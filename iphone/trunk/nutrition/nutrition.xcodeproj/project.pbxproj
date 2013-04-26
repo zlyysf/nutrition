@@ -18,6 +18,10 @@
 		5F3338BF172A407E0096E7AE /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3338BE172A407E0096E7AE /* Default-568h@2x.png */; };
 		5F3338C2172A407E0096E7AE /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3338C0172A407E0096E7AE /* MainStoryboard.storyboard */; };
 		5F3338C5172A407F0096E7AE /* LZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338C4172A407F0096E7AE /* LZViewController.m */; };
+		5F3338CD172A597A0096E7AE /* LZPersonInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338CC172A597A0096E7AE /* LZPersonInfoViewController.m */; };
+		5F3338D0172A59E20096E7AE /* LZDailyIntakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */; };
+		5F3338D3172A5A1D0096E7AE /* LZAnalysislViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338D2172A5A1D0096E7AE /* LZAnalysislViewController.m */; };
+		5F3338D6172A5BE50096E7AE /* Home_Background@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F3338D5172A5BE50096E7AE /* Home_Background@2x.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,14 +33,21 @@
 		5F3338B2172A407E0096E7AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5F3338B4172A407E0096E7AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5F3338B6172A407E0096E7AE /* nutrition-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nutrition-Prefix.pch"; sourceTree = "<group>"; };
-		5F3338B7172A407E0096E7AE /* LZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZAppDelegate.h; sourceTree = "<group>"; };
-		5F3338B8172A407E0096E7AE /* LZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZAppDelegate.m; sourceTree = "<group>"; };
+		5F3338B7172A407E0096E7AE /* LZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LZAppDelegate.h; path = Class/LZAppDelegate.h; sourceTree = "<group>"; };
+		5F3338B8172A407E0096E7AE /* LZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LZAppDelegate.m; path = Class/LZAppDelegate.m; sourceTree = "<group>"; };
 		5F3338BA172A407E0096E7AE /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		5F3338BC172A407E0096E7AE /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		5F3338BE172A407E0096E7AE /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
 		5F3338C1172A407E0096E7AE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
-		5F3338C3172A407F0096E7AE /* LZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZViewController.h; sourceTree = "<group>"; };
-		5F3338C4172A407F0096E7AE /* LZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZViewController.m; sourceTree = "<group>"; };
+		5F3338C3172A407F0096E7AE /* LZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LZViewController.h; path = Class/LZViewController.h; sourceTree = "<group>"; };
+		5F3338C4172A407F0096E7AE /* LZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LZViewController.m; path = Class/LZViewController.m; sourceTree = "<group>"; };
+		5F3338CB172A597A0096E7AE /* LZPersonInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZPersonInfoViewController.h; path = Class/LZPersonInfoViewController.h; sourceTree = "<group>"; };
+		5F3338CC172A597A0096E7AE /* LZPersonInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZPersonInfoViewController.m; path = Class/LZPersonInfoViewController.m; sourceTree = "<group>"; };
+		5F3338CE172A59E20096E7AE /* LZDailyIntakeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDailyIntakeViewController.h; path = Class/LZDailyIntakeViewController.h; sourceTree = "<group>"; };
+		5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDailyIntakeViewController.m; path = Class/LZDailyIntakeViewController.m; sourceTree = "<group>"; };
+		5F3338D1172A5A1D0096E7AE /* LZAnalysislViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZAnalysislViewController.h; path = Class/LZAnalysislViewController.h; sourceTree = "<group>"; };
+		5F3338D2172A5A1D0096E7AE /* LZAnalysislViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZAnalysislViewController.m; path = Class/LZAnalysislViewController.m; sourceTree = "<group>"; };
+		5F3338D5172A5BE50096E7AE /* Home_Background@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Home_Background@2x.jpg"; path = "nutrition/Resource/Home_Background@2x.jpg"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +67,9 @@
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				5F3338D4172A5BD60096E7AE /* Resource */,
 				5F3338AE172A407E0096E7AE /* nutrition */,
+				5F3338AF172A407E0096E7AE /* Supporting Files */,
 				5F3338A7172A407E0096E7AE /* Frameworks */,
 				5F3338A6172A407E0096E7AE /* Products */,
 			);
@@ -88,7 +101,12 @@
 				5F3338C0172A407E0096E7AE /* MainStoryboard.storyboard */,
 				5F3338C3172A407F0096E7AE /* LZViewController.h */,
 				5F3338C4172A407F0096E7AE /* LZViewController.m */,
-				5F3338AF172A407E0096E7AE /* Supporting Files */,
+				5F3338CB172A597A0096E7AE /* LZPersonInfoViewController.h */,
+				5F3338CC172A597A0096E7AE /* LZPersonInfoViewController.m */,
+				5F3338CE172A59E20096E7AE /* LZDailyIntakeViewController.h */,
+				5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */,
+				5F3338D1172A5A1D0096E7AE /* LZAnalysislViewController.h */,
+				5F3338D2172A5A1D0096E7AE /* LZAnalysislViewController.m */,
 			);
 			path = nutrition;
 			sourceTree = "<group>";
@@ -105,6 +123,15 @@
 				5F3338BE172A407E0096E7AE /* Default-568h@2x.png */,
 			);
 			name = "Supporting Files";
+			path = nutrition;
+			sourceTree = "<group>";
+		};
+		5F3338D4172A5BD60096E7AE /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				5F3338D5172A5BE50096E7AE /* Home_Background@2x.jpg */,
+			);
+			name = Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -164,6 +191,7 @@
 				5F3338BD172A407E0096E7AE /* Default@2x.png in Resources */,
 				5F3338BF172A407E0096E7AE /* Default-568h@2x.png in Resources */,
 				5F3338C2172A407E0096E7AE /* MainStoryboard.storyboard in Resources */,
+				5F3338D6172A5BE50096E7AE /* Home_Background@2x.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -177,6 +205,9 @@
 				5F3338B5172A407E0096E7AE /* main.m in Sources */,
 				5F3338B9172A407E0096E7AE /* LZAppDelegate.m in Sources */,
 				5F3338C5172A407F0096E7AE /* LZViewController.m in Sources */,
+				5F3338CD172A597A0096E7AE /* LZPersonInfoViewController.m in Sources */,
+				5F3338D0172A59E20096E7AE /* LZDailyIntakeViewController.m in Sources */,
+				5F3338D3172A5A1D0096E7AE /* LZAnalysislViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
