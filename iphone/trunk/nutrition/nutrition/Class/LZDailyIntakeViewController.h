@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZDailyIntakeViewController : UIViewController
+@interface LZDailyIntakeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@property (strong, nonatomic) IBOutlet UITableView *listView;
 
 @end

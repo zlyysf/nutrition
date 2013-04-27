@@ -22,6 +22,8 @@
     }
     return self;
 }
+- (IBAction)emailButtonTapped:(id)sender {
+}
 
 - (void)viewDidLoad
 {
