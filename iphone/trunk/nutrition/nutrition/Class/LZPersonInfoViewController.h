@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZPersonInfoViewController : UIViewController
+@interface LZPersonInfoViewController : UIViewController<UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UISegmentedControl *sexSegmentControl;
+@property (strong, nonatomic) IBOutlet UITextField *ageTextField;
+@property (strong, nonatomic) IBOutlet UITextField *heightTextField;
+@property (strong, nonatomic) IBOutlet UITextField *weightTextField;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *activityLevelSegmentControl;
 
 @end
