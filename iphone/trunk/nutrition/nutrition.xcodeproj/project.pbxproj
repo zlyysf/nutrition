@@ -22,6 +22,7 @@
 		5F3338D0172A59E20096E7AE /* LZDailyIntakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */; };
 		5F3338D3172A5A1D0096E7AE /* LZAnalysislViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338D2172A5A1D0096E7AE /* LZAnalysislViewController.m */; };
 		5F3338D6172A5BE50096E7AE /* Home_Background@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F3338D5172A5BE50096E7AE /* Home_Background@2x.jpg */; };
+		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +49,9 @@
 		5F3338D1172A5A1D0096E7AE /* LZAnalysislViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZAnalysislViewController.h; path = Class/LZAnalysislViewController.h; sourceTree = "<group>"; };
 		5F3338D2172A5A1D0096E7AE /* LZAnalysislViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZAnalysislViewController.m; path = Class/LZAnalysislViewController.m; sourceTree = "<group>"; };
 		5F3338D5172A5BE50096E7AE /* Home_Background@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Home_Background@2x.jpg"; path = "nutrition/Resource/Home_Background@2x.jpg"; sourceTree = "<group>"; };
+		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = Class/LZUtility.h; sourceTree = "<group>"; };
+		5FB8C0B7172BC61D00E90387 /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = Class/LZUtility.m; sourceTree = "<group>"; };
+		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = Class/LZConstants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +111,9 @@
 				5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */,
 				5F3338D1172A5A1D0096E7AE /* LZAnalysislViewController.h */,
 				5F3338D2172A5A1D0096E7AE /* LZAnalysislViewController.m */,
+				5FB8C0B6172BC61D00E90387 /* LZUtility.h */,
+				5FB8C0B7172BC61D00E90387 /* LZUtility.m */,
+				5FB8C0B9172BCA9F00E90387 /* LZConstants.h */,
 			);
 			path = nutrition;
 			sourceTree = "<group>";
@@ -208,6 +215,7 @@
 				5F3338CD172A597A0096E7AE /* LZPersonInfoViewController.m in Sources */,
 				5F3338D0172A59E20096E7AE /* LZDailyIntakeViewController.m in Sources */,
 				5F3338D3172A5A1D0096E7AE /* LZAnalysislViewController.m in Sources */,
+				5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +338,7 @@
 				5F3338CA172A407F0096E7AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

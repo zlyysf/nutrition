@@ -76,7 +76,7 @@
             <objects>
                 <viewController id="8yb-D5-PpJ" customClass="LZDailyIntakeViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0MU-gp-Uzo">
-                        <rect key="frame" x="0.0" y="64" width="320" height="352"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -88,6 +88,7 @@
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="重置" id="Fh7-mM-hJu"/>
                     </navigationItem>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDH-SS-oyy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -117,7 +118,7 @@
             <objects>
                 <viewController id="rLa-87-KUI" customClass="LZPersonInfoViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h6O-4b-Hq6">
-                        <rect key="frame" x="0.0" y="64" width="320" height="352"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="sex:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="D4O-NF-0Wz">
@@ -151,6 +152,9 @@
                                     <segment title="Active"/>
                                     <segment title="VeryActive"/>
                                 </segments>
+                                <connections>
+                                    <action selector="activityLevelValueChanged:" destination="rLa-87-KUI" eventType="valueChanged" id="l4S-xH-rke"/>
+                                </connections>
                             </segmentedControl>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="height:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jv6-I3-OHu">
                                 <rect key="frame" x="20" y="107" width="65" height="21"/>
@@ -221,6 +225,13 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pvs-lf-D5H">
+                                <rect key="frame" x="20" y="265" width="280" height="116"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -231,7 +242,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
+                        <outlet property="activityLevelBriefLabel" destination="pvs-lf-D5H" id="bAD-wM-cYa"/>
                         <outlet property="activityLevelSegmentControl" destination="sLA-rx-Lit" id="C8s-sf-fDr"/>
                         <outlet property="ageTextField" destination="Wai-JL-Kcu" id="6be-lD-kxn"/>
                         <outlet property="heightTextField" destination="Tit-Yp-eIp" id="zNB-2N-qFP"/>
@@ -248,13 +261,14 @@
             <objects>
                 <viewController id="ePs-5R-8Pk" customClass="LZAnalysislViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="E4e-0u-lIZ">
-                        <rect key="frame" x="0.0" y="64" width="320" height="352"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="向你推荐" id="tCX-vm-Gc7">
                         <barButtonItem key="rightBarButtonItem" title="发邮件" id="kTF-Kq-5i5"/>
                     </navigationItem>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mZQ-q2-Dac" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -277,7 +291,9 @@
         <class className="LZPersonInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZPersonInfoViewController.h"/>
             <relationships>
+                <relationship kind="action" name="activityLevelValueChanged:" candidateClass="UISegmentedControl"/>
                 <relationship kind="action" name="doneButtonTapped:"/>
+                <relationship kind="outlet" name="activityLevelBriefLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="activityLevelSegmentControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="ageTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="heightTextField" candidateClass="UITextField"/>
