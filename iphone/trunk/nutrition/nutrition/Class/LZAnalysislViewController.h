@@ -10,4 +10,5 @@
 
 @interface LZAnalysislViewController : UIViewController
 
+@property (strong, nonatomic) IBOutlet UITextView *recommendTextView;
 @end
