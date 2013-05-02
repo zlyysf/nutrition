@@ -13,7 +13,7 @@
 @end
 
 @implementation LZDailyIntakeViewController
-
+@synthesize foodIntakeAmountArray,foodNameArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -27,6 +27,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    //获取食物名称 初始化foodNameArray 和 foodIntakeAmountArray
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -42,19 +45,72 @@
     cell.delegate = self;
     cell.cellIndexPath = indexPath;
     //一个记录名称的数组 一个记录对应摄入量的数组
+    //cell.foodNameLabel.text = [self.foodNameArray objectAtIndex:indexPath.row];
+    //cell.intakeAmountTextField.text = [self.foodIntakeAmountArray objectAtIndex:indexPath.row];
     return cell;
 }
 
 - (IBAction)saveButtonTapped:(id)sender {
+    //储存摄入量
     [self.navigationController popViewControllerAnimated:YES];
 }
 - (IBAction)resetButtonTapped:(id)sender {
-    //clear 用量数组
+    //clear foodIntakeAmountArray
+    //[self.foodIntakeAmountArray removeAllObjects];
     [self.listView reloadData];
 }
-- (void)textFieldDidReturnForIndex:(NSIndexPath*)index
+- (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber
 {
-    NSLog(@"cell section %d , row %d",index.section,index.row);
+    //[self.foodIntakeAmountArray replaceObjectAtIndex:index.row withObject:foodNumber];
+    NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
+}
+- (void)keyboardWillShow:(NSNotification *)notification {
+	
+    NSDictionary *userInfo = [notification userInfo];
+    
+    NSValue *boundsValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+	CGRect keyboardRect = [boundsValue CGRectValue];
+    
+    CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height;
+    CGRect tableviewFrame = self.listView.frame;
+	tableviewFrame.size.height = keyboardTop;
+    
+	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    self.listView.frame = tableviewFrame;
+    [UIView commitAnimations];
+}
+
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    NSDictionary* userInfo = [notification userInfo];
+    /*
+     Restore the size of the text view (fill self's view).
+     Animate the resize so that it's in sync with the disappearance of the keyboard.
+     */
+	CGRect tableviewFrame = self.listView.frame;
+	tableviewFrame.size.height = self.view.frame.size.height;
+    
+	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    self.listView.frame = tableviewFrame;
+    [UIView commitAnimations];
+
+}
+
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 - (void)didReceiveMemoryWarning
 {

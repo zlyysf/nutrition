@@ -53,6 +53,21 @@
 - (IBAction)doneButtonTapped:(id)sender
 {
     //LZUser
+    if ([self.weightTextField.text length] == 0)
+    {
+        [self alertWithTitle:nil msg:@"需要输入体重"];
+        return;
+    }
+    if ([self.heightTextField.text length] == 0)
+    {
+        [self alertWithTitle:nil msg:@"需要输入身高"];
+        return;
+    }
+    if ([self.ageTextField.text length] == 0)
+    {
+        [self alertWithTitle:nil msg:@"需要输入年龄"];
+        return;
+    }
     float weight = [self.weightTextField.text floatValue];
     float height = [self.heightTextField.text floatValue];
     int age =[self.ageTextField.text integerValue];
@@ -66,6 +81,16 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
     [self.navigationController popViewControllerAnimated:YES];
 }
+- (void) alertWithTitle: (NSString *)_title_ msg: (NSString *)msg
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_title_
+                                                    message:msg
+                                                   delegate:nil
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
 {
     //1[textField becomeFirstResponder];

@@ -21,18 +21,24 @@
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
 {
-    //1[textField becomeFirstResponder];
+    //[textField becomeFirstResponder];
     return YES;
 }
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField;
+- (void)textFieldDidEndEditing:(UITextField *)textField
+{
+    if(delegate && [delegate respondsToSelector:@selector(textFieldDidReturnForIndex:andText:)])
+    {
+        [delegate textFieldDidReturnForIndex:self.cellIndexPath andText:self.intakeAmountTextField.text];
+    }
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     //记录用量
     
-    if(delegate && [delegate respondsToSelector:@selector(textFieldDidReturnForIndex:)])
-    {
-        [delegate textFieldDidReturnForIndex:self.cellIndexPath];
-    }
+//    if(delegate && [delegate respondsToSelector:@selector(textFieldDidReturnForIndex:)])
+//    {
+//        [delegate textFieldDidReturnForIndex:self.cellIndexPath];
+//    }
     [textField resignFirstResponder];
     return YES;
     
