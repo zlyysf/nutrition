@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol LZFoodCellDelegate<NSObject>
 - (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber;
+- (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index;
 @end
 @interface LZFoodCell : UITableViewCell<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UILabel *foodNameLabel;

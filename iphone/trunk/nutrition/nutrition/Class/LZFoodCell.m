@@ -24,6 +24,14 @@
     //[textField becomeFirstResponder];
     return YES;
 }
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    if(delegate && [delegate respondsToSelector:@selector(textFieldDidBeginEditingForIndex:)])
+    {
+        [delegate textFieldDidBeginEditingForIndex:self.cellIndexPath];
+    }
+
+}
 - (void)textFieldDidEndEditing:(UITextField *)textField
 {
     if(delegate && [delegate respondsToSelector:@selector(textFieldDidReturnForIndex:andText:)])
