@@ -9,6 +9,9 @@
 #import "LZUtility.h"
 #import "LZConstants.h"
 @implementation LZUtility
+/*
+ weight kg, height cm
+ */
 +(NSDictionary*)getStandardDRIForSex:(int )sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
 {
     float PA;
@@ -209,4 +212,42 @@
     NSDictionary *standardResult = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:energyStandard],@"Energ_Kcal",[NSNumber numberWithInt:carbohydrtStandard],@"Carbohydrt_(g)",[NSNumber numberWithInt:fatStandard],@"Lipid_Tot_(g)",[NSNumber numberWithInt:proteinStandard],@"Protein_(g)",nil];
     return standardResult;
 }
+
+
++(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
+{
+    NSDictionary *part1 = [self getStandardDRIForSex:sex age:age weight:weight height:height activityLevel:activityLevel];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSString *gender = @"male";
+    if (sex !=0)
+        gender = @"female";
+    NSDictionary *part2 = [da getDRIbyGender:gender andAge:age];
+    NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithDictionary:part1];
+    [ret addEntriesFromDictionary:part2];
+    return ret;
+}
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

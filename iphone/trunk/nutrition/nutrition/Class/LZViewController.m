@@ -8,6 +8,8 @@
 
 #import "LZViewController.h"
 
+#import "LZRecommendFood.h"
+
 @interface LZViewController ()
 
 @end
@@ -18,6 +20,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    [rf recommendFoodForEnoughNuitrition:0 age:30 weight:80 height:172 activityLevel:1];
 }
 
 - (void)didReceiveMemoryWarning
