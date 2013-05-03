@@ -16,6 +16,37 @@
 		085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4B17336720001A1ABB /* LZRecommendFood.m */; };
 		085C8D4E17336744001A1ABB /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D4D17336744001A1ABB /* CustomDB.dat */; };
 		085C8D50173367AC001A1ABB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 085C8D4F173367AC001A1ABB /* libsqlite3.dylib */; };
+		085C8D5817336A29001A1ABB /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338A8172A407E0096E7AE /* UIKit.framework */; };
+		085C8D5917336A29001A1ABB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AA172A407E0096E7AE /* Foundation.framework */; };
+		085C8D5A17336A29001A1ABB /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AC172A407E0096E7AE /* CoreGraphics.framework */; };
+		085C8D6017336A29001A1ABB /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D5E17336A29001A1ABB /* InfoPlist.strings */; };
+		085C8D6217336A29001A1ABB /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D6117336A29001A1ABB /* main.m */; };
+		085C8D6617336A29001A1ABB /* LZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D6517336A29001A1ABB /* LZAppDelegate.m */; };
+		085C8D6817336A29001A1ABB /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D6717336A29001A1ABB /* Default.png */; };
+		085C8D6A17336A29001A1ABB /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D6917336A29001A1ABB /* Default@2x.png */; };
+		085C8D6C17336A29001A1ABB /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D6B17336A29001A1ABB /* Default-568h@2x.png */; };
+		085C8D6F17336A29001A1ABB /* LZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D6E17336A29001A1ABB /* LZViewController.m */; };
+		085C8D7217336A29001A1ABB /* LZViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D7017336A29001A1ABB /* LZViewController_iPhone.xib */; };
+		085C8D7517336A29001A1ABB /* LZViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D7317336A29001A1ABB /* LZViewController_iPad.xib */; };
+		085C8D7917336A3D001A1ABB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 085C8D4F173367AC001A1ABB /* libsqlite3.dylib */; };
+		085C8D7A17336B82001A1ABB /* LZRecommendFood.h in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4A17336720001A1ABB /* LZRecommendFood.h */; };
+		085C8D7B17336B82001A1ABB /* LZRecommendFood.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4B17336720001A1ABB /* LZRecommendFood.m */; };
+		085C8D7C17336B82001A1ABB /* LZDataAccess.h in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4617336701001A1ABB /* LZDataAccess.h */; };
+		085C8D7D17336B82001A1ABB /* LZDataAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4717336701001A1ABB /* LZDataAccess.m */; };
+		085C8D7E17336B82001A1ABB /* FMDatabase.h in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D34173366F2001A1ABB /* FMDatabase.h */; };
+		085C8D7F17336B82001A1ABB /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D35173366F2001A1ABB /* FMDatabase.m */; };
+		085C8D8017336B82001A1ABB /* FMDatabaseAdditions.h in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D36173366F2001A1ABB /* FMDatabaseAdditions.h */; };
+		085C8D8117336B82001A1ABB /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D37173366F2001A1ABB /* FMDatabaseAdditions.m */; };
+		085C8D8217336B82001A1ABB /* FMDatabasePool.h in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D38173366F2001A1ABB /* FMDatabasePool.h */; };
+		085C8D8317336B82001A1ABB /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D39173366F2001A1ABB /* FMDatabasePool.m */; };
+		085C8D8417336B82001A1ABB /* FMDatabaseQueue.h in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3A173366F2001A1ABB /* FMDatabaseQueue.h */; };
+		085C8D8517336B82001A1ABB /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3B173366F2001A1ABB /* FMDatabaseQueue.m */; };
+		085C8D8617336B82001A1ABB /* FMResultSet.h in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3D173366F2001A1ABB /* FMResultSet.h */; };
+		085C8D8717336B82001A1ABB /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3E173366F2001A1ABB /* FMResultSet.m */; };
+		085C8D8817336B82001A1ABB /* CustomDB.dat in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4D17336744001A1ABB /* CustomDB.dat */; };
+		085C8D8917336BA5001A1ABB /* LZUtility.h in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B6172BC61D00E90387 /* LZUtility.h */; };
+		085C8D8A17336BA5001A1ABB /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
+		085C8D8B17336BE1001A1ABB /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D4D17336744001A1ABB /* CustomDB.dat */; };
 		5F3338A9172A407E0096E7AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338A8172A407E0096E7AE /* UIKit.framework */; };
 		5F3338AB172A407E0096E7AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AA172A407E0096E7AE /* Foundation.framework */; };
 		5F3338AD172A407E0096E7AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AC172A407E0096E7AE /* CoreGraphics.framework */; };
@@ -53,6 +84,20 @@
 		085C8D4B17336720001A1ABB /* LZRecommendFood.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFood.m; path = nutrition/Class/LZRecommendFood.m; sourceTree = "<group>"; };
 		085C8D4D17336744001A1ABB /* CustomDB.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomDB.dat; path = nutrition/Resource/CustomDB.dat; sourceTree = "<group>"; };
 		085C8D4F173367AC001A1ABB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		085C8D5717336A29001A1ABB /* testApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = testApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		085C8D5D17336A29001A1ABB /* testApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "testApp-Info.plist"; sourceTree = "<group>"; };
+		085C8D5F17336A29001A1ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		085C8D6117336A29001A1ABB /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		085C8D6317336A29001A1ABB /* testApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "testApp-Prefix.pch"; sourceTree = "<group>"; };
+		085C8D6417336A29001A1ABB /* LZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZAppDelegate.h; sourceTree = "<group>"; };
+		085C8D6517336A29001A1ABB /* LZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZAppDelegate.m; sourceTree = "<group>"; };
+		085C8D6717336A29001A1ABB /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		085C8D6917336A29001A1ABB /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		085C8D6B17336A29001A1ABB /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		085C8D6D17336A29001A1ABB /* LZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZViewController.h; sourceTree = "<group>"; };
+		085C8D6E17336A29001A1ABB /* LZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZViewController.m; sourceTree = "<group>"; };
+		085C8D7117336A29001A1ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LZViewController_iPhone.xib; sourceTree = "<group>"; };
+		085C8D7417336A29001A1ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LZViewController_iPad.xib; sourceTree = "<group>"; };
 		5F3338A5172A407E0096E7AE /* nutrition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nutrition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3338A8172A407E0096E7AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F3338AA172A407E0096E7AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -79,12 +124,23 @@
 		5F9995F4172BDBE400A36B4F /* LZFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodCell.h; path = Class/LZFoodCell.h; sourceTree = "<group>"; };
 		5F9995F5172BDBE400A36B4F /* LZFoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodCell.m; path = Class/LZFoodCell.m; sourceTree = "<group>"; };
 		5F9C128C17321935000E08E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = Class/LZUtility.h; sourceTree = "<group>"; };
-		5FB8C0B7172BC61D00E90387 /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = Class/LZUtility.m; sourceTree = "<group>"; };
+		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = nutrition/Class/LZUtility.h; sourceTree = "<group>"; };
+		5FB8C0B7172BC61D00E90387 /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = nutrition/Class/LZUtility.m; sourceTree = "<group>"; };
 		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = Class/LZConstants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		085C8D5417336A29001A1ABB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				085C8D7917336A3D001A1ABB /* libsqlite3.dylib in Frameworks */,
+				085C8D5817336A29001A1ABB /* UIKit.framework in Frameworks */,
+				085C8D5917336A29001A1ABB /* Foundation.framework in Frameworks */,
+				085C8D5A17336A29001A1ABB /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5F3338A2172A407E0096E7AE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -131,16 +187,46 @@
 		085C8D4917336707001A1ABB /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				5FB8C0B6172BC61D00E90387 /* LZUtility.h */,
+				5FB8C0B7172BC61D00E90387 /* LZUtility.m */,
 				085C8D4A17336720001A1ABB /* LZRecommendFood.h */,
 				085C8D4B17336720001A1ABB /* LZRecommendFood.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
 		};
+		085C8D5B17336A29001A1ABB /* testApp */ = {
+			isa = PBXGroup;
+			children = (
+				085C8D6417336A29001A1ABB /* LZAppDelegate.h */,
+				085C8D6517336A29001A1ABB /* LZAppDelegate.m */,
+				085C8D6D17336A29001A1ABB /* LZViewController.h */,
+				085C8D6E17336A29001A1ABB /* LZViewController.m */,
+				085C8D7017336A29001A1ABB /* LZViewController_iPhone.xib */,
+				085C8D7317336A29001A1ABB /* LZViewController_iPad.xib */,
+				085C8D5C17336A29001A1ABB /* Supporting Files */,
+			);
+			path = testApp;
+			sourceTree = "<group>";
+		};
+		085C8D5C17336A29001A1ABB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				085C8D5D17336A29001A1ABB /* testApp-Info.plist */,
+				085C8D5E17336A29001A1ABB /* InfoPlist.strings */,
+				085C8D6117336A29001A1ABB /* main.m */,
+				085C8D6317336A29001A1ABB /* testApp-Prefix.pch */,
+				085C8D6717336A29001A1ABB /* Default.png */,
+				085C8D6917336A29001A1ABB /* Default@2x.png */,
+				085C8D6B17336A29001A1ABB /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
-				085C8D4F173367AC001A1ABB /* libsqlite3.dylib */,
+				085C8D5B17336A29001A1ABB /* testApp */,
 				085C8D4917336707001A1ABB /* Util */,
 				085C8D4517336701001A1ABB /* dataAccess */,
 				085C8D33173366F2001A1ABB /* fmdbLib */,
@@ -156,6 +242,7 @@
 			isa = PBXGroup;
 			children = (
 				5F3338A5172A407E0096E7AE /* nutrition.app */,
+				085C8D5717336A29001A1ABB /* testApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -163,6 +250,7 @@
 		5F3338A7172A407E0096E7AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				085C8D4F173367AC001A1ABB /* libsqlite3.dylib */,
 				5F9C128C17321935000E08E5 /* MessageUI.framework */,
 				5F3338A8172A407E0096E7AE /* UIKit.framework */,
 				5F3338AA172A407E0096E7AE /* Foundation.framework */,
@@ -185,8 +273,6 @@
 				5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */,
 				5F3338D1172A5A1D0096E7AE /* LZAnalysislViewController.h */,
 				5F3338D2172A5A1D0096E7AE /* LZAnalysislViewController.m */,
-				5FB8C0B6172BC61D00E90387 /* LZUtility.h */,
-				5FB8C0B7172BC61D00E90387 /* LZUtility.m */,
 				5FB8C0B9172BCA9F00E90387 /* LZConstants.h */,
 				5F9995F4172BDBE400A36B4F /* LZFoodCell.h */,
 				5F9995F5172BDBE400A36B4F /* LZFoodCell.m */,
@@ -221,6 +307,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		085C8D5617336A29001A1ABB /* testApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 085C8D7617336A29001A1ABB /* Build configuration list for PBXNativeTarget "testApp" */;
+			buildPhases = (
+				085C8D5317336A29001A1ABB /* Sources */,
+				085C8D5417336A29001A1ABB /* Frameworks */,
+				085C8D5517336A29001A1ABB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = testApp;
+			productName = testApp;
+			productReference = 085C8D5717336A29001A1ABB /* testApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		5F3338A4172A407E0096E7AE /* nutrition */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5F3338C8172A407F0096E7AE /* Build configuration list for PBXNativeTarget "nutrition" */;
@@ -261,11 +364,26 @@
 			projectRoot = "";
 			targets = (
 				5F3338A4172A407E0096E7AE /* nutrition */,
+				085C8D5617336A29001A1ABB /* testApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		085C8D5517336A29001A1ABB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				085C8D8B17336BE1001A1ABB /* CustomDB.dat in Resources */,
+				085C8D6017336A29001A1ABB /* InfoPlist.strings in Resources */,
+				085C8D6817336A29001A1ABB /* Default.png in Resources */,
+				085C8D6A17336A29001A1ABB /* Default@2x.png in Resources */,
+				085C8D6C17336A29001A1ABB /* Default-568h@2x.png in Resources */,
+				085C8D7217336A29001A1ABB /* LZViewController_iPhone.xib in Resources */,
+				085C8D7517336A29001A1ABB /* LZViewController_iPad.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5F3338A3172A407E0096E7AE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -283,6 +401,33 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		085C8D5317336A29001A1ABB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				085C8D8917336BA5001A1ABB /* LZUtility.h in Sources */,
+				085C8D8A17336BA5001A1ABB /* LZUtility.m in Sources */,
+				085C8D7A17336B82001A1ABB /* LZRecommendFood.h in Sources */,
+				085C8D7B17336B82001A1ABB /* LZRecommendFood.m in Sources */,
+				085C8D7C17336B82001A1ABB /* LZDataAccess.h in Sources */,
+				085C8D7D17336B82001A1ABB /* LZDataAccess.m in Sources */,
+				085C8D7E17336B82001A1ABB /* FMDatabase.h in Sources */,
+				085C8D7F17336B82001A1ABB /* FMDatabase.m in Sources */,
+				085C8D8017336B82001A1ABB /* FMDatabaseAdditions.h in Sources */,
+				085C8D8117336B82001A1ABB /* FMDatabaseAdditions.m in Sources */,
+				085C8D8217336B82001A1ABB /* FMDatabasePool.h in Sources */,
+				085C8D8317336B82001A1ABB /* FMDatabasePool.m in Sources */,
+				085C8D8417336B82001A1ABB /* FMDatabaseQueue.h in Sources */,
+				085C8D8517336B82001A1ABB /* FMDatabaseQueue.m in Sources */,
+				085C8D8617336B82001A1ABB /* FMResultSet.h in Sources */,
+				085C8D8717336B82001A1ABB /* FMResultSet.m in Sources */,
+				085C8D8817336B82001A1ABB /* CustomDB.dat in Sources */,
+				085C8D6217336A29001A1ABB /* main.m in Sources */,
+				085C8D6617336A29001A1ABB /* LZAppDelegate.m in Sources */,
+				085C8D6F17336A29001A1ABB /* LZViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5F3338A1172A407E0096E7AE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -308,6 +453,30 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
+		085C8D5E17336A29001A1ABB /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				085C8D5F17336A29001A1ABB /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		085C8D7017336A29001A1ABB /* LZViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				085C8D7117336A29001A1ABB /* en */,
+			);
+			name = LZViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		085C8D7317336A29001A1ABB /* LZViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				085C8D7417336A29001A1ABB /* en */,
+			);
+			name = LZViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
 		5F3338B1172A407E0096E7AE /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -327,6 +496,32 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		085C8D7717336A29001A1ABB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "testApp/testApp-Prefix.pch";
+				INFOPLIST_FILE = "testApp/testApp-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		085C8D7817336A29001A1ABB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "testApp/testApp-Prefix.pch";
+				INFOPLIST_FILE = "testApp/testApp-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
 		5F3338C6172A407F0096E7AE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -408,6 +603,14 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		085C8D7617336A29001A1ABB /* Build configuration list for PBXNativeTarget "testApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				085C8D7717336A29001A1ABB /* Debug */,
+				085C8D7817336A29001A1ABB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
 		5F3338A0172A407E0096E7AE /* Build configuration list for PBXProject "nutrition" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

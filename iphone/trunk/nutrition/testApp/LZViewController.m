@@ -1,14 +1,16 @@
 //
 //  LZViewController.m
-//  nutrition
+//  testApp
 //
-//  Created by liu miao on 4/26/13.
-//  Copyright (c) 2013 lingzhi mobile. All rights reserved.
+//  Created by Yasofon on 13-5-3.
+//  Copyright (c) 2013年 lingzhi mobile. All rights reserved.
 //
 
 #import "LZViewController.h"
-
+#import "LZDataAccess.h"
 #import "LZRecommendFood.h"
+
+
 
 @interface LZViewController ()
 
@@ -21,6 +23,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
+//    LZDataAccess *da = [LZDataAccess singleton];
+//    [da getAllFood];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    [rf recommendFoodForEnoughNuitrition:0 age:30 weight:80 height:172 activityLevel:1];
 }
 
 - (void)didReceiveMemoryWarning
