@@ -42,20 +42,16 @@
     //设置主题
     [mailPicker setSubject: @"营养推荐反馈"];
     
-    // 添加发送者
+    //添加发送者
     NSArray *toRecipients = [NSArray arrayWithObjects: @"xinru.zong@yasofon.com",@"lianyu.zhang@yasofon.com",@"dalei.li@yasofon.com",@"miao.liu@yasofon.com",nil];
-    //NSArray *ccRecipients = [NSArray arrayWithObjects:@"second@example.com", @"third@example.com", nil];
-    //NSArray *bccRecipients = [NSArray arrayWithObject:@"fourth@example.com", nil];
+
     [mailPicker setToRecipients: toRecipients];
-    //[picker setCcRecipients:ccRecipients];
-    //[picker setBccRecipients:bccRecipients];
+
     
-    // 添加图片
-//    UIImage *addPic = [UIImage imageNamed: @"123.jpg"];
-//    NSData *imageData = UIImagePNGRepresentation(addPic);            // png
-//    // NSData *imageData = UIImageJPEGRepresentation(addPic, 1);    // jpeg
-//    [mailPicker addAttachmentData: imageData mimeType: @"" fileName: @"123.jpg"];
+//    NSData *attachmentData = [NSData dataWithContentsOfFile:]; insert file path (NSString*) to get nsdata
+//    [mailPicker addAttachmentData:attachmentData mimeType: @"text/csv" fileName: @"report.csv"];
     
+    //设置正文
     NSString *emailBody = self.recommendTextView.text;
     [mailPicker setMessageBody:emailBody isHTML:NO];
     
