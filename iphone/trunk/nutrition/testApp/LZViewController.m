@@ -27,7 +27,9 @@
 //    [da getAllFood];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    [rf recommendFoodForEnoughNuitrition:0 age:30 weight:80 height:172 activityLevel:1];
+    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitrition:0 age:30 weight:80 height:172 activityLevel:1];
+    [rf formatCsv_RecommendFoodForEnoughNuitrition:@"recommend1.csv" withRecommendResult:retDict];
+    
 }
 
 - (void)didReceiveMemoryWarning

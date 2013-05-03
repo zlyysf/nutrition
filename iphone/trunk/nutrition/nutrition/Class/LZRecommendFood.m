@@ -112,12 +112,229 @@
     NSLog(@"recommendFoodForEnoughNuitrition nutrientSupplyDict=\n%@, recommendFoodAmountDict=\n%@",nutrientSupplyDict,recommendFoodAmountDict);
     
     NSMutableDictionary *retDict = [NSMutableDictionary dictionaryWithCapacity:5];
-    [retDict setObject:DRIsDict forKey:@"DRI"];
-    [retDict setObject:nutrientSupplyDict forKey:@"NutrientSupply"];
-    [retDict setObject:recommendFoodAmountDict forKey:@"FoodAmount"];
-    [retDict setObject:recommendFoodAttrDict forKey:@"FoodAttr"];
+    [retDict setObject:DRIsDict forKey:@"DRI"];//nutrient name as key, also column name
+    [retDict setObject:nutrientSupplyDict forKey:@"NutrientSupply"];//nutrient name as key, also column name
+    [retDict setObject:recommendFoodAmountDict forKey:@"FoodAmount"];//food NO as key
+    [retDict setObject:recommendFoodAttrDict forKey:@"FoodAttr"];//food NO as key
+    
+    
     return retDict;
 }
+
+
+
+
+/*
+                            营养素1		营养素2		...
+ 食物ID1	食物名1	食物1质量	营养素1含量	营养素2含量	...
+ 食物ID2	食物名2	食物2质量
+ 
+                            营养素1合计	营养素2合计
+                            营养素1DRI	营养素2DRI
+                            营养素1超量	营养素2超量
+ 
+ 对照表
+                            营养素1		营养素2		...
+ 食物ID1	食物名1	100g		营养素1含量	营养素2含量	...
+ 食物ID2	食物名2	100g
+ */
+-(void) formatCsv_RecommendFoodForEnoughNuitrition: (NSString *)csvFileName withRecommendResult:(NSDictionary*)recmdDict
+{
+    NSLog(@"formatCsv_RecommendFoodForEnoughNuitrition enter");
+    
+    NSDictionary *DRIsDict = [recmdDict objectForKey:@"DRI"];//nutrient name as key, also column name
+    NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
+    NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:@"FoodAmount"];//food NO as key
+    NSDictionary *recommendFoodAttrDict = [recmdDict objectForKey:@"FoodAttr"];//food NO as key
+    NSMutableArray *rows = [NSMutableArray arrayWithCapacity:1000];
+    
+    int colIdx_NutrientStart = 3;
+    NSArray* nutrientNames = [DRIsDict allKeys];
+    
+    int columnCount = colIdx_NutrientStart+nutrientNames.count;
+    NSMutableArray *rowForInit = [NSMutableArray arrayWithCapacity:columnCount];
+    for(int i=0; i<columnCount; i++){
+        [rowForInit addObject:[NSNull null]];
+    }
+    
+    NSMutableArray* row;
+    //营养素列名集合的行
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    //row = [NSMutableArray arrayWithCapacity:columnCount];
+//    for(int i=0; i<colIdx_NutrientStart; i++){
+//        row[i] = @"";
+//    }
+    for(int i=0; i<nutrientNames.count; i++){
+        NSString *nutrientName = nutrientNames[i];
+        row[i+colIdx_NutrientStart] = nutrientName;
+    }
+    [rows addObject:row];
+    
+    int rowIdx_foodItemStart = 1;
+    NSArray* foodIDs = recommendFoodAmountDict.allKeys;
+    //各种食物具体的量和提供各种营养素的量
+    for(int i=0; i<foodIDs.count; i++){
+        NSString *foodID = foodIDs[i];
+        NSNumber *nmFoodAmount = [recommendFoodAmountDict objectForKey:foodID];
+        NSDictionary *foodAttrs = [recommendFoodAttrDict objectForKey:foodID];
+        row = [NSMutableArray arrayWithArray:rowForInit];
+        //row = [NSMutableArray arrayWithCapacity:(colIdx_NutrientStart+nutrientNames.count)];
+        row[0] = foodID;
+        row[1] = foodAttrs[@"CnCaption"];
+        row[2] = nmFoodAmount;
+        for(int j=0; j<nutrientNames.count;j++){
+            NSString *nutrientName = nutrientNames[j];
+            NSNumber *nmFoodAttrValue = [foodAttrs objectForKey:nutrientName];
+            if (nmFoodAttrValue == nil || nmFoodAttrValue == [NSNull null]){//有warning没事，试过了没问题
+                //do nothing
+            }else{
+                double foodSupplyNutrientAmount = [nmFoodAttrValue doubleValue]*[nmFoodAmount doubleValue]/100.0;
+                row[j+colIdx_NutrientStart] = [NSNumber numberWithDouble:foodSupplyNutrientAmount];
+            }
+        }//for j
+        [rows addObject:row];
+    }//for i
+    
+    //各种食物提供各种营养素的量的合计，手动算
+    NSMutableArray* rowSum = [NSMutableArray arrayWithArray:rowForInit];
+    //NSMutableArray* rowSum = [NSMutableArray arrayWithCapacity:(colIdx_NutrientStart+nutrientNames.count)];
+    rowSum[0] = @"Sum";
+    for(int j=0; j<nutrientNames.count;j++){
+        double sumCol = 0.0;
+        for(int i=0; i<foodIDs.count; i++){
+            NSNumber *nmCell = rows[i+rowIdx_foodItemStart][j+colIdx_NutrientStart] ;
+            if (nmCell != [NSNull null])//有warning没事，试过了没问题
+                sumCol += [nmCell doubleValue];
+        }//for i
+        rowSum[j+colIdx_NutrientStart] = [NSNumber numberWithDouble:sumCol];
+    }//for j
+    [rows addObject:rowSum];
+    
+    //各种食物提供各种营养素的量的合计，从supply中来
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    //row = [NSMutableArray arrayWithCapacity:(colIdx_NutrientStart+nutrientNames.count)];
+    row[0] = @"Supply";
+    for(int i=0; i<nutrientNames.count; i++){
+        NSString *nutrientName = nutrientNames[i];
+        NSNumber *nmNutrientSupply = [nutrientSupplyDict objectForKey:nutrientName];
+        if (nmNutrientSupply != nil || nmNutrientSupply == [NSNull null])
+            row[i+colIdx_NutrientStart] = nmNutrientSupply;
+        else
+            row[i+colIdx_NutrientStart] = [NSNumber numberWithDouble:0.0];
+    }
+    [rows addObject:row];
+    
+    //各种营养素DRI
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    //row = [NSMutableArray arrayWithCapacity:(colIdx_NutrientStart+nutrientNames.count)];
+    row[0] = @"DRI";
+    for(int i=0; i<nutrientNames.count; i++){
+        NSString *nutrientName = nutrientNames[i];
+        NSNumber *nmNutrientDRI = [DRIsDict objectForKey:nutrientName];
+        if (nmNutrientDRI != nil && nmNutrientDRI != [NSNull null])
+            row[i+colIdx_NutrientStart] = nmNutrientDRI;
+        else
+            row[i+colIdx_NutrientStart] = [NSNumber numberWithDouble:0.0];
+    }
+    [rows addObject:row];
+    
+    //各种营养素supply - DRI，超标部分
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    //row = [NSMutableArray arrayWithCapacity:(colIdx_NutrientStart+nutrientNames.count)];
+    row[0] = @"Supply-DRI";
+    for(int j=0; j<nutrientNames.count; j++){
+        NSNumber *nmSupply = rows[rows.count-2][j+colIdx_NutrientStart];
+        NSNumber *nmNutrientDRI = rows[rows.count-1][j+colIdx_NutrientStart];
+        row[j+colIdx_NutrientStart] = [NSNumber numberWithDouble:([nmSupply doubleValue]- [nmNutrientDRI doubleValue])] ;
+    }
+    [rows addObject:row];
+    
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    //row = [NSMutableArray arrayWithCapacity:(colIdx_NutrientStart+nutrientNames.count)];
+    row[0] = @"Standard";
+    [rows addObject:row];
+
+    //各种食物含各种营养素的标准量
+    for(int i=0; i<foodIDs.count; i++){
+        NSString *foodID = foodIDs[i];
+        NSDictionary *foodAttrs = [recommendFoodAttrDict objectForKey:foodID];
+        row = [NSMutableArray arrayWithArray:rowForInit];
+        //row = [NSMutableArray arrayWithCapacity:(colIdx_NutrientStart+nutrientNames.count)];
+        row[0] = foodID;
+        row[1] = foodAttrs[@"CnCaption"];
+        row[2] = @"100";
+        for(int j=0; j<nutrientNames.count;j++){
+            NSString *nutrientName = nutrientNames[j];
+            NSNumber *nmFoodAttrValue = [foodAttrs objectForKey:nutrientName];
+            if (nmFoodAttrValue == nil || nmFoodAttrValue == [NSNull null]){
+                //do nothing
+            }else{
+                row[j+colIdx_NutrientStart] = nmFoodAttrValue;
+            }
+        }//for j
+        [rows addObject:row];
+    }//for i
+
+    [self convert2DArrayToCsv:csvFileName withData:rows];
+}
+
+
+
+-(void) convert2DArrayToCsv: (NSString *)csvFileName withData:(NSArray*)ary2D
+{
+    NSLog(@"convert2DArrayToCsv enter");
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *csvFilePath = [documentsDirectory stringByAppendingPathComponent:csvFileName];
+    NSLog(@"csvFilePath=%@",csvFilePath);
+    
+    NSMutableData *writer = [[NSMutableData alloc] init];
+    for(int i=0; i<ary2D.count; i++){
+        NSArray *ary1D = ary2D[i];
+        NSMutableString *rowStr = [NSMutableString stringWithCapacity:10000];
+        for(int j=0 ; j<ary1D.count; j++){
+            NSObject *cell = ary1D[j];
+            NSMutableString *cellStr = [NSMutableString stringWithCapacity:100];
+            [cellStr appendString:@"\""];
+            
+            NSString *s1 = nil;
+            if (cell == nil || cell == [NSNull null]){
+                s1 = nil;
+            }else if ([cell isKindOfClass:[NSString class]]){
+                s1 = (NSString*)cell;
+            }else if ([cell isKindOfClass:[NSNumber class]]){
+                NSNumber *nm = (NSNumber *)cell;
+                s1 = [nm stringValue];
+            }else{
+                s1 = [cell description];
+            }
+            if (s1 != nil){
+                if ([s1 rangeOfString:@"\""].location == NSNotFound){
+                    NSString *s2 = [s1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\"\""];
+                    [cellStr appendString:s2];
+                }else{
+                    [cellStr appendString:s1];
+                }
+            }
+
+            [cellStr appendString:@"\""];
+            if (j<ary1D.count-1){
+                [cellStr appendString:@","];
+            }else{
+                [cellStr appendString:@"\n"];
+            }
+            [rowStr appendString:cellStr];
+        }//for j
+        
+        [writer appendData: [rowStr dataUsingEncoding:NSUTF8StringEncoding] ];
+    }//for i
+    
+    [writer writeToFile:csvFilePath atomically:YES];
+}
+
+
+
+
 
 @end
 
