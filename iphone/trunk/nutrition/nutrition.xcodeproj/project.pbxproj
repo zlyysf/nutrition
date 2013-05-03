@@ -11,11 +11,11 @@
 		085C8D40173366F2001A1ABB /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D37173366F2001A1ABB /* FMDatabaseAdditions.m */; };
 		085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D39173366F2001A1ABB /* FMDatabasePool.m */; };
 		085C8D42173366F2001A1ABB /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3B173366F2001A1ABB /* FMDatabaseQueue.m */; };
-		085C8D43173366F2001A1ABB /* fmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3C173366F2001A1ABB /* fmdb.m */; };
 		085C8D44173366F2001A1ABB /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3E173366F2001A1ABB /* FMResultSet.m */; };
 		085C8D4817336701001A1ABB /* LZDataAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4717336701001A1ABB /* LZDataAccess.m */; };
 		085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4B17336720001A1ABB /* LZRecommendFood.m */; };
 		085C8D4E17336744001A1ABB /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D4D17336744001A1ABB /* CustomDB.dat */; };
+		085C8D50173367AC001A1ABB /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 085C8D4F173367AC001A1ABB /* libsqlite3.dylib */; };
 		5F3338A9172A407E0096E7AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338A8172A407E0096E7AE /* UIKit.framework */; };
 		5F3338AB172A407E0096E7AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AA172A407E0096E7AE /* Foundation.framework */; };
 		5F3338AD172A407E0096E7AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AC172A407E0096E7AE /* CoreGraphics.framework */; };
@@ -45,7 +45,6 @@
 		085C8D39173366F2001A1ABB /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
 		085C8D3A173366F2001A1ABB /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
 		085C8D3B173366F2001A1ABB /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
-		085C8D3C173366F2001A1ABB /* fmdb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fmdb.m; sourceTree = "<group>"; };
 		085C8D3D173366F2001A1ABB /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
 		085C8D3E173366F2001A1ABB /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
 		085C8D4617336701001A1ABB /* LZDataAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZDataAccess.h; sourceTree = "<group>"; };
@@ -53,6 +52,7 @@
 		085C8D4A17336720001A1ABB /* LZRecommendFood.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFood.h; path = nutrition/Class/LZRecommendFood.h; sourceTree = "<group>"; };
 		085C8D4B17336720001A1ABB /* LZRecommendFood.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFood.m; path = nutrition/Class/LZRecommendFood.m; sourceTree = "<group>"; };
 		085C8D4D17336744001A1ABB /* CustomDB.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomDB.dat; path = nutrition/Resource/CustomDB.dat; sourceTree = "<group>"; };
+		085C8D4F173367AC001A1ABB /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		5F3338A5172A407E0096E7AE /* nutrition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nutrition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3338A8172A407E0096E7AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F3338AA172A407E0096E7AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -89,6 +89,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				085C8D50173367AC001A1ABB /* libsqlite3.dylib in Frameworks */,
 				5F3338A9172A407E0096E7AE /* UIKit.framework in Frameworks */,
 				5F3338AB172A407E0096E7AE /* Foundation.framework in Frameworks */,
 				5F3338AD172A407E0096E7AE /* CoreGraphics.framework in Frameworks */,
@@ -110,7 +111,6 @@
 				085C8D39173366F2001A1ABB /* FMDatabasePool.m */,
 				085C8D3A173366F2001A1ABB /* FMDatabaseQueue.h */,
 				085C8D3B173366F2001A1ABB /* FMDatabaseQueue.m */,
-				085C8D3C173366F2001A1ABB /* fmdb.m */,
 				085C8D3D173366F2001A1ABB /* FMResultSet.h */,
 				085C8D3E173366F2001A1ABB /* FMResultSet.m */,
 			);
@@ -140,6 +140,7 @@
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				085C8D4F173367AC001A1ABB /* libsqlite3.dylib */,
 				085C8D4917336707001A1ABB /* Util */,
 				085C8D4517336701001A1ABB /* dataAccess */,
 				085C8D33173366F2001A1ABB /* fmdbLib */,
@@ -298,7 +299,6 @@
 				085C8D40173366F2001A1ABB /* FMDatabaseAdditions.m in Sources */,
 				085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */,
 				085C8D42173366F2001A1ABB /* FMDatabaseQueue.m in Sources */,
-				085C8D43173366F2001A1ABB /* fmdb.m in Sources */,
 				085C8D44173366F2001A1ABB /* FMResultSet.m in Sources */,
 				085C8D4817336701001A1ABB /* LZDataAccess.m in Sources */,
 				085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */,
