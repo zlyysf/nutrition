@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LZDataAccess.h"
 @interface LZDailyIntakeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong , nonatomic)NSMutableArray *foodNameArray;
-@property (strong, nonatomic)NSMutableArray *foodIntakeAmountArray;
+@property (strong, nonatomic)NSMutableDictionary *foodIntakeDictionary;
+@property (strong, nonatomic)NSMutableArray *foodTypeArray;
 @end

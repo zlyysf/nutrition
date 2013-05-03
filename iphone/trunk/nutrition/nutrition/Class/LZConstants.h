@@ -15,5 +15,6 @@
 #define LZUserHeightKey @"LZUserHeightKey"//float cm
 #define LZUserWeightKey @"LZUserWeightKey"//float kg
 #define LZUserActivityLevelKey @"LZUserActivityLevelKey"//int 0 means Sedentary,1 means Low Active,2 means Active,3 means Very Active
+#define LZUserDailyIntakeKey @"LZUserDailyIntakeKey" //a dictionary for user daily intake
 
 #endif
