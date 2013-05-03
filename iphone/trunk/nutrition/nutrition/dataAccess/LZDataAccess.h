@@ -33,6 +33,7 @@
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN;
 
 -(NSArray *) getAllFood;
+-(NSArray *)getFoodByIds:(NSArray *)idAry;
 
 
 @end

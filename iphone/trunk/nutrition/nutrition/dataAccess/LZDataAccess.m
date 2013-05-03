@@ -176,6 +176,34 @@
 
 
 
+/*
+ idAry 的元素需要是字符串类型。
+ 返回值是dictionary，包含一个一维数组和一个二维数组。
+ */
+-(NSArray *)getFoodByIds:(NSArray *)idAry
+{
+    NSLog(@"getFoodByIds begin");
+    if (idAry==nil || idAry.count ==0)
+        return nil;
+    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:idAry.count];
+    for(int i=0; i<idAry.count; i++){
+        [placeholderAry addObject:@"?"];
+    }
+    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
+    [sqlStr appendString:@"SELECT * FROM FoodNutritionCustom WHERE NDB_No in ("];
+    [sqlStr appendString:placeholdersStr];
+    [sqlStr appendString:@")"];
+    
+    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:idAry];
+    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+    assert(dataAry.count > 0);
+    NSLog(@"getFoodByIds ret:\n%@",dataAry);
+    return dataAry;
+}
+
+
 
 
 

@@ -13,7 +13,10 @@
 
 -(NSMutableDictionary *) recommendFoodForEnoughNuitrition:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
 
+-(NSMutableDictionary *) recommendFoodForEnoughNuitritionWithPreIntake:(NSDictionary*)takenFoodAmountDict sex:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
+
 -(void) formatCsv_RecommendFoodForEnoughNuitrition: (NSString *)csvFileName withRecommendResult:(NSDictionary*)recmdDict;
+-(NSMutableString *) convert2DArrayToText:(NSArray*)ary2D;
 
 @end
 
