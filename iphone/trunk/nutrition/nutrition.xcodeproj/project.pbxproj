@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		085C8D3F173366F2001A1ABB /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D35173366F2001A1ABB /* FMDatabase.m */; };
+		085C8D40173366F2001A1ABB /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D37173366F2001A1ABB /* FMDatabaseAdditions.m */; };
+		085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D39173366F2001A1ABB /* FMDatabasePool.m */; };
+		085C8D42173366F2001A1ABB /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3B173366F2001A1ABB /* FMDatabaseQueue.m */; };
+		085C8D43173366F2001A1ABB /* fmdb.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3C173366F2001A1ABB /* fmdb.m */; };
+		085C8D44173366F2001A1ABB /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3E173366F2001A1ABB /* FMResultSet.m */; };
+		085C8D4817336701001A1ABB /* LZDataAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4717336701001A1ABB /* LZDataAccess.m */; };
+		085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4B17336720001A1ABB /* LZRecommendFood.m */; };
+		085C8D4E17336744001A1ABB /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D4D17336744001A1ABB /* CustomDB.dat */; };
 		5F3338A9172A407E0096E7AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338A8172A407E0096E7AE /* UIKit.framework */; };
 		5F3338AB172A407E0096E7AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AA172A407E0096E7AE /* Foundation.framework */; };
 		5F3338AD172A407E0096E7AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AC172A407E0096E7AE /* CoreGraphics.framework */; };
@@ -28,6 +37,22 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		085C8D34173366F2001A1ABB /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		085C8D35173366F2001A1ABB /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		085C8D36173366F2001A1ABB /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		085C8D37173366F2001A1ABB /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		085C8D38173366F2001A1ABB /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		085C8D39173366F2001A1ABB /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		085C8D3A173366F2001A1ABB /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		085C8D3B173366F2001A1ABB /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		085C8D3C173366F2001A1ABB /* fmdb.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = fmdb.m; sourceTree = "<group>"; };
+		085C8D3D173366F2001A1ABB /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		085C8D3E173366F2001A1ABB /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		085C8D4617336701001A1ABB /* LZDataAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZDataAccess.h; sourceTree = "<group>"; };
+		085C8D4717336701001A1ABB /* LZDataAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZDataAccess.m; sourceTree = "<group>"; };
+		085C8D4A17336720001A1ABB /* LZRecommendFood.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFood.h; path = nutrition/Class/LZRecommendFood.h; sourceTree = "<group>"; };
+		085C8D4B17336720001A1ABB /* LZRecommendFood.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFood.m; path = nutrition/Class/LZRecommendFood.m; sourceTree = "<group>"; };
+		085C8D4D17336744001A1ABB /* CustomDB.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomDB.dat; path = nutrition/Resource/CustomDB.dat; sourceTree = "<group>"; };
 		5F3338A5172A407E0096E7AE /* nutrition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nutrition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3338A8172A407E0096E7AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F3338AA172A407E0096E7AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -74,9 +99,50 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		085C8D33173366F2001A1ABB /* fmdbLib */ = {
+			isa = PBXGroup;
+			children = (
+				085C8D34173366F2001A1ABB /* FMDatabase.h */,
+				085C8D35173366F2001A1ABB /* FMDatabase.m */,
+				085C8D36173366F2001A1ABB /* FMDatabaseAdditions.h */,
+				085C8D37173366F2001A1ABB /* FMDatabaseAdditions.m */,
+				085C8D38173366F2001A1ABB /* FMDatabasePool.h */,
+				085C8D39173366F2001A1ABB /* FMDatabasePool.m */,
+				085C8D3A173366F2001A1ABB /* FMDatabaseQueue.h */,
+				085C8D3B173366F2001A1ABB /* FMDatabaseQueue.m */,
+				085C8D3C173366F2001A1ABB /* fmdb.m */,
+				085C8D3D173366F2001A1ABB /* FMResultSet.h */,
+				085C8D3E173366F2001A1ABB /* FMResultSet.m */,
+			);
+			name = fmdbLib;
+			path = nutrition/fmdbLib;
+			sourceTree = "<group>";
+		};
+		085C8D4517336701001A1ABB /* dataAccess */ = {
+			isa = PBXGroup;
+			children = (
+				085C8D4617336701001A1ABB /* LZDataAccess.h */,
+				085C8D4717336701001A1ABB /* LZDataAccess.m */,
+			);
+			name = dataAccess;
+			path = nutrition/dataAccess;
+			sourceTree = "<group>";
+		};
+		085C8D4917336707001A1ABB /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				085C8D4A17336720001A1ABB /* LZRecommendFood.h */,
+				085C8D4B17336720001A1ABB /* LZRecommendFood.m */,
+			);
+			name = Util;
+			sourceTree = "<group>";
+		};
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				085C8D4917336707001A1ABB /* Util */,
+				085C8D4517336701001A1ABB /* dataAccess */,
+				085C8D33173366F2001A1ABB /* fmdbLib */,
 				5F3338D4172A5BD60096E7AE /* Resource */,
 				5F3338AE172A407E0096E7AE /* nutrition */,
 				5F3338AF172A407E0096E7AE /* Supporting Files */,
@@ -145,6 +211,7 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				085C8D4D17336744001A1ABB /* CustomDB.dat */,
 				5F3338D5172A5BE50096E7AE /* Home_Background@2x.jpg */,
 			);
 			name = Resource;
@@ -208,6 +275,7 @@
 				5F3338BF172A407E0096E7AE /* Default-568h@2x.png in Resources */,
 				5F3338C2172A407E0096E7AE /* MainStoryboard.storyboard in Resources */,
 				5F3338D6172A5BE50096E7AE /* Home_Background@2x.jpg in Resources */,
+				085C8D4E17336744001A1ABB /* CustomDB.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -226,6 +294,14 @@
 				5F3338D3172A5A1D0096E7AE /* LZAnalysislViewController.m in Sources */,
 				5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */,
 				5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */,
+				085C8D3F173366F2001A1ABB /* FMDatabase.m in Sources */,
+				085C8D40173366F2001A1ABB /* FMDatabaseAdditions.m in Sources */,
+				085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */,
+				085C8D42173366F2001A1ABB /* FMDatabaseQueue.m in Sources */,
+				085C8D43173366F2001A1ABB /* fmdb.m in Sources */,
+				085C8D44173366F2001A1ABB /* FMResultSet.m in Sources */,
+				085C8D4817336701001A1ABB /* LZDataAccess.m in Sources */,
+				085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
