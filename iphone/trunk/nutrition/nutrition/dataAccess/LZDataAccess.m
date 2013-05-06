@@ -121,7 +121,7 @@
     [sqlStr appendString:@"SELECT * FROM "];
     [sqlStr appendString:tableName];
     [sqlStr appendString:@" WHERE Start <= ? "];
-    [sqlStr appendString:@" ORDER BY Start"];
+    [sqlStr appendString:@" ORDER BY Start desc"];
     
     NSArray * argAry = [NSArray arrayWithObjects:[NSNumber numberWithInt:age], nil];
     NSDictionary *rowDict = nil;
@@ -144,9 +144,11 @@
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
     [sqlStr appendString:@"SELECT * FROM FoodNutritionCustom"];
     [sqlStr appendString:@" ORDER BY "];
-    [sqlStr appendString:@"'"];
+    //[sqlStr appendString:@"'"];
+    [sqlStr appendString:@"["];
     [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"'"];
+    //[sqlStr appendString:@"' desc"];
+    [sqlStr appendString:@"] desc"];
     [sqlStr appendString:@" LIMIT "];
     [sqlStr appendString:[[NSNumber numberWithInt:topN] stringValue]];
     NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
@@ -169,7 +171,7 @@
     FMResultSet *rs = [dbfm executeQuery:query];
     NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
     assert(dataAry.count > 0);
-    NSLog(@"getAllFood ret:\n%@",dataAry);
+    //NSLog(@"getAllFood ret:\n%@",dataAry);
     return dataAry;
 }
 

@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZAnalysislViewController : UIViewController
+@interface LZAnalysislViewController : UIViewController{
+    NSString * csvFilePath;
+}
 
 @property (strong, nonatomic) IBOutlet UITextView *recommendTextView;
 @end

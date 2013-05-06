@@ -7,7 +7,12 @@
 //
 
 #import "LZAnalysislViewController.h"
+#import "LZConstants.h"
+#import "LZRecommendFood.h"
 #import <MessageUI/MessageUI.h>
+
+
+
 @interface LZAnalysislViewController ()<MFMailComposeViewControllerDelegate>
 
 @end
@@ -19,6 +24,8 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
+        
+
     }
     return self;
 }
@@ -48,9 +55,11 @@
     [mailPicker setToRecipients: toRecipients];
 
     
-//    NSData *attachmentData = [NSData dataWithContentsOfFile:]; insert file path (NSString*) to get nsdata
-//    [mailPicker addAttachmentData:attachmentData mimeType: @"text/csv" fileName: @"report.csv"];
-    
+    if (csvFilePath != nil){
+        NSData *attachmentData = [NSData dataWithContentsOfFile:csvFilePath];
+        [mailPicker addAttachmentData:attachmentData mimeType: @"text/csv" fileName: @"report.csv"];
+    }
+       
     //设置正文
     NSString *emailBody = self.recommendTextView.text;
     [mailPicker setMessageBody:emailBody isHTML:NO];
@@ -98,6 +107,27 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    float weight = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserWeightKey];
+    float height = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserHeightKey];
+    int age = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserAgeKey];
+    int sex = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserSexKey];
+    int activityLevel = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserActivityLevelKey];
+    
+    
+    
+    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    
+    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake sex:sex age:age weight:weight height:height activityLevel:activityLevel];
+    NSArray * ary2D = [rf generateData2D_RecommendFoodForEnoughNuitrition:retDict];
+    NSString * detailStr = [rf convert2DArrayToText:ary2D];
+    self.recommendTextView.text = detailStr;
+    
+    NSString * filePath = [rf convert2DArrayToCsv:@"recommend1.csv" withData:ary2D];
+    csvFilePath = filePath;
+
 }
 
 - (void)didReceiveMemoryWarning

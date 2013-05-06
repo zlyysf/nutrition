@@ -11,11 +11,12 @@
 
 @interface LZRecommendFood : NSObject
 
--(NSMutableDictionary *) recommendFoodForEnoughNuitrition:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
 
 -(NSMutableDictionary *) recommendFoodForEnoughNuitritionWithPreIntake:(NSDictionary*)takenFoodAmountDict sex:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
 
+-(NSArray*) generateData2D_RecommendFoodForEnoughNuitrition:(NSDictionary*)recmdDict;
 -(void) formatCsv_RecommendFoodForEnoughNuitrition: (NSString *)csvFileName withRecommendResult:(NSDictionary*)recmdDict;
+-(NSString *) convert2DArrayToCsv: (NSString *)csvFileName withData:(NSArray*)ary2D;
 -(NSMutableString *) convert2DArrayToText:(NSArray*)ary2D;
 
 @end

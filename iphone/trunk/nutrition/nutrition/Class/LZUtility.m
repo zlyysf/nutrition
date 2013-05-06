@@ -10,7 +10,7 @@
 #import "LZConstants.h"
 @implementation LZUtility
 /*
- weight kg, height cm
+ sex:0 for male.  weight kg, height cm
  */
 +(NSDictionary*)getStandardDRIForSex:(int )sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
 {
@@ -208,7 +208,7 @@
     }
     
     proteinStandard =(int)( weight*proteinFactor+0.5);
-    NSLog(@"energyStandard : %d \n Carbohydrt : %d \n Fat : %d \n Protein : %d",energyStandard,carbohydrtStandard,fatStandard,proteinStandard);
+    NSLog(@"getStandardDRIForSex ret: energyStandard : %d \n Carbohydrt : %d \n Fat : %d \n Protein : %d",energyStandard,carbohydrtStandard,fatStandard,proteinStandard);
     NSDictionary *standardResult = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:energyStandard],@"Energ_Kcal",[NSNumber numberWithInt:carbohydrtStandard],@"Carbohydrt_(g)",[NSNumber numberWithInt:fatStandard],@"Lipid_Tot_(g)",[NSNumber numberWithInt:proteinStandard],@"Protein_(g)",nil];
     return standardResult;
 }
@@ -224,6 +224,7 @@
     NSDictionary *part2 = [da getDRIbyGender:gender andAge:age];
     NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithDictionary:part1];
     [ret addEntriesFromDictionary:part2];
+    NSLog(@"getStandardDRIs ret:\n%@",ret);
     return ret;
 }
 
