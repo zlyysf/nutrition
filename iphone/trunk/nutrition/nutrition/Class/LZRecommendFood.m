@@ -382,7 +382,10 @@
     [rows addObject:rowSupplyToNeedRatio];
     
     row = [NSMutableArray arrayWithArray:rowForInit];
-    //row = [NSMutableArray arrayWithCapacity:(colIdx_NutrientStart+nutrientNames.count)];
+    row[0] = @"--------";
+    [rows addObject:row];
+    
+    row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"Standard";
     [rows addObject:row];
     
@@ -429,7 +432,14 @@
         [rows addObject:row];
     }//for i
     
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    row[0] = @"--------";
+    [rows addObject:row];
     [rows addObject:userInfos];
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    row[0] = @"--------";
+    [rows addObject:row];
+
 //    for(int i=0; i<foodSupplyNutrientLogs.count; i++){
 //    }
     [rows addObjectsFromArray:foodSupplyNutrientLogs];

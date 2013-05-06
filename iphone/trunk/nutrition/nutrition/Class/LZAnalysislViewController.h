@@ -10,7 +10,9 @@
 
 @interface LZAnalysislViewController : UIViewController{
     NSString * csvFilePath;
+    NSString * txtCalculateInfo;
 }
+@property (strong, nonatomic) IBOutlet UIWebView *recommendWebViewAsTable;
 
-@property (strong, nonatomic) IBOutlet UITextView *recommendTextView;
+//@property (strong, nonatomic) IBOutlet UITextView *recommendTextView;
 @end

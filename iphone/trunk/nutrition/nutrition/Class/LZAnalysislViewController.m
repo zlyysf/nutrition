@@ -61,7 +61,8 @@
     }
        
     //设置正文
-    NSString *emailBody = self.recommendTextView.text;
+    //NSString *emailBody = self.recommendTextView.text;
+    NSString *emailBody = txtCalculateInfo;
     [mailPicker setMessageBody:emailBody isHTML:NO];
     
     [self presentViewController:mailPicker animated:YES completion:nil];
@@ -123,10 +124,14 @@
     NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake sex:sex age:age weight:weight height:height activityLevel:activityLevel];
     NSArray * ary2D = [rf generateData2D_RecommendFoodForEnoughNuitrition:retDict];
     NSString * detailStr = [rf convert2DArrayToText:ary2D];
-    self.recommendTextView.text = detailStr;
+    txtCalculateInfo = detailStr;
+    //self.recommendTextView.text = detailStr;
     
     NSString * filePath = [rf convert2DArrayToCsv:@"recommend1.csv" withData:ary2D];
     csvFilePath = filePath;
+    NSURL *csvFileUrl = [NSURL fileURLWithPath:csvFilePath];
+    NSURLRequest *request = [NSURLRequest requestWithURL:csvFileUrl];
+    [self.recommendWebViewAsTable loadRequest:request];
 
 }
 
