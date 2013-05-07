@@ -247,6 +247,19 @@
     
     int colIdx_NutrientStart = 3;
     NSArray* nutrientNames = [DRIsDict allKeys];
+    NSArray* nutrientNamesOrdered = [NSArray arrayWithObjects:@"Energ_Kcal",@"Carbohydrt_(g)",@"Lipid_Tot_(g)",@"Protein_(g)",
+                   @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
+                   @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+                   @"Vit_B12_(µg)",@"Panto_Acid_mg)",
+                   @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
+                   @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",@"Sodium_(mg)",
+                   @"Water_(g)",@"Fiber_TD_(g)",@"Choline_Tot_ (mg)",@"Cholestrl_(mg)", nil];
+    assert(nutrientNames.count==nutrientNamesOrdered.count);
+    for(int i=0; i<nutrientNamesOrdered.count; i++){
+        assert([DRIsDict objectForKey:nutrientNamesOrdered[i]]!=nil);
+    }
+    nutrientNames = nutrientNamesOrdered;
+    
     
     int columnCount = colIdx_NutrientStart+nutrientNames.count;
     NSMutableArray *rowForInit = [NSMutableArray arrayWithCapacity:columnCount];
