@@ -45,7 +45,7 @@
                     PA = 1.0;
                     break;
             }
-            energyStandard = 88.5 - 61.5*age +PA*(26.7 *weight +903*heightM)+20;
+            energyStandard = 88.5 - 61.9*age +PA*(26.7 *weight +903*heightM)+20;
         }
         else if (age>=9 && age<19)
         {
@@ -67,7 +67,7 @@
                     break;
             }
             
-            energyStandard = 88.5 - 61.5*age +PA*(26.7 *weight +903*heightM)+25;
+            energyStandard = 88.5 - 61.9*age +PA*(26.7 *weight +903*heightM)+25;
         }
         else
         {

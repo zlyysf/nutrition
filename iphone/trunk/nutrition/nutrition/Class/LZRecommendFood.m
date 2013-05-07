@@ -39,12 +39,13 @@
     for (int i=0; i<nutrientNames1.count; i++) {//初始化supply集合
         [nutrientSupplyDict setObject:[NSNumber numberWithDouble:0.0] forKey:nutrientNames1[i]];
     }
-    
+    NSMutableDictionary *nutrientNameDictToCal = [NSMutableDictionary dictionaryWithDictionary:nutrientSupplyDict];
     for (int i=0; i<nutrientNames1.count; i++) {
         NSString *nutrientName = nutrientNames1[i];
         NSNumber *totalNeed = DRIsDict[nutrientName];
         if ([totalNeed doubleValue]==0.0){//需求量为0的就不用计算了
-            [nutrientSupplyDict removeObjectForKey:nutrientName];
+            //[nutrientSupplyDict removeObjectForKey:nutrientName];
+            [nutrientNameDictToCal removeObjectForKey:nutrientName];
         }
     }
     
@@ -97,7 +98,6 @@
     NSMutableArray* foodSupplyNutrientLogs = [NSMutableArray arrayWithCapacity:100];
 
     //对每个还需补足的营养素进行计算
-    NSMutableDictionary *nutrientNameDictToCal = [NSMutableDictionary dictionaryWithDictionary:nutrientSupplyDict];
     while (nutrientNameDictToCal.allKeys.count>0) {
         double maxNutrientLackRatio = nearZero;
         NSString *maxLackNutrientName = nil;
