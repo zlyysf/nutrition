@@ -21,7 +21,9 @@
     NSString *colName_NO = @"NDB_No";
     double nearZero = 0.0000001;
     //这里列出的营养素有专门而简单的食物补充，通过我们预置的那些食物反而不好补充
-    NSDictionary *nutrientsNotFromCustomFood =[ NSDictionary dictionaryWithObjectsAndKeys:@"1",@"Water_(g)", nil];
+    NSDictionary *nutrientsNotFromCustomFood =[ NSDictionary dictionaryWithObjectsAndKeys:@"1",@"Water_(g)",@"1",@"Sodium_(mg)", nil];
+    //这里的营养素最后再计算补充
+    NSMutableArray *lastSupplyCalNutrients = [NSMutableArray arrayWithObjects:@"Carbohydrt_(g)",@"Energ_Kcal", nil];
     LZDataAccess *da = [LZDataAccess singleton];
     
     NSArray *takenFoodIDs = nil;
@@ -47,6 +49,10 @@
             //[nutrientSupplyDict removeObjectForKey:nutrientName];
             [nutrientNameDictToCal removeObjectForKey:nutrientName];
         }
+    }
+    for(int i=0; i<lastSupplyCalNutrients.count; i++){//lastSupplyCalNutrients中的营养素在算完nutrientNameDictToCal所含的那些营养素之后再算
+        NSString *nutrientName = lastSupplyCalNutrients[i];
+        [nutrientNameDictToCal removeObjectForKey:nutrientName];
     }
     
     NSMutableDictionary *takenFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
@@ -98,37 +104,60 @@
     NSMutableArray* foodSupplyNutrientLogs = [NSMutableArray arrayWithCapacity:100];
 
     //对每个还需补足的营养素进行计算
-    while (nutrientNameDictToCal.allKeys.count>0) {
-        double maxNutrientLackRatio = nearZero;
-        NSString *maxLackNutrientName = nil;
-        NSArray * nutrientNamesToCal = [nutrientNameDictToCal allKeys];
-        for(int i=0; i<nutrientNamesToCal.count; i++){//先找出最需要补的营养素,即缺乏比例最大的
-            NSString *nutrientName = nutrientNamesToCal[i];
-            NSNumber *nmSupplied = nutrientSupplyDict[nutrientName];
-            NSNumber *nmTotalNeed = DRIsDict[nutrientName];
-            if ([nutrientsNotFromCustomFood objectForKey:nutrientName] != nil){
-                //这种营养素使用这里的食物不好补充，就不计算了。
-                [nutrientNameDictToCal removeObjectForKey:nutrientName];
-                continue;
+    //while (nutrientNameDictToCal.allKeys.count>0) {
+    while (TRUE) {
+        NSString *nutrientNameToCal = nil;
+        if (nutrientNameDictToCal.allKeys.count>0){
+            double maxNutrientLackRatio = nearZero;
+            NSString *maxLackNutrientName = nil;
+            NSArray * nutrientNamesToCal = [nutrientNameDictToCal allKeys];
+            for(int i=0; i<nutrientNamesToCal.count; i++){//先找出最需要补的营养素,即缺乏比例最大的
+                NSString *nutrientName = nutrientNamesToCal[i];
+                NSNumber *nmSupplied = nutrientSupplyDict[nutrientName];
+                NSNumber *nmTotalNeed = DRIsDict[nutrientName];
+                if ([nutrientsNotFromCustomFood objectForKey:nutrientName] != nil){
+                    //这种营养素使用这里的食物不好补充，就不计算了。
+                    [nutrientNameDictToCal removeObjectForKey:nutrientName];
+                    continue;
+                }
+                
+                double toAdd = [nmTotalNeed doubleValue]-[nmSupplied doubleValue];
+                if (toAdd <= nearZero){
+                    //可能由于在补一种或某些营养素时，选中的一些食物已经把其他的一些营养素的需要量给补够了。以及已经吃了的食物也把某些营养素摄取足了。这样的营养素就可以跳过不计算了.
+                    [nutrientNameDictToCal removeObjectForKey:nutrientName];
+                    continue;
+                }
+                double lackRatio = toAdd/[nmTotalNeed doubleValue];
+                if (lackRatio > maxNutrientLackRatio){
+                    maxLackNutrientName = nutrientName;
+                    maxNutrientLackRatio = lackRatio;
+                }
             }
-            
-            double toAdd = [nmTotalNeed doubleValue]-[nmSupplied doubleValue];
-            if (toAdd <= nearZero){
-                //可能由于在补一种或某些营养素时，选中的一些食物已经把其他的一些营养素的需要量给补够了。以及已经吃了的食物也把某些营养素摄取足了。这样的营养素就可以跳过不计算了.
-                [nutrientNameDictToCal removeObjectForKey:nutrientName];
-                continue;
-            }
-            double lackRatio = toAdd/[nmTotalNeed doubleValue];
-            if (lackRatio > maxNutrientLackRatio){
-                maxLackNutrientName = nutrientName;
-                maxNutrientLackRatio = lackRatio;
+            nutrientNameToCal = maxLackNutrientName;
+//            if (maxLackNutrientName == nil){//如果找不到最需要补的营养素，说明nutrientNameDictToCal中的营养素已经都补够了
+//                break;
+//            }
+        }
+        if (nutrientNameToCal == nil){
+            //如果从前面找不到最需要补的营养素，说明nutrientNameDictToCal中的营养素已经都补够了。现在该计算lastSupplyCalNutrients中的营养素了。
+            if (lastSupplyCalNutrients.count > 0){
+                nutrientNameToCal = lastSupplyCalNutrients[0];
+                [lastSupplyCalNutrients removeObjectAtIndex:0];
+                NSNumber *nmSupplied = nutrientSupplyDict[nutrientNameToCal];
+                NSNumber *nmTotalNeed = DRIsDict[nutrientNameToCal];
+                double toAdd = [nmTotalNeed doubleValue]-[nmSupplied doubleValue];
+                if (toAdd <= nearZero){
+                    //可能由于在计算过程中，已有的或已选的食物已经把这种营养素的需要量给补够了。这样的营养素就可以跳过不计算了.
+                    continue;
+                }
             }
         }
-        if (maxLackNutrientName == nil){//如果找不到最需要补的营养素，说明已经都补够了
+        
+        if (nutrientNameToCal == nil){//彻底没有需要计算的营养素了
             break;
         }
         //找到了一个营养素
-        NSString *nutrientNameToCal = maxLackNutrientName;
+        //nutrientNameToCal = maxLackNutrientName;
         NSNumber *nmSupplied = nutrientSupplyDict[nutrientNameToCal];
         NSNumber *nmTotalNeed = DRIsDict[nutrientNameToCal];
         double toAddForNutrient = [nmTotalNeed doubleValue]-[nmSupplied doubleValue];
@@ -149,7 +178,7 @@
                 canNotSupplyEnough = TRUE;
             }else{
                 double toAddForFood = toAddForNutrient / [nmNutrientContentOfFood doubleValue] * 100.0;//单位是g
-                if (toAddForFood - upperLimit > nearZero){//要补的食物的量过多，当食物所含该种营养素的量太少时发生。这时只取到上限值，再找其他食物来补充。应该要注意记录 TODO
+                if (toAddForFood - upperLimit > nearZero){//要补的食物的量过多，当食物所含该种营养素的量太少时发生。这时只取到上限值，再找其他食物来补充。
                     toAddForFood = upperLimit;
                 }
                 toAddForNutrient = toAddForNutrient - toAddForFood / 100.0 * [nmNutrientContentOfFood doubleValue];
@@ -171,8 +200,8 @@
                 [recommendFoodAttrDict setObject:food forKey:foodNO];
                 //NSMutableDictionary *foodSupplyNutrientLog = [NSMutableDictionary dictionaryWithCapacity:5];
                 NSMutableArray *foodSupplyNutrientLog = [NSMutableArray arrayWithCapacity:5];
-                [foodSupplyNutrientLog addObject:maxLackNutrientName];
-                [foodSupplyNutrientLog addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];
+                [foodSupplyNutrientLog addObject:nutrientNameToCal];
+                //[foodSupplyNutrientLog addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];
                 [foodSupplyNutrientLog addObject:foodNO];
                 [foodSupplyNutrientLog addObject:[NSNumber numberWithDouble:toAddForFood]];
                 [foodSupplyNutrientLog addObject:[food objectForKey:@"Shrt_Desc"]];
