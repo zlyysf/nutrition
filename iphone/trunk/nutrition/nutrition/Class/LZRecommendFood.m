@@ -23,7 +23,9 @@
     //这里列出的营养素有专门而简单的食物补充，通过我们预置的那些食物反而不好补充
     NSDictionary *nutrientsNotFromCustomFood =[ NSDictionary dictionaryWithObjectsAndKeys:@"1",@"Water_(g)",@"1",@"Sodium_(mg)", nil];
     //这里的营养素最后再计算补充
-    NSMutableArray *lastSupplyCalNutrients = [NSMutableArray arrayWithObjects:@"Carbohydrt_(g)",@"Energ_Kcal", nil];
+//    Choline_Tot_ (mg) 胆碱 最少需要187g的蛋来补充
+//    Vit_D_(µg) 只有鲤鱼等才有效补充
+    NSMutableArray *lastSupplyCalNutrients = [NSMutableArray arrayWithObjects:@"Vit_D_(µg)",@"Choline_Tot_ (mg)", @"Carbohydrt_(g)",@"Energ_Kcal", nil];
     LZDataAccess *da = [LZDataAccess singleton];
     
     NSArray *takenFoodIDs = nil;
@@ -31,7 +33,6 @@
         takenFoodIDs = [takenFoodAmountDict allKeys];
     NSArray *takenFoodAttrAry = [da getFoodByIds:takenFoodIDs];
 
-    
     NSDictionary *DRIsDict = [LZUtility getStandardDRIs:sex age:age weight:weight height:height activityLevel:activityLevel];
     NSMutableDictionary *recommendFoodAmountDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
     NSMutableDictionary *recommendFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
