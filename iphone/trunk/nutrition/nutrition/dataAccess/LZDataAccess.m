@@ -139,20 +139,46 @@
 
 
 
+//-(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN
+//{
+//    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+//    [sqlStr appendString:@"SELECT * FROM FoodNutritionCustom"];
+//    [sqlStr appendString:@" ORDER BY "];
+//    //[sqlStr appendString:@"'"];
+//    [sqlStr appendString:@"["];
+//    [sqlStr appendString:nutrientAsColumnName];
+//    //[sqlStr appendString:@"' desc"];
+//    [sqlStr appendString:@"] desc"];
+//    [sqlStr appendString:@" LIMIT "];
+//    [sqlStr appendString:[[NSNumber numberWithInt:topN] stringValue]];
+//    NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
+//
+//    FMResultSet *rs = [dbfm executeQuery:sqlStr];
+//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    assert(dataAry.count > 0);
+//    NSLog(@"getRichNutritionFood ret:\n%@",dataAry);
+//    return dataAry;
+//}
+
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN
 {
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    [sqlStr appendString:@"SELECT * FROM FoodNutritionCustom"];
-    [sqlStr appendString:@" ORDER BY "];
-    //[sqlStr appendString:@"'"];
-    [sqlStr appendString:@"["];
+    [sqlStr appendString:@"SELECT F.* FROM FoodNutritionCustom F join Food_Supply_DRI_Common D on F.NDB_No=D.NDB_No "];
+    [sqlStr appendString:@" WHERE "];
+    [sqlStr appendString:@"D.["];
     [sqlStr appendString:nutrientAsColumnName];
-    //[sqlStr appendString:@"' desc"];
-    [sqlStr appendString:@"] desc"];
+    [sqlStr appendString:@"]"];
+    [sqlStr appendString:@">0"];
+    
+    [sqlStr appendString:@" ORDER BY "];
+    [sqlStr appendString:@"D.["];
+    [sqlStr appendString:nutrientAsColumnName];
+    [sqlStr appendString:@"] ASC"];
+    
     [sqlStr appendString:@" LIMIT "];
     [sqlStr appendString:[[NSNumber numberWithInt:topN] stringValue]];
     NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
-
+    
     FMResultSet *rs = [dbfm executeQuery:sqlStr];
     NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
     assert(dataAry.count > 0);
