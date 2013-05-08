@@ -109,19 +109,23 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
+    assert([[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey]!=nil);
+        
     float weight = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserWeightKey];
     float height = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserHeightKey];
     int age = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserAgeKey];
     int sex = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserSexKey];
     int activityLevel = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserActivityLevelKey];
-    
-    
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithFloat:weight],@"weight", [NSNumber numberWithFloat:height],@"height",
+                              [NSNumber numberWithInt:age],@"age", [NSNumber numberWithInt:sex],@"sex",
+                              [NSNumber numberWithInt:activityLevel],@"activityLevel", nil];
     
     NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     
-    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake sex:sex age:age weight:weight height:height activityLevel:activityLevel];
+    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:nil];
     NSArray * ary2D = [rf generateData2D_RecommendFoodForEnoughNuitrition:retDict];
     NSString * detailStr = [rf convert2DArrayToText:ary2D];
     txtCalculateInfo = detailStr;

@@ -14,12 +14,39 @@
 
 
 
--(NSMutableDictionary *) recommendFoodForEnoughNuitritionWithPreIntake:(NSDictionary*)takenFoodAmountDict sex:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
+//-(NSMutableDictionary *) recommendFoodForEnoughNuitritionWithPreIntake:(NSDictionary*)takenFoodAmountDict sex:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
+-(NSMutableDictionary *) recommendFoodForEnoughNuitritionWithPreIntake:(NSDictionary*)takenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSDictionary*)options
 {
+    NSNumber *nmSex = [userInfo objectForKey:@"sex"];
+    NSNumber *nmAge = [userInfo objectForKey:@"age"];
+    NSNumber *nmWeight = [userInfo objectForKey:@"weight"];
+    NSNumber *nmHeight = [userInfo objectForKey:@"height"];
+    NSNumber *nmActivityLevel = [userInfo objectForKey:@"activityLevel"];
+    assert(nmSex != nil);
+    assert(nmAge != nil);
+    assert(nmWeight != nil);
+    assert(nmHeight != nil);
+    assert(nmActivityLevel != nil);
+    int sex = [nmSex intValue];
+    int age = [nmAge intValue];
+    float weight = [nmWeight floatValue];
+    float height = [nmHeight floatValue];
+    int activityLevel = [nmActivityLevel intValue];
+    
+    BOOL notAllowSameFood = TRUE;//这是一个策略标志位，到底是偏好食物的多样化，还是不是。不过，如果可供选取的正常量的食物只有一种，且这种食物在其他地方已经被计算使用时，就会有问题TODO。
+    if(options != nil){
+        NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
+        if (nmFlag_notAllowSameFood != nil)
+            notAllowSameFood = [nmFlag_notAllowSameFood boolValue];
+    }
+    
+    
     int upperLimit = 1000; // 1000 g
     int topN = 20;
     NSString *colName_NO = @"NDB_No";
     double nearZero = 0.0000001;
+    
+    
     //这里列出的营养素有专门而简单的食物补充，通过我们预置的那些食物反而不好补充
     NSDictionary *nutrientsNotFromCustomFood =[ NSDictionary dictionaryWithObjectsAndKeys:@"1",@"Water_(g)",@"1",@"Sodium_(mg)", nil];
     //这里的营养素最后再计算补充
@@ -36,7 +63,7 @@
     NSDictionary *DRIsDict = [LZUtility getStandardDRIs:sex age:age weight:weight height:height activityLevel:activityLevel];
     NSMutableDictionary *recommendFoodAmountDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
     NSMutableDictionary *recommendFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
-    
+    NSMutableDictionary *foodSupplyAmountDict = [NSMutableDictionary dictionaryWithDictionary:takenFoodAmountDict];//包括takenFoodAmountDict 和 recommendFoodAmountDict。与nutrientSupplyDict对应。
     NSMutableDictionary *nutrientSupplyDict = [NSMutableDictionary dictionaryWithDictionary:DRIsDict];
     NSArray *nutrientNames1 = [nutrientSupplyDict allKeys];
     for (int i=0; i<nutrientNames1.count; i++) {//初始化supply集合
@@ -168,9 +195,19 @@
         for(int i=0; i<foods.count; i++){
             NSDictionary *food = foods[i];
             NSString *foodNO = food[colName_NO];
-            if ([recommendFoodAmountDict objectForKey:foodNO] != nil || [takenFoodAttrDict objectForKey:foodNO] != nil){
-                //这种食物已经用到了，即已经在供给食物集合中出现。就不再使用它了。或者在已吃食物清单中出现，也不再使用。
-                continue;
+//            if ( [foodSupplyAmountDict objectForKey:foodNO]!=nil ){
+//            //if ([recommendFoodAmountDict objectForKey:foodNO] != nil || [takenFoodAttrDict objectForKey:foodNO] != nil){
+//                //这种食物已经用到了，即已经在供给食物集合中出现。就不再使用它了。或者在已吃食物清单中出现，也不再使用。
+//                continue;
+//            }
+            if ( [foodSupplyAmountDict objectForKey:foodNO]!=nil ){
+                if (notAllowSameFood){
+                    continue;
+                }
+                NSNumber *nmIntakeFoodAmount = [foodSupplyAmountDict objectForKey:foodNO];
+                if ([nmIntakeFoodAmount doubleValue] >= upperLimit){
+                    continue;
+                }
             }
             
             NSNumber* nmNutrientContentOfFood = [food objectForKey:nutrientNameToCal];
@@ -183,6 +220,7 @@
                     toAddForFood = upperLimit;
                 }
                 toAddForNutrient = toAddForNutrient - toAddForFood / 100.0 * [nmNutrientContentOfFood doubleValue];
+                
                 NSArray *foodAttrs = [food allKeys];//虽然food中主要有各营养成分的量，也有ID，desc等字段
                 //这个食物的各营养的量加到supply中
                 for (int j=0; j<foodAttrs.count; j++) {
@@ -197,9 +235,11 @@
                         }
                     }
                 }//for j
-                [recommendFoodAmountDict setObject:[NSNumber numberWithDouble:toAddForFood] forKey:foodNO];
+                //[recommendFoodAmountDict setObject:[NSNumber numberWithDouble:toAddForFood] forKey:foodNO];
+                [LZUtility addDoubleToDictionaryItem:toAddForFood withDictionary:recommendFoodAmountDict andKey:foodNO];
                 [recommendFoodAttrDict setObject:food forKey:foodNO];
-                //NSMutableDictionary *foodSupplyNutrientLog = [NSMutableDictionary dictionaryWithCapacity:5];
+                [LZUtility addDoubleToDictionaryItem:toAddForFood withDictionary:foodSupplyAmountDict andKey:foodNO];
+                
                 NSMutableArray *foodSupplyNutrientLog = [NSMutableArray arrayWithCapacity:5];
                 [foodSupplyNutrientLog addObject:nutrientNameToCal];
                 //[foodSupplyNutrientLog addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];

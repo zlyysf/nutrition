@@ -229,6 +229,24 @@
 }
 
 
++(NSNumber *)addDoubleToDictionaryItem:(double)valAdd withDictionary:(NSMutableDictionary*)data andKey:(NSString *)datakey
+{
+    assert(data!=nil);
+    assert(datakey!=nil);
+    id dataVal = [data objectForKey:datakey];
+    double sum = 0 ;
+    if (dataVal != nil){
+        NSNumber *nmDataVal = dataVal;
+        sum = [nmDataVal doubleValue]+valAdd;
+    }else{
+        sum = valAdd;
+    }
+    NSNumber *nmSum = [NSNumber numberWithDouble:sum];
+    [data setObject:nmSum forKey:datakey];
+    return nmSum;
+}
+
+
 @end
 
 
