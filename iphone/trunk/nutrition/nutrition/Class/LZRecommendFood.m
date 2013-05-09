@@ -83,6 +83,7 @@
         [nutrientNameDictToCal removeObjectForKey:nutrientName];
     }
     
+    NSMutableDictionary *dictNutrientLackWhenInitialTaken = [NSMutableDictionary dictionaryWithDictionary:DRIsDict];//主要是记录初始摄入食物后还缺哪些营养素
     NSMutableDictionary *takenFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
     if (takenFoodAttrAry != nil ){
         //已经吃了的各食物的各营养的量加到supply中
@@ -127,7 +128,24 @@
                 }
             }//for j
         }//for i
-    }
+        
+        //计算已经吃过给定食物还缺的各营养素的量，用于显示
+        NSArray *nutrientsDRI = [DRIsDict allKeys];
+        for(int i=0; i<nutrientsDRI.count; i++){
+            NSString *nutrientName = nutrientsDRI[i];
+            NSNumber *nmNutrientDRIvalue = [DRIsDict objectForKey:nutrientName];
+            double nutrientAlreadyTakenVal = 0.0;
+            NSNumber *nmInitialSupply = [nutrientSupplyDict objectForKey:nutrientName];
+            if (nmInitialSupply != nil){
+                nutrientAlreadyTakenVal = [nmInitialSupply doubleValue];
+            }
+            double nutrientLackVal = [nmNutrientDRIvalue doubleValue] - nutrientAlreadyTakenVal;
+            if (nutrientLackVal < 0)
+                nutrientLackVal = 0;
+            [dictNutrientLackWhenInitialTaken setObject:[NSNumber numberWithDouble:nutrientLackVal] forKey:nutrientName];
+        }
+        
+    }//if (takenFoodAttrAry != nil )
     
     NSMutableArray* foodSupplyNutrientLogs = [NSMutableArray arrayWithCapacity:100];
 
@@ -290,6 +308,8 @@
     [retDict setObject:recommendFoodAmountDict forKey:@"FoodAmount"];//food NO as key
     [retDict setObject:recommendFoodAttrDict forKey:@"FoodAttr"];//food NO as key
     
+    [retDict setObject:dictNutrientLackWhenInitialTaken forKey:@"NutrientLackWhenInitialTaken"];
+    
     NSArray *userInfos = [NSArray arrayWithObjects:@"sex(0 for M)",[NSNumber numberWithInt:sex],@"age",[NSNumber numberWithInt:age],
         @"weight(kg)",[NSNumber numberWithFloat:weight],@"height(cm)",[NSNumber numberWithFloat:height],@"activityLevel",[NSNumber numberWithInt:activityLevel],nil];
     [retDict setObject:userInfos forKey:@"UserInfo"];//2D array
@@ -327,6 +347,8 @@
     NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
     NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:@"FoodAmount"];//food NO as key
     NSDictionary *recommendFoodAttrDict = [recmdDict objectForKey:@"FoodAttr"];//food NO as key
+    
+    NSDictionary *dictNutrientLackWhenInitialTaken = [recmdDict objectForKey:@"NutrientLackWhenInitialTaken"];
     
     NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];//2D array
     NSArray *foodSupplyNutrientLogs = [recmdDict objectForKey:@"foodSupplyNutrientLogs"];//2D array
@@ -454,7 +476,6 @@
     
     //各种营养素DRI
     row = [NSMutableArray arrayWithArray:rowForInit];
-    //row = [NSMutableArray arrayWithCapacity:(colIdx_NutrientStart+nutrientNames.count)];
     row[0] = @"DRI";
     for(int i=0; i<nutrientNames.count; i++){
         NSString *nutrientName = nutrientNames[i];
@@ -484,6 +505,19 @@
     }
     [rows addObject:rowExceed];
     [rows addObject:rowSupplyToNeedRatio];
+    
+    //各种营养素相对DRI的lack
+    NSMutableArray *rowNutrientLack = [NSMutableArray arrayWithArray:rowForInit];
+    rowNutrientLack[0] = @"NutrientLack";
+    for(int i=0; i<nutrientNames.count; i++){
+        NSString *nutrientName = nutrientNames[i];
+        NSNumber *nmNutrient = [dictNutrientLackWhenInitialTaken objectForKey:nutrientName];
+        if (nmNutrient != nil && nmNutrient != [NSNull null])
+            rowNutrientLack[i+colIdx_NutrientStart] = nmNutrient;
+        else
+            rowNutrientLack[i+colIdx_NutrientStart] = [NSNumber numberWithDouble:0.0];
+    }
+    [rows addObject:rowNutrientLack];
     
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------";
@@ -654,6 +688,208 @@
     //NSLog(@"convert2DArrayToText ret:\n%@",rowsStr);
     return rowsStr;
 }
+
+
++(NSMutableString *) convert2DArrayToHtmlTable:(NSArray*)ary2D withColumnNames:(NSArray*)columnNames
+{
+    NSLog(@"convert2DArrayToHtmlTable enter");
+    
+    NSMutableString *strTable = nil;
+    if (ary2D == nil || ary2D.count == 0)
+        return strTable;
+    strTable = [NSMutableString stringWithCapacity:1000*ary2D.count];
+    [strTable appendString:@"\n<table style=\"border=1px;\">\n"];
+    
+    if (columnNames != nil && columnNames.count > 0){
+        NSMutableString *rowStr = [NSMutableString stringWithCapacity:1000];
+        [rowStr appendString:@"\t<tr>\n"];
+        for(int i=0; i<columnNames.count; i++){
+            NSString *columnName = columnNames[i];
+            [rowStr appendString:@"\t\t<th>"];
+            [rowStr appendString:columnName];
+            [rowStr appendString:@"</th>\n"];
+        }
+        [rowStr appendString:@"</tr>\n"];
+        [strTable appendString:rowStr];
+    }
+
+    for(int i=0; i<ary2D.count; i++){
+        NSArray *ary1D = ary2D[i];
+        NSMutableString *rowStr = [NSMutableString stringWithCapacity:1000];
+        [rowStr appendString:@"\t<tr>\n"];
+        for(int j=0 ; j<ary1D.count; j++){
+            NSObject *cell = ary1D[j];
+            NSMutableString *cellStr = [NSMutableString stringWithCapacity:100];
+            [cellStr appendString:@"\t\t<td>"];
+            
+            NSString *s1 = nil;
+            if (cell == nil || cell == [NSNull null]){
+                s1 = nil;
+            }else if ([cell isKindOfClass:[NSString class]]){
+                s1 = (NSString*)cell;
+            }else if ([cell isKindOfClass:[NSNumber class]]){
+                NSNumber *nm = (NSNumber *)cell;
+                s1 = [nm stringValue];
+            }else{
+                s1 = [cell description];
+            }
+            if (s1 != nil){
+                [cellStr appendString:s1];
+            }
+            
+            [cellStr appendString:@"</td>\n"];
+            [rowStr appendString:cellStr];
+        }//for j
+        [rowStr appendString:@"</tr>\n"];
+        [strTable appendString:rowStr];
+    }//for i
+    
+    [strTable appendString:@"</table>\n"];
+    return strTable;
+}
+
+
++(NSMutableArray*)generateEmptyArray:(int)count{
+    NSMutableArray *ary = [NSMutableArray arrayWithCapacity:count];
+    for(int i=0; i<count; i++){
+        [ary addObject:[NSNull null]];
+    }
+    return ary;
+}
+
+
+-(NSMutableString*) generateHtml_RecommendFoodForEnoughNuitrition:(NSDictionary*)recmdDict
+{
+    NSLog(@"generateHtml_RecommendFoodForEnoughNuitrition enter");
+    
+    NSDictionary *DRIsDict = [recmdDict objectForKey:@"DRI"];//nutrient name as key, also column name
+    NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
+    NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:@"FoodAmount"];//food NO as key
+    NSDictionary *recommendFoodAttrDict = [recmdDict objectForKey:@"FoodAttr"];//food NO as key
+    
+    NSDictionary *dictNutrientLackWhenInitialTaken = [recmdDict objectForKey:@"NutrientLackWhenInitialTaken"];
+    
+    NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];//2D array
+    NSArray *foodSupplyNutrientLogs = [recmdDict objectForKey:@"foodSupplyNutrientLogs"];//2D array
+    
+    
+    NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:@"TakenFoodAmount"];//food NO as key
+    NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:@"TakenFoodAttr"];//food NO as key
+    
+    double nearZero = 0.0000001;
+    
+    NSMutableString *strHtml = [NSMutableString stringWithCapacity:1000*1000];
+    [strHtml appendString:@"<style>\n"];
+    [strHtml appendString:@"td {border:1px solid;}\n"];
+    [strHtml appendString:@"</style>\n"];
+    [strHtml appendString:@"<body>\n"];
+    
+    int colIdx_NutrientStart = 3;
+    NSArray* nutrientNames = [DRIsDict allKeys];
+    NSArray* nutrientNamesOrdered = [NSArray arrayWithObjects:@"Energ_Kcal",@"Carbohydrt_(g)",@"Lipid_Tot_(g)",@"Protein_(g)",
+                                     @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
+                                     @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+                                     @"Vit_B12_(µg)",@"Panto_Acid_mg)",
+                                     @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
+                                     @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",@"Sodium_(mg)",
+                                     @"Water_(g)",@"Fiber_TD_(g)",@"Choline_Tot_ (mg)",@"Cholestrl_(mg)", nil];
+    assert(nutrientNames.count==nutrientNamesOrdered.count);
+    for(int i=0; i<nutrientNamesOrdered.count; i++){
+        assert([DRIsDict objectForKey:nutrientNamesOrdered[i]]!=nil);
+    }
+    nutrientNames = nutrientNamesOrdered;
+    
+    [strHtml appendString:@"<p>已经吃了的食物列表：</p>\n"];
+    if (takenFoodAmountDict != nil && takenFoodAmountDict.count>0){
+        NSArray* foodIDs = takenFoodAmountDict.allKeys;
+        NSMutableArray* rows = [NSMutableArray arrayWithCapacity:takenFoodAmountDict.count];
+        int colLen = 3;
+        for(int i=0; i<foodIDs.count; i++){
+            NSString *foodID = foodIDs[i];
+            NSNumber *nmFoodAmount = [takenFoodAmountDict objectForKey:foodID];
+            NSDictionary *foodAttrs = [takenFoodAttrDict objectForKey:foodID];
+            NSMutableArray* row = [[self class] generateEmptyArray:colLen];
+            row[0] = foodID;
+            row[1] = foodAttrs[@"CnCaption"];
+            row[2] = nmFoodAmount;
+            [rows addObject:row];
+        }//for i
+        NSString *strTbl = [[self class] convert2DArrayToHtmlTable:rows withColumnNames:nil];
+        [strHtml appendString:strTbl];
+    }else{
+        [strHtml appendString:@"<p>无。</p>\n"];
+    }//if (takenFoodAmountDict != nil)
+    
+    
+    [strHtml appendString:@"<p>缺乏的营养素列表：</p>\n"];
+    if (dictNutrientLackWhenInitialTaken == nil || dictNutrientLackWhenInitialTaken.count == 0){
+        [strHtml appendString:@"<p>无。</p>\n"];
+    }else{
+        NSArray* nutrientNames = dictNutrientLackWhenInitialTaken.allKeys;
+        NSMutableArray* rows = [NSMutableArray arrayWithCapacity:dictNutrientLackWhenInitialTaken.count];
+        int colLen = 3;
+        for(int i=0; i<nutrientNames.count; i++){
+            NSString *nutrientName = nutrientNames[i];
+            NSNumber *nmNutrientLackVal = [dictNutrientLackWhenInitialTaken objectForKey:nutrientName];
+            NSNumber *nmNutrientDRI = [DRIsDict objectForKey:nutrientName];
+            
+            if ([nmNutrientLackVal doubleValue]>nearZero){
+                double lackRatio = [nmNutrientLackVal doubleValue] / [nmNutrientDRI doubleValue];
+                NSMutableArray* row = [[self class] generateEmptyArray:colLen];
+                row[0] = nutrientName;
+                row[1] = nmNutrientLackVal;
+                row[2] = [NSNumber numberWithDouble:lackRatio];
+                [rows addObject:row];
+            }
+        }//for i
+        if (rows.count > 0){
+            NSString *strTbl = [[self class] convert2DArrayToHtmlTable:rows withColumnNames:[NSArray arrayWithObjects:@"营养素", @"缺乏量", @"缺乏比例", nil]];
+            [strHtml appendString:strTbl];
+        }else{
+            [strHtml appendString:@"<p>无。</p>\n"];
+        }
+    }
+
+    [strHtml appendString:@"<p>推荐的食物列表：</p>\n"];
+    if (recommendFoodAmountDict != nil&& recommendFoodAmountDict.count>0){
+        NSArray* foodIDs = recommendFoodAmountDict.allKeys;
+        NSMutableArray* rows = [NSMutableArray arrayWithCapacity:recommendFoodAmountDict.count];
+        int colLen = 3;
+        for(int i=0; i<foodIDs.count; i++){
+            NSString *foodID = foodIDs[i];
+            NSNumber *nmFoodAmount = [recommendFoodAmountDict objectForKey:foodID];
+            NSDictionary *foodAttrs = [recommendFoodAttrDict objectForKey:foodID];
+            NSMutableArray* row = [[self class] generateEmptyArray:colLen];
+            row[0] = foodID;
+            row[1] = foodAttrs[@"CnCaption"];
+            row[2] = nmFoodAmount;
+            [rows addObject:row];
+        }//for i
+        NSString *strTbl = [[self class] convert2DArrayToHtmlTable:rows withColumnNames:nil];
+        [strHtml appendString:strTbl];
+    }else{
+        [strHtml appendString:@"<p>无。</p>\n"];
+    }//if (takenFoodAmountDict != nil)
+    
+    [strHtml appendString:@"<br/><hr/><br/>\n"];
+    NSArray *detailData = [self generateData2D_RecommendFoodForEnoughNuitrition:recmdDict];
+    NSString *detailHtml = [self.class convert2DArrayToHtmlTable:detailData withColumnNames:nil];
+    [strHtml appendString:detailHtml];
+        
+    [strHtml appendString:@"</body>\n"];
+    return strHtml;
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -61,9 +61,13 @@
     }
        
     //设置正文
-    //NSString *emailBody = self.recommendTextView.text;
-    NSString *emailBody = txtCalculateInfo;
-    [mailPicker setMessageBody:emailBody isHTML:NO];
+//    //NSString *emailBody = self.recommendTextView.text;
+//    NSString *emailBody = txtCalculateInfo;
+//    [mailPicker setMessageBody:emailBody isHTML:NO];
+    NSString *emailBody = htmlCalculateInfo;
+    [mailPicker setMessageBody:emailBody isHTML:YES];
+    
+    
     
     [self presentViewController:mailPicker animated:YES completion:nil];
 }
@@ -133,10 +137,16 @@
     
     NSString * filePath = [rf convert2DArrayToCsv:@"recommend1.csv" withData:ary2D];
     csvFilePath = filePath;
-    NSURL *csvFileUrl = [NSURL fileURLWithPath:csvFilePath];
-    NSURLRequest *request = [NSURLRequest requestWithURL:csvFileUrl];
-    [self.recommendWebViewAsTable loadRequest:request];
+//    NSURL *csvFileUrl = [NSURL fileURLWithPath:csvFilePath];
+//    NSURLRequest *request = [NSURLRequest requestWithURL:csvFileUrl];
+//    [self.recommendWebViewAsTable loadRequest:request];
 
+    NSString *strHtml = [rf generateHtml_RecommendFoodForEnoughNuitrition:retDict];
+    htmlCalculateInfo = strHtml;
+    NSString * sBaseURL = @"localhost";
+    NSURL *baseURL = [NSURL URLWithString:sBaseURL];
+    [self.recommendWebViewAsTable loadHTMLString:strHtml baseURL:baseURL];
+    
 }
 
 - (void)didReceiveMemoryWarning

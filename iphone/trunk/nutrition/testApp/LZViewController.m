@@ -55,30 +55,31 @@
 //    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
 
     //case 2-3
+//    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                         [NSNumber numberWithDouble:50.0],@"01123",//egg
+//                                         [NSNumber numberWithDouble:100.0],@"10219",//pork
+//                                         nil];
+//    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+//                              [NSNumber numberWithInt:0],@"sex", [NSNumber numberWithInt:30],@"age",
+//                              [NSNumber numberWithFloat:75],@"weight", [NSNumber numberWithFloat:172],@"height",
+//                              [NSNumber numberWithInt:0],@"activityLevel", nil];
+//    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:FALSE],@"notAllowSameFood", nil];
+//    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
+    
+
+    //case 3
     NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                          [NSNumber numberWithDouble:50.0],@"01123",//egg
                                          [NSNumber numberWithDouble:100.0],@"10219",//pork
+                                         [NSNumber numberWithDouble:100.0],@"20450",//rice
                                          nil];
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithInt:0],@"sex", [NSNumber numberWithInt:30],@"age",
                               [NSNumber numberWithFloat:75],@"weight", [NSNumber numberWithFloat:172],@"height",
                               [NSNumber numberWithInt:0],@"activityLevel", nil];
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:FALSE],@"notAllowSameFood", nil];
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:TRUE],@"notAllowSameFood", nil];
     NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
-    
 
-    //case 3
-//    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:100.0],@"20450",//rice
-//                                         [NSNumber numberWithDouble:50.0],@"01123",//egg
-//                                         [NSNumber numberWithDouble:100.0],@"10219",//pork
-//                                         nil];
-//    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:takenFoodAmountDict sex:0 age:30 weight:80 height:172 activityLevel:1];
-    
-//    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithDouble:100.0],@"20450",
-//                                         [NSNumber numberWithDouble:50.0],@"01123",
-//                                         [NSNumber numberWithDouble:100.0],@"10219",
-//                                         nil];
-//    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:takenFoodAmountDict sex:0 age:25 weight:55 height:172 activityLevel:1];
     
     
     //test about reuse

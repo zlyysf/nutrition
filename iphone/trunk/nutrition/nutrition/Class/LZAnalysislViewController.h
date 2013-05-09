@@ -11,6 +11,7 @@
 @interface LZAnalysislViewController : UIViewController{
     NSString * csvFilePath;
     NSString * txtCalculateInfo;
+    NSString * htmlCalculateInfo;
 }
 @property (strong, nonatomic) IBOutlet UIWebView *recommendWebViewAsTable;
 

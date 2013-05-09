@@ -20,6 +20,8 @@
 -(NSString *) convert2DArrayToCsv: (NSString *)csvFileName withData:(NSArray*)ary2D;
 -(NSMutableString *) convert2DArrayToText:(NSArray*)ary2D;
 
+-(NSMutableString*) generateHtml_RecommendFoodForEnoughNuitrition:(NSDictionary*)recmdDict;
+
 @end
 
 

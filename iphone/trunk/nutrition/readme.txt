@@ -5,7 +5,7 @@
 
 有关Food_Supply_DRI_Common这个表。这个表记录的是食物的营养成分的丰富程度。
   其表结构与FoodNutritionCustom相同。
-  其数据来源是根据某份DRI的值算每个食物对于每个营养的供给量，然后按100g对供给量分level，超过1000g的不算，认为含量太少，而作为0值level。
+  其数据来源是根据某份DRI的值算每个食物对于每个营养的供给量，然后按100g对供给量分level，超过1000g的不算，认为含量太少，而作为0值level。其有效的数据列基本对应DRI中的数据列，除了少数特殊的营养素，如水、钠等。
   当level值为正数时，数越小代表某食物对于某营养的含量越丰富。
 
 CREATE TABLE Food_Supply_DRI_Common ('NDB_No' TEXT PRIMARY KEY,'Shrt_Desc' REAL,
