@@ -33,13 +33,25 @@
     float height = [nmHeight floatValue];
     int activityLevel = [nmActivityLevel intValue];
     
-    BOOL notAllowSameFood = TRUE;//这是一个策略标志位，到底是偏好食物的多样化，还是不是。不过，如果可供选取的正常量的食物只有一种，且这种食物在其他地方已经被计算使用时，就会有问题TODO。
+    BOOL notAllowSameFood = TRUE;//这是一个策略标志位，偏好食物的多样化的标志位，即当选取食物补充营养时，优先选取以前没有用过的食物。
+    BOOL randomSelectFood = TRUE;
+    int randomRangeSelectFood = 0;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
     if(options != nil){
         NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
         if (nmFlag_notAllowSameFood != nil)
             notAllowSameFood = [nmFlag_notAllowSameFood boolValue];
+        
+        NSNumber *nmFlag_randomSelectFood = [options objectForKey:@"randomSelectFood"];
+        if (nmFlag_randomSelectFood != nil)
+            randomSelectFood = [nmFlag_randomSelectFood boolValue];
+        
+        NSNumber *nm_randomRangeSelectFood = [options objectForKey:@"randomRangeSelectFood"];
+        if (nm_randomRangeSelectFood != nil)
+            randomRangeSelectFood = [nm_randomRangeSelectFood intValue];
     }
-    
+    uint randSeed = arc4random();
+    NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%d",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
+    srandom(randSeed);
     
     int upperLimit = 1000; // 1000 g
     int topN = 20;
@@ -95,21 +107,6 @@
                 nmTakenFoodAmount = [takenFoodAmountDict objectForKey:foodId];
             assert(foodId!=nil);
             [takenFoodAttrDict setObject:takenFoodAttrs forKey:foodId];
-
-//            //这个食物的各营养的量加到supply中
-//            NSArray *foodAttrs = [takenFoodAttrs allKeys];//虽然food的属性中主要有各营养成分的量，也有ID，desc等字段
-//            for (int j=0; j<foodAttrs.count; j++) {
-//                NSString *foodAttrName = foodAttrs[j];
-//                NSObject *foodAttrValue = [takenFoodAttrs objectForKey:foodAttrName];
-//                NSNumber *nmSupplyNutrient = [nutrientSupplyDict objectForKey:foodAttrName];
-//                if (nmSupplyNutrient != nil){//说明这个字段对应营养成分
-//                    NSNumber *nmNutrientContentOfFood = (NSNumber *)foodAttrValue;
-//                    if ([nmNutrientContentOfFood doubleValue] != 0.0){
-//                        double supplyNutrient2 = [nmSupplyNutrient doubleValue]+ [nmNutrientContentOfFood doubleValue]*([nmTakenFoodAmount doubleValue]/100.0);
-//                        [nutrientSupplyDict setObject:[NSNumber numberWithDouble:supplyNutrient2] forKey:foodAttrName];
-//                    }
-//                }
-//            }//for j
             
             //这个食物的各营养的量加到supply中
             NSArray *nutrientsToSupply = [nutrientSupplyDict allKeys];
@@ -229,8 +226,21 @@
             //NSDictionary *food = foodsToSupplyOneNutrient[i];
             NSDictionary *food = nil;
             if (normalFoodsToSupplyOneNutrient.count > 0){
-                food = normalFoodsToSupplyOneNutrient[0];
-                [normalFoodsToSupplyOneNutrient removeObjectAtIndex:0];
+                if (!randomSelectFood){
+                    food = normalFoodsToSupplyOneNutrient[0];
+                    [normalFoodsToSupplyOneNutrient removeObjectAtIndex:0];
+                }else{
+                    int idx = 0;
+                    if (randomRangeSelectFood > 0){
+                        idx = random() % randomRangeSelectFood;
+                        idx = idx % normalFoodsToSupplyOneNutrient.count;//avoid index overflow
+                    }else{
+                        idx = random() % normalFoodsToSupplyOneNutrient.count;
+                    }
+                    
+                    food = normalFoodsToSupplyOneNutrient[idx];
+                    [normalFoodsToSupplyOneNutrient removeObjectAtIndex:idx];
+                }
             }
             if (food == nil){
                 if (alreadyUsedFoodsWhenOtherNutrients.count>0){
@@ -312,8 +322,15 @@
     
     NSArray *userInfos = [NSArray arrayWithObjects:@"sex(0 for M)",[NSNumber numberWithInt:sex],@"age",[NSNumber numberWithInt:age],
         @"weight(kg)",[NSNumber numberWithFloat:weight],@"height(cm)",[NSNumber numberWithFloat:height],@"activityLevel",[NSNumber numberWithInt:activityLevel],nil];
-    [retDict setObject:userInfos forKey:@"UserInfo"];//2D array
+    [retDict setObject:userInfos forKey:@"UserInfo"];
     [retDict setObject:foodSupplyNutrientLogs forKey:@"foodSupplyNutrientLogs"];//2D array
+    
+    NSArray *otherInfos = [NSArray arrayWithObjects:@"randSeed",[NSNumber numberWithUnsignedInt:randSeed],
+                           @"randomRangeSelectFood",[NSNumber numberWithInt:randomRangeSelectFood],
+                           @"randomSelectFood",[NSNumber numberWithBool:randomSelectFood],
+                           @"notAllowSameFood",[NSNumber numberWithBool:notAllowSameFood],
+                           nil];
+    [retDict setObject:otherInfos forKey:@"OtherInfo"];
     
     if (takenFoodAmountDict != nil && takenFoodAmountDict.count>0){
         [retDict setObject:takenFoodAmountDict forKey:@"TakenFoodAmount"];//food NO as key
@@ -350,7 +367,8 @@
     
     NSDictionary *dictNutrientLackWhenInitialTaken = [recmdDict objectForKey:@"NutrientLackWhenInitialTaken"];
     
-    NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];//2D array
+    NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];
+    NSArray *otherInfos = [recmdDict objectForKey:@"OtherInfo"];
     NSArray *foodSupplyNutrientLogs = [recmdDict objectForKey:@"foodSupplyNutrientLogs"];//2D array
 
     
@@ -574,6 +592,7 @@
     row[0] = @"--------";
     [rows addObject:row];
     [rows addObject:userInfos];
+    [rows addObject:otherInfos];
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------";
     [rows addObject:row];

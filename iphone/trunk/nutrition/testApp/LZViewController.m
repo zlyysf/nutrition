@@ -68,6 +68,18 @@
     
 
     //case 3
+//    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                         [NSNumber numberWithDouble:50.0],@"01123",//egg
+//                                         [NSNumber numberWithDouble:100.0],@"10219",//pork
+//                                         [NSNumber numberWithDouble:100.0],@"20450",//rice
+//                                         nil];
+//    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+//                              [NSNumber numberWithInt:0],@"sex", [NSNumber numberWithInt:30],@"age",
+//                              [NSNumber numberWithFloat:75],@"weight", [NSNumber numberWithFloat:172],@"height",
+//                              [NSNumber numberWithInt:0],@"activityLevel", nil];
+//    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:TRUE],@"notAllowSameFood", nil];
+//    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
+    //case 3-2
     NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                          [NSNumber numberWithDouble:50.0],@"01123",//egg
                                          [NSNumber numberWithDouble:100.0],@"10219",//pork
@@ -77,9 +89,8 @@
                               [NSNumber numberWithInt:0],@"sex", [NSNumber numberWithInt:30],@"age",
                               [NSNumber numberWithFloat:75],@"weight", [NSNumber numberWithFloat:172],@"height",
                               [NSNumber numberWithInt:0],@"activityLevel", nil];
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:TRUE],@"notAllowSameFood", nil];
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:TRUE],@"notAllowSameFood", [NSNumber numberWithInt:2],@"randomRangeSelectFood", nil];
     NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
-
     
     
     //test about reuse

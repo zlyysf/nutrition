@@ -128,8 +128,8 @@
     NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    
-    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:nil];
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:TRUE],@"notAllowSameFood", [NSNumber numberWithInt:2],@"randomRangeSelectFood", nil];
+    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
     NSArray * ary2D = [rf generateData2D_RecommendFoodForEnoughNuitrition:retDict];
     NSString * detailStr = [rf convert2DArrayToText:ary2D];
     txtCalculateInfo = detailStr;
