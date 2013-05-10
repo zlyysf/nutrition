@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZAnalysislViewController : UIViewController{
+@interface LZAnalysislViewController : UIViewController<UIAlertViewDelegate>{
     NSString * csvFilePath;
     NSString * txtCalculateInfo;
     NSString * htmlCalculateInfo;

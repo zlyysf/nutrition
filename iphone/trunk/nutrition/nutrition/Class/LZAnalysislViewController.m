@@ -108,12 +108,22 @@
                                           otherButtonTitles:nil];
     [alert show];
 }
+
+//UIAlertViewDelegate Protocol Reference
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    [self.navigationController popViewControllerAnimated:NO];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    assert([[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey]!=nil);
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey]==nil){
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"缺少用户信息", @"") message:@"请先填写用户信息" delegate:self cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
         
     float weight = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserWeightKey];
     float height = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserHeightKey];
