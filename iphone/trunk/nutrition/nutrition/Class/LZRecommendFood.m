@@ -299,6 +299,8 @@
             [foodSupplyNutrientLog addObject:[food objectForKey:@"Shrt_Desc"]];
             [foodSupplyNutrientLogs addObject:foodSupplyNutrientLog];
             
+            
+            
             if (toAddForNutrient > nearZero){
                 //继续下一个循环取食物来补足
             }else{
@@ -748,7 +750,8 @@
                 s1 = (NSString*)cell;
             }else if ([cell isKindOfClass:[NSNumber class]]){
                 NSNumber *nm = (NSNumber *)cell;
-                s1 = [nm stringValue];
+                //s1 = [nm stringValue];
+                s1 = [NSString stringWithFormat:@"%.2f",[nm doubleValue] ] ;
             }else{
                 s1 = [cell description];
             }
@@ -795,6 +798,16 @@
     NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:@"TakenFoodAmount"];//food NO as key
     NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:@"TakenFoodAttr"];//food NO as key
     
+    
+    NSMutableDictionary *foodSupplyFirstChooseNutrientLogDict = [NSMutableDictionary dictionary];
+    for (int i=0; i<foodSupplyNutrientLogs.count; i++) {
+        NSArray *foodSupplyNutrientLog= foodSupplyNutrientLogs[i];
+        NSString *nutrientName = foodSupplyNutrientLog[0];
+        NSString *foodID = foodSupplyNutrientLog[1];
+        [foodSupplyFirstChooseNutrientLogDict setObject:nutrientName forKey:foodID];
+    }
+    
+    
     double nearZero = 0.0000001;
     
     NSMutableString *strHtml = [NSMutableString stringWithCapacity:1000*1000];
@@ -803,20 +816,20 @@
     [strHtml appendString:@"</style>\n"];
     [strHtml appendString:@"<body>\n"];
     
-    int colIdx_NutrientStart = 3;
-    NSArray* nutrientNames = [DRIsDict allKeys];
-    NSArray* nutrientNamesOrdered = [NSArray arrayWithObjects:@"Energ_Kcal",@"Carbohydrt_(g)",@"Lipid_Tot_(g)",@"Protein_(g)",
-                                     @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
-                                     @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-                                     @"Vit_B12_(µg)",@"Panto_Acid_mg)",
-                                     @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
-                                     @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",@"Sodium_(mg)",
-                                     @"Water_(g)",@"Fiber_TD_(g)",@"Choline_Tot_ (mg)",@"Cholestrl_(mg)", nil];
-    assert(nutrientNames.count==nutrientNamesOrdered.count);
-    for(int i=0; i<nutrientNamesOrdered.count; i++){
-        assert([DRIsDict objectForKey:nutrientNamesOrdered[i]]!=nil);
-    }
-    nutrientNames = nutrientNamesOrdered;
+
+//    NSArray* nutrientNames = [DRIsDict allKeys];
+//    NSArray* nutrientNamesOrdered = [NSArray arrayWithObjects:@"Energ_Kcal",@"Carbohydrt_(g)",@"Lipid_Tot_(g)",@"Protein_(g)",
+//                                     @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
+//                                     @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+//                                     @"Vit_B12_(µg)",@"Panto_Acid_mg)",
+//                                     @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
+//                                     @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",@"Sodium_(mg)",
+//                                     @"Water_(g)",@"Fiber_TD_(g)",@"Choline_Tot_ (mg)",@"Cholestrl_(mg)", nil];
+//    assert(nutrientNames.count==nutrientNamesOrdered.count);
+//    for(int i=0; i<nutrientNamesOrdered.count; i++){
+//        assert([DRIsDict objectForKey:nutrientNamesOrdered[i]]!=nil);
+//    }
+//    nutrientNames = nutrientNamesOrdered;
     
     [strHtml appendString:@"<p>已经吃了的食物列表：</p>\n"];
     if (takenFoodAmountDict != nil && takenFoodAmountDict.count>0){
@@ -873,18 +886,20 @@
     if (recommendFoodAmountDict != nil&& recommendFoodAmountDict.count>0){
         NSArray* foodIDs = recommendFoodAmountDict.allKeys;
         NSMutableArray* rows = [NSMutableArray arrayWithCapacity:recommendFoodAmountDict.count];
-        int colLen = 3;
+        int colLen = 4;
         for(int i=0; i<foodIDs.count; i++){
             NSString *foodID = foodIDs[i];
             NSNumber *nmFoodAmount = [recommendFoodAmountDict objectForKey:foodID];
             NSDictionary *foodAttrs = [recommendFoodAttrDict objectForKey:foodID];
+            NSString *nutrientName = [foodSupplyFirstChooseNutrientLogDict objectForKey:foodID];
             NSMutableArray* row = [[self class] generateEmptyArray:colLen];
             row[0] = foodID;
             row[1] = foodAttrs[@"CnCaption"];
             row[2] = nmFoodAmount;
+            row[3] = nutrientName;
             [rows addObject:row];
         }//for i
-        NSString *strTbl = [[self class] convert2DArrayToHtmlTable:rows withColumnNames:nil];
+        NSString *strTbl = [[self class] convert2DArrayToHtmlTable:rows withColumnNames:[NSArray arrayWithObjects:@"食物ID", @"食物名称", @"推荐量(g)", @"首补营养素", nil]];
         [strHtml appendString:strTbl];
     }else{
         [strHtml appendString:@"<p>无。</p>\n"];
