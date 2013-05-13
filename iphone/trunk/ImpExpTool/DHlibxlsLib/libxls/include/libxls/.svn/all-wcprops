@@ -1,0 +1,65 @@
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/libxls/!svn/ver/150/trunk/libxls/include/libxls
+END
+brdb.h
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svnroot/libxls/!svn/ver/141/trunk/libxls/include/libxls/brdb.h
+END
+brdb.c.h
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svnroot/libxls/!svn/ver/147/trunk/libxls/include/libxls/brdb.c.h
+END
+xlsstruct.h
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/libxls/!svn/ver/147/trunk/libxls/include/libxls/xlsstruct.h
+END
+xlstypes.h
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svnroot/libxls/!svn/ver/141/trunk/libxls/include/libxls/xlstypes.h
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/libxls/!svn/ver/150/trunk/libxls/include/libxls/Makefile.in
+END
+ole.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/libxls/!svn/ver/141/trunk/libxls/include/libxls/ole.h
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svnroot/libxls/!svn/ver/127/trunk/libxls/include/libxls/Makefile.am
+END
+xlstool.h
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/libxls/!svn/ver/147/trunk/libxls/include/libxls/xlstool.h
+END
+xls.h
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svnroot/libxls/!svn/ver/141/trunk/libxls/include/libxls/xls.h
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svnroot/libxls/!svn/ver/27/trunk/libxls/include/libxls/.cvsignore
+END

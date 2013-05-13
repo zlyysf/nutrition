@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 46
+/svnroot/libxls/!svn/ver/150/trunk/libxls/test
+END
+test.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svnroot/libxls/!svn/ver/141/trunk/libxls/test/test.c
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/libxls/!svn/ver/150/trunk/libxls/test/Makefile.in
+END
+test2.c
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/libxls/!svn/ver/141/trunk/libxls/test/test2.c
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svnroot/libxls/!svn/ver/127/trunk/libxls/test/Makefile.am
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svnroot/libxls/!svn/ver/32/trunk/libxls/test/.cvsignore
+END

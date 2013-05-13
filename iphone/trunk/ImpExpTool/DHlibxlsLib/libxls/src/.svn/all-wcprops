@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svnroot/libxls/!svn/ver/152/trunk/libxls/src
+END
+ole.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/libxls/!svn/ver/152/trunk/libxls/src/ole.c
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/libxls/!svn/ver/150/trunk/libxls/src/Makefile.in
+END
+getopt.c
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svnroot/libxls/!svn/ver/99/trunk/libxls/src/getopt.c
+END
+xls2csv.c
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/libxls/!svn/ver/152/trunk/libxls/src/xls2csv.c
+END
+xlstool.c
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/libxls/!svn/ver/147/trunk/libxls/src/xlstool.c
+END
+xls.c
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/libxls/!svn/ver/148/trunk/libxls/src/xls.c
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/libxls/!svn/ver/127/trunk/libxls/src/Makefile.am
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/libxls/!svn/ver/32/trunk/libxls/src/.cvsignore
+END

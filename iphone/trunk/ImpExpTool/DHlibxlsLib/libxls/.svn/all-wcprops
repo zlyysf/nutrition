@@ -1,0 +1,125 @@
+K 25
+svn:wc:ra_dav:version-url
+V 41
+/svnroot/libxls/!svn/ver/152/trunk/libxls
+END
+mkinstalldirs
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/libxls/!svn/ver/150/trunk/libxls/mkinstalldirs
+END
+configure
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/libxls/!svn/ver/150/trunk/libxls/configure
+END
+Makefile.in
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svnroot/libxls/!svn/ver/150/trunk/libxls/Makefile.in
+END
+AUTHORS
+K 25
+svn:wc:ra_dav:version-url
+V 48
+/svnroot/libxls/!svn/ver/52/trunk/libxls/AUTHORS
+END
+configure.in
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/libxls/!svn/ver/143/trunk/libxls/configure.in
+END
+depcomp
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svnroot/libxls/!svn/ver/150/trunk/libxls/depcomp
+END
+.cproject
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/libxls/!svn/ver/103/trunk/libxls/.cproject
+END
+config.guess
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svnroot/libxls/!svn/ver/150/trunk/libxls/config.guess
+END
+config.sub
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svnroot/libxls/!svn/ver/150/trunk/libxls/config.sub
+END
+ltmain.sh
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/libxls/!svn/ver/150/trunk/libxls/ltmain.sh
+END
+config.h.in
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svnroot/libxls/!svn/ver/150/trunk/libxls/config.h.in
+END
+TODO
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svnroot/libxls/!svn/ver/53/trunk/libxls/TODO
+END
+INSTALL
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svnroot/libxls/!svn/ver/107/trunk/libxls/INSTALL
+END
+missing
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svnroot/libxls/!svn/ver/150/trunk/libxls/missing
+END
+Makefile.am
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svnroot/libxls/!svn/ver/127/trunk/libxls/Makefile.am
+END
+bootstrap
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/libxls/!svn/ver/149/trunk/libxls/bootstrap
+END
+aclocal.m4
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svnroot/libxls/!svn/ver/150/trunk/libxls/aclocal.m4
+END
+.cvsignore
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/libxls/!svn/ver/50/trunk/libxls/.cvsignore
+END
+install-sh
+K 25
+svn:wc:ra_dav:version-url
+V 52
+/svnroot/libxls/!svn/ver/150/trunk/libxls/install-sh
+END
+stamp-h.in
+K 25
+svn:wc:ra_dav:version-url
+V 51
+/svnroot/libxls/!svn/ver/15/trunk/libxls/stamp-h.in
+END

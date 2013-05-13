@@ -1,0 +1,35 @@
+K 25
+svn:wc:ra_dav:version-url
+V 44
+/svnroot/libxls/!svn/ver/150/trunk/libxls/m4
+END
+ltsugar.m4
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/libxls/!svn/ver/122/trunk/libxls/m4/ltsugar.m4
+END
+libtool.m4
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svnroot/libxls/!svn/ver/150/trunk/libxls/m4/libtool.m4
+END
+ltversion.m4
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/libxls/!svn/ver/122/trunk/libxls/m4/ltversion.m4
+END
+lt~obsolete.m4
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svnroot/libxls/!svn/ver/122/trunk/libxls/m4/lt~obsolete.m4
+END
+ltoptions.m4
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svnroot/libxls/!svn/ver/122/trunk/libxls/m4/ltoptions.m4
+END

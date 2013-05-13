@@ -1,0 +1,517 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		088240811740924300E71E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240801740924300E71E6E /* UIKit.framework */; };
+		088240831740924300E71E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240821740924300E71E6E /* Foundation.framework */; };
+		088240851740924300E71E6E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240841740924300E71E6E /* CoreGraphics.framework */; };
+		0882408B1740924300E71E6E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 088240891740924300E71E6E /* InfoPlist.strings */; };
+		0882408D1740924300E71E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0882408C1740924300E71E6E /* main.m */; };
+		088240911740924300E71E6E /* LZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240901740924300E71E6E /* LZAppDelegate.m */; };
+		088240931740924300E71E6E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 088240921740924300E71E6E /* Default.png */; };
+		088240951740924300E71E6E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088240941740924300E71E6E /* Default@2x.png */; };
+		088240971740924300E71E6E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088240961740924300E71E6E /* Default-568h@2x.png */; };
+		0882409A1740924300E71E6E /* LZViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240991740924300E71E6E /* LZViewController.m */; };
+		0882409D1740924300E71E6E /* LZViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0882409B1740924300E71E6E /* LZViewController_iPhone.xib */; };
+		088240A01740924300E71E6E /* LZViewController_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0882409E1740924300E71E6E /* LZViewController_iPad.xib */; };
+		088240B117409E3500E71E6E /* LZDBAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240AE17409E3500E71E6E /* LZDBAccess.m */; };
+		088240B217409E3500E71E6E /* LZReadExcel.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240B017409E3500E71E6E /* LZReadExcel.m */; };
+		088240B41740A01700E71E6E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240B31740A01700E71E6E /* libsqlite3.dylib */; };
+		088240B81740A06D00E71E6E /* libiconv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240B71740A06D00E71E6E /* libiconv.dylib */; };
+		088240C51740A11900E71E6E /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240BB1740A11900E71E6E /* FMDatabase.m */; };
+		088240C61740A11900E71E6E /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240BD1740A11900E71E6E /* FMDatabaseAdditions.m */; };
+		088240C71740A11900E71E6E /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240BF1740A11900E71E6E /* FMDatabasePool.m */; };
+		088240C81740A11900E71E6E /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240C11740A11900E71E6E /* FMDatabaseQueue.m */; };
+		088240CA1740A11900E71E6E /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240C41740A11900E71E6E /* FMResultSet.m */; };
+		088240CE1740A1FF00E71E6E /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240CD1740A1FF00E71E6E /* LZUtility.m */; };
+		088240D21740A66100E71E6E /* LZDataAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 088240D11740A66100E71E6E /* LZDataAccess.m */; };
+		088240D31740A7AA00E71E6E /* libDHxlsReaderIOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240AB17409BAC00E71E6E /* libDHxlsReaderIOS.a */; };
+		088240DD1740A88700E71E6E /* ABBREV.xls in Resources */ = {isa = PBXBuildFile; fileRef = 088240D51740A88700E71E6E /* ABBREV.xls */; };
+		088240E11740A88700E71E6E /* customUSDAdataV2.xls in Resources */ = {isa = PBXBuildFile; fileRef = 088240D91740A88700E71E6E /* customUSDAdataV2.xls */; };
+		0882411C1740E08300E71E6E /* USDAFullDataInSqlite.dat in Resources */ = {isa = PBXBuildFile; fileRef = 0882411B1740E08300E71E6E /* USDAFullDataInSqlite.dat */; };
+		0882411F17410E6300E71E6E /* Female_DRI.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882411D17410E6300E71E6E /* Female_DRI.xls */; };
+		0882412017410E6300E71E6E /* Male_DRI.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882411E17410E6300E71E6E /* Male_DRI.xls */; };
+		0882412217411C9A00E71E6E /* LZConstants.h in Sources */ = {isa = PBXBuildFile; fileRef = 0882412117411C3A00E71E6E /* LZConstants.h */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		088240AA17409BAC00E71E6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 088240A617409BAC00E71E6E /* DHxlsReaderIOS.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = DEB78ABF14BB9ABF00845894;
+			remoteInfo = DHxlsReaderIOS;
+		};
+		088240B51740A05600E71E6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 088240A617409BAC00E71E6E /* DHxlsReaderIOS.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = DEB78ABE14BB9ABF00845894;
+			remoteInfo = DHxlsReaderIOS;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0882407D1740924300E71E6E /* ImpExpTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImpExpTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		088240801740924300E71E6E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		088240821740924300E71E6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		088240841740924300E71E6E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		088240881740924300E71E6E /* ImpExpTool-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ImpExpTool-Info.plist"; sourceTree = "<group>"; };
+		0882408A1740924300E71E6E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		0882408C1740924300E71E6E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0882408E1740924300E71E6E /* ImpExpTool-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ImpExpTool-Prefix.pch"; sourceTree = "<group>"; };
+		0882408F1740924300E71E6E /* LZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZAppDelegate.h; sourceTree = "<group>"; };
+		088240901740924300E71E6E /* LZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZAppDelegate.m; sourceTree = "<group>"; };
+		088240921740924300E71E6E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		088240941740924300E71E6E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		088240961740924300E71E6E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		088240981740924300E71E6E /* LZViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZViewController.h; sourceTree = "<group>"; };
+		088240991740924300E71E6E /* LZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZViewController.m; sourceTree = "<group>"; };
+		0882409C1740924300E71E6E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LZViewController_iPhone.xib; sourceTree = "<group>"; };
+		0882409F1740924300E71E6E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LZViewController_iPad.xib; sourceTree = "<group>"; };
+		088240A617409BAC00E71E6E /* DHxlsReaderIOS.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DHxlsReaderIOS.xcodeproj; path = DHlibxlsLib/DHxlsReaderIOS.xcodeproj; sourceTree = "<group>"; };
+		088240AD17409E3500E71E6E /* LZDBAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZDBAccess.h; sourceTree = "<group>"; };
+		088240AE17409E3500E71E6E /* LZDBAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZDBAccess.m; sourceTree = "<group>"; };
+		088240AF17409E3500E71E6E /* LZReadExcel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZReadExcel.h; sourceTree = "<group>"; };
+		088240B017409E3500E71E6E /* LZReadExcel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZReadExcel.m; sourceTree = "<group>"; };
+		088240B31740A01700E71E6E /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		088240B71740A06D00E71E6E /* libiconv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libiconv.dylib; path = usr/lib/libiconv.dylib; sourceTree = SDKROOT; };
+		088240BA1740A11900E71E6E /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
+		088240BB1740A11900E71E6E /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
+		088240BC1740A11900E71E6E /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
+		088240BD1740A11900E71E6E /* FMDatabaseAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseAdditions.m; sourceTree = "<group>"; };
+		088240BE1740A11900E71E6E /* FMDatabasePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabasePool.h; sourceTree = "<group>"; };
+		088240BF1740A11900E71E6E /* FMDatabasePool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabasePool.m; sourceTree = "<group>"; };
+		088240C01740A11900E71E6E /* FMDatabaseQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseQueue.h; sourceTree = "<group>"; };
+		088240C11740A11900E71E6E /* FMDatabaseQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabaseQueue.m; sourceTree = "<group>"; };
+		088240C31740A11900E71E6E /* FMResultSet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMResultSet.h; sourceTree = "<group>"; };
+		088240C41740A11900E71E6E /* FMResultSet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMResultSet.m; sourceTree = "<group>"; };
+		088240CC1740A1FF00E71E6E /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = ../nutrition/nutrition/Class/LZUtility.h; sourceTree = "<group>"; };
+		088240CD1740A1FF00E71E6E /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = ../nutrition/nutrition/Class/LZUtility.m; sourceTree = "<group>"; };
+		088240D01740A66100E71E6E /* LZDataAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZDataAccess.h; sourceTree = "<group>"; };
+		088240D11740A66100E71E6E /* LZDataAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZDataAccess.m; sourceTree = "<group>"; };
+		088240D51740A88700E71E6E /* ABBREV.xls */ = {isa = PBXFileReference; lastKnownFileType = file; path = ABBREV.xls; sourceTree = "<group>"; };
+		088240D91740A88700E71E6E /* customUSDAdataV2.xls */ = {isa = PBXFileReference; lastKnownFileType = file; path = customUSDAdataV2.xls; sourceTree = "<group>"; };
+		088240E51740BD3000E71E6E /* LZConst.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZConst.h; sourceTree = "<group>"; };
+		0882411B1740E08300E71E6E /* USDAFullDataInSqlite.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = USDAFullDataInSqlite.dat; path = ../../../data/USDAFullDataInSqlite.dat; sourceTree = "<group>"; };
+		0882411D17410E6300E71E6E /* Female_DRI.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Female_DRI.xls; path = ../../../data/Female_DRI.xls; sourceTree = "<group>"; };
+		0882411E17410E6300E71E6E /* Male_DRI.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Male_DRI.xls; path = ../../../data/Male_DRI.xls; sourceTree = "<group>"; };
+		0882412117411C3A00E71E6E /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = ../nutrition/nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0882407A1740924300E71E6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				088240D31740A7AA00E71E6E /* libDHxlsReaderIOS.a in Frameworks */,
+				088240B81740A06D00E71E6E /* libiconv.dylib in Frameworks */,
+				088240B41740A01700E71E6E /* libsqlite3.dylib in Frameworks */,
+				088240811740924300E71E6E /* UIKit.framework in Frameworks */,
+				088240831740924300E71E6E /* Foundation.framework in Frameworks */,
+				088240851740924300E71E6E /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		088240741740924300E71E6E = {
+			isa = PBXGroup;
+			children = (
+				088240D41740A88700E71E6E /* Resource */,
+				088240CB1740A1CA00E71E6E /* externalRef */,
+				088240AC17409E3500E71E6E /* Lib */,
+				088240A617409BAC00E71E6E /* DHxlsReaderIOS.xcodeproj */,
+				088240861740924300E71E6E /* ImpExpTool */,
+				0882407F1740924300E71E6E /* Frameworks */,
+				0882407E1740924300E71E6E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0882407E1740924300E71E6E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0882407D1740924300E71E6E /* ImpExpTool.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0882407F1740924300E71E6E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				088240B71740A06D00E71E6E /* libiconv.dylib */,
+				088240B31740A01700E71E6E /* libsqlite3.dylib */,
+				088240801740924300E71E6E /* UIKit.framework */,
+				088240821740924300E71E6E /* Foundation.framework */,
+				088240841740924300E71E6E /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		088240861740924300E71E6E /* ImpExpTool */ = {
+			isa = PBXGroup;
+			children = (
+				0882408F1740924300E71E6E /* LZAppDelegate.h */,
+				088240901740924300E71E6E /* LZAppDelegate.m */,
+				088240981740924300E71E6E /* LZViewController.h */,
+				088240991740924300E71E6E /* LZViewController.m */,
+				0882409B1740924300E71E6E /* LZViewController_iPhone.xib */,
+				0882409E1740924300E71E6E /* LZViewController_iPad.xib */,
+				088240871740924300E71E6E /* Supporting Files */,
+			);
+			path = ImpExpTool;
+			sourceTree = "<group>";
+		};
+		088240871740924300E71E6E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				088240881740924300E71E6E /* ImpExpTool-Info.plist */,
+				088240891740924300E71E6E /* InfoPlist.strings */,
+				0882408C1740924300E71E6E /* main.m */,
+				0882408E1740924300E71E6E /* ImpExpTool-Prefix.pch */,
+				088240921740924300E71E6E /* Default.png */,
+				088240941740924300E71E6E /* Default@2x.png */,
+				088240961740924300E71E6E /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		088240A717409BAC00E71E6E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				088240AB17409BAC00E71E6E /* libDHxlsReaderIOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		088240AC17409E3500E71E6E /* Lib */ = {
+			isa = PBXGroup;
+			children = (
+				088240AD17409E3500E71E6E /* LZDBAccess.h */,
+				088240AE17409E3500E71E6E /* LZDBAccess.m */,
+				088240AF17409E3500E71E6E /* LZReadExcel.h */,
+				088240B017409E3500E71E6E /* LZReadExcel.m */,
+				088240E51740BD3000E71E6E /* LZConst.h */,
+			);
+			name = Lib;
+			path = ImpExpTool/Lib;
+			sourceTree = "<group>";
+		};
+		088240B91740A11900E71E6E /* fmdbLib */ = {
+			isa = PBXGroup;
+			children = (
+				088240BA1740A11900E71E6E /* FMDatabase.h */,
+				088240BB1740A11900E71E6E /* FMDatabase.m */,
+				088240BC1740A11900E71E6E /* FMDatabaseAdditions.h */,
+				088240BD1740A11900E71E6E /* FMDatabaseAdditions.m */,
+				088240BE1740A11900E71E6E /* FMDatabasePool.h */,
+				088240BF1740A11900E71E6E /* FMDatabasePool.m */,
+				088240C01740A11900E71E6E /* FMDatabaseQueue.h */,
+				088240C11740A11900E71E6E /* FMDatabaseQueue.m */,
+				088240C31740A11900E71E6E /* FMResultSet.h */,
+				088240C41740A11900E71E6E /* FMResultSet.m */,
+			);
+			name = fmdbLib;
+			path = ../nutrition/nutrition/fmdbLib;
+			sourceTree = "<group>";
+		};
+		088240CB1740A1CA00E71E6E /* externalRef */ = {
+			isa = PBXGroup;
+			children = (
+				0882412117411C3A00E71E6E /* LZConstants.h */,
+				0882411A1740E02D00E71E6E /* Res */,
+				088240CF1740A66100E71E6E /* dataAccess */,
+				088240CC1740A1FF00E71E6E /* LZUtility.h */,
+				088240CD1740A1FF00E71E6E /* LZUtility.m */,
+				088240B91740A11900E71E6E /* fmdbLib */,
+			);
+			name = externalRef;
+			sourceTree = "<group>";
+		};
+		088240CF1740A66100E71E6E /* dataAccess */ = {
+			isa = PBXGroup;
+			children = (
+				088240D01740A66100E71E6E /* LZDataAccess.h */,
+				088240D11740A66100E71E6E /* LZDataAccess.m */,
+			);
+			name = dataAccess;
+			path = ../nutrition/nutrition/dataAccess;
+			sourceTree = "<group>";
+		};
+		088240D41740A88700E71E6E /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				088240D51740A88700E71E6E /* ABBREV.xls */,
+				088240D91740A88700E71E6E /* customUSDAdataV2.xls */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		0882411A1740E02D00E71E6E /* Res */ = {
+			isa = PBXGroup;
+			children = (
+				0882411D17410E6300E71E6E /* Female_DRI.xls */,
+				0882411E17410E6300E71E6E /* Male_DRI.xls */,
+				0882411B1740E08300E71E6E /* USDAFullDataInSqlite.dat */,
+			);
+			name = Res;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0882407C1740924300E71E6E /* ImpExpTool */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 088240A31740924300E71E6E /* Build configuration list for PBXNativeTarget "ImpExpTool" */;
+			buildPhases = (
+				088240791740924300E71E6E /* Sources */,
+				0882407A1740924300E71E6E /* Frameworks */,
+				0882407B1740924300E71E6E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				088240B61740A05600E71E6E /* PBXTargetDependency */,
+			);
+			name = ImpExpTool;
+			productName = ImpExpTool;
+			productReference = 0882407D1740924300E71E6E /* ImpExpTool.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		088240751740924300E71E6E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = LZ;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = Yasofon;
+			};
+			buildConfigurationList = 088240781740924300E71E6E /* Build configuration list for PBXProject "ImpExpTool" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 088240741740924300E71E6E;
+			productRefGroup = 0882407E1740924300E71E6E /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 088240A717409BAC00E71E6E /* Products */;
+					ProjectRef = 088240A617409BAC00E71E6E /* DHxlsReaderIOS.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				0882407C1740924300E71E6E /* ImpExpTool */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		088240AB17409BAC00E71E6E /* libDHxlsReaderIOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libDHxlsReaderIOS.a;
+			remoteRef = 088240AA17409BAC00E71E6E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0882407B1740924300E71E6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0882408B1740924300E71E6E /* InfoPlist.strings in Resources */,
+				088240931740924300E71E6E /* Default.png in Resources */,
+				088240951740924300E71E6E /* Default@2x.png in Resources */,
+				088240971740924300E71E6E /* Default-568h@2x.png in Resources */,
+				0882409D1740924300E71E6E /* LZViewController_iPhone.xib in Resources */,
+				088240A01740924300E71E6E /* LZViewController_iPad.xib in Resources */,
+				088240DD1740A88700E71E6E /* ABBREV.xls in Resources */,
+				088240E11740A88700E71E6E /* customUSDAdataV2.xls in Resources */,
+				0882411C1740E08300E71E6E /* USDAFullDataInSqlite.dat in Resources */,
+				0882411F17410E6300E71E6E /* Female_DRI.xls in Resources */,
+				0882412017410E6300E71E6E /* Male_DRI.xls in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		088240791740924300E71E6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0882412217411C9A00E71E6E /* LZConstants.h in Sources */,
+				0882408D1740924300E71E6E /* main.m in Sources */,
+				088240911740924300E71E6E /* LZAppDelegate.m in Sources */,
+				0882409A1740924300E71E6E /* LZViewController.m in Sources */,
+				088240B117409E3500E71E6E /* LZDBAccess.m in Sources */,
+				088240B217409E3500E71E6E /* LZReadExcel.m in Sources */,
+				088240C51740A11900E71E6E /* FMDatabase.m in Sources */,
+				088240C61740A11900E71E6E /* FMDatabaseAdditions.m in Sources */,
+				088240C71740A11900E71E6E /* FMDatabasePool.m in Sources */,
+				088240C81740A11900E71E6E /* FMDatabaseQueue.m in Sources */,
+				088240CA1740A11900E71E6E /* FMResultSet.m in Sources */,
+				088240CE1740A1FF00E71E6E /* LZUtility.m in Sources */,
+				088240D21740A66100E71E6E /* LZDataAccess.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		088240B61740A05600E71E6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = DHxlsReaderIOS;
+			targetProxy = 088240B51740A05600E71E6E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		088240891740924300E71E6E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0882408A1740924300E71E6E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		0882409B1740924300E71E6E /* LZViewController_iPhone.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0882409C1740924300E71E6E /* en */,
+			);
+			name = LZViewController_iPhone.xib;
+			sourceTree = "<group>";
+		};
+		0882409E1740924300E71E6E /* LZViewController_iPad.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0882409F1740924300E71E6E /* en */,
+			);
+			name = LZViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		088240A11740924300E71E6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = DHlibxlsLib/DHxlsReaderIOS;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		088240A21740924300E71E6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = DHlibxlsLib/DHxlsReaderIOS;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		088240A41740924300E71E6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ImpExpTool/ImpExpTool-Prefix.pch";
+				INFOPLIST_FILE = "ImpExpTool/ImpExpTool-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		088240A51740924300E71E6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "ImpExpTool/ImpExpTool-Prefix.pch";
+				INFOPLIST_FILE = "ImpExpTool/ImpExpTool-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		088240781740924300E71E6E /* Build configuration list for PBXProject "ImpExpTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				088240A11740924300E71E6E /* Debug */,
+				088240A21740924300E71E6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		088240A31740924300E71E6E /* Build configuration list for PBXNativeTarget "ImpExpTool" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				088240A41740924300E71E6E /* Debug */,
+				088240A51740924300E71E6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 088240751740924300E71E6E /* Project object */;
+}

@@ -1,0 +1,17 @@
+K 10
+svn:ignore
+V 122
+autom4te.cache
+conf??????
+confdefs.h
+config.h
+.cdtproject
+Makefile
+config.status
+.project
+stamp-h1
+.settings
+__*
+target-*
+
+END
