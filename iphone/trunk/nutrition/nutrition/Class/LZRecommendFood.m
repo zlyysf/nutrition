@@ -36,6 +36,8 @@
     BOOL notAllowSameFood = TRUE;//这是一个策略标志位，偏好食物的多样化的标志位，即当选取食物补充营养时，优先选取以前没有用过的食物。
     BOOL randomSelectFood = TRUE;
     int randomRangeSelectFood = 0;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
+    BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
+
     if(options != nil){
         NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
         if (nmFlag_notAllowSameFood != nil)
@@ -48,6 +50,11 @@
         NSNumber *nm_randomRangeSelectFood = [options objectForKey:@"randomRangeSelectFood"];
         if (nm_randomRangeSelectFood != nil)
             randomRangeSelectFood = [nm_randomRangeSelectFood intValue];
+        
+        NSNumber *nmFlag_needLimitNutrients = [options objectForKey:@"needLimitNutrients"];
+        if (nmFlag_needLimitNutrients != nil)
+            needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
+
     }
     uint randSeed = arc4random();
     NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%d",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
@@ -65,6 +72,11 @@
 //    Choline_Tot_ (mg) 胆碱 最少需要187g的蛋来补充
 //    Vit_D_(µg) 只有鲤鱼等才有效补充
     NSMutableArray *lastSupplyCalNutrients = [NSMutableArray arrayWithObjects:@"Vit_D_(µg)",@"Choline_Tot_ (mg)", @"Carbohydrt_(g)",@"Energ_Kcal", nil];
+    //这是需求中规定只计算哪些营养素
+    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
+                                         @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",@"Folate_Tot_(µg)", nil];
+    NSDictionary *limitedNutrientDictCanBeCal = [NSDictionary dictionaryWithObjects:limitedNutrientsCanBeCal forKeys:limitedNutrientsCanBeCal];
+    
     LZDataAccess *da = [LZDataAccess singleton];
     
     NSArray *takenFoodIDs = nil;
@@ -198,6 +210,11 @@
         
         if (nutrientNameToCal == nil){//彻底没有需要计算的营养素了
             break;
+        }else{
+            if (needLimitNutrients && [limitedNutrientDictCanBeCal objectForKey:nutrientNameToCal]==nil){
+                //对需求中限制可计算营养素集合以支持。不在这个集合中不计算。
+                continue;
+            }
         }
         //当前有需要计算的营养素
         NSNumber *nmSupplied = nutrientSupplyDict[nutrientNameToCal];
@@ -321,6 +338,9 @@
     [retDict setObject:recommendFoodAttrDict forKey:@"FoodAttr"];//food NO as key
     
     [retDict setObject:dictNutrientLackWhenInitialTaken forKey:@"NutrientLackWhenInitialTaken"];
+    if (needLimitNutrients){
+        [retDict setObject:limitedNutrientDictCanBeCal forKey:@"limitedNutrientDictCanBeCal"];
+    }
     
     NSArray *userInfos = [NSArray arrayWithObjects:@"sex(0 for M)",[NSNumber numberWithInt:sex],@"age",[NSNumber numberWithInt:age],
         @"weight(kg)",[NSNumber numberWithFloat:weight],@"height(cm)",[NSNumber numberWithFloat:height],@"activityLevel",[NSNumber numberWithInt:activityLevel],nil];
@@ -331,6 +351,7 @@
                            @"randomRangeSelectFood",[NSNumber numberWithInt:randomRangeSelectFood],
                            @"randomSelectFood",[NSNumber numberWithBool:randomSelectFood],
                            @"notAllowSameFood",[NSNumber numberWithBool:notAllowSameFood],
+                           @"needLimitNutrients",[NSNumber numberWithBool:needLimitNutrients],
                            nil];
     [retDict setObject:otherInfos forKey:@"OtherInfo"];
     
@@ -368,6 +389,7 @@
     NSDictionary *recommendFoodAttrDict = [recmdDict objectForKey:@"FoodAttr"];//food NO as key
     
     NSDictionary *dictNutrientLackWhenInitialTaken = [recmdDict objectForKey:@"NutrientLackWhenInitialTaken"];
+    NSDictionary *limitedNutrientDictCanBeCal = [recmdDict objectForKey:@"limitedNutrientDictCanBeCal"];
     
     NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];
     NSArray *otherInfos = [recmdDict objectForKey:@"OtherInfo"];
@@ -790,6 +812,7 @@
     NSDictionary *recommendFoodAttrDict = [recmdDict objectForKey:@"FoodAttr"];//food NO as key
     
     NSDictionary *dictNutrientLackWhenInitialTaken = [recmdDict objectForKey:@"NutrientLackWhenInitialTaken"];
+    NSDictionary *limitedNutrientDictCanBeCal = [recmdDict objectForKey:@"limitedNutrientDictCanBeCal"];
     
     NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];//2D array
     NSArray *foodSupplyNutrientLogs = [recmdDict objectForKey:@"foodSupplyNutrientLogs"];//2D array
@@ -865,13 +888,18 @@
             NSNumber *nmNutrientLackVal = [dictNutrientLackWhenInitialTaken objectForKey:nutrientName];
             NSNumber *nmNutrientDRI = [DRIsDict objectForKey:nutrientName];
             
-            if ([nmNutrientLackVal doubleValue]>nearZero){
-                double lackRatio = [nmNutrientLackVal doubleValue] / [nmNutrientDRI doubleValue];
-                NSMutableArray* row = [[self class] generateEmptyArray:colLen];
-                row[0] = nutrientName;
-                row[1] = nmNutrientLackVal;
-                row[2] = [NSNumber numberWithDouble:lackRatio];
-                [rows addObject:row];
+            if (limitedNutrientDictCanBeCal==nil ||
+                (limitedNutrientDictCanBeCal!=nil && [limitedNutrientDictCanBeCal objectForKey:nutrientName]!=nil)
+                )
+            {//这里要考虑到需求中可能限制了营养素集合
+                if ([nmNutrientLackVal doubleValue]>nearZero){
+                    double lackRatio = [nmNutrientLackVal doubleValue] / [nmNutrientDRI doubleValue];
+                    NSMutableArray* row = [[self class] generateEmptyArray:colLen];
+                    row[0] = nutrientName;
+                    row[1] = nmNutrientLackVal;
+                    row[2] = [NSNumber numberWithDouble:lackRatio];
+                    [rows addObject:row];
+                }
             }
         }//for i
         if (rows.count > 0){
