@@ -892,7 +892,7 @@
     NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:@"TakenFoodAmount"];//food NO as key
     NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:@"TakenFoodAttr"];//food NO as key
     
-    int limitRecommendFoodCount = 4;//只限制显示的
+    int limitRecommendFoodCount = 4;//0;//4;//只限制显示的
     if ([options objectForKey:@"limitRecommendFoodCount"]!=nil){
         NSNumber *nm_limitRecommendFoodCount = [options objectForKey:@"limitRecommendFoodCount"];
         limitRecommendFoodCount = [nm_limitRecommendFoodCount intValue];
@@ -1026,7 +1026,13 @@
             if (limitRecommendFoodCount > 0 && rows.count >= limitRecommendFoodCount){
                 //如果超过需求中限制的推荐食物数量，则不显示
             }else{
-                [rows addObject:row];
+                NSNumber *nmFoodLowerLimit = [foodAttrs objectForKey:@"Lower_Limit(g)"];
+                if (nmFoodLowerLimit!=nil && nmFoodLowerLimit!=[NSNull null]
+                    && [nmFoodLowerLimit doubleValue]>0 && [nmFoodAmount doubleValue]<[nmFoodLowerLimit doubleValue]){
+                    //如果推荐食物数量太少，低于其预设的下限值，则不显示
+                }else{
+                    [rows addObject:row];
+                }
             }
         }//for i
         assert(recommendFoodAmountDict2.count==0);
