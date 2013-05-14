@@ -34,6 +34,7 @@
 
 -(NSArray *) getAllFood;
 -(NSArray *)getFoodByIds:(NSArray *)idAry;
+-(NSArray *)getFoodAttributesByIds:(NSArray *)idAry;
 
 
 @end

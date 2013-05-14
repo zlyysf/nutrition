@@ -163,19 +163,21 @@
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN
 {
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    [sqlStr appendString:@"SELECT F.* FROM FoodNutritionCustom F join Food_Supply_DRI_Common D on F.NDB_No=D.NDB_No "];
+    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)] \n"];
+    [sqlStr appendString:@"  FROM FoodNutritionCustom F join Food_Supply_DRI_Common D on F.NDB_No=D.NDB_No \n"];
+    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
     [sqlStr appendString:@" WHERE "];
     [sqlStr appendString:@"D.["];
     [sqlStr appendString:nutrientAsColumnName];
     [sqlStr appendString:@"]"];
     [sqlStr appendString:@">0"];
     
-    [sqlStr appendString:@" ORDER BY "];
+    [sqlStr appendString:@"\n ORDER BY "];
     [sqlStr appendString:@"D.["];
     [sqlStr appendString:nutrientAsColumnName];
     [sqlStr appendString:@"] ASC"];
     
-    [sqlStr appendString:@" LIMIT "];
+    [sqlStr appendString:@"\n LIMIT "];
     [sqlStr appendString:[[NSNumber numberWithInt:topN] stringValue]];
     NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
     
@@ -231,7 +233,34 @@
     return dataAry;
 }
 
-
+/*
+ idAry 的元素需要是字符串类型。
+ 返回值是dictionary，包含一个一维数组和一个二维数组。
+ */
+-(NSArray *)getFoodAttributesByIds:(NSArray *)idAry
+{
+    NSLog(@"getFoodAttributesByIds begin");
+    if (idAry==nil || idAry.count ==0)
+        return nil;
+    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:idAry.count];
+    for(int i=0; i<idAry.count; i++){
+        [placeholderAry addObject:@"?"];
+    }
+    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
+    [sqlStr appendString:@"SELECT FNC.*,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)]\n"];
+    [sqlStr appendString:@"  FROM FoodNutritionCustom FNC LEFT OUTER JOIN FoodLimit FL ON FNC.NDB_No=FL.NDB_No\n"];
+    [sqlStr appendString:@"  WHERE FNC.NDB_No in ("];
+    [sqlStr appendString:placeholdersStr];
+    [sqlStr appendString:@")"];
+    NSLog(@"getFoodAttributesByIds sqlStr=%@",sqlStr);
+    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:idAry];
+    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+    assert(dataAry.count > 0);
+    NSLog(@"getFoodAttributesByIds ret:\n%@",dataAry);
+    return dataAry;
+}
 
 
 

@@ -82,7 +82,8 @@
     NSArray *takenFoodIDs = nil;
     if (takenFoodAmountDict!=nil && takenFoodAmountDict.count>0)
         takenFoodIDs = [takenFoodAmountDict allKeys];
-    NSArray *takenFoodAttrAry = [da getFoodByIds:takenFoodIDs];
+    //NSArray *takenFoodAttrAry = [da getFoodByIds:takenFoodIDs];
+    NSArray *takenFoodAttrAry = [da getFoodAttributesByIds:takenFoodIDs];
 
     NSDictionary *DRIsDict = [LZUtility getStandardDRIs:sex age:age weight:weight height:height activityLevel:activityLevel];
     NSMutableDictionary *recommendFoodAmountDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
@@ -285,8 +286,16 @@
             }
             
             double toAddForFood = toAddForNutrient / [nmNutrientContentOfFood doubleValue] * 100.0;//单位是g
+            NSNumber *nmFoodUpperLimit = food[@"Upper_Limit(g)"];
+            double dFoodUpperLimit = 0;
+            if (nmFoodUpperLimit != nil && nmFoodUpperLimit != [NSNull null]){
+                dFoodUpperLimit = [nmFoodUpperLimit doubleValue];
+            }
             if (toAddForFood - upperLimit > nearZero){//要补的食物的量过多，当食物所含该种营养素的量太少时发生。这时只取到上限值，再找其他食物来补充。
                 toAddForFood = upperLimit;
+            }
+            if (dFoodUpperLimit > 0 && toAddForFood - dFoodUpperLimit > nearZero){
+                toAddForFood = dFoodUpperLimit;
             }
             toAddForNutrient = toAddForNutrient - toAddForFood / 100.0 * [nmNutrientContentOfFood doubleValue];
             
