@@ -23,14 +23,16 @@
     //    [workRe convertExcelToSqlite_USDA_ABBREV_withDebugFlag:true];
     //    //[workRe convertExcelToSqlite_USDA_ABBREV_withDebugFlag:false];//生成正式的数据应该用这个
     
-    [workRe convertDRIFemaleDataFromExcelToSqlite];
-    [workRe convertDRIMaleDataFromExcelToSqlite];
-    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
+//    [workRe convertDRIFemaleDataFromExcelToSqlite];
+//    [workRe convertDRIMaleDataFromExcelToSqlite];
+//    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
+    [workRe convertExcelToSqlite_FoodLimit];
+    [workRe convertExcelToSqlite_FoodCnDescription];
     
     
-    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];
-    LZDBAccess *db = [workRe getDBconnection];
-    [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
+//    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];
+//    LZDBAccess *db = [workRe getDBconnection];
+//    [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
     
     
 
@@ -49,6 +51,8 @@
     [workRe convertDRIFemaleDataFromExcelToSqlite];
     [workRe convertDRIMaleDataFromExcelToSqlite];
     [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
+    [workRe convertExcelToSqlite_FoodLimit];
+    [workRe convertExcelToSqlite_FoodCnDescription];
 
     LZDBAccess *db = [workRe getDBconnection];
     [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];

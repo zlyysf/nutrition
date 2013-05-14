@@ -134,17 +134,22 @@
     [_db executeUpdate:sqlDelete];
 }
 
-/*
- USDA_ABBREV
- USDAtable 是特指美国农业部的那份以excel格式存在的数据库的唯一一个各食物营养成分表。这里暂定其表名为FoodNutrition。
- 美国农业部（http://ndb.nal.usda.gov/  USDA National Nutrient Database）
- */
--(void)createTableUSDA_ABBREV_withColumnNames : (NSArray*)columnNames andIfNeedDropTable:(BOOL)needDrop
+
+-(void)createTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames withPrimaryKey:(NSString*)primaryKey andIfNeedDropTable:(BOOL)needDrop
 {
     assert(columnNames.count > 1);
-    NSString *tableName = TABLE_NAME_USDA_ABBREV;//FoodNutrition
     if (needDrop){
         [self dropTable:tableName];
+    }
+    NSMutableDictionary *columnDict = [NSMutableDictionary dictionaryWithObjects:columnNames forKeys:columnNames];
+    assert([columnDict objectForKey:primaryKey]!=nil);
+    NSMutableArray *otherColumnNames = [NSMutableArray arrayWithArray:columnNames];//不能用dictionary的keys，是因为顺序乱了
+    for(int i=0; i<otherColumnNames.count; i++){
+        NSString *colName = otherColumnNames[i];
+        if ([colName isEqualToString:primaryKey]){
+            [otherColumnNames removeObjectAtIndex:i];
+            break;
+        }
     }
     
     NSMutableString *sqlCreate = [NSMutableString stringWithCapacity:1000*100];
@@ -152,39 +157,55 @@
     [sqlCreate appendString:@"CREATE TABLE "];
     [sqlCreate appendString:tableName];
     [sqlCreate appendString:@" ("];
-    s1 = [NSString stringWithFormat:@"'%@' TEXT PRIMARY KEY",columnNames[0]];
+    s1 = [NSString stringWithFormat:@"'%@' TEXT PRIMARY KEY",primaryKey];
     [sqlCreate appendString:s1];
-    for(int i=1; i<columnNames.count; i++){
-        s1 = [NSString stringWithFormat:@",'%@' REAL",columnNames[i]];
+    for(int i=0; i<otherColumnNames.count; i++){
+        s1 = [NSString stringWithFormat:@",'%@' REAL",otherColumnNames[i]];//对于sqlite来说，实际为text类型的列设计为real类型，也没有关系，从而省去一些判断的工作
         [sqlCreate appendString:s1];
     }
     [sqlCreate appendString:@")"];
+    NSLog(@"createTable_withTableName sqlCreate=%@",sqlCreate);
     [_db executeUpdate:sqlCreate];
 }
 
-
-/*
- USDAtable 是特指美国农业部的那份以excel格式存在的数据库的唯一一个各食物营养成分表。这里暂定其表名为FoodNutrition。
- 其中对于每个列名两头加了单引号以作为显式的字符串列名以防止其中的特殊字符导致出错。
- rows是一个二维数组。其中的每个单个row的位置都对应columnNames。
- */
--(void)insertToTable_USDA_ABBREV_withColumnNames: (NSArray*)columnNames andRows:(NSArray*)rows andIfNeedClearTable:(BOOL)needClear
+-(void)createTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames withRows2D:(NSArray*)rows2D withPrimaryKey:(NSString*)primaryKey andIfNeedDropTable:(BOOL)needDrop
 {
-    NSString *tableName = TABLE_NAME_USDA_ABBREV;//FoodNutrition
-    if (needClear){
-        [self deleteFromTable:tableName];
+    assert(columnNames.count > 1);
+    assert(rows2D.count > 0);
+    if (needDrop){
+        [self dropTable:tableName];
     }
-    if (rows.count == 0)
-        return;
-    assert(columnNames.count > 0);
-    NSString * insertSql = [self generateInsertSqlForTable:tableName andColumnNames:columnNames];
+    NSMutableDictionary *columnDict = [NSMutableDictionary dictionaryWithObjects:columnNames forKeys:columnNames];
+    assert([columnDict objectForKey:primaryKey]!=nil);
+    NSArray *row = rows2D[0];
+    assert(row.count==columnNames.count);
     
-    for(int i=0; i<rows.count; i++){
-        NSArray *row = rows[i];
-        assert(columnNames.count == row.count);
+    NSMutableString *sqlCreate = [NSMutableString stringWithCapacity:1000*100];
+    [sqlCreate appendString:@"CREATE TABLE "];
+    [sqlCreate appendString:tableName];
+    [sqlCreate appendString:@" ("];
 
-        [_db executeUpdate:insertSql withArgumentsInArray:row];
+    for(int i=0; i<columnNames.count; i++){
+        NSString *columnName = columnNames[i];
+        NSObject *cell = row[i];
+        NSMutableString *s1 = [NSMutableString stringWithCapacity:100];
+        if (i>0){
+            [s1 appendString:@","];
+        }
+        [s1 appendFormat:@"'%@'",columnName ];
+        if ([cell isKindOfClass:[NSNumber class]] && ![columnName isEqualToString:primaryKey]){
+            [s1 appendString:@" REAL"];
+        }else{
+            [s1 appendString:@" TEXT"];
+        }
+        if ([columnName isEqualToString:primaryKey]){
+            [s1 appendString:@" PRIMARY KEY"];
+        }
+        [sqlCreate appendString:s1];
     }
+    [sqlCreate appendString:@")"];
+    NSLog(@"createTable_withTableName sqlCreate=%@",sqlCreate);
+    [_db executeUpdate:sqlCreate];
 }
 
 /*
@@ -195,7 +216,7 @@
     assert(columnNames.count > 0);
     
     //  INSERT INTO tblGroup (id, name, description, pkgid, seqInPkg) VALUES (101, 'tblGroup 1', 'p1g1', 1, 1);
-
+    
     NSMutableArray *columnNames2 = [NSMutableArray arrayWithArray:columnNames];
     NSMutableArray *valuePlaceholders = [NSMutableArray arrayWithCapacity:columnNames.count];
     for(int i=0; i<columnNames2.count; i++){
@@ -216,9 +237,52 @@
     [sqlStr appendString:@") VALUES ("];
     [sqlStr appendString:valuePlaceholdersStr];
     [sqlStr appendString:@");"];
-    
+    NSLog(@"generateInsertSqlForTable sqlStr=%@",sqlStr);
     return sqlStr;
 }
+
+-(void)insertToTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames andRows2D:(NSArray*)rows2D andIfNeedClearTable:(BOOL)needClear
+{
+    if (needClear){
+        [self deleteFromTable:tableName];
+    }
+    if (rows2D.count == 0)
+        return;
+    assert(columnNames.count > 0);
+    NSString * insertSql = [self generateInsertSqlForTable:tableName andColumnNames:columnNames];
+    
+    for(int i=0; i<rows2D.count; i++){
+        NSArray *row = rows2D[i];
+        assert(columnNames.count == row.count);
+        
+        [_db executeUpdate:insertSql withArgumentsInArray:row];
+    }
+}
+
+/*
+ USDA_ABBREV
+ USDAtable 是特指美国农业部的那份以excel格式存在的数据库的唯一一个各食物营养成分表。这里暂定其表名为FoodNutrition。
+ 美国农业部（http://ndb.nal.usda.gov/  USDA National Nutrient Database）
+ */
+-(void)createTableUSDA_ABBREV_withColumnNames : (NSArray*)columnNames andIfNeedDropTable:(BOOL)needDrop
+{
+    NSString *tableName = TABLE_NAME_USDA_ABBREV;//FoodNutrition
+    NSString *primaryKey = COLUMN_NAME_NDB_No;
+    [self createTable_withTableName:tableName withColumnNames:columnNames withPrimaryKey:primaryKey andIfNeedDropTable:needDrop];
+}
+
+/*
+ USDAtable 是特指美国农业部的那份以excel格式存在的数据库的唯一一个各食物营养成分表。这里暂定其表名为FoodNutrition。
+ 其中对于每个列名两头加了单引号以作为显式的字符串列名以防止其中的特殊字符导致出错。
+ rows是一个二维数组。其中的每个单个row的位置都对应columnNames。
+ */
+-(void)insertToTable_USDA_ABBREV_withColumnNames: (NSArray*)columnNames andRows2D:(NSArray*)rows2D andIfNeedClearTable:(BOOL)needClear
+{
+    NSString *tableName = TABLE_NAME_USDA_ABBREV;//FoodNutrition
+    [self insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:needClear];
+}
+
+
 
 
 -(void)createDRItable:(NSString*)tableName andColumnNames:(NSArray*)columnNames

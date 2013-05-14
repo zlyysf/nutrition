@@ -71,7 +71,7 @@
     if (ifDebug)
         dataRowCount = 10 ;
     
-    NSMutableArray * rows = [NSMutableArray arrayWithCapacity:dataRowCount];
+    NSMutableArray * rows2D = [NSMutableArray arrayWithCapacity:dataRowCount];
     for(int i=0; i<dataRowCount; i++){
         NSMutableArray * rowData = [NSMutableArray arrayWithCapacity:columnCount];
         for(int j=0; j<columnCount; j++){
@@ -87,13 +87,13 @@
                 [rowData addObject:cell.val];
             }
         }
-        [rows addObject:rowData];
+        [rows2D addObject:rowData];
     }
-    NSLog(@"in readUSDA_ABBREV, rows=%@",rows);
+    NSLog(@"in readUSDA_ABBREV, rows2D=%@",rows2D);
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
     [retData setObject:columns forKey:@"columns"];
-    [retData setObject:rows forKey:@"rows"];
+    [retData setObject:rows2D forKey:@"rows2D"];
     return retData;
 }
 
@@ -104,12 +104,12 @@
 {
     NSDictionary *data = [self readUSDA_ABBREV_withDebugFlag:ifDebug];
     NSArray *columns = [data objectForKey:@"columns"];
-    NSArray *rows = [data objectForKey:@"rows"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
     
     assert(dbCon!=nil);
     LZDBAccess *db = dbCon;
     [db createTableUSDA_ABBREV_withColumnNames:columns andIfNeedDropTable:TRUE];
-    [db insertToTable_USDA_ABBREV_withColumnNames:columns andRows:rows andIfNeedClearTable:TRUE];
+    [db insertToTable_USDA_ABBREV_withColumnNames:columns andRows2D:rows2D andIfNeedClearTable:TRUE];
     
 }
 
@@ -148,7 +148,7 @@
     }
     NSLog(@"in readDRIdata_fromExcelFile, rowCount=%d",dataRowCount);
     
-    NSMutableArray * rows = [NSMutableArray arrayWithCapacity:dataRowCount];
+    NSMutableArray * rows2D = [NSMutableArray arrayWithCapacity:dataRowCount];
     for(int i=0; i<dataRowCount; i++){
         NSMutableArray * rowData = [NSMutableArray arrayWithCapacity:columnCount];
         for(int j=0; j<columnCount; j++){
@@ -176,13 +176,13 @@
                 }
             }
         }
-        [rows addObject:rowData];
+        [rows2D addObject:rowData];
     }
-    NSLog(@"in readDRIdata_fromExcelFile, rows=%@",rows);
+    NSLog(@"in readDRIdata_fromExcelFile, rows2D=%@",rows2D);
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
     [retData setObject:columns forKey:@"columns"];
-    [retData setObject:rows forKey:@"rows"];
+    [retData setObject:rows2D forKey:@"rows2D"];
     return retData;
 }
 
@@ -192,20 +192,20 @@
 {
     NSDictionary *data = [self readDRIdata_fromExcelFile:@"Female_DRI.xls"];
     NSArray *columns = [data objectForKey:@"columns"];
-    NSArray *rows = [data objectForKey:@"rows"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
     
     NSString *tableName = TABLE_NAME_DRIFemale;// @"DRIFemale";
 
     assert(dbCon!=nil);
     LZDBAccess *db = dbCon;
     [db createDRItable:tableName andColumnNames:columns];
-    [db insertToDRItable:tableName andColumnNames:columns andData:rows];    
+    [db insertToDRItable:tableName andColumnNames:columns andData:rows2D];    
 }
 -(void)convertDRIMaleDataFromExcelToSqlite
 {
     NSDictionary *data = [self readDRIdata_fromExcelFile:@"Male_DRI.xls"];
     NSArray *columns = [data objectForKey:@"columns"];
-    NSArray *rows = [data objectForKey:@"rows"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
     
     NSString *tableName = TABLE_NAME_DRIMale;// @"DRIMale";
     
@@ -213,7 +213,7 @@
     LZDBAccess *db = dbCon;
 
     [db createDRItable:tableName andColumnNames:columns];
-    [db insertToDRItable:tableName andColumnNames:columns andData:rows];
+    [db insertToDRItable:tableName andColumnNames:columns andData:rows2D];
 }
 
 
@@ -235,7 +235,8 @@
 -(NSDictionary *)readCustomUSDAdata_V2
 {
     NSLog(@"readCustomUSDAdata_V2 begin");
-    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"customUSDAdataV2.xls"];
+    //NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"customUSDAdataV2.xls"];
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food.xls"];
     NSLog(@"in readCustomUSDAdata_V2, xlsPath=%@",xlsPath);
     DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
 	assert(reader);
@@ -305,6 +306,149 @@
     [dbDest insertToCustomUSDAtable_V2:customData andRowsAndColumns:queryDataByIds andIfNeedClearTable:true];
 
 }
+
+
+/*
+ 返回值是一个dictionary，包括 以columnNames为key的一维数组和 以rows2D为key的二维数组
+ */
+-(NSDictionary *)readFoodCnDescription
+{
+    NSLog(@"readFoodCnDescription begin");
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_Limit.xls"];
+    NSLog(@"in readFoodLimit, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No, COLUMN_NAME_CnCaption,COLUMN_NAME_CnType, nil];
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+    
+    int idxInXls_Id = 3, idxInXls_CnCaption = 1, idxInXls_CnType = 2;
+    int idxRow=2;
+    DHcell *cellId, *cellCnCaption, *cellCnType;
+    cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+    cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+    cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
+    while (cellId.type != cellBlank) {
+        assert(cellId.type == cellString);
+        NSMutableArray *row = [NSMutableArray arrayWithCapacity:3];
+        [row addObject:cellId.str];
+        [row addObject:cellCnCaption.str];
+        [row addObject:cellCnType.str];
+        [rows2D addObject:row];
+        idxRow++;
+        cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+        cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+        cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
+    }
+    NSLog(@"in readFoodLimit, columnNames=%@, rows2D=%@",columnNames,rows2D);
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+    [retData setObject:columnNames forKey:@"columnNames"];
+    [retData setObject:rows2D forKey:@"rows2D"];
+    return retData;
+}
+
+-(void)convertExcelToSqlite_FoodCnDescription
+{
+    NSDictionary *data = [self readFoodCnDescription];
+    NSArray *columnNames = [data objectForKey:@"columnNames"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    NSString *tableName = TABLE_NAME_FoodCnDescription;
+    NSString *primaryKey = COLUMN_NAME_NDB_No;
+    [db createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:true];
+    [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
+}
+
+
+
+/*
+ 返回值是一个dictionary，包括 以columnNames为key的一维数组和 以rows2D为key的二维数组
+ */
+-(NSDictionary *)readFoodLimit
+{
+    NSLog(@"readFoodLimit begin");
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_Limit.xls"];
+    NSLog(@"in readFoodLimit, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+    NSMutableArray *columnNames = [NSMutableArray arrayWithCapacity:3];
+    int idxInXls_Id = 3, idxInXls_LowerLimit = 5, idxInXls_UpperLimit = 6;
+    
+    int idxRow=1;
+    DHcell *cellId, *cellLowerLimit, *cellUpperLimit;
+    cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+    cellLowerLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_LowerLimit];
+    cellUpperLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_UpperLimit];
+    [columnNames addObject:cellId.str];
+    [columnNames addObject:cellLowerLimit.str];
+    [columnNames addObject:cellUpperLimit.str];
+    idxRow ++;
+    cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+    cellLowerLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_LowerLimit];
+    cellUpperLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_UpperLimit];
+    while (cellId.type != cellBlank) {
+        assert(cellId.type == cellString);
+        NSMutableArray *row = [NSMutableArray arrayWithCapacity:3];
+        [row addObject:cellId.str];
+        [row addObject:cellLowerLimit.val];
+        [row addObject:cellUpperLimit.val];
+        [rows2D addObject:row]; 
+        idxRow++;
+        cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+        cellLowerLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_LowerLimit];
+        cellUpperLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_UpperLimit];
+    }
+    NSLog(@"in readFoodLimit, columnNames=%@, rows2D=%@",columnNames,rows2D);
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+    [retData setObject:columnNames forKey:@"columnNames"];
+    [retData setObject:rows2D forKey:@"rows2D"];
+    return retData;
+}
+
+-(void)convertExcelToSqlite_FoodLimit
+{
+    NSDictionary *data = [self readFoodLimit];
+    NSArray *columnNames = [data objectForKey:@"columnNames"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    NSString *tableName = TABLE_NAME_FoodLimit;
+    NSString *primaryKey = COLUMN_NAME_NDB_No;
+    [db createTable_withTableName:tableName withColumnNames:columnNames withPrimaryKey:primaryKey andIfNeedDropTable:true];
+    [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
