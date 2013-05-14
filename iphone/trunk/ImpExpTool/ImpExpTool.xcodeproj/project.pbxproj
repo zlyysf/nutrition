@@ -37,6 +37,7 @@
 		0882411F17410E6300E71E6E /* Female_DRI.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882411D17410E6300E71E6E /* Female_DRI.xls */; };
 		0882412017410E6300E71E6E /* Male_DRI.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882411E17410E6300E71E6E /* Male_DRI.xls */; };
 		0882412217411C9A00E71E6E /* LZConstants.h in Sources */ = {isa = PBXBuildFile; fileRef = 0882412117411C3A00E71E6E /* LZConstants.h */; };
+		088241251741E3CD00E71E6E /* LZFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241241741E3CD00E71E6E /* LZFacade.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -102,6 +103,8 @@
 		0882411D17410E6300E71E6E /* Female_DRI.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Female_DRI.xls; path = ../../../data/Female_DRI.xls; sourceTree = "<group>"; };
 		0882411E17410E6300E71E6E /* Male_DRI.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Male_DRI.xls; path = ../../../data/Male_DRI.xls; sourceTree = "<group>"; };
 		0882412117411C3A00E71E6E /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = ../nutrition/nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
+		088241231741E3CD00E71E6E /* LZFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZFacade.h; sourceTree = "<group>"; };
+		088241241741E3CD00E71E6E /* LZFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZFacade.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -198,6 +201,8 @@
 				088240AF17409E3500E71E6E /* LZReadExcel.h */,
 				088240B017409E3500E71E6E /* LZReadExcel.m */,
 				088240E51740BD3000E71E6E /* LZConst.h */,
+				088241231741E3CD00E71E6E /* LZFacade.h */,
+				088241241741E3CD00E71E6E /* LZFacade.m */,
 			);
 			name = Lib;
 			path = ImpExpTool/Lib;
@@ -366,6 +371,7 @@
 				088240CA1740A11900E71E6E /* FMResultSet.m in Sources */,
 				088240CE1740A1FF00E71E6E /* LZUtility.m in Sources */,
 				088240D21740A66100E71E6E /* LZDataAccess.m in Sources */,
+				088241251741E3CD00E71E6E /* LZFacade.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
