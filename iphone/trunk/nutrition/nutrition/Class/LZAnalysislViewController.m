@@ -145,7 +145,7 @@
     txtCalculateInfo = detailStr;
     //self.recommendTextView.text = detailStr;
     
-    NSString * filePath = [rf convert2DArrayToCsv:@"recommend1.csv" withData:ary2D];
+    NSString * filePath = [LZUtility convert2DArrayToCsv:@"recommend1.csv" withData:ary2D];
     csvFilePath = filePath;
 //    NSURL *csvFileUrl = [NSURL fileURLWithPath:csvFilePath];
 //    NSURLRequest *request = [NSURLRequest requestWithURL:csvFileUrl];

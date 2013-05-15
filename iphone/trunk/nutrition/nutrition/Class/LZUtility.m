@@ -9,224 +9,6 @@
 #import "LZUtility.h"
 #import "LZConstants.h"
 @implementation LZUtility
-/*
- sex:0 for male.  weight kg, height cm
- */
-+(NSDictionary*)getStandardDRIForSex:(int )sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
-{
-    float PA;
-    float heightM = height/100.f;
-    int energyStandard;
-    int carbohydrtStandard;
-    int fatStandard;
-    int proteinStandard;
-    if (sex == 0)//male
-    {
-        if (age>=1 && age<3)
-        {
-            energyStandard = 89*weight-100+20;
-        }
-        else if (age>=3 && age<9)
-        {
-            switch (activityLevel) {
-                case 0:
-                    PA = 1.0;
-                    break;
-                case 1:
-                    PA = 1.13;
-                    break;
-                case 2:
-                    PA = 1.26;
-                    break;
-                case 3:
-                    PA = 1.42;
-                    break;
-                default:
-                    PA = 1.0;
-                    break;
-            }
-            energyStandard = 88.5 - 61.9*age +PA*(26.7 *weight +903*heightM)+20;
-        }
-        else if (age>=9 && age<19)
-        {
-            switch (activityLevel) {
-                case 0:
-                    PA = 1.0;
-                    break;
-                case 1:
-                    PA = 1.13;
-                    break;
-                case 2:
-                    PA = 1.26;
-                    break;
-                case 3:
-                    PA = 1.42;
-                    break;
-                default:
-                    PA = 1.0;
-                    break;
-            }
-            
-            energyStandard = 88.5 - 61.9*age +PA*(26.7 *weight +903*heightM)+25;
-        }
-        else
-        {
-            switch (activityLevel) {
-                case 0:
-                    PA = 1.0;
-                    break;
-                case 1:
-                    PA = 1.11;
-                    break;
-                case 2:
-                    PA = 1.25;
-                    break;
-                case 3:
-                    PA = 1.48;
-                    break;
-                default:
-                    PA = 1.0;
-                    break;
-            }
-            
-            energyStandard = 662 - 9.53*age +PA*(15.91 *weight +539.6*heightM);
-        }
-        
-    }
-    else//female
-    {
-        if (age>=1 && age<3)
-        {
-            energyStandard = 89*weight-100+20;
-        }
-        else if (age>=3 && age<9)
-        {
-            switch (activityLevel) {
-                case 0:
-                    PA = 1.0;
-                    break;
-                case 1:
-                    PA = 1.16;
-                    break;
-                case 2:
-                    PA = 1.31;
-                    break;
-                case 3:
-                    PA = 1.56;
-                    break;
-                default:
-                    PA = 1.0;
-                    break;
-            }
-            
-            energyStandard = 135.3 - 30.8*age +PA*(10 *weight +934*heightM)+20;
-        }
-        else if (age>=9 && age<19)
-        {
-            switch (activityLevel) {
-                case 0:
-                    PA = 1.0;
-                    break;
-                case 1:
-                    PA = 1.16;
-                    break;
-                case 2:
-                    PA = 1.31;
-                    break;
-                case 3:
-                    PA = 1.56;
-                    break;
-                default:
-                    PA = 1.0;
-                    break;
-            }
-            
-            energyStandard = 135.3 - 30.8*age +PA*(10 *weight +934*heightM)+25;
-        }
-        else
-        {
-            switch (activityLevel) {
-                case 0:
-                    PA = 1.0;
-                    break;
-                case 1:
-                    PA = 1.12;
-                    break;
-                case 2:
-                    PA = 1.27;
-                    break;
-                case 3:
-                    PA = 1.45;
-                    break;
-                default:
-                    PA = 1.0;
-                    break;
-            }
-            
-            energyStandard = 354 - 6.91*age +PA*(9.36 *weight +726*heightM);
-        }
-        
-        
-    }
-    //self.energyStandardLabel.text = [NSString stringWithFormat:@"%d kcal",energyStandard];
-    
-    carbohydrtStandard = (int)(energyStandard*0.45*kCarbFactor+0.5);//(int)(energyStandard*0.65*kCarbFactor+0.5);
-    
-    if (age>=1 && age<4)
-    {
-        fatStandard = 0;//[NSString stringWithFormat:@"0 ~ %d", (int)(energyStandard*0.4*kFatFactor+0.5)];
-    }
-    else
-    {
-        if(age >= 4 && age<19)
-        {
-            fatStandard = (int)(energyStandard*0.25*kFatFactor+0.5);//, (int)(energyStandard*0.35*kFatFactor+0.5)];
-        }
-        else
-        {
-            fatStandard = (int)(energyStandard*0.2*kFatFactor+0.5);//, (int)(energyStandard*0.35*kFatFactor+0.5)];
-        }
-    }
-    
-    float proteinFactor;
-    
-    if (age>=1 && age<4)
-    {
-        proteinFactor = 1.05;
-    }
-    else if (age>=4 && age<14)
-    {
-        proteinFactor = 0.95;
-    }
-    else if (age>=14 && age<19)
-    {
-        proteinFactor =0.85;
-    }
-    else
-    {
-        proteinFactor = 0.8;
-    }
-    
-    proteinStandard =(int)( weight*proteinFactor+0.5);
-    NSLog(@"getStandardDRIForSex ret: energyStandard : %d \n Carbohydrt : %d \n Fat : %d \n Protein : %d",energyStandard,carbohydrtStandard,fatStandard,proteinStandard);
-    NSDictionary *standardResult = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:energyStandard],@"Energ_Kcal",[NSNumber numberWithInt:carbohydrtStandard],@"Carbohydrt_(g)",[NSNumber numberWithInt:fatStandard],@"Lipid_Tot_(g)",[NSNumber numberWithInt:proteinStandard],@"Protein_(g)",nil];
-    return standardResult;
-}
-
-
-+(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
-{
-    NSDictionary *part1 = [self getStandardDRIForSex:sex age:age weight:weight height:height activityLevel:activityLevel];
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSString *gender = @"male";
-    if (sex !=0)
-        gender = @"female";
-    NSDictionary *part2 = [da getDRIbyGender:gender andAge:age];
-    NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithDictionary:part1];
-    [ret addEntriesFromDictionary:part2];
-    NSLog(@"getStandardDRIs ret:\n%@",ret);
-    return ret;
-}
 
 
 +(NSNumber *)addDoubleToDictionaryItem:(double)valAdd withDictionary:(NSMutableDictionary*)data andKey:(NSString *)datakey
@@ -245,6 +27,147 @@
     [data setObject:nmSum forKey:datakey];
     return nmSum;
 }
+
+
+
+
+
+
++(NSString *) convert2DArrayToCsv: (NSString *)csvFileName withData:(NSArray*)ary2D
+{
+    NSLog(@"convert2DArrayToCsv enter");
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *csvFilePath = [documentsDirectory stringByAppendingPathComponent:csvFileName];
+    NSLog(@"csvFilePath=%@",csvFilePath);
+    
+    NSMutableData *writer = [[NSMutableData alloc] init];
+    for(int i=0; i<ary2D.count; i++){
+        NSArray *ary1D = ary2D[i];
+        NSMutableString *rowStr = [NSMutableString stringWithCapacity:10000];
+        for(int j=0 ; j<ary1D.count; j++){
+            NSObject *cell = ary1D[j];
+            NSMutableString *cellStr = [NSMutableString stringWithCapacity:100];
+            [cellStr appendString:@"\""];
+            
+            NSString *s1 = nil;
+            if (cell == nil || cell == [NSNull null]){
+                s1 = nil;
+            }else if ([cell isKindOfClass:[NSString class]]){
+                s1 = (NSString*)cell;
+            }else if ([cell isKindOfClass:[NSNumber class]]){
+                NSNumber *nm = (NSNumber *)cell;
+                s1 = [nm stringValue];
+            }else{
+                s1 = [cell description];
+            }
+            if (s1 != nil){
+                if ([s1 rangeOfString:@"\""].location == NSNotFound){
+                    NSString *s2 = [s1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\"\""];
+                    [cellStr appendString:s2];
+                }else{
+                    [cellStr appendString:s1];
+                }
+            }
+            
+            [cellStr appendString:@"\""];
+            if (j<ary1D.count-1){
+                [cellStr appendString:@","];
+            }else{
+                [cellStr appendString:@"\n"];
+            }
+            [rowStr appendString:cellStr];
+        }//for j
+        
+        [writer appendData: [rowStr dataUsingEncoding:NSUTF8StringEncoding] ];
+    }//for i
+    
+    [writer writeToFile:csvFilePath atomically:YES];
+    return csvFilePath;
+}
+
+
+
+
+
++(NSMutableString *) convert2DArrayToHtmlTable:(NSArray*)ary2D withColumnNames:(NSArray*)columnNames
+{
+    NSLog(@"convert2DArrayToHtmlTable enter");
+    
+    NSMutableString *strTable = nil;
+    if (ary2D == nil || ary2D.count == 0)
+        return strTable;
+    strTable = [NSMutableString stringWithCapacity:1000*ary2D.count];
+    [strTable appendString:@"\n<table style=\"border=1px;\">\n"];
+    
+    if (columnNames != nil && columnNames.count > 0){
+        NSMutableString *rowStr = [NSMutableString stringWithCapacity:1000];
+        [rowStr appendString:@"\t<tr>\n"];
+        for(int i=0; i<columnNames.count; i++){
+            NSString *columnName = columnNames[i];
+            [rowStr appendString:@"\t\t<th>"];
+            [rowStr appendString:columnName];
+            [rowStr appendString:@"</th>\n"];
+        }
+        [rowStr appendString:@"</tr>\n"];
+        [strTable appendString:rowStr];
+    }
+    
+    for(int i=0; i<ary2D.count; i++){
+        NSArray *ary1D = ary2D[i];
+        NSMutableString *rowStr = [NSMutableString stringWithCapacity:1000];
+        [rowStr appendString:@"\t<tr>\n"];
+        for(int j=0 ; j<ary1D.count; j++){
+            NSObject *cell = ary1D[j];
+            NSMutableString *cellStr = [NSMutableString stringWithCapacity:100];
+            [cellStr appendString:@"\t\t<td>"];
+            
+            NSString *s1 = nil;
+            if (cell == nil || cell == [NSNull null]){
+                s1 = nil;
+            }else if ([cell isKindOfClass:[NSString class]]){
+                s1 = (NSString*)cell;
+            }else if ([cell isKindOfClass:[NSNumber class]]){
+                NSNumber *nm = (NSNumber *)cell;
+                //s1 = [nm stringValue];
+                s1 = [NSString stringWithFormat:@"%.2f",[nm doubleValue] ] ;
+            }else{
+                s1 = [cell description];
+            }
+            if (s1 != nil){
+                [cellStr appendString:s1];
+            }
+            
+            [cellStr appendString:@"</td>\n"];
+            [rowStr appendString:cellStr];
+        }//for j
+        [rowStr appendString:@"</tr>\n"];
+        [strTable appendString:rowStr];
+    }//for i
+    
+    [strTable appendString:@"</table>\n"];
+    return strTable;
+}
+
+
+
+
++(NSMutableArray*)generateEmptyArray:(int)count
+{
+    NSMutableArray *ary = [NSMutableArray arrayWithCapacity:count];
+    for(int i=0; i<count; i++){
+        [ary addObject:[NSNull null]];
+    }
+    return ary;
+}
+
+
+
+
+
+
+
+
 
 
 @end
