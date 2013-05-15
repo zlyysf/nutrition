@@ -48,6 +48,7 @@
 		085C8D8A17336BA5001A1ABB /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
 		085C8D8B17336BE1001A1ABB /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D4D17336744001A1ABB /* CustomDB.dat */; };
 		0882403E173A7E7400E71E6E /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882403D173A7E7400E71E6E /* readme.txt */; };
+		088241301743873500E71E6E /* LZSecretSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0882412F1743873500E71E6E /* LZSecretSettingViewController.m */; };
 		5F3338A9172A407E0096E7AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338A8172A407E0096E7AE /* UIKit.framework */; };
 		5F3338AB172A407E0096E7AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AA172A407E0096E7AE /* Foundation.framework */; };
 		5F3338AD172A407E0096E7AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AC172A407E0096E7AE /* CoreGraphics.framework */; };
@@ -100,6 +101,8 @@
 		085C8D7117336A29001A1ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LZViewController_iPhone.xib; sourceTree = "<group>"; };
 		085C8D7417336A29001A1ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LZViewController_iPad.xib; sourceTree = "<group>"; };
 		0882403D173A7E7400E71E6E /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		0882412E1743873500E71E6E /* LZSecretSettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSecretSettingViewController.h; path = Class/LZSecretSettingViewController.h; sourceTree = "<group>"; };
+		0882412F1743873500E71E6E /* LZSecretSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZSecretSettingViewController.m; path = Class/LZSecretSettingViewController.m; sourceTree = "<group>"; };
 		5F3338A5172A407E0096E7AE /* nutrition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nutrition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3338A8172A407E0096E7AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F3338AA172A407E0096E7AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -279,6 +282,8 @@
 				5FB8C0B9172BCA9F00E90387 /* LZConstants.h */,
 				5F9995F4172BDBE400A36B4F /* LZFoodCell.h */,
 				5F9995F5172BDBE400A36B4F /* LZFoodCell.m */,
+				0882412E1743873500E71E6E /* LZSecretSettingViewController.h */,
+				0882412F1743873500E71E6E /* LZSecretSettingViewController.m */,
 			);
 			path = nutrition;
 			sourceTree = "<group>";
@@ -451,6 +456,7 @@
 				085C8D44173366F2001A1ABB /* FMResultSet.m in Sources */,
 				085C8D4817336701001A1ABB /* LZDataAccess.m in Sources */,
 				085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */,
+				088241301743873500E71E6E /* LZSecretSettingViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -119,26 +119,55 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey]==nil){
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    if ([userDefaults objectForKey:LZUserWeightKey]==nil){
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"缺少用户信息", @"") message:@"请先填写用户信息" delegate:self cancelButtonTitle:NSLocalizedString(@"OK", @"") otherButtonTitles:nil];
         [alert show];
         return;
     }
-        
-    float weight = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserWeightKey];
-    float height = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserHeightKey];
-    int age = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserAgeKey];
-    int sex = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserSexKey];
-    int activityLevel = [[NSUserDefaults standardUserDefaults] floatForKey:LZUserActivityLevelKey];
+    
+    float weight = [userDefaults floatForKey:LZUserWeightKey];
+    float height = [userDefaults floatForKey:LZUserHeightKey];
+    int age = [userDefaults floatForKey:LZUserAgeKey];
+    int sex = [userDefaults floatForKey:LZUserSexKey];
+    int activityLevel = [userDefaults floatForKey:LZUserActivityLevelKey];
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               [NSNumber numberWithFloat:weight],@"weight", [NSNumber numberWithFloat:height],@"height",
                               [NSNumber numberWithInt:age],@"age", [NSNumber numberWithInt:sex],@"sex",
                               [NSNumber numberWithInt:activityLevel],@"activityLevel", nil];
     
-    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+    NSDictionary *dailyIntake = [userDefaults objectForKey:LZUserDailyIntakeKey];
     
+    BOOL notAllowSameFood = TRUE;//这是一个策略标志位，偏好食物的多样化的标志位，即当选取食物补充营养时，优先选取以前没有用过的食物。
+    BOOL randomSelectFood = TRUE;
+    int randomRangeSelectFood = 2;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
+    BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
+    int limitRecommendFoodCount = 4;//0;//4;//只限制显示的
+    
+    if ( [userDefaults objectForKey:LZSettingKey_randomSelectFood]!=nil ){
+        randomSelectFood = [userDefaults boolForKey:LZSettingKey_randomSelectFood];
+    }
+    if ( [userDefaults objectForKey:LZSettingKey_randomRangeSelectFood]!=nil ){
+        randomRangeSelectFood = [userDefaults integerForKey:LZSettingKey_randomRangeSelectFood];
+    }
+    if ( [userDefaults objectForKey:LZSettingKey_needLimitNutrients]!=nil ){
+        needLimitNutrients = [userDefaults boolForKey:LZSettingKey_needLimitNutrients];
+    }
+    if ( [userDefaults objectForKey:LZSettingKey_notAllowSameFood]!=nil ){
+        notAllowSameFood = [userDefaults boolForKey:LZSettingKey_notAllowSameFood];
+    }
+    if ( [userDefaults objectForKey:LZSettingKey_limitRecommendFoodCount]!=nil ){
+        limitRecommendFoodCount = [userDefaults integerForKey:LZSettingKey_limitRecommendFoodCount];
+    }
+
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithBool:TRUE],@"notAllowSameFood", [NSNumber numberWithInt:2],@"randomRangeSelectFood", nil];
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:notAllowSameFood],@"notAllowSameFood",
+                             [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
+                             [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
+                             [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
+                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+                             nil];
     NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
     NSArray * ary2D = [rf generateData2D_RecommendFoodForEnoughNuitrition:retDict];
     NSString * detailStr = [rf convert2DArrayToText:ary2D];

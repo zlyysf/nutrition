@@ -772,7 +772,7 @@
     NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:@"TakenFoodAmount"];//food NO as key
     NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:@"TakenFoodAttr"];//food NO as key
     
-    int limitRecommendFoodCount = 4;//0;//4;//只限制显示的
+    int limitRecommendFoodCount = 2;//0;//4;//只限制显示的
     if ([options objectForKey:@"limitRecommendFoodCount"]!=nil){
         NSNumber *nm_limitRecommendFoodCount = [options objectForKey:@"limitRecommendFoodCount"];
         limitRecommendFoodCount = [nm_limitRecommendFoodCount intValue];
