@@ -726,7 +726,11 @@
                         //do nothing
                     }
                     if (needAmountToLevel){
-                        foodSupplyAmount = round((foodSupplyAmount + 100) / 100.0);
+                        if (foodSupplyAmount > 0){
+                            foodSupplyAmount = round((foodSupplyAmount + 100) / 100.0);
+                        }else{
+                            //when foodSupplyAmount be 0, not right to convert to level value
+                        }
                     }else{
                         //do nothing
                     }
