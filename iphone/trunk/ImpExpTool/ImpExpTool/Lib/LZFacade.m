@@ -26,8 +26,8 @@
 //    [workRe convertDRIFemaleDataFromExcelToSqlite];
 //    [workRe convertDRIMaleDataFromExcelToSqlite];
 //    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
-    [workRe convertExcelToSqlite_FoodLimit];
-    [workRe convertExcelToSqlite_FoodCnDescription];
+//    [workRe convertExcelToSqlite_FoodLimit];
+//    [workRe convertExcelToSqlite_FoodCnDescription];
     
     
 //    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];
@@ -38,6 +38,32 @@
 
 }
 
++(void)test2{
+    NSString *originDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"CustomDB.dat"];
+    
+    NSString *destDbFileName = @"CustomDBt1.dat";
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *destDbFilePath = [documentsDirectory stringByAppendingPathComponent:destDbFileName];
+    
+    NSFileManager * defFileManager = [NSFileManager defaultManager];
+    NSError *err = nil;
+    [defFileManager removeItemAtPath:destDbFilePath error:&err];
+    if (err != nil){
+        NSLog(@"test2, defFileManager removeItemAtPath err=%@",err);
+    }
+    [defFileManager copyItemAtPath:originDBPath toPath:destDbFilePath error:&err];
+    if (err != nil){
+        NSLog(@"test2, defFileManager copyItemAtPath err=%@",err);
+        return;
+    }
+
+    LZDBAccess *db = [[LZDBAccess alloc]init];
+    [db myInitWithDbFilePath:destDbFilePath andIfNeedClear:FALSE];
+    [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
+    [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
+
+}
 
 
 
@@ -56,6 +82,7 @@
 
     LZDBAccess *db = [workRe getDBconnection];
     [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
+    [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
 
 }
 

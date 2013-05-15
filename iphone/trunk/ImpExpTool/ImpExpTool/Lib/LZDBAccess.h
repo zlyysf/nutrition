@@ -44,10 +44,9 @@
 //- (NSDictionary *)getDRIbyGender:(NSString*)gender andAge:(int)age;
 //-(void)initTable_Food_Supply_DRIWithGender :(NSString *)gender andAge:(int)age;
 
--(void)createTable_Food_Supply_DRI_Common_withIfNeedDropTable:(BOOL)needDrop;
--(void)initTable_Food_Supply_DRI_Common_withIfNeedClearTable:(BOOL)needClear;
--(void)generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:(BOOL)needClear;
 
+-(void)generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:(BOOL)needClear;
+-(void)generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:(BOOL)needClear;
 
 
 @end

@@ -40,6 +40,8 @@
 		088241251741E3CD00E71E6E /* LZFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241241741E3CD00E71E6E /* LZFacade.m */; };
 		0882412717422E7C00E71E6E /* Food.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882412617422E7C00E71E6E /* Food.xls */; };
 		0882412917422F4100E71E6E /* Food_Limit.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882412817422F4100E71E6E /* Food_Limit.xls */; };
+		0882412B1743342700E71E6E /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882412A1743342600E71E6E /* readme.txt */; };
+		0882412D174368E900E71E6E /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 0882412C174368E900E71E6E /* CustomDB.dat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,6 +111,8 @@
 		088241241741E3CD00E71E6E /* LZFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZFacade.m; sourceTree = "<group>"; };
 		0882412617422E7C00E71E6E /* Food.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Food.xls; path = ../../../data/Food.xls; sourceTree = "<group>"; };
 		0882412817422F4100E71E6E /* Food_Limit.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Food_Limit.xls; path = ../../../data/Food_Limit.xls; sourceTree = "<group>"; };
+		0882412A1743342600E71E6E /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
+		0882412C174368E900E71E6E /* CustomDB.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomDB.dat; path = ../nutrition/nutrition/Resource/CustomDB.dat; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -131,6 +135,7 @@
 		088240741740924300E71E6E = {
 			isa = PBXGroup;
 			children = (
+				0882412A1743342600E71E6E /* readme.txt */,
 				088240D41740A88700E71E6E /* Resource */,
 				088240CB1740A1CA00E71E6E /* externalRef */,
 				088240AC17409E3500E71E6E /* Lib */,
@@ -265,6 +270,7 @@
 		0882411A1740E02D00E71E6E /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				0882412C174368E900E71E6E /* CustomDB.dat */,
 				0882412817422F4100E71E6E /* Food_Limit.xls */,
 				0882412617422E7C00E71E6E /* Food.xls */,
 				0882411D17410E6300E71E6E /* Female_DRI.xls */,
@@ -356,6 +362,8 @@
 				0882412017410E6300E71E6E /* Male_DRI.xls in Resources */,
 				0882412717422E7C00E71E6E /* Food.xls in Resources */,
 				0882412917422F4100E71E6E /* Food_Limit.xls in Resources */,
+				0882412B1743342700E71E6E /* readme.txt in Resources */,
+				0882412D174368E900E71E6E /* CustomDB.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

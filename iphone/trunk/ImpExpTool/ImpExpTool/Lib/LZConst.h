@@ -14,6 +14,7 @@
 #define COLUMN_NAME_CnType @"CnType"
 
 #define TABLE_NAME_Food_Supply_DRI_Common @"Food_Supply_DRI_Common"
+#define TABLE_NAME_Food_Supply_DRI_Amount @"Food_Supply_DRI_Amount"
 
 #define TABLE_NAME_FoodLimit @"FoodLimit"
 #define TABLE_NAME_FoodCnDescription @"FoodCnDescription"

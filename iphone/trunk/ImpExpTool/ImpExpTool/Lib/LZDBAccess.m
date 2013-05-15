@@ -597,11 +597,24 @@
     [self createTable_Food_Supply_DRI_Common_withIfNeedDropTable:needClear];
     [self initTable_Food_Supply_DRI_Common_withIfNeedClearTable:needClear];
 }
-
-
--(void)createTable_Food_Supply_DRI_Common_withIfNeedDropTable:(BOOL)needDrop
+-(void)generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:(BOOL)needClear
 {
+    [self createTable_Food_Supply_DRI_Amount_withIfNeedDropTable:needClear];
+    [self initTable_Food_Supply_DRI_Amount_withIfNeedClearTable:needClear];
+}
+
+
+-(void)createTable_Food_Supply_DRI_Common_withIfNeedDropTable:(BOOL)needDrop{
     NSString *tableName = TABLE_NAME_Food_Supply_DRI_Common;
+    [self createTable_Food_Supply_DRI_Various_withTableName:tableName andIfNeedDropTable:needDrop];
+}
+-(void)createTable_Food_Supply_DRI_Amount_withIfNeedDropTable:(BOOL)needDrop{
+    NSString *tableName = TABLE_NAME_Food_Supply_DRI_Amount;
+    [self createTable_Food_Supply_DRI_Various_withTableName:tableName andIfNeedDropTable:needDrop];
+}
+
+-(void)createTable_Food_Supply_DRI_Various_withTableName:(NSString*)tableName andIfNeedDropTable:(BOOL)needDrop
+{
     if (needDrop){
         [self dropTable:tableName];
     }
@@ -626,8 +639,40 @@
 -(void)initTable_Food_Supply_DRI_Common_withIfNeedClearTable:(BOOL)needClear
 {
     NSString *tableName = TABLE_NAME_Food_Supply_DRI_Common; //@"Food_Supply_DRI_Common";// @"Food_Supply_DRI_M19";
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             @"originalAndUpLimit",@"supplyAmountType",
+                             [NSNumber numberWithBool:TRUE],@"needAmountToLevel", nil];
+    [self initTable_Food_Supply_DRI_Various_withTableName:tableName andIfNeedClearTable:needClear andOptions:options];
+}
+
+-(void)initTable_Food_Supply_DRI_Amount_withIfNeedClearTable:(BOOL)needClear
+{
+    NSString *tableName = TABLE_NAME_Food_Supply_DRI_Amount; 
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             @"original",@"supplyAmountType",
+                             [NSNumber numberWithBool:FALSE],@"needAmountToLevel", nil];
+    [self initTable_Food_Supply_DRI_Various_withTableName:tableName andIfNeedClearTable:needClear andOptions:options];
+}
+
+-(void)initTable_Food_Supply_DRI_Various_withTableName:(NSString*)tableName andIfNeedClearTable:(BOOL)needClear andOptions:(NSDictionary*)options
+{
     if (needClear){
         [self deleteFromTable:tableName];
+    }
+    NSString * supplyAmountType = @"originalAndUpLimit"; // @"original"; // @"originalAndUpLimit"
+    BOOL needAmountToLevel = TRUE;
+    BOOL needRoundAmount = TRUE;
+    if (options != nil){
+        id valObj = [options objectForKey:@"supplyAmountType"];
+        if (valObj!=nil){
+            supplyAmountType = valObj;
+        }
+        
+        valObj = [options objectForKey:@"needAmountToLevel"];
+        if (valObj != nil){
+            NSNumber *nmVal = valObj;
+            needAmountToLevel = [nmVal boolValue];
+        }
     }
     
     NSArray * allNutrientAry = [self getAllNutrientColumns];
@@ -671,14 +716,25 @@
                     [fsdRow addObject:[NSNumber numberWithInt:0]];
                 }else{
                     double foodSupplyAmount = [nmNutrientDRI doubleValue]/[nmFoodNutrientAmount doubleValue] * 100.0;
-                    if (foodSupplyAmount < 1000.0){
-                        //[fsdRow addObject:[NSNumber numberWithInt:foodSupplyAmount]];
-                        int supplyLevel = (foodSupplyAmount + 100) / 100;
-                        [fsdRow addObject:[NSNumber numberWithInt:supplyLevel]];
+                    if ([@"originalAndUpLimit" isEqualToString:supplyAmountType]){
+                        if (foodSupplyAmount >= 1000.0){
+                            foodSupplyAmount = 0;
+                        }else{
+                            //do nothing
+                        }
+                    }else{//@"original"
+                        //do nothing
+                    }
+                    if (needAmountToLevel){
+                        foodSupplyAmount = round((foodSupplyAmount + 100) / 100.0);
                     }else{
-                        [fsdRow addObject:[NSNumber numberWithInt:0]];
+                        //do nothing
+                    }
+                    if (needRoundAmount){
+                        foodSupplyAmount = round(foodSupplyAmount);
                     }
                     
+                    [fsdRow addObject:[NSNumber numberWithDouble:foodSupplyAmount]];
                 }
             }
 
@@ -930,13 +986,35 @@
 
 
 
+//------------------------
 
 
 
 
 
+-(NSString *)convertSelectSqlToCsv_withSelectSql:(NSString*)sqlSelect andCsvFileName:(NSString*)csvFileName
+{
+    NSMutableArray *rowAry = [NSMutableArray arrayWithCapacity:1000];
+    NSMutableArray *columnNames = nil;
+    FMResultSet *rs = [_db executeQuery:sqlSelect];
+    while ([rs next]) {
+        if (columnNames == nil){
+            //取固定顺序的所有列名
+            columnNames = rs.columnNameArray;
+        }
+        NSArray *row = rs.resultArray;
+        [rowAry addObject:row];
+    }
+    NSLog(@"queryUSDADataByIds ret:\n%@",rowAry);
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:5];
+    [retData setObject:columnNames forKey:@"columnNames"];
+    [retData setObject:rowAry forKey:@"rows"];
 
-
+    
+    
+    return nil;
+}
 
 
 
