@@ -60,8 +60,9 @@
 
     LZDBAccess *db = [[LZDBAccess alloc]init];
     [db myInitWithDbFilePath:destDbFilePath andIfNeedClear:FALSE];
-    [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
-    [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
+//    [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
+//    [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
+    [db convertFood_Supply_DRI_AmountWithExtraInfoToCsv:@"Food_Supply_DRI_Amount_Extra.csv"];
 
 }
 

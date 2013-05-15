@@ -7,7 +7,7 @@
 #import "LZConst.h"
 
 #import "LZDBAccess.h"
-//#import "LZUtility.h"
+#import "LZUtility.h"
 #import "LZConstants.h"
 
 
@@ -989,10 +989,7 @@
 //------------------------
 
 
-
-
-
--(NSString *)convertSelectSqlToCsv_withSelectSql:(NSString*)sqlSelect andCsvFileName:(NSString*)csvFileName
+-(NSDictionary*)queryDataAndMetaDataBySelectSql:(NSString*)sqlSelect
 {
     NSMutableArray *rowAry = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray *columnNames = nil;
@@ -1005,18 +1002,33 @@
         NSArray *row = rs.resultArray;
         [rowAry addObject:row];
     }
-    NSLog(@"queryUSDADataByIds ret:\n%@",rowAry);
+    NSLog(@"queryDataBySelectSql get columnNames=\n%@,\nrows=\n%@",columnNames,rowAry);
     
-    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:5];
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:3];
     [retData setObject:columnNames forKey:@"columnNames"];
-    [retData setObject:rowAry forKey:@"rows"];
-
-    
-    
-    return nil;
+    [retData setObject:rowAry forKey:@"rows2D"];
+    return retData;
 }
 
 
+-(NSString *)convertSelectSqlToCsv_withSelectSql:(NSString*)sqlSelect andCsvFileName:(NSString*)csvFileName
+{
+    NSDictionary* data = [self queryDataAndMetaDataBySelectSql:sqlSelect];
+    NSArray *columnNames = [data objectForKey:@"columnNames"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    return [LZUtility convert2DArrayToCsv:csvFileName withColumnNames:columnNames andRows2D:rows2D];
+}
+
+-(NSString*)convertFood_Supply_DRI_AmountWithExtraInfoToCsv:(NSString*)csvFileName
+{
+    NSString *sqlQuery = @""
+    "select c.CnCaption, c.CnType, a.*"
+    "  from Food_Supply_DRI_Amount a join FoodCnDescription c on a.NDB_No=c.NDB_No"
+    "  order by a.NDB_No"
+    ;
+    return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
+}
 
 
 
