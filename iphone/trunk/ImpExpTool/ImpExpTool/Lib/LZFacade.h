@@ -13,5 +13,7 @@
 +(void)test1;
 +(void)test2;
 +(void)generateInitialData;
++(void)generateInitialDataToAllInOne;
++(void)generateVariousCsv;
 
 @end

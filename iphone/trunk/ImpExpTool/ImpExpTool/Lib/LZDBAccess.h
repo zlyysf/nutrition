@@ -50,7 +50,7 @@
 
 -(NSString *)convertSelectSqlToCsv_withSelectSql:(NSString*)sqlSelect andCsvFileName:(NSString*)csvFileName;
 -(NSString*)convertFood_Supply_DRI_AmountWithExtraInfoToCsv:(NSString*)csvFileName;
-
+-(NSString*)convertCnFoodNutritionWithExtraInfoToCsv:(NSString*)csvFileName;
 
 @end
 

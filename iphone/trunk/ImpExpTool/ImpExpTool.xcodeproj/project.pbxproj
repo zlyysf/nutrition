@@ -42,6 +42,7 @@
 		0882412917422F4100E71E6E /* Food_Limit.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882412817422F4100E71E6E /* Food_Limit.xls */; };
 		0882412B1743342700E71E6E /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882412A1743342600E71E6E /* readme.txt */; };
 		0882412D174368E900E71E6E /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 0882412C174368E900E71E6E /* CustomDB.dat */; };
+		088241411744C59300E71E6E /* dataAll.dat in Resources */ = {isa = PBXBuildFile; fileRef = 088241401744C59300E71E6E /* dataAll.dat */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -113,6 +114,7 @@
 		0882412817422F4100E71E6E /* Food_Limit.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Food_Limit.xls; path = ../../../data/Food_Limit.xls; sourceTree = "<group>"; };
 		0882412A1743342600E71E6E /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		0882412C174368E900E71E6E /* CustomDB.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomDB.dat; path = ../nutrition/nutrition/Resource/CustomDB.dat; sourceTree = "<group>"; };
+		088241401744C59300E71E6E /* dataAll.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = dataAll.dat; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -261,6 +263,7 @@
 		088240D41740A88700E71E6E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				088241401744C59300E71E6E /* dataAll.dat */,
 				088240D51740A88700E71E6E /* ABBREV.xls */,
 				088240D91740A88700E71E6E /* customUSDAdataV2.xls */,
 			);
@@ -364,6 +367,7 @@
 				0882412917422F4100E71E6E /* Food_Limit.xls in Resources */,
 				0882412B1743342700E71E6E /* readme.txt in Resources */,
 				0882412D174368E900E71E6E /* CustomDB.dat in Resources */,
+				088241411744C59300E71E6E /* dataAll.dat in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,6 +536,7 @@
 				088240A51740924300E71E6E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

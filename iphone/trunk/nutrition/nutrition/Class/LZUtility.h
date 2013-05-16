@@ -22,7 +22,7 @@
 +(NSMutableString *) convert2DArrayToHtmlTable:(NSArray*)ary2D withColumnNames:(NSArray*)columnNames;
 +(NSMutableArray*)generateEmptyArray:(int)count;
 
-
++(NSString *)copyResourceToDocumentWithResFileName:(NSString*)resFileName andDestFileName:(NSString*)destFileName;
 
 
 @end

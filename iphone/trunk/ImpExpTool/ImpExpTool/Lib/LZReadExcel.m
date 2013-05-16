@@ -14,7 +14,7 @@
 
 -(void)myInitDBConnectionWithFilePath: (NSString *)dbFileNameOrPath andIfNeedClear:(BOOL) needClear{
     dbCon = [[LZDBAccess alloc]init];
-    [dbCon myInitWithDbFilePath:dbFileNameOrPath andIfNeedClear:true];
+    [dbCon myInitWithDbFilePath:dbFileNameOrPath andIfNeedClear:needClear];
 }
 -(LZDBAccess*)getDBconnection
 {
@@ -98,7 +98,8 @@
 }
 
 /*
- 注意由于读excel数据相对比较慢，几千行数据要很久。测试调试时在readUSDA_ABBREV中有代码限制。
+ 注意由于读excel数据相对比较慢，几千行数据要很久。测试调试时在readUSDA_ABBREV中有代码限制，这里使用了ifDebug标记来控制。
+ 其作用是把USDA的ABBREV.xlsx中的数据导入到sqlite中，对应的表名为FoodNutrition。而USDAFullDataInSqlite.dat是一份已经导好的数据。
  */
 -(void)convertExcelToSqlite_USDA_ABBREV_withDebugFlag : (BOOL)ifDebug
 {
@@ -187,7 +188,9 @@
 }
 
 
-
+/*
+ 其作用是把female的DRI数据，即Female_DRI.xls中的数据导入到sqlite中，对应的表名为DRIFemale。
+ */
 -(void)convertDRIFemaleDataFromExcelToSqlite
 {
     NSDictionary *data = [self readDRIdata_fromExcelFile:@"Female_DRI.xls"];
@@ -201,6 +204,9 @@
     [db createDRItable:tableName andColumnNames:columns];
     [db insertToDRItable:tableName andColumnNames:columns andData:rows2D];    
 }
+/*
+ 其作用是把male的DRI数据，即Male_DRI.xls中的数据导入到sqlite中，对应的表名为DRIMale。
+ */
 -(void)convertDRIMaleDataFromExcelToSqlite
 {
     NSDictionary *data = [self readDRIdata_fromExcelFile:@"Male_DRI.xls"];
@@ -283,7 +289,11 @@
     return retData;
 }
 
-
+/*
+ 这是导增加了额外信息的食物营养成分数据。
+ 其作用是把Food.xls中包含的食物的中文描述数据，结合已经导入到sqlite的USDAFullDataInSqlite.dat的全部食物的营养成分表的数据，生成一份包含部分食物但附加了中文信息的数据，对应表为FoodNutritionCustom。
+ 这个FoodNutritionCustom表其实可以通过 FoodNutrition 和 FoodCnDescription 经过join得到，甚至根本用不着这个表。但由于历史原因，目前实际使用的是它。
+ */
 -(void)generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2
 {
     NSLog(@"generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2 begin");
@@ -347,6 +357,9 @@
     return retData;
 }
 
+/*
+ 其作用是把食物的中文描述信息从Food.xls导入到sqlite中，对应的表名为FoodCnDescription。
+ */
 -(void)convertExcelToSqlite_FoodCnDescription
 {
     NSDictionary *data = [self readFoodCnDescription];
@@ -410,6 +423,9 @@
     return retData;
 }
 
+/*
+ 其作用是把食物摄取的符合情理的上下限值表导入，即Food_Limit.xls中的数据导入到sqlite中，对应的表名为FoodLimit。
+ */
 -(void)convertExcelToSqlite_FoodLimit
 {
     NSDictionary *data = [self readFoodLimit];

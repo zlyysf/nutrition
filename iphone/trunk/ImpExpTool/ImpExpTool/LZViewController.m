@@ -22,7 +22,9 @@
 	// Do any additional setup after loading the view, typically from a nib.
 //    [LZFacade test1];
 //    [LZFacade generateInitialData];
-    [LZFacade test2];
+//    [LZFacade test2];
+//    [LZFacade generateInitialDataToAllInOne];
+    [LZFacade generateVariousCsv];
 }
 
 - (void)didReceiveMemoryWarning

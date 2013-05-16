@@ -62,7 +62,7 @@
                 s1 = [cell description];
             }
             if (s1 != nil){
-                if ([s1 rangeOfString:@"\""].location == NSNotFound){
+                if ([s1 rangeOfString:@"\""].location != NSNotFound){
                     NSString *s2 = [s1 stringByReplacingOccurrencesOfString:@"\"" withString:@"\"\""];
                     [cellStr appendString:s2];
                 }else{
@@ -167,7 +167,30 @@
     return ary;
 }
 
-
++(NSString *)copyResourceToDocumentWithResFileName:(NSString*)resFileName andDestFileName:(NSString*)destFileName
+{
+    NSString *originDBPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:resFileName];
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *destFilePath = [documentsDirectory stringByAppendingPathComponent:destFileName];
+    
+    NSFileManager * defFileManager = [NSFileManager defaultManager];
+    NSError *err = nil;
+    if ([defFileManager fileExistsAtPath:destFilePath]){
+        [defFileManager removeItemAtPath:destFilePath error:&err];
+        if (err != nil){
+            NSLog(@"copyResourceToDocumentWithResFileName, defFileManager removeItemAtPath err=%@",err);
+        }
+    }
+    
+    [defFileManager copyItemAtPath:originDBPath toPath:destFilePath error:&err];
+    if (err != nil){
+        NSLog(@"copyResourceToDocumentWithResFileName, defFileManager copyItemAtPath err=%@",err);
+        return nil;
+    }
+    return destFilePath;
+}
 
 
 

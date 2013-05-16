@@ -592,11 +592,17 @@
 
 }
 
+/*
+ 生成Food_Supply_DRI_Common表中的数据，参考readme
+ */
 -(void)generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:(BOOL)needClear
 {
     [self createTable_Food_Supply_DRI_Common_withIfNeedDropTable:needClear];
     [self initTable_Food_Supply_DRI_Common_withIfNeedClearTable:needClear];
 }
+/*
+ 生成Food_Supply_DRI_Amount表中的数据，参考readme
+ */
 -(void)generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:(BOOL)needClear
 {
     [self createTable_Food_Supply_DRI_Amount_withIfNeedDropTable:needClear];
@@ -1024,6 +1030,11 @@
     return [LZUtility convert2DArrayToCsv:csvFileName withColumnNames:columnNames andRows2D:rows2D];
 }
 
+/*
+ 把Food_Supply_DRI_Amount中的内容，以及食物的中文描述导出成一个csv文件。
+ 注意调用前需要Food_Supply_DRI_Amount表中已经有数据。
+ 虽然似乎可以通过sqlite的客户端工具进行，但是时不时出程序死掉的问题，还是自己做了个工具。
+ */
 -(NSString*)convertFood_Supply_DRI_AmountWithExtraInfoToCsv:(NSString*)csvFileName
 {
     NSString *sqlQuery = @""
@@ -1033,6 +1044,29 @@
     ;
     return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
 }
+
+/*
+ 结合FoodCnDescription和FoodNutrition表中的内容导出成一个csv文件。这个文件的数据实际上与Food.xls相同。
+ 这需要先做工作保证那两张表在同一个sqlite文件中。
+ 有了这个工具后，Food.xls就只需提供FoodCnDescription所需列，而不必担心看FoodNutrition表对应的excel档缺乏中文信息了。
+ 虽然似乎可以通过sqlite的客户端工具进行，但是时不时出程序死掉的问题，还是自己做了个工具。
+ */
+-(NSString*)convertCnFoodNutritionWithExtraInfoToCsv:(NSString*)csvFileName
+{
+    NSString *sqlQuery = @""
+    "select c.CnCaption, c.CnType, f.*"
+    "  from FoodNutrition f join FoodCnDescription c on f.NDB_No=c.NDB_No"
+    "  order by f.NDB_No"
+    ;
+    return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
+}
+
+
+
+
+
+
+
 
 
 
