@@ -10,4 +10,19 @@
 
 @interface LZViewController : UIViewController
 
+- (IBAction)btnTestClick:(id)sender;
+
+- (IBAction)btnInitDbClick:(id)sender;
+
+- (IBAction)btnGenAllDataClick:(id)sender;
+
+- (IBAction)btnGenCsvClick:(id)sender;
+
+
+
+
+
+
+
+
 @end
