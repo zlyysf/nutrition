@@ -101,8 +101,10 @@
     NSLog(@"convert2DArrayToHtmlTable enter");
     
     NSMutableString *strTable = nil;
-    if (ary2D == nil || ary2D.count == 0)
-        return strTable;
+    if (ary2D == nil || ary2D.count == 0){
+        strTable = [NSMutableString stringWithString:@"<div>NONE</div>"];
+        return strTable;//return nil will cause following error
+    }
     strTable = [NSMutableString stringWithCapacity:1000*ary2D.count];
     [strTable appendString:@"\n<table style=\"border=1px;\">\n"];
     

@@ -21,8 +21,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-//    [LZTest1 test1];
-    [LZTest1 test2];
+    [LZTest1 test1];
+//    [LZTest1 test2];
 
 }
 

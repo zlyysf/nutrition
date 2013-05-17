@@ -15,7 +15,9 @@
 +(void)test1
 {
 
-    [self.class caseUser1_randseed_1];
+//    [self.class caseUser1_randseed_1];
+    
+    [self.class caseUser1_preTaken_4full];
 }
 
 
@@ -289,6 +291,65 @@
                                          [NSNumber numberWithDouble:50.0],@"01123",//egg
                                          [NSNumber numberWithDouble:100.0],@"10219",//pork
                                          [NSNumber numberWithDouble:100.0],@"20450",//rice
+                                         nil];
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],@"sex", [NSNumber numberWithInt:age],@"age",
+                              [NSNumber numberWithFloat:weight],@"weight", [NSNumber numberWithFloat:height],@"height",
+                              [NSNumber numberWithInt:activityLevel],@"activityLevel", nil];
+    BOOL notAllowSameFood = TRUE;
+    BOOL randomSelectFood = FALSE;
+    int randomRangeSelectFood = 0;
+    BOOL needLimitNutrients = FALSE;
+    int limitRecommendFoodCount = 0;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:notAllowSameFood],@"notAllowSameFood",
+                             [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
+                             [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
+                             [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
+                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+                             nil];
+    
+    NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
+    NSString *csvFileName = [NSString stringWithFormat:@"recommend_%@.csv",paramsDigestStr ];
+    NSString *htmlFileName = [NSString stringWithFormat:@"recommend_%@.html",paramsDigestStr ];
+    NSLog(@"csvFileName=%@\nhtmlFileName=%@",csvFileName,htmlFileName);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
+    NSString *strHtml = [rf generateHtml_RecommendFoodForEnoughNuitrition:retDict];
+    strHtml = [LZUtility getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
+    [rf formatCsv_RecommendFoodForEnoughNuitrition:csvFileName withRecommendResult:retDict];
+    
+}
+
++(void)caseUser1_preTaken_4full
+{
+    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:120.0],@"01123",//egg
+                                         [NSNumber numberWithDouble:100.0],@"10219",//pork
+                                         [NSNumber numberWithDouble:200.0],@"20450",//rice
+                                         
+                                         [NSNumber numberWithDouble:200.0],@"16014",//heidou
+                                         [NSNumber numberWithDouble:100.0],@"09148",//mihoutao
+                                         [NSNumber numberWithDouble:200.0],@"11457",//bocai
+                                         [NSNumber numberWithDouble:50.0],@"12036",//guazi
+                                         
+                                         [NSNumber numberWithDouble:100.0],@"10110",//zhugan
+                                         [NSNumber numberWithDouble:100.0],@"01005",//nailao
+                                         [NSNumber numberWithDouble:100.0],@"15008",//liyu
+                                         
+                                         
                                          nil];
     int sex = 0;//Male
     int age = 25;
