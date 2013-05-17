@@ -15,5 +15,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *weightTextField;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *activityLevelSegmentControl;
 @property (strong, nonatomic) IBOutlet UILabel *activityLevelBriefLabel;
+@property (strong, nonatomic) IBOutlet UITextField *personsTextField;
+@property (strong, nonatomic) IBOutlet UITextField *daysTextField;
 
 @end

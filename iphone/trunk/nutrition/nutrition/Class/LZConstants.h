@@ -16,7 +16,8 @@
 #define LZUserWeightKey @"LZUserWeightKey"//float kg
 #define LZUserActivityLevelKey @"LZUserActivityLevelKey"//int 0 means Sedentary,1 means Low Active,2 means Active,3 means Very Active
 #define LZUserDailyIntakeKey @"LZUserDailyIntakeKey" //a dictionary for user daily intake
-
+#define LZPlanPersonsKey @"LZPersonAmountKey"//int
+#define LZPlanDaysKey @"LZPlanDaysKey"//int
 
 #define LZSettingKey_randomSelectFood @"randomSelectFood" //BOOL
 #define LZSettingKey_randomRangeSelectFood @"randomRangeSelectFood" //int

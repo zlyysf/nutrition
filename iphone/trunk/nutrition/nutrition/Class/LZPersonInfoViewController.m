@@ -30,7 +30,19 @@
     self.activityLevelSegmentControl.selectedSegmentIndex = 0;
     self.activityLevelBriefLabel.text = @"Daily activities such as housework or gardening";
 }
-
+- (void)viewWillAppear:(BOOL)animated
+{
+    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+    if (planPerson != NULL)
+    {
+        self.personsTextField.text = [NSString stringWithFormat:@"%d",[planPerson intValue]];
+    }
+    if (planDays != NULL)
+    {
+        self.daysTextField.text = [NSString stringWithFormat:@"%d",[planDays intValue]];
+    }
+}
 - (IBAction)activityLevelValueChanged:(UISegmentedControl *)sender {
     switch (sender.selectedSegmentIndex)
     {
@@ -53,31 +65,43 @@
 - (IBAction)doneButtonTapped:(id)sender
 {
     //LZUser
-    if ([self.weightTextField.text length] == 0)
+//    if ([self.weightTextField.text length] == 0)
+//    {
+//        [self alertWithTitle:nil msg:@"需要输入体重"];
+//        return;
+//    }
+//    if ([self.heightTextField.text length] == 0)
+//    {
+//        [self alertWithTitle:nil msg:@"需要输入身高"];
+//        return;
+//    }
+//    if ([self.ageTextField.text length] == 0)
+//    {
+//        [self alertWithTitle:nil msg:@"需要输入年龄"];
+//        return;
+//    }
+//    float weight = [self.weightTextField.text floatValue];
+//    float height = [self.heightTextField.text floatValue];
+//    int age =[self.ageTextField.text integerValue];
+//    int sex = self.sexSegmentControl.selectedSegmentIndex;
+//    int activityLevel = self.activityLevelSegmentControl.selectedSegmentIndex;
+//    [[NSUserDefaults standardUserDefaults]setFloat:weight forKey:LZUserWeightKey];
+//    [[NSUserDefaults standardUserDefaults]setFloat:height forKey:LZUserHeightKey];
+//    [[NSUserDefaults standardUserDefaults]setInteger:age forKey:LZUserAgeKey];
+//    [[NSUserDefaults standardUserDefaults]setInteger:sex forKey:LZUserSexKey];
+//    [[NSUserDefaults standardUserDefaults]setInteger:activityLevel forKey:LZUserActivityLevelKey];
+    if ([self.personsTextField.text length] == 0 ||[self.personsTextField.text intValue]<=0)
     {
-        [self alertWithTitle:nil msg:@"需要输入体重"];
+        [self alertWithTitle:nil msg:@"需要输入正确人数"];
         return;
     }
-    if ([self.heightTextField.text length] == 0)
+    if ([self.daysTextField.text length] == 0||[self.daysTextField.text intValue]<=0)
     {
-        [self alertWithTitle:nil msg:@"需要输入身高"];
+        [self alertWithTitle:nil msg:@"需要输入正确天数"];
         return;
     }
-    if ([self.ageTextField.text length] == 0)
-    {
-        [self alertWithTitle:nil msg:@"需要输入年龄"];
-        return;
-    }
-    float weight = [self.weightTextField.text floatValue];
-    float height = [self.heightTextField.text floatValue];
-    int age =[self.ageTextField.text integerValue];
-    int sex = self.sexSegmentControl.selectedSegmentIndex;
-    int activityLevel = self.activityLevelSegmentControl.selectedSegmentIndex;
-    [[NSUserDefaults standardUserDefaults]setFloat:weight forKey:LZUserWeightKey];
-    [[NSUserDefaults standardUserDefaults]setFloat:height forKey:LZUserHeightKey];
-    [[NSUserDefaults standardUserDefaults]setInteger:age forKey:LZUserAgeKey];
-    [[NSUserDefaults standardUserDefaults]setInteger:sex forKey:LZUserSexKey];
-    [[NSUserDefaults standardUserDefaults]setInteger:activityLevel forKey:LZUserActivityLevelKey];
+    [[NSUserDefaults standardUserDefaults]setInteger:[self.personsTextField.text intValue] forKey:LZPlanPersonsKey];
+    [[NSUserDefaults standardUserDefaults]setInteger:[self.daysTextField.text intValue] forKey:LZPlanDaysKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
     [self.navigationController popViewControllerAnimated:YES];
 }
