@@ -34,6 +34,7 @@
 - (NSArray *)selectTableByEqualFilter:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue;
 
 - (NSDictionary *)getDRIbyGender:(NSString*)gender andAge:(int)age ;
+-(NSDictionary*)getAbstractPersonDRIs;
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN;
 
 -(NSArray *) getAllFood;

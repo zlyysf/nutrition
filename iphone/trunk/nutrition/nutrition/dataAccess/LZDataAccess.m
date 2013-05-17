@@ -285,7 +285,22 @@
 }
 
 
-
+-(NSDictionary*)getAbstractPersonDRIs
+{
+    NSDictionary *maleDRIs = [self getStandardDRIs:0 age:25 weight:70 height:175 activityLevel:1];
+    NSDictionary *femaleDRIs = [self getStandardDRIs:1 age:25 weight:70 height:175 activityLevel:1];
+    NSMutableDictionary *personDRIs = [NSMutableDictionary dictionaryWithCapacity:maleDRIs.count];
+    NSArray *keys = maleDRIs.allKeys;
+    for(int i=0; i<keys.count; i++){
+        NSString* key = keys[i];
+        NSNumber *nmM = [maleDRIs objectForKey:key];
+        NSNumber *nmF = [femaleDRIs objectForKey:key];
+        double avg = ([nmM doubleValue]+[nmF doubleValue])/2.0;
+        [personDRIs setObject:[NSNumber numberWithDouble:avg] forKey:key];
+    }
+    NSLog(@"getAbstractPersonDRIs ret:\n%@",personDRIs);
+    return personDRIs;
+}
 
 
 

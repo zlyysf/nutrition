@@ -14,7 +14,7 @@
 
 
 
-//-(NSMutableDictionary *) recommendFoodForEnoughNuitritionWithPreIntake:(NSDictionary*)takenFoodAmountDict sex:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
+
 -(NSMutableDictionary *) recommendFoodForEnoughNuitritionWithPreIntake:(NSDictionary*)takenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSDictionary*)options
 {
     NSNumber *nmSex = [userInfo objectForKey:@"sex"];
@@ -33,6 +33,45 @@
     float height = [nmHeight floatValue];
     int activityLevel = [nmActivityLevel intValue];
     
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *DRIsDict = [da getStandardDRIs:sex age:age weight:weight height:height activityLevel:activityLevel];
+    
+    NSMutableDictionary *retDict = [self recommendFoodForEnoughNuitritionWithPreIntake:takenFoodAmountDict andDRIs:DRIsDict andOptions:options];
+    NSArray *userInfos = [NSArray arrayWithObjects:@"sex(0 for M)",[NSNumber numberWithInt:sex],@"age",[NSNumber numberWithInt:age],
+                          @"weight(kg)",[NSNumber numberWithFloat:weight],@"height(cm)",[NSNumber numberWithFloat:height],@"activityLevel",[NSNumber numberWithInt:activityLevel],nil];
+    [retDict setObject:userInfos forKey:@"UserInfo"];
+    return retDict;
+}
+
+-(NSMutableDictionary *) recommendFood_AbstractPerson:(NSDictionary*)params withDecidedFoods:(NSDictionary*)decidedFoodAmountDict andOptions:(NSDictionary*)options
+{
+    NSNumber *nm_personCount = [params objectForKey:@"personCount"];
+    uint personCount = [nm_personCount unsignedIntValue];
+    assert(personCount>0);
+    NSNumber *nm_dayCount = [params objectForKey:@"dayCount"];
+    uint dayCount = [nm_dayCount unsignedIntValue];
+    assert(dayCount>0);
+    
+    uint multiCount = personCount*dayCount;
+    
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *DRIsDict = [da getAbstractPersonDRIs];
+    NSArray * nutrientsInDRI = [DRIsDict allKeys];
+    for(int i=0; i<nutrientsInDRI.count; i++){
+        NSString * nutrient = nutrientsInDRI[i];
+        NSNumber * oneDRIval = [DRIsDict objectForKey:nutrient];
+        double dval2 = [oneDRIval doubleValue]*multiCount;
+        [DRIsDict setValue:[NSNumber numberWithDouble:dval2]  forKey:nutrient];
+    }
+    
+    NSMutableDictionary *retDict = [self recommendFoodForEnoughNuitritionWithPreIntake:decidedFoodAmountDict andDRIs:DRIsDict andOptions:options];
+    return retDict;
+
+}
+
+-(NSMutableDictionary *) recommendFoodForEnoughNuitritionWithPreIntake:(NSDictionary*)takenFoodAmountDict andDRIs:(NSDictionary*)DRIsDict andOptions:(NSDictionary*)options
+{
+
     BOOL notAllowSameFood = TRUE;//这是一个策略标志位，偏好食物的多样化的标志位，即当选取食物补充营养时，优先选取以前没有用过的食物。
     BOOL randomSelectFood = TRUE;
     int randomRangeSelectFood = 0;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
@@ -41,7 +80,7 @@
     
     uint randSeed = arc4random();
     NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%d",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
-
+    
     if(options != nil){
         NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
         if (nmFlag_notAllowSameFood != nil)
@@ -79,8 +118,8 @@
     //这里列出的营养素有专门而简单的食物补充，通过我们预置的那些食物反而不好补充
     NSDictionary *nutrientsNotFromCustomFood =[ NSDictionary dictionaryWithObjectsAndKeys:@"1",@"Water_(g)",@"1",@"Sodium_(mg)", nil];
     //这里的营养素最后再计算补充
-//    Choline_Tot_ (mg) 胆碱 最少需要187g的蛋来补充
-//    Vit_D_(µg) 只有鲤鱼等才有效补充
+    //    Choline_Tot_ (mg) 胆碱 最少需要187g的蛋来补充
+    //    Vit_D_(µg) 只有鲤鱼等才有效补充
     NSMutableArray *lastSupplyCalNutrients = [NSMutableArray arrayWithObjects:@"Vit_D_(µg)",@"Choline_Tot_ (mg)", @"Carbohydrt_(g)",@"Energ_Kcal", nil];
     //这是需求中规定只计算哪些营养素
     NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
@@ -94,8 +133,7 @@
         takenFoodIDs = [takenFoodAmountDict allKeys];
     //NSArray *takenFoodAttrAry = [da getFoodByIds:takenFoodIDs];
     NSArray *takenFoodAttrAry = [da getFoodAttributesByIds:takenFoodIDs];
-
-    NSDictionary *DRIsDict = [da getStandardDRIs:sex age:age weight:weight height:height activityLevel:activityLevel];
+    
     NSMutableDictionary *recommendFoodAmountDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
     NSMutableDictionary *recommendFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
     NSMutableDictionary *foodSupplyAmountDict = [NSMutableDictionary dictionaryWithDictionary:takenFoodAmountDict];//包括takenFoodAmountDict 和 recommendFoodAmountDict。与nutrientSupplyDict对应。
@@ -168,7 +206,7 @@
     }//if (takenFoodAttrAry != nil )
     
     NSMutableArray* foodSupplyNutrientSeqs = [NSMutableArray arrayWithCapacity:100];
-
+    
     //对每个还需补足的营养素进行计算
     //while (nutrientNameDictToCal.allKeys.count>0) {
     while (TRUE) {
@@ -250,7 +288,7 @@
         }
         
         while (TRUE) {//对每个食物计算补当前营养素的情况
-        //for(int i=0; i<foodsToSupplyOneNutrient.count; i++){
+            //for(int i=0; i<foodsToSupplyOneNutrient.count; i++){
             //NSDictionary *food = foodsToSupplyOneNutrient[i];
             NSDictionary *food = nil;
             if (normalFoodsToSupplyOneNutrient.count > 0){
@@ -342,7 +380,7 @@
                 //这个营养素已经补足，可以到外层循环计算下一个营养素了
                 break;
             }
-        //}//for i
+            //}//for i
         }//对每个食物计算补当前营养素的情况
     }//while (nutrientNameDictToCal.allKeys.count>0)
     
@@ -360,9 +398,6 @@
         [retDict setObject:limitedNutrientDictCanBeCal forKey:@"limitedNutrientDictCanBeCal"];
     }
     
-    NSArray *userInfos = [NSArray arrayWithObjects:@"sex(0 for M)",[NSNumber numberWithInt:sex],@"age",[NSNumber numberWithInt:age],
-        @"weight(kg)",[NSNumber numberWithFloat:weight],@"height(cm)",[NSNumber numberWithFloat:height],@"activityLevel",[NSNumber numberWithInt:activityLevel],nil];
-    [retDict setObject:userInfos forKey:@"UserInfo"];
     [retDict setObject:options forKey:@"optionsDict"];
     [retDict setObject:foodSupplyNutrientSeqs forKey:@"foodSupplyNutrientSeqs"];//2D array
     
@@ -381,6 +416,13 @@
     }
     return retDict;
 }
+
+
+
+
+
+
+
 
 
 
@@ -696,7 +738,9 @@
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------";
     [rows addObject:row];
-    [rows addObject:userInfos];
+    if(userInfos!=nil){
+        [rows addObject:userInfos];
+    }
     [rows addObject:otherInfos];
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------";
@@ -775,7 +819,7 @@
     NSDictionary *dictNutrientLackWhenInitialTaken = [recmdDict objectForKey:@"NutrientLackWhenInitialTaken"];
     NSDictionary *limitedNutrientDictCanBeCal = [recmdDict objectForKey:@"limitedNutrientDictCanBeCal"];
     
-    NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];//2D array
+    //NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];//2D array
     NSDictionary *options = [recmdDict objectForKey:@"optionsDict"];
     NSArray *foodSupplyNutrientSeqs = [recmdDict objectForKey:@"foodSupplyNutrientSeqs"];//2D array
     
