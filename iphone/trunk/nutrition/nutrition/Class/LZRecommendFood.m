@@ -37,6 +37,10 @@
     BOOL randomSelectFood = TRUE;
     int randomRangeSelectFood = 0;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
+    BOOL needUseFoodLimitTableWhenCal = TRUE;
+    
+    uint randSeed = arc4random();
+    NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%d",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
 
     if(options != nil){
         NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
@@ -51,13 +55,19 @@
         if (nm_randomRangeSelectFood != nil)
             randomRangeSelectFood = [nm_randomRangeSelectFood intValue];
         
+        NSNumber *nm_randSeed = [options objectForKey:@"randSeed"];
+        if (nm_randSeed != nil)
+            randSeed = [nm_randSeed unsignedIntValue];
+        
         NSNumber *nmFlag_needLimitNutrients = [options objectForKey:@"needLimitNutrients"];
         if (nmFlag_needLimitNutrients != nil)
             needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
-
+        
+        NSNumber *nmFlag_needUseFoodLimitTableWhenCal = [options objectForKey:@"needUseFoodLimitTableWhenCal"];
+        if (nmFlag_needUseFoodLimitTableWhenCal != nil)
+            needUseFoodLimitTableWhenCal = [nmFlag_needUseFoodLimitTableWhenCal boolValue];
     }
-    uint randSeed = arc4random();
-    NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%d",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
+    
     srandom(randSeed);
     
     int upperLimit = 1000; // 1000 g
@@ -294,7 +304,7 @@
             if (toAddForFood - upperLimit > nearZero){//要补的食物的量过多，当食物所含该种营养素的量太少时发生。这时只取到上限值，再找其他食物来补充。
                 toAddForFood = upperLimit;
             }
-            if (dFoodUpperLimit > 0 && toAddForFood - dFoodUpperLimit > nearZero){
+            if (needUseFoodLimitTableWhenCal && dFoodUpperLimit > 0 && toAddForFood - dFoodUpperLimit > nearZero){
                 toAddForFood = dFoodUpperLimit;
             }
             toAddForNutrient = toAddForNutrient - toAddForFood / 100.0 * [nmNutrientContentOfFood doubleValue];
@@ -361,6 +371,7 @@
                            @"randomSelectFood",[NSNumber numberWithBool:randomSelectFood],
                            @"notAllowSameFood",[NSNumber numberWithBool:notAllowSameFood],
                            @"needLimitNutrients",[NSNumber numberWithBool:needLimitNutrients],
+                           @"needUseFoodLimitTableWhenCal",[NSNumber numberWithBool:needUseFoodLimitTableWhenCal],
                            nil];
     [retDict setObject:otherInfos forKey:@"OtherInfo"];
     
@@ -772,11 +783,11 @@
     NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:@"TakenFoodAmount"];//food NO as key
     NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:@"TakenFoodAttr"];//food NO as key
     
-    int limitRecommendFoodCount = 2;//0;//4;//只限制显示的
-    if ([options objectForKey:@"limitRecommendFoodCount"]!=nil){
-        NSNumber *nm_limitRecommendFoodCount = [options objectForKey:@"limitRecommendFoodCount"];
-        limitRecommendFoodCount = [nm_limitRecommendFoodCount intValue];
-    }
+    int limitRecommendFoodCount = 0;//0;//4;//只限制显示的
+//    if ([options objectForKey:@"limitRecommendFoodCount"]!=nil){
+//        NSNumber *nm_limitRecommendFoodCount = [options objectForKey:@"limitRecommendFoodCount"];
+//        limitRecommendFoodCount = [nm_limitRecommendFoodCount intValue];
+//    }
     
     
     NSMutableDictionary *foodSupplyFirstChooseNutrientLogDict = [NSMutableDictionary dictionary];

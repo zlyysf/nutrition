@@ -193,7 +193,14 @@
 }
 
 
-
++(NSString*)getFullHtml_withPart:(NSString*)htmlPart
+{
+    NSMutableString * str = [NSMutableString string];
+    [str appendString:@"<html><head><meta charset=\"UTF-8\"></head><body>\n"];
+    [str appendString:htmlPart];
+    [str appendString:@"\n</body></html>"];
+    return str;
+}
 
 
 

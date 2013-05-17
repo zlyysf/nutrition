@@ -24,5 +24,7 @@
 
 +(NSString *)copyResourceToDocumentWithResFileName:(NSString*)resFileName andDestFileName:(NSString*)destFileName;
 
++(NSString*)getFullHtml_withPart:(NSString*)htmlPart;
+
 
 @end

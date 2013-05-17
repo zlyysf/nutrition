@@ -186,6 +186,12 @@
     NSURL *baseURL = [NSURL URLWithString:sBaseURL];
     [self.recommendWebViewAsTable loadHTMLString:strHtml baseURL:baseURL];
     
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:@"recommend1.html"];
+    strHtml = [self.class getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
 }
 
 - (void)didReceiveMemoryWarning
