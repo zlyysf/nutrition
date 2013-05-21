@@ -26,5 +26,9 @@
 
 +(NSString*)getFullHtml_withPart:(NSString*)htmlPart;
 
++(NSMutableArray*)arrayMinusSet_withArray:(NSMutableArray*)srcAry andMinusSet:(NSSet*)minusSet;
++(NSMutableArray*)arrayIntersectSet_withArray:(NSMutableArray*)ary andSet:(NSSet*)set;
+
+
 
 @end

@@ -205,6 +205,34 @@
 }
 
 
++(NSMutableArray*)arrayMinusSet_withArray:(NSMutableArray*)srcAry andMinusSet:(NSSet*)minusSet
+{
+    if (srcAry.count == 0 || minusSet.count == 0)
+        return srcAry;
+    NSMutableArray *toBeMinusAry = srcAry;
+    for(int i=toBeMinusAry.count-1; i>=0; i--){
+        NSString *item = toBeMinusAry[i];
+        if ([minusSet containsObject:item]){
+            [toBeMinusAry removeObjectAtIndex:i];
+        }
+    }
+    return toBeMinusAry;
+}
+
++(NSMutableArray*)arrayIntersectSet_withArray:(NSMutableArray*)ary andSet:(NSSet*)set
+{
+    if (ary.count == 0)
+        return ary;
+    if (set.count == 0)
+        return [NSMutableArray array];
+    for(int i=ary.count-1; i>=0; i--){
+        NSString *item = ary[i];
+        if (![set containsObject:item]){
+            [ary removeObjectAtIndex:i];
+        }
+    }
+    return ary;
+}
 
 
 

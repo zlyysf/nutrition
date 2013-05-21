@@ -419,6 +419,10 @@
 {
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
     [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)] \n"];
+    [sqlStr appendString:@"D.["];
+    [sqlStr appendString:nutrientAsColumnName];
+    [sqlStr appendString:@"] AS RichLevel \n"];
+
     [sqlStr appendString:@"  FROM FoodNutritionCustom F join Food_Supply_DRI_Common D on F.NDB_No=D.NDB_No \n"];
     [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
     [sqlStr appendString:@" WHERE "];
