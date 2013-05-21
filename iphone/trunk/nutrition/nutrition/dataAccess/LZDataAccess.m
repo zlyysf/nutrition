@@ -8,6 +8,7 @@
 
 #import "LZDataAccess.h"
 #import "LZConstants.h"
+#import "LZUtility.h"
 
 @implementation LZDataAccess
 
@@ -467,7 +468,7 @@
 
 /*
  idAry 的元素需要是字符串类型。
- 返回值是dictionary，包含一个一维数组和一个二维数组。
+ 返回值是array。
  */
 -(NSArray *)getFoodByIds:(NSArray *)idAry
 {
@@ -494,7 +495,7 @@
 
 /*
  idAry 的元素需要是字符串类型。
- 返回值是dictionary，包含一个一维数组和一个二维数组。
+ 返回值是array。
  */
 -(NSArray *)getFoodAttributesByIds:(NSArray *)idAry
 {
@@ -522,8 +523,77 @@
 }
 
 
+/*
+ 用以支持得到nutrients的信息数据，并可以通过普通的nutrient的列名取到相应的nutrient信息。
+ */
+-(NSMutableDictionary*)getNutrientInfoAs2LevelDictionary_withNutrientIds:(NSArray*)nutrientIds
+{
+    NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds begin");
+    if (nutrientIds==nil || nutrientIds.count ==0)
+        return nil;
+    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:nutrientIds.count];
+    for(int i=0; i<nutrientIds.count; i++){
+        [placeholderAry addObject:@"?"];
+    }
+    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
+    [sqlStr appendString:@"SELECT * FROM NutritionInfo WHERE NutrientID in ("];
+    [sqlStr appendString:placeholdersStr];
+    [sqlStr appendString:@")"];
+    
+    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:nutrientIds];
+    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+    NSMutableDictionary *dic2Level = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:@"NutrientID" andDicArray:dataAry];
+
+    NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds ret:\n%@",dic2Level);
+    return dic2Level;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

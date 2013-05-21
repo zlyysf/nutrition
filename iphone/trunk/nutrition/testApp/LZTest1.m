@@ -9,6 +9,8 @@
 #import "LZTest1.h"
 #import "LZDataAccess.h"
 #import "LZRecommendFood.h"
+#import "LZUtility.h"
+
 
 @implementation LZTest1
 
@@ -19,7 +21,9 @@
     
 //    [self.class caseUser1_preTaken_4full];
     
-    [self.class caseMiltipleUser1_simple];
+//    [self.class caseMiltipleUser1_simple];
+    
+    [self.class testDA1];
 }
 
 
@@ -816,4 +820,43 @@
 
 
 
+
+
+
+
++(void)testDA1
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSArray *nutrientNames = [LZRecommendFood getCustomNutrients];
+    [da getNutrientInfoAs2LevelDictionary_withNutrientIds:nutrientNames];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
