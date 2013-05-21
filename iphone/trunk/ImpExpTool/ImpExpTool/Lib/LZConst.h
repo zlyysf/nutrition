@@ -19,4 +19,9 @@
 #define TABLE_NAME_FoodLimit @"FoodLimit"
 #define TABLE_NAME_FoodCnDescription @"FoodCnDescription"
 
+#define TABLE_NAME_NutritionInfo @"NutritionInfo"
+#define COLUMN_NAME_NutrientID @"NutrientID"
+
+
+
 #endif

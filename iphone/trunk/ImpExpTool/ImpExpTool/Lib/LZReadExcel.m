@@ -445,7 +445,71 @@
 
 
 
+-(NSDictionary *)readNutritionInfo
+{
+    NSString *fileName = @"NutrientInfo.xls";
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
+    NSLog(@"in readNutritionInfo, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+    int row=1, col=1, columnCount=0,dataRowCount=0;
+    DHcell *cell = nil;
+    NSMutableArray * columns = [NSMutableArray arrayWithCapacity:100];
+    
+    cell = [reader cellInWorkSheetIndex:0 row:row col:col];
+    while (cell.type != cellBlank) {
+        NSString *columnCaption = cell.str;
+        [columns addObject:columnCaption];
+        columnCount ++;
+        col++;
+        cell = [reader cellInWorkSheetIndex:0 row:row col:col];
+    }
+    NSLog(@"in readNutritionInfo, columnCount=%d, columns=%@",columnCount,columns);
+    
+    row = 2, col = 1;
+    cell = [reader cellInWorkSheetIndex:0 row:row col:col];
+    while (cell.type != cellBlank) {
+        dataRowCount ++;
+        row++;
+        cell = [reader cellInWorkSheetIndex:0 row:row col:col];
+    }
+    NSLog(@"in readNutritionInfo, rowCount=%d",dataRowCount);
+    
+    NSMutableArray * rows2D = [NSMutableArray arrayWithCapacity:dataRowCount];
+    for(int i=0; i<dataRowCount; i++){
+        NSMutableArray * rowData = [NSMutableArray arrayWithCapacity:columnCount];
+        for(int j=0; j<columnCount; j++){
+            row = 2+i, col = 1+j;
+            NSLog(@"in readNutritionInfo, row=%d, col=%d",row,col);
+            
+            cell = [reader cellInWorkSheetIndex:0 row:row col:col];
+            [rowData addObject:cell.str];
+        }
+        [rows2D addObject:rowData];
+    }
+    NSLog(@"in readNutritionInfo, rows2D=%@",rows2D);
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+    [retData setObject:columns forKey:@"columns"];
+    [retData setObject:rows2D forKey:@"rows2D"];
+    return retData;
+}
 
+
+-(void)convertExcelToSqlite_readNutritionInfo
+{
+    NSDictionary *data = [self readNutritionInfo];
+    NSArray *columns = [data objectForKey:@"columns"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    NSString *tableName = TABLE_NAME_NutritionInfo;// @"NutritionInfo";
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    [db createTable_withTableName:tableName withColumnNames:columns withRows2D:rows2D withPrimaryKey:COLUMN_NAME_NutrientID andIfNeedDropTable:true];
+    [db insertToTable_withTableName:tableName withColumnNames:columns andRows2D:rows2D andIfNeedClearTable:true];
+}
 
 
 

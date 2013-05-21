@@ -29,6 +29,7 @@
 //    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
 //    [workRe convertExcelToSqlite_FoodLimit];
 //    [workRe convertExcelToSqlite_FoodCnDescription];
+    [workRe convertExcelToSqlite_readNutritionInfo];
     
     
 //    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];
@@ -91,22 +92,21 @@
 +(void)generateInitialData
 {
     NSString *destDbFileName = @"data1.dat";
-    
-    [self.class generateInitialDataWithFileNameOrPath:destDbFileName];
+    LZReadExcel *workRe = [[LZReadExcel alloc]init];
+    [workRe myInitDBConnectionWithFilePath:destDbFileName andIfNeedClear:true];
+    [self.class generateInitialDataWithFileNameOrPath:workRe];
 
 }
 
-+(void)generateInitialDataWithFileNameOrPath:(NSString *)dbFileNameOrPath
++(void)generateInitialDataWithFileNameOrPath:(LZReadExcel *)workRe
 {
-    LZReadExcel *workRe = [[LZReadExcel alloc]init];
 
-    [workRe myInitDBConnectionWithFilePath:dbFileNameOrPath andIfNeedClear:true];
-    
     [workRe convertDRIFemaleDataFromExcelToSqlite];
     [workRe convertDRIMaleDataFromExcelToSqlite];
     [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
     [workRe convertExcelToSqlite_FoodLimit];
     [workRe convertExcelToSqlite_FoodCnDescription];
+    [workRe convertExcelToSqlite_readNutritionInfo];
     
     LZDBAccess *db = [workRe getDBconnection];
     [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
@@ -125,8 +125,10 @@
         NSLog(@"generateInitialDataToAllInOne fail, destDbFilePath == nil");
         return;
     }
+    LZReadExcel *workRe = [[LZReadExcel alloc]init];
+    [workRe myInitDBConnectionWithFilePath:destDbFilePath andIfNeedClear:FALSE];
     
-    [self.class generateInitialDataWithFileNameOrPath:destDbFilePath];
+    [self.class generateInitialDataWithFileNameOrPath:workRe];
 
 }
 

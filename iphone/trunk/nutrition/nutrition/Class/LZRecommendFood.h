@@ -11,6 +11,7 @@
 
 @interface LZRecommendFood : NSObject
 
++(NSArray*)getCustomNutrients;
 
 -(NSMutableDictionary *) recommendFoodForEnoughNuitritionWithPreIntake:(NSDictionary*)takenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSDictionary*)options;
 
