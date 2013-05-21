@@ -7,7 +7,7 @@
 //
 
 #import "LZRecommendFoodController.h"
-#define kProgressBarRect CGRectMake(2,2,220,14)
+#define kProgressBarRect CGRectMake(2,2,220,16)
 #import "LZRecommendFoodCell.h"
 #import "LZNutritionCell.h"
 @interface LZRecommendFoodController ()
@@ -43,17 +43,17 @@
         LZNutritionCell *cell = (LZNutritionCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionCell"];
         if (indexPath.row == 0)
         {
-            [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:0.5 withRadius:7];
+            [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:0.5 withRadius:8];
             [cell adjustLabelAccordingToProgress:0.5];
         }
         else if(indexPath.row == 1)
         {
-           [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor blueColor] progress:0.8 withRadius:7];
+           [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor blueColor] progress:0.8 withRadius:8];
             [cell adjustLabelAccordingToProgress:0.8];
         }
         else
         {
-           [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor redColor] progress:0.3 withRadius:7];
+           [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor redColor] progress:0.3 withRadius:8];
             [cell adjustLabelAccordingToProgress:0.3];
         }
         

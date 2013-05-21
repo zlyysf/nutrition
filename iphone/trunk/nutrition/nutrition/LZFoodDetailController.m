@@ -7,7 +7,7 @@
 //
 
 #import "LZFoodDetailController.h"
-#define kProgressBarRect CGRectMake(2,2,220,14)
+#define kProgressBarRect CGRectMake(2,2,220,16)
 #import "LZNutritionSupplyCell.h"
 #import "LZStandardContentCell.h"
 @interface LZFoodDetailController ()
@@ -48,7 +48,7 @@
         UIView *tempView = [[UIView alloc] init];
         [cell setBackgroundView:tempView];
         [cell setBackgroundColor:[UIColor clearColor]];
-        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:0.5 withRadius:7];
+        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:0.5 withRadius:8];
         return cell;
     }
     else

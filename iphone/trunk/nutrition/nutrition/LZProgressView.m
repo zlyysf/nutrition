@@ -31,32 +31,32 @@
 -(void) drawWithShadows :(CGContextRef) myContext
 {
     CGSize          myShadowOffset = CGSizeMake (0,  1);
-    float           myColorValues[] = {0, 0, 0, 1.0};
-    CGColorRef      myColor;
-    CGColorSpaceRef myColorSpace;
+//    float           myColorValues[] = {0, 0, 0, 1.0};
+//    CGColorRef      myColor;
+//    CGColorSpaceRef myColorSpace;
     CGContextSaveGState(myContext);
-    CGContextSetShadow (myContext, myShadowOffset, 5);
+    CGContextSetShadow (myContext, myShadowOffset, 2);
     
+    // Your drawing code here
+//    myColorSpace = CGColorSpaceCreateDeviceRGB ();
+//    myColor = CGColorCreate (myColorSpace, myColorValues);
+//    CGContextSetShadowWithColor (myContext, myShadowOffset, 5, myColor);
     // Your drawing code here
     [drawingBackColor setStroke];//设置线条颜色
     [drawingBackColor setFill]; //设置填充颜色
     //画圆角矩形
     [self drawRectangle:drawingRect withRadius:drawingRadius ];
-  
-    myColorSpace = CGColorSpaceCreateDeviceRGB ();
-    myColor = CGColorCreate (myColorSpace, myColorValues);
-    CGContextSetShadowWithColor (myContext, myShadowOffset, 5, myColor);
-    // Your drawing code here
+    
 
 
-    CGColorRelease (myColor);
-    CGColorSpaceRelease (myColorSpace);
+//    CGColorRelease (myColor);
+//    CGColorSpaceRelease (myColorSpace);
     CGContextRestoreGState(myContext);
-    CGRect fillRect = CGRectMake(drawingRect.origin.x+1, drawingRect.origin.y+1, (drawingRect.size.width-2)*drawingProgress, drawingRect.size.height-2);
+    CGRect fillRect = CGRectMake(drawingRect.origin.x+2, drawingRect.origin.y+2, (drawingRect.size.width-4)*drawingProgress, drawingRect.size.height-4);
 
     [drawingFillColor setStroke];
     [drawingFillColor setFill];
-    [self drawRectangle:fillRect withRadius:drawingRadius-1];
+    [self drawRectangle:fillRect withRadius:drawingRadius-2];
 
 }
 - (void)drawProgressForRect:(CGRect)rect backgroundColor:(UIColor*)backColor fillColor:(UIColor*)fillColor progress:(float)progress withRadius:(float)radius
