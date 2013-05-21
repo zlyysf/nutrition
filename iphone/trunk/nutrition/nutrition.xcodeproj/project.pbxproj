@@ -50,6 +50,15 @@
 		0882403E173A7E7400E71E6E /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882403D173A7E7400E71E6E /* readme.txt */; };
 		088241301743873500E71E6E /* LZSecretSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0882412F1743873500E71E6E /* LZSecretSettingViewController.m */; };
 		088241441744DE8000E71E6E /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
+		5F03D347174B9241008EFB60 /* LZRecommendFoodController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D33A174B923F008EFB60 /* LZRecommendFoodController.m */; };
+		5F03D348174B9241008EFB60 /* LZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D33C174B923F008EFB60 /* LZProgressView.m */; };
+		5F03D349174B9241008EFB60 /* LZRecommendFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D33E174B923F008EFB60 /* LZRecommendFoodCell.m */; };
+		5F03D34A174B9241008EFB60 /* LZNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D340174B9240008EFB60 /* LZNutritionCell.m */; };
+		5F03D34B174B9241008EFB60 /* LZFoodDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D342174B9240008EFB60 /* LZFoodDetailController.m */; };
+		5F03D34C174B9241008EFB60 /* LZNutritionSupplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D344174B9241008EFB60 /* LZNutritionSupplyCell.m */; };
+		5F03D34D174B9241008EFB60 /* LZStandardContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D346174B9241008EFB60 /* LZStandardContentCell.m */; };
+		5F03D350174B924B008EFB60 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F03D34E174B924B008EFB60 /* background@2x.png */; };
+		5F03D351174B924B008EFB60 /* been@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F03D34F174B924B008EFB60 /* been@2x.png */; };
 		5F3338A9172A407E0096E7AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338A8172A407E0096E7AE /* UIKit.framework */; };
 		5F3338AB172A407E0096E7AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AA172A407E0096E7AE /* Foundation.framework */; };
 		5F3338AD172A407E0096E7AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AC172A407E0096E7AE /* CoreGraphics.framework */; };
@@ -106,6 +115,22 @@
 		0882412F1743873500E71E6E /* LZSecretSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZSecretSettingViewController.m; path = Class/LZSecretSettingViewController.m; sourceTree = "<group>"; };
 		088241421744DE8000E71E6E /* LZTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZTest1.h; sourceTree = "<group>"; };
 		088241431744DE8000E71E6E /* LZTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZTest1.m; sourceTree = "<group>"; };
+		5F03D339174B923F008EFB60 /* LZRecommendFoodController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZRecommendFoodController.h; sourceTree = "<group>"; };
+		5F03D33A174B923F008EFB60 /* LZRecommendFoodController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZRecommendFoodController.m; sourceTree = "<group>"; };
+		5F03D33B174B923F008EFB60 /* LZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZProgressView.h; sourceTree = "<group>"; };
+		5F03D33C174B923F008EFB60 /* LZProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZProgressView.m; sourceTree = "<group>"; };
+		5F03D33D174B923F008EFB60 /* LZRecommendFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZRecommendFoodCell.h; sourceTree = "<group>"; };
+		5F03D33E174B923F008EFB60 /* LZRecommendFoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZRecommendFoodCell.m; sourceTree = "<group>"; };
+		5F03D33F174B9240008EFB60 /* LZNutritionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZNutritionCell.h; sourceTree = "<group>"; };
+		5F03D340174B9240008EFB60 /* LZNutritionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZNutritionCell.m; sourceTree = "<group>"; };
+		5F03D341174B9240008EFB60 /* LZFoodDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZFoodDetailController.h; sourceTree = "<group>"; };
+		5F03D342174B9240008EFB60 /* LZFoodDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZFoodDetailController.m; sourceTree = "<group>"; };
+		5F03D343174B9240008EFB60 /* LZNutritionSupplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZNutritionSupplyCell.h; sourceTree = "<group>"; };
+		5F03D344174B9241008EFB60 /* LZNutritionSupplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZNutritionSupplyCell.m; sourceTree = "<group>"; };
+		5F03D345174B9241008EFB60 /* LZStandardContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZStandardContentCell.h; sourceTree = "<group>"; };
+		5F03D346174B9241008EFB60 /* LZStandardContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZStandardContentCell.m; sourceTree = "<group>"; };
+		5F03D34E174B924B008EFB60 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
+		5F03D34F174B924B008EFB60 /* been@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "been@2x.png"; sourceTree = "<group>"; };
 		5F3338A5172A407E0096E7AE /* nutrition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nutrition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3338A8172A407E0096E7AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F3338AA172A407E0096E7AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -276,6 +301,20 @@
 				5F3338B7172A407E0096E7AE /* LZAppDelegate.h */,
 				5F3338B8172A407E0096E7AE /* LZAppDelegate.m */,
 				5F3338C0172A407E0096E7AE /* MainStoryboard.storyboard */,
+				5F03D339174B923F008EFB60 /* LZRecommendFoodController.h */,
+				5F03D33A174B923F008EFB60 /* LZRecommendFoodController.m */,
+				5F03D33B174B923F008EFB60 /* LZProgressView.h */,
+				5F03D33C174B923F008EFB60 /* LZProgressView.m */,
+				5F03D33D174B923F008EFB60 /* LZRecommendFoodCell.h */,
+				5F03D33E174B923F008EFB60 /* LZRecommendFoodCell.m */,
+				5F03D33F174B9240008EFB60 /* LZNutritionCell.h */,
+				5F03D340174B9240008EFB60 /* LZNutritionCell.m */,
+				5F03D341174B9240008EFB60 /* LZFoodDetailController.h */,
+				5F03D342174B9240008EFB60 /* LZFoodDetailController.m */,
+				5F03D343174B9240008EFB60 /* LZNutritionSupplyCell.h */,
+				5F03D344174B9241008EFB60 /* LZNutritionSupplyCell.m */,
+				5F03D345174B9241008EFB60 /* LZStandardContentCell.h */,
+				5F03D346174B9241008EFB60 /* LZStandardContentCell.m */,
 				5F3338C3172A407F0096E7AE /* LZViewController.h */,
 				5F3338C4172A407F0096E7AE /* LZViewController.m */,
 				5F3338CB172A597A0096E7AE /* LZPersonInfoViewController.h */,
@@ -311,6 +350,8 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5F03D34E174B924B008EFB60 /* background@2x.png */,
+				5F03D34F174B924B008EFB60 /* been@2x.png */,
 				085C8D4D17336744001A1ABB /* CustomDB.dat */,
 				5F3338D5172A5BE50096E7AE /* Home_Background@2x.jpg */,
 			);
@@ -409,6 +450,8 @@
 				5F3338D6172A5BE50096E7AE /* Home_Background@2x.jpg in Resources */,
 				085C8D4E17336744001A1ABB /* CustomDB.dat in Resources */,
 				0882403E173A7E7400E71E6E /* readme.txt in Resources */,
+				5F03D350174B924B008EFB60 /* background@2x.png in Resources */,
+				5F03D351174B924B008EFB60 /* been@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,6 +506,13 @@
 				085C8D4817336701001A1ABB /* LZDataAccess.m in Sources */,
 				085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */,
 				088241301743873500E71E6E /* LZSecretSettingViewController.m in Sources */,
+				5F03D347174B9241008EFB60 /* LZRecommendFoodController.m in Sources */,
+				5F03D348174B9241008EFB60 /* LZProgressView.m in Sources */,
+				5F03D349174B9241008EFB60 /* LZRecommendFoodCell.m in Sources */,
+				5F03D34A174B9241008EFB60 /* LZNutritionCell.m in Sources */,
+				5F03D34B174B9241008EFB60 /* LZFoodDetailController.m in Sources */,
+				5F03D34C174B9241008EFB60 /* LZNutritionSupplyCell.m in Sources */,
+				5F03D34D174B9241008EFB60 /* LZStandardContentCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
