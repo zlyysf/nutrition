@@ -441,6 +441,34 @@
 
 
 //---------------------------------------
+/*
+ 这是主接口函数,使用补充食物新策略
+ */
+-(NSMutableDictionary *) recommendFood2_AbstractPerson:(NSDictionary*)params withDecidedFoods:(NSDictionary*)decidedFoodAmountDict andOptions:(NSDictionary*)options
+{
+    NSNumber *nm_personCount = [params objectForKey:@"personCount"];
+    uint personCount = [nm_personCount unsignedIntValue];
+    assert(personCount>0);
+    NSNumber *nm_dayCount = [params objectForKey:@"dayCount"];
+    uint dayCount = [nm_dayCount unsignedIntValue];
+    assert(dayCount>0);
+    
+    uint multiCount = personCount*dayCount;
+    uint personDayCount = multiCount;
+    NSDictionary *params2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithUnsignedInt:personDayCount],@"personDayCount",
+                            nil];
+    
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *DRIsDict = [da getAbstractPersonDRIs];
+    
+    NSMutableDictionary *retDict = [self recommendFood2WithPreIntake:decidedFoodAmountDict andDRIs:DRIsDict andParams:params2 andOptions:options];
+    return retDict;
+    
+}
+/*
+ 这是使用补充食物新策略的一个外部接口函数
+ */
 -(NSMutableDictionary *) recommendFood2WithPreIntake:(NSDictionary*)takenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andParams:(NSDictionary*)params andOptions:(NSDictionary*)options
 {
     NSNumber *nmSex = [userInfo objectForKey:@"sex"];
@@ -555,7 +583,7 @@
     NSMutableSet *nutrientSetToCal = [NSMutableSet setWithArray:DRIsDict.allKeys];//以DRI中所含营养素为初始值进行过滤
     [nutrientSetToCal minusSet:nutrientSetNotCal];
     if (needLimitNutrients){
-        [nutrientSetToCal minusSet:limitedNutrientSetCanBeCal];
+        [nutrientSetToCal intersectSet:limitedNutrientSetCanBeCal];
     }
     assert(nutrientSetToCal.count>0);
     assert([nutrientSetToCal isSubsetOfSet:nutrientNameSetOrdered]);//确认那个手工得到的全集还有效
@@ -570,7 +598,8 @@
     [nutrientNameAryToCal addObjectsFromArray:nutrientArrayLastCal];//这里再把nutrientArrayLastCal的补回来
     //到这里 nutrientNameAryToCal 中的值是既经过过滤，又经过排序的了。可以用于下面的计算了
     assert(nutrientNameAryToCal.count>0);
-    
+
+    NSLog(@"nutrientNameAryToCal begin,=%@", [nutrientNameAryToCal componentsJoinedByString:@","]);
     
     NSArray *takenFoodIDs = nil;
     if (takenFoodAmountDict!=nil && takenFoodAmountDict.count>0)
@@ -647,11 +676,13 @@
             double toAdd = [nmTotalNeed1Unit doubleValue]*personDayCount - [nmSupplied doubleValue];
             if (toAdd <= nearZero){
                 [nutrientNameAryToCal removeObjectAtIndex:i];
+                NSLog(@"Already Full for %@, removed",nutrientName);
             }
         }
         if (nutrientNameAryToCal.count == 0){
             break;
         }
+        NSLog(@"nutrientNameAryToCal cal-ing,=%@", [nutrientNameAryToCal componentsJoinedByString:@","]);
         
         NSString *nutrientNameToCal = nil;
         int idxOfNutrientNameToCal = 0;
@@ -670,7 +701,9 @@
                 idxOfNutrientNameToCal = i;
             }
         }
+        NSLog(@"maxLackNutrientName=%@, maxNutrientLackRatio=%.2f, idxOfNutrientNameToCal=%d",maxLackNutrientName,maxNutrientLackRatio,idxOfNutrientNameToCal);
         nutrientNameToCal = maxLackNutrientName;//已经取到待计算的营养素，但不从待计算集合中去掉，因为一次计算未必能够补充满这种营养素，由于有上限表之类的限制。并且注意下次找到的最需补充的营养素不一定是现在这个了。
+        
 
         //当前有需要计算的营养素
         NSNumber *nmSupplied = nutrientSupplyDict[nutrientNameToCal];
@@ -801,6 +834,7 @@
             [foodSupplyNutrientSeq addObject:[food objectForKey:@"CnCaption"]];
             [foodSupplyNutrientSeq addObject:[food objectForKey:@"Shrt_Desc"]];
             [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];
+            NSLog(@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]);
         
             [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
             
@@ -808,7 +842,9 @@
                 //这次没有把这个营养素补充完，但现在由于补充了这种食物后，当前营养素不一定是最缺的，可以计算下一个最缺的营养素而不必非要把当前的营养素补充完
             }else{
                 //这个营养素已经补足，可以到外层循环计算下一个营养素了
+                NSLog(@"food supply Full for %@, idx=%d, removing, nutrientNameAryToCal=%@",nutrientNameToCal,idxOfNutrientNameToCal,[nutrientNameAryToCal componentsJoinedByString:@" , "]);
                 [nutrientNameAryToCal removeObjectAtIndex:idxOfNutrientNameToCal];
+                
             }
 
         //}//while ////选取一个食物，来补当前营养素

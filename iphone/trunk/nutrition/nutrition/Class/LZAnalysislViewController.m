@@ -159,6 +159,12 @@
     if ( [userDefaults objectForKey:LZSettingKey_limitRecommendFoodCount]!=nil ){
         limitRecommendFoodCount = [userDefaults integerForKey:LZSettingKey_limitRecommendFoodCount];
     }
+    
+    uint personCount = 1;
+    uint dayCount = 1;
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithUnsignedInt:personCount],@"personCount",
+                            [NSNumber numberWithUnsignedInt:dayCount],@"dayCount", nil];
 
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -168,7 +174,8 @@
                              [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
                              [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
                              nil];
-    NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
+    //NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
+    NSMutableDictionary *retDict = [rf recommendFood2_AbstractPerson:params withDecidedFoods:dailyIntake andOptions:options];
     NSArray * ary2D = [rf generateData2D_RecommendFoodForEnoughNuitrition:retDict];
     NSString * detailStr = [rf convert2DArrayToText:ary2D];
     txtCalculateInfo = detailStr;

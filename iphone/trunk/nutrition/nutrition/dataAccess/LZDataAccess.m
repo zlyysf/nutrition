@@ -419,7 +419,7 @@
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN
 {
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)] \n"];
+    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)], \n"];
     [sqlStr appendString:@"D.["];
     [sqlStr appendString:nutrientAsColumnName];
     [sqlStr appendString:@"] AS RichLevel \n"];
