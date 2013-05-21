@@ -82,7 +82,7 @@
     CGMutablePathRef pathRef = [self pathwithFrame:rect withRadius:radius];
     
     CGContextAddPath(context, pathRef);
-    CGContextDrawPath(context,kCGPathFillStroke);
+    CGContextDrawPath(context,kCGPathFill);
     
     CGPathRelease(pathRef);
 }
