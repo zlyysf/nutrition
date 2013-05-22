@@ -10,5 +10,5 @@
 
 @interface LZFoodDetailController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
-
+@property (strong,nonatomic)NSArray *nutrientSupplyArray;
 @end

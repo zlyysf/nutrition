@@ -14,9 +14,10 @@
     UIColor *drawingFillColor;
     float drawingProgress;
     CGRect drawingRect;
-    float drawingRadius;
+    float drawingBackRadius;
+    float drawingFillRadius;
     BOOL needDisplay;
 }
 @property (nonatomic,strong)UILabel *contentLabel;
-- (void)drawProgressForRect:(CGRect)rect backgroundColor:(UIColor*)backColor fillColor:(UIColor*)fillColor progress:(float)progress withRadius:(float)radius;
+- (void)drawProgressForRect:(CGRect)rect backgroundColor:(UIColor*)backColor fillColor:(UIColor*)fillColor progress:(float)progress withBackRadius:(float)backRadius fillRadius:(float)fillRadius;
 @end

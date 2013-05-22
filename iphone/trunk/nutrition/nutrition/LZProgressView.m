@@ -45,28 +45,33 @@
     [drawingBackColor setStroke];//设置线条颜色
     [drawingBackColor setFill]; //设置填充颜色
     //画圆角矩形
-    [self drawRectangle:drawingRect withRadius:drawingRadius ];
+    [self drawRectangle:drawingRect withRadius:drawingBackRadius ];
     
 
 
 //    CGColorRelease (myColor);
 //    CGColorSpaceRelease (myColorSpace);
     CGContextRestoreGState(myContext);
+    if (drawingProgress <0.01f)
+    {
+        return;
+    }
     CGRect fillRect = CGRectMake(drawingRect.origin.x+2, drawingRect.origin.y+2, (drawingRect.size.width-4)*drawingProgress, drawingRect.size.height-4);
 
     [drawingFillColor setStroke];
     [drawingFillColor setFill];
-    [self drawRectangle:fillRect withRadius:drawingRadius-2];
+    [self drawRectangle:fillRect withRadius:drawingFillRadius];
 
 }
-- (void)drawProgressForRect:(CGRect)rect backgroundColor:(UIColor*)backColor fillColor:(UIColor*)fillColor progress:(float)progress withRadius:(float)radius
+- (void)drawProgressForRect:(CGRect)rect backgroundColor:(UIColor*)backColor fillColor:(UIColor*)fillColor progress:(float)progress withBackRadius:(float)backRadius fillRadius:(float)fillRadius;
 {
     needDisplay = YES;
     drawingRect = rect;
     drawingBackColor = backColor;
     drawingFillColor = fillColor;
     drawingProgress = progress;
-    drawingRadius = radius;
+    drawingBackRadius = backRadius;
+    drawingFillRadius = fillRadius;
     [self setNeedsDisplay];
     //[self setNeedsLayout];
     

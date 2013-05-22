@@ -51,7 +51,7 @@
 //        [cell setBackgroundView:tempView];
 //        [cell setBackgroundColor:[UIColor clearColor]];
 
-        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:0.5 withRadius:8];
+        //[cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:0.5 withRadius:8];
         return cell;
     }
     else
