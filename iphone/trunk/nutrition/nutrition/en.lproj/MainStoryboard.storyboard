@@ -642,6 +642,8 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+                                            <outlet property="nutrientNameLabel" destination="kgT-JR-93n" id="rh9-md-EGU"/>
+                                            <outlet property="nutrientSupplyLabel" destination="TRQ-yq-SPS" id="g61-tT-iu7"/>
                                             <outlet property="nutritionProgressView" destination="n4i-AI-Rrx" id="xLY-dc-htF"/>
                                         </connections>
                                     </tableViewCell>
@@ -714,7 +716,6 @@
         <class className="LZDailyIntakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDailyIntakeViewController.h"/>
             <relationships>
-                <relationship kind="action" name="resetButtonTapped:"/>
                 <relationship kind="action" name="saveButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
@@ -743,6 +744,7 @@
         <class className="LZNutritionSupplyCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionSupplyCell.h"/>
             <relationships>
+                <relationship kind="outlet" name="nutrientNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
             </relationships>
         </class>

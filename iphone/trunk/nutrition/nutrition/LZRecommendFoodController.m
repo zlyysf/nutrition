@@ -152,7 +152,7 @@
     }
     else
     {
-        if(takenFoodArray ==nil || [takenFoodArray count]==0)
+        if(recommendFoodArray ==nil || [recommendFoodArray count]==0)
         {
             UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EmptyCell"];
             cell.textLabel.text = @"空";
@@ -212,9 +212,24 @@
 {
     if (indexPath.section == 0)
     {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
-        [self.navigationController pushViewController:foodDetailController animated:YES];
+        if(takenFoodArray ==nil || [takenFoodArray count]==0)
+        {
+            return;
+        }
+        else
+        {
+            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
+            NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
+            NSArray *nutrientSupplyArr = [[takenFoodDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
+            NSArray *nutrientStandardArr = [[takenFoodDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
+            NSString *foodName = [aFood objectForKey:@"Name"];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+            LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
+            foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
+            foodDetailController.nutrientStandardArray = nutrientStandardArr;
+            foodDetailController.title = foodName;
+            [self.navigationController pushViewController:foodDetailController animated:YES];
+        }
 
     }
     else if (indexPath.section == 1)
@@ -223,9 +238,24 @@
     }
     else
     {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
-        [self.navigationController pushViewController:foodDetailController animated:YES];
+        if(recommendFoodArray ==nil || [recommendFoodArray count]==0)
+        {
+            return;
+        }
+        else
+        {
+            NSDictionary *aFood = [recommendFoodArray objectAtIndex:indexPath.row];
+            NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
+            NSArray *nutrientSupplyArr = [[recommendFoodDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
+            NSArray *nutrientStandardArr = [[recommendFoodDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
+            NSString *foodName = [aFood objectForKey:@"Name"];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+            LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
+            foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
+            foodDetailController.nutrientStandardArray = nutrientStandardArr;
+            foodDetailController.title = foodName;
+            [self.navigationController pushViewController:foodDetailController animated:YES];
+        }
 
     }
 }

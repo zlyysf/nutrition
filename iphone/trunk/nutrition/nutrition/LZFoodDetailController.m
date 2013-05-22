@@ -15,7 +15,7 @@
 @end
 
 @implementation LZFoodDetailController
-
+@synthesize nutrientSupplyArray,nutrientStandardArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,11 +32,28 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    self.title = @"黄豆";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 3;
+    if (section == 0)
+    {
+        if (nutrientSupplyArray != nil && [nutrientSupplyArray count]!=0)
+        {
+            return [nutrientSupplyArray count];
+        }
+        else
+            return 0;
+    }
+    else
+    {
+        if (nutrientStandardArray != nil && [nutrientStandardArray count]!=0)
+        {
+            return [nutrientStandardArray count];
+        }
+        else
+            return 0;
+    }
+
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -47,6 +64,27 @@
     if (indexPath.section == 0)
     {
         LZNutritionSupplyCell *cell = (LZNutritionSupplyCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionSupplyCell"];
+        NSDictionary *aNutrient = [nutrientSupplyArray objectAtIndex:indexPath.row];
+        NSString *nutrientName = [aNutrient objectForKey:@"Name"];
+        cell.nutrientNameLabel.text = nutrientName;
+        NSNumber *percent = [aNutrient objectForKey:@"1foodSupply1NutrientRate"];
+        NSNumber *food1Supply1NutrientAmount = [aNutrient objectForKey:@"food1Supply1NutrientAmount"];
+        NSNumber *nutrientTotalDRI = [aNutrient objectForKey:@"nutrientTotalDRI"];
+        NSString *unit = [aNutrient objectForKey:@"Unit"];
+        float progress = [percent floatValue]>1.f ? 1.f :[percent floatValue];
+        float radius;
+        if (progress >0.03 )
+        {
+            radius = 6;
+        }
+        else
+        {
+            radius = 2;
+        }
+        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:progress withBackRadius:8.f fillRadius:radius];
+        //[cell adjustLabelAccordingToProgress:0.5];
+        cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%%,%d/%d (%@)",(int)(progress *100),[food1Supply1NutrientAmount intValue],[nutrientTotalDRI intValue ],unit];
+
 //        UIView *tempView = [[UIView alloc] init];
 //        [cell setBackgroundView:tempView];
 //        [cell setBackgroundColor:[UIColor clearColor]];
@@ -57,6 +95,10 @@
     else
     {
         LZStandardContentCell *cell = (LZStandardContentCell *)[tableView dequeueReusableCellWithIdentifier:@"LZStandardContentCell"];
+        NSDictionary *nutrientStandard = [nutrientStandardArray objectAtIndex:indexPath.row];
+        NSString *nutrientName = [nutrientStandard objectForKey:@"Name"];
+        NSNumber *foodNutrientContent = [nutrientStandard objectForKey:@"foodNutrientContent"];
+        NSString *unit = [nutrientStandard objectForKey:@"Unit"];
         if (indexPath.row == 0)
         {
             NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_top@2x" ofType:@"png"];
@@ -64,7 +106,7 @@
 
             [cell.cellBackgroundImageView setImage:cellTopImage];
         }
-        else if (indexPath.row == 2)
+        else if (indexPath.row == [nutrientStandardArray count]-1)
         {
             NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_bottom@2x" ofType:@"png"];
             UIImage * cellBottomImage = [UIImage imageWithContentsOfFile:path];
@@ -76,6 +118,9 @@
             UIImage * cellMiddleImage = [UIImage imageWithContentsOfFile:path];
             [cell.cellBackgroundImageView setImage:cellMiddleImage];
         }
+        cell.nutritionNameLabel.text = nutrientName;
+        cell.nutritionSupplyLabel.text = [NSString stringWithFormat:@"%.2f%@",[foodNutrientContent floatValue],unit];
+        
         return cell;
     }
 }
