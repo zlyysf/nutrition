@@ -541,6 +541,9 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+                                            <outlet property="foodImageView" destination="mS9-I5-2Ya" id="h0x-aU-Ssm"/>
+                                            <outlet property="foodNameLabel" destination="u6B-te-1O0" id="aqH-vr-2fT"/>
+                                            <outlet property="foodWeightlabel" destination="y6w-eZ-F7X" id="mZB-kF-RXH"/>
                                             <segue destination="G0c-hi-7d1" kind="push" id="7Qa-Rm-jYA"/>
                                         </connections>
                                     </tableViewCell>
@@ -574,6 +577,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+                                            <outlet property="nutritionNameLabel" destination="Zjx-NY-I9g" id="oqc-Iv-P4h"/>
                                             <outlet property="nutritionProgressView" destination="kbX-x6-LNw" id="YL0-eS-3q6"/>
                                             <outlet property="supplyPercentlabel" destination="8KV-2f-8iT" id="nqq-9c-Va4"/>
                                         </connections>
@@ -642,22 +646,26 @@
                                             <outlet property="nutritionProgressView" destination="n4i-AI-Rrx" id="xLY-dc-htF"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZStandardContentCell" rowHeight="44" id="8mG-XT-RE4" customClass="LZStandardContentCell">
-                                        <rect key="frame" x="0.0" y="106" width="320" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZStandardContentCell" rowHeight="30" id="8mG-XT-RE4" customClass="LZStandardContentCell">
+                                        <rect key="frame" x="0.0" y="106" width="320" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="29"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="mMJ-ZW-nAn">
+                                                    <rect key="frame" x="9" y="0.0" width="302" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="维生素A" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pmG-sF-0ZE">
-                                                    <rect key="frame" x="8" y="11" width="63" height="21"/>
+                                                    <rect key="frame" x="10" y="4" width="63" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="100g" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vZq-Ay-CaS">
-                                                    <rect key="frame" x="208" y="11" width="72" height="21"/>
+                                                    <rect key="frame" x="228" y="4" width="72" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -666,6 +674,11 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <connections>
+                                            <outlet property="cellBackgroundImageView" destination="mMJ-ZW-nAn" id="gEG-zV-DGR"/>
+                                            <outlet property="nutritionNameLabel" destination="pmG-sF-0ZE" id="yqq-hR-JEQ"/>
+                                            <outlet property="nutritionSupplyLabel" destination="vZq-Ay-CaS" id="4bV-L4-e3f"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -722,6 +735,7 @@
         <class className="LZNutritionCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionCell.h"/>
             <relationships>
+                <relationship kind="outlet" name="nutritionNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
                 <relationship kind="outlet" name="supplyPercentlabel" candidateClass="UILabel"/>
             </relationships>
@@ -752,6 +766,11 @@
         </class>
         <class className="LZRecommendFoodCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZRecommendFoodCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="foodImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="foodNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="foodWeightlabel" candidateClass="UILabel"/>
+            </relationships>
         </class>
         <class className="LZRecommendFoodController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZRecommendFoodController.h"/>
@@ -772,6 +791,11 @@
         </class>
         <class className="LZStandardContentCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZStandardContentCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="cellBackgroundImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="nutritionNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nutritionSupplyLabel" candidateClass="UILabel"/>
+            </relationships>
         </class>
         <class className="LZViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZViewController.h"/>

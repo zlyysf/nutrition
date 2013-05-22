@@ -10,4 +10,7 @@
 
 @interface LZRecommendFoodCell : UITableViewCell
 
+@property (strong, nonatomic) IBOutlet UIImageView *foodImageView;
+@property (strong, nonatomic) IBOutlet UILabel *foodNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *foodWeightlabel;
 @end

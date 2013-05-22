@@ -29,7 +29,9 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"background.png"]]];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.title = @"黄豆";
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -45,16 +47,35 @@
     if (indexPath.section == 0)
     {
         LZNutritionSupplyCell *cell = (LZNutritionSupplyCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionSupplyCell"];
-        UIView *tempView = [[UIView alloc] init];
-        [cell setBackgroundView:tempView];
-        [cell setBackgroundColor:[UIColor clearColor]];
+//        UIView *tempView = [[UIView alloc] init];
+//        [cell setBackgroundView:tempView];
+//        [cell setBackgroundColor:[UIColor clearColor]];
+
         [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:0.5 withRadius:8];
         return cell;
     }
     else
     {
         LZStandardContentCell *cell = (LZStandardContentCell *)[tableView dequeueReusableCellWithIdentifier:@"LZStandardContentCell"];
-        
+        if (indexPath.row == 0)
+        {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_top@2x" ofType:@"png"];
+            UIImage * cellTopImage = [UIImage imageWithContentsOfFile:path];
+
+            [cell.cellBackgroundImageView setImage:cellTopImage];
+        }
+        else if (indexPath.row == 2)
+        {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_bottomp@2x" ofType:@"png"];
+            UIImage * cellBottomImage = [UIImage imageWithContentsOfFile:path];
+            [cell.cellBackgroundImageView setImage:cellBottomImage];
+        }
+        else
+        {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_middle@2x" ofType:@"png"];
+            UIImage * cellMiddleImage = [UIImage imageWithContentsOfFile:path];
+            [cell.cellBackgroundImageView setImage:cellMiddleImage];
+        }
         return cell;
     }
 }
@@ -63,12 +84,12 @@
     if (indexPath.section == 0)
         return 84;
     else
-        return 44;
+        return 30;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 30;
+}
 //- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 //{
 //
