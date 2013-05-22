@@ -29,6 +29,8 @@
 
 -(NSMutableString*) generateHtml_RecommendFoodForEnoughNuitrition:(NSDictionary*)recmdDict;
 
+-(NSMutableDictionary*)formatRecommendResultForUI:(NSMutableDictionary *)recommendResult;
+
 @end
 
 
