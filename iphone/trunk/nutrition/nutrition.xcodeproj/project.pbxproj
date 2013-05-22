@@ -53,6 +53,8 @@
 		5F0122A8174C731900AC0156 /* cell_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122A5174C731900AC0156 /* cell_bottom@2x.png */; };
 		5F0122A9174C731900AC0156 /* cell_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122A6174C731900AC0156 /* cell_middle@2x.png */; };
 		5F0122AA174C731900AC0156 /* cell_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122A7174C731900AC0156 /* cell_top@2x.png */; };
+		5F0122AF174C83AF00AC0156 /* nav_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122AD174C83AF00AC0156 /* nav_bar@2x.png */; };
+		5F0122B0174C83AF00AC0156 /* section_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122AE174C83AF00AC0156 /* section_bar@2x.png */; };
 		5F03D347174B9241008EFB60 /* LZRecommendFoodController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D33A174B923F008EFB60 /* LZRecommendFoodController.m */; };
 		5F03D348174B9241008EFB60 /* LZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D33C174B923F008EFB60 /* LZProgressView.m */; };
 		5F03D349174B9241008EFB60 /* LZRecommendFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D33E174B923F008EFB60 /* LZRecommendFoodCell.m */; };
@@ -118,9 +120,11 @@
 		0882412F1743873500E71E6E /* LZSecretSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZSecretSettingViewController.m; path = Class/LZSecretSettingViewController.m; sourceTree = "<group>"; };
 		088241421744DE8000E71E6E /* LZTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZTest1.h; sourceTree = "<group>"; };
 		088241431744DE8000E71E6E /* LZTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZTest1.m; sourceTree = "<group>"; };
-		5F0122A5174C731900AC0156 /* cell_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_bottom@2x.png"; sourceTree = "<group>"; };
-		5F0122A6174C731900AC0156 /* cell_middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_middle@2x.png"; sourceTree = "<group>"; };
-		5F0122A7174C731900AC0156 /* cell_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cell_top@2x.png"; sourceTree = "<group>"; };
+		5F0122A5174C731900AC0156 /* cell_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_bottom@2x.png"; path = "nutrition/Resource/cell_bottom@2x.png"; sourceTree = "<group>"; };
+		5F0122A6174C731900AC0156 /* cell_middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_middle@2x.png"; path = "nutrition/Resource/cell_middle@2x.png"; sourceTree = "<group>"; };
+		5F0122A7174C731900AC0156 /* cell_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_top@2x.png"; path = "nutrition/Resource/cell_top@2x.png"; sourceTree = "<group>"; };
+		5F0122AD174C83AF00AC0156 /* nav_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nav_bar@2x.png"; path = "nutrition/Resource/nav_bar@2x.png"; sourceTree = "<group>"; };
+		5F0122AE174C83AF00AC0156 /* section_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "section_bar@2x.png"; path = "nutrition/Resource/section_bar@2x.png"; sourceTree = "<group>"; };
 		5F03D339174B923F008EFB60 /* LZRecommendFoodController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZRecommendFoodController.h; sourceTree = "<group>"; };
 		5F03D33A174B923F008EFB60 /* LZRecommendFoodController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZRecommendFoodController.m; sourceTree = "<group>"; };
 		5F03D33B174B923F008EFB60 /* LZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZProgressView.h; sourceTree = "<group>"; };
@@ -135,8 +139,8 @@
 		5F03D344174B9241008EFB60 /* LZNutritionSupplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZNutritionSupplyCell.m; sourceTree = "<group>"; };
 		5F03D345174B9241008EFB60 /* LZStandardContentCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZStandardContentCell.h; sourceTree = "<group>"; };
 		5F03D346174B9241008EFB60 /* LZStandardContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZStandardContentCell.m; sourceTree = "<group>"; };
-		5F03D34E174B924B008EFB60 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "background@2x.png"; sourceTree = "<group>"; };
-		5F03D34F174B924B008EFB60 /* been@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "been@2x.png"; sourceTree = "<group>"; };
+		5F03D34E174B924B008EFB60 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "background@2x.png"; path = "nutrition/Resource/background@2x.png"; sourceTree = "<group>"; };
+		5F03D34F174B924B008EFB60 /* been@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "been@2x.png"; path = "nutrition/Resource/been@2x.png"; sourceTree = "<group>"; };
 		5F3338A5172A407E0096E7AE /* nutrition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nutrition.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3338A8172A407E0096E7AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F3338AA172A407E0096E7AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -356,6 +360,8 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5F0122AD174C83AF00AC0156 /* nav_bar@2x.png */,
+				5F0122AE174C83AF00AC0156 /* section_bar@2x.png */,
 				5F0122A5174C731900AC0156 /* cell_bottom@2x.png */,
 				5F0122A6174C731900AC0156 /* cell_middle@2x.png */,
 				5F0122A7174C731900AC0156 /* cell_top@2x.png */,
@@ -464,6 +470,8 @@
 				5F0122A8174C731900AC0156 /* cell_bottom@2x.png in Resources */,
 				5F0122A9174C731900AC0156 /* cell_middle@2x.png in Resources */,
 				5F0122AA174C731900AC0156 /* cell_top@2x.png in Resources */,
+				5F0122AF174C83AF00AC0156 /* nav_bar@2x.png in Resources */,
+				5F0122B0174C83AF00AC0156 /* section_bar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -66,7 +66,7 @@
         }
         else if (indexPath.row == 2)
         {
-            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_bottomp@2x" ofType:@"png"];
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_bottom@2x" ofType:@"png"];
             UIImage * cellBottomImage = [UIImage imageWithContentsOfFile:path];
             [cell.cellBackgroundImageView setImage:cellBottomImage];
         }
@@ -88,24 +88,51 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 30;
+    if( section == 0)
+        return 27;
+    else
+        return 47;
 }
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    if( section == 0)
+        return 0;
+    else
+        return 20;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    float height = (section ==0 ? 27 :47);
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
+    [sectionView setBackgroundColor:[UIColor clearColor]];
+    
+    UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
+    [sectionView addSubview:sectionBarView];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
+    UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
+    [sectionBarView setImage:sectionBarImage];
+    UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
+    [sectionTitleLabel setTextColor:[UIColor whiteColor]];
+    [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+    [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
+    [sectionView addSubview:sectionTitleLabel];
+    
+    if (section == 0)
+        sectionTitleLabel.text =  @"供给比例=供给量/标准需求量";
+    else
+        sectionTitleLabel.text =  @"标准含量(100g)";
+    return sectionView;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 20)];
+    [sectionView setBackgroundColor:[UIColor clearColor]];
+    return sectionView;
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 2;
 }// Default is 1 if not implemented
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (section == 0)
-        return @"供给比例=供给量/标准需求量";
-    else
-        return @"标准含量(100g)";
-}// fixed font style. use custom
 
 - (void)didReceiveMemoryWarning
 {

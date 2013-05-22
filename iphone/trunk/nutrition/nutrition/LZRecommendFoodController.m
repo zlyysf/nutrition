@@ -69,30 +69,42 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 84;
+    if (indexPath.section == 1)
+        return 68;
+    else
+        return 84;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    
-//}
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    
-//}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 27;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
+    UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
+    [sectionView addSubview:sectionBarView];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
+    UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
+    [sectionBarView setImage:sectionBarImage];
+    UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
+    [sectionTitleLabel setTextColor:[UIColor whiteColor]];
+    [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+    [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
+    [sectionView addSubview:sectionTitleLabel];
+    
+    if (section == 0)
+        sectionTitleLabel.text =  @"已经决定了的食物";
+    else if (section == 1)
+        sectionTitleLabel.text =  @"摄取的营养够了么";
+    else
+        sectionTitleLabel.text =  @"推荐食物";
+
+    return sectionView;
+}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 3;
 }// Default is 1 if not implemented
-
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    if (section == 0)
-        return @"已经决定了的食物";
-    else if (section == 1)
-        return @"摄取的营养够了么";
-    else
-        return @"推荐食物";
-}// fixed font style. use custom
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
