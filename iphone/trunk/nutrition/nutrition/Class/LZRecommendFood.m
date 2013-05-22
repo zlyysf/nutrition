@@ -627,7 +627,10 @@
 
     logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal begin, cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","] ];
     NSLog(@"%@",logMsg);
-    calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
+    calculationLog = [NSMutableArray array];
+    [calculationLog addObject:@"nutrientNameAryToCal begin,cnt="];
+    [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
+    [calculationLog addObjectsFromArray:nutrientNameAryToCal];
     [calculationLogs addObject:calculationLog];
     
     
@@ -717,7 +720,10 @@
         }
         logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal cal-ing,cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","]];
         NSLog(@"%@",logMsg);
-        calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
+        calculationLog = [NSMutableArray array];
+        [calculationLog addObject:@"nutrientNameAryToCal cal-ing,cnt="];
+        [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
+        [calculationLog addObjectsFromArray:nutrientNameAryToCal];
         [calculationLogs addObject:calculationLog];
         
         NSString *nutrientNameToCal = nil;
@@ -746,6 +752,15 @@
         logMsg = [NSMutableString stringWithFormat:@"maxLackNutrientName=%@, maxNutrientLackRatio=%.2f, idxOfNutrientNameToCal=%d",maxLackNutrientName,maxNutrientLackRatio,idxOfNutrientNameToCal];
         NSLog(@"%@",logMsg);
         calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
+        calculationLog = [NSMutableArray array];
+        [calculationLog addObject:@"maxLackNutrientName="];
+        [calculationLog addObject:maxLackNutrientName];
+        [calculationLog addObject:@"maxNutrientLackRatio="];
+        [calculationLog addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];
+        [calculationLog addObject:@"idxOfNutrientNameToCal="];
+        [calculationLog addObject:[NSNumber numberWithInt:idxOfNutrientNameToCal]];
+        [calculationLog addObjectsFromArray:nutrientNameAryToCal];
+
         [calculationLogs addObject:calculationLog];
         
         nutrientNameToCal = maxLackNutrientName;//已经取到待计算的营养素，但不从待计算集合中去掉，因为一次计算未必能够补充满这种营养素，由于有上限表之类的限制。并且注意下次找到的最需补充的营养素不一定是现在这个了。
@@ -882,7 +897,9 @@
             [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];
             logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
             NSLog(@"%@",logMsg);
-            calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
+            calculationLog = [NSMutableArray array];
+            [calculationLog addObject:@"supply food:"];
+            [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
             [calculationLogs addObject:calculationLog];
         
             [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
@@ -891,11 +908,15 @@
                 //这次没有把这个营养素补充完，但现在由于补充了这种食物后，当前营养素不一定是最缺的，可以计算下一个最缺的营养素而不必非要把当前的营养素补充完
             }else{
                 //这个营养素已经补足，可以到外层循环计算下一个营养素了
-                logMsg = [NSMutableString stringWithFormat:@"food supply Full for %@, idx=%d, removing, nutrientNameAryToCal=%@",nutrientNameToCal,idxOfNutrientNameToCal,[nutrientNameAryToCal componentsJoinedByString:@" , "]];
+                logMsg = [NSMutableString stringWithFormat:@"food supply Full, removing %@, idx=%d, nutrientNameAryToCal=%@",nutrientNameToCal,idxOfNutrientNameToCal,[nutrientNameAryToCal componentsJoinedByString:@" , "]];
                 NSLog(@"%@",logMsg);
-                calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
+                calculationLog = [NSMutableArray array];
+                [calculationLog addObject:@"food supply Full, removing "];
+                [calculationLog addObject:nutrientNameToCal];
+                [calculationLog addObject:@"idx="];
+                [calculationLog addObject:[NSNumber numberWithInt:idxOfNutrientNameToCal]];
+                [calculationLog addObjectsFromArray:nutrientNameAryToCal];
                 [calculationLogs addObject:calculationLog];
-                
                 [nutrientNameAryToCal removeObjectAtIndex:idxOfNutrientNameToCal];
                 
             }
@@ -1159,7 +1180,7 @@
         NSMutableDictionary *recommendFoodStandardNutrientInfoAryDict = [NSMutableDictionary dictionary];
         for(int i=0; i<recommendFoodIds.count; i++){
             NSString *foodId = recommendFoodIds[i];
-            NSDictionary *foodAttrs = takenFoodAttrDict[foodId];
+            NSDictionary *foodAttrs = recommendFoodAttrDict[foodId];
             
             NSMutableArray *foodStandardNutrientInfoAry = [NSMutableArray arrayWithCapacity:customNutrients.count];
             for(int j=0; j<customNutrients.count; j++){
