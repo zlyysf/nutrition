@@ -248,6 +248,28 @@
 }
 
 
++(NSMutableArray*)dictionaryAllToArray:(NSDictionary*)dict
+{
+    if (dict==nil)
+        return nil;
+    NSArray *keys = [dict allKeys];
+    NSMutableArray *ary = [NSMutableArray arrayWithCapacity:keys.count*2];
+    for(int i=0; i<keys.count; i++){
+        NSString *key = keys[i];
+        [ary addObject:key];
+        [ary addObject:dict[key]];
+    }
+    return ary;
+}
+
+
+
+
+
+
+
+
+
 @end
 
 

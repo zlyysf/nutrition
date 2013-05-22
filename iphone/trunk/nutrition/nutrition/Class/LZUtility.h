@@ -31,4 +31,6 @@
 
 +(NSMutableDictionary*)dictionaryArrayTo2LevelDictionary_withKeyName:(NSString*)keyName andDicArray:(NSArray*)dicArray;
 
++(NSMutableArray*)dictionaryAllToArray:(NSDictionary*)dict;
+
 @end
