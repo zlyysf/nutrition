@@ -53,8 +53,11 @@
 #define Key_Name @"Name"
 #define Key_Unit @"Unit"
 #define Key_PicturePath @"PicturePath"
-#define Key_takenFoodInfo2LevelDict @"takenFoodInfo2LevelDict"
-#define Key_recommendFoodInfo2LevelDict @"recommendFoodInfo2LevelDict"
+//#define Key_takenFoodInfo2LevelDict @"takenFoodInfo2LevelDict"
+//#define Key_recommendFoodInfo2LevelDict @"recommendFoodInfo2LevelDict"
+#define Key_takenFoodInfoDictArray @"takenFoodInfoDictArray"
+#define Key_recommendFoodInfoDictArray @"recommendFoodInfoDictArray"
+
 #define Key_nutrientInitialSupplyRate @"nutrientInitialSupplyRate"
 #define Key_nutrientTakenRateInfoArray @"nutrientTakenRateInfoArray"
 #define Key_food1Supply1NutrientAmount @"food1Supply1NutrientAmount"
