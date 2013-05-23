@@ -70,8 +70,8 @@
 #define Key_recommendFoodNutrientInfoAryDictDict @"recommendFoodNutrientInfoAryDictDict"
 
 
-
-
+#define Type_normalSet @"normalSet"
+#define Type_lastSet @"lastSet"
 
 
 

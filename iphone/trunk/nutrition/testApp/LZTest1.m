@@ -49,6 +49,7 @@
 //    [self.class caseAbstractUser1_simple];
 //    [self.class caseAbstractUser1_req];
     [self.class caseAbstractUser1_req_preTaken_1];
+    
 }
 
 +(void)test4
@@ -57,7 +58,12 @@
 //    [self.class caseMiltipleUser1_simple_pd5];
 //    [self.class caseMiltipleUser1_limitNut_pd1];
 //    [self.class caseMiltipleUser1_limitNut_pd5];
-    [self.class caseMiltipleUser1_simple_pd1_r2];
+//    [self.class caseMiltipleUser1_simple_pd1_r2];
+//    [self.class caseMiltipleUser1_pretakenVegetable1_pd1];
+//    [self.class caseMiltipleUser1_pretakenVegetable2_pd1];
+//    [self.class caseMiltipleUser1_pretakenVegetable3_pd1];
+    [self.class caseMiltipleUser1_pretakenSemiMeat1_pd1];
+//    [self.class caseMiltipleUser1_pretakenSemiMeat1_pd5];
 }
 
 +(NSString*)getParamsDigestStr_withUserInfo:(NSDictionary *)userInfo andOptions:(NSDictionary *)options andTakenFoodAmountDict:(NSDictionary *)takenFoodAmountDict
@@ -948,6 +954,325 @@
     [rf formatCsv_RecommendFoodForEnoughNuitrition:csvFileName withRecommendResult:retDict];
     
 }
+
+
+
++(void)caseMiltipleUser1_pretakenVegetable1_pd1
+{
+
+    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:200.0],@"20450",//rice
+                                         [NSNumber numberWithDouble:100.0],@"16108",//huangdou
+                                         [NSNumber numberWithDouble:200.0],@"09003",//apple
+                                         nil];
+
+    
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],@"sex", [NSNumber numberWithInt:age],@"age",
+                              [NSNumber numberWithFloat:weight],@"weight", [NSNumber numberWithFloat:height],@"height",
+                              [NSNumber numberWithInt:activityLevel],@"activityLevel", nil];
+    BOOL notAllowSameFood = TRUE;
+    BOOL randomSelectFood = FALSE;
+    int randomRangeSelectFood = 0;
+    BOOL needLimitNutrients = FALSE;
+    int limitRecommendFoodCount = 0;
+    BOOL needUseFoodLimitTableWhenCal = TRUE;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:notAllowSameFood],@"notAllowSameFood",
+                             [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
+                             [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
+                             [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
+                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+                             [NSNumber numberWithBool:needUseFoodLimitTableWhenCal],@"needUseFoodLimitTableWhenCal",
+                             nil];
+    
+    uint personDayCount = 1;
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithUnsignedInt:personDayCount],@"personDayCount",
+                            nil];
+    
+    NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andParams:params andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
+    NSString *csvFileName = [NSString stringWithFormat:@"recommend_%@.csv",paramsDigestStr ];
+    NSString *htmlFileName = [NSString stringWithFormat:@"recommend_%@.html",paramsDigestStr ];
+    NSLog(@"csvFileName=%@\nhtmlFileName=%@",csvFileName,htmlFileName);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
+    
+    
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFood2WithPreIntake:takenFoodAmountDict andUserInfo:userInfo andParams:params andOptions:options];
+    NSString *strHtml = [rf generateHtml_RecommendFoodForEnoughNuitrition:retDict];
+    strHtml = [LZUtility getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
+    [rf formatCsv_RecommendFoodForEnoughNuitrition:csvFileName withRecommendResult:retDict];
+    
+}
+
+
+
++(void)caseMiltipleUser1_pretakenVegetable2_pd1
+{
+    
+    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:200.0],@"20450",//rice
+                                         [NSNumber numberWithDouble:100.0],@"16108",//huangdou
+                                         [NSNumber numberWithDouble:200.0],@"11116",//youcai
+                                         nil];
+    
+    
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],@"sex", [NSNumber numberWithInt:age],@"age",
+                              [NSNumber numberWithFloat:weight],@"weight", [NSNumber numberWithFloat:height],@"height",
+                              [NSNumber numberWithInt:activityLevel],@"activityLevel", nil];
+    BOOL notAllowSameFood = TRUE;
+    BOOL randomSelectFood = FALSE;
+    int randomRangeSelectFood = 0;
+    BOOL needLimitNutrients = FALSE;
+    int limitRecommendFoodCount = 0;
+    BOOL needUseFoodLimitTableWhenCal = TRUE;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:notAllowSameFood],@"notAllowSameFood",
+                             [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
+                             [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
+                             [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
+                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+                             [NSNumber numberWithBool:needUseFoodLimitTableWhenCal],@"needUseFoodLimitTableWhenCal",
+                             nil];
+    
+    uint personDayCount = 1;
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithUnsignedInt:personDayCount],@"personDayCount",
+                            nil];
+    
+    NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andParams:params andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
+    NSString *csvFileName = [NSString stringWithFormat:@"recommend_%@.csv",paramsDigestStr ];
+    NSString *htmlFileName = [NSString stringWithFormat:@"recommend_%@.html",paramsDigestStr ];
+    NSLog(@"csvFileName=%@\nhtmlFileName=%@",csvFileName,htmlFileName);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
+    
+    
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFood2WithPreIntake:takenFoodAmountDict andUserInfo:userInfo andParams:params andOptions:options];
+    NSString *strHtml = [rf generateHtml_RecommendFoodForEnoughNuitrition:retDict];
+    strHtml = [LZUtility getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
+    [rf formatCsv_RecommendFoodForEnoughNuitrition:csvFileName withRecommendResult:retDict];
+    
+}
+
+
+
+
++(void)caseMiltipleUser1_pretakenVegetable3_pd1
+{
+    
+    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:200.0],@"20450",//rice
+                                         [NSNumber numberWithDouble:100.0],@"16108",//huangdou
+                                         [NSNumber numberWithDouble:200.0],@"11116",//youcai
+                                         [NSNumber numberWithDouble:150.0],@"16022",//doujiao
+                                         nil];
+    
+    
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],@"sex", [NSNumber numberWithInt:age],@"age",
+                              [NSNumber numberWithFloat:weight],@"weight", [NSNumber numberWithFloat:height],@"height",
+                              [NSNumber numberWithInt:activityLevel],@"activityLevel", nil];
+    BOOL notAllowSameFood = TRUE;
+    BOOL randomSelectFood = FALSE;
+    int randomRangeSelectFood = 0;
+    BOOL needLimitNutrients = FALSE;
+    int limitRecommendFoodCount = 0;
+    BOOL needUseFoodLimitTableWhenCal = TRUE;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:notAllowSameFood],@"notAllowSameFood",
+                             [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
+                             [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
+                             [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
+                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+                             [NSNumber numberWithBool:needUseFoodLimitTableWhenCal],@"needUseFoodLimitTableWhenCal",
+                             nil];
+    
+    uint personDayCount = 1;
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithUnsignedInt:personDayCount],@"personDayCount",
+                            nil];
+    
+    NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andParams:params andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
+    NSString *csvFileName = [NSString stringWithFormat:@"recommend_%@.csv",paramsDigestStr ];
+    NSString *htmlFileName = [NSString stringWithFormat:@"recommend_%@.html",paramsDigestStr ];
+    NSLog(@"csvFileName=%@\nhtmlFileName=%@",csvFileName,htmlFileName);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
+    
+    
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFood2WithPreIntake:takenFoodAmountDict andUserInfo:userInfo andParams:params andOptions:options];
+    NSString *strHtml = [rf generateHtml_RecommendFoodForEnoughNuitrition:retDict];
+    strHtml = [LZUtility getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
+    [rf formatCsv_RecommendFoodForEnoughNuitrition:csvFileName withRecommendResult:retDict];
+    
+}
+
+
+
++(void)caseMiltipleUser1_pretakenSemiMeat1_pd1
+{
+    
+    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:200.0],@"20450",//rice
+                                         [NSNumber numberWithDouble:100.0],@"16108",//huangdou
+                                         [NSNumber numberWithDouble:200.0],@"11116",//youcai
+                                         [NSNumber numberWithDouble:150.0],@"16022",//doujiao
+                                         [NSNumber numberWithDouble:100.0],@"01123",//egg
+                                         nil];
+    
+    
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],@"sex", [NSNumber numberWithInt:age],@"age",
+                              [NSNumber numberWithFloat:weight],@"weight", [NSNumber numberWithFloat:height],@"height",
+                              [NSNumber numberWithInt:activityLevel],@"activityLevel", nil];
+    BOOL notAllowSameFood = TRUE;
+    BOOL randomSelectFood = FALSE;
+    int randomRangeSelectFood = 0;
+    BOOL needLimitNutrients = FALSE;
+    int limitRecommendFoodCount = 0;
+    BOOL needUseFoodLimitTableWhenCal = TRUE;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:notAllowSameFood],@"notAllowSameFood",
+                             [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
+                             [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
+                             [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
+                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+                             [NSNumber numberWithBool:needUseFoodLimitTableWhenCal],@"needUseFoodLimitTableWhenCal",
+                             nil];
+    
+    uint personDayCount = 1;
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithUnsignedInt:personDayCount],@"personDayCount",
+                            nil];
+    
+    NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andParams:params andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
+    NSString *csvFileName = [NSString stringWithFormat:@"recommend_%@.csv",paramsDigestStr ];
+    NSString *htmlFileName = [NSString stringWithFormat:@"recommend_%@.html",paramsDigestStr ];
+    NSLog(@"csvFileName=%@\nhtmlFileName=%@",csvFileName,htmlFileName);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
+    
+    
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFood2WithPreIntake:takenFoodAmountDict andUserInfo:userInfo andParams:params andOptions:options];
+    NSString *strHtml = [rf generateHtml_RecommendFoodForEnoughNuitrition:retDict];
+    strHtml = [LZUtility getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
+    [rf formatCsv_RecommendFoodForEnoughNuitrition:csvFileName withRecommendResult:retDict];
+    
+}
+
+
+
++(void)caseMiltipleUser1_pretakenSemiMeat1_pd5
+{
+    
+    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:200.0],@"20450",//rice
+                                         [NSNumber numberWithDouble:100.0],@"16108",//huangdou
+                                         [NSNumber numberWithDouble:500.0],@"11116",//youcai
+                                         [NSNumber numberWithDouble:1000.0],@"16022",//doujiao
+                                         [NSNumber numberWithDouble:100.0],@"01123",//egg
+                                         nil];
+    
+    
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],@"sex", [NSNumber numberWithInt:age],@"age",
+                              [NSNumber numberWithFloat:weight],@"weight", [NSNumber numberWithFloat:height],@"height",
+                              [NSNumber numberWithInt:activityLevel],@"activityLevel", nil];
+    BOOL notAllowSameFood = TRUE;
+    BOOL randomSelectFood = FALSE;
+    int randomRangeSelectFood = 0;
+    BOOL needLimitNutrients = FALSE;
+    int limitRecommendFoodCount = 0;
+    BOOL needUseFoodLimitTableWhenCal = TRUE;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:notAllowSameFood],@"notAllowSameFood",
+                             [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
+                             [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
+                             [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
+                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+                             [NSNumber numberWithBool:needUseFoodLimitTableWhenCal],@"needUseFoodLimitTableWhenCal",
+                             nil];
+    
+    uint personDayCount = 5;
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithUnsignedInt:personDayCount],@"personDayCount",
+                            nil];
+    
+    NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andParams:params andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
+    NSString *csvFileName = [NSString stringWithFormat:@"recommend_%@.csv",paramsDigestStr ];
+    NSString *htmlFileName = [NSString stringWithFormat:@"recommend_%@.html",paramsDigestStr ];
+    NSLog(@"csvFileName=%@\nhtmlFileName=%@",csvFileName,htmlFileName);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
+    
+    
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFood2WithPreIntake:takenFoodAmountDict andUserInfo:userInfo andParams:params andOptions:options];
+    NSString *strHtml = [rf generateHtml_RecommendFoodForEnoughNuitrition:retDict];
+    strHtml = [LZUtility getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
+    [rf formatCsv_RecommendFoodForEnoughNuitrition:csvFileName withRecommendResult:retDict];
+    
+}
+
+
+
 
 
 +(void)caseMiltipleUser1_limitNut_pd1

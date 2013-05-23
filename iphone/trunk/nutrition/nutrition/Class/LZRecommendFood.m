@@ -584,9 +584,10 @@
     NSSet *nutrientSetNotCal = [NSSet setWithArray:nutrientArrayNotCal];
     
     //这里的营养素最后再计算补充
-    //    Choline_Tot_ (mg) 胆碱 最少需要187g的蛋来补充
-    //    Vit_D_(µg) 只有鲤鱼等才有效补充
-    NSMutableArray *nutrientArrayLastCal = [NSMutableArray arrayWithObjects:@"Vit_D_(µg)",@"Choline_Tot_ (mg)", @"Carbohydrt_(g)",@"Energ_Kcal", nil];
+    //    Choline_Tot_ (mg) 胆碱 最少需要187g的蛋来补充或475g黄豆，都有悖常识，似乎是极难补充
+    //    Vit_D_(µg) 只有鲤鱼等4种才有效补充
+    //    Fiber_TD_(g) 最适合的只有豆角一种 151g，其次是豆类中的绿豆 233g，蔬菜水果类中的其次是藕 776g，都有些离谱了。不过，如果固定用蔬菜水果类来补，每天3斤的量，还说得过去。另外，不同书籍对其需要量及补充食物的含量都有区别。
+    NSMutableArray *nutrientArrayLastCal = [NSMutableArray arrayWithObjects:@"Vit_D_(µg)",@"Choline_Tot_ (mg)",@"Fiber_TD_(g)", @"Carbohydrt_(g)",@"Energ_Kcal", nil];
     
     //这是需求中规定只计算哪些营养素
 //    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
@@ -596,19 +597,20 @@
     NSDictionary *limitedNutrientDictCanBeCal = [NSDictionary dictionaryWithObjects:limitedNutrientsCanBeCal forKeys:limitedNutrientsCanBeCal];
     
     //这是一个营养素的全集
-    NSArray* nutrientNamesOrdered = [NSArray arrayWithObjects:@"Energ_Kcal",@"Carbohydrt_(g)",@"Lipid_Tot_(g)",@"Protein_(g)",
+    NSArray* nutrientNamesOrdered = [NSArray arrayWithObjects:
                                      @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
                                      @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
                                      @"Vit_B12_(µg)",@"Panto_Acid_mg)",
                                      @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
                                      @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",@"Sodium_(mg)",
+                                     @"Protein_(g)",@"Lipid_Tot_(g)",@"Energ_Kcal",@"Carbohydrt_(g)",
                                      @"Water_(g)",@"Fiber_TD_(g)",@"Choline_Tot_ (mg)",@"Cholestrl_(mg)", nil];
     NSSet *nutrientNameSetOrdered = [NSSet setWithArray:nutrientNamesOrdered];
     
     //这里先根据各种过滤限制条件算出需要纳入计算的营养素，再对之进行顺序方面的设置
     NSMutableSet *nutrientSetToCal = [NSMutableSet setWithArray:DRIsDict.allKeys];//以DRI中所含营养素为初始值进行过滤
     [nutrientSetToCal minusSet:nutrientSetNotCal];
-    if (needLimitNutrients){
+    if (needLimitNutrients){//如果需要使用限制集中的营养素的话
         [nutrientSetToCal intersectSet:limitedNutrientSetCanBeCal];
     }
     assert(nutrientSetToCal.count>0);
@@ -618,12 +620,17 @@
     nutrientArrayLastCal = [LZUtility arrayIntersectSet_withArray:nutrientArrayLastCal andSet:nutrientSetToCal];
     NSSet *nutrientSetLastCal = [NSSet setWithArray:nutrientArrayLastCal];
     
-    // nutrientNamesOrdered 与 nutrientSetToCal 取交集得到保持顺序的nutrient array ToCal，从这个结果还要把 nutrientArrayLastCal 中的取出挪到最后。
-    [nutrientSetToCal minusSet:nutrientSetLastCal];// 先取个小交集，从 nutrientSetToCal 减掉 nutrientArrayLastCal 的，
-    NSMutableArray *nutrientNameAryToCal = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:nutrientNamesOrdered] andSet:nutrientSetToCal];
-    [nutrientNameAryToCal addObjectsFromArray:nutrientArrayLastCal];//这里再把nutrientArrayLastCal的补回来
-    //到这里 nutrientNameAryToCal 中的值是既经过过滤，又经过排序的了。可以用于下面的计算了
-    assert(nutrientNameAryToCal.count>0);
+//    // nutrientNamesOrdered 与 nutrientSetToCal 取交集得到保持顺序的nutrient array ToCal，从这个结果还要把 nutrientArrayLastCal 中的取出挪到最后。
+//    [nutrientSetToCal minusSet:nutrientSetLastCal];// 先取个小交集，从 nutrientSetToCal 减掉 nutrientArrayLastCal 的，
+//    NSMutableArray *nutrientNameAryToCal = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:nutrientNamesOrdered] andSet:nutrientSetToCal];
+//    [nutrientNameAryToCal addObjectsFromArray:nutrientArrayLastCal];//这里再把nutrientArrayLastCal的补回来
+//    //到这里 nutrientNameAryToCal 中的值是既经过过滤，又经过排序的了。可以用于下面的计算了
+//    assert(nutrientNameAryToCal.count>0);
+    
+    // nutrientNamesOrdered 与 nutrientSetToCal 取交集得到保持顺序的nutrient array ToCal，从这个结果还要把 nutrientArrayLastCal 中的取出，因为nutrientArrayLastCal会单独处理。
+    [nutrientSetToCal minusSet:nutrientSetLastCal];
+    NSMutableArray *nutrientNameAryToCal = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:nutrientNamesOrdered] andSet:nutrientSetToCal];//主要作用是把nutrientSetToCal中的内容根据nutrientNamesOrdered的顺序来排序
+    //到这里，要计算的营养素含在nutrientNameAryToCal 和 nutrientArrayLastCal 中了
 
     logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal begin, cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","] ];
     NSLog(@"%@",logMsg);
@@ -632,7 +639,6 @@
     [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
     [calculationLog addObjectsFromArray:nutrientNameAryToCal];
     [calculationLogs addObject:calculationLog];
-    
     
     NSArray *takenFoodIDs = nil;
     if (takenFoodAmountDict!=nil && takenFoodAmountDict.count>0)
@@ -701,70 +707,104 @@
     
     NSMutableArray* foodSupplyNutrientSeqs = [NSMutableArray arrayWithCapacity:100];
     //对每个还需补足的营养素进行计算
-    while (nutrientNameAryToCal.count > 0) {
-        for(int i=nutrientNameAryToCal.count-1; i>=0; i--){//先去掉已经补满的
-            NSString *nutrientName = nutrientNameAryToCal[i];
-            NSNumber *nmSupplied = nutrientSupplyDict[nutrientName];
-            NSNumber *nmTotalNeed1Unit = DRIsDict[nutrientName];
-            double toAdd = [nmTotalNeed1Unit doubleValue]*personDayCount - [nmSupplied doubleValue];
-            if (toAdd <= nearZero){
-                [nutrientNameAryToCal removeObjectAtIndex:i];
-                logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
-                NSLog(@"%@",logMsg);
-                calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
-                [calculationLogs addObject:calculationLog];
-            }
-        }
-        if (nutrientNameAryToCal.count == 0){
-            break;
-        }
-        logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal cal-ing,cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","]];
-        NSLog(@"%@",logMsg);
-        calculationLog = [NSMutableArray array];
-        [calculationLog addObject:@"nutrientNameAryToCal cal-ing,cnt="];
-        [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
-        [calculationLog addObjectsFromArray:nutrientNameAryToCal];
-        [calculationLogs addObject:calculationLog];
-        
+    while (TRUE) {
         NSString *nutrientNameToCal = nil;
         int idxOfNutrientNameToCal = 0;
+        NSString *typeOfNutrientNamesToCal = nil;
         double maxNutrientLackRatio = nearZero;
         NSString *maxLackNutrientName = nil;
-        calculationLog = [NSMutableArray arrayWithObjects:@"nutrients supply rates:", nil];
-        for(int i=0; i<nutrientNameAryToCal.count; i++){//先找出最需要补的营养素,即缺乏比例最大的
-            NSString *nutrientName = nutrientNameAryToCal[i];
-            NSNumber *nmSupplied = nutrientSupplyDict[nutrientName];
-            NSNumber *nmTotalNeed1Unit = DRIsDict[nutrientName];
-            double toAdd = [nmTotalNeed1Unit doubleValue]*personDayCount-[nmSupplied doubleValue];
-            assert(toAdd > nearZero);
-            double lackRatio = toAdd/([nmTotalNeed1Unit doubleValue]*personDayCount);
-            [calculationLog addObject:nutrientName];
-            [calculationLog addObject:[NSNumber numberWithDouble:lackRatio]];
-            if (lackRatio > maxNutrientLackRatio){
-                maxLackNutrientName = nutrientName;
-                maxNutrientLackRatio = lackRatio;
-                idxOfNutrientNameToCal = i;
+        if (nutrientNameAryToCal.count > 0){
+            for(int i=nutrientNameAryToCal.count-1; i>=0; i--){//先去掉已经补满的
+                NSString *nutrientName = nutrientNameAryToCal[i];
+                NSNumber *nmSupplied = nutrientSupplyDict[nutrientName];
+                NSNumber *nmTotalNeed1Unit = DRIsDict[nutrientName];
+                double toAdd = [nmTotalNeed1Unit doubleValue]*personDayCount - [nmSupplied doubleValue];
+                if (toAdd <= nearZero){
+                    [nutrientNameAryToCal removeObjectAtIndex:i];
+                    logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
+                    NSLog(@"%@",logMsg);
+                    calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
+                    [calculationLogs addObject:calculationLog];
+                }
+            }
+            if (nutrientNameAryToCal.count > 0){
+                logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal cal-ing,cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","]];
+                NSLog(@"%@",logMsg);
+                calculationLog = [NSMutableArray array];
+                [calculationLog addObject:@"nutrientNameAryToCal cal-ing,cnt="];
+                [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
+                [calculationLog addObjectsFromArray:nutrientNameAryToCal];
+                [calculationLogs addObject:calculationLog];
+                
+                maxNutrientLackRatio = nearZero;
+                maxLackNutrientName = nil;
+                calculationLog = [NSMutableArray arrayWithObjects:@"nutrients lack rates:", nil];
+                for(int i=0; i<nutrientNameAryToCal.count; i++){//先找出最需要补的营养素,即缺乏比例最大的
+                    NSString *nutrientName = nutrientNameAryToCal[i];
+                    NSNumber *nmSupplied = nutrientSupplyDict[nutrientName];
+                    NSNumber *nmTotalNeed1Unit = DRIsDict[nutrientName];
+                    double toAdd = [nmTotalNeed1Unit doubleValue]*personDayCount-[nmSupplied doubleValue];
+                    assert(toAdd > nearZero);
+                    double lackRatio = toAdd/([nmTotalNeed1Unit doubleValue]*personDayCount);
+                    [calculationLog addObject:nutrientName];
+                    [calculationLog addObject:[NSNumber numberWithDouble:lackRatio]];
+                    if (lackRatio > maxNutrientLackRatio){
+                        maxLackNutrientName = nutrientName;
+                        maxNutrientLackRatio = lackRatio;
+                        idxOfNutrientNameToCal = i;
+                    }
+                }
+                NSLog(@"%@",[calculationLog componentsJoinedByString:@","]);
+                [calculationLogs addObject:calculationLog];
+
+                logMsg = [NSMutableString stringWithFormat:@"maxLackNutrientName=%@, maxNutrientLackRatio=%.2f, idxOfNutrientNameToCal=%d",maxLackNutrientName,maxNutrientLackRatio,idxOfNutrientNameToCal];
+                NSLog(@"%@",logMsg);
+                calculationLog = [NSMutableArray array];
+                [calculationLog addObject:@"maxLackNutrientName="];
+                [calculationLog addObject:maxLackNutrientName];
+                [calculationLog addObject:@"maxNutrientLackRatio="];
+                [calculationLog addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];
+                [calculationLog addObject:@"idxOfNutrientNameToCal="];
+                [calculationLog addObject:[NSNumber numberWithInt:idxOfNutrientNameToCal]];
+                [calculationLog addObjectsFromArray:nutrientNameAryToCal];
+                
+                [calculationLogs addObject:calculationLog];
+                
+                nutrientNameToCal = maxLackNutrientName;//已经取到待计算的营养素，但不从待计算集合中去掉，因为一次计算未必能够补充满这种营养素，由于有上限表之类的限制。并且注意下次找到的最需补充的营养素不一定是现在这个了。
+                typeOfNutrientNamesToCal = Type_normalSet;
+            }//if (nutrientNameAryToCal.count > 0) L2
+        }//if (nutrientNameAryToCal.count > 0) L1
+        
+        if (nutrientNameToCal==nil){
+            assert(nutrientNameAryToCal.count==0);//下面该看nutrientArrayLastCal中的营养素了
+            if (nutrientArrayLastCal.count>0){
+                for(int i=nutrientArrayLastCal.count-1; i>=0; i--){//先去掉已经补满的
+                    NSString *nutrientName = nutrientArrayLastCal[i];
+                    NSNumber *nmSupplied = nutrientSupplyDict[nutrientName];
+                    NSNumber *nmTotalNeed1Unit = DRIsDict[nutrientName];
+                    double toAdd = [nmTotalNeed1Unit doubleValue]*personDayCount - [nmSupplied doubleValue];
+                    if (toAdd <= nearZero){
+                        [nutrientArrayLastCal removeObjectAtIndex:i];
+                        logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
+                        NSLog(@"%@",logMsg);
+                        calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
+                        [calculationLogs addObject:calculationLog];
+                    }
+                }
+            }
+
+            if(nutrientArrayLastCal.count > 0){
+                idxOfNutrientNameToCal = 0;
+                nutrientNameToCal = nutrientArrayLastCal[idxOfNutrientNameToCal];
+                typeOfNutrientNamesToCal = Type_lastSet;
             }
         }
-        NSLog(@"%@",[calculationLog componentsJoinedByString:@","]);
-        [calculationLogs addObject:calculationLog];
-        
-        logMsg = [NSMutableString stringWithFormat:@"maxLackNutrientName=%@, maxNutrientLackRatio=%.2f, idxOfNutrientNameToCal=%d",maxLackNutrientName,maxNutrientLackRatio,idxOfNutrientNameToCal];
-        NSLog(@"%@",logMsg);
-        calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
-        calculationLog = [NSMutableArray array];
-        [calculationLog addObject:@"maxLackNutrientName="];
-        [calculationLog addObject:maxLackNutrientName];
-        [calculationLog addObject:@"maxNutrientLackRatio="];
-        [calculationLog addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];
-        [calculationLog addObject:@"idxOfNutrientNameToCal="];
-        [calculationLog addObject:[NSNumber numberWithInt:idxOfNutrientNameToCal]];
-        [calculationLog addObjectsFromArray:nutrientNameAryToCal];
-
-        [calculationLogs addObject:calculationLog];
-        
-        nutrientNameToCal = maxLackNutrientName;//已经取到待计算的营养素，但不从待计算集合中去掉，因为一次计算未必能够补充满这种营养素，由于有上限表之类的限制。并且注意下次找到的最需补充的营养素不一定是现在这个了。
-        
+                
+        if (nutrientNameToCal==nil){
+            assert(nutrientNameAryToCal.count==0);
+            assert(nutrientArrayLastCal.count==0);
+            break;
+        }
 
         //当前有需要计算的营养素
         NSNumber *nmSupplied = nutrientSupplyDict[nutrientNameToCal];
@@ -838,7 +878,28 @@
                 }//while(alreadyUsedFoodsWhenOtherNutrients.count>0)
             }
             if (food==nil){//这个营养素把所有能补的食物都用到上限了，不能再对它进行计算了
-                [nutrientNameAryToCal removeObjectAtIndex:idxOfNutrientNameToCal];
+                logMsg = [NSMutableString stringWithFormat:@"no more proper food for the nutrient:%@,%d,%@",nutrientNameToCal,idxOfNutrientNameToCal,typeOfNutrientNamesToCal];
+                NSLog(@"%@",logMsg);
+                calculationLog = [NSMutableArray array];
+                [calculationLog addObject:@"no more proper food for the nutrient:"];
+                [calculationLog addObject:nutrientNameToCal];
+                [calculationLog addObject:[NSNumber numberWithInt:idxOfNutrientNameToCal]];
+                [calculationLog addObject:typeOfNutrientNamesToCal];
+                if ([typeOfNutrientNamesToCal isEqualToString:Type_normalSet]){
+                    [calculationLog addObject:[NSNumber numberWithInt:nutrientNameAryToCal.count]];
+                    [calculationLog addObjectsFromArray:nutrientNameAryToCal];
+                }else{
+                    [calculationLog addObject:[NSNumber numberWithInt:nutrientArrayLastCal.count]];
+                    [calculationLog addObjectsFromArray:nutrientArrayLastCal];
+                }
+                [calculationLogs addObject:calculationLog];
+                
+                if ([typeOfNutrientNamesToCal isEqualToString:Type_normalSet]){
+                    [nutrientNameAryToCal removeObjectAtIndex:idxOfNutrientNameToCal];
+                }else{
+                    [nutrientArrayLastCal removeObjectAtIndex:idxOfNutrientNameToCal];
+                }
+
                 continue;//对于第1层while
                 //break;//对于第2层while
             }
@@ -907,18 +968,28 @@
             if (toAddForNutrient > nearZero){
                 //这次没有把这个营养素补充完，但现在由于补充了这种食物后，当前营养素不一定是最缺的，可以计算下一个最缺的营养素而不必非要把当前的营养素补充完
             }else{
-                //这个营养素已经补足，可以到外层循环计算下一个营养素了
-                logMsg = [NSMutableString stringWithFormat:@"food supply Full, removing %@, idx=%d, nutrientNameAryToCal=%@",nutrientNameToCal,idxOfNutrientNameToCal,[nutrientNameAryToCal componentsJoinedByString:@" , "]];
+                //这个营养素已经补足，可以到外层循环计算下一个营养素了。
+                logMsg = [NSMutableString stringWithFormat:@"food supply Full, remove %@, %d, %@",nutrientNameToCal,idxOfNutrientNameToCal,typeOfNutrientNamesToCal];
                 NSLog(@"%@",logMsg);
                 calculationLog = [NSMutableArray array];
-                [calculationLog addObject:@"food supply Full, removing "];
+                [calculationLog addObject:@"food supply Full, remove "];
                 [calculationLog addObject:nutrientNameToCal];
-                [calculationLog addObject:@"idx="];
                 [calculationLog addObject:[NSNumber numberWithInt:idxOfNutrientNameToCal]];
-                [calculationLog addObjectsFromArray:nutrientNameAryToCal];
+                [calculationLog addObject:typeOfNutrientNamesToCal];
+                if ([typeOfNutrientNamesToCal isEqualToString:Type_normalSet]){
+                    [calculationLog addObject:[NSNumber numberWithInt:nutrientNameAryToCal.count]];
+                    [calculationLog addObjectsFromArray:nutrientNameAryToCal];
+                }else{
+                    [calculationLog addObject:[NSNumber numberWithInt:nutrientArrayLastCal.count]];
+                    [calculationLog addObjectsFromArray:nutrientArrayLastCal];
+                }
                 [calculationLogs addObject:calculationLog];
-                [nutrientNameAryToCal removeObjectAtIndex:idxOfNutrientNameToCal];
                 
+                if ([typeOfNutrientNamesToCal isEqualToString:Type_normalSet]){
+                    [nutrientNameAryToCal removeObjectAtIndex:idxOfNutrientNameToCal];
+                }else{
+                    [nutrientArrayLastCal removeObjectAtIndex:idxOfNutrientNameToCal];
+                }
             }
 
         //}//while ////选取一个食物，来补当前营养素
@@ -943,8 +1014,7 @@
     [retDict setObject:params forKey:@"paramsDict"];
     [retDict setObject:foodSupplyNutrientSeqs forKey:@"foodSupplyNutrientSeqs"];//2D array
     [retDict setObject:calculationLogs forKey:@"calculationLogs"];//2D array
-    
-    
+
     
     NSArray *otherInfos = [NSArray arrayWithObjects:@"randSeed",[NSNumber numberWithUnsignedInt:randSeed],
                            @"randomRangeSelectFood",[NSNumber numberWithInt:randomRangeSelectFood],
@@ -1233,6 +1303,7 @@
     
     NSDictionary *DRIsDict = [recmdDict objectForKey:@"DRI"];//nutrient name as key, also column name
     NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
+    NSDictionary *nutrientInitialSupplyDict = [recmdDict objectForKey:@"nutrientInitialSupplyDict"];
     NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:@"FoodAmount"];//food NO as key
     NSDictionary *recommendFoodAttrDict = [recmdDict objectForKey:@"FoodAttr"];//food NO as key
     
@@ -1453,6 +1524,22 @@
             rowNutrientLack[i+colIdx_NutrientStart] = [NSNumber numberWithDouble:0.0];
     }
     [rows addObject:rowNutrientLack];
+    
+    //nutrientInitialSupplyDict
+    NSMutableArray *rowInitSupplyRate = [NSMutableArray arrayWithArray:rowForInit];
+    rowInitSupplyRate[0] = @"InitSupplyRate";
+    for(int i=0; i<nutrientNames.count; i++){
+        NSString *nutrientName = nutrientNames[i];
+        NSNumber *nmInitSupplyNutrientAmount = [nutrientInitialSupplyDict objectForKey:nutrientName];
+        NSNumber *nmNutrientDRI1unit = [DRIsDict objectForKey:nutrientName];
+        if ([nmNutrientDRI1unit doubleValue]==0.0){
+            rowInitSupplyRate[i+colIdx_NutrientStart] = @"N/A";
+        }else{
+            double initSupplyRate = [nmInitSupplyNutrientAmount doubleValue]/([nmNutrientDRI1unit doubleValue]*personDayCount);
+            rowInitSupplyRate[i+colIdx_NutrientStart] = [NSNumber numberWithDouble:initSupplyRate];
+        }
+    }
+    [rows addObject:rowInitSupplyRate];
     
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------";
