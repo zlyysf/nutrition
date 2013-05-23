@@ -14,7 +14,7 @@
 @end
 
 @implementation LZDailyIntakeViewController
-@synthesize foodIntakeDictionary,foodNameArray,foodTypeArray;
+@synthesize foodIntakeDictionary,foodNameArray,foodTypeArray,foodSearchBar,foodSearchDisplayController,searchResultArray,allFood;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,10 +29,11 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     //获取食物名称 初始化foodNameArray 和 foodIntakeAmountArray
-    NSArray *allFood = [[LZDataAccess singleton]getAllFood];
+    allFood = [[LZDataAccess singleton]getAllFood];
     NSMutableSet *foodTypeSet = [NSMutableSet set];
     self.foodTypeArray = [[NSMutableArray alloc]init];
     self.foodNameArray = [[NSMutableArray alloc]init];
+    self.searchResultArray = [[NSMutableArray alloc]init];
     NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
 
     self.foodIntakeDictionary = [[NSMutableDictionary alloc]init];
@@ -71,23 +72,49 @@
             [[self.foodNameArray objectAtIndex:index]addObject:afood];
         }
     }
-    NSLog(@"%@, %@",self.foodTypeArray,foodTypeSet);
+    NSLog(@"footypearray %@, foodtypeset %@",self.foodTypeArray,foodTypeSet);
 
-    NSLog(@"%@",self.foodNameArray);
-    //NSLog(@"%@",self.foodIntakeAmountArray);
+    NSLog(@"foodnamearray %@",self.foodNameArray);
+    
+    foodSearchBar = [[UISearchBar alloc]init];
+    foodSearchBar.delegate = self;
+    [foodSearchBar setAutocapitalizationType:UITextAutocapitalizationTypeNone];
+    [foodSearchBar sizeToFit];
+    self.listView.tableHeaderView = foodSearchBar;
+    
+    foodSearchDisplayController = [[UISearchDisplayController alloc]initWithSearchBar:foodSearchBar contentsController:self];
+    foodSearchDisplayController.delegate = self;
+    foodSearchDisplayController.searchResultsDataSource = self;
+    foodSearchDisplayController.searchResultsDelegate = self;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
+    if(tableView == foodSearchDisplayController.searchResultsTableView)
+    {
+        NSLog(@"searchResultArray %@",self.searchResultArray);
+        return [self.searchResultArray count];
+    }
+
     return [(NSMutableArray*)[self.foodNameArray objectAtIndex:section]count];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
+    if(tableView == foodSearchDisplayController.searchResultsTableView)
+    {
+        return 1;
+    }
     return [self.foodTypeArray count];
 }
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
 {
+    if(tableView == foodSearchDisplayController.searchResultsTableView)
+    {
+        return @"";
+    }
     return (NSString*)[self.foodTypeArray objectAtIndex:section];
 }
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -95,18 +122,73 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LZFoodCell* cell =[tableView dequeueReusableCellWithIdentifier:@"FoodCell"];
-    cell.delegate = self;
-    cell.cellIndexPath = indexPath;
-    //一个记录名称的数组 一个记录对应摄入量的数组
-    NSDictionary *aFood = [[self.foodNameArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
-    cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];//NDB_No
-    NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
-    NSNumber *intake = [self.foodIntakeDictionary objectForKey:NDB_No];
-    cell.intakeAmountTextField.text = [NSString stringWithFormat:@"%d",[intake intValue]];
-    return cell;
+    if(tableView == foodSearchDisplayController.searchResultsTableView)
+    {
+        static NSString *CellIdentifier = @"Cell";
+        
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+        if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
+        }
+        cell.textLabel.text = [[searchResultArray objectAtIndex:indexPath.row]objectForKey:@"CnCaption"];
+        return cell;
+    }
+    else
+    {
+        LZFoodCell* cell =[tableView dequeueReusableCellWithIdentifier:@"FoodCell"];
+        cell.delegate = self;
+        cell.cellIndexPath = indexPath;
+        //一个记录名称的数组 一个记录对应摄入量的数组
+        NSDictionary *aFood = [[self.foodNameArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];//NDB_No
+        NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
+        NSNumber *intake = [self.foodIntakeDictionary objectForKey:NDB_No];
+        cell.intakeAmountTextField.text = [NSString stringWithFormat:@"%d",[intake intValue]];
+        return cell;
+    }
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(tableView == foodSearchDisplayController.searchResultsTableView)
+    {
+        NSDictionary *aFood = [self.searchResultArray objectAtIndex:indexPath.row];
+        NSString *aFoodType = [aFood objectForKey:@"CnType"];
+        int section= -1;
+        int row= -1;
+        NSLog(@"%@",aFood);
+        for (NSString *type in self.foodTypeArray)
+        {
+            if([type isEqualToString:aFoodType])
+            {
+                section = [self.foodTypeArray indexOfObject:type];
+                break;
+            }
 
+        }
+
+        if (section >=0 && section<[self.foodNameArray count]) {
+            NSArray *subArray = [self.foodNameArray objectAtIndex:section];
+            for (NSDictionary *dict in subArray)
+            {
+                if ([[dict objectForKey:@"CnType"]isEqualToString:aFoodType])
+                {
+                    row = [self.foodNameArray indexOfObject:dict];
+                    break;
+                }
+            }
+        }
+        if (section >= 0 && row >= 0)
+        {
+            [foodSearchBar resignFirstResponder];
+            NSIndexPath *index = [NSIndexPath indexPathForRow:row inSection:section];
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 50 * USEC_PER_SEC);
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self.listView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+            });
+            
+        }
+    }
+}
 - (IBAction)saveButtonTapped:(id)sender {
     //储存摄入量
     NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
@@ -198,9 +280,58 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self.listView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     });
-
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText
+{
     
 }
+#pragma mark -
+#pragma mark UISearchDisplayController Delegate Methods
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
+    [self.searchResultArray removeAllObjects];
+    // Return YES to cause the search result table view to be reloaded.
+    NSLog(@"%@",searchString);
+    for (int i=0; i<[allFood count]; i++)
+    {
+        NSDictionary *aFood = [allFood objectAtIndex:i];
+        NSString *cnName = [aFood objectForKey:@"CnCaption"];
+        NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@",searchString];
+        if ([pre evaluateWithObject:cnName])
+        {
+            [self.searchResultArray addObject:aFood];
+        }
+        
+    }
+    
+   //NSArray *arrayPre=[allFood filteredArrayUsingPredicate: pre];
+    //NSLog(@"result %@",arrayPre);
+    return YES;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption{
+    // Return YES to cause the search result table view to be reloaded.
+    return YES;
+}
+
+- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller{
+	/*
+     Bob: Because the searchResultsTableView will be released and allocated automatically, so each time we start to begin search, we set its delegate here.
+     */
+	[foodSearchDisplayController.searchResultsTableView setDelegate:self];
+    
+}
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
+	
+    [foodSearchBar resignFirstResponder];
+}
+- (void)viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
