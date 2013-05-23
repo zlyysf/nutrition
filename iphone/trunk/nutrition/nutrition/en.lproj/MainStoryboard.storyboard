@@ -106,7 +106,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="iA2-pX-NOM">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" clearsOnBeginEditing="YES" minimumFontSize="17" id="iA2-pX-NOM">
                                                     <rect key="frame" x="181" y="7" width="97" height="30"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -709,13 +709,13 @@
         <class className="LZAnalysislViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZAnalysislViewController.h"/>
             <relationships>
-                <relationship kind="action" name="emailButtonTapped:"/>
                 <relationship kind="outlet" name="recommendWebViewAsTable" candidateClass="UIWebView"/>
             </relationships>
         </class>
         <class className="LZDailyIntakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDailyIntakeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="resetButtonTapped:"/>
                 <relationship kind="action" name="saveButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
@@ -745,13 +745,13 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionSupplyCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="nutrientNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="nutrientSupplyLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
             </relationships>
         </class>
         <class className="LZPersonInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZPersonInfoViewController.h"/>
             <relationships>
-                <relationship kind="action" name="activityLevelValueChanged:" candidateClass="UISegmentedControl"/>
                 <relationship kind="action" name="doneButtonTapped:"/>
                 <relationship kind="outlet" name="activityLevelBriefLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="activityLevelSegmentControl" candidateClass="UISegmentedControl"/>

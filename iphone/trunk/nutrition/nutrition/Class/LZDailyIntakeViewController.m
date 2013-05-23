@@ -109,14 +109,37 @@
     }
     return [self.foodTypeArray count];
 }
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    if(tableView == foodSearchDisplayController.searchResultsTableView)
+        return 0;
+    return 27;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if(tableView == foodSearchDisplayController.searchResultsTableView)
     {
-        return @"";
+        return nil;
     }
-    return (NSString*)[self.foodTypeArray objectAtIndex:section];
+    else
+    {
+        UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
+        UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
+        [sectionView addSubview:sectionBarView];
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
+        UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
+        [sectionBarView setImage:sectionBarImage];
+        UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
+        [sectionTitleLabel setTextColor:[UIColor whiteColor]];
+        [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+        [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
+        [sectionView addSubview:sectionTitleLabel];
+            sectionTitleLabel.text =  [self.foodTypeArray objectAtIndex:section];
+        
+        return sectionView;
+    }
 }
+
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
@@ -153,6 +176,7 @@
     {
         NSDictionary *aFood = [self.searchResultArray objectAtIndex:indexPath.row];
         NSString *aFoodType = [aFood objectForKey:@"CnType"];
+        NSString *aFoodNo = [aFood objectForKey:@"NDB_No"];
         int section= -1;
         int row= -1;
         NSLog(@"%@",aFood);
@@ -170,9 +194,9 @@
             NSArray *subArray = [self.foodNameArray objectAtIndex:section];
             for (NSDictionary *dict in subArray)
             {
-                if ([[dict objectForKey:@"CnType"]isEqualToString:aFoodType])
+                if ([[dict objectForKey:@"NDB_No"]isEqualToString:aFoodNo])
                 {
-                    row = [self.foodNameArray indexOfObject:dict];
+                    row = [subArray indexOfObject:dict];
                     break;
                 }
             }
@@ -180,10 +204,14 @@
         if (section >= 0 && row >= 0)
         {
             [foodSearchBar resignFirstResponder];
+            [foodSearchDisplayController setActive:NO animated:NO];
             NSIndexPath *index = [NSIndexPath indexPathForRow:row inSection:section];
+            NSLog(@"%@",[index description]);
             dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 50 * USEC_PER_SEC);
             dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                [self.listView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+                [self.listView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:NO];
+                LZFoodCell *cell = (LZFoodCell*)[self.listView cellForRowAtIndexPath:index];
+                [cell.intakeAmountTextField becomeFirstResponder];
             });
             
         }
