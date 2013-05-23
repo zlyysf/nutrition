@@ -86,7 +86,19 @@
     foodSearchDisplayController.delegate = self;
     foodSearchDisplayController.searchResultsDataSource = self;
     foodSearchDisplayController.searchResultsDelegate = self;
+    UIView *rightNavView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 80, 44)];
+    UIButton *resetButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
     
+    UIButton *recommendButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+
+    [resetButton setFrame:CGRectMake(0, 2, 40, 40)];
+    [recommendButton setFrame:CGRectMake(40, 2, 40, 40)];
+    [resetButton setTitle:@"重置" forState:UIControlStateNormal];
+    [recommendButton setTitle:@"推荐" forState:UIControlStateNormal];
+    [rightNavView addSubview:resetButton];
+        [rightNavView addSubview:recommendButton];
+    UIBarButtonItem *rightBarItem = [[UIBarButtonItem alloc]initWithCustomView:rightNavView];
+    self.navigationItem.rightBarButtonItem = rightBarItem;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     

@@ -152,11 +152,6 @@
                                 <action selector="saveButtonTapped:" destination="8yb-D5-PpJ" id="Olm-Jo-Vgt"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="重置" id="Fh7-mM-hJu">
-                            <connections>
-                                <action selector="resetButtonTapped:" destination="8yb-D5-PpJ" id="1eJ-RU-Puu"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <connections>
@@ -752,6 +747,7 @@
         <class className="LZPersonInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZPersonInfoViewController.h"/>
             <relationships>
+                <relationship kind="action" name="activityLevelValueChanged:" candidateClass="UISegmentedControl"/>
                 <relationship kind="action" name="doneButtonTapped:"/>
                 <relationship kind="outlet" name="activityLevelBriefLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="activityLevelSegmentControl" candidateClass="UISegmentedControl"/>
