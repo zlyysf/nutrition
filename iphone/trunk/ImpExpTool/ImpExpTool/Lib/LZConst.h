@@ -22,6 +22,7 @@
 #define TABLE_NAME_NutritionInfo @"NutritionInfo"
 #define COLUMN_NAME_NutrientID @"NutrientID"
 
-
+#define TABLE_NAME_FoodPicPath @"FoodPicPath"
+#define COLUMN_NAME_PicPath @"PicPath"
 
 #endif

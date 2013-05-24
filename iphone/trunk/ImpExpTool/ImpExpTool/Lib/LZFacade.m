@@ -29,7 +29,8 @@
 //    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
 //    [workRe convertExcelToSqlite_FoodLimit];
 //    [workRe convertExcelToSqlite_FoodCnDescription];
-    [workRe convertExcelToSqlite_readNutritionInfo];
+//    [workRe convertExcelToSqlite_NutritionInfo];
+    [workRe convertExcelToSqlite_FoodPicPath];
     
     
 //    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];
@@ -106,8 +107,9 @@
     [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
     [workRe convertExcelToSqlite_FoodLimit];
     [workRe convertExcelToSqlite_FoodCnDescription];
-    [workRe convertExcelToSqlite_readNutritionInfo];
-    
+    [workRe convertExcelToSqlite_NutritionInfo];
+    [workRe convertExcelToSqlite_FoodPicPath];
+
     LZDBAccess *db = [workRe getDBconnection];
     [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
     [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];

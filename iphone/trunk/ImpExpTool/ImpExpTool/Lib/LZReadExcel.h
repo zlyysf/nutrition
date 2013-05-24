@@ -27,7 +27,12 @@
 -(void)convertExcelToSqlite_FoodCnDescription;
 -(void)convertExcelToSqlite_FoodLimit;
 
--(void)convertExcelToSqlite_readNutritionInfo;
+-(void)convertExcelToSqlite_NutritionInfo;
+
+-(void)convertExcelToSqlite_FoodPicPath;
+
+
+
 
 @end
 

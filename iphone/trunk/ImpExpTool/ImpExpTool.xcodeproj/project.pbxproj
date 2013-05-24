@@ -44,6 +44,7 @@
 		0882412D174368E900E71E6E /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 0882412C174368E900E71E6E /* CustomDB.dat */; };
 		088241411744C59300E71E6E /* dataAll.dat in Resources */ = {isa = PBXBuildFile; fileRef = 088241401744C59300E71E6E /* dataAll.dat */; };
 		0882414D174B615D00E71E6E /* NutrientInfo.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882414C174B615D00E71E6E /* NutrientInfo.xls */; };
+		08824155174F66B000E71E6E /* Food_PicPath.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08824154174F66B000E71E6E /* Food_PicPath.xls */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		0882412C174368E900E71E6E /* CustomDB.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomDB.dat; path = ../nutrition/nutrition/Resource/CustomDB.dat; sourceTree = "<group>"; };
 		088241401744C59300E71E6E /* dataAll.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = dataAll.dat; sourceTree = "<group>"; };
 		0882414C174B615D00E71E6E /* NutrientInfo.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = NutrientInfo.xls; path = ../../../data/NutrientInfo.xls; sourceTree = "<group>"; };
+		08824154174F66B000E71E6E /* Food_PicPath.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Food_PicPath.xls; path = ../../../data/Food_PicPath.xls; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,6 +277,7 @@
 		0882411A1740E02D00E71E6E /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				08824154174F66B000E71E6E /* Food_PicPath.xls */,
 				0882414C174B615D00E71E6E /* NutrientInfo.xls */,
 				0882412C174368E900E71E6E /* CustomDB.dat */,
 				0882412817422F4100E71E6E /* Food_Limit.xls */,
@@ -372,6 +375,7 @@
 				0882412D174368E900E71E6E /* CustomDB.dat in Resources */,
 				088241411744C59300E71E6E /* dataAll.dat in Resources */,
 				0882414D174B615D00E71E6E /* NutrientInfo.xls in Resources */,
+				08824155174F66B000E71E6E /* Food_PicPath.xls in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

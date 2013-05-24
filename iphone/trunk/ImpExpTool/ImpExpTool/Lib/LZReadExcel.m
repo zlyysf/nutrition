@@ -497,7 +497,7 @@
 }
 
 
--(void)convertExcelToSqlite_readNutritionInfo
+-(void)convertExcelToSqlite_NutritionInfo
 {
     NSDictionary *data = [self readNutritionInfo];
     NSArray *columns = [data objectForKey:@"columns"];
@@ -520,8 +520,66 @@
 
 
 
+/*
+ 返回值是一个dictionary，包括 以COLUMN_NAME_NDB_No为key的一维数组和 以COLUMN_NAME_PicPath为key的一维数组
+ */
+-(NSDictionary *)readFoodPicPath
+{
+    NSLog(@"readFoodPicPath begin");
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_PicPath.xls"];
+    NSLog(@"in readFoodPicPath, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+//    NSMutableArray *foodNoAry = [NSMutableArray arrayWithCapacity:200];
+//    NSMutableArray *picPathAry = [NSMutableArray arrayWithCapacity:200];
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:200];
+    int colIdx_No = 3;
+    int colIdx_PicPath = 5;
+
+    int idxRow=2;
+    DHcell *cellNo, *cellPicPath;
+    cellNo = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx_No];
+    cellPicPath = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx_PicPath];
+    while (cellNo.type != cellBlank || cellPicPath.type != cellBlank) {
+        if (cellNo.type != cellBlank && cellPicPath.type != cellBlank){
+            NSMutableArray *row = [NSMutableArray arrayWithCapacity:2];
+            [row addObject:cellNo.str];
+            [row addObject:cellPicPath.str];
+//            [foodNoAry addObject:cellNo.str];
+//            [picPathAry addObject:cellPicPath.str];
+            [rows2D addObject:row];
+        }
+    
+        idxRow++;
+        cellNo = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx_No];
+        cellPicPath = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx_PicPath];
+    }
+//    NSLog(@"in readFoodPicPath, foodNoAry=%@, picPathAry=%@",foodNoAry,picPathAry);
+    NSLog(@"in readFoodPicPath, rows2D=%@",rows2D);
+    
+    NSMutableArray *columns = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No,COLUMN_NAME_PicPath, nil];
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+    [retData setObject:columns forKey:@"columns"];
+    [retData setObject:rows2D forKey:@"rows2D"];
+    return retData;
+}
 
 
+-(void)convertExcelToSqlite_FoodPicPath
+{
+    NSDictionary *data = [self readFoodPicPath];
+    NSArray *columns = [data objectForKey:@"columns"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    NSString *tableName = TABLE_NAME_FoodPicPath;// @"FoodPicPath";
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    [db createTable_withTableName:tableName withColumnNames:columns withRows2D:rows2D withPrimaryKey:COLUMN_NAME_NDB_No andIfNeedDropTable:true];
+    [db insertToTable_withTableName:tableName withColumnNames:columns andRows2D:rows2D andIfNeedClearTable:true];
+}
 
 
 
