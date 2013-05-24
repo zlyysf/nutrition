@@ -6,7 +6,8 @@
 //  Copyright (c) 2013年 Yasofon. All rights reserved.
 //
 
-#import "LZConst.h"
+//#import "LZConst.h"
+#import "LZConstants.h"
 #import "LZReadExcel.h"
 
 @implementation LZReadExcel

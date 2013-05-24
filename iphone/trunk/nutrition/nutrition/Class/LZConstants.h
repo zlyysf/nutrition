@@ -26,6 +26,8 @@
 #define LZSettingKey_notAllowSameFood @"notAllowSameFood" //BOOL
 
 
+
+
 #define COLUMN_NAME_NDB_No @"NDB_No"
 
 #define TABLE_NAME_USDA_ABBREV @"FoodNutrition"
@@ -47,7 +49,9 @@
 
 #define COLUMN_NAME_NutrientCnCaption @"NutrientCnCaption"
 #define COLUMN_NAME_NutrientEnUnit @"NutrientEnUnit"
-#define COLUMN_NAME_NutrientID @"NutrientID"
+
+#define TABLE_NAME_FoodPicPath @"FoodPicPath"
+#define COLUMN_NAME_PicPath @"PicPath"
 
 #define Key_Amount @"Amount"
 #define Key_Name @"Name"

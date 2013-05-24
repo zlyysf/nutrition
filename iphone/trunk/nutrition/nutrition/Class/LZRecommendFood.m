@@ -1082,7 +1082,7 @@
             NSDictionary *foodAttrs = takenFoodAttrDict[foodId];
             NSNumber *nmFoodAmount = takenFoodAmountDict[foodId];
             NSString *foodName = foodAttrs[COLUMN_NAME_CnCaption];
-            NSString *foodPicPath = @"";//TODO
+            NSString *foodPicPath = foodAttrs[COLUMN_NAME_PicPath];
             NSDictionary *takenFoodInfoDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                                foodId,COLUMN_NAME_NDB_No,
                                                foodName,Key_Name,
@@ -1126,7 +1126,7 @@
             NSDictionary *foodAttrs = recommendFoodAttrDict[foodId];
             NSNumber *nmFoodAmount = recommendFoodAmountDict[foodId];
             NSString *foodName = foodAttrs[COLUMN_NAME_CnCaption];
-            NSString *foodPicPath = @"";//TODO
+            NSString *foodPicPath = foodAttrs[COLUMN_NAME_PicPath];
             NSDictionary *recommendFoodInfoDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                                    foodId,COLUMN_NAME_NDB_No,
                                                    foodName,Key_Name,

@@ -419,13 +419,14 @@
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN
 {
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)], \n"];
+    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],P.PicPath, \n"];
     [sqlStr appendString:@"D.["];
     [sqlStr appendString:nutrientAsColumnName];
     [sqlStr appendString:@"] AS RichLevel \n"];
 
-    [sqlStr appendString:@"  FROM FoodNutritionCustom F join Food_Supply_DRI_Common D on F.NDB_No=D.NDB_No \n"];
+    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Common D on F.NDB_No=D.NDB_No \n"];
     [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
+    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
     [sqlStr appendString:@" WHERE "];
     [sqlStr appendString:@"D.["];
     [sqlStr appendString:nutrientAsColumnName];
@@ -509,8 +510,10 @@
     NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
     
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
-    [sqlStr appendString:@"SELECT FNC.*,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)]\n"];
-    [sqlStr appendString:@"  FROM FoodNutritionCustom FNC LEFT OUTER JOIN FoodLimit FL ON FNC.NDB_No=FL.NDB_No\n"];
+    [sqlStr appendString:@"SELECT FNC.*,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],P.PicPath \n"];
+    [sqlStr appendString:@"  FROM FoodNutritionCustom FNC \n"];
+    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON FNC.NDB_No=FL.NDB_No \n"];
+    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON FNC.NDB_No=P.NDB_No \n"];
     [sqlStr appendString:@"  WHERE FNC.NDB_No in ("];
     [sqlStr appendString:placeholdersStr];
     [sqlStr appendString:@")"];

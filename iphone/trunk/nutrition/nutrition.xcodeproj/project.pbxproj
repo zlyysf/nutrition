@@ -169,7 +169,7 @@
 		5F9C128C17321935000E08E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = nutrition/Class/LZUtility.h; sourceTree = "<group>"; };
 		5FB8C0B7172BC61D00E90387 /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = nutrition/Class/LZUtility.m; sourceTree = "<group>"; };
-		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = Class/LZConstants.h; sourceTree = "<group>"; };
+		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,6 +230,7 @@
 		085C8D4917336707001A1ABB /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				5FB8C0B9172BCA9F00E90387 /* LZConstants.h */,
 				5FB8C0B6172BC61D00E90387 /* LZUtility.h */,
 				5FB8C0B7172BC61D00E90387 /* LZUtility.m */,
 				085C8D4A17336720001A1ABB /* LZRecommendFood.h */,
@@ -333,7 +334,6 @@
 				5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */,
 				5F3338D1172A5A1D0096E7AE /* LZAnalysislViewController.h */,
 				5F3338D2172A5A1D0096E7AE /* LZAnalysislViewController.m */,
-				5FB8C0B9172BCA9F00E90387 /* LZConstants.h */,
 				5F9995F4172BDBE400A36B4F /* LZFoodCell.h */,
 				5F9995F5172BDBE400A36B4F /* LZFoodCell.m */,
 				0882412E1743873500E71E6E /* LZSecretSettingViewController.h */,
