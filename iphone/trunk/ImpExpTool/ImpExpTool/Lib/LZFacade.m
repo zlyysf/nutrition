@@ -26,11 +26,11 @@
     
 //    [workRe convertDRIFemaleDataFromExcelToSqlite];
 //    [workRe convertDRIMaleDataFromExcelToSqlite];
-//    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
+    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
 //    [workRe convertExcelToSqlite_FoodLimit];
 //    [workRe convertExcelToSqlite_FoodCnDescription];
 //    [workRe convertExcelToSqlite_NutritionInfo];
-    [workRe convertExcelToSqlite_FoodPicPath];
+//    [workRe convertExcelToSqlite_FoodPicPath];
     
     
 //    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];

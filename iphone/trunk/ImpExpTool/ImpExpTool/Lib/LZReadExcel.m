@@ -243,7 +243,8 @@
 {
     NSLog(@"readCustomUSDAdata_V2 begin");
     //NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"customUSDAdataV2.xls"];
-    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food.xls"];
+//    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food.xls"];
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
     NSLog(@"in readCustomUSDAdata_V2, xlsPath=%@",xlsPath);
     DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
 	assert(reader);
@@ -251,37 +252,48 @@
     NSMutableArray * idAry = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray * cnCaptionAry = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray * cnTypeAry = [NSMutableArray arrayWithCapacity:1000];
-    int idxRow=2, colIdxCnCaption=1, colIdxCnType=2, colIdxId=3;
-    DHcell *cellCnCaption,*cellCnType, *cellId;
+    int idxRow=2, colIdxCnCaption=1, colIdxCnType=2, colIdxId=3, colIdx4th = 4;
+    DHcell *cellCnCaption,*cellCnType, *cellId, *cell4th;
     cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnCaption];
     cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnType];
     cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxId];
-    while (cellId.type != cellBlank) {
-        assert(cellId.type == cellString);
-        [idAry addObject:cellId.str];
-        
-        if (cellCnCaption.type == cellBlank){
-            [cnCaptionAry addObject:@""];
-        }else if (cellCnCaption.type == cellString){
-            [cnCaptionAry addObject:cellCnCaption.str];
+    cell4th = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx4th];
+    NSLog(@"dealing row, %d, %@, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str, cell4th.str);
+    while (cellId.type!=cellBlank || cellCnCaption.type!=cellBlank || cellCnType.type!=cellBlank) {
+        if (cellId.type!=cellBlank && cellCnCaption.type!=cellBlank && cellCnType.type!=cellBlank){
+            assert(cellId.type == cellString);
+            [idAry addObject:cellId.str];
+            
+            if (cellCnCaption.type == cellBlank){
+                [cnCaptionAry addObject:@""];
+            }else if (cellCnCaption.type == cellString){
+                [cnCaptionAry addObject:cellCnCaption.str];
+            }else{
+                [cnCaptionAry addObject:@""];
+            }
+            
+            if (cellCnType.type == cellBlank){
+                [cnTypeAry addObject:@""];
+            }else if (cellCnType.type == cellString){
+                [cnTypeAry addObject:cellCnType.str];
+            }else{
+                [cnTypeAry addObject:@""];
+            }
+            NSLog(@"GOODrow, %d",idxRow);
+//            NSLog(@"GOODrow, %d, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str);
         }else{
-            [cnCaptionAry addObject:@""];
+            NSLog(@"bad row, %d",idxRow);
+//            NSLog(@"bad row, %d, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str);
         }
         
-        if (cellCnType.type == cellBlank){
-            [cnTypeAry addObject:@""];
-        }else if (cellCnType.type == cellString){
-            [cnTypeAry addObject:cellCnType.str];
-        }else{
-            [cnTypeAry addObject:@""];
-        }
-
         idxRow++;
         cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnCaption];
         cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnType];
         cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxId];
+        NSLog(@"dealing row, %d, %@, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str, cell4th.str);
+
     }
-    NSLog(@"in readCustomUSDAdata, idAry=%@, cnCaptionAry=%@, cnTypeAry=%@",idAry,cnCaptionAry,cnTypeAry);
+//    NSLog(@"in readCustomUSDAdata_V2, idAry=%d, %@, cnCaptionAry=%d, %@, cnTypeAry=%d, %@",idAry.count,idAry,cnCaptionAry.count,cnCaptionAry,cnTypeAry.count,cnTypeAry);
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
     [retData setObject:idAry forKey:@"ids"];
