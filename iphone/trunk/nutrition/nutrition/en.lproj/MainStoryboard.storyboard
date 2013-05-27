@@ -20,10 +20,10 @@
             </objects>
             <point key="canvasLocation" x="-596" y="-129"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--Custom Tab Bar Controller-->
         <scene sceneID="FIv-Fk-RWb">
             <objects>
-                <tabBarController storyboardIdentifier="LZMainTabBarController" definesPresentationContext="YES" id="rK2-CS-vcz" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="LZCustomTabBarController" definesPresentationContext="YES" id="rK2-CS-vcz" customClass="LZCustomTabBarController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="V1c-h1-C1d"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="AgO-sa-9B9">
@@ -44,7 +44,7 @@
         <!--Recommend Food Controller-->
         <scene sceneID="LNV-0L-OsM">
             <objects>
-                <viewController id="Jf5-8g-XNx" customClass="LZRecommendFoodController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="Jf5-8g-XNx" customClass="LZRecommendFoodController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="jsp-5y-uHy">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -59,7 +59,7 @@
         <!--Settings View Controller-->
         <scene sceneID="Bn6-Zl-hBc">
             <objects>
-                <viewController id="v2r-YV-GYD" customClass="LZSettingsViewController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="v2r-YV-GYD" customClass="LZSettingsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZHJ-1P-sm5">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -96,22 +96,22 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="goP-7Z-AJg">
-                                <rect key="frame" x="15" y="86" width="42" height="21"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="人数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="goP-7Z-AJg">
+                                <rect key="frame" x="15" y="86" width="49" height="26"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="STHeitiSC-Light" family="Heiti SC" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="天数" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NKY-Tk-Lkm">
+                                <rect key="frame" x="15" y="170" width="34" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NKY-Tk-Lkm">
-                                <rect key="frame" x="15" y="170" width="42" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wv9-ZD-PXy">
-                                <rect key="frame" x="15" y="14" width="257" height="51"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="请在此根据实际情况认真填写，以方便我们为您提供更适合您的营养推荐食谱！谢谢！" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wv9-ZD-PXy">
+                                <rect key="frame" x="15" y="14" width="291" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -144,14 +144,14 @@
         <!--Food List View Controller-->
         <scene sceneID="2OI-FM-1YG">
             <objects>
-                <viewController id="ZUO-at-v7f" customClass="LZFoodListViewController" sceneMemberID="viewController">
+                <viewController hidesBottomBarWhenPushed="YES" id="ZUO-at-v7f" customClass="LZFoodListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rfa-3h-Scd">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="jGA-gU-8c3">
-                        <barButtonItem key="leftBarButtonItem" title="Item" id="MxW-ak-TTm"/>
+                        <barButtonItem key="leftBarButtonItem" title="编辑" id="MxW-ak-TTm"/>
                         <barButtonItem key="rightBarButtonItem" title="添加" id="2Bb-3W-kIs">
                             <connections>
                                 <action selector="addFoodAction:" destination="ZUO-at-v7f" id="opp-H3-6gZ"/>
@@ -258,7 +258,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <items>
                                     <navigationItem title="你吃了啥" id="m7v-1e-7Fz">
-                                        <barButtonItem key="leftBarButtonItem" title="保存" id="g6e-bt-W7I">
+                                        <barButtonItem key="rightBarButtonItem" title="保存" id="g6e-bt-W7I">
                                             <connections>
                                                 <action selector="saveButtonTapped:" destination="8yb-D5-PpJ" id="Olm-Jo-Vgt"/>
                                             </connections>
@@ -908,15 +908,15 @@
         <class className="LZAnalysislViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZAnalysislViewController.h"/>
             <relationships>
-                <relationship kind="action" name="emailButtonTapped:"/>
                 <relationship kind="outlet" name="recommendWebViewAsTable" candidateClass="UIWebView"/>
             </relationships>
+        </class>
+        <class className="LZCustomTabBarController" superclassName="UITabBarController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZCustomTabBarController.h"/>
         </class>
         <class className="LZDailyIntakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDailyIntakeViewController.h"/>
             <relationships>
-                <relationship kind="action" name="resetButtonTapped:"/>
-                <relationship kind="action" name="saveButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -936,7 +936,6 @@
         <class className="LZFoodListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodListViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addFoodAction:"/>
                 <relationship kind="outlet" name="addFoodItem" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
@@ -959,8 +958,6 @@
         <class className="LZPersonInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZPersonInfoViewController.h"/>
             <relationships>
-                <relationship kind="action" name="activityLevelValueChanged:" candidateClass="UISegmentedControl"/>
-                <relationship kind="action" name="doneButtonTapped:"/>
                 <relationship kind="outlet" name="activityLevelBriefLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="activityLevelSegmentControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="ageTextField" candidateClass="UITextField"/>

@@ -79,6 +79,8 @@
 		5F3338D0172A59E20096E7AE /* LZDailyIntakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */; };
 		5F3338D3172A5A1D0096E7AE /* LZAnalysislViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338D2172A5A1D0096E7AE /* LZAnalysislViewController.m */; };
 		5F3338D6172A5BE50096E7AE /* Home_Background@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 5F3338D5172A5BE50096E7AE /* Home_Background@2x.jpg */; };
+		5F3605C81753409C0058EC98 /* LZCustomTabBarController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3605C71753409C0058EC98 /* LZCustomTabBarController.m */; };
+		5F3605D21753623A0058EC98 /* button_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3605D11753623A0058EC98 /* button_back@2x.png */; };
 		5F94A86517531CC100664B57 /* LZFoodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZFoodListViewController.m */; };
 		5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86717531ED700664B57 /* LZSettingsViewController.m */; };
 		5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
@@ -166,6 +168,9 @@
 		5F3338D1172A5A1D0096E7AE /* LZAnalysislViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZAnalysislViewController.h; path = Class/LZAnalysislViewController.h; sourceTree = "<group>"; };
 		5F3338D2172A5A1D0096E7AE /* LZAnalysislViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZAnalysislViewController.m; path = Class/LZAnalysislViewController.m; sourceTree = "<group>"; };
 		5F3338D5172A5BE50096E7AE /* Home_Background@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = "Home_Background@2x.jpg"; path = "nutrition/Resource/Home_Background@2x.jpg"; sourceTree = "<group>"; };
+		5F3605C61753409C0058EC98 /* LZCustomTabBarController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZCustomTabBarController.h; path = Class/LZCustomTabBarController.h; sourceTree = "<group>"; };
+		5F3605C71753409C0058EC98 /* LZCustomTabBarController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZCustomTabBarController.m; path = Class/LZCustomTabBarController.m; sourceTree = "<group>"; };
+		5F3605D11753623A0058EC98 /* button_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_back@2x.png"; path = "nutrition/Resource/button_back@2x.png"; sourceTree = "<group>"; };
 		5F94A86317531CC100664B57 /* LZFoodListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodListViewController.h; path = Class/LZFoodListViewController.h; sourceTree = "<group>"; };
 		5F94A86417531CC100664B57 /* LZFoodListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodListViewController.m; path = Class/LZFoodListViewController.m; sourceTree = "<group>"; };
 		5F94A86617531ED700664B57 /* LZSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSettingsViewController.h; path = Class/LZSettingsViewController.h; sourceTree = "<group>"; };
@@ -348,6 +353,8 @@
 				5F94A86417531CC100664B57 /* LZFoodListViewController.m */,
 				5F94A86617531ED700664B57 /* LZSettingsViewController.h */,
 				5F94A86717531ED700664B57 /* LZSettingsViewController.m */,
+				5F3605C61753409C0058EC98 /* LZCustomTabBarController.h */,
+				5F3605C71753409C0058EC98 /* LZCustomTabBarController.m */,
 			);
 			path = nutrition;
 			sourceTree = "<group>";
@@ -370,6 +377,7 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5F3605D11753623A0058EC98 /* button_back@2x.png */,
 				5F0122AD174C83AF00AC0156 /* nav_bar@2x.png */,
 				5F0122AE174C83AF00AC0156 /* section_bar@2x.png */,
 				5F0122A5174C731900AC0156 /* cell_bottom@2x.png */,
@@ -482,6 +490,7 @@
 				5F0122AA174C731900AC0156 /* cell_top@2x.png in Resources */,
 				5F0122AF174C83AF00AC0156 /* nav_bar@2x.png in Resources */,
 				5F0122B0174C83AF00AC0156 /* section_bar@2x.png in Resources */,
+				5F3605D21753623A0058EC98 /* button_back@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -545,6 +554,7 @@
 				5F03D34D174B9241008EFB60 /* LZStandardContentCell.m in Sources */,
 				5F94A86517531CC100664B57 /* LZFoodListViewController.m in Sources */,
 				5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */,
+				5F3605C81753409C0058EC98 /* LZCustomTabBarController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -645,7 +655,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 			};
@@ -669,7 +679,7 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -682,6 +692,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
 				INFOPLIST_FILE = "nutrition/nutrition-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -693,6 +704,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
 				INFOPLIST_FILE = "nutrition/nutrition-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

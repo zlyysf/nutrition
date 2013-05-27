@@ -27,6 +27,11 @@
 {
     [super viewDidLoad];
     self.title = @"设置";
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+
 	// Do any additional setup after loading the view.
     //显示目前设定的人数 天数
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];

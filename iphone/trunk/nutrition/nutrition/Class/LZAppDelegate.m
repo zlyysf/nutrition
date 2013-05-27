@@ -15,7 +15,17 @@
     // Override point for customization after application launch.
     NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
     UIImage * navImage = [UIImage imageWithContentsOfFile:path];
-    [[UINavigationBar appearance]setBackgroundImage:navImage forBarMetrics:UIBarMetricsDefault];
+    UIImage *gradientImage44 = [navImage
+                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    [[UINavigationBar appearance]setBackgroundImage:gradientImage44 forBarMetrics:UIBarMetricsDefault];
+    
+    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+    [[UIBarButtonItem appearance] setBackgroundImage:button30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    
+//    UIImage *buttonBack30 = [[UIImage imageNamed:@"backbutton_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)];
+//    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
     return YES;
 }
 							

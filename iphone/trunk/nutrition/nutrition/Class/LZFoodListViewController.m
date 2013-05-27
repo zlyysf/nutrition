@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"食物列表";
+    self.title = @"食物";
 	// Do any additional setup after loading the view.
 }
 
