@@ -64,6 +64,7 @@
 
 #define Key_nutrientInitialSupplyRate @"nutrientInitialSupplyRate"
 #define Key_nutrientTakenRateInfoArray @"nutrientTakenRateInfoArray"
+#define Key_nutrientTotalSupplyRateInfoArray @"nutrientTotalSupplyRateInfoArray"
 #define Key_food1Supply1NutrientAmount @"food1Supply1NutrientAmount"
 #define Key_nutrientTotalDRI @"nutrientTotalDRI"
 #define Key_1foodSupply1NutrientRate @"1foodSupply1NutrientRate"

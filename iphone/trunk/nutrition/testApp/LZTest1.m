@@ -24,6 +24,9 @@
     
     
 //    [self.class testDA1];
+    
+//    [self.class testFormatResult1];
+    [self.class testFormatResult2_taken];
 }
 
 
@@ -1399,7 +1402,68 @@
 
 
 
++(void)testFormatResult1
+{
+    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:200.0],@"20450",//rice
+                                         [NSNumber numberWithDouble:100.0],@"16108",//huangdou
+                                         [NSNumber numberWithDouble:200.0],@"11116",//youcai
+                                         [NSNumber numberWithDouble:150.0],@"16022",//doujiao
+                                         nil];
 
+    BOOL notAllowSameFood = TRUE;
+    BOOL randomSelectFood = FALSE;
+    int randomRangeSelectFood = 0;
+    BOOL needLimitNutrients = FALSE;
+    int limitRecommendFoodCount = 0;
+    BOOL needUseFoodLimitTableWhenCal = TRUE;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:notAllowSameFood],@"notAllowSameFood",
+                             [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
+                             [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
+                             [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
+                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+                             [NSNumber numberWithBool:needUseFoodLimitTableWhenCal],@"needUseFoodLimitTableWhenCal",
+                             nil];
+    
+    uint personCount = 1;
+    uint dayCount = 1;
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithUnsignedInt:personCount],@"personCount",
+                            [NSNumber numberWithUnsignedInt:dayCount],@"dayCount",
+                            nil];
+    
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFood2_AbstractPerson:params withDecidedFoods:takenFoodAmountDict andOptions:options];
+    NSMutableDictionary *retFmtDict = [rf formatRecommendResultForUI:retDict];
+
+}
+
+
++(void)testFormatResult2_taken
+{
+    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:200.0],@"20450",//rice
+                                         [NSNumber numberWithDouble:100.0],@"16108",//huangdou
+                                         [NSNumber numberWithDouble:200.0],@"11116",//youcai
+                                         [NSNumber numberWithDouble:150.0],@"16022",//doujiao
+                                         nil];
+    
+        
+    uint personCount = 1;
+    uint dayCount = 1;
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithUnsignedInt:personCount],@"personCount",
+                            [NSNumber numberWithUnsignedInt:dayCount],@"dayCount",
+                            nil];
+
+        
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+    NSMutableDictionary *retFmtDict = [rf formatRecommendResultForUI:retDict];
+    
+}
 
 
 
