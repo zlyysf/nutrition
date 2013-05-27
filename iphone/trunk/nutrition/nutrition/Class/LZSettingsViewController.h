@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZSettingsViewController : UIViewController
+@interface LZSettingsViewController : UIViewController<UITextFieldDelegate>
 
+@property (strong, nonatomic) IBOutlet UITextField *personsTextField;
+@property (strong, nonatomic) IBOutlet UITextField *daysTextField;
 @end

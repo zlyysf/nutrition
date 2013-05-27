@@ -25,7 +25,7 @@
             <objects>
                 <tabBarController storyboardIdentifier="LZMainTabBarController" definesPresentationContext="YES" id="rK2-CS-vcz" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="V1c-h1-C1d"/>
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
+                    <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="AgO-sa-9B9">
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -63,9 +63,79 @@
                     <view key="view" contentMode="scaleToFill" id="ZHJ-1P-sm5">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="olu-uC-TH9">
+                                <rect key="frame" x="82" y="82" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="v2r-YV-GYD" id="c0q-IV-WrP"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="4r3-aQ-wIr">
+                                <rect key="frame" x="82" y="161" width="97" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                                <connections>
+                                    <outlet property="delegate" destination="v2r-YV-GYD" id="SlG-0o-XJs"/>
+                                </connections>
+                            </textField>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="人" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="m6y-aB-nhf">
+                                <rect key="frame" x="187" y="86" width="17" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="天" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="5JD-5o-OQp">
+                                <rect key="frame" x="187" y="170" width="17" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="goP-7Z-AJg">
+                                <rect key="frame" x="15" y="86" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NKY-Tk-Lkm">
+                                <rect key="frame" x="15" y="170" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wv9-ZD-PXy">
+                                <rect key="frame" x="15" y="14" width="257" height="51"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="mYF-ed-kAE"/>
+                    <navigationItem key="navigationItem" id="mYF-ed-kAE">
+                        <barButtonItem key="leftBarButtonItem" title="取消修改" id="yWU-Nv-rgW">
+                            <connections>
+                                <action selector="cancelChanges:" destination="v2r-YV-GYD" id="QGK-yM-gU2"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="保存修改" id="QWg-U3-9fO">
+                            <connections>
+                                <action selector="saveChanges:" destination="v2r-YV-GYD" id="74m-8B-qHR"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="daysTextField" destination="4r3-aQ-wIr" id="csn-br-vZd"/>
+                        <outlet property="personsTextField" destination="olu-uC-TH9" id="ob3-LN-siI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R4C-lr-bw2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -838,12 +908,15 @@
         <class className="LZAnalysislViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZAnalysislViewController.h"/>
             <relationships>
+                <relationship kind="action" name="emailButtonTapped:"/>
                 <relationship kind="outlet" name="recommendWebViewAsTable" candidateClass="UIWebView"/>
             </relationships>
         </class>
         <class className="LZDailyIntakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDailyIntakeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="resetButtonTapped:"/>
+                <relationship kind="action" name="saveButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -863,6 +936,7 @@
         <class className="LZFoodListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodListViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addFoodAction:"/>
                 <relationship kind="outlet" name="addFoodItem" candidateClass="UIBarButtonItem"/>
             </relationships>
         </class>
@@ -885,6 +959,8 @@
         <class className="LZPersonInfoViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZPersonInfoViewController.h"/>
             <relationships>
+                <relationship kind="action" name="activityLevelValueChanged:" candidateClass="UISegmentedControl"/>
+                <relationship kind="action" name="doneButtonTapped:"/>
                 <relationship kind="outlet" name="activityLevelBriefLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="activityLevelSegmentControl" candidateClass="UISegmentedControl"/>
                 <relationship kind="outlet" name="ageTextField" candidateClass="UITextField"/>
@@ -925,6 +1001,10 @@
         </class>
         <class className="LZSettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZSettingsViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="daysTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="personsTextField" candidateClass="UITextField"/>
+            </relationships>
         </class>
         <class className="LZStandardContentCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZStandardContentCell.h"/>
