@@ -86,7 +86,7 @@
         {
             radius = 2;
         }
-        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:progress withBackRadius:8.f fillRadius:radius];
+        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor blueColor] progress:progress withBackRadius:8.f fillRadius:radius];
         //[cell adjustLabelAccordingToProgress:0.5];
         cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%%,%d/%d (%@)",(int)(progress *100),[food1Supply1NutrientAmount intValue],[nutrientTotalDRI intValue ],unit];
 
@@ -132,7 +132,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
-        return 84;
+        return 50;
     else
         return 30;
 }

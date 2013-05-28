@@ -173,7 +173,7 @@
     if (indexPath.section == 0)
         return 84;
     else
-        return 68;
+        return 50;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -208,32 +208,6 @@
 {
     if (indexPath.section == 0)
     {
-        if(takenFoodArray ==nil || [takenFoodArray count]==0)
-        {
-            return;
-        }
-        else
-        {
-            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
-            NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
-            NSArray *nutrientSupplyArr = [[takenFoodDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
-            NSArray *nutrientStandardArr = [[takenFoodDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
-            NSString *foodName = [aFood objectForKey:@"Name"];
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-            LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
-            foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
-            foodDetailController.nutrientStandardArray = nutrientStandardArr;
-            foodDetailController.title = foodName;
-            [self.navigationController pushViewController:foodDetailController animated:YES];
-        }
-
-    }
-    else if (indexPath.section == 1)
-    {
-        return;
-    }
-    else
-    {
         if(recommendFoodArray ==nil || [recommendFoodArray count]==0)
         {
             return;
@@ -252,11 +226,33 @@
             foodDetailController.foodName = foodName;
             UINavigationController *initialController = (UINavigationController*)[UIApplication
                                                                                   sharedApplication].keyWindow.rootViewController;
-
+            
             [initialController pushViewController:foodDetailController animated:YES];
         }
 
+//        if(takenFoodArray ==nil || [takenFoodArray count]==0)
+//        {
+//            return;
+//        }
+//        else
+//        {
+//            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
+//            NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
+//            NSArray *nutrientSupplyArr = [[takenFoodDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
+//            NSArray *nutrientStandardArr = [[takenFoodDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
+//            NSString *foodName = [aFood objectForKey:@"Name"];
+//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//            LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
+//            foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
+//            foodDetailController.nutrientStandardArray = nutrientStandardArr;
+//            foodDetailController.title = foodName;
+//            [self.navigationController pushViewController:foodDetailController animated:YES];
+//        }
+
     }
+    else
+        return;
+
 }
 - (void)didReceiveMemoryWarning
 {
