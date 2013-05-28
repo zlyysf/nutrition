@@ -12,4 +12,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic)NSArray *nutrientSupplyArray;
 @property (strong,nonatomic)NSArray *nutrientStandardArray;
+@property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
+@property (strong,nonatomic)NSString *foodName;
 @end

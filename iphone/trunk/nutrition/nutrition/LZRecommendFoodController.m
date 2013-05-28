@@ -96,11 +96,9 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)
-        return (takenFoodArray ==nil || [takenFoodArray count]==0) ? 1 : [takenFoodArray count];
-    else if (section == 1)
-        return [nutrientInfoArray count];
-    else
         return (recommendFoodArray ==nil || [recommendFoodArray count]==0) ? 1 : [recommendFoodArray count];
+    else
+        return [nutrientInfoArray count];
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -108,9 +106,30 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+//    if (indexPath.section == 0)
+//    {
+//        if(takenFoodArray ==nil || [takenFoodArray count]==0)
+//        {
+//            UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EmptyCell"];
+//            cell.textLabel.text = @"空";
+//            return cell;
+//        }
+//        else
+//        {
+//            LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
+//            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
+//            cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
+//            NSNumber *weight = [aFood objectForKey:@"Amount"];
+//            cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
+//            NSString *foodPic = [aFood objectForKey:@"PicturePath"];
+//            UIImage *iconImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/quizicons/%@",[[NSBundle mainBundle] bundlePath],foodPic]];
+//            [cell.foodImageView setImage:iconImage];
+//            return cell;
+//        }
+//    }
     if (indexPath.section == 0)
     {
-        if(takenFoodArray ==nil || [takenFoodArray count]==0)
+        if(recommendFoodArray ==nil || [recommendFoodArray count]==0)
         {
             UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EmptyCell"];
             cell.textLabel.text = @"空";
@@ -119,17 +138,15 @@
         else
         {
             LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
-            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
+            NSDictionary *aFood = [recommendFoodArray objectAtIndex:indexPath.row];
             cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
             NSNumber *weight = [aFood objectForKey:@"Amount"];
             cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
-//            NSString *foodPic = [aFood objectForKey:@"PicturePath"];
-//            UIImage *iconImage = [UIImage imageWithContentsOfFile:[NSString stringWithFormat:@"%@/quizicons/%@",[[NSBundle mainBundle] bundlePath],foodPic]];
-//            [cell.foodImageView setImage:iconImage];
+            
             return cell;
         }
     }
-    else if (indexPath.section == 1)
+    else
     {
         LZNutritionCell *cell = (LZNutritionCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionCell"];
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
@@ -150,32 +167,13 @@
         cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(progress *100)];
         return cell;
     }
-    else
-    {
-        if(recommendFoodArray ==nil || [recommendFoodArray count]==0)
-        {
-            UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EmptyCell"];
-            cell.textLabel.text = @"空";
-            return cell;
-        }
-        else
-        {
-            LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
-            NSDictionary *aFood = [recommendFoodArray objectAtIndex:indexPath.row];
-            cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
-            NSNumber *weight = [aFood objectForKey:@"Amount"];
-            cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
-
-        return cell;
-        }
-    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 1)
-        return 68;
-    else
+    if (indexPath.section == 0)
         return 84;
+    else
+        return 68;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
@@ -196,17 +194,15 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text =  @"已经决定了的食物";
-    else if (section == 1)
-        sectionTitleLabel.text =  @"摄取的营养够了么";
-    else
         sectionTitleLabel.text =  @"推荐食物";
+    else
+        sectionTitleLabel.text =  @"摄取的营养";
 
     return sectionView;
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 3;
+    return 2;
 }// Default is 1 if not implemented
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -253,8 +249,11 @@
             LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
             foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
             foodDetailController.nutrientStandardArray = nutrientStandardArr;
-            foodDetailController.title = foodName;
-            [self.navigationController pushViewController:foodDetailController animated:YES];
+            foodDetailController.foodName = foodName;
+            UINavigationController *initialController = (UINavigationController*)[UIApplication
+                                                                                  sharedApplication].keyWindow.rootViewController;
+
+            [initialController pushViewController:foodDetailController animated:YES];
         }
 
     }

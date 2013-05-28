@@ -15,7 +15,7 @@
 @end
 
 @implementation LZFoodDetailController
-@synthesize nutrientSupplyArray,nutrientStandardArray;
+@synthesize nutrientSupplyArray,nutrientStandardArray,foodName;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,10 +32,9 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(backButtonTapped:)];
-    self.navigationItem.leftBarButtonItem = backItem;
+    self.navItem.title = foodName;
 }
-- (void)backButtonTapped:(id)sender
+- (IBAction)backButtonTapped:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -191,4 +190,8 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidUnload {
+    [self setNavItem:nil];
+    [super viewDidUnload];
+}
 @end
