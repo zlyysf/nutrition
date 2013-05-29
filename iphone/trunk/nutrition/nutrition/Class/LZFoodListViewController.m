@@ -12,12 +12,13 @@
 #import "LZRecommendFoodCell.h"
 #import "LZNutritionCell.h"
 #import "LZConstants.h"
+#import "LZFoodDetailController.h"
 @interface LZFoodListViewController ()
 
 @end
 
 @implementation LZFoodListViewController
-@synthesize showTableView,takenFoodArray,takenFoodDict,nutrientInfoArray;
+@synthesize showTableView,takenFoodArray,takenFoodDict,nutrientInfoArray,needRefresh;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -35,11 +36,35 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    self.listView.hidden = NO;
+    needRefresh = NO;
+    takenFoodArray = [[NSMutableArray alloc]init];
+    takenFoodDict = [[NSMutableDictionary alloc]init];
+    nutrientInfoArray = [[NSMutableArray alloc]init];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
+
+    [self displayTakenFoodResult];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    if(needRefresh)
+    {
+        [self displayTakenFoodResult];
+        needRefresh = NO;
+    }
+}
+- (void)takenFoodChanged:(NSNotification *)notification
+{
+    needRefresh = YES;
+}
+-(void)displayTakenFoodResult
+{
     NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
     if (takenFoodAmountDict == NULL || [[takenFoodAmountDict allKeys]count]==0)
     {
         showTableView = NO;
+        self.listView.hidden = YES;
+        [self.editFoodItem setEnabled:NO];
+        self.emptyFoodShowLabel.hidden= NO;
     }
     else
     {
@@ -56,24 +81,32 @@
         NSLog(@"retFmtDict %@",retFmtDict);
         NSArray *takenArray = [retFmtDict objectForKey:Key_takenFoodInfoDictArray];
         if (takenArray != nil && [takenArray count]!=0) {
-            takenFoodArray = [[NSMutableArray alloc]initWithArray:takenArray];
+            [takenFoodArray removeAllObjects];
+            [takenFoodArray addObjectsFromArray:takenArray];
         }
         NSLog(@"takenArray %@",takenFoodArray);
         NSDictionary *takenDict = [retFmtDict objectForKey:Key_takenFoodNutrientInfoAryDictDict];
         if (takenDict != nil )
         {
-            takenFoodDict = [[NSMutableDictionary alloc]initWithDictionary:takenDict];
+            [takenFoodDict removeAllObjects];
+            [takenFoodDict addEntriesFromDictionary:takenDict];
             NSLog(@"takenFoodDict %@ ",takenFoodDict);
         }
         NSArray *nutrientArray = [retFmtDict objectForKey:Key_nutrientTakenRateInfoArray];
         if (nutrientArray != nil && [nutrientArray count]!=0) {
-            nutrientInfoArray = [[NSMutableArray alloc]initWithArray:nutrientArray];
+            [nutrientInfoArray removeAllObjects];
+            [nutrientInfoArray addObjectsFromArray:nutrientArray];
+            NSLog(@"nutrientInfoArray %@",nutrientInfoArray);
         }
-
+        
         showTableView = YES;
+        self.listView.hidden = NO;
+        self.emptyFoodShowLabel.hidden= YES;
+        [self.editFoodItem setEnabled:YES];
+        [self.listView reloadData];
     }
-}
 
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -133,7 +166,7 @@
             radius = 2;
         }
         [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:progress withBackRadius:8.f fillRadius:radius];
-        [cell adjustLabelAccordingToProgress:0.5];
+        [cell adjustLabelAccordingToProgress:progress];
         cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(progress *100)];
         return cell;
     }
@@ -176,21 +209,75 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(indexPath.section == 0)
+    {
+        if(takenFoodArray ==nil || [takenFoodArray count]==0)
+        {
+            return;
+        }
+        else
+        {
+            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
+            NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
+            NSArray *nutrientSupplyArr = [[takenFoodDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
+            NSArray *nutrientStandardArr = [[takenFoodDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
+            NSString *foodName = [aFood objectForKey:@"Name"];
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+            LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
+            foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
+            foodDetailController.nutrientStandardArray = nutrientStandardArr;
+            foodDetailController.foodName = foodName;
+            UINavigationController *initialController = (UINavigationController*)[UIApplication
+                                                                                  sharedApplication].keyWindow.rootViewController;
+            [initialController pushViewController:foodDetailController animated:YES];
+        }
+    }
+    else
+        return;
+}
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section ==1)
+    {
+        return NO;
+    }
+    return YES;
+}
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:takenFoodAmountDict];
+    NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
+    NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
+    [tempDict removeObjectForKey:ndb_No];
+    [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    [self.takenFoodArray removeObjectAtIndex:indexPath.row];
+    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+    [self.listView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
     
 }
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return @"删除";
+}
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
 - (IBAction)editFoodAction:(id)sender {
+    
     if(!self.listView.editing)
     {
         [self.editFoodItem setStyle:UIBarButtonItemStyleDone];
         [self.editFoodItem setTitle:@"完成"];
-        
+        self.listView.editing= !self.listView.editing;
     }
     else
     {
         [self.editFoodItem setStyle:UIBarButtonItemStyleBordered];
         [self.editFoodItem setTitle:@"编辑"];
+        self.listView.editing= !self.listView.editing;
+        [self displayTakenFoodResult];
     }
-    self.listView.editing= !self.listView.editing;
+
 }
 
 - (IBAction)addFoodAction:(id)sender {
@@ -207,8 +294,10 @@
 }
 
 - (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
     [self setListView:nil];
     [self setEditFoodItem:nil];
+    [self setEmptyFoodShowLabel:nil];
     [super viewDidUnload];
 }
 @end

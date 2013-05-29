@@ -255,8 +255,8 @@
         }
     }
     if (needSaveData) {
-        NSDictionary *userDailyIntake = [[NSDictionary alloc]initWithDictionary:intakeDict];
-        [[NSUserDefaults standardUserDefaults]setObject:userDailyIntake forKey:LZUserDailyIntakeKey];
+        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
         [[NSUserDefaults  standardUserDefaults]synchronize];
     }
     [self.navigationController popViewControllerAnimated:YES];

@@ -15,5 +15,7 @@
 @property (strong,nonatomic)NSMutableArray *takenFoodArray;
 @property (strong, nonatomic)NSMutableDictionary *takenFoodDict;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *editFoodItem;
+@property (strong, nonatomic) IBOutlet UILabel *emptyFoodShowLabel;
 @property (strong,nonatomic)NSMutableArray *nutrientInfoArray;
+@property (assign,nonatomic)BOOL needRefresh;
 @end

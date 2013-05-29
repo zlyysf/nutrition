@@ -134,6 +134,13 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="您可以预先决定一些您爱吃的食物，我们再帮你推荐其他食物以全面补充营养。" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="HLI-F7-3rT">
+                                <rect key="frame" x="10" y="200" width="300" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="grJ-fr-1H6">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -240,6 +247,7 @@
                     <connections>
                         <outlet property="addFoodItem" destination="2Bb-3W-kIs" id="Mkx-lZ-XaI"/>
                         <outlet property="editFoodItem" destination="MxW-ak-TTm" id="KjH-V5-qRX"/>
+                        <outlet property="emptyFoodShowLabel" destination="HLI-F7-3rT" id="2xm-nm-ny1"/>
                         <outlet property="listView" destination="grJ-fr-1H6" id="dwV-Bd-QkJ"/>
                     </connections>
                 </viewController>
@@ -738,8 +746,15 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="2Km-OU-F5W"/>
+                    <navigationItem key="navigationItem" id="2Km-OU-F5W">
+                        <barButtonItem key="rightBarButtonItem" title="换一组" id="vft-3D-kfl">
+                            <connections>
+                                <action selector="changeOnePlan:" destination="QI7-b7-9g8" id="oRZ-fS-vuF"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
+                        <outlet property="changeOnePlanItem" destination="vft-3D-kfl" id="VaW-qP-rff"/>
                         <outlet property="listView" destination="Qwn-3A-G6b" id="lrR-gk-ssa"/>
                     </connections>
                 </viewController>
@@ -954,6 +969,7 @@
             <relationships>
                 <relationship kind="outlet" name="addFoodItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="editFoodItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="emptyFoodShowLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1001,6 +1017,7 @@
         <class className="LZRecommendFoodController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZRecommendFoodController.h"/>
             <relationships>
+                <relationship kind="outlet" name="changeOnePlanItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>

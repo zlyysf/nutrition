@@ -18,7 +18,7 @@
 @end
 
 @implementation LZRecommendFoodController
-@synthesize recommendFoodArray,recommendFoodDict,nutrientInfoArray;
+@synthesize recommendFoodArray,recommendFoodDict,nutrientInfoArray,needResfesh;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -27,6 +27,36 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    recommendFoodArray = [[NSMutableArray alloc]init];
+    recommendFoodDict = [[NSMutableDictionary alloc]init];
+    nutrientInfoArray = [[NSMutableArray alloc]init];
+    needResfesh= NO;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
+    [self recommendOnePlan];
+}
+- (void)settingsChanged:(NSNotification *)notification
+{
+    needResfesh = YES;
+}
+- (void)takenFoodChanged:(NSNotification *)notification
+{
+    needResfesh = YES;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    if (needResfesh )
+    {
+        [self recommendOnePlan];
+        needResfesh = NO;
+    }
+}
+- (IBAction)changeOnePlan:(id)sender {
+    [self recommendOnePlan];
+}
+- (void)recommendOnePlan
+{
+    [self.changeOnePlanItem setEnabled:NO];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *dailyIntake = [userDefaults objectForKey:LZUserDailyIntakeKey];
     
@@ -68,20 +98,25 @@
     //NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
     NSMutableDictionary *retDict = [rf recommendFood2_AbstractPerson:params withDecidedFoods:dailyIntake andOptions:options];
     NSMutableDictionary *uiDictionary = [rf formatRecommendResultForUI:retDict];
-    NSLog(@"uiDictionary %@",uiDictionary);
+    NSLog(@"uiDictionary %@",[uiDictionary allKeys]);
     NSArray *recommendArray = [uiDictionary objectForKey:Key_recommendFoodInfoDictArray];
     if (recommendArray != nil && [recommendArray count]!=0) {
-        recommendFoodArray = [[NSArray alloc]initWithArray:recommendArray];
+        [recommendFoodArray removeAllObjects];
+        [recommendFoodArray addObjectsFromArray:recommendArray];
     }
     NSDictionary *recommendDict = [uiDictionary objectForKey:Key_recommendFoodNutrientInfoAryDictDict];
     if (recommendDict != nil )
     {
-        recommendFoodDict = [[NSDictionary alloc]initWithDictionary:recommendDict];
+        [recommendFoodDict removeAllObjects];
+        [recommendFoodDict addEntriesFromDictionary:recommendDict];
     }
-    NSArray *nutrientArray = [uiDictionary objectForKey:Key_nutrientTakenRateInfoArray];
+    NSArray *nutrientArray = [uiDictionary objectForKey:Key_nutrientTotalSupplyRateInfoArray];
     if (nutrientArray != nil && [nutrientArray count]!=0) {
-        nutrientInfoArray = [[NSArray alloc]initWithArray:nutrientArray];
+        [nutrientInfoArray removeAllObjects];
+        [nutrientInfoArray addObjectsFromArray:nutrientArray];
     }
+    [self.changeOnePlanItem setEnabled:YES];
+    [self.listView reloadData];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -153,7 +188,7 @@
             radius = 2;
         }
         [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:progress withBackRadius:8.f fillRadius:radius];
-        [cell adjustLabelAccordingToProgress:0.5];
+        [cell adjustLabelAccordingToProgress:progress];
         cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(progress *100)];
         return cell;
     }
@@ -220,24 +255,6 @@
             [initialController pushViewController:foodDetailController animated:YES];
         }
 
-//        if(takenFoodArray ==nil || [takenFoodArray count]==0)
-//        {
-//            return;
-//        }
-//        else
-//        {
-//            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
-//            NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
-//            NSArray *nutrientSupplyArr = [[takenFoodDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
-//            NSArray *nutrientStandardArr = [[takenFoodDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
-//            NSString *foodName = [aFood objectForKey:@"Name"];
-//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-//            LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
-//            foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
-//            foodDetailController.nutrientStandardArray = nutrientStandardArr;
-//            foodDetailController.title = foodName;
-//            [self.navigationController pushViewController:foodDetailController animated:YES];
-//        }
 
     }
     else
@@ -250,4 +267,10 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_SettingsChangedKey object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
+    [self setChangeOnePlanItem:nil];
+    [super viewDidUnload];
+}
 @end

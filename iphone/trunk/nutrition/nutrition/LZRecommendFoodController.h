@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 @interface LZRecommendFoodController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
-@property (strong,nonatomic)NSArray *recommendFoodArray;
-@property (strong,nonatomic)NSDictionary *recommendFoodDict;
-@property (strong,nonatomic)NSArray *nutrientInfoArray;
+@property (strong,nonatomic)NSMutableArray *recommendFoodArray;
+@property (strong,nonatomic)NSMutableDictionary *recommendFoodDict;
+@property (strong,nonatomic)NSMutableArray *nutrientInfoArray;
+@property (strong, nonatomic) IBOutlet UIBarButtonItem *changeOnePlanItem;
+@property (assign, nonatomic)BOOL needResfesh;
 @end

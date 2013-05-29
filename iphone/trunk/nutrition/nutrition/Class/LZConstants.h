@@ -82,8 +82,8 @@
 #define TopNavigationBarHeight 44
 #define FoodTypeSelectorViewHeight 41
 
-
-
+#define Notification_TakenFoodChangedKey @"KeyTakenFoodChangedNotification"
+#define Notification_SettingsChangedKey @"KeySettingsChangedNotification"
 
 
 
