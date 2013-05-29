@@ -53,7 +53,7 @@
                                 <rect key="frame" x="82" y="82" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="v2r-YV-GYD" id="c0q-IV-WrP"/>
                                 </connections>
@@ -62,7 +62,7 @@
                                 <rect key="frame" x="82" y="161" width="97" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="v2r-YV-GYD" id="SlG-0o-XJs"/>
                                 </connections>
@@ -106,12 +106,12 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="mYF-ed-kAE">
-                        <barButtonItem key="leftBarButtonItem" title="取消修改" id="yWU-Nv-rgW">
+                        <barButtonItem key="leftBarButtonItem" title="取消" id="yWU-Nv-rgW">
                             <connections>
                                 <action selector="cancelChanges:" destination="v2r-YV-GYD" id="QGK-yM-gU2"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" title="保存修改" id="QWg-U3-9fO">
+                        <barButtonItem key="rightBarButtonItem" title="保存" id="QWg-U3-9fO">
                             <connections>
                                 <action selector="saveChanges:" destination="v2r-YV-GYD" id="74m-8B-qHR"/>
                             </connections>
@@ -365,287 +365,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jDH-SS-oyy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1162" y="-530"/>
-        </scene>
-        <!--Person Info View Controller - 个人信息-->
-        <scene sceneID="UZR-GT-h7l">
-            <objects>
-                <viewController id="rLa-87-KUI" customClass="LZPersonInfoViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="h6O-4b-Hq6">
-                        <rect key="frame" x="0.0" y="20" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="sex:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="D4O-NF-0Wz">
-                                <rect key="frame" x="20" y="131" width="58" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="age:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="XbH-wh-VOd">
-                                <rect key="frame" x="20" y="175" width="65" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="zef-9r-l85">
-                                <rect key="frame" x="105" y="127" width="195" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Male"/>
-                                    <segment title="Female"/>
-                                </segments>
-                            </segmentedControl>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="sLA-rx-Lit">
-                                <rect key="frame" x="20" y="339" width="280" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <segments>
-                                    <segment title="Sedentary"/>
-                                    <segment title="LowActive"/>
-                                    <segment title="Active"/>
-                                    <segment title="VeryActive"/>
-                                </segments>
-                                <connections>
-                                    <action selector="activityLevelValueChanged:" destination="rLa-87-KUI" eventType="valueChanged" id="l4S-xH-rke"/>
-                                </connections>
-                            </segmentedControl>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="height:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jv6-I3-OHu">
-                                <rect key="frame" x="20" y="218" width="65" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="weight:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u9E-4H-sV3">
-                                <rect key="frame" x="20" y="257" width="65" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="activity level:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="iqy-yQ-zSw">
-                                <rect key="frame" x="20" y="302" width="123" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="Wai-JL-Kcu">
-                                <rect key="frame" x="114" y="172" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                <connections>
-                                    <outlet property="delegate" destination="rLa-87-KUI" id="bUX-fr-jAr"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="Tit-Yp-eIp">
-                                <rect key="frame" x="114" y="215" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                <connections>
-                                    <outlet property="delegate" destination="rLa-87-KUI" id="pwU-yQ-QGa"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="Wx6-lW-QYr">
-                                <rect key="frame" x="114" y="254" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                <connections>
-                                    <outlet property="delegate" destination="rLa-87-KUI" id="vnO-wf-rZS"/>
-                                </connections>
-                            </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="years" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Gj9-yD-FwB">
-                                <rect key="frame" x="226" y="175" width="48" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="cm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AAO-09-nNk">
-                                <rect key="frame" x="226" y="218" width="48" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="kg" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lGr-bD-8OM">
-                                <rect key="frame" x="226" y="257" width="48" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pvs-lf-D5H">
-                                <rect key="frame" x="20" y="265" width="280" height="116"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="几人份" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MhC-JG-VXZ">
-                                <rect key="frame" x="20" y="25" width="51" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="几天" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FfH-5m-a0I">
-                                <rect key="frame" x="20" y="73" width="34" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="l15-rW-qMK">
-                                <rect key="frame" x="99" y="69" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                <connections>
-                                    <outlet property="delegate" destination="rLa-87-KUI" id="ezb-mI-JUO"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" id="iuI-cJ-rcG">
-                                <rect key="frame" x="99" y="21" width="97" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                <connections>
-                                    <outlet property="delegate" destination="rLa-87-KUI" id="4e3-Jk-TDe"/>
-                                </connections>
-                            </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="人份" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FSy-Gj-ABi">
-                                <rect key="frame" x="204" y="25" width="34" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="天" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="t1Z-ha-EUe">
-                                <rect key="frame" x="204" y="73" width="17" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="个人信息" id="P85-kn-4WK">
-                        <barButtonItem key="rightBarButtonItem" title="完成" id="Rk4-9A-zQ2">
-                            <connections>
-                                <action selector="doneButtonTapped:" destination="rLa-87-KUI" id="VWM-k9-OKH"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <connections>
-                        <outlet property="activityLevelBriefLabel" destination="pvs-lf-D5H" id="bAD-wM-cYa"/>
-                        <outlet property="activityLevelSegmentControl" destination="sLA-rx-Lit" id="C8s-sf-fDr"/>
-                        <outlet property="ageTextField" destination="Wai-JL-Kcu" id="6be-lD-kxn"/>
-                        <outlet property="daysTextField" destination="l15-rW-qMK" id="C7I-OD-Jcb"/>
-                        <outlet property="heightTextField" destination="Tit-Yp-eIp" id="zNB-2N-qFP"/>
-                        <outlet property="personsTextField" destination="iuI-cJ-rcG" id="XDQ-Ga-Nz8"/>
-                        <outlet property="sexSegmentControl" destination="zef-9r-l85" id="T1n-iM-ma1"/>
-                        <outlet property="weightTextField" destination="Wx6-lW-QYr" id="c5T-LO-FUf"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="9Tr-dp-NHl" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1672" y="-11"/>
-        </scene>
-        <!--Secret Setting View Controller - 非公开设置-->
-        <scene sceneID="VMN-ca-bY9">
-            <objects>
-                <viewController id="n1U-9X-eK5" customClass="LZSecretSettingViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="Rh6-Zl-fYv">
-                        <rect key="frame" x="0.0" y="20" width="320" height="416"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="是否随机选取食物:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="2at-Pg-tjx">
-                                <rect key="frame" x="20" y="25" width="141" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="xKm-tE-pBv">
-                                <rect key="frame" x="223" y="25" width="79" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </switch>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="随机选取前几个食物:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gNi-ZY-9X0">
-                                <rect key="frame" x="20" y="64" width="158" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="2" borderStyle="roundedRect" minimumFontSize="17" id="4pb-ow-aJo">
-                                <rect key="frame" x="223" y="60" width="77" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="计算时使用部分营养素:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="On9-UN-Kth">
-                                <rect key="frame" x="20" y="103" width="175" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Mol-8i-9Ln">
-                                <rect key="frame" x="223" y="100" width="79" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </switch>
-                            <label hidden="YES" opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="显示推荐食物的限制数量:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4rW-zL-gJY">
-                                <rect key="frame" x="20" y="142" width="192" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="4" borderStyle="roundedRect" minimumFontSize="17" id="FgF-vU-b5W">
-                                <rect key="frame" x="223" y="139" width="77" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="食物尽量多样化:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="IZb-Zx-g1W">
-                                <rect key="frame" x="20" y="183" width="124" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="XA3-o6-oa0">
-                                <rect key="frame" x="223" y="183" width="79" height="27"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </switch>
-                        </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="非公开设置" id="2rn-7m-cpF">
-                        <barButtonItem key="rightBarButtonItem" title="保存" id="nTM-zJ-NRa">
-                            <connections>
-                                <action selector="onSaveClick:" destination="n1U-9X-eK5" id="UVU-D4-wx7"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
-                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <connections>
-                        <outlet property="switchNeedLimitNutrients" destination="Mol-8i-9Ln" id="rbO-OV-dAU"/>
-                        <outlet property="switchNotAllowSameFood" destination="XA3-o6-oa0" id="JmU-eO-pll"/>
-                        <outlet property="switchRandomSelectFood" destination="xKm-tE-pBv" id="mIB-d6-j2K"/>
-                        <outlet property="textfieldLimitRecommendFoodCount" destination="FgF-vU-b5W" id="c0m-Ma-mlg"/>
-                        <outlet property="textfieldRandomRangeSelectFood" destination="4pb-ow-aJo" id="O0u-gL-jmI"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="GST-Gj-cq3" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1665" y="585"/>
         </scene>
         <!--Recommend Food Controller-->
         <scene sceneID="uIY-Hl-QHj">
@@ -989,19 +708,6 @@
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
             </relationships>
         </class>
-        <class className="LZPersonInfoViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZPersonInfoViewController.h"/>
-            <relationships>
-                <relationship kind="outlet" name="activityLevelBriefLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="activityLevelSegmentControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="ageTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="daysTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="heightTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="personsTextField" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="sexSegmentControl" candidateClass="UISegmentedControl"/>
-                <relationship kind="outlet" name="weightTextField" candidateClass="UITextField"/>
-            </relationships>
-        </class>
         <class className="LZProgressView" superclassName="UIView">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZProgressView.h"/>
         </class>
@@ -1019,17 +725,6 @@
             <relationships>
                 <relationship kind="outlet" name="changeOnePlanItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="LZSecretSettingViewController" superclassName="UIViewController">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZSecretSettingViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="onSaveClick:"/>
-                <relationship kind="outlet" name="switchNeedLimitNutrients" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="switchNotAllowSameFood" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="switchRandomSelectFood" candidateClass="UISwitch"/>
-                <relationship kind="outlet" name="textfieldLimitRecommendFoodCount" candidateClass="UITextField"/>
-                <relationship kind="outlet" name="textfieldRandomRangeSelectFood" candidateClass="UITextField"/>
             </relationships>
         </class>
         <class className="LZSettingsViewController" superclassName="UIViewController">

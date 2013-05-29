@@ -13,7 +13,7 @@
 @end
 
 @implementation LZSettingsViewController
-
+@synthesize currentTextField;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -61,7 +61,9 @@
 {
 
 }
-- (IBAction)saveChanges:(id)sender {
+- (IBAction)saveChanges:(id)sender
+{
+    [currentTextField resignFirstResponder];
     int persons = [self.personsTextField.text intValue];
     int days = [self.daysTextField.text intValue];
     if (persons <=0 || days <=0)
@@ -75,7 +77,9 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
     [[NSNotificationCenter defaultCenter]postNotificationName:Notification_SettingsChangedKey object:nil userInfo:nil];
 }
-- (IBAction)cancelChanges:(id)sender {
+- (IBAction)cancelChanges:(id)sender
+{
+    [currentTextField resignFirstResponder];
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
     if (planPerson != NULL)
@@ -111,6 +115,7 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    currentTextField = textField;
     return YES;
 }
 

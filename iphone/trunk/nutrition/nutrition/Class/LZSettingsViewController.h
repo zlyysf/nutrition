@@ -12,4 +12,5 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *personsTextField;
 @property (strong, nonatomic) IBOutlet UITextField *daysTextField;
+@property (strong, nonatomic)UITextField * currentTextField;
 @end
