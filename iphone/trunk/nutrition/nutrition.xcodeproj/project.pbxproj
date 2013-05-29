@@ -50,6 +50,7 @@
 		0882403E173A7E7400E71E6E /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882403D173A7E7400E71E6E /* readme.txt */; };
 		088241301743873500E71E6E /* LZSecretSettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0882412F1743873500E71E6E /* LZSecretSettingViewController.m */; };
 		088241441744DE8000E71E6E /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
+		0882419F175621DE00E71E6E /* foodDealed in Resources */ = {isa = PBXBuildFile; fileRef = 0882419E175621DE00E71E6E /* foodDealed */; };
 		5F0122A8174C731900AC0156 /* cell_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122A5174C731900AC0156 /* cell_bottom@2x.png */; };
 		5F0122A9174C731900AC0156 /* cell_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122A6174C731900AC0156 /* cell_middle@2x.png */; };
 		5F0122AA174C731900AC0156 /* cell_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122A7174C731900AC0156 /* cell_top@2x.png */; };
@@ -127,6 +128,7 @@
 		0882412F1743873500E71E6E /* LZSecretSettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZSecretSettingViewController.m; path = Class/LZSecretSettingViewController.m; sourceTree = "<group>"; };
 		088241421744DE8000E71E6E /* LZTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZTest1.h; sourceTree = "<group>"; };
 		088241431744DE8000E71E6E /* LZTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZTest1.m; sourceTree = "<group>"; };
+		0882419E175621DE00E71E6E /* foodDealed */ = {isa = PBXFileReference; lastKnownFileType = folder; name = foodDealed; path = ../../../ui/pictures/foodDealed; sourceTree = "<group>"; };
 		5F0122A5174C731900AC0156 /* cell_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_bottom@2x.png"; path = "nutrition/Resource/cell_bottom@2x.png"; sourceTree = "<group>"; };
 		5F0122A6174C731900AC0156 /* cell_middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_middle@2x.png"; path = "nutrition/Resource/cell_middle@2x.png"; sourceTree = "<group>"; };
 		5F0122A7174C731900AC0156 /* cell_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_top@2x.png"; path = "nutrition/Resource/cell_top@2x.png"; sourceTree = "<group>"; };
@@ -287,9 +289,18 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0882419D175621BC00E71E6E /* ResExternal */ = {
+			isa = PBXGroup;
+			children = (
+				0882419E175621DE00E71E6E /* foodDealed */,
+			);
+			name = ResExternal;
+			sourceTree = "<group>";
+		};
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				0882419D175621BC00E71E6E /* ResExternal */,
 				0882403D173A7E7400E71E6E /* readme.txt */,
 				085C8D5B17336A29001A1ABB /* testApp */,
 				085C8D4917336707001A1ABB /* Util */,
@@ -504,6 +515,7 @@
 				5F3605D21753623A0058EC98 /* button_back@2x.png in Resources */,
 				5F50961D17548FAB00461964 /* selector_back@2x.png in Resources */,
 				5F789B231755B1F3002FE365 /* foodCellBack@2x.png in Resources */,
+				0882419F175621DE00E71E6E /* foodDealed in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
