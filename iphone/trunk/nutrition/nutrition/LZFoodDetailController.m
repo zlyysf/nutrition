@@ -168,7 +168,7 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text =  @"供给比例=供给量/标准需求量";
+        sectionTitleLabel.text =  @"营养成分";
     else
         sectionTitleLabel.text =  @"标准含量(100g)";
     return sectionView;
