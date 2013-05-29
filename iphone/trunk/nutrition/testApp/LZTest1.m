@@ -1461,7 +1461,7 @@
         
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
-    NSMutableDictionary *retFmtDict = [rf formatRecommendResultForUI:retDict];
+    NSMutableDictionary *retFmtDict = [rf formatTakenResultForUI:retDict];
     
 }
 

@@ -7,7 +7,7 @@
 //
 
 #import "LZRecommendFoodController.h"
-#define kProgressBarRect CGRectMake(2,2,220,16)
+
 #import "LZRecommendFoodCell.h"
 #import "LZNutritionCell.h"
 #import "LZConstants.h"
@@ -18,7 +18,7 @@
 @end
 
 @implementation LZRecommendFoodController
-@synthesize takenFoodArray,takenFoodDict,recommendFoodArray,recommendFoodDict,nutrientInfoArray;
+@synthesize recommendFoodArray,recommendFoodDict,nutrientInfoArray;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -51,12 +51,11 @@
     if ( [userDefaults objectForKey:LZSettingKey_limitRecommendFoodCount]!=nil ){
         limitRecommendFoodCount = [userDefaults integerForKey:LZSettingKey_limitRecommendFoodCount];
     }
-    
-    uint personCount = 1;
-    uint dayCount = 1;
+    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSNumber numberWithUnsignedInt:personCount],@"personCount",
-                            [NSNumber numberWithUnsignedInt:dayCount],@"dayCount", nil];
+                            planPerson,@"personCount",
+                            planDays,@"dayCount", nil];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -70,15 +69,6 @@
     NSMutableDictionary *retDict = [rf recommendFood2_AbstractPerson:params withDecidedFoods:dailyIntake andOptions:options];
     NSMutableDictionary *uiDictionary = [rf formatRecommendResultForUI:retDict];
     NSLog(@"uiDictionary %@",uiDictionary);
-    NSArray *takenArray = [uiDictionary objectForKey:Key_takenFoodInfoDictArray];
-    if (takenArray != nil && [takenArray count]!=0) {
-        takenFoodArray = [[NSArray alloc]initWithArray:takenArray];
-    }
-    NSDictionary *takenDict = [uiDictionary objectForKey:Key_takenFoodNutrientInfoAryDictDict];
-    if (takenDict != nil )
-    {
-        takenFoodDict = [[NSDictionary alloc]initWithDictionary:takenDict];
-    }
     NSArray *recommendArray = [uiDictionary objectForKey:Key_recommendFoodInfoDictArray];
     if (recommendArray != nil && [recommendArray count]!=0) {
         recommendFoodArray = [[NSArray alloc]initWithArray:recommendArray];
@@ -142,7 +132,7 @@
             cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
             NSNumber *weight = [aFood objectForKey:@"Amount"];
             cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
-            
+            [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
             return cell;
         }
     }
@@ -171,7 +161,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
-        return 84;
+        return 70;
     else
         return 50;
 }

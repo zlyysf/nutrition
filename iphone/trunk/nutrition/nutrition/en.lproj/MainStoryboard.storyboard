@@ -133,10 +133,104 @@
                     <view key="view" contentMode="scaleToFill" id="rfa-3h-Scd">
                         <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="grJ-fr-1H6">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZNutritionCell" rowHeight="50" id="MK3-85-T22" customClass="LZNutritionCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="MqH-hA-1J5">
+                                                    <rect key="frame" x="10" y="25" width="70" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" id="ROY-1z-ALT" customClass="LZProgressView">
+                                                    <rect key="frame" x="87" y="25" width="223" height="20"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yvw-yD-9mt">
+                                                    <rect key="frame" x="87" y="5" width="223" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="nutritionNameLabel" destination="MqH-hA-1J5" id="4XD-2s-sWC"/>
+                                            <outlet property="nutritionProgressView" destination="ROY-1z-ALT" id="age-oN-q1Z"/>
+                                            <outlet property="supplyPercentlabel" destination="Yvw-yD-9mt" id="t1c-Qd-hbX"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZRecommendFoodCell" rowHeight="70" id="dMZ-JL-q59" customClass="LZRecommendFoodCell">
+                                        <rect key="frame" x="0.0" y="72" width="320" height="70"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="6mI-Qm-Maj">
+                                                    <rect key="frame" x="11" y="8" width="303" height="53"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="been.png" id="RBO-Vs-7xb">
+                                                            <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="黄豆" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1lD-TZ-ICB">
+                                                            <rect key="frame" x="64" y="16" width="98" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="100g" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FOf-dV-3Vw">
+                                                            <rect key="frame" x="227" y="16" width="54" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="backView" destination="6mI-Qm-Maj" id="L5c-My-oqr"/>
+                                            <outlet property="foodImageView" destination="RBO-Vs-7xb" id="Uwp-LR-p5r"/>
+                                            <outlet property="foodNameLabel" destination="1lD-TZ-ICB" id="8DL-p8-Dt1"/>
+                                            <outlet property="foodWeightlabel" destination="FOf-dV-3Vw" id="xlT-sB-hf1"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="ZUO-at-v7f" id="4iY-RR-GUk"/>
+                                    <outlet property="delegate" destination="ZUO-at-v7f" id="YrO-bi-Vf6"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="jGA-gU-8c3">
-                        <barButtonItem key="leftBarButtonItem" title="编辑" id="MxW-ak-TTm"/>
+                        <barButtonItem key="leftBarButtonItem" title="编辑" id="MxW-ak-TTm">
+                            <connections>
+                                <action selector="editFoodAction:" destination="ZUO-at-v7f" id="8Co-1B-C2q"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" title="添加" id="2Bb-3W-kIs">
                             <connections>
                                 <action selector="addFoodAction:" destination="ZUO-at-v7f" id="opp-H3-6gZ"/>
@@ -145,6 +239,8 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addFoodItem" destination="2Bb-3W-kIs" id="Mkx-lZ-XaI"/>
+                        <outlet property="editFoodItem" destination="MxW-ak-TTm" id="KjH-V5-qRX"/>
+                        <outlet property="listView" destination="grJ-fr-1H6" id="dwV-Bd-QkJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9h1-MI-fDy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -159,69 +255,59 @@
                         <rect key="frame" x="0.0" y="20" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <navigationBar contentMode="scaleToFill" id="QHa-Md-DWX">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
-                                <items>
-                                    <navigationItem title="添加" id="m7v-1e-7Fz">
-                                        <barButtonItem key="leftBarButtonItem" title="取消" id="Y3X-Ak-oTY">
-                                            <connections>
-                                                <action selector="cancelButtonTapped:" destination="8yb-D5-PpJ" id="keF-7j-UJP"/>
-                                            </connections>
-                                        </barButtonItem>
-                                        <barButtonItem key="rightBarButtonItem" title="保存" id="g6e-bt-W7I">
-                                            <connections>
-                                                <action selector="saveButtonTapped:" destination="8yb-D5-PpJ" id="Olm-Jo-Vgt"/>
-                                            </connections>
-                                        </barButtonItem>
-                                    </navigationItem>
-                                </items>
-                            </navigationBar>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FUh-Jg-fvz">
-                                <rect key="frame" x="0.0" y="85" width="320" height="372"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="FUh-Jg-fvz">
+                                <rect key="frame" x="0.0" y="85" width="320" height="330"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FoodCell" id="hwZ-7O-E4d" customClass="LZFoodCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="FoodCell" rowHeight="70" id="hwZ-7O-E4d" customClass="LZFoodCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="LY8-dg-s9l">
-                                                    <rect key="frame" x="10" y="0.0" width="300" height="44"/>
+                                                    <rect key="frame" x="10" y="8" width="303" height="53"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="been.png" id="ppt-Hh-lbd">
+                                                            <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </imageView>
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" clearsOnBeginEditing="YES" minimumFontSize="17" id="iA2-pX-NOM">
+                                                            <rect key="frame" x="220" y="12" width="52" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="hwZ-7O-E4d" id="Ru6-r1-qiB"/>
+                                                            </connections>
+                                                        </textField>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="l4t-L8-9gD">
+                                                            <rect key="frame" x="60" y="16" width="74" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="g" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fKh-Zb-m13">
+                                                            <rect key="frame" x="275" y="16" width="23" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </label>
+                                                    </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 </view>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" clearsOnBeginEditing="YES" minimumFontSize="17" id="iA2-pX-NOM">
-                                                    <rect key="frame" x="181" y="7" width="97" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <textInputTraits key="textInputTraits" returnKeyType="done"/>
-                                                    <connections>
-                                                        <outlet property="delegate" destination="hwZ-7O-E4d" id="Ru6-r1-qiB"/>
-                                                    </connections>
-                                                </textField>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="l4t-L8-9gD">
-                                                    <rect key="frame" x="20" y="11" width="153" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="g" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fKh-Zb-m13">
-                                                    <rect key="frame" x="286" y="11" width="23" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+                                            <outlet property="backView" destination="LY8-dg-s9l" id="mAg-kZ-b7W"/>
                                             <outlet property="foodNameLabel" destination="l4t-L8-9gD" id="jLs-eE-vyV"/>
+                                            <outlet property="foodPicView" destination="ppt-Hh-lbd" id="edm-Cc-bEt"/>
                                             <outlet property="intakeAmountTextField" destination="iA2-pX-NOM" id="DxY-hY-V6J"/>
                                         </connections>
                                     </tableViewCell>
@@ -240,6 +326,24 @@
                                     <outlet property="delegate" destination="8yb-D5-PpJ" id="ZAI-Ij-ZBl"/>
                                 </connections>
                             </view>
+                            <navigationBar contentMode="scaleToFill" id="QHa-Md-DWX">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="添加" id="m7v-1e-7Fz">
+                                        <barButtonItem key="leftBarButtonItem" title="取消" id="Y3X-Ak-oTY">
+                                            <connections>
+                                                <action selector="cancelButtonTapped:" destination="8yb-D5-PpJ" id="keF-7j-UJP"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" title="保存" id="g6e-bt-W7I">
+                                            <connections>
+                                                <action selector="saveButtonTapped:" destination="8yb-D5-PpJ" id="Olm-Jo-Vgt"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
@@ -548,30 +652,30 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZRecommendFoodCell" rowHeight="84" id="azA-kU-rSe" customClass="LZRecommendFoodCell">
-                                        <rect key="frame" x="0.0" y="22" width="320" height="84"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZRecommendFoodCell" rowHeight="70" id="azA-kU-rSe" customClass="LZRecommendFoodCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="70"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="83"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="69"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="SPP-6J-sFU">
-                                                    <rect key="frame" x="11" y="20" width="289" height="42"/>
+                                                    <rect key="frame" x="11" y="8" width="303" height="53"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="been.png" id="mS9-I5-2Ya">
-                                                            <rect key="frame" x="0.0" y="0.0" width="56" height="43"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="黄豆" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u6B-te-1O0">
-                                                            <rect key="frame" x="64" y="10" width="98" height="21"/>
+                                                            <rect key="frame" x="64" y="16" width="98" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="100g" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y6w-eZ-F7X">
-                                                            <rect key="frame" x="227" y="10" width="54" height="21"/>
+                                                            <rect key="frame" x="227" y="16" width="54" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -584,13 +688,14 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+                                            <outlet property="backView" destination="SPP-6J-sFU" id="gKH-Ak-P1V"/>
                                             <outlet property="foodImageView" destination="mS9-I5-2Ya" id="h0x-aU-Ssm"/>
                                             <outlet property="foodNameLabel" destination="u6B-te-1O0" id="aqH-vr-2fT"/>
                                             <outlet property="foodWeightlabel" destination="y6w-eZ-F7X" id="mZB-kF-RXH"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZNutritionCell" rowHeight="50" id="610-NU-MEI" customClass="LZNutritionCell">
-                                        <rect key="frame" x="0.0" y="106" width="320" height="50"/>
+                                        <rect key="frame" x="0.0" y="92" width="320" height="50"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -831,7 +936,9 @@
         <class className="LZFoodCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodCell.h"/>
             <relationships>
+                <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="foodNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="foodPicView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="intakeAmountTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
@@ -846,6 +953,8 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodListViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="addFoodItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="editFoodItem" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
         <class className="LZNutritionCell" superclassName="UITableViewCell">
@@ -883,6 +992,7 @@
         <class className="LZRecommendFoodCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZRecommendFoodCell.h"/>
             <relationships>
+                <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="foodImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="foodNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="foodWeightlabel" candidateClass="UILabel"/>

@@ -14,7 +14,7 @@
 @end
 
 @implementation LZDailyIntakeViewController
-@synthesize foodIntakeDictionary,foodNameArray,foodTypeArray,searchResultArray,allFood,selectorView;
+@synthesize foodIntakeDictionary,foodNameArray,foodTypeArray,searchResultArray,allFood,selectorView,currentSelectedIndex;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -84,13 +84,18 @@
     self.selectorView.shouldBeTransparent = YES;
     self.selectorView.horizontalScrolling = YES;
     self.selectorView.debugEnabled = NO;
+    self.currentSelectedIndex = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [(NSMutableArray*)[self.foodNameArray objectAtIndex:section]count];
+    return [(NSMutableArray*)[self.foodNameArray objectAtIndex:self.currentSelectedIndex]count];
+}
+- (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 70;
 }
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 //{
@@ -129,11 +134,12 @@
         cell.delegate = self;
         cell.cellIndexPath = indexPath;
         //一个记录名称的数组 一个记录对应摄入量的数组
-        NSDictionary *aFood = [[self.foodNameArray objectAtIndex:indexPath.section] objectAtIndex:indexPath.row];
+        NSDictionary *aFood = [[self.foodNameArray objectAtIndex:self.currentSelectedIndex] objectAtIndex:indexPath.row];
         cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];//NDB_No
         NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
         NSNumber *intake = [self.foodIntakeDictionary objectForKey:NDB_No];
         cell.intakeAmountTextField.text = [NSString stringWithFormat:@"%d",[intake intValue]];
+        [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
         return cell;
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -228,6 +234,8 @@
 #pragma IZValueSelector delegate
 - (void)selector:(LZValueSelectorView *)valueSelector didSelectRowAtIndex:(NSInteger)index {
     NSLog(@"Selected index %d",index);
+    currentSelectedIndex = index;
+    [self.listView reloadData];
 }
 - (IBAction)cancelButtonTapped:(id)sender
 {
@@ -265,7 +273,7 @@
 - (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber
 {
     //[self.foodIntakeAmountArray replaceObjectAtIndex:index.row withObject:foodNumber];
-    NSDictionary *afood = [[self.foodNameArray objectAtIndex:index.section]objectAtIndex:index.row];
+    NSDictionary *afood = [[self.foodNameArray objectAtIndex:currentSelectedIndex]objectAtIndex:index.row];
     NSString *NDB_No = [afood objectForKey:@"NDB_No"];
     [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
     NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
@@ -279,7 +287,7 @@
     
     CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height;
     CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = keyboardTop;
+	tableviewFrame.size.height = keyboardTop-TopNavigationBarHeight-FoodTypeSelectorViewHeight;
     
 	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -300,7 +308,7 @@
      Animate the resize so that it's in sync with the disappearance of the keyboard.
      */
 	CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = self.view.frame.size.height;
+	tableviewFrame.size.height = self.view.frame.size.height-TopNavigationBarHeight-FoodTypeSelectorViewHeight;
     
 	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];

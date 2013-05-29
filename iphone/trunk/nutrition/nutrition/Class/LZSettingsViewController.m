@@ -64,6 +64,12 @@
 - (IBAction)saveChanges:(id)sender {
     int persons = [self.personsTextField.text intValue];
     int days = [self.daysTextField.text intValue];
+    if (persons <=0 || days <=0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"设置不当" message:@"请输入正确的数字" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
     [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:days] forKey:LZPlanDaysKey];
     [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:persons] forKey:LZPlanPersonsKey];
     [[NSUserDefaults standardUserDefaults]synchronize];

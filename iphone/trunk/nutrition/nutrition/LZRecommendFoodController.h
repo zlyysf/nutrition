@@ -9,8 +9,6 @@
 #import <UIKit/UIKit.h>
 @interface LZRecommendFoodController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
-@property (strong,nonatomic)NSArray *takenFoodArray;
-@property (strong, nonatomic)NSDictionary *takenFoodDict;
 @property (strong,nonatomic)NSArray *recommendFoodArray;
 @property (strong,nonatomic)NSDictionary *recommendFoodDict;
 @property (strong,nonatomic)NSArray *nutrientInfoArray;

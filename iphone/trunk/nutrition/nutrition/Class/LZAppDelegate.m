@@ -7,12 +7,14 @@
 //
 
 #import "LZAppDelegate.h"
-
+#import "LZConstants.h"
 @implementation LZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    //custom navigationbar and barbuttonitem
     NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
     UIImage * navImage = [UIImage imageWithContentsOfFile:path];
     UIImage *gradientImage44 = [navImage
@@ -21,11 +23,22 @@
     
     UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
     [[UIBarButtonItem appearance] setBackgroundImage:button30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    
-//    UIImage *buttonBack30 = [[UIImage imageNamed:@"backbutton_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)];
-//    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    //initialize persons and days setting
+    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+    if (planPerson == NULL)
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+    if (planDays == NULL)
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
+        [[NSUserDefaults standardUserDefaults]synchronize];
 
-    [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    }
+
+
     return YES;
 }
 							

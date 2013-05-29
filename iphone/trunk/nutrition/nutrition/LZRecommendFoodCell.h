@@ -13,4 +13,5 @@
 @property (strong, nonatomic) IBOutlet UIImageView *foodImageView;
 @property (strong, nonatomic) IBOutlet UILabel *foodNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *foodWeightlabel;
+@property (strong, nonatomic) IBOutlet UIView *backView;
 @end

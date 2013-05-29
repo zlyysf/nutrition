@@ -12,9 +12,11 @@
 - (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index;
 @end
 @interface LZFoodCell : UITableViewCell<UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UIImageView *foodPicView;
 @property (strong, nonatomic) IBOutlet UILabel *foodNameLabel;
 @property (weak, nonatomic)id<LZFoodCellDelegate>delegate;
 @property (strong,nonatomic)NSIndexPath*cellIndexPath;
 @property (strong, nonatomic) IBOutlet UITextField *intakeAmountTextField;
+@property (strong, nonatomic) IBOutlet UIView *backView;
 
 @end

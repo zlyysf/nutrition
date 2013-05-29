@@ -7,7 +7,7 @@
 //
 
 #import "LZFoodDetailController.h"
-#define kProgressBarRect CGRectMake(2,2,220,16)
+#import "LZConstants.h"
 #import "LZNutritionSupplyCell.h"
 #import "LZStandardContentCell.h"
 @interface LZFoodDetailController ()

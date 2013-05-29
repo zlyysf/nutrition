@@ -83,6 +83,7 @@
 		5F3605D21753623A0058EC98 /* button_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3605D11753623A0058EC98 /* button_back@2x.png */; };
 		5F50961B1754777300461964 /* LZValueSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F50961A1754777300461964 /* LZValueSelectorView.m */; };
 		5F50961D17548FAB00461964 /* selector_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F50961C17548FAB00461964 /* selector_back@2x.png */; };
+		5F789B231755B1F3002FE365 /* foodCellBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F789B221755B1F3002FE365 /* foodCellBack@2x.png */; };
 		5F94A86517531CC100664B57 /* LZFoodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZFoodListViewController.m */; };
 		5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86717531ED700664B57 /* LZSettingsViewController.m */; };
 		5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
@@ -176,6 +177,7 @@
 		5F5096191754777300461964 /* LZValueSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZValueSelectorView.h; path = Class/LZValueSelectorView.h; sourceTree = "<group>"; };
 		5F50961A1754777300461964 /* LZValueSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZValueSelectorView.m; path = Class/LZValueSelectorView.m; sourceTree = "<group>"; };
 		5F50961C17548FAB00461964 /* selector_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selector_back@2x.png"; path = "nutrition/Resource/selector_back@2x.png"; sourceTree = "<group>"; };
+		5F789B221755B1F3002FE365 /* foodCellBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "foodCellBack@2x.png"; path = "nutrition/Resource/foodCellBack@2x.png"; sourceTree = "<group>"; };
 		5F94A86317531CC100664B57 /* LZFoodListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodListViewController.h; path = Class/LZFoodListViewController.h; sourceTree = "<group>"; };
 		5F94A86417531CC100664B57 /* LZFoodListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodListViewController.m; path = Class/LZFoodListViewController.m; sourceTree = "<group>"; };
 		5F94A86617531ED700664B57 /* LZSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSettingsViewController.h; path = Class/LZSettingsViewController.h; sourceTree = "<group>"; };
@@ -384,6 +386,7 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5F789B221755B1F3002FE365 /* foodCellBack@2x.png */,
 				5F50961C17548FAB00461964 /* selector_back@2x.png */,
 				5F3605D11753623A0058EC98 /* button_back@2x.png */,
 				5F0122AD174C83AF00AC0156 /* nav_bar@2x.png */,
@@ -500,6 +503,7 @@
 				5F0122B0174C83AF00AC0156 /* section_bar@2x.png in Resources */,
 				5F3605D21753623A0058EC98 /* button_back@2x.png in Resources */,
 				5F50961D17548FAB00461964 /* selector_back@2x.png in Resources */,
+				5F789B231755B1F3002FE365 /* foodCellBack@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

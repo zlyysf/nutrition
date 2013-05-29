@@ -17,4 +17,5 @@
 @property (strong, nonatomic)NSMutableArray *searchResultArray;
 @property (strong, nonatomic)NSArray *allFood;
 @property (strong, nonatomic)IBOutlet LZValueSelectorView *selectorView;
+@property (assign,nonatomic)int currentSelectedIndex;
 @end
