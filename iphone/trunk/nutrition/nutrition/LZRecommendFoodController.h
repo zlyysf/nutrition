@@ -13,5 +13,5 @@
 @property (strong,nonatomic)NSMutableDictionary *recommendFoodDict;
 @property (strong,nonatomic)NSMutableArray *nutrientInfoArray;
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *changeOnePlanItem;
-@property (assign, nonatomic)BOOL needResfesh;
+@property (assign, nonatomic)BOOL needRefresh;
 @end

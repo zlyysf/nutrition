@@ -18,7 +18,7 @@
 @end
 
 @implementation LZRecommendFoodController
-@synthesize recommendFoodArray,recommendFoodDict,nutrientInfoArray,needResfesh;
+@synthesize recommendFoodArray,recommendFoodDict,nutrientInfoArray,needRefresh;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -30,25 +30,25 @@
     recommendFoodArray = [[NSMutableArray alloc]init];
     recommendFoodDict = [[NSMutableDictionary alloc]init];
     nutrientInfoArray = [[NSMutableArray alloc]init];
-    needResfesh= NO;
+    needRefresh= NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
     [self recommendOnePlan];
 }
 - (void)settingsChanged:(NSNotification *)notification
 {
-    needResfesh = YES;
+    needRefresh = YES;
 }
 - (void)takenFoodChanged:(NSNotification *)notification
 {
-    needResfesh = YES;
+    needRefresh = YES;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    if (needResfesh )
+    if (needRefresh )
     {
         [self recommendOnePlan];
-        needResfesh = NO;
+        needRefresh = NO;
     }
 }
 - (IBAction)changeOnePlan:(id)sender {

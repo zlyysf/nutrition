@@ -137,7 +137,7 @@
         NSDictionary *aFood = [[self.foodNameArray objectAtIndex:self.currentSelectedIndex] objectAtIndex:indexPath.row];
         NSLog(@"picture path food list %@",aFood);
         NSString *picturePath;
-        NSString *picPath = [aFood objectForKey:@"PicturePath"];
+        NSString *picPath = [aFood objectForKey:@"PicPath"];
         if (picPath == NULL || [picPath isEqualToString:@""])
         {
             picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];

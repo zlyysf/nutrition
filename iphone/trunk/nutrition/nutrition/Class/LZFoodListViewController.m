@@ -41,7 +41,7 @@
     takenFoodDict = [[NSMutableDictionary alloc]init];
     nutrientInfoArray = [[NSMutableArray alloc]init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
-
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [self displayTakenFoodResult];
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -51,6 +51,10 @@
         [self displayTakenFoodResult];
         needRefresh = NO;
     }
+}
+- (void)settingsChanged:(NSNotification *)notification
+{
+    needRefresh = YES;
 }
 - (void)takenFoodChanged:(NSNotification *)notification
 {
@@ -293,7 +297,16 @@
     }
 
 }
-
+- (void)viewWillDisappear:(BOOL)animated
+{
+    if (self.listView.editing)
+    {
+        [self.editFoodItem setStyle:UIBarButtonItemStyleBordered];
+        [self.editFoodItem setTitle:@"编辑"];
+        self.listView.editing= !self.listView.editing;
+        [self displayTakenFoodResult];
+    }
+}
 - (IBAction)addFoodAction:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZDailyIntakeViewController *dailyIntakeController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
@@ -309,6 +322,7 @@
 
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_SettingsChangedKey object:nil];
     [self setListView:nil];
     [self setEditFoodItem:nil];
     [self setEmptyFoodShowLabel:nil];
