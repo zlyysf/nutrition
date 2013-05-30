@@ -193,7 +193,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="been.png" id="RBO-Vs-7xb">
-                                                            <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
+                                                            <rect key="frame" x="1" y="1" width="50" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="黄豆" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1lD-TZ-ICB">
@@ -280,8 +280,8 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="been.png" id="ppt-Hh-lbd">
-                                                            <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
-                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                            <rect key="frame" x="1" y="1" width="50" height="50"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" clearsOnBeginEditing="YES" minimumFontSize="17" id="iA2-pX-NOM">
                                                             <rect key="frame" x="220" y="12" width="52" height="30"/>
@@ -391,7 +391,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="been.png" id="mS9-I5-2Ya">
-                                                            <rect key="frame" x="0.0" y="0.0" width="53" height="53"/>
+                                                            <rect key="frame" x="1" y="1" width="50" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="黄豆" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="u6B-te-1O0">
@@ -663,6 +663,8 @@
         <class className="LZDailyIntakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDailyIntakeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelButtonTapped:"/>
+                <relationship kind="action" name="saveButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="selectorView" candidateClass="LZValueSelectorView"/>
             </relationships>
@@ -679,6 +681,7 @@
         <class className="LZFoodDetailController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodDetailController.h"/>
             <relationships>
+                <relationship kind="action" name="backButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="navItem" candidateClass="UINavigationItem"/>
             </relationships>
@@ -686,6 +689,8 @@
         <class className="LZFoodListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodListViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addFoodAction:"/>
+                <relationship kind="action" name="editFoodAction:"/>
                 <relationship kind="outlet" name="addFoodItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="editFoodItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="emptyFoodShowLabel" candidateClass="UILabel"/>
@@ -723,6 +728,7 @@
         <class className="LZRecommendFoodController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZRecommendFoodController.h"/>
             <relationships>
+                <relationship kind="action" name="changeOnePlan:"/>
                 <relationship kind="outlet" name="changeOnePlanItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
@@ -730,6 +736,8 @@
         <class className="LZSettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZSettingsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelChanges:"/>
+                <relationship kind="action" name="saveChanges:"/>
                 <relationship kind="outlet" name="daysTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="personsTextField" candidateClass="UITextField"/>
             </relationships>

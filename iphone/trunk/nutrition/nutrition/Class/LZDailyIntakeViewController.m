@@ -135,6 +135,20 @@
         cell.cellIndexPath = indexPath;
         //一个记录名称的数组 一个记录对应摄入量的数组
         NSDictionary *aFood = [[self.foodNameArray objectAtIndex:self.currentSelectedIndex] objectAtIndex:indexPath.row];
+        NSLog(@"picture path food list %@",aFood);
+        NSString *picturePath;
+        NSString *picPath = [aFood objectForKey:@"PicturePath"];
+        if (picPath == NULL || [picPath isEqualToString:@""])
+        {
+            picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
+        }
+        else
+        {
+            picturePath = [NSString stringWithFormat:@"%@/foodDealed/%@",[[NSBundle mainBundle] bundlePath],picPath];
+        }
+        UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
+        [cell.foodPicView setImage:foodImage];
+
         cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];//NDB_No
         NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
         NSNumber *intake = [self.foodIntakeDictionary objectForKey:NDB_No];

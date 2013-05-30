@@ -142,6 +142,20 @@
         {
             LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
             NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
+            NSLog(@"picture path %@",aFood);
+            NSString *picturePath;
+            NSString *picPath = [aFood objectForKey:@"PicturePath"];
+            if (picPath == NULL || [picPath isEqualToString:@""])
+            {
+                picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
+            }
+            else
+            {
+                picturePath = [NSString stringWithFormat:@"%@/foodDealed/%@",[[NSBundle mainBundle] bundlePath],picPath];
+            }
+            UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
+            [cell.foodImageView setImage:foodImage];
+
             cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
             NSNumber *weight = [aFood objectForKey:@"Amount"];
             cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
