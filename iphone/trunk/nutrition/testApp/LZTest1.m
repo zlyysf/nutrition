@@ -23,10 +23,10 @@
     
     
     
-//    [self.class testDA1];
+    [self.class testDA1];
     
 //    [self.class testFormatResult1];
-    [self.class testFormatResult2_taken];
+//    [self.class testFormatResult2_taken];
 }
 
 
@@ -1396,8 +1396,11 @@
 +(void)testDA1
 {
     LZDataAccess *da = [LZDataAccess singleton];
-    NSArray *nutrientNames = [LZRecommendFood getCustomNutrients];
-    [da getNutrientInfoAs2LevelDictionary_withNutrientIds:nutrientNames];
+//    NSArray *nutrientNames = [LZRecommendFood getCustomNutrients];
+//    [da getNutrientInfoAs2LevelDictionary_withNutrientIds:nutrientNames];
+    
+    NSArray * dataAry = [da getAllFood];
+    NSLog(@"getAllFood ret:\n%@",dataAry);
 }
 
 

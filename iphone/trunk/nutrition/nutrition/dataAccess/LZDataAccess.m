@@ -453,14 +453,14 @@
 -(NSArray *) getAllFood
 {
     NSString *query = @""
-    "SELECT * FROM FoodNutritionCustom"
+    "SELECT FNC.*,P.PicPath FROM FoodNutritionCustom FNC LEFT OUTER JOIN FoodPicPath P ON FNC.NDB_No=P.NDB_No"
     " ORDER BY CnType, NDB_No"
     ;
 
     FMResultSet *rs = [dbfm executeQuery:query];
     NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
     assert(dataAry.count > 0);
-    //NSLog(@"getAllFood ret:\n%@",dataAry);
+//    NSLog(@"getAllFood ret:\n%@",dataAry);
     return dataAry;
 }
 
