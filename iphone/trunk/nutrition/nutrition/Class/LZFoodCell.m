@@ -26,18 +26,20 @@
 }
 - (void)textFieldDidBeginEditing:(UITextField *)textField
 {
-    if(delegate && [delegate respondsToSelector:@selector(textFieldDidBeginEditingForIndex:)])
+    if(delegate && [delegate respondsToSelector:@selector(textFieldDidBeginEditingForIndex:textField:)])
     {
-        [delegate textFieldDidBeginEditingForIndex:self.cellIndexPath];
+        [delegate textFieldDidBeginEditingForIndex:self.cellIndexPath textField:self.intakeAmountTextField];
     }
 
 }
-- (void)textFieldDidEndEditing:(UITextField *)textField
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
 {
     if(delegate && [delegate respondsToSelector:@selector(textFieldDidReturnForIndex:andText:)])
     {
         [delegate textFieldDidReturnForIndex:self.cellIndexPath andText:self.intakeAmountTextField.text];
     }
+    return YES;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {

@@ -16,6 +16,7 @@
 @property (strong, nonatomic)NSMutableArray *foodTypeArray;
 @property (strong, nonatomic)NSMutableArray *searchResultArray;
 @property (strong, nonatomic)NSArray *allFood;
+@property (assign, nonatomic)UITextField *currentFoodInputTextField;
 @property (strong, nonatomic)IBOutlet LZValueSelectorView *selectorView;
 @property (assign,nonatomic)int currentSelectedIndex;
 @end

@@ -14,7 +14,7 @@
 @end
 
 @implementation LZDailyIntakeViewController
-@synthesize foodIntakeDictionary,foodNameArray,foodTypeArray,searchResultArray,allFood,selectorView,currentSelectedIndex;
+@synthesize foodIntakeDictionary,foodNameArray,foodTypeArray,searchResultArray,allFood,selectorView,currentSelectedIndex,currentFoodInputTextField;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -257,6 +257,10 @@
 }
 - (IBAction)saveButtonTapped:(id)sender {
     //储存摄入量
+    if(self.currentFoodInputTextField != nil)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
     NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
     BOOL needSaveData = NO;
     for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
@@ -287,6 +291,7 @@
 - (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber
 {
     //[self.foodIntakeAmountArray replaceObjectAtIndex:index.row withObject:foodNumber];
+    self.currentFoodInputTextField = nil;
     NSDictionary *afood = [[self.foodNameArray objectAtIndex:currentSelectedIndex]objectAtIndex:index.row];
     NSString *NDB_No = [afood objectForKey:@"NDB_No"];
     [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
@@ -340,8 +345,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
-- (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index
+- (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index textField:(UITextField *)currentTextField
 {
+    self.currentFoodInputTextField = currentTextField;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 50 * USEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         [self.listView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];

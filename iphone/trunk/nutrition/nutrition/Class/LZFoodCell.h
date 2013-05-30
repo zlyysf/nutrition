@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 @protocol LZFoodCellDelegate<NSObject>
 - (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber;
-- (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index;
+- (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index textField:(UITextField*)currentTextField;
 @end
 @interface LZFoodCell : UITableViewCell<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *foodPicView;
