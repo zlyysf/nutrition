@@ -395,26 +395,7 @@
 
 
 
-//-(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN
-//{
-//    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-//    [sqlStr appendString:@"SELECT * FROM FoodNutritionCustom"];
-//    [sqlStr appendString:@" ORDER BY "];
-//    //[sqlStr appendString:@"'"];
-//    [sqlStr appendString:@"["];
-//    [sqlStr appendString:nutrientAsColumnName];
-//    //[sqlStr appendString:@"' desc"];
-//    [sqlStr appendString:@"] desc"];
-//    [sqlStr appendString:@" LIMIT "];
-//    [sqlStr appendString:[[NSNumber numberWithInt:topN] stringValue]];
-//    NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
-//
-//    FMResultSet *rs = [dbfm executeQuery:sqlStr];
-//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-//    assert(dataAry.count > 0);
-//    NSLog(@"getRichNutritionFood ret:\n%@",dataAry);
-//    return dataAry;
-//}
+
 
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN
 {
@@ -438,8 +419,11 @@
     [sqlStr appendString:nutrientAsColumnName];
     [sqlStr appendString:@"] ASC"];
     
-    [sqlStr appendString:@"\n LIMIT "];
-    [sqlStr appendString:[[NSNumber numberWithInt:topN] stringValue]];
+    if (topN){
+        [sqlStr appendString:@"\n LIMIT "];
+        [sqlStr appendString:[[NSNumber numberWithInt:topN] stringValue]];
+    }
+    
     NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
     
     FMResultSet *rs = [dbfm executeQuery:sqlStr];
@@ -560,7 +544,22 @@
 
 
 
-
+-(NSArray *) getRichNutritionFoodForNutrient:(NSString *)nutrientName andNutrientAmount:(NSNumber*)nutrientAmount
+{
+    NSArray * foods = [self getRichNutritionFood:nutrientName andTopN:0];
+    
+    for(int i=0; i<foods.count; i++){
+        NSMutableDictionary *food = foods[i];
+        NSNumber * foodNutrientStandard = [food objectForKey:nutrientName];
+        if ([foodNutrientStandard doubleValue]!=0.0){
+            double dFoodAmount = [nutrientAmount doubleValue]/ [foodNutrientStandard doubleValue] * 100.0;
+            [food setObject:[NSNumber numberWithDouble:dFoodAmount] forKey:Key_FoodAmount];
+        }else{
+            //do nothing, then get will obtain nil, though should not
+        }
+    }
+    return foods;
+}
 
 
 

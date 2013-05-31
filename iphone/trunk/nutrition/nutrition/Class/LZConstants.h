@@ -57,6 +57,7 @@
 #define Key_Name @"Name"
 #define Key_Unit @"Unit"
 #define Key_PicturePath @"PicturePath"
+#define Key_FoodAmount @"FoodAmount"
 //#define Key_takenFoodInfo2LevelDict @"takenFoodInfo2LevelDict"
 //#define Key_recommendFoodInfo2LevelDict @"recommendFoodInfo2LevelDict"
 #define Key_takenFoodInfoDictArray @"takenFoodInfoDictArray"
