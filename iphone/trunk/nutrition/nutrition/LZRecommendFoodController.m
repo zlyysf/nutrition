@@ -7,13 +7,16 @@
 //
 
 #import "LZRecommendFoodController.h"
-
+#import "MBProgressHUD.h"
 #import "LZRecommendFoodCell.h"
 #import "LZNutritionCell.h"
 #import "LZConstants.h"
 #import "LZRecommendFood.h"
 #import "LZFoodDetailController.h"
-@interface LZRecommendFoodController ()
+@interface LZRecommendFoodController ()<MBProgressHUDDelegate>
+{
+    MBProgressHUD *HUD;
+}
 
 @end
 
@@ -30,10 +33,15 @@
     recommendFoodArray = [[NSMutableArray alloc]init];
     recommendFoodDict = [[NSMutableDictionary alloc]init];
     nutrientInfoArray = [[NSMutableArray alloc]init];
-    needRefresh= NO;
+    needRefresh= YES;
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    HUD.hidden = YES;
+    HUD.delegate = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
-    [self recommendOnePlan];
+   
+    //[self recommendOnePlan];
 }
 - (void)settingsChanged:(NSNotification *)notification
 {
@@ -43,7 +51,18 @@
 {
     needRefresh = YES;
 }
--(void)viewWillAppear:(BOOL)animated
+- (void)viewWillAppear:(BOOL)animated
+{
+    if (needRefresh)
+    {
+        self.listView.hidden = YES;
+        HUD.hidden = NO;
+        HUD.labelText = @"";
+        [HUD show:YES];
+
+    }
+}
+-(void)viewDidAppear:(BOOL)animated
 {
     if (needRefresh )
     {
@@ -52,7 +71,14 @@
     }
 }
 - (IBAction)changeOnePlan:(id)sender {
-    [self recommendOnePlan];
+    HUD.hidden = NO;
+    [HUD show:YES];
+    //self.listView.hidden = YES;
+    
+    HUD.labelText = @"";
+    
+    [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.5];
+    //[self recommendOnePlan];
 }
 - (void)recommendOnePlan
 {
@@ -116,6 +142,8 @@
         [nutrientInfoArray addObjectsFromArray:nutrientArray];
     }
     [self.changeOnePlanItem setEnabled:YES];
+    [HUD hide:YES];
+    self.listView.hidden = NO;
     [self.listView reloadData];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -274,6 +302,13 @@
         return;
 
 }
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+    HUD.hidden = YES;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
