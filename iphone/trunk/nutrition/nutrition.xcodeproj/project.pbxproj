@@ -92,6 +92,7 @@
 		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
 		5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
 		5FF8473D1758546900DEA6DE /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8473B1758546900DEA6DE /* README.mdown */; };
+		5FF8474117587F0100DEA6DE /* nav_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8474017587F0100DEA6DE /* nav_back_button@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -195,6 +196,7 @@
 		5FF847391758546900DEA6DE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = nutrition/MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		5FF8473A1758546900DEA6DE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = nutrition/MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		5FF8473B1758546900DEA6DE /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.mdown; path = nutrition/MBProgressHUD/README.mdown; sourceTree = "<group>"; };
+		5FF8474017587F0100DEA6DE /* nav_back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nav_back_button@2x.png"; path = "nutrition/Resource/nav_back_button@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -403,6 +405,7 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5FF8474017587F0100DEA6DE /* nav_back_button@2x.png */,
 				5F789B221755B1F3002FE365 /* foodCellBack@2x.png */,
 				5F50961C17548FAB00461964 /* selector_back@2x.png */,
 				5F3605D11753623A0058EC98 /* button_back@2x.png */,
@@ -533,6 +536,7 @@
 				5F789B231755B1F3002FE365 /* foodCellBack@2x.png in Resources */,
 				0882419F175621DE00E71E6E /* foodDealed in Resources */,
 				5FF8473D1758546900DEA6DE /* README.mdown in Resources */,
+				5FF8474117587F0100DEA6DE /* nav_back_button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -67,7 +67,7 @@
     {
         showTableView = NO;
         self.listView.hidden = YES;
-        [self.editFoodItem setEnabled:NO];
+        //[self.editFoodItem setEnabled:NO];
         self.emptyFoodShowLabel.hidden= NO;
     }
     else
@@ -106,7 +106,6 @@
         showTableView = YES;
         self.listView.hidden = NO;
         self.emptyFoodShowLabel.hidden= YES;
-        [self.editFoodItem setEnabled:YES];
         [self.listView reloadData];
     }
 
@@ -177,7 +176,7 @@
         float radius;
         if (progress >0.03 )
         {
-            radius = 6;
+            radius = 5;
         }
         else
         {
@@ -227,6 +226,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.listView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.section == 0)
     {
         if(takenFoodArray ==nil || [takenFoodArray count]==0)
@@ -268,55 +268,61 @@
     [tempDict removeObjectForKey:ndb_No];
     [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    [self.takenFoodArray removeObjectAtIndex:indexPath.row];
-    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-    [self.listView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    [self displayTakenFoodResult];
+//    [self.takenFoodArray removeObjectAtIndex:indexPath.row];
+//    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+//    [self.listView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
     
 }
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return @"删除";
 }
+- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewCellEditingStyleDelete;
 }
-- (IBAction)editFoodAction:(id)sender {
-    
-    if(!self.listView.editing)
-    {
-        [self.editFoodItem setStyle:UIBarButtonItemStyleDone];
-        [self.editFoodItem setTitle:@"完成"];
-        self.listView.editing= !self.listView.editing;
-    }
-    else
-    {
-        [self.editFoodItem setStyle:UIBarButtonItemStyleBordered];
-        [self.editFoodItem setTitle:@"编辑"];
-        self.listView.editing= !self.listView.editing;
-        [self displayTakenFoodResult];
-    }
-
-}
+//- (IBAction)editFoodAction:(id)sender {
+//    
+//    if(!self.listView.editing)
+//    {
+//        [self.editFoodItem setStyle:UIBarButtonItemStyleDone];
+//        [self.editFoodItem setTitle:@"完成"];
+//        self.listView.editing= !self.listView.editing;
+//    }
+//    else
+//    {
+//        [self.editFoodItem setStyle:UIBarButtonItemStyleBordered];
+//        [self.editFoodItem setTitle:@"编辑"];
+//        self.listView.editing= !self.listView.editing;
+//        [self displayTakenFoodResult];
+//    }
+//
+//}
 - (void)viewWillDisappear:(BOOL)animated
 {
-    if (self.listView.editing)
-    {
-        [self.editFoodItem setStyle:UIBarButtonItemStyleBordered];
-        [self.editFoodItem setTitle:@"编辑"];
-        self.listView.editing= !self.listView.editing;
-        [self displayTakenFoodResult];
-    }
+//    if (self.listView.editing)
+//    {
+//        [self.editFoodItem setStyle:UIBarButtonItemStyleBordered];
+//        [self.editFoodItem setTitle:@"编辑"];
+//        self.listView.editing= !self.listView.editing;
+//        [self displayTakenFoodResult];
+//    }
 }
 - (IBAction)addFoodAction:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZDailyIntakeViewController *dailyIntakeController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
-    UINavigationController *initialController = (UINavigationController*)[UIApplication
-                                                                          sharedApplication].keyWindow.rootViewController;
+    [self presentModalViewController:dailyIntakeController animated:YES];
+    //UINavigationController *initialController = (UINavigationController*)[UIApplication
+                                                                          //sharedApplication].keyWindow.rootViewController;
 
     //UINavigationController* mainNavController = (UINavigationController*)storyboard.instantiateInitialViewController;
     //NSLog(@"%@",[mainNavController description]);
     //NSLog(@"%@",[initialController description]);
-    [initialController pushViewController:dailyIntakeController animated:YES];
+    //[initialController pushViewController:dailyIntakeController animated:YES];
     
 }
 
@@ -324,7 +330,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_SettingsChangedKey object:nil];
     [self setListView:nil];
-    [self setEditFoodItem:nil];
     [self setEmptyFoodShowLabel:nil];
     [super viewDidUnload];
 }

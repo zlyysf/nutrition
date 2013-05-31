@@ -253,7 +253,7 @@
 }
 - (IBAction)cancelButtonTapped:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:YES];
 }
 - (IBAction)saveButtonTapped:(id)sender {
     //储存摄入量
@@ -277,7 +277,7 @@
         [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
         [[NSUserDefaults  standardUserDefaults]synchronize];
     }
-    [self.navigationController popViewControllerAnimated:YES];
+    [self dismissModalViewControllerAnimated:YES];
 }
 //- (IBAction)resetButtonTapped:(id)sender {
 //    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])

@@ -222,7 +222,7 @@
         float radius;
         if (progress >0.03 )
         {
-            radius = 6;
+            radius = 5;
         }
         else
         {

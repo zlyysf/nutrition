@@ -33,8 +33,24 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.navItem.title = foodName;
+    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setTitle:@"返回" forState:UIControlStateNormal];
+    
+    button.frame = CGRectMake(0, 0, 48, 30);
+    [button.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [button addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    self.navItem.leftBarButtonItem= customBarItem;
+
 }
-- (IBAction)backButtonTapped:(id)sender
+- (void)backButtonTapped:(id)sender
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
