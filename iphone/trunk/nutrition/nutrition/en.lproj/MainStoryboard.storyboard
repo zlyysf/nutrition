@@ -602,7 +602,7 @@
         <scene sceneID="XW2-me-tAk">
             <objects>
                 <navigationController id="ZAM-vJ-R5c" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="食物列表" id="wQA-Aq-Dqo"/>
+                    <tabBarItem key="tabBarItem" title="食物列表" image="food_icon.png" id="wQA-Aq-Dqo"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="RZA-jY-aQy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -621,7 +621,7 @@
         <scene sceneID="FxW-p2-XCg">
             <objects>
                 <navigationController id="gn5-Cb-gWN" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="推荐食物" id="irF-x9-oWC"/>
+                    <tabBarItem key="tabBarItem" title="推荐食物" image="recommend_icon.png" id="irF-x9-oWC"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="hhB-tL-naL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -640,7 +640,7 @@
         <scene sceneID="mgE-uF-wOV">
             <objects>
                 <navigationController id="Rhh-IJ-efw" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="设置" id="fd6-3L-wv8"/>
+                    <tabBarItem key="tabBarItem" title="设置" image="settings_icon.png" id="fd6-3L-wv8"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NqO-dN-vk4">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -658,6 +658,9 @@
     </scenes>
     <resources>
         <image name="been.png" width="16" height="16"/>
+        <image name="food_icon.png" width="16" height="16"/>
+        <image name="recommend_icon.png" width="16" height="16"/>
+        <image name="settings_icon.png" width="16" height="16"/>
     </resources>
     <classes>
         <class className="LZDailyIntakeViewController" superclassName="UIViewController">
