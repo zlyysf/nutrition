@@ -13,6 +13,7 @@
 #import "LZConstants.h"
 #import "LZRecommendFood.h"
 #import "LZFoodDetailController.h"
+#import "LZUtility.h"
 @interface LZRecommendFoodController ()<MBProgressHUDDelegate>
 {
     MBProgressHUD *HUD;
@@ -216,6 +217,8 @@
     {
         LZNutritionCell *cell = (LZNutritionCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionCell"];
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
+        NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+        UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
         cell.nutritionNameLabel.text = [nutrient objectForKey:@"Name"];
         NSNumber *percent = [nutrient objectForKey:@"nutrientInitialSupplyRate"];
         float progress = [percent floatValue]>1.f ? 1.f :[percent floatValue];
@@ -228,7 +231,7 @@
         {
             radius = 2;
         }
-        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:progress withBackRadius:8.f fillRadius:radius];
+        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:8.f fillRadius:radius];
         [cell adjustLabelAccordingToProgress:progress];
         cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(progress *100)];
         return cell;

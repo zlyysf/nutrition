@@ -263,7 +263,32 @@
 }
 
 
-
++(UIColor*)getNutrientColorForNutrientId:(NSString *)nutrientId
+{
+    /*VA:2e69ac   VB6:be206b  VC:01a290   VD:f25e38   VE:c1d03f   钙:facf04   铁：009bd4  锌：e34e35   纤维：24c5d9   叶酸：412e04
+@"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",@"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",@"Folate_Tot_(µg)"*/
+    NSDictionary * colorDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [UIColor colorWithRed:46/255.f green:105/255.f blue:172/255.f alpha:1.0f],@"Vit_A_RAE",
+                                [UIColor colorWithRed:1/255.f green:162/255.f blue:144/255.f alpha:1.0f],@"Vit_C_(mg)",
+                                [UIColor colorWithRed:242/255.f green:94/255.f blue:56/255.f alpha:1.0f],@"Vit_D_(µg)",
+                                [UIColor colorWithRed:193/255.f green:208/255.f blue:63/255.f alpha:1.0f],@"Vit_E_(mg)",
+                                [UIColor colorWithRed:190/255.f green:32/255.f blue:107/255.f alpha:1.0f],@"Vit_B6_(mg)",
+                                [UIColor colorWithRed:250/255.f green:207/255.f blue:4/255.f alpha:1.0f],@"Calcium_(mg)",
+                                [UIColor colorWithRed:0/255.f green:155/255.f blue:212/255.f alpha:1.0f],@"Iron_(mg)",
+                                [UIColor colorWithRed:227/255.f green:78/255.f blue:53/255.f alpha:1.0f],@"Zinc_(mg)",
+                                [UIColor colorWithRed:36/255.f green:197/255.f blue:217/255.f alpha:1.0f],@"Fiber_TD_(g)",
+                                [UIColor colorWithRed:65/255.f green:46/255.f blue:4/255.f alpha:1.0f],@"Folate_Tot_(µg)",
+                                nil];
+    UIColor *nutrientColor = [colorDict objectForKey:nutrientId];
+    if (nutrientColor == NULL)
+    {
+        return [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:1];
+    }
+    else
+    {
+        return nutrientColor;
+    }
+}
 
 
 

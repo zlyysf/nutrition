@@ -10,6 +10,7 @@
 #import "LZConstants.h"
 #import "LZNutritionSupplyCell.h"
 #import "LZStandardContentCell.h"
+#import "LZUtility.h"
 @interface LZFoodDetailController ()
 
 @end
@@ -87,6 +88,8 @@
         LZNutritionSupplyCell *cell = (LZNutritionSupplyCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionSupplyCell"];
         NSDictionary *aNutrient = [nutrientSupplyArray objectAtIndex:indexPath.row];
         NSString *nutrientName = [aNutrient objectForKey:@"Name"];
+        NSString *nutrientId = [aNutrient objectForKey:@"NutrientID"];
+        UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
         cell.nutrientNameLabel.text = nutrientName;
         NSNumber *percent = [aNutrient objectForKey:@"1foodSupply1NutrientRate"];
         NSNumber *food1Supply1NutrientAmount = [aNutrient objectForKey:@"food1Supply1NutrientAmount"];
@@ -96,15 +99,15 @@
         float radius;
         if (progress >0.03 )
         {
-            radius = 6;
+            radius = 5;
         }
         else
         {
             radius = 2;
         }
-        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor blueColor] progress:progress withBackRadius:8.f fillRadius:radius];
+        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:8.f fillRadius:radius];
         //[cell adjustLabelAccordingToProgress:0.5];
-        cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%%,%d/%d (%@)",(int)(progress *100),[food1Supply1NutrientAmount intValue],[nutrientTotalDRI intValue ],unit];
+        cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%d/%d%@)",(int)(progress *100),[food1Supply1NutrientAmount intValue],[nutrientTotalDRI intValue ],unit];
 
 //        UIView *tempView = [[UIView alloc] init];
 //        [cell setBackgroundView:tempView];
