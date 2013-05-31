@@ -31,6 +31,10 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
+    UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
+    [self.personsBackImageView setImage:textBackImage];
+    [self.daysBackImageView setImage:textBackImage];
 
 	// Do any additional setup after loading the view.
     //显示目前设定的人数 天数
@@ -126,4 +130,9 @@
     
 }
 
+- (void)viewDidUnload {
+    [self setPersonsBackImageView:nil];
+    [self setDaysBackImageView:nil];
+    [super viewDidUnload];
+}
 @end

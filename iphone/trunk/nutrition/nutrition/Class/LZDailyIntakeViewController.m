@@ -95,35 +95,34 @@
 }
 - (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 70;
+    return 60;
 }
 //- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 //{
 //
 //    return 1;
 //}
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    return 60;
-//}
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 5;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 5;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
+    [sectionView setBackgroundColor:[UIColor clearColor]];
+    return sectionView;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
 
-//        UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
-//        UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
-//        [sectionView addSubview:sectionBarView];
-//        NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
-//        UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
-//        [sectionBarView setImage:sectionBarImage];
-//        UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
-//        [sectionTitleLabel setTextColor:[UIColor whiteColor]];
-//        [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:18]];
-//        [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
-//        [sectionView addSubview:sectionTitleLabel];
-//            sectionTitleLabel.text =  [self.foodTypeArray objectAtIndex:section];
-    
-//        return self.selectorView;
-//}
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
+    [sectionView setBackgroundColor:[UIColor clearColor]];
+    return sectionView;
+}
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
@@ -152,6 +151,9 @@
         cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];//NDB_No
         NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
         NSNumber *intake = [self.foodIntakeDictionary objectForKey:NDB_No];
+        UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
+        UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
+        [cell.textFiledBackImage setImage:textBackImage];
         cell.intakeAmountTextField.text = [NSString stringWithFormat:@"%d",[intake intValue]];
         [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
         return cell;
@@ -221,8 +223,8 @@
 
 
 - (UIView *)selector:(LZValueSelectorView *)valueSelector viewForRowAtIndex:(NSInteger)index {
-    UILabel * label = nil;
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320/3 , 41)];
+    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320/3 , 41)];
+    [label setFont:[UIFont systemFontOfSize:18.f]];
     label.textColor = [UIColor whiteColor];
     label.text = [self.foodTypeArray objectAtIndex:index];
     label.textAlignment =  NSTextAlignmentCenter;

@@ -99,13 +99,13 @@
         float radius;
         if (progress >0.03 )
         {
-            radius = 5;
+            radius = 4;
         }
         else
         {
             radius = 2;
         }
-        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:8.f fillRadius:radius];
+        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
         //[cell adjustLabelAccordingToProgress:0.5];
         cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%d/%d%@)",(int)(progress *100),[food1Supply1NutrientAmount intValue],[nutrientTotalDRI intValue ],unit];
 
@@ -151,27 +151,27 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
-        return 50;
+        return 42;
     else
         return 30;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if( section == 0)
-        return 27;
+        return 32;
     else
         return 47;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     if( section == 0)
-        return 0;
+        return 5;
     else
         return 20;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    float height = (section ==0 ? 27 :47);
+    float height = (section ==0 ? 32 :47);
     UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
     [sectionView setBackgroundColor:[UIColor clearColor]];
     
@@ -182,7 +182,7 @@
     [sectionBarView setImage:sectionBarImage];
     UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
     [sectionTitleLabel setTextColor:[UIColor whiteColor]];
-    [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:18]];
+    [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
     [sectionView addSubview:sectionTitleLabel];
     
@@ -194,7 +194,8 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 20)];
+    float height = (section == 0 ?5:20);
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
     [sectionView setBackgroundColor:[UIColor clearColor]];
     return sectionView;
 }

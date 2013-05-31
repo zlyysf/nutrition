@@ -12,5 +12,7 @@
 
 @property (strong, nonatomic) IBOutlet UITextField *personsTextField;
 @property (strong, nonatomic) IBOutlet UITextField *daysTextField;
+@property (strong, nonatomic) IBOutlet UIImageView *personsBackImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *daysBackImageView;
 @property (strong, nonatomic)UITextField * currentTextField;
 @end
