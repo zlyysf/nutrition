@@ -25,7 +25,7 @@
     [[UIBarButtonItem appearance] setBackgroundImage:button30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
     [[UITabBar appearance]setBackgroundImage:[UIImage imageNamed:@"tabbar_back.png"]];
     [[UITabBar appearance] setSelectedImageTintColor:[UIColor greenColor]];
-    [[UITabBar appearance]setTintColor:[UIColor greenColor]];
+    [[UITabBar appearance]setTintColor:[UIColor lightGrayColor]];
     //initialize persons and days setting
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];

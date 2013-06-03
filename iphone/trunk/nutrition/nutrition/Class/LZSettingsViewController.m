@@ -72,7 +72,7 @@
     int days = [self.daysTextField.text intValue];
     if (persons <=0 || days <=0)
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"设置不当" message:@"请输入正确的数字" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"设置不当" message:@"请输入正确的数字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
         [alert show];
         return;
     }

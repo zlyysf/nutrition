@@ -14,7 +14,7 @@
 #import "LZConstants.h"
 #import "LZFoodDetailController.h"
 #import "LZUtility.h"
-@interface LZFoodListViewController ()
+@interface LZFoodListViewController ()<LZRecommendFoodCellDelegate>
 
 @end
 
@@ -159,11 +159,12 @@
             }
             UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
             [cell.foodImageView setImage:foodImage];
-
+            cell.cellIndexPath = indexPath;
+            cell.delegate = self;
             cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
             NSNumber *weight = [aFood objectForKey:@"Amount"];
             cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
-            [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
+//            [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
             return cell;
         }
     }
@@ -238,9 +239,9 @@
 {
     return 2;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma -mark LZRecommendFoodCellDelegate
+-(void)userSelectedCellForIndexPath:(NSIndexPath *)indexPath
 {
-    [self.listView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.section == 0)
     {
         if(takenFoodArray ==nil || [takenFoodArray count]==0)
@@ -267,6 +268,35 @@
     else
         return;
 }
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    [self.listView deselectRowAtIndexPath:indexPath animated:YES];
+//    if(indexPath.section == 0)
+//    {
+//        if(takenFoodArray ==nil || [takenFoodArray count]==0)
+//        {
+//            return;
+//        }
+//        else
+//        {
+//            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
+//            NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
+//            NSArray *nutrientSupplyArr = [[takenFoodDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
+//            NSArray *nutrientStandardArr = [[takenFoodDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
+//            NSString *foodName = [aFood objectForKey:@"Name"];
+//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//            LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
+//            foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
+//            foodDetailController.nutrientStandardArray = nutrientStandardArr;
+//            foodDetailController.foodName = foodName;
+//            UINavigationController *initialController = (UINavigationController*)[UIApplication
+//                                                                                  sharedApplication].keyWindow.rootViewController;
+//            [initialController pushViewController:foodDetailController animated:YES];
+//        }
+//    }
+//    else
+//        return;
+//}
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section ==1)
     {

@@ -14,7 +14,7 @@
 #import "LZRecommendFood.h"
 #import "LZFoodDetailController.h"
 #import "LZUtility.h"
-@interface LZRecommendFoodController ()<MBProgressHUDDelegate>
+@interface LZRecommendFoodController ()<MBProgressHUDDelegate,LZRecommendFoodCellDelegate>
 {
     MBProgressHUD *HUD;
 }
@@ -209,7 +209,9 @@
             [cell.foodImageView setImage:foodImage];
             NSNumber *weight = [aFood objectForKey:@"Amount"];
             cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
-            [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
+            //[cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
+            cell.delegate = self;
+            cell.cellIndexPath = indexPath;
             return cell;
         }
     }
@@ -283,7 +285,8 @@
 {
     return 2;
 }// Default is 1 if not implemented
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+#pragma -mark LZRecommendFoodCellDelegate
+-(void)userSelectedCellForIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
     {
@@ -308,13 +311,45 @@
             
             [initialController pushViewController:foodDetailController animated:YES];
         }
-
-
+        
+        
     }
     else
         return;
 
 }
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    if (indexPath.section == 0)
+//    {
+//        if(recommendFoodArray ==nil || [recommendFoodArray count]==0)
+//        {
+//            return;
+//        }
+//        else
+//        {
+//            NSDictionary *aFood = [recommendFoodArray objectAtIndex:indexPath.row];
+//            NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
+//            NSArray *nutrientSupplyArr = [[recommendFoodDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
+//            NSArray *nutrientStandardArr = [[recommendFoodDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
+//            NSString *foodName = [aFood objectForKey:@"Name"];
+//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//            LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
+//            foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
+//            foodDetailController.nutrientStandardArray = nutrientStandardArr;
+//            foodDetailController.foodName = foodName;
+//            UINavigationController *initialController = (UINavigationController*)[UIApplication
+//                                                                                  sharedApplication].keyWindow.rootViewController;
+//            
+//            [initialController pushViewController:foodDetailController animated:YES];
+//        }
+//
+//
+//    }
+//    else
+//        return;
+//
+//}
 #pragma mark MBProgressHUDDelegate methods
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
