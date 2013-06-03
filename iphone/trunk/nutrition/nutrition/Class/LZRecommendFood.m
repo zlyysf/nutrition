@@ -1062,8 +1062,8 @@
 }
 -(NSMutableDictionary *) takenFoodSupplyNutrients:(NSDictionary*)takenFoodAmountDict andDRIs:(NSDictionary*)DRIsDict andParams:(NSDictionary*)params
 {
-    if (takenFoodAmountDict == nil || takenFoodAmountDict.count == 0)
-        return nil;
+//    if (takenFoodAmountDict == nil || takenFoodAmountDict.count == 0)
+//        return nil;
     
     assert(params != nil && params.count > 0);
     int personDayCount = 1;
@@ -1080,11 +1080,12 @@
     
         
     NSArray *takenFoodIDs = nil;
-    takenFoodIDs = [takenFoodAmountDict allKeys];
-    NSArray *takenFoodAttrAry = [da getFoodAttributesByIds:takenFoodIDs];
+    NSArray *takenFoodAttrAry = nil;
+    if (takenFoodAmountDict != nil){
+        takenFoodIDs = [takenFoodAmountDict allKeys];
+        takenFoodAttrAry = [da getFoodAttributesByIds:takenFoodIDs];
+    }
     
-
-
     NSMutableDictionary *nutrientSupplyDict = [NSMutableDictionary dictionaryWithDictionary:DRIsDict];
     NSArray *nutrientNames1 = [nutrientSupplyDict allKeys];
     for (int i=0; i<nutrientNames1.count; i++) {//初始化supply集合
@@ -1095,41 +1096,45 @@
     NSMutableDictionary *takenFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
 
     //已经吃了的各食物的各营养的量加到supply中
-    for(int i=0; i<takenFoodAttrAry.count; i++){
-        NSDictionary *takenFoodAttrs = takenFoodAttrAry[i];
-        NSString *foodId = [takenFoodAttrs objectForKey:colName_NO];
-        NSNumber *nmTakenFoodAmount = nil;
-        if (takenFoodAmountDict != nil)
-            nmTakenFoodAmount = [takenFoodAmountDict objectForKey:foodId];
-        assert(foodId!=nil);
-        [takenFoodAttrDict setObject:takenFoodAttrs forKey:foodId];
-        
-        //这个食物的各营养的量加到supply中
-        NSArray *nutrientsToSupply = [nutrientSupplyDict allKeys];
-        for(int j=0; j<nutrientsToSupply.count; j++){
-            NSString *nutrient = nutrientsToSupply[j];
-            id nutrientValueOfFood = [takenFoodAttrs objectForKey:nutrient];
-            assert(nutrientValueOfFood != nil);
-            if (nutrientValueOfFood != nil){
-                NSNumber *nmNutrientContentOfFood = (NSNumber *)nutrientValueOfFood;
-                assert(nmNutrientContentOfFood != nil);
-                if ([nmNutrientContentOfFood doubleValue] != 0.0){
-                    NSNumber *nmSupplyNutrient = [nutrientSupplyDict objectForKey:nutrient];
-                    double supplyNutrient2 = [nmSupplyNutrient doubleValue]+ [nmNutrientContentOfFood doubleValue]*([nmTakenFoodAmount doubleValue]/100.0);
-                    [nutrientSupplyDict setObject:[NSNumber numberWithDouble:supplyNutrient2] forKey:nutrient];
+    if (takenFoodAttrAry != nil){
+        for(int i=0; i<takenFoodAttrAry.count; i++){
+            NSDictionary *takenFoodAttrs = takenFoodAttrAry[i];
+            NSString *foodId = [takenFoodAttrs objectForKey:colName_NO];
+            NSNumber *nmTakenFoodAmount = nil;
+            if (takenFoodAmountDict != nil)
+                nmTakenFoodAmount = [takenFoodAmountDict objectForKey:foodId];
+            assert(foodId!=nil);
+            [takenFoodAttrDict setObject:takenFoodAttrs forKey:foodId];
+            
+            //这个食物的各营养的量加到supply中
+            NSArray *nutrientsToSupply = [nutrientSupplyDict allKeys];
+            for(int j=0; j<nutrientsToSupply.count; j++){
+                NSString *nutrient = nutrientsToSupply[j];
+                id nutrientValueOfFood = [takenFoodAttrs objectForKey:nutrient];
+                assert(nutrientValueOfFood != nil);
+                if (nutrientValueOfFood != nil){
+                    NSNumber *nmNutrientContentOfFood = (NSNumber *)nutrientValueOfFood;
+                    assert(nmNutrientContentOfFood != nil);
+                    if ([nmNutrientContentOfFood doubleValue] != 0.0){
+                        NSNumber *nmSupplyNutrient = [nutrientSupplyDict objectForKey:nutrient];
+                        double supplyNutrient2 = [nmSupplyNutrient doubleValue]+ [nmNutrientContentOfFood doubleValue]*([nmTakenFoodAmount doubleValue]/100.0);
+                        [nutrientSupplyDict setObject:[NSNumber numberWithDouble:supplyNutrient2] forKey:nutrient];
+                    }
                 }
-            }
-        }//for j
-    }//for i
-
+            }//for j
+        }//for i
+    }
+    
     NSDictionary *nutrientInitialSupplyDict = [NSDictionary dictionaryWithDictionary:nutrientSupplyDict];//记录already taken food提供的营养素的量
     
     NSMutableDictionary *retDict = [NSMutableDictionary dictionaryWithCapacity:5];
     [retDict setObject:DRIsDict forKey:@"DRI"];//nutrient name as key, also column name
     [retDict setObject:nutrientInitialSupplyDict forKey:@"nutrientInitialSupplyDict"];
     [retDict setObject:params forKey:@"paramsDict"];
-    [retDict setObject:takenFoodAmountDict forKey:@"TakenFoodAmount"];//food NO as key
-    [retDict setObject:takenFoodAttrDict forKey:@"TakenFoodAttr"];//food NO as key
+    if (takenFoodAmountDict != nil){
+        [retDict setObject:takenFoodAmountDict forKey:@"TakenFoodAmount"];//food NO as key
+        [retDict setObject:takenFoodAttrDict forKey:@"TakenFoodAttr"];//food NO as key
+    }
     return retDict;
 }
 
@@ -1315,8 +1320,8 @@
     NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
     
     NSMutableDictionary* formatResult = [NSMutableDictionary dictionary];
-    if (takenResult == nil)
-        return formatResult;
+//    if (takenResult == nil)
+//        return formatResult;
     
     //已经决定了的食物
     if (takenFoodAmountDict!=nil){
