@@ -85,6 +85,8 @@
 		5F50961D17548FAB00461964 /* selector_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F50961C17548FAB00461964 /* selector_back@2x.png */; };
 		5F627437175C6A19006E46CA /* LZRecommendEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F627436175C6A19006E46CA /* LZRecommendEmptyCell.m */; };
 		5F62743A175C93F3006E46CA /* LZFoodNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */; };
+		5F62743D175CAB63006E46CA /* LZAddByNutrientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743C175CAB63006E46CA /* LZAddByNutrientController.m */; };
+		5F627440175CACAC006E46CA /* LZNutrientFoodAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743F175CACAB006E46CA /* LZNutrientFoodAddCell.m */; };
 		5F638030175C4969005E5517 /* cellSelectedBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */; };
 		5F789B231755B1F3002FE365 /* foodCellBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F789B221755B1F3002FE365 /* foodCellBack@2x.png */; };
 		5F94A86517531CC100664B57 /* LZFoodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZFoodListViewController.m */; };
@@ -192,6 +194,10 @@
 		5F627436175C6A19006E46CA /* LZRecommendEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendEmptyCell.m; path = Class/LZRecommendEmptyCell.m; sourceTree = "<group>"; };
 		5F627438175C93F2006E46CA /* LZFoodNutritionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodNutritionCell.h; path = Class/LZFoodNutritionCell.h; sourceTree = "<group>"; };
 		5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodNutritionCell.m; path = Class/LZFoodNutritionCell.m; sourceTree = "<group>"; };
+		5F62743B175CAB62006E46CA /* LZAddByNutrientController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZAddByNutrientController.h; path = Class/LZAddByNutrientController.h; sourceTree = "<group>"; };
+		5F62743C175CAB63006E46CA /* LZAddByNutrientController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZAddByNutrientController.m; path = Class/LZAddByNutrientController.m; sourceTree = "<group>"; };
+		5F62743E175CACAA006E46CA /* LZNutrientFoodAddCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZNutrientFoodAddCell.h; path = Class/LZNutrientFoodAddCell.h; sourceTree = "<group>"; };
+		5F62743F175CACAB006E46CA /* LZNutrientFoodAddCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZNutrientFoodAddCell.m; path = Class/LZNutrientFoodAddCell.m; sourceTree = "<group>"; };
 		5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cellSelectedBack@2x.png"; path = "nutrition/Resource/cellSelectedBack@2x.png"; sourceTree = "<group>"; };
 		5F789B221755B1F3002FE365 /* foodCellBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "foodCellBack@2x.png"; path = "nutrition/Resource/foodCellBack@2x.png"; sourceTree = "<group>"; };
 		5F94A86317531CC100664B57 /* LZFoodListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodListViewController.h; path = Class/LZFoodListViewController.h; sourceTree = "<group>"; };
@@ -403,6 +409,10 @@
 				5F627436175C6A19006E46CA /* LZRecommendEmptyCell.m */,
 				5F627438175C93F2006E46CA /* LZFoodNutritionCell.h */,
 				5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */,
+				5F62743B175CAB62006E46CA /* LZAddByNutrientController.h */,
+				5F62743C175CAB63006E46CA /* LZAddByNutrientController.m */,
+				5F62743E175CACAA006E46CA /* LZNutrientFoodAddCell.h */,
+				5F62743F175CACAB006E46CA /* LZNutrientFoodAddCell.m */,
 			);
 			path = nutrition;
 			sourceTree = "<group>";
@@ -635,6 +645,8 @@
 				5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */,
 				5F627437175C6A19006E46CA /* LZRecommendEmptyCell.m in Sources */,
 				5F62743A175C93F3006E46CA /* LZFoodNutritionCell.m in Sources */,
+				5F62743D175CAB63006E46CA /* LZAddByNutrientController.m in Sources */,
+				5F627440175CACAC006E46CA /* LZNutrientFoodAddCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

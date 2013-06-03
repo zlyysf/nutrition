@@ -255,7 +255,28 @@
     }
     else
     {
+        NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
         
+        NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+        NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                planPerson,@"personCount",
+                                planDays,@"dayCount", nil];
+        
+        
+        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+        NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+        NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
+        NSString *nutrientName = [nutrient objectForKey:@"NutrientID"];
+        NSDictionary *DRIsDict = [retDict objectForKey:@"DRI"];//nutrient name as key, also column name
+        NSDictionary *nutrientInitialSupplyDict = [retDict objectForKey:@"nutrientInitialSupplyDict"];
+        NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientName];
+        double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientName]) doubleValue]*[planPerson intValue]*[planDays intValue];
+        double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientName andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
+        NSLog(@"recommendFoodArray %@",recommendFoodArray);
+
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
