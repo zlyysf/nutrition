@@ -36,6 +36,7 @@
 - (NSDictionary *)getDRIbyGender:(NSString*)gender andAge:(int)age ;
 -(NSDictionary*)getAbstractPersonDRIs;
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN;
+-(NSArray *) getRichNutritionFoodForNutrient:(NSString *)nutrientName andNutrientAmount:(NSNumber*)nutrientAmount;
 
 -(NSArray *) getAllFood;
 -(NSArray *)getFoodByIds:(NSArray *)idAry;

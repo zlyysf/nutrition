@@ -558,6 +558,7 @@
             //do nothing, then get will obtain nil, though should not
         }
     }
+    NSLog(@"getRichNutritionFoodForNutrient ret:\n%@",foods);
     return foods;
 }
 

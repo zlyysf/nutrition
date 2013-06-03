@@ -23,10 +23,10 @@
     
     
     
-    [self.class testDA1];
+//    [self.class testDA1];
     
 //    [self.class testFormatResult1];
-//    [self.class testFormatResult2_taken];
+    [self.class testFormatResult2_taken];
 }
 
 
@@ -1465,6 +1465,16 @@
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
     NSMutableDictionary *retFmtDict = [rf formatTakenResultForUI:retDict];
+    
+    NSString *nutrientName1 = @"Vit_A_RAE";
+    NSDictionary *DRIsDict = [retDict objectForKey:@"DRI"];//nutrient name as key, also column name
+    NSDictionary *nutrientInitialSupplyDict = [retDict objectForKey:@"nutrientInitialSupplyDict"];
+    NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientName1];
+    double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientName1]) doubleValue]*personCount*dayCount;
+    double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
+    LZDataAccess *da = [LZDataAccess singleton];
+    [da getRichNutritionFoodForNutrient:nutrientName1 andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
+    
     
 }
 
