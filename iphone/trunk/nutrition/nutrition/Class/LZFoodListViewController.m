@@ -186,8 +186,8 @@
         {
             radius = 2;
         }
-        [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
-        [cell adjustLabelAccordingToProgress:progress];
+        [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,226,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
+        [cell adjustLabelAccordingToProgress:progress forLabelWidth:226];
         cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(progress *100)];
         return cell;
     }

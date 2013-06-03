@@ -7,7 +7,6 @@
 //
 
 #import "LZNutritionCell.h"
-#define PercentLabelWidth 244
 @implementation LZNutritionCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -18,10 +17,10 @@
     }
     return self;
 }
--(void)adjustLabelAccordingToProgress:(float)progress
+-(void)adjustLabelAccordingToProgress:(float)progress forLabelWidth:(float)labelWith
 {
     CGRect labelFrame = self.supplyPercentlabel.frame;
-    labelFrame.size.width = PercentLabelWidth*progress < 30 ? 30:PercentLabelWidth*progress;
+    labelFrame.size.width = labelWith*progress < 30 ? 30:labelWith*progress;
     self.supplyPercentlabel.frame = labelFrame;
 }
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated

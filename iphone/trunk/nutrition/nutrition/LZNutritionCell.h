@@ -12,6 +12,6 @@
 
 @property (strong, nonatomic) IBOutlet LZProgressView *nutritionProgressView;
 @property (strong, nonatomic) IBOutlet UILabel *supplyPercentlabel;
--(void)adjustLabelAccordingToProgress:(float)progress;
+-(void)adjustLabelAccordingToProgress:(float)progress forLabelWidth:(float)labelWith;
 @property (strong, nonatomic) IBOutlet UILabel *nutritionNameLabel;
 @end

@@ -250,6 +250,10 @@
 #pragma IZValueSelector delegate
 - (void)selector:(LZValueSelectorView *)valueSelector didSelectRowAtIndex:(NSInteger)index {
     NSLog(@"Selected index %d",index);
+    if(self.currentFoodInputTextField != nil)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
     currentSelectedIndex = index;
     [self.listView reloadData];
 }
