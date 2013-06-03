@@ -84,6 +84,7 @@
 		5F50961B1754777300461964 /* LZValueSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F50961A1754777300461964 /* LZValueSelectorView.m */; };
 		5F50961D17548FAB00461964 /* selector_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F50961C17548FAB00461964 /* selector_back@2x.png */; };
 		5F627437175C6A19006E46CA /* LZRecommendEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F627436175C6A19006E46CA /* LZRecommendEmptyCell.m */; };
+		5F62743A175C93F3006E46CA /* LZFoodNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */; };
 		5F638030175C4969005E5517 /* cellSelectedBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */; };
 		5F789B231755B1F3002FE365 /* foodCellBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F789B221755B1F3002FE365 /* foodCellBack@2x.png */; };
 		5F94A86517531CC100664B57 /* LZFoodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZFoodListViewController.m */; };
@@ -189,6 +190,8 @@
 		5F50961C17548FAB00461964 /* selector_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "selector_back@2x.png"; path = "nutrition/Resource/selector_back@2x.png"; sourceTree = "<group>"; };
 		5F627435175C6A18006E46CA /* LZRecommendEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendEmptyCell.h; path = Class/LZRecommendEmptyCell.h; sourceTree = "<group>"; };
 		5F627436175C6A19006E46CA /* LZRecommendEmptyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendEmptyCell.m; path = Class/LZRecommendEmptyCell.m; sourceTree = "<group>"; };
+		5F627438175C93F2006E46CA /* LZFoodNutritionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodNutritionCell.h; path = Class/LZFoodNutritionCell.h; sourceTree = "<group>"; };
+		5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodNutritionCell.m; path = Class/LZFoodNutritionCell.m; sourceTree = "<group>"; };
 		5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cellSelectedBack@2x.png"; path = "nutrition/Resource/cellSelectedBack@2x.png"; sourceTree = "<group>"; };
 		5F789B221755B1F3002FE365 /* foodCellBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "foodCellBack@2x.png"; path = "nutrition/Resource/foodCellBack@2x.png"; sourceTree = "<group>"; };
 		5F94A86317531CC100664B57 /* LZFoodListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodListViewController.h; path = Class/LZFoodListViewController.h; sourceTree = "<group>"; };
@@ -398,6 +401,8 @@
 				5F3605C71753409C0058EC98 /* LZCustomTabBarController.m */,
 				5F627435175C6A18006E46CA /* LZRecommendEmptyCell.h */,
 				5F627436175C6A19006E46CA /* LZRecommendEmptyCell.m */,
+				5F627438175C93F2006E46CA /* LZFoodNutritionCell.h */,
+				5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */,
 			);
 			path = nutrition;
 			sourceTree = "<group>";
@@ -629,6 +634,7 @@
 				5F50961B1754777300461964 /* LZValueSelectorView.m in Sources */,
 				5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */,
 				5F627437175C6A19006E46CA /* LZRecommendEmptyCell.m in Sources */,
+				5F62743A175C93F3006E46CA /* LZFoodNutritionCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

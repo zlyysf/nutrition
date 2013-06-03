@@ -11,10 +11,8 @@
 @interface LZFoodListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UIBarButtonItem *addFoodItem;
 @property (strong, nonatomic) IBOutlet UITableView *listView;
-@property (assign,nonatomic)BOOL showTableView;
 @property (strong,nonatomic)NSMutableArray *takenFoodArray;
 @property (strong, nonatomic)NSMutableDictionary *takenFoodDict;
-@property (strong, nonatomic) IBOutlet UILabel *emptyFoodShowLabel;
 @property (strong,nonatomic)NSMutableArray *nutrientInfoArray;
 @property (assign,nonatomic)BOOL needRefresh;
 @end

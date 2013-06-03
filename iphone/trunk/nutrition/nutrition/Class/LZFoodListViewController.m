@@ -10,16 +10,17 @@
 #import "LZDailyIntakeViewController.h"
 #import "LZRecommendFood.h"
 #import "LZRecommendFoodCell.h"
-#import "LZNutritionCell.h"
+#import "LZFoodNutritionCell.h"
 #import "LZConstants.h"
 #import "LZFoodDetailController.h"
 #import "LZUtility.h"
+#import "LZRecommendEmptyCell.h"
 @interface LZFoodListViewController ()
 
 @end
 
 @implementation LZFoodListViewController
-@synthesize showTableView,takenFoodArray,takenFoodDict,nutrientInfoArray,needRefresh;
+@synthesize takenFoodArray,takenFoodDict,nutrientInfoArray,needRefresh;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -64,51 +65,40 @@
 -(void)displayTakenFoodResult
 {
     NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
-    if (takenFoodAmountDict == NULL || [[takenFoodAmountDict allKeys]count]==0)
-    {
-        showTableView = NO;
-        self.listView.hidden = YES;
-        //[self.editFoodItem setEnabled:NO];
-        self.emptyFoodShowLabel.hidden= NO;
+
+    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            planPerson,@"personCount",
+                            planDays,@"dayCount", nil];
+    
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+    NSMutableDictionary *retFmtDict = [rf formatTakenResultForUI:retDict];
+    NSLog(@"retFmtDict %@",retFmtDict);
+    NSArray *takenArray = [retFmtDict objectForKey:Key_takenFoodInfoDictArray];
+    if (takenArray != nil && [takenArray count]!=0) {
+        [takenFoodArray removeAllObjects];
+        [takenFoodArray addObjectsFromArray:takenArray];
     }
-    else
+    NSLog(@"takenArray %@",takenFoodArray);
+    NSDictionary *takenDict = [retFmtDict objectForKey:Key_takenFoodNutrientInfoAryDictDict];
+    if (takenDict != nil )
     {
-        NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-        NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                planPerson,@"personCount",
-                                planDays,@"dayCount", nil];
-        
-        
-        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-        NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
-        NSMutableDictionary *retFmtDict = [rf formatTakenResultForUI:retDict];
-        NSLog(@"retFmtDict %@",retFmtDict);
-        NSArray *takenArray = [retFmtDict objectForKey:Key_takenFoodInfoDictArray];
-        if (takenArray != nil && [takenArray count]!=0) {
-            [takenFoodArray removeAllObjects];
-            [takenFoodArray addObjectsFromArray:takenArray];
-        }
-        NSLog(@"takenArray %@",takenFoodArray);
-        NSDictionary *takenDict = [retFmtDict objectForKey:Key_takenFoodNutrientInfoAryDictDict];
-        if (takenDict != nil )
-        {
-            [takenFoodDict removeAllObjects];
-            [takenFoodDict addEntriesFromDictionary:takenDict];
-            NSLog(@"takenFoodDict %@ ",takenFoodDict);
-        }
-        NSArray *nutrientArray = [retFmtDict objectForKey:Key_nutrientTakenRateInfoArray];
-        if (nutrientArray != nil && [nutrientArray count]!=0) {
-            [nutrientInfoArray removeAllObjects];
-            [nutrientInfoArray addObjectsFromArray:nutrientArray];
-            NSLog(@"nutrientInfoArray %@",nutrientInfoArray);
-        }
-        
-        showTableView = YES;
-        self.listView.hidden = NO;
-        self.emptyFoodShowLabel.hidden= YES;
-        [self.listView reloadData];
+        [takenFoodDict removeAllObjects];
+        [takenFoodDict addEntriesFromDictionary:takenDict];
+        NSLog(@"takenFoodDict %@ ",takenFoodDict);
     }
+    NSArray *nutrientArray = [retFmtDict objectForKey:Key_nutrientTakenRateInfoArray];
+    if (nutrientArray != nil && [nutrientArray count]!=0) {
+        [nutrientInfoArray removeAllObjects];
+        [nutrientInfoArray addObjectsFromArray:nutrientArray];
+        NSLog(@"nutrientInfoArray %@",nutrientInfoArray);
+    }
+    
+
+    [self.listView reloadData];
 
 }
 - (void)didReceiveMemoryWarning
@@ -118,14 +108,10 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (showTableView)
-    {
-        if (section == 0)
-            return [takenFoodArray count];
-        else
-            return [nutrientInfoArray count];
-    }
-    return 0;
+    if (section == 0)
+        return (takenFoodArray ==nil || [takenFoodArray count]==0) ? 1 : [takenFoodArray count];
+    else
+        return [nutrientInfoArray count];
 //    if (section == 0)
 //        return (recommendFoodArray ==nil || [recommendFoodArray count]==0) ? 1 : [recommendFoodArray count];
 //    else
@@ -138,8 +124,8 @@
     {
         if(takenFoodArray ==nil || [takenFoodArray count]==0)
         {
-            UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EmptyCell"];
-            cell.textLabel.text = @"空";
+            LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
+            cell.contentLabel.text = @"添加你想要买的食物，或者根据营养成分定制你的购物单。";
             return cell;
         }
         else
@@ -169,7 +155,7 @@
     }
     else
     {
-        LZNutritionCell *cell = (LZNutritionCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionCell"];
+        LZFoodNutritionCell *cell = (LZFoodNutritionCell *)[tableView dequeueReusableCellWithIdentifier:@"LZFoodNutritionCell"];
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
         cell.nutritionNameLabel.text = [nutrient objectForKey:@"Name"];
         NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
@@ -265,7 +251,9 @@
         }
     }
     else
-        return;
+    {
+        
+    }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
     if (indexPath.section ==1)
@@ -345,7 +333,6 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_SettingsChangedKey object:nil];
     [self setListView:nil];
-    [self setEmptyFoodShowLabel:nil];
     [super viewDidUnload];
 }
 @end
