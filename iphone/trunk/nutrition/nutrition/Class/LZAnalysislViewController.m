@@ -126,15 +126,15 @@
         return;
     }
     
-    float weight = [userDefaults floatForKey:LZUserWeightKey];
-    float height = [userDefaults floatForKey:LZUserHeightKey];
-    int age = [userDefaults floatForKey:LZUserAgeKey];
-    int sex = [userDefaults floatForKey:LZUserSexKey];
-    int activityLevel = [userDefaults floatForKey:LZUserActivityLevelKey];
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              [NSNumber numberWithFloat:weight],@"weight", [NSNumber numberWithFloat:height],@"height",
-                              [NSNumber numberWithInt:age],@"age", [NSNumber numberWithInt:sex],@"sex",
-                              [NSNumber numberWithInt:activityLevel],@"activityLevel", nil];
+//    float weight = [userDefaults floatForKey:LZUserWeightKey];
+//    float height = [userDefaults floatForKey:LZUserHeightKey];
+//    int age = [userDefaults floatForKey:LZUserAgeKey];
+//    int sex = [userDefaults floatForKey:LZUserSexKey];
+//    int activityLevel = [userDefaults floatForKey:LZUserActivityLevelKey];
+//    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+//                              [NSNumber numberWithFloat:weight],@"weight", [NSNumber numberWithFloat:height],@"height",
+//                              [NSNumber numberWithInt:age],@"age", [NSNumber numberWithInt:sex],@"sex",
+//                              [NSNumber numberWithInt:activityLevel],@"activityLevel", nil];
     
     NSDictionary *dailyIntake = [userDefaults objectForKey:LZUserDailyIntakeKey];
     

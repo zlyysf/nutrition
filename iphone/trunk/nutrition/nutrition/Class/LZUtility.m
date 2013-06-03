@@ -241,7 +241,7 @@
     NSMutableDictionary *dic2Level = [NSMutableDictionary dictionaryWithCapacity:dicArray.count];
     for(int i=0; i<dicArray.count; i++){
         NSDictionary *dic = dicArray[i];
-        NSObject *keyVal = [dic objectForKey:keyName];
+        NSString *keyVal = [dic objectForKey:keyName];
         [dic2Level setValue:dic forKey:keyVal];
     }
     return dic2Level;
