@@ -313,6 +313,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
     [self displayTakenFoodResult];
+    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
 //    [self.takenFoodArray removeObjectAtIndex:indexPath.row];
 //    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
 //    [self.listView deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];

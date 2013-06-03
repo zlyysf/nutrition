@@ -14,6 +14,7 @@
 #import "LZRecommendFood.h"
 #import "LZFoodDetailController.h"
 #import "LZUtility.h"
+#import "LZRecommendEmptyCell.h"
 @interface LZRecommendFoodController ()<MBProgressHUDDelegate,LZRecommendFoodCellDelegate>
 {
     MBProgressHUD *HUD;
@@ -41,6 +42,7 @@
     HUD.delegate = self;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(takenFoodDeleted:) name:Notification_TakenFoodDeletedKey object:nil];
    
     //[self recommendOnePlan];
 }
@@ -49,6 +51,10 @@
     needRefresh = YES;
 }
 - (void)takenFoodChanged:(NSNotification *)notification
+{
+    needRefresh = YES;
+}
+- (void)takenFoodDeleted:(NSNotification *)notification
 {
     needRefresh = YES;
 }
@@ -185,8 +191,8 @@
     {
         if(recommendFoodArray ==nil || [recommendFoodArray count]==0)
         {
-            UITableViewCell * cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"EmptyCell"];
-            cell.textLabel.text = @"空";
+            LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
+            cell.contentLabel.text = @"您所需要的营养素已经由预选食物补充完全，不需要另行推荐食物。";
             return cell;
         }
         else
@@ -366,6 +372,7 @@
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_SettingsChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:Notification_TakenFoodDeletedKey object:nil];
     [self setChangeOnePlanItem:nil];
     [super viewDidUnload];
 }

@@ -85,7 +85,7 @@
 
 #define Notification_TakenFoodChangedKey @"KeyTakenFoodChangedNotification"
 #define Notification_SettingsChangedKey @"KeySettingsChangedNotification"
-
+#define Notification_TakenFoodDeletedKey @"KeyTakenFoodDeletedNotification"
 
 
 

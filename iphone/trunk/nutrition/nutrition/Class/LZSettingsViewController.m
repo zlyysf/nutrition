@@ -38,6 +38,9 @@
 
 	// Do any additional setup after loading the view.
     //显示目前设定的人数 天数
+ }
+- (void)viewWillAppear:(BOOL)animated
+{
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
     if (planPerson != NULL)
@@ -60,9 +63,6 @@
         [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
         [[NSUserDefaults standardUserDefaults]synchronize];
     }
-}
-- (void)viewWillAppear:(BOOL)animated
-{
 
 }
 - (IBAction)saveChanges:(id)sender

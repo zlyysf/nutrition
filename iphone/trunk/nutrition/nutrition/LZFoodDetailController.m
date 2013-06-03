@@ -39,7 +39,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"返回" forState:UIControlStateNormal];
+    [button setTitle:@"  返回" forState:UIControlStateNormal];
     
     button.frame = CGRectMake(0, 0, 48, 30);
     [button.titleLabel setFont:[UIFont systemFontOfSize:13]];
