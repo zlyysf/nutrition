@@ -538,7 +538,7 @@
     BOOL needUseFoodLimitTableWhenCal = TRUE;
     
     uint randSeed = arc4random();
-    NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%d",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
+    
     
     if(options != nil){
         NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
@@ -565,7 +565,8 @@
         if (nmFlag_needUseFoodLimitTableWhenCal != nil)
             needUseFoodLimitTableWhenCal = [nmFlag_needUseFoodLimitTableWhenCal boolValue];
     }
-    
+
+    NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%u",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
     srandom(randSeed);
     
     int upperLimit = 1000; // 1000 g
@@ -1189,8 +1190,9 @@
                                                    nmFoodAmount,Key_Amount,
                                                    foodPicPath, Key_PicturePath,
                                                    nil];
-            //[recommendFoodInfoDict2Level setValue:recommendFoodInfoDict forKey:foodId];
-            [recommendFoodInfoDictArray addObject:recommendFoodInfoDict];
+            if ([nmFoodAmount intValue]>0){//如果是小于1的double，转成整数会得到0，显示不妥
+                [recommendFoodInfoDictArray addObject:recommendFoodInfoDict];
+            }
         }//for
         //[formatResult setValue:recommendFoodInfoDict2Level forKey:Key_recommendFoodInfo2LevelDict];
         [formatResult setValue:recommendFoodInfoDictArray forKey:Key_recommendFoodInfoDictArray];
