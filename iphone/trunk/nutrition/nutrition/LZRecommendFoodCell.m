@@ -9,7 +9,6 @@
 #import "LZRecommendFoodCell.h"
 
 @implementation LZRecommendFoodCell
-@synthesize delegate,cellIndexPath;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -18,27 +17,26 @@
     }
     return self;
 }
-- (IBAction)selectedAction:(id)sender {
-//    if (self.delegate && [self.delegate respondsToSelector:@selector(userSelectedCellForIndexPath:)])
-//    {
-//        [self.delegate userSelectedCellForIndexPath:self.cellIndexPath];
-//    }
-
-    [self performSelector:@selector(sendSelectedInformation) withObject:nil afterDelay:0.1];
-}
-- (void)sendSelectedInformation
-{
-    if (self.delegate && [self.delegate respondsToSelector:@selector(userSelectedCellForIndexPath:)])
-    {
-        [self.delegate userSelectedCellForIndexPath:self.cellIndexPath];
-    }
-
-}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
 }
-
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    [super setHighlighted:highlighted animated:animated];
+    if (highlighted)
+    {
+        [self.foodNameLabel setTextColor:[UIColor whiteColor]];
+        [self.foodWeightlabel setTextColor:[UIColor whiteColor]];
+        [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellSelectedBack.png"]]];
+    }
+    else
+    {
+        [self.foodNameLabel setTextColor:[UIColor blackColor]];
+        [self.foodWeightlabel setTextColor:[UIColor blackColor]];
+        [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
+    }
+}
 @end
