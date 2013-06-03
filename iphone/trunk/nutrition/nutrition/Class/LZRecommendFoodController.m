@@ -133,19 +133,22 @@
     NSMutableDictionary *uiDictionary = [rf formatRecommendResultForUI:retDict];
     NSLog(@"uiDictionary %@",[uiDictionary allKeys]);
     NSArray *recommendArray = [uiDictionary objectForKey:Key_recommendFoodInfoDictArray];
+    [recommendFoodArray removeAllObjects];
     if (recommendArray != nil && [recommendArray count]!=0) {
-        [recommendFoodArray removeAllObjects];
+        
         [recommendFoodArray addObjectsFromArray:recommendArray];
     }
     NSDictionary *recommendDict = [uiDictionary objectForKey:Key_recommendFoodNutrientInfoAryDictDict];
+    [recommendFoodDict removeAllObjects];
     if (recommendDict != nil )
     {
-        [recommendFoodDict removeAllObjects];
+        
         [recommendFoodDict addEntriesFromDictionary:recommendDict];
     }
     NSArray *nutrientArray = [uiDictionary objectForKey:Key_nutrientTotalSupplyRateInfoArray];
+    [nutrientInfoArray removeAllObjects];
     if (nutrientArray != nil && [nutrientArray count]!=0) {
-        [nutrientInfoArray removeAllObjects];
+        
         [nutrientInfoArray addObjectsFromArray:nutrientArray];
     }
     [self.changeOnePlanItem setEnabled:YES];

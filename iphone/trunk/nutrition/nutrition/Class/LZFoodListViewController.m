@@ -78,21 +78,24 @@
     NSMutableDictionary *retFmtDict = [rf formatTakenResultForUI:retDict];
     NSLog(@"retFmtDict %@",retFmtDict);
     NSArray *takenArray = [retFmtDict objectForKey:Key_takenFoodInfoDictArray];
+    [takenFoodArray removeAllObjects];
     if (takenArray != nil && [takenArray count]!=0) {
-        [takenFoodArray removeAllObjects];
+        
         [takenFoodArray addObjectsFromArray:takenArray];
     }
     NSLog(@"takenArray %@",takenFoodArray);
     NSDictionary *takenDict = [retFmtDict objectForKey:Key_takenFoodNutrientInfoAryDictDict];
+    [takenFoodDict removeAllObjects];
     if (takenDict != nil )
     {
-        [takenFoodDict removeAllObjects];
+        
         [takenFoodDict addEntriesFromDictionary:takenDict];
         NSLog(@"takenFoodDict %@ ",takenFoodDict);
     }
     NSArray *nutrientArray = [retFmtDict objectForKey:Key_nutrientTakenRateInfoArray];
+    [nutrientInfoArray removeAllObjects];
     if (nutrientArray != nil && [nutrientArray count]!=0) {
-        [nutrientInfoArray removeAllObjects];
+        
         [nutrientInfoArray addObjectsFromArray:nutrientArray];
         NSLog(@"nutrientInfoArray %@",nutrientInfoArray);
     }
@@ -260,7 +263,10 @@
     {
         return NO;
     }
-    return YES;
+    else
+    {
+        return !(takenFoodArray ==nil || [takenFoodArray count]==0);
+    }
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
