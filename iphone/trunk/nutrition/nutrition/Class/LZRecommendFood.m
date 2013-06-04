@@ -861,7 +861,7 @@
                     
                     NSString *foodNO = food2[colName_NO];
                     NSNumber *nmIntakeFoodAmount = [foodSupplyAmountDict objectForKey:foodNO];
-                    if (upperLimit*daylight - [nmIntakeFoodAmount doubleValue] <= nearZero){//这个食物已经用得够多到绝对上限量了，换下一个来试
+                    if (upperLimit*personDayCount - [nmIntakeFoodAmount doubleValue] <= nearZero){//这个食物已经用得够多到绝对上限量了，换下一个来试
                         continue;
                     }
                     if (needUseFoodLimitTableWhenCal){
@@ -870,7 +870,7 @@
                         if (nmFoodUpperLimit != nil && (NSNull*)nmFoodUpperLimit != [NSNull null]){
                             dFoodUpperLimit = [nmFoodUpperLimit doubleValue];
                         }
-                        if (dFoodUpperLimit > 0 && dFoodUpperLimit*daylight - [nmIntakeFoodAmount doubleValue] <= nearZero){//这个食物已经用得够多到自定义上限量了，换下一个来试
+                        if (dFoodUpperLimit > 0 && dFoodUpperLimit*personDayCount - [nmIntakeFoodAmount doubleValue] <= nearZero){//这个食物已经用得够多到自定义上限量了，换下一个来试
                             continue;
                         }
                     }
