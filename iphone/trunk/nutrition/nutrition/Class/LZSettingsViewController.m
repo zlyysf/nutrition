@@ -35,7 +35,7 @@
     UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
     [self.personsBackImageView setImage:textBackImage];
     [self.daysBackImageView setImage:textBackImage];
-
+    [self.tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
 	// Do any additional setup after loading the view.
     //显示目前设定的人数 天数
  }
@@ -133,6 +133,7 @@
 - (void)viewDidUnload {
     [self setPersonsBackImageView:nil];
     [self setDaysBackImageView:nil];
+    [self setTipsLabel:nil];
     [super viewDidUnload];
 }
 @end

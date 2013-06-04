@@ -129,7 +129,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-        LZFoodCell* cell =[tableView dequeueReusableCellWithIdentifier:@"FoodCell"];
+        LZFoodCell* cell =(LZFoodCell*)[tableView dequeueReusableCellWithIdentifier:@"FoodCell"];
         cell.delegate = self;
         cell.cellIndexPath = indexPath;
         //一个记录名称的数组 一个记录对应摄入量的数组

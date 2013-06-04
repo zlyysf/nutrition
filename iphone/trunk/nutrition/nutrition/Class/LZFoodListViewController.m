@@ -15,6 +15,7 @@
 #import "LZFoodDetailController.h"
 #import "LZUtility.h"
 #import "LZRecommendEmptyCell.h"
+#import "LZAddByNutrientController.h"
 @interface LZFoodListViewController ()
 
 @end
@@ -128,6 +129,7 @@
         if(takenFoodArray ==nil || [takenFoodArray count]==0)
         {
             LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
+            [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
             cell.contentLabel.text = @"添加你想要买的食物，或者根据营养成分定制你的购物单。";
             return cell;
         }
@@ -267,15 +269,24 @@
         LZRecommendFood *rf = [[LZRecommendFood alloc]init];
         NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
-        NSString *nutrientName = [nutrient objectForKey:@"NutrientID"];
+        NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+        NSString *nutrientName = [nutrient objectForKey:@"Name"];
         NSDictionary *DRIsDict = [retDict objectForKey:@"DRI"];//nutrient name as key, also column name
         NSDictionary *nutrientInitialSupplyDict = [retDict objectForKey:@"nutrientInitialSupplyDict"];
-        NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientName];
-        double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientName]) doubleValue]*[planPerson intValue]*[planDays intValue];
+        NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientId];
+        double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientId]) doubleValue]*[planPerson intValue]*[planDays intValue];
         double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
+        if (dNutrientLackVal <= 0)
+        {
+            return;
+        }
         LZDataAccess *da = [LZDataAccess singleton];
-        NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientName andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
-        NSLog(@"recommendFoodArray %@",recommendFoodArray);
+        NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
+        addByNutrientController.foodArray = recommendFoodArray;
+        addByNutrientController.nutrientTitle = nutrientName;
+        [self presentModalViewController:addByNutrientController animated:YES];
 
     }
 }

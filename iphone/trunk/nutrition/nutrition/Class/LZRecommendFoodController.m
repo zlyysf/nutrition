@@ -195,6 +195,7 @@
         if(recommendFoodArray ==nil || [recommendFoodArray count]==0)
         {
             LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
+            [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
             cell.contentLabel.text = @"您所需要的营养素已经由预选食物补充完全，不需要另行推荐食物。";
             return cell;
         }
