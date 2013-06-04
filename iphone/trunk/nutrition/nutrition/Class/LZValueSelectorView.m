@@ -71,7 +71,7 @@
 
 
     // Initialization code
-    CGFloat OffsetCreated;
+    CGFloat OffsetCreated = 0;
     
     //If this is an horizontal scrolling we have to rotate the table view
     if (self.horizontalScrolling) {

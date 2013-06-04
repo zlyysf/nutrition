@@ -34,11 +34,11 @@
 {
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-    if (planPerson != NULL)
+    if (planPerson != nil)
     {
         self.personsTextField.text = [NSString stringWithFormat:@"%d",[planPerson intValue]];
     }
-    if (planDays != NULL)
+    if (planDays != nil)
     {
         self.daysTextField.text = [NSString stringWithFormat:@"%d",[planDays intValue]];
     }

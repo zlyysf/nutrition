@@ -38,7 +38,7 @@
     tipsLabel.numberOfLines = 2;
     [tipsLabel setFont:[UIFont systemFontOfSize:15]];
     [tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
-    tipsLabel.text = @"您可以选择下列富含维生素A的食物，括号中是推荐量 您可以根据我们给出的推荐量选择食物";
+    tipsLabel.text = [NSString stringWithFormat:@"下列是富含%@的食物，您可以根据我们提供的推荐量来挑选适合自己的食物。", nutrientTitle];
     tempIntakeDict = [[NSMutableDictionary alloc]init];
     [tipsLabel setBackgroundColor:[UIColor clearColor]];
     [headerView addSubview:tipsLabel];
@@ -73,7 +73,7 @@
     NSLog(@"picture path food list %@",aFood);
     NSString *picturePath;
     NSString *picPath = [aFood objectForKey:@"PicPath"];
-    if (picPath == NULL || [picPath isEqualToString:@""])
+    if (picPath == nil || [picPath isEqualToString:@""])
     {
         picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
     }
@@ -109,7 +109,7 @@
     }
     NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
     NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
-    if(dailyIntake != NULL)
+    if(dailyIntake != nil)
     {
         [intakeDict addEntriesFromDictionary:dailyIntake];
     }

@@ -29,12 +29,12 @@
     //initialize persons and days setting
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-    if (planPerson == NULL)
+    if (planPerson == nil)
     {
         [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
         [[NSUserDefaults standardUserDefaults]synchronize];
     }
-    if (planDays == NULL)
+    if (planDays == nil)
     {
         [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
         [[NSUserDefaults standardUserDefaults]synchronize];

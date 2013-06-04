@@ -280,7 +280,7 @@
                                 [UIColor colorWithRed:65/255.f green:46/255.f blue:4/255.f alpha:1.0f],@"Folate_Tot_(µg)",
                                 nil];
     UIColor *nutrientColor = [colorDict objectForKey:nutrientId];
-    if (nutrientColor == NULL)
+    if (nutrientColor == nil)
     {
         return [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:1];
     }

@@ -45,7 +45,7 @@
         NSDictionary *afood = [allFood objectAtIndex:i];
         NSString *foodType = [afood objectForKey:@"CnType"];
         NSString *NDB_No = [afood objectForKey:@"NDB_No"];
-        if (dailyIntake != NULL)
+        if (dailyIntake != nil)
         {
             NSNumber *intakeNumber = [dailyIntake objectForKey:NDB_No];
             if (intakeNumber)
@@ -137,7 +137,7 @@
         NSLog(@"picture path food list %@",aFood);
         NSString *picturePath;
         NSString *picPath = [aFood objectForKey:@"PicPath"];
-        if (picPath == NULL || [picPath isEqualToString:@""])
+        if (picPath == nil || [picPath isEqualToString:@""])
         {
             picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
         }

@@ -196,7 +196,7 @@
         {
             LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
             [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
-            cell.contentLabel.text = @"您所需要的营养素已经由预选食物补充完全，不需要另行推荐食物。";
+            cell.contentLabel.text = @"您所需要的营养已经足够，不需要另行推荐，去购物吧。";
             return cell;
         }
         else
@@ -207,7 +207,7 @@
             NSLog(@"picture path %@",aFood);
             NSString *picturePath;
             NSString *picPath = [aFood objectForKey:@"PicturePath"];
-            if (picPath == NULL || [picPath isEqualToString:@""])
+            if (picPath == nil || [picPath isEqualToString:@""])
             {
                 picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
             }
@@ -283,9 +283,9 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text =  @"推荐食物";
+        sectionTitleLabel.text =  @"推荐的食物";
     else
-        sectionTitleLabel.text =  @"摄取的营养";
+        sectionTitleLabel.text =  @"提供的营养成分";
 
     return sectionView;
 }

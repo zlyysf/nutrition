@@ -130,7 +130,7 @@
         {
             LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
             [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
-            cell.contentLabel.text = @"添加你想要买的食物，或者根据营养成分定制你的购物单。";
+            cell.contentLabel.text = @"您可以预先选好一些食物，通过添加或者点击具体的营养成分来选择，我们再向您推荐以全面补足营养。";
             return cell;
         }
         else
@@ -140,7 +140,7 @@
             NSLog(@"picture path %@",aFood);
             NSString *picturePath;
             NSString *picPath = [aFood objectForKey:@"PicturePath"];
-            if (picPath == NULL || [picPath isEqualToString:@""])
+            if (picPath == nil || [picPath isEqualToString:@""])
             {
                 picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
             }
@@ -219,9 +219,9 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text =  @"已经确定吃的食物";
+        sectionTitleLabel.text =  @"现已挑选的食物";
     else
-        sectionTitleLabel.text =  @"摄取的营养";
+        sectionTitleLabel.text =  @"提供的营养成分";
     
     return sectionView;
 }
@@ -365,6 +365,13 @@
     //NSLog(@"%@",[initialController description]);
     //[initialController pushViewController:dailyIntakeController animated:YES];
     
+}
+- (IBAction)clearFoodAction:(id)sender {
+    NSDictionary *dailyIntake = [[NSDictionary alloc]init];
+    [[NSUserDefaults standardUserDefaults] setObject:dailyIntake forKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    [self displayTakenFoodResult];
+    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
 }
 
 - (void)viewDidUnload {

@@ -36,6 +36,7 @@
     [self.personsBackImageView setImage:textBackImage];
     [self.daysBackImageView setImage:textBackImage];
     [self.tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
+    self.tipsLabel.text = @"我们默认向您推荐一个成年人一天的食物量，可以按照实际情况进行适当修改。";
 	// Do any additional setup after loading the view.
     //显示目前设定的人数 天数
  }
@@ -43,7 +44,7 @@
 {
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-    if (planPerson != NULL)
+    if (planPerson != nil)
     {
         self.personsTextField.text = [NSString stringWithFormat:@"%d",[planPerson intValue]];
     }
@@ -53,7 +54,7 @@
         [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
         [[NSUserDefaults standardUserDefaults]synchronize];
     }
-    if (planDays != NULL)
+    if (planDays != nil)
     {
         self.daysTextField.text = [NSString stringWithFormat:@"%d",[planDays intValue]];
     }
@@ -72,8 +73,28 @@
     int days = [self.daysTextField.text intValue];
     if (persons <=0 || days <=0)
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"设置不当" message:@"请输入正确的数字" delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-        [alert show];
+        NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+        NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+        if (planPerson != nil)
+        {
+            self.personsTextField.text = [NSString stringWithFormat:@"%d",[planPerson intValue]];
+        }
+        else
+        {
+            self.personsTextField.text = [NSString stringWithFormat:@"%d",1];
+            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+        }
+        if (planDays != nil)
+        {
+            self.daysTextField.text = [NSString stringWithFormat:@"%d",[planDays intValue]];
+        }
+        else
+        {
+            self.daysTextField.text = [NSString stringWithFormat:@"%d",1];
+            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+        }
         return;
     }
     [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:days] forKey:LZPlanDaysKey];
@@ -86,7 +107,7 @@
     [currentTextField resignFirstResponder];
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-    if (planPerson != NULL)
+    if (planPerson != nil)
     {
         self.personsTextField.text = [NSString stringWithFormat:@"%d",[planPerson intValue]];
     }
@@ -96,7 +117,7 @@
         [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
         [[NSUserDefaults standardUserDefaults]synchronize];
     }
-    if (planDays != NULL)
+    if (planDays != nil)
     {
         self.daysTextField.text = [NSString stringWithFormat:@"%d",[planDays intValue]];
     }
