@@ -162,7 +162,7 @@
 		5F03D346174B9241008EFB60 /* LZStandardContentCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZStandardContentCell.m; path = Class/LZStandardContentCell.m; sourceTree = "<group>"; };
 		5F03D34E174B924B008EFB60 /* background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "background@2x.png"; path = "nutrition/Resource/background@2x.png"; sourceTree = "<group>"; };
 		5F03D34F174B924B008EFB60 /* defaulFoodPic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "defaulFoodPic@2x.png"; path = "nutrition/Resource/defaulFoodPic@2x.png"; sourceTree = "<group>"; };
-		5F3338A5172A407E0096E7AE /* nutrition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = nutrition.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F3338A5172A407E0096E7AE /* 买菜助手.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "买菜助手.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3338A8172A407E0096E7AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F3338AA172A407E0096E7AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5F3338AC172A407E0096E7AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -347,7 +347,7 @@
 		5F3338A6172A407E0096E7AE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5F3338A5172A407E0096E7AE /* nutrition.app */,
+				5F3338A5172A407E0096E7AE /* 买菜助手.app */,
 				085C8D5717336A29001A1ABB /* testApp.app */,
 			);
 			name = Products;
@@ -501,7 +501,7 @@
 			);
 			name = nutrition;
 			productName = nutrition;
-			productReference = 5F3338A5172A407E0096E7AE /* nutrition.app */;
+			productReference = 5F3338A5172A407E0096E7AE /* 买菜助手.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -785,7 +785,7 @@
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
 				INFOPLIST_FILE = "nutrition/nutrition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "买菜助手";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -797,7 +797,7 @@
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
 				INFOPLIST_FILE = "nutrition/nutrition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "买菜助手";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
