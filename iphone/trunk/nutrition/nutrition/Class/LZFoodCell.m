@@ -7,7 +7,7 @@
 //
 
 #import "LZFoodCell.h"
-
+#import "LZConstants.h"
 @implementation LZFoodCell
 @synthesize cellIndexPath;
 @synthesize delegate;
@@ -21,6 +21,9 @@
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
 {
+    LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:@"完成" delegate:self];
+    textField.inputAccessoryView = keyboardToolbar;
+
     //[textField becomeFirstResponder];
     return YES;
 }
@@ -53,7 +56,10 @@
     return YES;
     
 }// called when 'return' key pressed. return NO to
-
+-(void)toolbarKeyboardDone
+{
+    [self.intakeAmountTextField resignFirstResponder];
+}
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];

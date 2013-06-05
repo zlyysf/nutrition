@@ -154,7 +154,16 @@
         UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
         UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
         [cell.textFiledBackImage setImage:textBackImage];
-        cell.intakeAmountTextField.text = [NSString stringWithFormat:@"%d",[intake intValue]];
+        int num = [intake intValue];
+        if(num == 0)
+        {
+            cell.intakeAmountTextField.text = @"";
+        }
+        else
+        {
+            cell.intakeAmountTextField.text = [NSString stringWithFormat:@"%d",num];
+        }
+
         [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
         return cell;
 }

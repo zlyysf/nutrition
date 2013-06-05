@@ -7,11 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LZKeyboardToolBar.h"
 @protocol LZFoodCellDelegate<NSObject>
 - (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber;
 - (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index textField:(UITextField*)currentTextField;
 @end
-@interface LZFoodCell : UITableViewCell<UITextFieldDelegate>
+@interface LZFoodCell : UITableViewCell<UITextFieldDelegate,LZKeyboardToolBarDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *foodPicView;
 @property (strong, nonatomic) IBOutlet UIImageView *textFiledBackImage;
 @property (strong, nonatomic) IBOutlet UILabel *foodNameLabel;

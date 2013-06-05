@@ -8,7 +8,8 @@
 
 #import "LZSettingsViewController.h"
 #import "LZConstants.h"
-@interface LZSettingsViewController ()
+#import "LZKeyboardToolBar.h"
+@interface LZSettingsViewController ()<LZKeyboardToolBarDelegate>
 
 @end
 
@@ -73,7 +74,7 @@
     int days = [self.daysTextField.text intValue];
     if (persons <=0 || days <=0 || persons >= 10 || days>= 10)
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请输入一位数字" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请输入合适的数字" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
         [alert show];
         NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
         NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
@@ -142,7 +143,10 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
+    LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:@"完成" delegate:self];
+    textField.inputAccessoryView = keyboardToolbar;
     currentTextField = textField;
+
     return YES;
 }
 
@@ -151,6 +155,11 @@
     [textField resignFirstResponder];
     return YES;
     
+}
+#pragma mark- LZKeyboardToolBarDelegate
+-(void)toolbarKeyboardDone
+{
+    [self.currentTextField resignFirstResponder];
 }
 
 - (void)viewDidUnload {
