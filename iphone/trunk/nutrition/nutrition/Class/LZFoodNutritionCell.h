@@ -13,5 +13,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *supplyPercentlabel;
 -(void)adjustLabelAccordingToProgress:(float)progress forLabelWidth:(float)labelWith;
 @property (strong, nonatomic) IBOutlet UILabel *nutritionNameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *cellArrowImage;
 
 @end

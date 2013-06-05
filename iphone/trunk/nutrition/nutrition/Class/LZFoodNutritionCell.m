@@ -39,12 +39,14 @@
         [self.supplyPercentlabel setTextColor:[UIColor whiteColor]];
         [self.nutritionNameLabel setTextColor:[UIColor whiteColor]];
         [self setBackgroundColor:[UIColor colorWithRed:15/255.f green:148/255.f blue:26/255.f alpha:0.8f]];
+        [self.cellArrowImage setImage:[UIImage imageNamed:@"arrow_click.png"]];
     }
     else
     {
         [self.supplyPercentlabel setTextColor:[UIColor blackColor]];
         [self.nutritionNameLabel setTextColor:[UIColor blackColor]];
         [self setBackgroundColor:[UIColor clearColor]];
+        [self.cellArrowImage setImage:[UIImage imageNamed:@"arrow.png"]];
     }
 }
 

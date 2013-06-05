@@ -36,7 +36,7 @@
     [self.personsBackImageView setImage:textBackImage];
     [self.daysBackImageView setImage:textBackImage];
     [self.tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
-    self.tipsLabel.text = @"我们默认向您推荐一个成年人一天的食物量，可以按照实际情况进行适当修改。";
+    self.tipsLabel.text = @"我们默认向您推荐一个成年人一天的食物量，您在给家庭大采购时可以适当调整人数和天数，但只能输入一位数字。";
 	// Do any additional setup after loading the view.
     //显示目前设定的人数 天数
  }
@@ -71,8 +71,10 @@
     [currentTextField resignFirstResponder];
     int persons = [self.personsTextField.text intValue];
     int days = [self.daysTextField.text intValue];
-    if (persons <=0 || days <=0)
+    if (persons <=0 || days <=0 || persons >= 10 || days>= 10)
     {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请输入一位数字" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        [alert show];
         NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
         NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
         if (planPerson != nil)

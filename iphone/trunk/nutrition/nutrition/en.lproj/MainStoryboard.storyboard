@@ -70,7 +70,7 @@
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wv9-ZD-PXy">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wv9-ZD-PXy">
                                 <rect key="frame" x="10" y="20" width="300" height="60"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -114,7 +114,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="mYF-ed-kAE">
-                        <barButtonItem key="leftBarButtonItem" title="取消" id="yWU-Nv-rgW">
+                        <barButtonItem key="leftBarButtonItem" title="重置" id="yWU-Nv-rgW">
                             <connections>
                                 <action selector="cancelChanges:" destination="v2r-YV-GYD" id="QGK-yM-gU2"/>
                             </connections>
@@ -180,7 +180,7 @@
                                                             </connections>
                                                         </textField>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="FOO-ur-PLu">
-                                                            <rect key="frame" x="81" y="9" width="80" height="22"/>
+                                                            <rect key="frame" x="81" y="6" width="80" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -193,10 +193,10 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="(1000g)" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R3e-4L-b0g">
-                                                            <rect key="frame" x="81" y="30" width="121" height="13"/>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="R3e-4L-b0g">
+                                                            <rect key="frame" x="81" y="30" width="121" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
@@ -328,11 +328,11 @@
                                             <outlet property="foodWeightlabel" destination="o1T-4N-j5C" id="qeY-lV-F3F"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="LZFoodNutritionCell" rowHeight="42" id="Aok-1x-Uk1" customClass="LZFoodNutritionCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZFoodNutritionCell" rowHeight="42" id="Aok-1x-Uk1" customClass="LZFoodNutritionCell">
                                         <rect key="frame" x="0.0" y="142" width="320" height="42"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="300" height="41"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gci-5H-gmj">
@@ -354,10 +354,15 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="byo-uy-Lf0">
+                                                    <rect key="frame" x="301" y="21" width="9" height="14"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                </imageView>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+                                            <outlet property="cellArrowImage" destination="byo-uy-Lf0" id="DVV-32-gDR"/>
                                             <outlet property="nutritionNameLabel" destination="gci-5H-gmj" id="NDu-Yd-oPp"/>
                                             <outlet property="nutritionProgressView" destination="M1r-b3-aE9" id="nRS-Vs-T8f"/>
                                             <outlet property="supplyPercentlabel" destination="hN3-f8-EtZ" id="p6V-y6-Idb"/>
@@ -866,6 +871,7 @@
         <class className="LZFoodNutritionCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodNutritionCell.h"/>
             <relationships>
+                <relationship kind="outlet" name="cellArrowImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="nutritionNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
                 <relationship kind="outlet" name="supplyPercentlabel" candidateClass="UILabel"/>
@@ -914,6 +920,7 @@
         <class className="LZRecommendFoodController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZRecommendFoodController.h"/>
             <relationships>
+                <relationship kind="action" name="changeOnePlan:"/>
                 <relationship kind="outlet" name="changeOnePlanItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
