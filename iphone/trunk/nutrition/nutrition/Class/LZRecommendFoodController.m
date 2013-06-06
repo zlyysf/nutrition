@@ -95,7 +95,7 @@
     
     BOOL notAllowSameFood = TRUE;//这是一个策略标志位，偏好食物的多样化的标志位，即当选取食物补充营养时，优先选取以前没有用过的食物。
     BOOL randomSelectFood = TRUE;
-    int randomRangeSelectFood = 4;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
+    int randomRangeSelectFood = 20;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
     int limitRecommendFoodCount = 4;//0;//4;//只限制显示的
     
