@@ -8,11 +8,13 @@
 
 #import "LZAppDelegate.h"
 #import "LZConstants.h"
+#import "MobClick.h"
 @implementation LZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
+
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
     //custom navigationbar and barbuttonitem
     NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
@@ -26,6 +28,10 @@
     [[UITabBar appearance]setBackgroundImage:[UIImage imageNamed:@"tabbar_back.png"]];
     [[UITabBar appearance] setSelectedImageTintColor:[UIColor greenColor]];
     [[UITabBar appearance]setTintColor:[UIColor lightGrayColor]];
+    //友盟统计SDK启动
+    [MobClick startWithAppkey:UMSDKAPPKey];
+    //检查更新
+    [MobClick checkUpdate:@"检测到新版本" cancelButtonTitle:@"下次再说" otherButtonTitles:@"去AppStore"];
     //initialize persons and days setting
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];

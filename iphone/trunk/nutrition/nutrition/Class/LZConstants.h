@@ -88,7 +88,7 @@
 #define Notification_SettingsChangedKey @"KeySettingsChangedNotification"
 #define Notification_TakenFoodDeletedKey @"KeyTakenFoodDeletedNotification"
 
-
+#define UMSDKAPPKey @"51b96cc356240b6ee80a05dc"
 
 
 #endif
