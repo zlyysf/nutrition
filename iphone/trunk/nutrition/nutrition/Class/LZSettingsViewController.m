@@ -9,7 +9,9 @@
 #import "LZSettingsViewController.h"
 #import "LZConstants.h"
 #import "LZKeyboardToolBar.h"
-@interface LZSettingsViewController ()<LZKeyboardToolBarDelegate>
+#import "LZReviewAppManager.h"
+#import <MessageUI/MessageUI.h>
+@interface LZSettingsViewController ()<LZKeyboardToolBarDelegate,MFMailComposeViewControllerDelegate>
 
 @end
 
@@ -67,6 +69,86 @@
     }
 
 }
+- (IBAction)reviewOurApp:(id)sender {
+    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
+}
+- (IBAction)userFeedBack:(id)sender {
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    
+    if (mailClass != nil)
+    {
+        if ([mailClass canSendMail])
+        {
+            [self displayComposerSheet];
+        }
+    }
+
+}
+-(void)displayComposerSheet
+{
+    MFMailComposeViewController *mailPicker = [[MFMailComposeViewController alloc] init];
+    
+    mailPicker.mailComposeDelegate = self;
+    
+    //设置主题
+    [mailPicker setSubject: @"用户意见反馈"];
+    
+    //添加发送者
+    NSArray *toRecipients = [NSArray arrayWithObjects: @"lingzhi@support.com",nil];
+    
+    [mailPicker setToRecipients: toRecipients];
+    
+    
+    
+    //设置正文
+    //    //NSString *emailBody = self.recommendTextView.text;
+    //    NSString *emailBody = txtCalculateInfo;
+    //    [mailPicker setMessageBody:emailBody isHTML:NO];
+    //NSString *emailBody = htmlCalculateInfo;
+    //[mailPicker setMessageBody:emailBody isHTML:YES];
+    
+    
+    
+    [self presentViewController:mailPicker animated:YES completion:nil];
+}
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    NSString *msg;
+    
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            msg = @"邮件发送取消";
+            break;
+        case MFMailComposeResultSaved:
+            msg = @"邮件保存成功";
+            [self alertWithTitle:nil msg:msg];
+            break;
+        case MFMailComposeResultSent:
+            msg = @"邮件发送成功";
+            [self alertWithTitle:nil msg:msg];
+            break;
+        case MFMailComposeResultFailed:
+            msg = @"邮件发送失败";
+            [self alertWithTitle:nil msg:msg];
+            break;
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+- (void) alertWithTitle: (NSString *)_title_ msg: (NSString *)msg
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_title_
+                                                    message:msg
+                                                   delegate:nil
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
 - (IBAction)saveChanges:(id)sender
 {
     [currentTextField resignFirstResponder];
