@@ -15,6 +15,7 @@
 #import "LZFoodDetailController.h"
 #import "LZUtility.h"
 #import "LZRecommendEmptyCell.h"
+#import "LZShareViewController.h"
 @interface LZRecommendFoodController ()<MBProgressHUDDelegate>
 {
     MBProgressHUD *HUD;
@@ -90,6 +91,7 @@
 - (void)recommendOnePlan
 {
     [self.changeOnePlanItem setEnabled:NO];
+    [self.shareItem setEnabled:NO];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *dailyIntake = [userDefaults objectForKey:LZUserDailyIntakeKey];
     
@@ -152,6 +154,7 @@
         [nutrientInfoArray addObjectsFromArray:nutrientArray];
     }
     [self.changeOnePlanItem setEnabled:YES];
+    [self.shareItem setEnabled:YES];
     [HUD hide:YES];
     self.listView.hidden = NO;
     [self.listView reloadData];
@@ -325,6 +328,14 @@
         return;
 
 }
+- (IBAction)shareButtonTapped:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
+    shareViewController.preInsertText = @"测试一下";
+    [self presentModalViewController:shareViewController animated:YES];
+
+    
+}
 #pragma mark MBProgressHUDDelegate methods
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
@@ -343,6 +354,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter]removeObserver:self name:Notification_TakenFoodDeletedKey object:nil];
     [self setChangeOnePlanItem:nil];
+    [self setShareItem:nil];
     [super viewDidUnload];
 }
 @end

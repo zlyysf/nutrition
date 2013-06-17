@@ -118,6 +118,8 @@
 		5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
 		5F9C128D17321935000E08E5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9C128C17321935000E08E5 /* MessageUI.framework */; };
 		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
+		5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */; };
+		5FDED102176F2E2D0026BCA3 /* text_clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */; };
 		5FE436CA175F2373003947ED /* arrow_click@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436C8175F2373003947ED /* arrow_click@2x.png */; };
 		5FE436CB175F2373003947ED /* arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436C9175F2373003947ED /* arrow@2x.png */; };
 		5FE436CE175F29D5003947ED /* LZKeyboardToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE436CD175F29D5003947ED /* LZKeyboardToolBar.m */; };
@@ -271,6 +273,9 @@
 		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = nutrition/Class/LZUtility.h; sourceTree = "<group>"; };
 		5FB8C0B7172BC61D00E90387 /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = nutrition/Class/LZUtility.m; sourceTree = "<group>"; };
 		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
+		5FDED0FE176F1D8E0026BCA3 /* LZShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZShareViewController.h; path = Class/LZShareViewController.h; sourceTree = "<group>"; };
+		5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZShareViewController.m; path = Class/LZShareViewController.m; sourceTree = "<group>"; };
+		5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "text_clear@2x.png"; path = "nutrition/Resource/text_clear@2x.png"; sourceTree = "<group>"; };
 		5FE436C8175F2373003947ED /* arrow_click@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow_click@2x.png"; path = "nutrition/Resource/arrow_click@2x.png"; sourceTree = "<group>"; };
 		5FE436C9175F2373003947ED /* arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "arrow@2x.png"; path = "nutrition/Resource/arrow@2x.png"; sourceTree = "<group>"; };
 		5FE436CC175F29D5003947ED /* LZKeyboardToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZKeyboardToolBar.h; path = Class/LZKeyboardToolBar.h; sourceTree = "<group>"; };
@@ -511,6 +516,8 @@
 				5FE436CD175F29D5003947ED /* LZKeyboardToolBar.m */,
 				5F746C061769EB9A00E68D0E /* LZReviewAppManager.h */,
 				5F746C071769EB9A00E68D0E /* LZReviewAppManager.m */,
+				5FDED0FE176F1D8E0026BCA3 /* LZShareViewController.h */,
+				5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */,
 			);
 			path = nutrition;
 			sourceTree = "<group>";
@@ -533,6 +540,7 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */,
 				5FE436CF175F3EF5003947ED /* Icon-Small.png */,
 				5FE436D0175F3EF5003947ED /* Icon-Small@2x.png */,
 				5FE436D1175F3EF5003947ED /* Icon.png */,
@@ -778,6 +786,7 @@
 				5F746C31176B1E6800E68D0E /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				5F746C35176B1E6800E68D0E /* ShareSDKiPhoneDefaultShareViewUI.bundle in Resources */,
 				5F746C37176B1E6800E68D0E /* ShareSDKiPhoneSimpleShareViewUI.bundle in Resources */,
+				5FDED102176F2E2D0026BCA3 /* text_clear@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -850,6 +859,7 @@
 				5F627440175CACAC006E46CA /* LZNutrientFoodAddCell.m in Sources */,
 				5FE436CE175F29D5003947ED /* LZKeyboardToolBar.m in Sources */,
 				5F746C081769EB9A00E68D0E /* LZReviewAppManager.m in Sources */,
+				5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
