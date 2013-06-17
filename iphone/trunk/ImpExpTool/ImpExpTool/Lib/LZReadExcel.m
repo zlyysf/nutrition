@@ -337,8 +337,9 @@
 -(NSDictionary *)readFoodCnDescription
 {
     NSLog(@"readFoodCnDescription begin");
-    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_Limit.xls"];
-    NSLog(@"in readFoodLimit, xlsPath=%@",xlsPath);
+//    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_Limit.xls"];
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
+    NSLog(@"in readFoodCnDescription, xlsPath=%@",xlsPath);
     DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
 	assert(reader);
     NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No, COLUMN_NAME_CnCaption,COLUMN_NAME_CnType, nil];
@@ -362,7 +363,7 @@
         cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
         cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
     }
-    NSLog(@"in readFoodLimit, columnNames=%@, rows2D=%@",columnNames,rows2D);
+    NSLog(@"in readFoodCnDescription, columnNames=%@, rows2D=%@",columnNames,rows2D);
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
     [retData setObject:columnNames forKey:@"columnNames"];
@@ -549,12 +550,14 @@
     NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:200];
     int colIdx_No = 3;
     int colIdx_PicPath = 5;
+    int colIdx_Name = 1;
 
     int idxRow=2;
-    DHcell *cellNo, *cellPicPath;
+    DHcell *cellNo, *cellPicPath, *cellName;
     cellNo = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx_No];
     cellPicPath = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx_PicPath];
-    while (cellNo.type != cellBlank || cellPicPath.type != cellBlank) {
+    cellName = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx_Name];
+    while (cellNo.type != cellBlank || cellPicPath.type != cellBlank || cellName.type != cellBlank) {
         if (cellNo.type != cellBlank && cellPicPath.type != cellBlank){
             NSMutableArray *row = [NSMutableArray arrayWithCapacity:2];
             [row addObject:cellNo.str];
@@ -567,6 +570,7 @@
         idxRow++;
         cellNo = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx_No];
         cellPicPath = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx_PicPath];
+        cellName = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx_Name];
     }
 //    NSLog(@"in readFoodPicPath, foodNoAry=%@, picPathAry=%@",foodNoAry,picPathAry);
     NSLog(@"in readFoodPicPath, rows2D=%@",rows2D);
