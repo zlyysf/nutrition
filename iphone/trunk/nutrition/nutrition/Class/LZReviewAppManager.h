@@ -11,4 +11,5 @@
 @interface LZReviewAppManager : NSObject<UIAlertViewDelegate>
 +(LZReviewAppManager*)SharedInstance;
 -(void)popReviewOurAppAlertAccordingRules;
+-(void)reviewOurAppDirectly;
 @end
