@@ -1243,8 +1243,8 @@
                 double food1Supply1NutrientAmount = [nm_foodNutrientContent doubleValue]/100.0*[nmFoodAmount doubleValue];
                 double nutrientTotalDRI = [nm_DRI1unit doubleValue]*personDayCount;
                 double supplyRate = food1Supply1NutrientAmount / nutrientTotalDRI;
-                if (supplyRate>1.0)
-                    supplyRate = 1.0;
+//                if (supplyRate>1.0)
+//                    supplyRate = 1.0;
                 NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
                 NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
                 NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
@@ -1355,8 +1355,8 @@
         NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
         NSNumber *nm_InitialSupply = nutrientInitialSupplyDict[nutrientId];
         double supplyRate = [nm_InitialSupply doubleValue]/([nm_DRI1unit doubleValue]*personDayCount);
-        if (supplyRate>1.0)
-            supplyRate = 1.0;
+//        if (supplyRate>1.0)
+//            supplyRate = 1.0;
         NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
         NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
         NSDictionary *nutrientTakenRateInfo= [NSDictionary dictionaryWithObjectsAndKeys:
