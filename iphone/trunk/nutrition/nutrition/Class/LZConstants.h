@@ -89,7 +89,7 @@
 #define Notification_TakenFoodDeletedKey @"KeyTakenFoodDeletedNotification"
 
 #define UMSDKAPPKey @"51b96cc356240b6ee80a05dc"
-
+#define LocalNotifyTimeInterval (72*60*60) // 72 hours
 
 #endif
 

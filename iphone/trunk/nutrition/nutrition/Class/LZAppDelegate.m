@@ -29,13 +29,14 @@
     [[UITabBar appearance]setBackgroundImage:[UIImage imageNamed:@"tabbar_back.png"]];
     [[UITabBar appearance] setSelectedImageTintColor:[UIColor greenColor]];
     [[UITabBar appearance]setTintColor:[UIColor lightGrayColor]];
-    //友盟统计SDK启动
+    //友盟统计SDK启
     [MobClick startWithAppkey:UMSDKAPPKey];
     //检查更新
     [MobClick checkUpdate:@"检测到新版本" cancelButtonTitle:@"下次再说" otherButtonTitles:@"去AppStore"];
     //initialize persons and days setting
-    [ShareSDK connectSinaWeiboWithAppKey:@"3201194191"
-                               appSecret:@"0334252914651e8f76bad63337b3b78f"
+    [ShareSDK registerApp:@"活动号外"];
+    [ShareSDK connectSinaWeiboWithAppKey:@"3626415671"
+                               appSecret:@"9d17e75a675323f5b719cb058c5b9d0d"
                              redirectUri:@"http://appgo.cn"];
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
@@ -63,6 +64,18 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
+    [[UIApplication sharedApplication]cancelAllLocalNotifications];
+    UILocalNotification *local = [[UILocalNotification alloc]init];
+    [local setAlertAction:@"查看"];
+    [local setAlertBody:@"今天吃的健康么，快来用买菜助手吧，帮你计划健康饮食"];
+    [local setApplicationIconBadgeNumber:1];
+    NSDate *currentDate = [NSDate date];
+    [local setFireDate:[currentDate dateByAddingTimeInterval:LocalNotifyTimeInterval]];
+    [local setTimeZone:[NSTimeZone defaultTimeZone]];
+    [local setSoundName:UILocalNotificationDefaultSoundName];
+    //NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"一分钟后触发" forKey:@"notifyType"];
+    //[local setUserInfo:infoDict];
+    [[UIApplication sharedApplication] scheduleLocalNotification:local];
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
@@ -74,6 +87,8 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+    [[UIApplication sharedApplication]cancelAllLocalNotifications];
+    [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 
