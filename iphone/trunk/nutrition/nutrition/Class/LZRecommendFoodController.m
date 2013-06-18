@@ -17,6 +17,7 @@
 #import "LZRecommendEmptyCell.h"
 #import "LZShareViewController.h"
 #import "GADMasterViewController.h"
+#import "LZReviewAppManager.h"
 @interface LZRecommendFoodController ()<MBProgressHUDDelegate>
 {
     MBProgressHUD *HUD;
@@ -167,6 +168,7 @@
     [HUD hide:YES];
     self.listView.hidden = NO;
     [self.listView reloadData];
+    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

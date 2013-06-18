@@ -93,6 +93,8 @@
 
 #define KeyUseRealPercentValue 1
 
+#define KeyIsAlreadyReviewdeOurApp @"KeyIsAlreadyReviewdeOurApp" // YES means already reviewed
+#define KeyReviewAlertControllCount @"KeyReviewAlertControllCount" // >=10 popAlert
 #endif
 
 

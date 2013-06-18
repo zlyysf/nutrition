@@ -66,8 +66,8 @@
 {
     [[UIApplication sharedApplication]cancelAllLocalNotifications];
     UILocalNotification *local = [[UILocalNotification alloc]init];
-    [local setAlertAction:@"查看"];
-    [local setAlertBody:@"今天吃的健康么，快来用买菜助手吧，帮你计划健康饮食"];
+    [local setAlertAction:@"打开"];
+    [local setAlertBody:@"买菜助手竭诚为您推荐含有全面丰富营养的食物搭配，敬请使用"];
     [local setApplicationIconBadgeNumber:1];
     NSDate *currentDate = [NSDate date];
     [local setFireDate:[currentDate dateByAddingTimeInterval:LocalNotifyTimeInterval]];

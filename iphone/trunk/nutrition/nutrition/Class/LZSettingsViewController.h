@@ -15,5 +15,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *personsBackImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *daysBackImageView;
 @property (strong, nonatomic) IBOutlet UILabel *tipsLabel;
+@property (strong, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (strong, nonatomic)UITextField * currentTextField;
 @end

@@ -70,102 +70,9 @@
     }
 
 }
-- (IBAction)shareButtonTapped:(id)sender {
-    //弹出平台菜单
-//    NSString *imagePath =  [[NSBundle mainBundle] pathForResource:@"ShareSDK"
-//                                                           ofType:@"jpg"];
-//    //构造分享内容
-//    id<ISSContent> publishContent = [ShareSDK content:@"分享内容"
-//                                       defaultContent:@"默认分享内容，没内容时显示"
-//                                                image:[ShareSDK imageWithPath:imagePath]
-//                                                title:@"ShareSDK"
-//                                                  url:@"http://www.sharesdk.cn"
-//                                          description:@"这是一条测试信息"
-//                                            mediaType:SSPublishContentMediaTypeNews];
-//    
-//    [ShareSDK showShareActionSheet:nil
-//                         shareList:nil
-//                           content:publishContent
-//                     statusBarTips:YES
-//                       authOptions:nil
-//                      shareOptions: nil
-//                            result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-//                                if (state == SSPublishContentStateSuccess)
-//                                {
-//                                    NSLog(@"分享成功");
-//                                }
-//                                else if (state == SSPublishContentStateFail)
-//                                {
-//                                    NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode],  [error errorDescription]);
-//                                }
-//                            }];
-    
-    
-    
-    //直接出分享页面
-//    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"jpg"];
-//    
-//    id<ISSContent> publishContent = [ShareSDK content:@"content"
-//                                       defaultContent:@""
-//                                                image:[ShareSDK imageWithPath:imagePath]
-//                                                title:nil
-//                                                  url:nil
-//                                          description:nil
-//                                            mediaType:SSPublishContentMediaTypeText];
-//    
-//    //创建弹出菜单容器
-//    id<ISSContainer> container = [ShareSDK container];
-//    [container setIPadContainerWithView:sender
-//                            arrowDirect:UIPopoverArrowDirectionUp];
-//    
-//    //显示分享菜单
-//    [ShareSDK showShareViewWithType:ShareTypeSinaWeibo
-//                          container:container
-//                            content:publishContent
-//                      statusBarTips:YES
-//                        authOptions:nil
-//                       shareOptions:nil
-//                             result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-//                                 if (state == SSPublishContentStateSuccess)
-//                                 {
-//                                     NSLog(@"发表成功");
-//                                 }
-//                                 else if (state == SSPublishContentStateFail)
-//                                 {
-//                                     NSLog(@"发布失败!error code == %d, error code == %@", [error errorCode], [error errorDescription]);
-//                                 }
-//                             }];
-    
-    //直接分享
-    //创建分享内容
-    NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"jpg"];
-    
-    id<ISSContent> publishContent = [ShareSDK content:@"content"
-                                       defaultContent:@""
-                                                image:[ShareSDK imageWithPath:imagePath]
-                                                title:nil
-                                                  url:nil
-                                          description:nil
-                                            mediaType:SSPublishContentMediaTypeText];
-    
-    [ShareSDK shareContent:publishContent
-                      type:ShareTypeSinaWeibo
-               authOptions:nil
-             statusBarTips:YES
-                    result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                        if (state == SSPublishContentStateSuccess)
-                        {
-                            NSLog(@"分享成功");
-                        }
-                        else if (state == SSPublishContentStateFail)
-                        {
-                            NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode],  [error errorDescription]);
-                        }
-                    }];
-
-}
 - (IBAction)reviewOurApp:(id)sender {
-    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
+
+    [[LZReviewAppManager SharedInstance]reviewOurAppDirectly];
 }
 - (IBAction)userFeedBack:(id)sender {
     Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
@@ -342,6 +249,7 @@
     [self setPersonsBackImageView:nil];
     [self setDaysBackImageView:nil];
     [self setTipsLabel:nil];
+    [self setContentScrollView:nil];
     [super viewDidUnload];
 }
 @end
