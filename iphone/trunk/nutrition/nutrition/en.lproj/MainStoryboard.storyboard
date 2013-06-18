@@ -51,14 +51,14 @@
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="0J9-iN-6I9">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="RAz-Sn-Rch">
                                         <rect key="frame" x="10" y="79" width="300" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="rwx-3q-w8q">
-                                        <rect key="frame" x="10" y="289" width="300" height="40"/>
+                                        <rect key="frame" x="10" y="270" width="300" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="天数:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="X9r-bV-l4k">
@@ -78,14 +78,14 @@
                                         </connections>
                                     </textField>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="新浪微博" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ufi-KA-UbI">
-                                        <rect key="frame" x="80" y="298" width="140" height="21"/>
+                                        <rect key="frame" x="80" y="279" width="140" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="elN-XU-3qA">
-                                        <rect key="frame" x="10" y="237" width="300" height="44"/>
+                                        <rect key="frame" x="10" y="218" width="300" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal">
@@ -100,8 +100,11 @@
                                         </connections>
                                     </button>
                                     <switch opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" id="Kj3-E9-aEC">
-                                        <rect key="frame" x="228" y="295" width="79" height="27"/>
+                                        <rect key="frame" x="228" y="276" width="79" height="27"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <connections>
+                                            <action selector="authSwitchChangeHandler:" destination="v2r-YV-GYD" eventType="valueChanged" id="Duu-NW-wpe"/>
+                                        </connections>
                                     </switch>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="人数:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pHf-aT-2i3">
                                         <rect key="frame" x="10" y="86" width="42" height="26"/>
@@ -111,7 +114,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bUF-0N-msF">
-                                        <rect key="frame" x="10" y="186" width="300" height="44"/>
+                                        <rect key="frame" x="10" y="167" width="300" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                         <state key="normal">
@@ -172,7 +175,7 @@
                                         </connections>
                                     </textField>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="F8y-Fi-DIh">
-                                        <rect key="frame" x="20" y="288" width="48" height="41"/>
+                                        <rect key="frame" x="20" y="269" width="48" height="41"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="2XT-iD-QHO">
@@ -181,27 +184,32 @@
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="给我们评分" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="I5L-Kh-Lky">
-                                        <rect key="frame" x="20" y="197" width="153" height="21"/>
+                                        <rect key="frame" x="20" y="178" width="153" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="意见反馈" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ZK2-OP-SG0">
-                                        <rect key="frame" x="20" y="248" width="153" height="21"/>
+                                        <rect key="frame" x="20" y="229" width="153" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="arrow.png" id="EjB-ky-AbY">
-                                        <rect key="frame" x="290" y="201" width="9" height="14"/>
+                                        <rect key="frame" x="290" y="182" width="9" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="arrow.png" id="1AY-YM-WL6">
-                                        <rect key="frame" x="290" y="252" width="9" height="14"/>
+                                        <rect key="frame" x="290" y="233" width="9" height="14"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
+                                    <view contentMode="scaleToFill" id="hsL-Rz-QQN">
+                                        <rect key="frame" x="0.0" y="317" width="320" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -209,12 +217,14 @@
                     </view>
                     <navigationItem key="navigationItem" id="mYF-ed-kAE"/>
                     <connections>
+                        <outlet property="admobView" destination="hsL-Rz-QQN" id="mOV-Up-MBd"/>
                         <outlet property="contentScrollView" destination="0J9-iN-6I9" id="s1Y-6H-doS"/>
                         <outlet property="daysBackImageView" destination="RAz-Sn-Rch" id="4lY-J9-zbY"/>
                         <outlet property="daysTextField" destination="TdH-wF-9XW" id="xrl-Zp-n3E"/>
                         <outlet property="personsBackImageView" destination="rwx-3q-w8q" id="ZoL-yp-dgd"/>
                         <outlet property="personsTextField" destination="fVV-kF-zA3" id="2F9-pG-b02"/>
                         <outlet property="tipsLabel" destination="Rtu-Gf-UE0" id="nVo-rl-5kR"/>
+                        <outlet property="weiboAuthSwitch" destination="Kj3-E9-aEC" id="eaF-Hr-hal"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R4C-lr-bw2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -994,7 +1004,6 @@
         <class className="LZAddByNutrientController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZAddByNutrientController.h"/>
             <relationships>
-                <relationship kind="action" name="cancelButtonTapped:"/>
                 <relationship kind="action" name="saveButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="navItem" candidateClass="UINavigationItem"/>
@@ -1027,8 +1036,6 @@
         <class className="LZFoodListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodListViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addFoodAction:"/>
-                <relationship kind="action" name="clearFoodAction:"/>
                 <relationship kind="outlet" name="addFoodItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
@@ -1085,8 +1092,6 @@
         <class className="LZRecommendFoodController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZRecommendFoodController.h"/>
             <relationships>
-                <relationship kind="action" name="changeOnePlan:"/>
-                <relationship kind="action" name="shareButtonTapped:"/>
                 <relationship kind="outlet" name="changeOnePlanItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="shareItem" candidateClass="UIBarButtonItem"/>
@@ -1095,19 +1100,19 @@
         <class className="LZSettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZSettingsViewController.h"/>
             <relationships>
-                <relationship kind="action" name="reviewOurApp:"/>
+                <relationship kind="outlet" name="admobView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="contentScrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="daysBackImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="daysTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="personsBackImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="personsTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="tipsLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="weiboAuthSwitch" candidateClass="UISwitch"/>
             </relationships>
         </class>
         <class className="LZShareViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZShareViewController.h"/>
             <relationships>
-                <relationship kind="action" name="cancelButtonTapped:"/>
                 <relationship kind="outlet" name="contentBackgroundImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="contentTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="wordCountLabel" candidateClass="UILabel"/>

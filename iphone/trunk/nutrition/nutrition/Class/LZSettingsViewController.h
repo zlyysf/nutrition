@@ -17,4 +17,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *tipsLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (strong, nonatomic)UITextField * currentTextField;
+@property (strong, nonatomic) IBOutlet UISwitch *weiboAuthSwitch;
+@property (strong, nonatomic) IBOutlet UIView *admobView;
 @end

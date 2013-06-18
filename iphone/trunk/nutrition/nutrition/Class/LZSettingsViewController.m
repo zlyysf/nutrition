@@ -12,7 +12,8 @@
 #import "LZReviewAppManager.h"
 #import <MessageUI/MessageUI.h>
 #import <ShareSDK/ShareSDK.h>
-@interface LZSettingsViewController ()<LZKeyboardToolBarDelegate,MFMailComposeViewControllerDelegate>
+#import "GADMasterViewController.h"
+@interface LZSettingsViewController ()<LZKeyboardToolBarDelegate,MFMailComposeViewControllerDelegate,UIAlertViewDelegate>
 
 @end
 
@@ -41,11 +42,67 @@
     [self.daysBackImageView setImage:textBackImage];
     [self.tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
     self.tipsLabel.text = @"我们默认向您推荐一个成年人一天的食物量，您在给家庭大采购时可以适当调整人数和天数，但只能输入一位数字。";
+    
+    [ShareSDK addNotificationWithName:SSN_USER_AUTH
+                               target:self
+                               action:@selector(userInfoUpdateHandler:)];
 	// Do any additional setup after loading the view.
     //显示目前设定的人数 天数
  }
+- (IBAction)authSwitchChangeHandler:(UISwitch *)sender
+{
+    if (sender.on)
+    {
+        id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                             allowCallback:YES
+                                                             authViewStyle:SSAuthViewStylePopup
+                                                              viewDelegate:nil
+                                                   authManagerViewDelegate:nil];
+        [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
+                                        [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"买菜助手"],
+                                        SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
+                                        //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
+                                        //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
+                                        nil]];
+        [ShareSDK authWithType:ShareTypeSinaWeibo options:authOptions result:^(SSAuthState state, id<ICMErrorInfo> error) {
+            if (state == SSAuthStateCancel || state == SSAuthStateFail)
+            {
+                [self.weiboAuthSwitch setOn:NO];
+            }
+            NSLog(@"ssauthState %d",state);
+        }];
+
+    }
+    else
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"解除新浪微博绑定？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"解除", nil];//[ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
+        [alert show];
+    }
+}
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 1)//0
+    {
+        //现在就评分
+        [ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
+    }
+    else
+    {
+        [self.weiboAuthSwitch setOn:YES];
+    }
+    
+}
+
+- (void)userInfoUpdateHandler:(NSNotification *)notif
+{
+    NSLog(@"notify user info %@",[notif userInfo]);
+}
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.weiboAuthSwitch.on = [ShareSDK hasAuthorizedWithType:ShareTypeSinaWeibo];
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    [shared resetAdView:self andListView:self.admobView];
+
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
     if (planPerson != nil)
@@ -250,6 +307,8 @@
     [self setDaysBackImageView:nil];
     [self setTipsLabel:nil];
     [self setContentScrollView:nil];
+    [self setWeiboAuthSwitch:nil];
+    [self setAdmobView:nil];
     [super viewDidUnload];
 }
 @end
