@@ -16,6 +16,7 @@
 #import "LZUtility.h"
 #import "LZRecommendEmptyCell.h"
 #import "LZShareViewController.h"
+#import "GADMasterViewController.h"
 @interface LZRecommendFoodController ()<MBProgressHUDDelegate>
 {
     MBProgressHUD *HUD;
@@ -41,6 +42,11 @@
     [self.view addSubview:HUD];
     HUD.hidden = YES;
     HUD.delegate = self;
+    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+                                                             CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+                                                             CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+    self.listView.tableFooterView = footer;
+
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(takenFoodDeleted:) name:Notification_TakenFoodDeletedKey object:nil];
@@ -61,6 +67,8 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    [shared resetAdView:self andListView:self.listView];
     if (needRefresh)
     {
         self.listView.hidden = YES;
@@ -246,7 +254,15 @@
         }
         [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
         [cell adjustLabelAccordingToProgress:progress forLabelWidth:244];
-        cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(progress *100)];
+        if (KeyUseRealPercentValue)
+        {
+            cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)([percent floatValue] *100)];
+        }
+        else
+        {
+            cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(progress *100)];
+            
+        }
         return cell;
     }
 }

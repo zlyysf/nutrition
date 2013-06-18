@@ -16,6 +16,7 @@
 #import "LZUtility.h"
 #import "LZRecommendEmptyCell.h"
 #import "LZAddByNutrientController.h"
+#import "GADMasterViewController.h"
 @interface LZFoodListViewController ()
 
 @end
@@ -43,12 +44,18 @@
     takenFoodArray = [[NSMutableArray alloc]init];
     takenFoodDict = [[NSMutableDictionary alloc]init];
     nutrientInfoArray = [[NSMutableArray alloc]init];
+    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+                                                             CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+                                                             CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+    self.listView.tableFooterView = footer;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [self displayTakenFoodResult];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    [shared resetAdView:self andListView:self.listView];
     if(needRefresh)
     {
         [self displayTakenFoodResult];

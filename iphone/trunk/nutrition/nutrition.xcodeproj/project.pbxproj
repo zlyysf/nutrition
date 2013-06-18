@@ -127,6 +127,12 @@
 		5FE436D4175F3EF5003947ED /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D0175F3EF5003947ED /* Icon-Small@2x.png */; };
 		5FE436D5175F3EF5003947ED /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D1175F3EF5003947ED /* Icon.png */; };
 		5FE436D6175F3EF5003947ED /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D2175F3EF5003947ED /* Icon@2x.png */; };
+		5FF631D517702C690068CBFE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */; };
+		5FF631D617702C690068CBFE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5FF631D417702C690068CBFE /* README.txt */; };
+		5FF631D817702CD00068CBFE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D717702CD00068CBFE /* StoreKit.framework */; };
+		5FF631DA17702CD70068CBFE /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D917702CD70068CBFE /* AdSupport.framework */; };
+		5FF631DC17702CDF0068CBFE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631DB17702CDF0068CBFE /* AudioToolbox.framework */; };
+		5FF631DF17702D630068CBFE /* GADMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF631DE17702D630068CBFE /* GADMasterViewController.m */; };
 		5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
 		5FF8473D1758546900DEA6DE /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8473B1758546900DEA6DE /* README.mdown */; };
 		5FF8474117587F0100DEA6DE /* nav_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8474017587F0100DEA6DE /* nav_back_button@2x.png */; };
@@ -284,6 +290,22 @@
 		5FE436D0175F3EF5003947ED /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "nutrition/Icon-Small@2x.png"; sourceTree = "<group>"; };
 		5FE436D1175F3EF5003947ED /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = nutrition/Icon.png; sourceTree = "<group>"; };
 		5FE436D2175F3EF5003947ED /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "nutrition/Icon@2x.png"; sourceTree = "<group>"; };
+		5FF631CA17702C690068CBFE /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
+		5FF631CB17702C690068CBFE /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
+		5FF631CC17702C690068CBFE /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
+		5FF631CD17702C690068CBFE /* GADBannerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerView.h; sourceTree = "<group>"; };
+		5FF631CE17702C690068CBFE /* GADBannerViewDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADBannerViewDelegate.h; sourceTree = "<group>"; };
+		5FF631CF17702C690068CBFE /* GADInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitial.h; sourceTree = "<group>"; };
+		5FF631D017702C690068CBFE /* GADInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADInterstitialDelegate.h; sourceTree = "<group>"; };
+		5FF631D117702C690068CBFE /* GADRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequest.h; sourceTree = "<group>"; };
+		5FF631D217702C690068CBFE /* GADRequestError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADRequestError.h; sourceTree = "<group>"; };
+		5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleAdMobAds.a; sourceTree = "<group>"; };
+		5FF631D417702C690068CBFE /* README.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.txt; sourceTree = "<group>"; };
+		5FF631D717702CD00068CBFE /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		5FF631D917702CD70068CBFE /* AdSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AdSupport.framework; path = System/Library/Frameworks/AdSupport.framework; sourceTree = SDKROOT; };
+		5FF631DB17702CDF0068CBFE /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		5FF631DD17702D630068CBFE /* GADMasterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GADMasterViewController.h; path = Class/GADMasterViewController.h; sourceTree = "<group>"; };
+		5FF631DE17702D630068CBFE /* GADMasterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GADMasterViewController.m; path = Class/GADMasterViewController.m; sourceTree = "<group>"; };
 		5FF847391758546900DEA6DE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = nutrition/MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		5FF8473A1758546900DEA6DE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = nutrition/MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		5FF8473B1758546900DEA6DE /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.mdown; path = nutrition/MBProgressHUD/README.mdown; sourceTree = "<group>"; };
@@ -311,6 +333,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FF631DC17702CDF0068CBFE /* AudioToolbox.framework in Frameworks */,
+				5FF631DA17702CD70068CBFE /* AdSupport.framework in Frameworks */,
+				5FF631D817702CD00068CBFE /* StoreKit.framework in Frameworks */,
 				5F746C40176B1EA900E68D0E /* libz.1.2.5.dylib in Frameworks */,
 				5F746C3E176B1E9F00E68D0E /* libicucore.dylib in Frameworks */,
 				5F746C3C176B1E9000E68D0E /* QuartzCore.framework in Frameworks */,
@@ -334,6 +359,7 @@
 				5F746C34176B1E6800E68D0E /* ShareSDKiPhoneAppRecommendShareViewUI.framework in Frameworks */,
 				5F746C36176B1E6800E68D0E /* ShareSDKiPhoneDefaultShareViewUI.framework in Frameworks */,
 				5F746C38176B1E6800E68D0E /* ShareSDKiPhoneSimpleShareViewUI.framework in Frameworks */,
+				5FF631D517702C690068CBFE /* libGoogleAdMobAds.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,6 +447,10 @@
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				5FF631DB17702CDF0068CBFE /* AudioToolbox.framework */,
+				5FF631D917702CD70068CBFE /* AdSupport.framework */,
+				5FF631D717702CD00068CBFE /* StoreKit.framework */,
+				5FF631C917702C690068CBFE /* AdMob */,
 				5F746C0B176B1E6800E68D0E /* ShareSDK_v2.2.2 */,
 				5F746BFE1769A81500E68D0E /* YouMengSDK */,
 				5FF847381758540200DEA6DE /* MBProgressHUD */,
@@ -476,6 +506,8 @@
 				5F03D33A174B923F008EFB60 /* LZRecommendFoodController.m */,
 				5F03D33B174B923F008EFB60 /* LZProgressView.h */,
 				5F03D33C174B923F008EFB60 /* LZProgressView.m */,
+				5FF631DD17702D630068CBFE /* GADMasterViewController.h */,
+				5FF631DE17702D630068CBFE /* GADMasterViewController.m */,
 				5F03D33D174B923F008EFB60 /* LZRecommendFoodCell.h */,
 				5F03D33E174B923F008EFB60 /* LZRecommendFoodCell.m */,
 				5F03D33F174B9240008EFB60 /* LZNutritionCell.h */,
@@ -655,6 +687,25 @@
 			path = UI;
 			sourceTree = "<group>";
 		};
+		5FF631C917702C690068CBFE /* AdMob */ = {
+			isa = PBXGroup;
+			children = (
+				5FF631CA17702C690068CBFE /* GADAdMobExtras.h */,
+				5FF631CB17702C690068CBFE /* GADAdNetworkExtras.h */,
+				5FF631CC17702C690068CBFE /* GADAdSize.h */,
+				5FF631CD17702C690068CBFE /* GADBannerView.h */,
+				5FF631CE17702C690068CBFE /* GADBannerViewDelegate.h */,
+				5FF631CF17702C690068CBFE /* GADInterstitial.h */,
+				5FF631D017702C690068CBFE /* GADInterstitialDelegate.h */,
+				5FF631D117702C690068CBFE /* GADRequest.h */,
+				5FF631D217702C690068CBFE /* GADRequestError.h */,
+				5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */,
+				5FF631D417702C690068CBFE /* README.txt */,
+			);
+			name = AdMob;
+			path = nutrition/AdMob;
+			sourceTree = "<group>";
+		};
 		5FF847381758540200DEA6DE /* MBProgressHUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -787,6 +838,7 @@
 				5F746C35176B1E6800E68D0E /* ShareSDKiPhoneDefaultShareViewUI.bundle in Resources */,
 				5F746C37176B1E6800E68D0E /* ShareSDKiPhoneSimpleShareViewUI.bundle in Resources */,
 				5FDED102176F2E2D0026BCA3 /* text_clear@2x.png in Resources */,
+				5FF631D617702C690068CBFE /* README.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -860,6 +912,7 @@
 				5FE436CE175F29D5003947ED /* LZKeyboardToolBar.m in Sources */,
 				5F746C081769EB9A00E68D0E /* LZReviewAppManager.m in Sources */,
 				5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */,
+				5FF631DF17702D630068CBFE /* GADMasterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1026,7 +1079,9 @@
 					"\"$(SRCROOT)/nutrition/YouMengSDK\"",
 					"\"$(SRCROOT)/nutrition/ShareSDK_v2.2.2/Extend/SDKExport\"",
 					"\"$(SRCROOT)/nutrition/ShareSDK_v2.2.2/Extend/TencentWeiboSSO\"",
+					"\"$(SRCROOT)/nutrition/AdMob\"",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "买菜助手";
 				PROVISIONING_PROFILE = "4657BC38-C652-4082-9417-DF391598F514";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4657BC38-C652-4082-9417-DF391598F514";
@@ -1055,7 +1110,9 @@
 					"\"$(SRCROOT)/nutrition/YouMengSDK\"",
 					"\"$(SRCROOT)/nutrition/ShareSDK_v2.2.2/Extend/SDKExport\"",
 					"\"$(SRCROOT)/nutrition/ShareSDK_v2.2.2/Extend/TencentWeiboSSO\"",
+					"\"$(SRCROOT)/nutrition/AdMob\"",
 				);
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "买菜助手";
 				PROVISIONING_PROFILE = "8C70EA96-AABA-41BC-884D-1ED0FA721E82";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8C70EA96-AABA-41BC-884D-1ED0FA721E82";
