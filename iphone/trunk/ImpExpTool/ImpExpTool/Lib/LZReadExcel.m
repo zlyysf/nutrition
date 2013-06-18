@@ -403,30 +403,35 @@
     
     NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray *columnNames = [NSMutableArray arrayWithCapacity:3];
-    int idxInXls_Id = 3, idxInXls_LowerLimit = 5, idxInXls_UpperLimit = 6;
+    int idxInXls_Id = 3, idxInXls_LowerLimit = 5, idxInXls_NormalValue = 6, idxInXls_UpperLimit = 7;
     
     int idxRow=1;
-    DHcell *cellId, *cellLowerLimit, *cellUpperLimit;
+    DHcell *cellId, *cellLowerLimit, *cellNormalValue, *cellUpperLimit;
     cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
     cellLowerLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_LowerLimit];
+    cellNormalValue = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_NormalValue];
     cellUpperLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_UpperLimit];
     [columnNames addObject:cellId.str];
     [columnNames addObject:cellLowerLimit.str];
+    [columnNames addObject:cellNormalValue.str];
     [columnNames addObject:cellUpperLimit.str];
     idxRow ++;
     cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
     cellLowerLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_LowerLimit];
+    cellNormalValue = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_NormalValue];
     cellUpperLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_UpperLimit];
     while (cellId.type != cellBlank) {
         assert(cellId.type == cellString);
-        NSMutableArray *row = [NSMutableArray arrayWithCapacity:3];
+        NSMutableArray *row = [NSMutableArray arrayWithCapacity:4];
         [row addObject:cellId.str];
         [row addObject:cellLowerLimit.val];
+        [row addObject:cellNormalValue.val];
         [row addObject:cellUpperLimit.val];
-        [rows2D addObject:row]; 
+        [rows2D addObject:row];
         idxRow++;
         cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
         cellLowerLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_LowerLimit];
+        cellNormalValue = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_NormalValue];
         cellUpperLimit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_UpperLimit];
     }
     NSLog(@"in readFoodLimit, columnNames=%@, rows2D=%@",columnNames,rows2D);
@@ -498,7 +503,11 @@
             NSLog(@"in readNutritionInfo, row=%d, col=%d",row,col);
             
             cell = [reader cellInWorkSheetIndex:0 row:row col:col];
-            [rowData addObject:cell.str];
+            if (cell.type != cellBlank){
+                [rowData addObject:cell.str];
+            }else{
+                [rowData addObject:@""];
+            }
         }
         [rows2D addObject:rowData];
     }

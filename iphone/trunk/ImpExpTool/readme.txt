@@ -23,7 +23,11 @@ FoodNutritionCustom表和Food.xls中的数据可以说是一样的，都含有�
     但FoodNutritionCustom表的数据来源不是完全来自Food.xls中的数据，而是从Food.xls中取中文信息数据，并结合FoodNutrition的数据来连接生成。
 FoodCnDescription表包含Food.xls中的那些中文信息列的数据。可以与FoodNutrition连接生成FoodNutritionCustom的数据。
 
-FoodLimit表和Food_Limit.xls中的数据是一样的，包含各种食物摄取的符合情理的上下限值。
+FoodLimit表和Food_Limit.xls中的数据是一样的，包含各种食物摄取的符合情理的上下限值。这些值对应的是是一天的摄入量。
+    下限值Lower_Limit(g)定义为至少需要量，即如果低于下限值，则取下限值。 对于上限值Upper_Limit(g)，如果高于上限值，则取上限值。
+    而normal_value介于上下限之间，目前的意义是适当值，即某种意义上的建议值，在某种算法中，首先以建议值为上限，当超过建议值时先使用别的食物，直到找不到别的未超过建议值的食物后，再使用上限值。
+    另外，对于上下限值，normal值，应该会有一个地方给出默认值。
+
 
 Food_Supply_DRI_Amount 这个表是以 某份DRI 为基准（male 25 175cm 75kg low sport），根据食物营养成分表计算出的 每种营养成分在DRI的量的情况下，分别所需食物的量。
 Food_Supply_DRI_Common 这个表中的数据源于 Food_Supply_DRI_Amount ，1000以上的作为0值，1000以下的除以100取整，这样分出一些level。可以用于食物含营养丰富程度的粗排序。
