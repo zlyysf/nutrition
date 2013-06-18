@@ -42,10 +42,10 @@
     [self.view addSubview:HUD];
     HUD.hidden = YES;
     HUD.delegate = self;
-    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                              CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                              CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
-    self.listView.tableFooterView = footer;
+    self.listView.tableFooterView = footerView;
 
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
@@ -68,7 +68,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     GADMasterViewController *shared = [GADMasterViewController singleton];
-    [shared resetAdView:self andListView:self.listView];
+    UIView *footerView = self.listView.tableFooterView;
+    [shared resetAdView:self andListView:footerView];
     if (needRefresh)
     {
         self.listView.hidden = YES;

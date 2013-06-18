@@ -177,7 +177,6 @@
             [self displayComposerSheet];
         }
     }
-
 }
 -(void)displayComposerSheet
 {

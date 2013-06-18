@@ -35,7 +35,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"食物";
+    self.title = @"检测";
 	// Do any additional setup after loading the view.
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
@@ -44,10 +44,10 @@
     takenFoodArray = [[NSMutableArray alloc]init];
     takenFoodDict = [[NSMutableDictionary alloc]init];
     nutrientInfoArray = [[NSMutableArray alloc]init];
-    UIView *footer = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                              CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                              CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
-    self.listView.tableFooterView = footer;
+    self.listView.tableFooterView = footerView;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [self displayTakenFoodResult];
@@ -55,7 +55,8 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     GADMasterViewController *shared = [GADMasterViewController singleton];
-    [shared resetAdView:self andListView:self.listView];
+    UIView *footerView = self.listView.tableFooterView;
+    [shared resetAdView:self andListView:footerView];
     if(needRefresh)
     {
         [self displayTakenFoodResult];
@@ -137,7 +138,7 @@
         {
             LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
             [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
-            cell.contentLabel.text = @"您可以预先选好一些食物，通过添加或者点击具体的营养成分来选择，我们再向您推荐以全面补足营养。";
+            cell.contentLabel.text = @"请添加计划要购买的食物，我们会分析其营养量是否达到标准，并推荐其他食物以全面摄入营养。";
             return cell;
         }
         else
@@ -226,9 +227,9 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text =  @"现已挑选的食物";
+        sectionTitleLabel.text =  @"打算购买的食物";
     else
-        sectionTitleLabel.text =  @"提供的营养成分";
+        sectionTitleLabel.text =  @"检测结果";
     
     return sectionView;
 }

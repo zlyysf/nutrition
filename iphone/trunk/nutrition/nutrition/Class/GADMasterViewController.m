@@ -42,23 +42,24 @@
     return self;
 }
 
--(NSString*)getAdIdentifier{
-    // Print IDFA (from AdSupport Framework) for iOS 6 and UDID for iOS < 6.
-    NSString *idStr ;
-    if (NSClassFromString(@"ASIdentifierManager")) {
-        idStr = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
-    } else {
-        idStr = [[UIDevice currentDevice] uniqueIdentifier];
-    }
-    return idStr;
-}
+//-(NSString*)getAdIdentifier{
+//    // Print IDFA (from AdSupport Framework) for iOS 6 and UDID for iOS < 6.
+//    NSString *idStr ;
+//    if (NSClassFromString(@"ASIdentifierManager")) {
+//        idStr = [[[ASIdentifierManager sharedManager] advertisingIdentifier] UUIDString];
+//    } else {
+//        idStr = [[UIDevice currentDevice] uniqueIdentifier];
+//    }
+//    return idStr;
+//}
 
--(void)resetAdView:(UIViewController *)rootViewController andListView :(UITableView *)listView {
+-(void)resetAdView:(UIViewController *)rootViewController andListView :(UIView *)superView
+{
     // Always keep track of currentDelegate for notification forwarding
     currentDelegate_ = rootViewController;
     // Ad already requested, simply add it into the view
     if (isLoaded_) {
-        [listView.tableFooterView addSubview:adBanner_];
+        [superView addSubview:adBanner_];
 
     } else {
         
@@ -68,7 +69,7 @@
         
         [self adBannerLoadRequest];
 
-        [listView.tableFooterView addSubview:adBanner_];
+        [superView addSubview:adBanner_];
         isLoaded_ = YES;
     }
 }

@@ -15,6 +15,6 @@
     id currentDelegate_;
 }
 +(GADMasterViewController *)singleton;
--(void)resetAdView:(UIViewController *)rootViewController andListView :(UITableView *)listView;
+-(void)resetAdView:(UIViewController *)rootViewController andListView :(UIView *)superView;
 -(void)removeAds;
 @end
