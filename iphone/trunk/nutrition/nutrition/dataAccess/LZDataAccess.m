@@ -405,7 +405,8 @@
     [sqlStr appendString:nutrientAsColumnName];
     [sqlStr appendString:@"] AS RichLevel \n"];
 
-    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Common D on F.NDB_No=D.NDB_No \n"];
+//    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Common D on F.NDB_No=D.NDB_No \n"];
+    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
     [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
     [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
     [sqlStr appendString:@" WHERE "];
@@ -413,6 +414,11 @@
     [sqlStr appendString:nutrientAsColumnName];
     [sqlStr appendString:@"]"];
     [sqlStr appendString:@">0"];
+    
+    [sqlStr appendString:@" AND D.["];
+    [sqlStr appendString:nutrientAsColumnName];
+    [sqlStr appendString:@"]"];
+    [sqlStr appendString:@"<1000"];
     
     [sqlStr appendString:@"\n ORDER BY "];
     [sqlStr appendString:@"D.["];

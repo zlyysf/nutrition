@@ -578,7 +578,8 @@
     srandom(randSeed);
     
     int upperLimit = 1000; // 1000 g
-    int topN = 20;
+    //int topN = 20;
+    int topN = 50;
     NSString *colName_NO = @"NDB_No";
     double nearZero = 0.0000001;
     
