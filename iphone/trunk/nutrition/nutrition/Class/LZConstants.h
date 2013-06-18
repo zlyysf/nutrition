@@ -8,6 +8,9 @@
 
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
+
+#define Config_needConsiderNutrientLoss TRUE
+
 #define kFatFactor 1/9 //means 1g fat contains 9Kcal energy
 #define kCarbFactor 1/4 //means 1g carbohydrt contains 4Kcal energy
 #define LZUserSexKey @"LZUserSexKey" //int 0 means male 1 means female
@@ -49,6 +52,8 @@
 
 #define COLUMN_NAME_NutrientCnCaption @"NutrientCnCaption"
 #define COLUMN_NAME_NutrientEnUnit @"NutrientEnUnit"
+#define COLUMN_NAME_LossRate @"LossRate"
+#define COLUMN_NAME_NutrientDescription @"NutrientDescription"
 
 #define TABLE_NAME_FoodPicPath @"FoodPicPath"
 #define COLUMN_NAME_PicPath @"PicPath"

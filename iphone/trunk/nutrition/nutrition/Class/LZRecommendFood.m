@@ -52,7 +52,7 @@
     int activityLevel = [nmActivityLevel intValue];
     
     LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *DRIsDict = [da getStandardDRIs:sex age:age weight:weight height:height activityLevel:activityLevel];
+    NSDictionary *DRIsDict = [da getStandardDRIs:sex age:age weight:weight height:height activityLevel:activityLevel considerLoss:Config_needConsiderNutrientLoss];
     
     NSMutableDictionary *retDict = [self recommendFoodForEnoughNuitritionWithPreIntake:takenFoodAmountDict andDRIs:DRIsDict andOptions:options];
     NSArray *userInfos = [NSArray arrayWithObjects:@"sex(0 for M)",[NSNumber numberWithInt:sex],@"age",[NSNumber numberWithInt:age],
@@ -73,7 +73,7 @@
     uint multiCount = personCount*dayCount;
     
     LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *DRIsDict = [da getAbstractPersonDRIs];
+    NSDictionary *DRIsDict = [da getAbstractPersonDRIsWithConsiderLoss:Config_needConsiderNutrientLoss];
     NSArray * nutrientsInDRI = [DRIsDict allKeys];
     for(int i=0; i<nutrientsInDRI.count; i++){
         NSString * nutrient = nutrientsInDRI[i];
@@ -471,7 +471,7 @@
                             nil];
     
     LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *DRIsDict = [da getAbstractPersonDRIs];
+    NSDictionary *DRIsDict = [da getAbstractPersonDRIsWithConsiderLoss:Config_needConsiderNutrientLoss];
     
     NSMutableDictionary *retDict = [self recommendFood2WithPreIntake:decidedFoodAmountDict andDRIs:DRIsDict andParams:params2 andOptions:options];
     return retDict;
@@ -499,7 +499,7 @@
     int activityLevel = [nmActivityLevel intValue];
     
     LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *DRIsDict = [da getStandardDRIs:sex age:age weight:weight height:height activityLevel:activityLevel];
+    NSDictionary *DRIsDict = [da getStandardDRIs:sex age:age weight:weight height:height activityLevel:activityLevel considerLoss:Config_needConsiderNutrientLoss];
     
     NSMutableDictionary *retDict = [self recommendFood2WithPreIntake:takenFoodAmountDict andDRIs:DRIsDict andParams:params andOptions:options];
     NSArray *userInfos = [NSArray arrayWithObjects:@"sex(0 for M)",[NSNumber numberWithInt:sex],@"age",[NSNumber numberWithInt:age],
@@ -1063,7 +1063,7 @@
                              nil];
     
     LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *DRIsDict = [da getAbstractPersonDRIs];
+    NSDictionary *DRIsDict = [da getAbstractPersonDRIsWithConsiderLoss:Config_needConsiderNutrientLoss];
     
     NSMutableDictionary *retDict = [self takenFoodSupplyNutrients:decidedFoodAmountDict andDRIs:DRIsDict andParams:params2];
     return retDict;

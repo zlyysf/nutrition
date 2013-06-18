@@ -22,9 +22,9 @@
 
 - (id)initDBConnection;
 
--(NSDictionary*)getStandardDRIForSex:(int )sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
--(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
-
+//-(NSDictionary*)getStandardDRIForSex:(int )sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
+//-(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
+-(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int)activityLevel considerLoss:(BOOL)needConsiderLoss;
 
 
 -(NSString *)replaceForSqlText:(NSString *)origin;
@@ -34,7 +34,8 @@
 - (NSArray *)selectTableByEqualFilter:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue;
 
 - (NSDictionary *)getDRIbyGender:(NSString*)gender andAge:(int)age ;
--(NSDictionary*)getAbstractPersonDRIs;
+//-(NSDictionary*)getAbstractPersonDRIs;
+-(NSDictionary*)getAbstractPersonDRIsWithConsiderLoss : (BOOL)needConsiderLoss;
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN;
 -(NSArray *) getRichNutritionFoodForNutrient:(NSString *)nutrientName andNutrientAmount:(NSNumber*)nutrientAmount;
 
@@ -43,6 +44,6 @@
 -(NSArray *)getFoodAttributesByIds:(NSArray *)idAry;
 
 -(NSMutableDictionary*)getNutrientInfoAs2LevelDictionary_withNutrientIds:(NSArray*)nutrientIds;
-
+-(NSDictionary*)getNutrientInfo:(NSString*)nutrientId;
 
 @end

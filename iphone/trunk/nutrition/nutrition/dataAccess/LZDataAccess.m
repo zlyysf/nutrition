@@ -271,7 +271,7 @@
 }
 
 
--(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
+-(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int)activityLevel considerLoss:(BOOL)needConsiderLoss
 {
     NSDictionary *part1 = [self getStandardDRIForSex:sex age:age weight:weight height:height activityLevel:activityLevel];
     LZDataAccess *da = [LZDataAccess singleton];
@@ -281,15 +281,20 @@
     NSDictionary *part2 = [da getDRIbyGender:gender andAge:age];
     NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithDictionary:part1];
     [ret addEntriesFromDictionary:part2];
+    
+    if (needConsiderLoss){
+        ret = [self letDRIConsiderLoss:ret];
+    }
+    
     NSLog(@"getStandardDRIs ret:\n%@",ret);
     return ret;
 }
 
 
--(NSDictionary*)getAbstractPersonDRIs
+-(NSDictionary*)getAbstractPersonDRIsWithConsiderLoss : (BOOL)needConsiderLoss
 {
-    NSDictionary *maleDRIs = [self getStandardDRIs:0 age:25 weight:70 height:175 activityLevel:1];
-    NSDictionary *femaleDRIs = [self getStandardDRIs:1 age:25 weight:70 height:175 activityLevel:1];
+    NSDictionary *maleDRIs = [self getStandardDRIs:0 age:25 weight:70 height:175 activityLevel:1 considerLoss:needConsiderLoss];
+    NSDictionary *femaleDRIs = [self getStandardDRIs:1 age:25 weight:70 height:175 activityLevel:1 considerLoss:needConsiderLoss];
     NSMutableDictionary *personDRIs = [NSMutableDictionary dictionaryWithCapacity:maleDRIs.count];
     NSArray *keys = maleDRIs.allKeys;
     for(int i=0; i<keys.count; i++){
@@ -299,14 +304,41 @@
         double avg = ([nmM doubleValue]+[nmF doubleValue])/2.0;
         [personDRIs setObject:[NSNumber numberWithDouble:avg] forKey:key];
     }
-    NSLog(@"getAbstractPersonDRIs ret:\n%@",personDRIs);
-    return personDRIs;
+    NSMutableDictionary *retDRI = personDRIs;
+//    if (needConsiderLoss){
+//        retDRI = [self letDRIConsiderLoss:personDRIs];
+//    }
+    
+    NSLog(@"getAbstractPersonDRIsWithConsiderLoss ret:\n%@",retDRI);
+    return retDRI;
 }
 
 
 
-
-
+-(NSMutableDictionary*)letDRIConsiderLoss:(NSMutableDictionary*)DRIdict
+{
+    if (DRIdict == nil)
+        return nil;
+    NSMutableDictionary* DRIdict2 = [NSMutableDictionary dictionaryWithDictionary:DRIdict];
+    
+    NSMutableDictionary *nutrientInfos = [self getNutrientInfoAs2LevelDictionary_withNutrientIds:nil];
+    NSArray *keys = DRIdict2.allKeys;
+    
+    for(int i=0; i<keys.count; i++){
+        NSString* key = keys[i];
+        NSNumber *driVal = [DRIdict2 objectForKey:key];
+        NSDictionary *nutrientInfo = [nutrientInfos objectForKey:key];
+        assert(nutrientInfo!=nil);
+        NSNumber *nmLossRate = [nutrientInfo objectForKey:COLUMN_NAME_LossRate];
+        double driV2 = [driVal doubleValue];
+        if ([nmLossRate doubleValue]>0)
+            driV2 = [driVal doubleValue]/(1.0-[nmLossRate doubleValue]);
+        
+        [DRIdict2 setObject:[NSNumber numberWithDouble:driV2] forKey:key];
+    }
+    NSLog(@"letDRIConsiderLoss ret:\n%@",DRIdict2);
+    return DRIdict2;
+}
 
 
 
@@ -522,19 +554,21 @@
 -(NSMutableDictionary*)getNutrientInfoAs2LevelDictionary_withNutrientIds:(NSArray*)nutrientIds
 {
     NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds begin");
-    if (nutrientIds==nil || nutrientIds.count ==0)
-        return nil;
-    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:nutrientIds.count];
-    for(int i=0; i<nutrientIds.count; i++){
-        [placeholderAry addObject:@"?"];
-    }
-    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
     
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
-    [sqlStr appendString:@"SELECT * FROM NutritionInfo WHERE NutrientID in ("];
-    [sqlStr appendString:placeholdersStr];
-    [sqlStr appendString:@")"];
-    
+    [sqlStr appendString:@"SELECT * FROM NutritionInfo"];
+    if (nutrientIds!=nil && nutrientIds.count >0){
+        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:nutrientIds.count];
+        for(int i=0; i<nutrientIds.count; i++){
+            [placeholderAry addObject:@"?"];
+        }
+        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+        
+        [sqlStr appendString:@"  WHERE NutrientID in ("];
+        [sqlStr appendString:placeholdersStr];
+        [sqlStr appendString:@")"];
+    }
+
     FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:nutrientIds];
     NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
     NSMutableDictionary *dic2Level = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:@"NutrientID" andDicArray:dataAry];
@@ -543,7 +577,24 @@
     return dic2Level;
 }
 
-
+-(NSDictionary*)getNutrientInfo:(NSString*)nutrientId
+{
+    NSLog(@"getNutrientInfo begin");
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
+    [sqlStr appendString:@"SELECT * FROM NutritionInfo"];
+    [sqlStr appendString:@"  WHERE NutrientID = ?"];
+    
+    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:[NSArray arrayWithObject:nutrientId]];
+    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+    NSDictionary *nutrientInfo = nil;
+    if (dataAry.count>0){
+        nutrientInfo = dataAry[0];
+    }
+    
+    NSLog(@"getNutrientInfo ret:\n%@",nutrientInfo);
+    return nutrientInfo;
+}
 
 
 
