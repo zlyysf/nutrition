@@ -27,7 +27,7 @@
          @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
          @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
          @"Protein_(g)",@"Lipid_Tot_(g)",
-         @"Fiber_TD_(g)",@"Choline_Tot_ (mg)",@"Cholestrl_(mg)", nil];
+         @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
     return limitedNutrientsCanBeCal;
 }
 
