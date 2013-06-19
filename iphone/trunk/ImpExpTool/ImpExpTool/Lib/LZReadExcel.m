@@ -252,33 +252,32 @@
     NSMutableArray * idAry = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray * cnCaptionAry = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray * cnTypeAry = [NSMutableArray arrayWithCapacity:1000];
-    int idxRow=2, colIdxCnCaption=1, colIdxCnType=2, colIdxId=3, colIdx4th = 4;
-    DHcell *cellCnCaption,*cellCnType, *cellId, *cell4th;
+    NSMutableArray * classifyAry = [NSMutableArray arrayWithCapacity:1000];
+    int idxRow=2, colIdxCnCaption=1, colIdxCnType=2, colIdxId=3, colIdxClassify=4 ;
+    DHcell *cellCnCaption,*cellCnType, *cellId, *cellClassify;
     cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnCaption];
     cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnType];
     cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxId];
-    cell4th = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdx4th];
-    NSLog(@"dealing row, %d, %@, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str, cell4th.str);
-    while (cellId.type!=cellBlank || cellCnCaption.type!=cellBlank || cellCnType.type!=cellBlank) {
-        if (cellId.type!=cellBlank && cellCnCaption.type!=cellBlank && cellCnType.type!=cellBlank){
+    cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxClassify];
+    NSLog(@"dealing row, %d, %@, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str, cellClassify.str);
+    while (cellId.type!=cellBlank || cellCnCaption.type!=cellBlank || cellCnType.type!=cellBlank || cellClassify.type!=cellBlank) {
+        if (cellId.type!=cellBlank && cellCnCaption.type!=cellBlank && cellCnType.type!=cellBlank && cellClassify.type!=cellBlank){
             assert(cellId.type == cellString);
             [idAry addObject:cellId.str];
             
-            if (cellCnCaption.type == cellBlank){
-                [cnCaptionAry addObject:@""];
-            }else if (cellCnCaption.type == cellString){
-                [cnCaptionAry addObject:cellCnCaption.str];
-            }else{
-                [cnCaptionAry addObject:@""];
-            }
+//            if (cellCnCaption.type == cellBlank){
+//                [cnCaptionAry addObject:@""];
+//            }else if (cellCnCaption.type == cellString){
+//                [cnCaptionAry addObject:cellCnCaption.str];
+//            }else{
+//                [cnCaptionAry addObject:@""];
+//            }
+            [cnCaptionAry addObject:cellCnCaption.str];
             
-            if (cellCnType.type == cellBlank){
-                [cnTypeAry addObject:@""];
-            }else if (cellCnType.type == cellString){
-                [cnTypeAry addObject:cellCnType.str];
-            }else{
-                [cnTypeAry addObject:@""];
-            }
+            [cnTypeAry addObject:cellCnType.str];
+            
+            [classifyAry addObject:cellClassify.str];
+            
             NSLog(@"GOODrow, %d",idxRow);
 //            NSLog(@"GOODrow, %d, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str);
         }else{
@@ -290,7 +289,8 @@
         cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnCaption];
         cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnType];
         cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxId];
-        NSLog(@"dealing row, %d, %@, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str, cell4th.str);
+        cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxClassify];
+        NSLog(@"dealing row, %d, %@, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str, cellClassify.str);
 
     }
 //    NSLog(@"in readCustomUSDAdata_V2, idAry=%d, %@, cnCaptionAry=%d, %@, cnTypeAry=%d, %@",idAry.count,idAry,cnCaptionAry.count,cnCaptionAry,cnTypeAry.count,cnTypeAry);
@@ -299,6 +299,7 @@
     [retData setObject:idAry forKey:@"ids"];
     [retData setObject:cnCaptionAry forKey:@"ChineseCaptions"];
     [retData setObject:cnTypeAry forKey:@"ChineseTypes"];
+    [retData setObject:classifyAry forKey:COLUMN_NAME_classify];
     return retData;
 }
 

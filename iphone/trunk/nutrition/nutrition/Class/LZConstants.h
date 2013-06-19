@@ -45,6 +45,7 @@
 #define TABLE_NAME_FoodNutritionCustom @"FoodNutritionCustom"
 #define COLUMN_NAME_CnCaption @"CnCaption"
 #define COLUMN_NAME_CnType @"CnType"
+#define COLUMN_NAME_classify @"classify"
 
 #define TABLE_NAME_Food_Supply_DRI_Common @"Food_Supply_DRI_Common"
 #define TABLE_NAME_Food_Supply_DRI_Amount @"Food_Supply_DRI_Amount"

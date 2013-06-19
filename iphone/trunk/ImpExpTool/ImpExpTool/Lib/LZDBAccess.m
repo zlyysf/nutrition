@@ -437,7 +437,7 @@
     }
     
     assert(columnNamesOfABBREV.count > 1);
-    NSArray *columnNamesCustom = [NSArray arrayWithObjects:COLUMN_NAME_CnCaption,COLUMN_NAME_CnType, nil];
+    NSArray *columnNamesCustom = [NSArray arrayWithObjects:COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify, nil];
     
     NSMutableString *sqlStr = [self generateCreateSqlForUSDA_ABBREV_CustomWithColumnNames:columnNamesOfABBREV andCustomColumnNames:columnNamesCustom];
     [_db executeUpdate:sqlStr];
@@ -453,7 +453,7 @@
     NSLog(@"insertToCustomUSDAtable_V2 begin");
     
     NSString *tableName = TABLE_NAME_FoodNutritionCustom;
-    NSArray *columnNamesCustom = [NSArray arrayWithObjects:COLUMN_NAME_CnCaption,COLUMN_NAME_CnType, nil];
+    NSArray *columnNamesCustom = [NSArray arrayWithObjects:COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify, nil];
     if (needClear){
         [self deleteFromTable:tableName];
     }
@@ -461,6 +461,7 @@
     NSArray *idAry = [customData objectForKey:@"ids"];
     NSArray *cnCaptionAry = [customData objectForKey:@"ChineseCaptions"];
     NSArray *cnTypeAry = [customData objectForKey:@"ChineseTypes"];
+    NSArray *classifyAry = [customData objectForKey:COLUMN_NAME_classify];
     
     NSMutableArray *columnNamesOfABBREV = [dictRowsCols objectForKey:@"columnNames"];
     NSMutableArray *rows = [dictRowsCols objectForKey:@"rows"];
@@ -474,9 +475,11 @@
     
     NSMutableDictionary *dictIdToCnCaption = [NSMutableDictionary dictionaryWithCapacity:idAry.count];
     NSMutableDictionary *dictIdToCnType = [NSMutableDictionary dictionaryWithCapacity:idAry.count];
+    NSMutableDictionary *dictIdToClassify = [NSMutableDictionary dictionaryWithCapacity:idAry.count];
     for(int i=0; i<idAry.count; i++){
         [dictIdToCnCaption setObject:cnCaptionAry[i] forKey:idAry[i]];
         [dictIdToCnType setObject:cnTypeAry[i] forKey:idAry[i]];
+        [dictIdToClassify setObject:classifyAry[i] forKey:idAry[i]];
     }
     //NSLog(@"insertToCustomUSDAtable dictIdToCnCaption=%@, dictIdToCnType=%@",dictIdToCnCaption,dictIdToCnType);
     
@@ -494,10 +497,12 @@
         NSString *rowId = row[columnIndexForId];
         NSString *cnCaption = [dictIdToCnCaption objectForKey:rowId];
         NSString *cnType = [dictIdToCnType objectForKey:rowId];
-        NSLog(@"i=%d,rowId=%@,cnCaption=%@,cnType=%@",i,rowId,cnCaption,cnType);
+        NSString *classify = [dictIdToClassify objectForKey:rowId];
+        NSLog(@"i=%d,rowId=%@,cnCaption=%@,cnType=%@,classify=%@",i,rowId,cnCaption,cnType,classify);
         
         [row addObject:cnCaption];//这里直接在查询出的数据上改了
         [row addObject:cnType];
+        [row addObject:classify];
     }//for
     
     for(int i=0; i<rows.count; i++){

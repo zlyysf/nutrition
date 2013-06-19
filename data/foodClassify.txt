@@ -1,0 +1,29 @@
+食物内部分类：
+谷类 gulei 谷类及制品
+豆类 doulei 干豆类及制品
+蔬菜 shucai 蔬菜类及制品
+  薯类 shucai-shulei 薯类、淀粉及制品
+  菌藻 shucai-junzao 菌藻类
+水果 shuiguo 水果类及制品
+干果 ganguo 坚果、种子类
+肉类
+    畜肉 rou-chu 畜肉类及制品
+    禽肉 rou-qin 禽肉类及制品
+    鱼虾 rou-yuxia 鱼虾蟹贝类
+奶类 nailei 乳类及制品
+蛋类 danlei 蛋类及制品
+油脂 youzhi
+调味品 tiaoweipin
+饮料类 yinliao
+含酒精饮料 jiuyinliao
+糖、果脯和蜜饯、蜂蜜 ..
+小吃、甜饼 ..
+
+
+
+
+
+
+
+
+
