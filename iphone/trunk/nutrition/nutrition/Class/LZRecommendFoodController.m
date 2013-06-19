@@ -19,7 +19,7 @@
 #import "GADMasterViewController.h"
 #import "LZReviewAppManager.h"
 #import <ShareSDK/ShareSDK.h>
-@interface LZRecommendFoodController ()<MBProgressHUDDelegate>
+@interface LZRecommendFoodController ()<MBProgressHUDDelegate,UIActionSheetDelegate>
 {
     MBProgressHUD *HUD;
 }
@@ -348,41 +348,53 @@
         return;
 
 }
-- (IBAction)shareButtonTapped:(id)sender {
-    if ([ShareSDK hasAuthorizedWithType:ShareTypeSinaWeibo])
+- (IBAction)shareButtonTapped:(id)sender
+{
+    UIActionSheet *shareSheet = [[UIActionSheet alloc]initWithTitle:@"分享到" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新浪微博", nil];
+    [shareSheet showInView:self.view.superview];
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == actionSheet.cancelButtonIndex)
     {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-        shareViewController.preInsertText = @"测试一下";
-        [self presentModalViewController:shareViewController animated:YES];
+        return;
     }
-   else
-   {
-       id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
-                                                            allowCallback:YES
-                                                            authViewStyle:SSAuthViewStylePopup
-                                                             viewDelegate:nil
-                                                  authManagerViewDelegate:nil];
-       [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
-                                       [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"买菜助手"],
-                                       SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
-                                       //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
-                                       //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
-                                       nil]];
-       [ShareSDK authWithType:ShareTypeSinaWeibo options:authOptions result:^(SSAuthState state, id<ICMErrorInfo> error) {
-           if (state == SSAuthStateSuccess)
-           {
-               UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-               LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-               shareViewController.preInsertText = @"测试一下";
-               [self presentModalViewController:shareViewController animated:YES];
-           }
-           NSLog(@"ssauthState %d",state);
-       }];
+    else
+    {
+        if ([ShareSDK hasAuthorizedWithType:ShareTypeSinaWeibo])
+        {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+            LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
+            shareViewController.preInsertText = @"测试一下";
+            [self presentModalViewController:shareViewController animated:YES];
+        }
+        else
+        {
+            id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                                 allowCallback:YES
+                                                                 authViewStyle:SSAuthViewStylePopup
+                                                                  viewDelegate:nil
+                                                       authManagerViewDelegate:nil];
+            [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
+                                            [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"买菜助手"],
+                                            SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
+                                            //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
+                                            //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
+                                            nil]];
+            [ShareSDK authWithType:ShareTypeSinaWeibo options:authOptions result:^(SSAuthState state, id<ICMErrorInfo> error) {
+                if (state == SSAuthStateSuccess)
+                {
+                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                    LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
+                    shareViewController.preInsertText = @"测试一下";
+                    [self presentModalViewController:shareViewController animated:YES];
+                }
+                NSLog(@"ssauthState %d",state);
+            }];
+            
+        }
+    }
 
-   }
-
-    
 }
 #pragma mark MBProgressHUDDelegate methods
 

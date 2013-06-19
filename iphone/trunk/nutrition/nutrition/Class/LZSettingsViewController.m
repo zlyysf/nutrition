@@ -19,6 +19,7 @@
 
 @implementation LZSettingsViewController
 @synthesize currentTextField;
+@synthesize topSectionView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,9 +44,22 @@
     [self.tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
     self.tipsLabel.text = @"我们默认向您推荐一个成年人一天的食物量，您在给家庭大采购时可以适当调整人数和天数，但只能输入一位数字。";
     
-    [ShareSDK addNotificationWithName:SSN_USER_AUTH
-                               target:self
-                               action:@selector(userInfoUpdateHandler:)];
+    UIImage *greenButtonImage = [UIImage imageNamed:@"green_button.png"];
+    [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+    [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+    [self.resetButton setBackgroundImage:greenButtonImage forState:UIControlStateNormal];
+    [self.saveButton setBackgroundImage:greenButtonImage forState:UIControlStateNormal];
+    if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
+    {
+        [self.contentScrollView setContentSize:CGSizeMake(320, 455)];
+    }
+    else
+    {
+        [self.contentScrollView setContentSize:CGSizeMake(320, 384)];
+    }
+//    [ShareSDK addNotificationWithName:SSN_USER_AUTH
+//                               target:self
+//                               action:@selector(userInfoUpdateHandler:)];
 	// Do any additional setup after loading the view.
     //显示目前设定的人数 天数
  }
@@ -93,10 +107,10 @@
     
 }
 
-- (void)userInfoUpdateHandler:(NSNotification *)notif
-{
-    NSLog(@"notify user info %@",[notif userInfo]);
-}
+//- (void)userInfoUpdateHandler:(NSNotification *)notif
+//{
+//    NSLog(@"notify user info %@",[notif userInfo]);
+//}
 - (void)viewWillAppear:(BOOL)animated
 {
     self.weiboAuthSwitch.on = [ShareSDK hasAuthorizedWithType:ShareTypeSinaWeibo];
@@ -125,7 +139,42 @@
         [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
         [[NSUserDefaults standardUserDefaults]synchronize];
     }
-
+    if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
+    {
+        CGRect topFrame = self.topSectionView.frame;
+        topFrame.origin.y = 30;
+        self.topSectionView.frame = topFrame;
+        
+        CGRect midFrame = self.midSectionView.frame;
+        midFrame.origin.y = 214;
+        self.midSectionView.frame = midFrame;
+        
+        CGRect bottomFrame = self.bottomSectionView.frame;
+        bottomFrame.origin.y = 325;
+        self.bottomSectionView.frame = bottomFrame;
+        
+        CGRect mobFrame = self.admobView.frame;
+        mobFrame.origin.y = 405;
+        self.admobView.frame = mobFrame;
+    }
+    else
+    {
+        CGRect topFrame = self.topSectionView.frame;
+        topFrame.origin.y = 10;
+        self.topSectionView.frame = topFrame;
+        
+        CGRect midFrame = self.midSectionView.frame;
+        midFrame.origin.y = 174;
+        self.midSectionView.frame = midFrame;
+        
+        CGRect bottomFrame = self.bottomSectionView.frame;
+        bottomFrame.origin.y = 265;
+        self.bottomSectionView.frame = bottomFrame;
+        
+        CGRect mobFrame = self.admobView.frame;
+        mobFrame.origin.y = 334;
+        self.admobView.frame = mobFrame;
+    }
 }
 - (IBAction)reviewOurApp:(id)sender {
 
@@ -177,7 +226,6 @@
     switch (result)
     {
         case MFMailComposeResultCancelled:
-            msg = @"邮件发送取消";
             break;
         case MFMailComposeResultSaved:
             msg = @"邮件保存成功";
@@ -309,6 +357,13 @@
     [self setContentScrollView:nil];
     [self setWeiboAuthSwitch:nil];
     [self setAdmobView:nil];
+    [self setTopSectionView:nil];
+    [self setResetButton:nil];
+    [self setSaveButton:nil];
+    [self setMidSectionView:nil];
+    [self setBottomSectionView:nil];
+    [self setLine1View:nil];
+    [self setLine2View:nil];
     [super viewDidUnload];
 }
 @end
