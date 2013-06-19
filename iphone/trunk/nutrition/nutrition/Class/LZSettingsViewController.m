@@ -69,7 +69,7 @@
     {
         id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
                                                              allowCallback:YES
-                                                             authViewStyle:SSAuthViewStylePopup
+                                                             authViewStyle:SSAuthViewStyleFullScreenPopup
                                                               viewDelegate:nil
                                                    authManagerViewDelegate:nil];
         [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:

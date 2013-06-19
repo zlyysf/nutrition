@@ -9,6 +9,7 @@
 #import "LZNutrientionManager.h"
 #import <QuartzCore/QuartzCore.h>
 #import "LZAppDelegate.h"
+#import "LZDataAccess.h"
 @implementation LZNutrientionManager
 +(LZNutrientionManager*)SharedInstance
 {
@@ -22,13 +23,14 @@
 - (void)showNutrientInfo:(NSString *)nutrientId
 {
     float duration = 0.5;
-    LZNutritionInfoView *viewtoAnimate = [[LZNutritionInfoView alloc]initWithFrame:CGRectMake(50, 50, 50, 50) andColor:[UIColor blueColor] delegate:self];
-    //[viewtoAnimate setBackgroundColor:[UIColor redColor]];
-    //viewtoAnimate.tag = 202;
+    CGSize screenSize = [[UIScreen mainScreen]bounds].size;
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *dict = [da getNutrientInfo:nutrientId];
+    NSLog(@"nutrient dict %@",dict);
+    LZNutritionInfoView *viewtoAnimate = [[LZNutritionInfoView alloc]initWithFrame:CGRectMake(0, 20, screenSize.width, screenSize.height-20) andColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5] andInfo:dict delegate:self];
+
     LZAppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
     [appDelegate.window addSubview:viewtoAnimate];
-
-    
     CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     scale.duration = duration;
     scale.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.5f],
@@ -37,26 +39,26 @@
                     [NSNumber numberWithFloat:1.f],
                     nil];
     
-    CABasicAnimation *fadeIn = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    fadeIn.duration = duration * .4f;
-    fadeIn.fromValue = [NSNumber numberWithFloat:0.f];
-    fadeIn.toValue = [NSNumber numberWithFloat:1.f];
-    fadeIn.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    fadeIn.fillMode = kCAFillModeForwards;
+//    CABasicAnimation *fadeIn = [CABasicAnimation animationWithKeyPath:@"opacity"];
+//    fadeIn.duration = duration * .4f;
+//    fadeIn.fromValue = [NSNumber numberWithFloat:0.f];
+//    fadeIn.toValue = [NSNumber numberWithFloat:.7f];
+//    fadeIn.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+//    fadeIn.fillMode = kCAFillModeForwards;
     CAAnimationGroup *group = [CAAnimationGroup animation];
-    group.animations = [NSArray arrayWithArray:[NSArray arrayWithObjects:scale, fadeIn, nil]];
+    group.animations = [NSArray arrayWithArray:[NSArray arrayWithObjects:scale, nil]];
     group.delegate = nil;
     group.duration = duration;
     group.removedOnCompletion = YES;
     
     group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [viewtoAnimate.layer addAnimation:group forKey:@"kFTAnimationPopIn"];
+    [viewtoAnimate.backView.layer addAnimation:group forKey:@"kFTAnimationPopIn"];
 
 }
 - (void)infoViewClosed:(LZNutritionInfoView *)infoView
 {
     [infoView.layer removeAllAnimations];
-    float duration = 0.5;
+    float duration = 0.3;
     CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     scale.duration = duration;
     scale.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:1.f],
@@ -65,11 +67,11 @@
                     nil];
     
     CABasicAnimation *fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
-    fadeOut.duration = duration * .4f;
+    fadeOut.duration = duration; //* .4f;
     fadeOut.fromValue = [NSNumber numberWithFloat:1.f];
     fadeOut.toValue = [NSNumber numberWithFloat:0.f];
     fadeOut.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
-    fadeOut.beginTime = duration * .6f;
+    //fadeOut.beginTime = duration * .6f;
     //fadeOut.fillMode = kCAFillModeForwards;
     CAAnimationGroup *group = [CAAnimationGroup animation];
     group.animations = [NSArray arrayWithArray:[NSArray arrayWithObjects:scale, fadeOut, nil]];
@@ -78,8 +80,8 @@
     group.removedOnCompletion = NO;
     group.fillMode = kCAFillModeForwards;
     group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [group setValue:infoView forKey:@"kViewToRemove"];
-    [infoView.layer addAnimation:group forKey:@"kFTAnimationPopOut"];
+    [group setValue:infoView.backView forKey:@"kViewToRemove"];
+    [infoView.backView.layer addAnimation:group forKey:@"kFTAnimationPopOut"];
 //    float duration = 0.5;
 //    CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
 //    scale.duration = duration;
@@ -108,7 +110,7 @@
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
     if(flag)
     {
-        LZNutritionInfoView *view = [theAnimation valueForKey:@"kViewToRemove"];
+        LZNutritionInfoView *view = (LZNutritionInfoView*)((UIView*)[theAnimation valueForKey:@"kViewToRemove"]).superview;
         if(view)
         {
             [view removeFromSuperview];

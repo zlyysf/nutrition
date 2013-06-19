@@ -14,7 +14,8 @@
 @interface LZNutritionInfoView : UIView
 - (id)initWithFrame:(CGRect)frame
            andColor:(UIColor *)backColor
+            andInfo:(NSDictionary *)infoDict
            delegate:(id<LZNutritionInfoViewDelegate>)nutrientDelegate;
-
+@property (nonatomic,strong)UIView *backView;
 @property (nonatomic,assign)id<LZNutritionInfoViewDelegate>delegate;
 @end
