@@ -46,11 +46,11 @@
             <objects>
                 <viewController id="v2r-YV-GYD" customClass="LZSettingsViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ZHJ-1P-sm5">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="0J9-iN-6I9">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="367"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="RAz-Sn-Rch">
@@ -207,7 +207,7 @@
                                     </imageView>
                                     <view contentMode="scaleToFill" id="hsL-Rz-QQN">
                                         <rect key="frame" x="0.0" y="317" width="320" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
                                 </subviews>
@@ -216,6 +216,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="mYF-ed-kAE"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics"/>
                     <connections>
                         <outlet property="admobView" destination="hsL-Rz-QQN" id="mOV-Up-MBd"/>
                         <outlet property="contentScrollView" destination="0J9-iN-6I9" id="s1Y-6H-doS"/>
@@ -1004,6 +1005,7 @@
         <class className="LZAddByNutrientController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZAddByNutrientController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelButtonTapped:"/>
                 <relationship kind="action" name="saveButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="navItem" candidateClass="UINavigationItem"/>
@@ -1012,6 +1014,8 @@
         <class className="LZDailyIntakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDailyIntakeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelButtonTapped:"/>
+                <relationship kind="action" name="saveButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="selectorView" candidateClass="LZValueSelectorView"/>
             </relationships>
@@ -1036,6 +1040,8 @@
         <class className="LZFoodListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodListViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addFoodAction:"/>
+                <relationship kind="action" name="clearFoodAction:"/>
                 <relationship kind="outlet" name="addFoodItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
@@ -1092,6 +1098,8 @@
         <class className="LZRecommendFoodController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZRecommendFoodController.h"/>
             <relationships>
+                <relationship kind="action" name="changeOnePlan:"/>
+                <relationship kind="action" name="shareButtonTapped:"/>
                 <relationship kind="outlet" name="changeOnePlanItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="shareItem" candidateClass="UIBarButtonItem"/>
@@ -1100,6 +1108,11 @@
         <class className="LZSettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZSettingsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="authSwitchChangeHandler:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="cancelChanges:"/>
+                <relationship kind="action" name="reviewOurApp:"/>
+                <relationship kind="action" name="saveChanges:"/>
+                <relationship kind="action" name="userFeedBack:"/>
                 <relationship kind="outlet" name="admobView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="contentScrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="daysBackImageView" candidateClass="UIImageView"/>
@@ -1113,6 +1126,9 @@
         <class className="LZShareViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZShareViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelButtonTapped:"/>
+                <relationship kind="action" name="clearButtonTapped:"/>
+                <relationship kind="action" name="publishButtonTapped:"/>
                 <relationship kind="outlet" name="contentBackgroundImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="contentTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="wordCountLabel" candidateClass="UILabel"/>
