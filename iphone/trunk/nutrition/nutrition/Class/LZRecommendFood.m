@@ -88,6 +88,8 @@
 }
 
 /*
+ 这里算法的主要特点是 ，补营养素的计算策略是一次对一种营养素用各种食物补够。
+ 
  返回值是一个Dictionary，包含key有：
      "DRI"，对应当前用户的DRI清单，虽然也可以调用方法计算出来。
      "NutrientSupply"，
@@ -142,7 +144,7 @@
     int upperLimit = 1000; // 1000 g
     int topN = 20;
     NSString *colName_NO = @"NDB_No";
-    double nearZero = 0.0000001;
+
     
     
     //这里列出的营养素有专门而简单的食物补充，通过我们预置的那些食物反而不好补充
@@ -243,7 +245,7 @@
     while (TRUE) {
         NSString *nutrientNameToCal = nil;
         if (nutrientNameDictToCal.allKeys.count>0){
-            double maxNutrientLackRatio = nearZero;
+            double maxNutrientLackRatio = Config_nearZero;
             NSString *maxLackNutrientName = nil;
             NSArray * nutrientNamesToCal = [nutrientNameDictToCal allKeys];
             for(int i=0; i<nutrientNamesToCal.count; i++){//先找出最需要补的营养素,即缺乏比例最大的
@@ -257,7 +259,7 @@
                 }
                 
                 double toAdd = [nmTotalNeed doubleValue]-[nmSupplied doubleValue];
-                if (toAdd <= nearZero){
+                if (toAdd <= Config_nearZero){
                     //可能由于在补一种或某些营养素时，选中的一些食物已经把其他的一些营养素的需要量给补够了。以及已经吃了的食物也把某些营养素摄取足了。这样的营养素就可以跳过不计算了.
                     [nutrientNameDictToCal removeObjectForKey:nutrientName];
                     continue;
@@ -281,7 +283,7 @@
                 NSNumber *nmSupplied = nutrientSupplyDict[nutrientNameToCal];
                 NSNumber *nmTotalNeed = DRIsDict[nutrientNameToCal];
                 double toAdd = [nmTotalNeed doubleValue]-[nmSupplied doubleValue];
-                if (toAdd <= nearZero){
+                if (toAdd <= Config_nearZero){
                     //可能由于在计算过程中，已有的或已选的食物已经把这种营养素的需要量给补够了。这样的营养素就可以跳过不计算了.
                     continue;
                 }
@@ -300,7 +302,7 @@
         NSNumber *nmSupplied = nutrientSupplyDict[nutrientNameToCal];
         NSNumber *nmTotalNeed = DRIsDict[nutrientNameToCal];
         double toAddForNutrient = [nmTotalNeed doubleValue]-[nmSupplied doubleValue];
-        assert(toAddForNutrient>nearZero);
+        assert(toAddForNutrient>Config_nearZero);
         
         NSArray * foodsToSupplyOneNutrient = [da getRichNutritionFood:nutrientNameToCal andTopN:topN];//找一些对于这种营养素含量最高的食物
         NSMutableArray *normalFoodsToSupplyOneNutrient = [NSMutableArray arrayWithArray:foodsToSupplyOneNutrient];
@@ -352,7 +354,7 @@
             NSString *foodNO = food[colName_NO];
             if ( [foodSupplyAmountDict objectForKey:foodNO]!=nil ){//已经用过这种食物了
                 NSNumber *nmIntakeFoodAmount = [foodSupplyAmountDict objectForKey:foodNO];
-                if (upperLimit - [nmIntakeFoodAmount doubleValue] < nearZero){//这个食物已经用得够多到上限量了，换下一个来试
+                if (upperLimit - [nmIntakeFoodAmount doubleValue] < Config_nearZero){//这个食物已经用得够多到上限量了，换下一个来试
                     continue;
                 }
             }
@@ -370,10 +372,10 @@
             if (nmFoodUpperLimit != nil && (NSNull*)nmFoodUpperLimit != [NSNull null]){
                 dFoodUpperLimit = [nmFoodUpperLimit doubleValue];
             }
-            if (toAddForFood - upperLimit > nearZero){//要补的食物的量过多，当食物所含该种营养素的量太少时发生。这时只取到上限值，再找其他食物来补充。
+            if (toAddForFood - upperLimit > Config_nearZero){//要补的食物的量过多，当食物所含该种营养素的量太少时发生。这时只取到上限值，再找其他食物来补充。
                 toAddForFood = upperLimit;
             }
-            if (needUseFoodLimitTableWhenCal && dFoodUpperLimit > 0 && toAddForFood - dFoodUpperLimit > nearZero){
+            if (needUseFoodLimitTableWhenCal && dFoodUpperLimit > 0 && toAddForFood - dFoodUpperLimit > Config_nearZero){
                 toAddForFood = dFoodUpperLimit;
             }
             toAddForNutrient = toAddForNutrient - toAddForFood / 100.0 * [nmNutrientContentOfFood doubleValue];
@@ -404,7 +406,7 @@
             [foodSupplyNutrientSeq addObject:[food objectForKey:@"Shrt_Desc"]];
             [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
             
-            if (toAddForNutrient > nearZero){
+            if (toAddForNutrient > Config_nearZero){
                 //继续下一个循环取食物来补足当前营养素。
                 //虽然有种策略是由于补充了这种食物后，当前营养素不一定是最缺的，可以计算下一个最缺的营养素而不必非要把当前的营养素补充完。不过由于这里的循环结构会导致当前营养素已经去掉，这种策略目前不适用。
             }else{
@@ -547,7 +549,6 @@
     
     uint randSeed = arc4random();
     
-    
     if(options != nil){
         NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
         if (nmFlag_notAllowSameFood != nil)
@@ -577,11 +578,13 @@
     NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%u",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
     srandom(randSeed);
     
-    int upperLimit = 1000; // 1000 g
+    int defFoodUpperLimit = Config_foodUpperLimit; // 1000 g
+    int defFoodLowerLimit = Config_foodLowerLimit;
+    int defFoodNormalValue = Config_foodNormalValue;
     //int topN = 20;
     int topN = 50;
     NSString *colName_NO = @"NDB_No";
-    double nearZero = 0.0000001;
+
     
     LZDataAccess *da = [LZDataAccess singleton];
     
@@ -721,7 +724,7 @@
         NSString *nutrientNameToCal = nil;
         int idxOfNutrientNameToCal = 0;
         NSString *typeOfNutrientNamesToCal = nil;
-        double maxNutrientLackRatio = nearZero;
+        double maxNutrientLackRatio = Config_nearZero;
         NSString *maxLackNutrientName = nil;
         if (nutrientNameAryToCal.count > 0){
             for(int i=nutrientNameAryToCal.count-1; i>=0; i--){//先去掉已经补满的
@@ -729,7 +732,7 @@
                 NSNumber *nmSupplied = nutrientSupplyDict[nutrientName];
                 NSNumber *nmTotalNeed1Unit = DRIsDict[nutrientName];
                 double toAdd = [nmTotalNeed1Unit doubleValue]*personDayCount - [nmSupplied doubleValue];
-                if (toAdd <= nearZero){
+                if (toAdd <= Config_nearZero){
                     [nutrientNameAryToCal removeObjectAtIndex:i];
                     logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
                     NSLog(@"%@",logMsg);
@@ -746,7 +749,7 @@
                 [calculationLog addObjectsFromArray:nutrientNameAryToCal];
                 [calculationLogs addObject:calculationLog];
                 
-                maxNutrientLackRatio = nearZero;
+                maxNutrientLackRatio = Config_nearZero;
                 maxLackNutrientName = nil;
                 calculationLog = [NSMutableArray arrayWithObjects:@"nutrients lack rates:", nil];
                 for(int i=0; i<nutrientNameAryToCal.count; i++){//先找出最需要补的营养素,即缺乏比例最大的
@@ -754,7 +757,7 @@
                     NSNumber *nmSupplied = nutrientSupplyDict[nutrientName];
                     NSNumber *nmTotalNeed1Unit = DRIsDict[nutrientName];
                     double toAdd = [nmTotalNeed1Unit doubleValue]*personDayCount-[nmSupplied doubleValue];
-                    assert(toAdd > nearZero);
+                    assert(toAdd > Config_nearZero);
                     double lackRatio = toAdd/([nmTotalNeed1Unit doubleValue]*personDayCount);
                     [calculationLog addObject:nutrientName];
                     [calculationLog addObject:[NSNumber numberWithDouble:lackRatio]];
@@ -793,7 +796,7 @@
                     NSNumber *nmSupplied = nutrientSupplyDict[nutrientName];
                     NSNumber *nmTotalNeed1Unit = DRIsDict[nutrientName];
                     double toAdd = [nmTotalNeed1Unit doubleValue]*personDayCount - [nmSupplied doubleValue];
-                    if (toAdd <= nearZero){
+                    if (toAdd <= Config_nearZero){
                         [nutrientArrayLastCal removeObjectAtIndex:i];
                         logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
                         NSLog(@"%@",logMsg);
@@ -820,7 +823,7 @@
         NSNumber *nmSupplied = nutrientSupplyDict[nutrientNameToCal];
         NSNumber *nmTotalNeed1Unit = DRIsDict[nutrientNameToCal];
         double toAddForNutrient = [nmTotalNeed1Unit doubleValue]*personDayCount-[nmSupplied doubleValue];
-        assert(toAddForNutrient>nearZero);
+        assert(toAddForNutrient>Config_nearZero);
         
         NSArray * foodsToSupplyOneNutrient = [da getRichNutritionFood:nutrientNameToCal andTopN:topN];//找一些对于这种营养素含量最高的食物
         NSMutableArray *normalFoodsToSupplyOneNutrient = [NSMutableArray arrayWithArray:foodsToSupplyOneNutrient];
@@ -829,7 +832,7 @@
         for(int i=normalFoodsToSupplyOneNutrient.count-1; i>=0; i--){
             NSDictionary *food = foodsToSupplyOneNutrient[i];
             NSString *foodNO = food[colName_NO];
-            if ( [foodSupplyAmountDict objectForKey:foodNO]!=nil ){//已经用过这种食物了
+            if ( [foodSupplyAmountDict objectForKey:foodNO]!=nil ){//已经用过这种食物了  TODO 已经用过几次的计数比较，使用尚未用过的或用的次数少的......
                 if (notAllowSameFood){//需要食物多样化的话，这里就不再用这种食物了
                     //[alreadyUsedFoodsWhenOtherNutrients addObject:food];
                     [alreadyUsedFoodsWhenOtherNutrients insertObject:food atIndex:0];
@@ -841,7 +844,7 @@
         //while (TRUE) {////选取一个食物，来补当前营养素
             NSDictionary *food = nil;
             
-            if (normalFoodsToSupplyOneNutrient.count > 0){
+            if (normalFoodsToSupplyOneNutrient.count > 0){//先找尚未用过的食物
                 if (!randomSelectFood){
                     //to use RichLevel todo
                     food = normalFoodsToSupplyOneNutrient[0];
@@ -857,7 +860,7 @@
                 }
             }
             if (food == nil){
-                while(alreadyUsedFoodsWhenOtherNutrients.count>0){
+                while(alreadyUsedFoodsWhenOtherNutrients.count>0){//再循环找已经用过的食物且未超上限的
                     int idx = 0;
                     if (randomRangeSelectFood > 0){
                         idx = random() % randomRangeSelectFood;
@@ -870,19 +873,18 @@
                     
                     NSString *foodNO = food2[colName_NO];
                     NSNumber *nmIntakeFoodAmount = [foodSupplyAmountDict objectForKey:foodNO];
-                    if (upperLimit*personDayCount - [nmIntakeFoodAmount doubleValue] <= nearZero){//这个食物已经用得够多到绝对上限量了，换下一个来试
-                        continue;
-                    }
-                    if (needUseFoodLimitTableWhenCal){
-                        NSNumber *nmFoodUpperLimit = food[@"Upper_Limit(g)"];
-                        double dFoodUpperLimit = 0;
-                        if (nmFoodUpperLimit != nil && (NSNull*)nmFoodUpperLimit != [NSNull null]){
+                    
+                    double dFoodUpperLimit = defFoodUpperLimit;
+                    if (needUseFoodLimitTableWhenCal){//如果使用限制表中的数据
+                        NSNumber *nmFoodUpperLimit = food[COLUMN_NAME_Upper_Limit];
+                        if (nmFoodUpperLimit != nil && (NSNull*)nmFoodUpperLimit != [NSNull null]){//用if而不是assert是容错考虑
                             dFoodUpperLimit = [nmFoodUpperLimit doubleValue];
                         }
-                        if (dFoodUpperLimit > 0 && dFoodUpperLimit*personDayCount - [nmIntakeFoodAmount doubleValue] <= nearZero){//这个食物已经用得够多到自定义上限量了，换下一个来试
-                            continue;
-                        }
                     }
+                    if (dFoodUpperLimit*personDayCount - [nmIntakeFoodAmount doubleValue] <= Config_nearZero){//这个食物已经用得够多到上限量了，换下一个来试
+                        continue;
+                    }
+                    
                     food = food2;
                     break;
                 }//while(alreadyUsedFoodsWhenOtherNutrients.count>0)
@@ -918,27 +920,31 @@
             NSString *foodNO = food[colName_NO];
 
             NSNumber* nmNutrientContentOfFood = [food objectForKey:nutrientNameToCal];
-            assert([nmNutrientContentOfFood doubleValue]>0.0);
-//            if ([nmNutrientContentOfFood doubleValue]==0.0){
-//                //这个营养素的目前计算到的含其最多的食物的含量已经为0，没法补齐这个营养素了.换下一个吧。
-//                //虽然食物的营养素含量不太可能为0，但以防万一
-//                continue;
-//            }
+            assert([nmNutrientContentOfFood doubleValue]>0.0);//确认选出的这个食物含这种营养素
         
             double toAddForFood = toAddForNutrient / [nmNutrientContentOfFood doubleValue] * 100.0;//单位是g
-            if (toAddForFood - upperLimit > nearZero){//要补的食物的量过多，当食物所含该种营养素的量太少时发生。这时这次只取到上限值，再找其他食物来补充。
-                toAddForFood = upperLimit;
-            }
-            if (needUseFoodLimitTableWhenCal){
-                NSNumber *nmFoodUpperLimit = food[@"Upper_Limit(g)"];
-                double dFoodUpperLimit = 0;
-                if (nmFoodUpperLimit != nil && (NSNull*)nmFoodUpperLimit != [NSNull null]){
-                    dFoodUpperLimit = [nmFoodUpperLimit doubleValue];
+            double dFoodNormalValue = defFoodNormalValue;
+            if (needUseFoodLimitTableWhenCal){//如果使用限制表中的数据
+                NSNumber *nmFoodNormalValue = food[COLUMN_NAME_normal_value];
+                if(nmFoodNormalValue != nil && (NSNull*)nmFoodNormalValue != [NSNull null]){//用if而不是assert是容错考虑
+                    dFoodNormalValue = [nmFoodNormalValue doubleValue];
                 }
-                if (dFoodUpperLimit > 0 && toAddForFood - dFoodUpperLimit > nearZero){
-                    toAddForFood = dFoodUpperLimit;//如果要用通常上限。这时这次只取到通常上限值，下次再计算别的最需要补充的食物。
-                }  
             }
+            if (toAddForFood - dFoodNormalValue > Config_nearZero){//要补的食物的量对于普通建议量有点多，目前暂且不用上限值，这时这次只取到普通建议量，再找其他食物来补充。
+                toAddForFood = dFoodNormalValue;
+            }
+        
+            double dFoodLowerLimit = defFoodLowerLimit;
+            if (needUseFoodLimitTableWhenCal){//如果使用限制表中的数据
+                NSNumber *nmFoodLowerLimit = food[COLUMN_NAME_Lower_Limit];
+                if(nmFoodLowerLimit != nil && (NSNull*)nmFoodLowerLimit != [NSNull null]){//用if而不是assert是容错考虑
+                    dFoodLowerLimit = [nmFoodLowerLimit doubleValue];
+                }
+            }
+            if (toAddForFood < dFoodLowerLimit) {//当这次要补的食物的量过少，近似于0而低于下限值时，则使用下限值，除非下限值为0
+                toAddForFood = dFoodLowerLimit;
+            }
+        
             toAddForNutrient = toAddForNutrient - toAddForFood / 100.0 * [nmNutrientContentOfFood doubleValue];
             
             NSArray *foodAttrs = [food allKeys];//虽然food中主要有各营养成分的量，也有ID，desc等字段
@@ -975,7 +981,7 @@
         
             [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
             
-            if (toAddForNutrient > nearZero){
+            if (toAddForNutrient > Config_nearZero){
                 //这次没有把这个营养素补充完，但现在由于补充了这种食物后，当前营养素不一定是最缺的，可以计算下一个最缺的营养素而不必非要把当前的营养素补充完
             }else{
                 //这个营养素已经补足，可以到外层循环计算下一个营养素了。
@@ -1914,7 +1920,7 @@
     }
     
     
-    double nearZero = 0.0000001;
+
     
     NSMutableString *strHtml = [NSMutableString stringWithCapacity:1000*1000];
     [strHtml appendString:@"<style>\n"];
@@ -1975,7 +1981,7 @@
                 (limitedNutrientDictCanBeCal!=nil && [limitedNutrientDictCanBeCal objectForKey:nutrientName]!=nil)
                 )
             {//这里要考虑到需求中可能限制了营养素集合
-                if ([nmNutrientLackVal doubleValue]>nearZero){
+                if ([nmNutrientLackVal doubleValue]>Config_nearZero){
                     double lackRatio = [nmNutrientLackVal doubleValue] / [nmNutrientDRI doubleValue];
                     NSMutableArray* row = [LZUtility generateEmptyArray:colLen];
                     row[0] = nutrientName;

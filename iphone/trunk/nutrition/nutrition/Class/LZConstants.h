@@ -10,6 +10,11 @@
 #define nutrition_LZConstants_h
 
 #define Config_needConsiderNutrientLoss TRUE
+#define Config_foodUpperLimit 1000 // unit g
+#define Config_foodLowerLimit 1 // unit g
+#define Config_foodNormalValue 250 // unit g
+#define Config_nearZero 0.0000001
+
 
 #define kFatFactor 1/9 //means 1g fat contains 9Kcal energy
 #define kCarbFactor 1/4 //means 1g carbohydrt contains 4Kcal energy
@@ -45,6 +50,9 @@
 #define TABLE_NAME_Food_Supply_DRI_Amount @"Food_Supply_DRI_Amount"
 
 #define TABLE_NAME_FoodLimit @"FoodLimit"
+#define COLUMN_NAME_Lower_Limit @"Lower_Limit(g)"
+#define COLUMN_NAME_Upper_Limit @"Upper_Limit(g)"
+#define COLUMN_NAME_normal_value @"normal_value"
 #define TABLE_NAME_FoodCnDescription @"FoodCnDescription"
 
 #define TABLE_NAME_NutritionInfo @"NutritionInfo"
