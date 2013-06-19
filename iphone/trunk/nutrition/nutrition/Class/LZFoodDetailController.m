@@ -90,7 +90,8 @@
         NSString *nutrientName = [aNutrient objectForKey:@"Name"];
         NSString *nutrientId = [aNutrient objectForKey:@"NutrientID"];
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
-        cell.nutrientNameLabel.text = nutrientName;
+        cell.nutrientId = nutrientId;
+        [cell.nameButton setTitle:nutrientName forState:UIControlStateNormal];
         NSNumber *percent = [aNutrient objectForKey:@"1foodSupply1NutrientRate"];
         NSNumber *food1Supply1NutrientAmount = [aNutrient objectForKey:@"food1Supply1NutrientAmount"];
         NSNumber *nutrientTotalDRI = [aNutrient objectForKey:@"nutrientTotalDRI"];

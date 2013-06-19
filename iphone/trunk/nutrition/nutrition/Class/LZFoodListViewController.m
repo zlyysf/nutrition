@@ -170,8 +170,9 @@
     {
         LZFoodNutritionCell *cell = (LZFoodNutritionCell *)[tableView dequeueReusableCellWithIdentifier:@"LZFoodNutritionCell"];
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
-        cell.nutritionNameLabel.text = [nutrient objectForKey:@"Name"];
+        [cell.nutritionNameButton setTitle:[nutrient objectForKey:@"Name"] forState:UIControlStateNormal];
         NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+        cell.nutrientId = nutrientId;
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
         NSNumber *percent = [nutrient objectForKey:@"nutrientInitialSupplyRate"];
         float progress = [percent floatValue]>1.f ? 1.f :[percent floatValue];

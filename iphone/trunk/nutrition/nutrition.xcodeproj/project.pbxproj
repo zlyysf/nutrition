@@ -140,6 +140,8 @@
 		5FF631F317715F0D0068CBFE /* weibo_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF631EE17715F0C0068CBFE /* weibo_icon@2x.png */; };
 		5FF631F6177165C20068CBFE /* button_bottom_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF631F4177165C20068CBFE /* button_bottom_clicked@2x.png */; };
 		5FF631F7177165C20068CBFE /* button_top_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF631F5177165C20068CBFE /* button_top_clicked@2x.png */; };
+		5FF6320417718E100068CBFE /* LZNutrientionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF6320117718E0F0068CBFE /* LZNutrientionManager.m */; };
+		5FF6320517718E100068CBFE /* LZNutritionInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF6320317718E100068CBFE /* LZNutritionInfoView.m */; };
 		5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
 		5FF8473D1758546900DEA6DE /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8473B1758546900DEA6DE /* README.mdown */; };
 		5FF8474117587F0100DEA6DE /* nav_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8474017587F0100DEA6DE /* nav_back_button@2x.png */; };
@@ -320,6 +322,10 @@
 		5FF631EE17715F0C0068CBFE /* weibo_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "weibo_icon@2x.png"; path = "nutrition/Resource/weibo_icon@2x.png"; sourceTree = "<group>"; };
 		5FF631F4177165C20068CBFE /* button_bottom_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_bottom_clicked@2x.png"; path = "nutrition/Resource/button_bottom_clicked@2x.png"; sourceTree = "<group>"; };
 		5FF631F5177165C20068CBFE /* button_top_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_top_clicked@2x.png"; path = "nutrition/Resource/button_top_clicked@2x.png"; sourceTree = "<group>"; };
+		5FF6320017718E0E0068CBFE /* LZNutrientionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZNutrientionManager.h; path = Class/LZNutrientionManager.h; sourceTree = "<group>"; };
+		5FF6320117718E0F0068CBFE /* LZNutrientionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZNutrientionManager.m; path = Class/LZNutrientionManager.m; sourceTree = "<group>"; };
+		5FF6320217718E0F0068CBFE /* LZNutritionInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZNutritionInfoView.h; path = Class/LZNutritionInfoView.h; sourceTree = "<group>"; };
+		5FF6320317718E100068CBFE /* LZNutritionInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZNutritionInfoView.m; path = Class/LZNutritionInfoView.m; sourceTree = "<group>"; };
 		5FF847391758546900DEA6DE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = nutrition/MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		5FF8473A1758546900DEA6DE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = nutrition/MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		5FF8473B1758546900DEA6DE /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.mdown; path = nutrition/MBProgressHUD/README.mdown; sourceTree = "<group>"; };
@@ -564,6 +570,10 @@
 				5F746C071769EB9A00E68D0E /* LZReviewAppManager.m */,
 				5FDED0FE176F1D8E0026BCA3 /* LZShareViewController.h */,
 				5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */,
+				5FF6320017718E0E0068CBFE /* LZNutrientionManager.h */,
+				5FF6320117718E0F0068CBFE /* LZNutrientionManager.m */,
+				5FF6320217718E0F0068CBFE /* LZNutritionInfoView.h */,
+				5FF6320317718E100068CBFE /* LZNutritionInfoView.m */,
 			);
 			path = nutrition;
 			sourceTree = "<group>";
@@ -941,6 +951,8 @@
 				5F746C081769EB9A00E68D0E /* LZReviewAppManager.m in Sources */,
 				5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */,
 				5FF631DF17702D630068CBFE /* GADMasterViewController.m in Sources */,
+				5FF6320417718E100068CBFE /* LZNutrientionManager.m in Sources */,
+				5FF6320517718E100068CBFE /* LZNutritionInfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

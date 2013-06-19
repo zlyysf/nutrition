@@ -10,7 +10,7 @@
 #import "LZProgressView.h"
 @interface LZNutritionSupplyCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet LZProgressView *nutritionProgressView;
-@property (strong, nonatomic) IBOutlet UILabel *nutrientNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *nutrientSupplyLabel;
-
+@property (strong, nonatomic) IBOutlet UIButton *nameButton;
+@property (strong,nonatomic)NSString *nutrientId;
 @end

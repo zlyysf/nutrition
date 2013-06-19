@@ -7,9 +7,9 @@
 //
 
 #import "LZFoodNutritionCell.h"
-
+#import "LZNutrientionManager.h"
 @implementation LZFoodNutritionCell
-
+@synthesize nutrientId;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -37,17 +37,20 @@
     if (highlighted)
     {
         [self.supplyPercentlabel setTextColor:[UIColor whiteColor]];
-        [self.nutritionNameLabel setTextColor:[UIColor whiteColor]];
+        //[self.nutritionNameButton.titleLabel setTextColor:[UIColor whiteColor]];
         [self setBackgroundColor:[UIColor colorWithRed:15/255.f green:148/255.f blue:26/255.f alpha:0.8f]];
         [self.cellArrowImage setImage:[UIImage imageNamed:@"arrow_click.png"]];
     }
     else
     {
         [self.supplyPercentlabel setTextColor:[UIColor blackColor]];
-        [self.nutritionNameLabel setTextColor:[UIColor blackColor]];
+        //[self.nutritionNameButton.titleLabel setTextColor:[UIColor darkTextColor]];
         [self setBackgroundColor:[UIColor clearColor]];
         [self.cellArrowImage setImage:[UIImage imageNamed:@"arrow.png"]];
     }
+}
+- (IBAction)nameButtonTapped:(id)sender {
+    [[LZNutrientionManager SharedInstance]showNutrientInfo:self.nutrientId];
 }
 
 @end

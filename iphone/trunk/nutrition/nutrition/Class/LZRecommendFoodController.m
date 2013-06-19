@@ -244,7 +244,8 @@
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
         NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
-        cell.nutritionNameLabel.text = [nutrient objectForKey:@"Name"];
+        cell.nutrientId = nutrientId;
+        [cell.nameButton setTitle:[nutrient objectForKey:@"Name"] forState:UIControlStateNormal];
         NSNumber *percent = [nutrient objectForKey:@"nutrientInitialSupplyRate"];
         float progress = [percent floatValue]>1.f ? 1.f :[percent floatValue];
         float radius;
