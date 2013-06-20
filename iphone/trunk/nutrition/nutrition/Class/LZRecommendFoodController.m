@@ -114,9 +114,9 @@
     
     BOOL notAllowSameFood = TRUE;//这是一个策略标志位，偏好食物的多样化的标志位，即当选取食物补充营养时，优先选取以前没有用过的食物。
     BOOL randomSelectFood = TRUE;
-    int randomRangeSelectFood = 20;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
+    int randomRangeSelectFood = 40;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
-    int limitRecommendFoodCount = 4;//0;//4;//只限制显示的
+
     
     if ( [userDefaults objectForKey:LZSettingKey_randomSelectFood]!=nil ){
         randomSelectFood = [userDefaults boolForKey:LZSettingKey_randomSelectFood];
@@ -130,9 +130,9 @@
     if ( [userDefaults objectForKey:LZSettingKey_notAllowSameFood]!=nil ){
         notAllowSameFood = [userDefaults boolForKey:LZSettingKey_notAllowSameFood];
     }
-    if ( [userDefaults objectForKey:LZSettingKey_limitRecommendFoodCount]!=nil ){
-        limitRecommendFoodCount = [userDefaults integerForKey:LZSettingKey_limitRecommendFoodCount];
-    }
+//    if ( [userDefaults objectForKey:LZSettingKey_limitRecommendFoodCount]!=nil ){
+//        limitRecommendFoodCount = [userDefaults integerForKey:LZSettingKey_limitRecommendFoodCount];
+//    }
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -145,10 +145,10 @@
                              [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
                              [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
                              [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
-                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+//                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
                              nil];
     //NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
-    NSMutableDictionary *retDict = [rf recommendFood2_AbstractPerson:params withDecidedFoods:dailyIntake andOptions:options];
+    NSMutableDictionary *retDict = [rf recommendFood3_AbstractPerson:params withDecidedFoods:dailyIntake andOptions:options];
     NSMutableDictionary *uiDictionary = [rf formatRecommendResultForUI:retDict];
     NSLog(@"uiDictionary %@",[uiDictionary allKeys]);
     NSArray *recommendArray = [uiDictionary objectForKey:Key_recommendFoodInfoDictArray];

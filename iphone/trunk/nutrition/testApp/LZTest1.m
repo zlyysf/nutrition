@@ -1352,9 +1352,10 @@
 
 +(void)caseAbstractUserWithRandToReproduce1
 {
-    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                         [NSNumber numberWithDouble:250.0],@"11233",//jielan
-                                         nil];
+    NSDictionary *takenFoodAmountDict = nil;
+//    NSDictionary *takenFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                         [NSNumber numberWithDouble:250.0],@"11233",//jielan
+//                                         nil];
     
     BOOL notAllowSameFood = TRUE;
     BOOL randomSelectFood = TRUE;

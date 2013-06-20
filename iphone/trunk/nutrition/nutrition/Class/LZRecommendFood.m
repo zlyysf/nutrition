@@ -18,16 +18,16 @@
  */
 +(NSArray*)getCustomNutrients
 {
-//    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
-//                                         @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",@"Folate_Tot_(µg)", nil];
-    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
-         @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
-         @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-         @"Vit_B12_(µg)",@"Panto_Acid_mg)",
-         @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
-         @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
-         @"Protein_(g)",@"Lipid_Tot_(g)",
-         @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
+    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
+                                         @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",@"Folate_Tot_(µg)", nil];
+//    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
+//         @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
+//         @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+//         @"Vit_B12_(µg)",@"Panto_Acid_mg)",
+//         @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
+//         @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
+//         @"Protein_(g)",@"Lipid_Tot_(g)",
+//         @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
     return limitedNutrientsCanBeCal;
 }
 /*
@@ -1196,7 +1196,8 @@
     //    Choline_Tot_ (mg) 胆碱 最少需要187g的蛋来补充或475g黄豆，都有悖常识，似乎是极难补充
     //    Vit_D_(µg) 只有鲤鱼等4种才有效补充
     //    Fiber_TD_(g) 最适合的只有豆角一种 151g，其次是豆类中的绿豆 233g，蔬菜水果类中的其次是藕 776g，都有些离谱了。不过，如果固定用蔬菜水果类来补，每天3斤的量，还说得过去。另外，不同书籍对其需要量及补充食物的含量都有区别。
-    NSMutableArray *nutrientArrayLastCal = [NSMutableArray arrayWithObjects:@"Vit_D_(µg)",@"Choline_Tot_ (mg)",@"Fiber_TD_(g)", @"Carbohydrt_(g)",@"Energ_Kcal", nil];
+    //    Calcium_(mg) 能补的食物种类虽多，但是量比较大--不过经试验特殊对待并无显著改进
+    NSMutableArray *nutrientArrayLastCal = [NSMutableArray arrayWithObjects: @"Vit_D_(µg)",@"Choline_Tot_ (mg)",@"Fiber_TD_(g)", @"Carbohydrt_(g)",@"Energ_Kcal", nil];
     
     //这是需求中规定只计算哪些营养素
     //    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
@@ -1722,10 +1723,23 @@
         [needMergeClassifyCountDict setObject:nmClassifyCount forKey:classifyToMerge];
     }
     
+    classifyToMerge = FoodClassify_rou_qin;
+    nmClassifyCount = [recommendClassifyCountDict objectForKey:classifyToMerge];
+    if (nmClassifyCount != nil){
+        [needMergeClassifyCountDict setObject:nmClassifyCount forKey:classifyToMerge];
+    }
+    
+    classifyToMerge = FoodClassify_danlei;
+    nmClassifyCount = [recommendClassifyCountDict objectForKey:classifyToMerge];
+    if (nmClassifyCount != nil){
+        [needMergeClassifyCountDict setObject:nmClassifyCount forKey:classifyToMerge];
+    }
+
     NSArray *classifyToMergeAry = [needMergeClassifyCountDict allKeys];
     if (classifyToMergeAry.count == 0)
         return recommendResult;
-    
+    NSMutableArray *mergeLogs = [NSMutableArray arrayWithCapacity:100];
+    NSMutableArray *mergeLog;
     NSMutableDictionary *recommendFoodAmountDict2 = [NSMutableDictionary dictionaryWithDictionary:recommendFoodAmountDict];
     NSMutableDictionary *recommendFoodAttrDict2 = [NSMutableDictionary dictionaryWithDictionary:recommendFoodAttrDict];
     NSMutableDictionary *nutrientSupplyDict2 = [NSMutableDictionary dictionaryWithDictionary:nutrientSupplyDict];
@@ -1757,6 +1771,8 @@
                         [LZUtility addDoubleToDictionaryItem:dFoodSupplyTheNutrient withDictionary:nutrientSupplyDict2 andKey:nutrient];
                     }
                 }//for j
+                mergeLog = [NSMutableArray arrayWithObjects:@"MergeFrom",foodId,nmFoodAmount,[foodInfo objectForKey:COLUMN_NAME_CnCaption], nil];
+                [mergeLogs addObject:mergeLog];
             }//if ([foodClassify isEqualToString:foodClassify2])
         }//for(int i=0; i<recommendFoodIds.count; i++)
         
@@ -1817,6 +1833,9 @@
             NSDictionary *goodFoodInfo = [originalFoodAttrOfClassifyDict objectForKey:minAmountFoodId];
             [recommendFoodAttrDict2 setObject:goodFoodInfo forKey:minAmountFoodId];
             
+            mergeLog = [NSMutableArray arrayWithObjects:@"MergeTo",minAmountFoodId,[NSNumber numberWithDouble:dMinFoodAmount],[goodFoodInfo objectForKey:COLUMN_NAME_CnCaption], nil];
+            [mergeLogs addObject:mergeLog];
+            
             //这个食物的各营养的量加到supply中
             NSArray *nutrients = [nutrientSupplyDict2 allKeys];
             for(int i=0; i<nutrients.count; i++){
@@ -1830,9 +1849,12 @@
         }
     }//for( int a=0; a<classifyToMergeAry.count; a++)
     
+    NSLog(@"in mergeSomeSameClassFoodForRecommend1personDay,mergeLogs=\n%@",mergeLogs);
+    
     [recommendResult setObject:recommendFoodAmountDict2 forKey:@"FoodAmount"];//food NO as key
     [recommendResult setObject:recommendFoodAttrDict2 forKey:@"FoodAttr"];//food NO as key
     [recommendResult setObject:nutrientSupplyDict2 forKey:@"NutrientSupply"];//nutrient name as key, also column name
+    [recommendResult setObject:mergeLogs forKey:@"mergeLogs"];
     
     [recommendResult setObject:recommendFoodAmountDict forKey:@"FoodAmountOld"];//food NO as key
     [recommendResult setObject:recommendFoodAttrDict forKey:@"FoodAttrOld"];//food NO as key
@@ -2291,6 +2313,7 @@
     NSDictionary *recommendFoodAmountDictOld = [recmdDict objectForKey:@"FoodAmountOld"];//food NO as key
     NSDictionary *recommendFoodAttrDictOld = [recmdDict objectForKey:@"FoodAttrOld"];//food NO as key
     NSDictionary *nutrientSupplyDictOld = [recmdDict objectForKey:@"NutrientSupplyOld"];//nutrient name as key, also column name
+    NSArray *mergeLogs = [recmdDict objectForKey:@"mergeLogs"];
     
     NSDictionary *params = [recmdDict objectForKey:@"paramsDict"];
     int personDayCount = 1;
@@ -2763,6 +2786,13 @@
         row = [NSMutableArray arrayWithArray:rowForInit];
         row[0] = @"--------";
         [rows addObject:row];
+        
+        [rows addObjectsFromArray:mergeLogs];
+        
+        row = [NSMutableArray arrayWithArray:rowForInit];
+        row[0] = @"--------";
+        [rows addObject:row];
+
         
     }//if (recommendFoodAmountDictOld != nil) to show recommendFoodAmountDictOld related
     

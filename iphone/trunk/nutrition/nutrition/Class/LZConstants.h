@@ -9,6 +9,8 @@
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
 
+#define KeyIsEnvironmentDebug 1
+
 #define Config_needConsiderNutrientLoss TRUE
 #define Config_foodUpperLimit 1000 // unit g
 #define Config_foodLowerLimit 1 // unit g
@@ -19,7 +21,8 @@
 #define FoodClassify_rou_shui_yu @"rou-shui-yu"
 #define FoodClassify_rou_shui_xia @"rou-shui-xia"
 #define FoodClassify_rou_chu_rou @"rou-chu-rou"
-
+#define FoodClassify_rou_qin @"rou-qin"
+#define FoodClassify_danlei @"danlei"
 
 
 #define kFatFactor 1/9 //means 1g fat contains 9Kcal energy
@@ -112,7 +115,7 @@
 #define ShareSDKAPPKey @"4d8c71c46cb"
 #define LocalNotifyTimeInterval (72*60*60) // 72 hours
 
-#define KeyIsEnvironmentDebug 1
+
 
 #define KeyIsAlreadyReviewdeOurApp @"KeyIsAlreadyReviewdeOurApp" // YES means already reviewed
 #define KeyReviewAlertControllCount @"KeyReviewAlertControllCount" // >=10 popAlert
