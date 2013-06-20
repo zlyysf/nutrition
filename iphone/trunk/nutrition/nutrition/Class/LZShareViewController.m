@@ -32,8 +32,17 @@
     [self.contentBackgroundImage setImage:textBackImage];
     if (preInsertText != nil)
     {
-        self.contentTextView.text = preInsertText;
-        self.wordCountLabel.text = [NSString stringWithFormat:@"%i/140",[preInsertText length]];
+        if ([preInsertText length]<= 140) {
+            self.contentTextView.text = preInsertText;
+            self.wordCountLabel.text = [NSString stringWithFormat:@"%i/140",[preInsertText length]];
+        }
+        else
+        {
+            NSString *content = [preInsertText substringToIndex:137];
+            content = [content stringByAppendingString:@"..."];
+            self.contentTextView.text = content;
+            self.wordCountLabel.text = [NSString stringWithFormat:@"%i/140",[content length]];
+        }
     }
 	// Do any additional setup after loading the view.
 }

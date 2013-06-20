@@ -258,7 +258,7 @@
             radius = 2;
         }
         [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
-        [cell adjustLabelAccordingToProgress:progress forLabelWidth:244];
+        [cell adjustLabelAccordingToProgress:progress forLabelWidth:226];
         if (KeyIsEnvironmentDebug)
         {
             cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)([percent floatValue] *100)];
@@ -366,7 +366,20 @@
         {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
             LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-            shareViewController.preInsertText = @"测试一下";
+            NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为您精心推荐:";
+            for (NSDictionary *aFood in recommendFoodArray)
+            {
+                NSString *name = [aFood objectForKey:@"Name"];
+                NSNumber *weight = [aFood objectForKey:@"Amount"];
+                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
+            }
+//            买菜助手(http://t.cn/zHuwJxz )为您精心推荐:
+//                 食物1 123g
+//                 食物1 123g
+//                 食物1 123g
+//                 食物1 123g
+//
+            shareViewController.preInsertText = contents;
             [self presentModalViewController:shareViewController animated:YES];
         }
         else

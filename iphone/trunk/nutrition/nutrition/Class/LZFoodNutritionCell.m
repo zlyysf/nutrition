@@ -38,7 +38,7 @@
     {
         [self.supplyPercentlabel setTextColor:[UIColor whiteColor]];
         //[self.nutritionNameButton.titleLabel setTextColor:[UIColor whiteColor]];
-        [self setBackgroundColor:[UIColor colorWithRed:238/255.f green:238/255.f blue:238/255.f alpha:1.0f]];
+        [self setBackgroundColor:[UIColor clearColor]];
         [self.cellArrowImage setImage:[UIImage imageNamed:@"arrow_click.png"]];
     }
     else

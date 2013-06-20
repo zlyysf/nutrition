@@ -41,13 +41,26 @@
         closeButton.center = CGPointMake(descriptionView.frame.origin.x +descriptionView.frame.size.width-10, descriptionView.frame.origin.y+10);
         [backView addSubview: closeButton];
         
-        UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 0, descriptionView.frame.size.width-4, descriptionView.frame.size.height-4)];
-        textView.text = @"123";//[infoDict description];
+        UILabel * nutrientNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 260, 18)];
+        [nutrientNameLabel setFont:[UIFont systemFontOfSize:15]];
+        [nutrientNameLabel setBackgroundColor:[UIColor clearColor]];
+        [nutrientNameLabel setTextColor:[UIColor blackColor]];
+        nutrientNameLabel.text = [infoDict objectForKey:@"NutrientCnCaption"];
+        [descriptionView addSubview:nutrientNameLabel];
+        
+        UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 38,280, 256)];
+        [textView setFont:[UIFont systemFontOfSize:12]];
+//        NSString *contents = @"";
+//        for (NSString * key in [infoDict allKeys])
+//        {
+//            NSString *content = [infoDict objectForKey:key];
+//            contents = [contents stringByAppendingFormat:@" %@ : %@ \n",key,content];
+//        }
+        textView.text =[infoDict objectForKey:@"NutrientDescription"];// [NSString stringWithFormat:@"%@",infoDict];//[infoDict description];
+        textView.showsVerticalScrollIndicator = NO;
         [textView setBackgroundColor:[UIColor clearColor]];
         textView.editable = NO;
-        textView.userInteractionEnabled = NO;
         [descriptionView addSubview:textView];
-        textView.center = CGPointMake(descriptionView.frame.size.width/2,descriptionView.frame.size.height/2);
     }
     return self;
 }

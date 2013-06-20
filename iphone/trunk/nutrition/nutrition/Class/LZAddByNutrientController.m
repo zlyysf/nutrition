@@ -9,6 +9,7 @@
 #import "LZAddByNutrientController.h"
 #import "LZConstants.h"
 #import <math.h>
+#import "GADMasterViewController.h"
 @interface LZAddByNutrientController ()
 
 @end
@@ -44,6 +45,16 @@
     [headerView addSubview:tipsLabel];
     self.listView.tableHeaderView = headerView;
     self.navItem.title = nutrientTitle;
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+    self.listView.tableFooterView = footerView;
+}
+- (void)viewWillAppear:(BOOL)animated
+{
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    UIView *footerView = self.listView.tableFooterView;
+    [shared resetAdView:self andListView:footerView];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
