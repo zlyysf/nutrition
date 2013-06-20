@@ -93,7 +93,7 @@
 #define Type_normalSet @"normalSet"
 #define Type_lastSet @"lastSet"
 
-#define kProgressBarRect CGRectMake(2,2,240,14)
+#define kProgressBarRect CGRectMake(2,2,226,14)
 #define kKeyBoardToolBarRect CGRectMake(0,0,320,44)
 #define TopNavigationBarHeight 44
 #define FoodTypeSelectorViewHeight 41
