@@ -34,10 +34,10 @@
     //检查更新
     [MobClick checkUpdate:@"检测到新版本" cancelButtonTitle:@"下次再说" otherButtonTitles:@"去AppStore"];
     //initialize persons and days setting
-    [ShareSDK registerApp:@"4d8c71c46cb"];
-//    [ShareSDK connectSinaWeiboWithAppKey:@"3626415671"
-//                               appSecret:@"9d17e75a675323f5b719cb058c5b9d0d"
-//                             redirectUri:@"http://weibo.com"];
+    [ShareSDK registerApp:ShareSDKAPPKey];
+//    [ShareSDK connectSinaWeiboWithAppKey:SinaWeiboAppKey
+//                               appSecret:SinaWeiboAppSecret
+//                             redirectUri:@"http://www.lingzhi.com"];
     [ShareSDK connectSinaWeiboWithAppKey:@"568898243"
                                appSecret:@"38a4f8204cc784f81f9f0daaf31e02e3"
                              redirectUri:@"http://www.sharesdk.cn"];

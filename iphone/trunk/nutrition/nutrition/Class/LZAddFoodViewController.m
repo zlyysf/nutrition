@@ -11,6 +11,7 @@
 #import "LZDataAccess.h"
 #import "LZConstants.h"
 #import "LZDailyIntakeViewController.h"
+#import "GADMasterViewController.h"
 @interface LZAddFoodViewController ()
 
 @end
@@ -25,10 +26,6 @@
     }
     return self;
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    NSLog(@"food intake dict %@",foodIntakeDictionary);
-}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,7 +39,10 @@
     self.foodTypeArray = [[NSMutableArray alloc]init];
     self.foodNameArray = [[NSMutableArray alloc]init];
     NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
-    
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+    self.listView.tableFooterView = footerView;
     self.foodIntakeDictionary = [[NSMutableDictionary alloc]init];
     for (int i = 0; i< [allFood count]; i++)
     {
@@ -80,6 +80,13 @@
         }
     }
 
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    UIView *footerView = self.listView.tableFooterView;
+    [shared resetAdView:self andListView:footerView];
+    
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

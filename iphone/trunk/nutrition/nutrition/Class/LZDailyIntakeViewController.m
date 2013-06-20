@@ -9,6 +9,7 @@
 #import "LZDailyIntakeViewController.h"
 #import "LZFoodCell.h"
 #import "LZConstants.h"
+#import "GADMasterViewController.h"
 @interface LZDailyIntakeViewController ()<LZFoodCellDelegate>
 
 @end
@@ -46,8 +47,11 @@
     UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     self.navItem.leftBarButtonItem= customBarItem;
-
-	// Do any additional setup after loading the view.
+//    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+//                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+//                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+//    self.listView.tableFooterView = footerView;
+ 	// Do any additional setup after loading the view.
     //获取食物名称 初始化foodNameArray 和 foodIntakeAmountArray
 //    allFood = [[LZDataAccess singleton]getAllFood];
 //    NSMutableSet *foodTypeSet = [NSMutableSet set];
@@ -104,6 +108,12 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    [shared resetAdView:self andListView:self.admobView];
+
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -350,7 +360,7 @@
      Animate the resize so that it's in sync with the disappearance of the keyboard.
      */
 	CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = self.view.frame.size.height-TopNavigationBarHeight;
+	tableviewFrame.size.height = self.view.frame.size.height-TopNavigationBarHeight-CGSizeFromGADAdSize(kGADAdSizeBanner).height;
     
 	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -420,6 +430,7 @@
 - (void)viewDidUnload
 {
     [self setNavItem:nil];
+    [self setAdmobView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

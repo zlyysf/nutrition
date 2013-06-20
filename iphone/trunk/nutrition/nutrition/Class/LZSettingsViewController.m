@@ -43,7 +43,7 @@
     [self.daysBackImageView setImage:textBackImage];
     [self.tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
     self.tipsLabel.text = @"我们默认向您推荐一个成年人一天的食物量，您在给家庭大采购时可以适当调整人数和天数，但只能输入一位数字。";
-    
+    self.topSectionView.hidden = YES;
     UIImage *greenButtonImage = [UIImage imageNamed:@"green_button.png"];
     [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.line2View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
@@ -55,7 +55,7 @@
     }
     else
     {
-        [self.contentScrollView setContentSize:CGSizeMake(320, 384)];
+        [self.contentScrollView setContentSize:CGSizeMake(320, 367)];
     }
 //    [ShareSDK addNotificationWithName:SSN_USER_AUTH
 //                               target:self
@@ -141,16 +141,16 @@
     }
     if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
     {
-        CGRect topFrame = self.topSectionView.frame;
-        topFrame.origin.y = 30;
-        self.topSectionView.frame = topFrame;
+//        CGRect topFrame = self.topSectionView.frame;
+//        topFrame.origin.y = 30;
+//        self.topSectionView.frame = topFrame;
         
         CGRect midFrame = self.midSectionView.frame;
-        midFrame.origin.y = 214;
+        midFrame.origin.y = 30;//214
         self.midSectionView.frame = midFrame;
         
         CGRect bottomFrame = self.bottomSectionView.frame;
-        bottomFrame.origin.y = 325;
+        bottomFrame.origin.y = 130;//325
         self.bottomSectionView.frame = bottomFrame;
         
         CGRect mobFrame = self.admobView.frame;
@@ -159,20 +159,20 @@
     }
     else
     {
-        CGRect topFrame = self.topSectionView.frame;
-        topFrame.origin.y = 10;
-        self.topSectionView.frame = topFrame;
+//        CGRect topFrame = self.topSectionView.frame;
+//        topFrame.origin.y = 10;
+//        self.topSectionView.frame = topFrame;
         
         CGRect midFrame = self.midSectionView.frame;
-        midFrame.origin.y = 174;
+        midFrame.origin.y = 30;//174
         self.midSectionView.frame = midFrame;
         
         CGRect bottomFrame = self.bottomSectionView.frame;
-        bottomFrame.origin.y = 265;
+        bottomFrame.origin.y = 130;//265
         self.bottomSectionView.frame = bottomFrame;
         
         CGRect mobFrame = self.admobView.frame;
-        mobFrame.origin.y = 334;
+        mobFrame.origin.y = 317;
         self.admobView.frame = mobFrame;
     }
 }

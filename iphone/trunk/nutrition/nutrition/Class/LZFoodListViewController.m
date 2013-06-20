@@ -187,7 +187,7 @@
         }
         [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,226,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
         [cell adjustLabelAccordingToProgress:progress forLabelWidth:226];
-        if (KeyUseRealPercentValue)
+        if (KeyIsEnvironmentDebug)
         {
             cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)([percent floatValue] *100)];
         }

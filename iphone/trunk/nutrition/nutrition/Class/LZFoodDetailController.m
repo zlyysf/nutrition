@@ -11,6 +11,7 @@
 #import "LZNutritionSupplyCell.h"
 #import "LZStandardContentCell.h"
 #import "LZUtility.h"
+#import "GADMasterViewController.h"
 @interface LZFoodDetailController ()
 
 @end
@@ -49,6 +50,16 @@
     UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     self.navItem.leftBarButtonItem= customBarItem;
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+    self.listView.tableFooterView = footerView;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    UIView *footerView = self.listView.tableFooterView;
+    [shared resetAdView:self andListView:footerView];
 
 }
 - (void)backButtonTapped:(id)sender
@@ -108,7 +119,7 @@
         }
         [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
         //[cell adjustLabelAccordingToProgress:0.5];
-        if(KeyUseRealPercentValue)
+        if(KeyIsEnvironmentDebug)
         {
             cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%d/%d%@)",(int)([percent floatValue] *100),[food1Supply1NutrientAmount intValue],[nutrientTotalDRI intValue ],unit];
         }

@@ -103,12 +103,17 @@
 #define Notification_TakenFoodDeletedKey @"KeyTakenFoodDeletedNotification"
 
 #define UMSDKAPPKey @"51b96cc356240b6ee80a05dc"
+#define ShareSDKAPPKey @"4d8c71c46cb"
 #define LocalNotifyTimeInterval (72*60*60) // 72 hours
 
-#define KeyUseRealPercentValue 1
+#define KeyIsEnvironmentDebug 1
 
 #define KeyIsAlreadyReviewdeOurApp @"KeyIsAlreadyReviewdeOurApp" // YES means already reviewed
 #define KeyReviewAlertControllCount @"KeyReviewAlertControllCount" // >=10 popAlert
+
+#define SinaWeiboAppKey @"3626415671"
+#define SinaWeiboAppSecret @"9d17e75a675323f5b719cb058c5b9d0d"
+
 #endif
 
 
