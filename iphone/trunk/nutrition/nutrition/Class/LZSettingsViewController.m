@@ -46,7 +46,7 @@
     
     UIImage *greenButtonImage = [UIImage imageNamed:@"green_button.png"];
     [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
-    [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+    [self.line2View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.resetButton setBackgroundImage:greenButtonImage forState:UIControlStateNormal];
     [self.saveButton setBackgroundImage:greenButtonImage forState:UIControlStateNormal];
     if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5

@@ -23,10 +23,10 @@
         backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 330)];
         [backView setBackgroundColor:[UIColor clearColor]];
         [self addSubview:backView];
-        backView.center = self.center;
+        backView.center = CGPointMake(self.center.x, self.center.y-20);
         
        UIView * descriptionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 304)];
-        [descriptionView setBackgroundColor:[UIColor whiteColor]];
+        [descriptionView setBackgroundColor:[UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.9]];
         descriptionView.layer.masksToBounds = YES;
         descriptionView.layer.cornerRadius = 10.f;
         descriptionView.layer.opacity = 1.0f;
@@ -43,7 +43,7 @@
         
         UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(0, 0, descriptionView.frame.size.width-4, descriptionView.frame.size.height-4)];
         textView.text = @"123";//[infoDict description];
-        
+        [textView setBackgroundColor:[UIColor clearColor]];
         textView.editable = NO;
         textView.userInteractionEnabled = NO;
         [descriptionView addSubview:textView];
