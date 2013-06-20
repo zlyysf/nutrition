@@ -10,6 +10,7 @@
 #import "LZConstants.h"
 #import <math.h>
 #import "GADMasterViewController.h"
+#import "MobClick.h"
 @interface LZAddByNutrientController ()
 
 @end
@@ -52,6 +53,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"按营养素添加食物页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
@@ -218,6 +220,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [MobClick endLogPageView:@"按营养素添加食物页面"];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }

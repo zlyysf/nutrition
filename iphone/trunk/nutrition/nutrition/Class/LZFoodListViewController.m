@@ -17,6 +17,7 @@
 #import "LZRecommendEmptyCell.h"
 #import "LZAddByNutrientController.h"
 #import "GADMasterViewController.h"
+#import "MobClick.h"
 @interface LZFoodListViewController ()
 
 @end
@@ -54,6 +55,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"检测页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
@@ -362,6 +364,7 @@
 //}
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [MobClick endLogPageView:@"检测页面"];
 //    if (self.listView.editing)
 //    {
 //        [self.editFoodItem setStyle:UIBarButtonItemStyleBordered];

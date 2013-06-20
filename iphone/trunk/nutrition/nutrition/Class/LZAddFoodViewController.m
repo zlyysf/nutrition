@@ -12,6 +12,7 @@
 #import "LZConstants.h"
 #import "LZDailyIntakeViewController.h"
 #import "GADMasterViewController.h"
+#import "MobClick.h"
 @interface LZAddFoodViewController ()
 
 @end
@@ -83,12 +84,16 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"食物种类页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
     
 }
-
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"食物种类页面"];
+}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.foodTypeArray count];

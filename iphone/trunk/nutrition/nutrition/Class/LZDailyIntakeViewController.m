@@ -10,6 +10,7 @@
 #import "LZFoodCell.h"
 #import "LZConstants.h"
 #import "GADMasterViewController.h"
+#import "MobClick.h"
 @interface LZDailyIntakeViewController ()<LZFoodCellDelegate>
 
 @end
@@ -111,6 +112,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"按种类添加页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
 
@@ -375,6 +377,7 @@
 
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [MobClick endLogPageView:@"按种类添加页面"];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }

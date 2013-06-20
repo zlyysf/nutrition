@@ -12,6 +12,7 @@
 #import "LZStandardContentCell.h"
 #import "LZUtility.h"
 #import "GADMasterViewController.h"
+#import "MobClick.h"
 @interface LZFoodDetailController ()
 
 @end
@@ -57,10 +58,15 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"食物详情页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
 
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"食物详情页面"];
 }
 - (void)backButtonTapped:(id)sender
 {

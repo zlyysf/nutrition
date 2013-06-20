@@ -13,6 +13,7 @@
 #import <MessageUI/MessageUI.h>
 #import <ShareSDK/ShareSDK.h>
 #import "GADMasterViewController.h"
+#import "MobClick.h"
 @interface LZSettingsViewController ()<LZKeyboardToolBarDelegate,MFMailComposeViewControllerDelegate,UIAlertViewDelegate>
 
 @end
@@ -113,6 +114,7 @@
 //}
 - (void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"设置页面"];
     self.weiboAuthSwitch.on = [ShareSDK hasAuthorizedWithType:ShareTypeSinaWeibo];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
@@ -175,6 +177,10 @@
         mobFrame.origin.y = 317;
         self.admobView.frame = mobFrame;
     }
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"设置页面"];
 }
 - (IBAction)reviewOurApp:(id)sender {
 

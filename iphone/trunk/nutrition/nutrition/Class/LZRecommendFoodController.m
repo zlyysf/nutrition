@@ -19,6 +19,7 @@
 #import "GADMasterViewController.h"
 #import "LZReviewAppManager.h"
 #import <ShareSDK/ShareSDK.h>
+#import "MobClick.h"
 @interface LZRecommendFoodController ()<MBProgressHUDDelegate,UIActionSheetDelegate>
 {
     MBProgressHUD *HUD;
@@ -69,6 +70,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"推荐页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
@@ -80,6 +82,10 @@
         [HUD show:YES];
 
     }
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"推荐页面"];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
