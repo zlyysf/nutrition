@@ -7,7 +7,7 @@
 //
 
 #import "LZFoodListViewController.h"
-#import "LZDailyIntakeViewController.h"
+#import "LZAddFoodViewController.h"
 #import "LZRecommendFood.h"
 #import "LZRecommendFoodCell.h"
 #import "LZFoodNutritionCell.h"
@@ -372,8 +372,11 @@
 }
 - (IBAction)addFoodAction:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LZDailyIntakeViewController *dailyIntakeController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
-    [self presentModalViewController:dailyIntakeController animated:YES];
+
+    LZAddFoodViewController *addFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddFoodViewController"];
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addFoodViewController];
+    [navController setNavigationBarHidden:YES];
+    [self presentModalViewController:navController animated:YES];
     //UINavigationController *initialController = (UINavigationController*)[UIApplication
                                                                           //sharedApplication].keyWindow.rootViewController;
 

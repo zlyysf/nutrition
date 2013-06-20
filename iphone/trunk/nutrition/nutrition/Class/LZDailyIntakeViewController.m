@@ -14,7 +14,7 @@
 @end
 
 @implementation LZDailyIntakeViewController
-@synthesize foodIntakeDictionary,foodNameArray,foodTypeArray,searchResultArray,allFood,selectorView,currentSelectedIndex,currentFoodInputTextField;
+@synthesize foodIntakeDictionary,foodArray,currentFoodInputTextField,titleString;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -30,68 +30,84 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    self.navItem.title = titleString;
+    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+    
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setTitle:@"  返回" forState:UIControlStateNormal];
+    
+    button.frame = CGRectMake(0, 0, 48, 30);
+    [button.titleLabel setFont:[UIFont systemFontOfSize:13]];
+    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [button addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    
+    self.navItem.leftBarButtonItem= customBarItem;
+
 	// Do any additional setup after loading the view.
     //获取食物名称 初始化foodNameArray 和 foodIntakeAmountArray
-    allFood = [[LZDataAccess singleton]getAllFood];
-    NSMutableSet *foodTypeSet = [NSMutableSet set];
-    self.foodTypeArray = [[NSMutableArray alloc]init];
-    self.foodNameArray = [[NSMutableArray alloc]init];
-    self.searchResultArray = [[NSMutableArray alloc]init];
-    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
-
-    self.foodIntakeDictionary = [[NSMutableDictionary alloc]init];
-    for (int i = 0; i< [allFood count]; i++)
-    {
-        NSDictionary *afood = [allFood objectAtIndex:i];
-        NSString *foodType = [afood objectForKey:@"CnType"];
-        NSString *NDB_No = [afood objectForKey:@"NDB_No"];
-        if (dailyIntake != nil)
-        {
-            NSNumber *intakeNumber = [dailyIntake objectForKey:NDB_No];
-            if (intakeNumber)
-            {
-                [self.foodIntakeDictionary setObject:intakeNumber forKey:NDB_No];
-            }
-            else
-            {
-                [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:0] forKey:NDB_No];
-            }
-        }
-        else
-        {
-            [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:0] forKey:NDB_No];
-        }
-        if (![foodTypeSet containsObject:foodType])
-        {
-            NSMutableArray *foodName = [[NSMutableArray alloc]init];
-            [foodName addObject:afood];
-            [self.foodNameArray addObject:foodName];
-            [self.foodTypeArray addObject:foodType];
-            [foodTypeSet addObject:foodType];
-        }
-        else
-        {
-           int index = [self.foodTypeArray indexOfObject:foodType];
-            [[self.foodNameArray objectAtIndex:index]addObject:afood];
-        }
-    }
-    NSLog(@"footypearray %@, foodtypeset %@",self.foodTypeArray,foodTypeSet);
-
-    NSLog(@"foodnamearray %@",self.foodNameArray);
-    self.selectorView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"selector_back.png"]];
-    self.selectorView.dataSource = self;
-    self.selectorView.delegate = self;
-    self.selectorView.shouldBeTransparent = YES;
-    self.selectorView.horizontalScrolling = YES;
-    self.selectorView.debugEnabled = NO;
-    self.currentSelectedIndex = 0;
+//    allFood = [[LZDataAccess singleton]getAllFood];
+//    NSMutableSet *foodTypeSet = [NSMutableSet set];
+//    self.foodTypeArray = [[NSMutableArray alloc]init];
+//    self.foodNameArray = [[NSMutableArray alloc]init];
+//    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+//
+//    self.foodIntakeDictionary = [[NSMutableDictionary alloc]init];
+//    for (int i = 0; i< [allFood count]; i++)
+//    {
+//        NSDictionary *afood = [allFood objectAtIndex:i];
+//        NSString *foodType = [afood objectForKey:@"CnType"];
+//        NSString *NDB_No = [afood objectForKey:@"NDB_No"];
+//        if (dailyIntake != nil)
+//        {
+//            NSNumber *intakeNumber = [dailyIntake objectForKey:NDB_No];
+//            if (intakeNumber)
+//            {
+//                [self.foodIntakeDictionary setObject:intakeNumber forKey:NDB_No];
+//            }
+//            else
+//            {
+//                [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:0] forKey:NDB_No];
+//            }
+//        }
+//        else
+//        {
+//            [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:0] forKey:NDB_No];
+//        }
+//        if (![foodTypeSet containsObject:foodType])
+//        {
+//            NSMutableArray *foodName = [[NSMutableArray alloc]init];
+//            [foodName addObject:afood];
+//            [self.foodNameArray addObject:foodName];
+//            [self.foodTypeArray addObject:foodType];
+//            [foodTypeSet addObject:foodType];
+//        }
+//        else
+//        {
+//           int index = [self.foodTypeArray indexOfObject:foodType];
+//            [[self.foodNameArray objectAtIndex:index]addObject:afood];
+//        }
+//    }
+//    NSLog(@"footypearray %@, foodtypeset %@",self.foodTypeArray,foodTypeSet);
+//
+//    NSLog(@"foodnamearray %@",self.foodNameArray);
+//    self.selectorView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"selector_back.png"]];
+//    self.selectorView.dataSource = self;
+//    self.selectorView.delegate = self;
+//    self.selectorView.shouldBeTransparent = YES;
+//    self.selectorView.horizontalScrolling = YES;
+//    self.selectorView.debugEnabled = NO;
+//    self.currentSelectedIndex = 0;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [(NSMutableArray*)[self.foodNameArray objectAtIndex:self.currentSelectedIndex]count];
+    return [self.foodArray count];
 }
 - (float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -133,7 +149,7 @@
         cell.delegate = self;
         cell.cellIndexPath = indexPath;
         //一个记录名称的数组 一个记录对应摄入量的数组
-        NSDictionary *aFood = [[self.foodNameArray objectAtIndex:self.currentSelectedIndex] objectAtIndex:indexPath.row];
+        NSDictionary *aFood = [self.foodArray  objectAtIndex:indexPath.row];
         NSLog(@"picture path food list %@",aFood);
         NSString *picturePath;
         NSString *picPath = [aFood objectForKey:@"PicPath"];
@@ -167,8 +183,8 @@
         [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
         return cell;
 }
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
+//- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+//{
 //    if(tableView == foodSearchDisplayController.searchResultsTableView)
 //    {
 //        NSDictionary *aFood = [self.searchResultArray objectAtIndex:indexPath.row];
@@ -213,104 +229,96 @@
 //            
 //        }
 //    }
-}
-#pragma IZValueSelector dataSource
-- (NSInteger)numberOfRowsInSelector:(LZValueSelectorView *)valueSelector {
-    return [self.foodTypeArray count];
-}
-
-
-
-//ONLY ONE OF THESE WILL GET CALLED (DEPENDING ON the horizontalScrolling property Value)
-- (CGFloat)rowHeightInSelector:(LZValueSelectorView *)valueSelector {
-    return 320/3;
-}
-
-- (CGFloat)rowWidthInSelector:(LZValueSelectorView *)valueSelector {
-    return 320/3;
-}
-
-
-- (UIView *)selector:(LZValueSelectorView *)valueSelector viewForRowAtIndex:(NSInteger)index {
-    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320/3 , 41)];
-    [label setFont:[UIFont systemFontOfSize:18.f]];
-    label.textColor = [UIColor whiteColor];
-    label.text = [self.foodTypeArray objectAtIndex:index];
-    label.textAlignment =  NSTextAlignmentCenter;
-    label.backgroundColor = [UIColor clearColor];
-    return label;
-}
-
-- (CGRect)rectForSelectionInSelector:(LZValueSelectorView *)valueSelector {
-    //Just return a rect in which you want the selector image to appear
-    //Use the IZValueSelector coordinates
-    //Basically the x will be 0
-    //y will be the origin of your image
-    //width and height will be the same as in your selector image
-//    if (valueSelector == self.selectorHorizontal) {
-//        return CGRectMake(self.selectorHorizontal.frame.size.width/2 - 35.0, 0.0, 70.0, 90.0);
-//    }
-//    else {
-//        return CGRectMake(0.0, self.selectorVertical.frame.size.height/2 - 35.0, 90.0, 70.0);
-//    }
-    return CGRectMake(320/3,0,320/3,41);
-}
-
-#pragma IZValueSelector delegate
-- (void)selector:(LZValueSelectorView *)valueSelector didSelectRowAtIndex:(NSInteger)index {
-    NSLog(@"Selected index %d",index);
-    if(self.currentFoodInputTextField != nil)
-    {
-        [self.currentFoodInputTextField resignFirstResponder];
-    }
-    currentSelectedIndex = index;
-    [self.listView reloadData];
-}
-- (IBAction)cancelButtonTapped:(id)sender
-{
-    [self dismissModalViewControllerAnimated:YES];
-}
-- (IBAction)saveButtonTapped:(id)sender {
-    //储存摄入量
-    if(self.currentFoodInputTextField != nil)
-    {
-        [self.currentFoodInputTextField resignFirstResponder];
-    }
-    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
-    BOOL needSaveData = NO;
-    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
-    {
-        NSNumber *num = [self.foodIntakeDictionary objectForKey:NDB_No];
-        if ([num intValue]>0)
-        {
-            needSaveData = YES;
-            [intakeDict setObject:num forKey:NDB_No];
-        }
-    }
-    if (needSaveData) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
-        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
-        [[NSUserDefaults  standardUserDefaults]synchronize];
-    }
-    [self dismissModalViewControllerAnimated:YES];
-}
-//- (IBAction)resetButtonTapped:(id)sender {
-//    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
+//}
+//#pragma IZValueSelector dataSource
+//- (NSInteger)numberOfRowsInSelector:(LZValueSelectorView *)valueSelector {
+//    return [self.foodTypeArray count];
+//}
+//
+//
+//
+////ONLY ONE OF THESE WILL GET CALLED (DEPENDING ON the horizontalScrolling property Value)
+//- (CGFloat)rowHeightInSelector:(LZValueSelectorView *)valueSelector {
+//    return 320/3;
+//}
+//
+//- (CGFloat)rowWidthInSelector:(LZValueSelectorView *)valueSelector {
+//    return 320/3;
+//}
+//
+//
+//- (UIView *)selector:(LZValueSelectorView *)valueSelector viewForRowAtIndex:(NSInteger)index {
+//    UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 320/3 , 41)];
+//    [label setFont:[UIFont systemFontOfSize:18.f]];
+//    label.textColor = [UIColor whiteColor];
+//    label.text = [self.foodTypeArray objectAtIndex:index];
+//    label.textAlignment =  NSTextAlignmentCenter;
+//    label.backgroundColor = [UIColor clearColor];
+//    return label;
+//}
+//
+//- (CGRect)rectForSelectionInSelector:(LZValueSelectorView *)valueSelector {
+//    //Just return a rect in which you want the selector image to appear
+//    //Use the IZValueSelector coordinates
+//    //Basically the x will be 0
+//    //y will be the origin of your image
+//    //width and height will be the same as in your selector image
+////    if (valueSelector == self.selectorHorizontal) {
+////        return CGRectMake(self.selectorHorizontal.frame.size.width/2 - 35.0, 0.0, 70.0, 90.0);
+////    }
+////    else {
+////        return CGRectMake(0.0, self.selectorVertical.frame.size.height/2 - 35.0, 90.0, 70.0);
+////    }
+//    return CGRectMake(320/3,0,320/3,41);
+//}
+//
+//#pragma IZValueSelector delegate
+//- (void)selector:(LZValueSelectorView *)valueSelector didSelectRowAtIndex:(NSInteger)index {
+//    NSLog(@"Selected index %d",index);
+//    if(self.currentFoodInputTextField != nil)
 //    {
-//        [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:0] forKey:NDB_No];
+//        [self.currentFoodInputTextField resignFirstResponder];
 //    }
-//    [[NSUserDefaults standardUserDefaults]removeObjectForKey:LZUserDailyIntakeKey];
-//    [[NSUserDefaults standardUserDefaults]synchronize];
+//    currentSelectedIndex = index;
 //    [self.listView reloadData];
 //}
+- (IBAction)backButtonTapped:(id)sender
+{
+    if(self.currentFoodInputTextField != nil)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
+//    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
+//    BOOL needSaveData = NO;
+//    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
+//    {
+//        NSNumber *num = [self.foodIntakeDictionary objectForKey:NDB_No];
+//        if ([num intValue]>0)
+//        {
+//            needSaveData = YES;
+//            [intakeDict setObject:num forKey:NDB_No];
+//        }
+//    }
+//    if (needSaveData) {
+//        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+//        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
+//        [[NSUserDefaults  standardUserDefaults]synchronize];
+//    }
+
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
 - (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber
 {
     //[self.foodIntakeAmountArray replaceObjectAtIndex:index.row withObject:foodNumber];
     self.currentFoodInputTextField = nil;
-    NSDictionary *afood = [[self.foodNameArray objectAtIndex:currentSelectedIndex]objectAtIndex:index.row];
-    NSString *NDB_No = [afood objectForKey:@"NDB_No"];
-    [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
-    NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
+    if ([foodNumber intValue]>=0)
+    {
+        NSDictionary *afood = [self.foodArray objectAtIndex:index.row];
+        NSString *NDB_No = [afood objectForKey:@"NDB_No"];
+        [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
+        NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
+    }
 }
 - (void)keyboardWillShow:(NSNotification *)notification {
 	
@@ -321,7 +329,7 @@
     
     CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height;
     CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = keyboardTop-TopNavigationBarHeight-FoodTypeSelectorViewHeight;
+	tableviewFrame.size.height = keyboardTop-TopNavigationBarHeight;
     
 	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -342,7 +350,7 @@
      Animate the resize so that it's in sync with the disappearance of the keyboard.
      */
 	CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = self.view.frame.size.height-TopNavigationBarHeight-FoodTypeSelectorViewHeight;
+	tableviewFrame.size.height = self.view.frame.size.height-TopNavigationBarHeight;
     
 	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -411,6 +419,7 @@
 //}
 - (void)viewDidUnload
 {
+    [self setNavItem:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
 }

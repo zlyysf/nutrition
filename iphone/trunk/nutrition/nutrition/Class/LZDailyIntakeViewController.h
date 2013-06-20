@@ -8,15 +8,17 @@
 
 #import <UIKit/UIKit.h>
 #import "LZDataAccess.h"
-#import "LZValueSelectorView.h"
-@interface LZDailyIntakeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,IZValueSelectorViewDataSource,IZValueSelectorViewDelegate>
+//#import "LZValueSelectorView.h"
+@interface LZDailyIntakeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>//IZValueSelectorViewDataSource,IZValueSelectorViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
-@property (strong , nonatomic)NSMutableArray *foodNameArray;
+@property (strong , nonatomic)NSMutableArray *foodArray;
 @property (strong, nonatomic)NSMutableDictionary *foodIntakeDictionary;
-@property (strong, nonatomic)NSMutableArray *foodTypeArray;
-@property (strong, nonatomic)NSMutableArray *searchResultArray;
-@property (strong, nonatomic)NSArray *allFood;
+//@property (strong, nonatomic)NSMutableArray *foodTypeArray;
+//@property (strong, nonatomic)NSArray *allFood;
+@property (strong,nonatomic)NSString *titleString;
+
+@property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
 @property (assign, nonatomic)UITextField *currentFoodInputTextField;
-@property (strong, nonatomic)IBOutlet LZValueSelectorView *selectorView;
-@property (assign,nonatomic)int currentSelectedIndex;
+//@property (strong, nonatomic)IBOutlet LZValueSelectorView *selectorView;
+//@property (assign,nonatomic)int currentSelectedIndex;
 @end
