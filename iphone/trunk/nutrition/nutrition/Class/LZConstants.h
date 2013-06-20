@@ -16,6 +16,12 @@
 #define Config_nearZero 0.0000001
 
 
+#define FoodClassify_rou_shui_yu @"rou-shui-yu"
+#define FoodClassify_rou_shui_xia @"rou-shui-xia"
+#define FoodClassify_rou_chu_rou @"rou-chu-rou"
+
+
+
 #define kFatFactor 1/9 //means 1g fat contains 9Kcal energy
 #define kCarbFactor 1/4 //means 1g carbohydrt contains 4Kcal energy
 #define LZUserSexKey @"LZUserSexKey" //int 0 means male 1 means female

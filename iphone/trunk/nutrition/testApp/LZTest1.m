@@ -1360,7 +1360,7 @@
     BOOL randomSelectFood = TRUE;
     int randomRangeSelectFood = 20;
     BOOL needLimitNutrients = TRUE;
-    int limitRecommendFoodCount = 4;
+    int limitRecommendFoodCount = 40;
     BOOL needUseFoodLimitTableWhenCal = TRUE;
 //    uint randSeed = 57246344;
     uint randSeed =0 ;
@@ -1395,7 +1395,7 @@
     
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSMutableDictionary *retDict = [rf recommendFood2_AbstractPerson:params withDecidedFoods:takenFoodAmountDict andOptions:options];
+    NSMutableDictionary *retDict = [rf recommendFood3_AbstractPerson:params withDecidedFoods:takenFoodAmountDict andOptions:options];
     NSString *strHtml = [rf generateHtml_RecommendFoodForEnoughNuitrition:retDict];
     strHtml = [LZUtility getFullHtml_withPart:strHtml];
     [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
