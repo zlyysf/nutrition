@@ -97,11 +97,12 @@
                     result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
                         if (state == SSPublishContentStateSuccess)
                         {
-                            NSLog(@"分享成功");
+                            [self dismissModalViewControllerAnimated:YES];
                         }
                         else if (state == SSPublishContentStateFail)
                         {
-                            NSLog(@"分享失败,错误码:%d,错误描述:%@", [error errorCode],  [error errorDescription]);
+                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享失败" message:@"请稍后再试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                            [alert show];
                         }
                     }];
 

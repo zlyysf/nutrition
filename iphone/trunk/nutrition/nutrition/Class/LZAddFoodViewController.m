@@ -89,7 +89,9 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LZAddFoodCell * cell =(LZAddFoodCell*)[tableView dequeueReusableCellWithIdentifier:@"LZAddFoodCell"];
-    cell.foodTypeNameLabel.text = [self.foodTypeArray objectAtIndex:indexPath.row];
+    NSString *typeName = [self.foodTypeArray objectAtIndex:indexPath.row];
+    cell.foodTypeNameLabel.text = typeName;
+    cell.foodTypeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",typeName]];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

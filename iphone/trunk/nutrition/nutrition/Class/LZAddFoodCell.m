@@ -31,13 +31,13 @@
     if (highlighted)
     {
         [self.foodTypeNameLabel setTextColor:[UIColor whiteColor]];
-        //[self.foodWeightlabel setTextColor:[UIColor whiteColor]];
+        [self.arrowImage setImage:[UIImage imageNamed:@"big_arrow_clicked.png"]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellSelectedBack.png"]]];
     }
     else
     {
         [self.foodTypeNameLabel setTextColor:[UIColor blackColor]];
-        //[self.foodWeightlabel setTextColor:[UIColor blackColor]];
+        [self.arrowImage setImage:[UIImage imageNamed:@"big_arrow.png"]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
     }
 }
