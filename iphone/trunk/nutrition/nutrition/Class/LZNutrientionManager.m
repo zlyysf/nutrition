@@ -26,7 +26,7 @@
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary *dict = [da getNutrientInfo:nutrientId];
-    NSLog(@"nutrient dict %@",dict);
+    //NSLog(@"nutrient dict %@",dict);
     LZNutritionInfoView *viewtoAnimate = [[LZNutritionInfoView alloc]initWithFrame:CGRectMake(0, 20, screenSize.width, screenSize.height-20) andColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5] andInfo:dict delegate:self];
 
     LZAppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];

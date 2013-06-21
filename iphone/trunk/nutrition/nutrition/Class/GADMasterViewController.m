@@ -35,7 +35,7 @@
                      initWithFrame:CGRectMake(0.0,0.0,
                                               CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                               CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
-        NSLog(@"admob view width %f ,height %f",adBanner_.frame.size.width,adBanner_.frame.size.height);//CGSizeFromGADAdSize(kGADAdSizeBanner).height
+        //NSLog(@"admob view width %f ,height %f",adBanner_.frame.size.width,adBanner_.frame.size.height);//CGSizeFromGADAdSize(kGADAdSizeBanner).height
         // Has an ad request already been made
         isLoaded_ = NO;
     }
@@ -100,11 +100,11 @@
 - (void)adViewDidReceiveAd:(GADBannerView *)view {
     if (adBanner_.hasAutoRefreshed)
     {
-        NSLog(@"hasAutoRefreshed YES");
+        //NSLog(@"hasAutoRefreshed YES");
     }
     else
     {
-        NSLog(@"hasAutoRefreshed NO");
+        //NSLog(@"hasAutoRefreshed NO");
     }
     if ([currentDelegate_ respondsToSelector:@selector(adViewDidReceiveAd:)]) {
         [currentDelegate_ adViewDidReceiveAd:view];
@@ -113,14 +113,14 @@
 - (void)adView:(GADBannerView *)view
 didFailToReceiveAdWithError:(GADRequestError *)error
 {
-    NSLog(@"Admob Error %@",[error description]);
+    //NSLog(@"Admob Error %@",[error description]);
     if (adBanner_.hasAutoRefreshed)
     {
-        NSLog(@"hasAutoRefreshed YES");
+        //NSLog(@"hasAutoRefreshed YES");
     }
     else
     {
-        NSLog(@"hasAutoRefreshed NO");
+        //NSLog(@"hasAutoRefreshed NO");
     }
     NSTimeInterval delaySec = 60.0;
     [self performSelector:@selector(adBannerLoadRequest) withObject:self afterDelay:delaySec];

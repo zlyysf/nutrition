@@ -162,7 +162,7 @@
         cell.cellIndexPath = indexPath;
         //一个记录名称的数组 一个记录对应摄入量的数组
         NSDictionary *aFood = [self.foodArray  objectAtIndex:indexPath.row];
-        NSLog(@"picture path food list %@",aFood);
+        //NSLog(@"picture path food list %@",aFood);
         NSString *picturePath;
         NSString *picPath = [aFood objectForKey:@"PicPath"];
         if (picPath == nil || [picPath isEqualToString:@""])
@@ -329,7 +329,7 @@
         NSDictionary *afood = [self.foodArray objectAtIndex:index.row];
         NSString *NDB_No = [afood objectForKey:@"NDB_No"];
         [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
-        NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
+        //NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
     }
 }
 - (void)keyboardWillShow:(NSNotification *)notification {

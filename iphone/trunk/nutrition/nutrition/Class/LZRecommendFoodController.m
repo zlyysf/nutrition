@@ -150,7 +150,7 @@
     //NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
     NSMutableDictionary *retDict = [rf recommendFood3_AbstractPerson:params withDecidedFoods:dailyIntake andOptions:options];
     NSMutableDictionary *uiDictionary = [rf formatRecommendResultForUI:retDict];
-    NSLog(@"uiDictionary %@",[uiDictionary allKeys]);
+    //NSLog(@"uiDictionary %@",[uiDictionary allKeys]);
     NSArray *recommendArray = [uiDictionary objectForKey:Key_recommendFoodInfoDictArray];
     [recommendFoodArray removeAllObjects];
     if (recommendArray != nil && [recommendArray count]!=0) {
@@ -225,7 +225,7 @@
             LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
             NSDictionary *aFood = [recommendFoodArray objectAtIndex:indexPath.row];
             cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
-            NSLog(@"picture path %@",aFood);
+            //NSLog(@"picture path %@",aFood);
             NSString *picturePath;
             NSString *picPath = [aFood objectForKey:@"PicturePath"];
             if (picPath == nil || [picPath isEqualToString:@""])
@@ -406,10 +406,18 @@
                 {
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                     LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-                    shareViewController.preInsertText = @"测试一下";
+                    NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为您精心推荐:";
+                    for (NSDictionary *aFood in recommendFoodArray)
+                    {
+                        NSString *name = [aFood objectForKey:@"Name"];
+                        NSNumber *weight = [aFood objectForKey:@"Amount"];
+                        contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
+                    }
+
+                    shareViewController.preInsertText = contents;
                     [self presentModalViewController:shareViewController animated:YES];
                 }
-                NSLog(@"ssauthState %d",state);
+                //NSLog(@"ssauthState %d",state);
             }];
             
         }

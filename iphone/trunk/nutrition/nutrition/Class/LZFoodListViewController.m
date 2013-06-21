@@ -87,28 +87,28 @@
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
     NSMutableDictionary *retFmtDict = [rf formatTakenResultForUI:retDict];
-    NSLog(@"retFmtDict %@",retFmtDict);
+    //NSLog(@"retFmtDict %@",retFmtDict);
     NSArray *takenArray = [retFmtDict objectForKey:Key_takenFoodInfoDictArray];
     [takenFoodArray removeAllObjects];
     if (takenArray != nil && [takenArray count]!=0) {
         
         [takenFoodArray addObjectsFromArray:takenArray];
     }
-    NSLog(@"takenArray %@",takenFoodArray);
+    //NSLog(@"takenArray %@",takenFoodArray);
     NSDictionary *takenDict = [retFmtDict objectForKey:Key_takenFoodNutrientInfoAryDictDict];
     [takenFoodDict removeAllObjects];
     if (takenDict != nil )
     {
         
         [takenFoodDict addEntriesFromDictionary:takenDict];
-        NSLog(@"takenFoodDict %@ ",takenFoodDict);
+        //NSLog(@"takenFoodDict %@ ",takenFoodDict);
     }
     NSArray *nutrientArray = [retFmtDict objectForKey:Key_nutrientTakenRateInfoArray];
     [nutrientInfoArray removeAllObjects];
     if (nutrientArray != nil && [nutrientArray count]!=0) {
         
         [nutrientInfoArray addObjectsFromArray:nutrientArray];
-        NSLog(@"nutrientInfoArray %@",nutrientInfoArray);
+        //NSLog(@"nutrientInfoArray %@",nutrientInfoArray);
     }
     
 
@@ -147,7 +147,7 @@
         {
             LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
             NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
-            NSLog(@"picture path %@",aFood);
+            //NSLog(@"picture path %@",aFood);
             NSString *picturePath;
             NSString *picPath = [aFood objectForKey:@"PicturePath"];
             if (picPath == nil || [picPath isEqualToString:@""])

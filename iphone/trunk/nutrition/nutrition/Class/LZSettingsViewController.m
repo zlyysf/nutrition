@@ -84,7 +84,7 @@
             {
                 [self.weiboAuthSwitch setOn:NO];
             }
-            NSLog(@"ssauthState %d",state);
+            //NSLog(@"ssauthState %d",state);
         }];
 
     }
@@ -195,6 +195,9 @@
         {
             [self displayComposerSheet];
         }
+        else{
+            [self alertWithTitle:nil msg:@"对不起，你还没有邮件账户，请到系统设置里面创建一个。"];
+        }
     }
 }
 -(void)displayComposerSheet
@@ -207,11 +210,11 @@
     [mailPicker setSubject: @"用户意见反馈"];
     
     //添加发送者
-    NSArray *toRecipients = [NSArray arrayWithObjects: @"lingzhi@support.com",nil];
+    NSArray *toRecipients = [NSArray arrayWithObjects: @"support@lingzhimobile.com",nil];
     
     [mailPicker setToRecipients: toRecipients];
     
-    
+    [mailPicker setMessageBody:@"" isHTML:NO];
     
     //设置正文
     //    //NSString *emailBody = self.recommendTextView.text;
