@@ -1,11 +1,15 @@
 食物内部分类：
 谷类 gulei 谷类及制品
-豆类 doulei 干豆类及制品
+豆类 gandoulei 干豆类及制品
 蔬菜 shucai 蔬菜类及制品
   薯类 shucai-shulei 薯类、淀粉及制品
   菌藻 shucai-junzao 菌藻类
 水果 shuiguo 水果类及制品
 干果 ganguo 坚果、种子类
+        ganguo-putong
+		ganguo-qita
+干水果 ganshuiguo
+  
 肉类
     畜肉 rou-chu 畜肉类及制品
 	  肉 rou-chu-rou

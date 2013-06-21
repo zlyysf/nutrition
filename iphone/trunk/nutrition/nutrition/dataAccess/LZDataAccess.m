@@ -620,8 +620,43 @@
 }
 
 
-
-
+/*
+ 主要作用是把食物按类别排序，以供显示
+ */
+-(NSArray *)getOrderedFoodIds:(NSArray *)idAry
+{
+    NSLog(@"getOrderedFoodIds begin");
+    if (idAry==nil || idAry.count ==0)
+        return nil;
+    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:idAry.count];
+    for(int i=0; i<idAry.count; i++){
+        [placeholderAry addObject:@"?"];
+    }
+    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
+    [sqlStr appendString:@"SELECT "];
+    [sqlStr appendString:COLUMN_NAME_NDB_No];
+    [sqlStr appendString:@"  FROM FoodNutritionCustom \n"];
+    [sqlStr appendString:@"  WHERE NDB_No in ("];
+    [sqlStr appendString:placeholdersStr];
+    [sqlStr appendString:@")\n"];
+    [sqlStr appendString:@"  ORDER BY "];
+    [sqlStr appendString:COLUMN_NAME_classify];
+    NSLog(@"getOrderedFoodIds sqlStr=%@",sqlStr);
+    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:idAry];
+    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+    NSMutableArray *orderedIdAry = [NSMutableArray arrayWithCapacity:idAry.count];
+    for(int i=0; i<dataAry.count; i++){
+        NSDictionary *rowData = dataAry[i];
+        NSString *idData = [rowData objectForKey:COLUMN_NAME_NDB_No];
+        if(idData != nil)
+            [orderedIdAry addObject:idData];
+    }
+    
+    NSLog(@"getOrderedFoodIds ret:\n%@",orderedIdAry);
+    return orderedIdAry;
+}
 
 
 

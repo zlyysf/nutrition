@@ -2016,11 +2016,12 @@
     //推荐食物
     if (recommendFoodAmountDict!=nil){
         NSArray *recommendFoodIds = [recommendFoodAmountDict allKeys];
+        NSArray *orderedFoodIds = [da getOrderedFoodIds:recommendFoodIds];
+        assert(recommendFoodIds.count == orderedFoodIds.count);
         
-        //NSMutableDictionary *recommendFoodInfoDict2Level = [NSMutableDictionary dictionary];
         NSMutableArray *recommendFoodInfoDictArray = [NSMutableArray array];
-        for(int i=0; i<recommendFoodIds.count; i++){
-            NSString *foodId = recommendFoodIds[i];
+        for(int i=0; i<orderedFoodIds.count; i++){
+            NSString *foodId = orderedFoodIds[i];
             NSDictionary *foodAttrs = recommendFoodAttrDict[foodId];
             NSNumber *nmFoodAmount = recommendFoodAmountDict[foodId];
             NSString *foodName = foodAttrs[COLUMN_NAME_CnCaption];
@@ -2035,7 +2036,6 @@
                 [recommendFoodInfoDictArray addObject:recommendFoodInfoDict];
             }
         }//for
-        //[formatResult setValue:recommendFoodInfoDict2Level forKey:Key_recommendFoodInfo2LevelDict];
         [formatResult setValue:recommendFoodInfoDictArray forKey:Key_recommendFoodInfoDictArray];
     }
     
@@ -2162,11 +2162,13 @@
     //已经决定了的食物
     if (takenFoodAmountDict!=nil){
         NSArray *takenFoodIds = [takenFoodAmountDict allKeys];
+        NSArray *orderedFoodIds = [da getOrderedFoodIds:takenFoodIds];
+        assert(takenFoodIds.count == orderedFoodIds.count);
         
         //NSMutableDictionary *takenFoodInfoDict2Level = [NSMutableDictionary dictionary];
         NSMutableArray *takenFoodInfoDictArray = [NSMutableArray array];
-        for(int i=0; i<takenFoodIds.count; i++){
-            NSString *foodId = takenFoodIds[i];
+        for(int i=0; i<orderedFoodIds.count; i++){
+            NSString *foodId = orderedFoodIds[i];
             NSDictionary *foodAttrs = takenFoodAttrDict[foodId];
             NSNumber *nmFoodAmount = takenFoodAmountDict[foodId];
             NSString *foodName = foodAttrs[COLUMN_NAME_CnCaption];
