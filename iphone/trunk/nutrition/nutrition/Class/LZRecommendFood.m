@@ -1658,24 +1658,24 @@
     NSLog(@"mergeSomeSameClassFoodForRecommend1personDay enter");
     
     NSDictionary *DRIsDict = [recommendResult objectForKey:@"DRI"];//nutrient name as key, also column name
-    NSDictionary *nutrientInitialSupplyDict = [recommendResult objectForKey:@"nutrientInitialSupplyDict"];
+//    NSDictionary *nutrientInitialSupplyDict = [recommendResult objectForKey:@"nutrientInitialSupplyDict"];
     NSDictionary *nutrientSupplyDict = [recommendResult objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
     NSMutableDictionary *recommendFoodAmountDict = [recommendResult objectForKey:@"FoodAmount"];//food NO as key
     NSMutableDictionary *recommendFoodAttrDict = [recommendResult objectForKey:@"FoodAttr"];//food NO as key
     
     //    NSDictionary *dictNutrientLackWhenInitialTaken = [recommendResult objectForKey:@"NutrientLackWhenInitialTaken"];
-    NSDictionary *limitedNutrientDictCanBeCal = [recommendResult objectForKey:@"limitedNutrientDictCanBeCal"];
+//    NSDictionary *limitedNutrientDictCanBeCal = [recommendResult objectForKey:@"limitedNutrientDictCanBeCal"];
     
 
-    NSDictionary *options = [recommendResult objectForKey:@"optionsDict"];
+//    NSDictionary *options = [recommendResult objectForKey:@"optionsDict"];
     NSDictionary *params = [recommendResult objectForKey:@"paramsDict"];
     
-    NSArray *foodSupplyNutrientSeqs = [recommendResult objectForKey:@"foodSupplyNutrientSeqs"];//2D array
-    NSArray *calculationLogs = [recommendResult objectForKey:@"calculationLogs"];//2D array
-    NSArray *otherInfos = [recommendResult objectForKey:@"OtherInfo"];
+//    NSArray *foodSupplyNutrientSeqs = [recommendResult objectForKey:@"foodSupplyNutrientSeqs"];//2D array
+//    NSArray *calculationLogs = [recommendResult objectForKey:@"calculationLogs"];//2D array
+//    NSArray *otherInfos = [recommendResult objectForKey:@"OtherInfo"];
 
-    NSMutableDictionary *takenFoodAmountDict = [recommendResult objectForKey:@"TakenFoodAmount"];//food NO as key
-    NSMutableDictionary *takenFoodAttrDict = [recommendResult objectForKey:@"TakenFoodAttr"];//food NO as key
+//    NSMutableDictionary *takenFoodAmountDict = [recommendResult objectForKey:@"TakenFoodAmount"];//food NO as key
+//    NSMutableDictionary *takenFoodAttrDict = [recommendResult objectForKey:@"TakenFoodAttr"];//food NO as key
     
     NSArray * nutrientNameAryToCalTotalOriginal = [recommendResult objectForKey:@"nutrientNameAryToCalTotalOriginal"];
     
@@ -2299,11 +2299,11 @@
     
     NSDictionary *DRIsDict = [recmdDict objectForKey:@"DRI"];//nutrient name as key, also column name
     NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
-    NSDictionary *nutrientInitialSupplyDict = [recmdDict objectForKey:@"nutrientInitialSupplyDict"];
+//    NSDictionary *nutrientInitialSupplyDict = [recmdDict objectForKey:@"nutrientInitialSupplyDict"];
     NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:@"FoodAmount"];//food NO as key
     NSDictionary *recommendFoodAttrDict = [recmdDict objectForKey:@"FoodAttr"];//food NO as key
     
-    NSDictionary *dictNutrientLackWhenInitialTaken = [recmdDict objectForKey:@"NutrientLackWhenInitialTaken"];
+//    NSDictionary *dictNutrientLackWhenInitialTaken = [recmdDict objectForKey:@"NutrientLackWhenInitialTaken"];
 //    NSDictionary *limitedNutrientDictCanBeCal = [recmdDict objectForKey:@"limitedNutrientDictCanBeCal"];
     
     NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];
@@ -2406,7 +2406,7 @@
                 for(int j=0; j<nutrientNames.count;j++){
                     NSString *nutrientName = nutrientNames[j];
                     NSNumber *nmFoodAttrValue = [foodAttrs objectForKey:nutrientName];
-                    if (nmFoodAttrValue == nil || nmFoodAttrValue == [NSNull null]){//有warning没事，试过了没问题
+                    if (nmFoodAttrValue == nil || (NSNull *)nmFoodAttrValue == [NSNull null]){//有warning没事，试过了没问题
                         //do nothing
                     }else{
                         double foodSupplyNutrientAmount = [nmFoodAttrValue doubleValue]*[nmFoodAmount doubleValue]/100.0;
@@ -2584,7 +2584,7 @@
             for(int j=0; j<nutrientNames.count;j++){
                 NSString *nutrientName = nutrientNames[j];
                 NSNumber *nmFoodAttrValue = [foodAttrs objectForKey:nutrientName];
-                if (nmFoodAttrValue == nil || nmFoodAttrValue == [NSNull null]){
+                if (nmFoodAttrValue == nil || (NSNull *)nmFoodAttrValue == [NSNull null]){
                     //do nothing
                 }else{
                     row[j+colIdx_NutrientStart] = nmFoodAttrValue;
@@ -2864,24 +2864,24 @@
 {
     NSLog(@"generateHtml_RecommendFoodForEnoughNuitrition enter");
     
-    NSDictionary *DRIsDict = [recmdDict objectForKey:@"DRI"];//nutrient name as key, also column name
+//    NSDictionary *DRIsDict = [recmdDict objectForKey:@"DRI"];//nutrient name as key, also column name
 //    NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
     NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:@"FoodAmount"];//food NO as key
     NSDictionary *recommendFoodAttrDict = [recmdDict objectForKey:@"FoodAttr"];//food NO as key
     
-    NSDictionary *dictNutrientLackWhenInitialTaken = [recmdDict objectForKey:@"NutrientLackWhenInitialTaken"];//to be discarded
-    NSDictionary *limitedNutrientDictCanBeCal = [recmdDict objectForKey:@"limitedNutrientDictCanBeCal"];//little use, to be discarded
+//    NSDictionary *dictNutrientLackWhenInitialTaken = [recmdDict objectForKey:@"NutrientLackWhenInitialTaken"];//to be discarded
+//    NSDictionary *limitedNutrientDictCanBeCal = [recmdDict objectForKey:@"limitedNutrientDictCanBeCal"];//little use, to be discarded
     
     //NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];//2D array
 //    NSDictionary *options = [recmdDict objectForKey:@"optionsDict"];
-    NSArray *foodSupplyNutrientSeqs = [recmdDict objectForKey:@"foodSupplyNutrientSeqs"];//2D array
+//    NSArray *foodSupplyNutrientSeqs = [recmdDict objectForKey:@"foodSupplyNutrientSeqs"];//2D array
     
     
     NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:@"TakenFoodAmount"];//food NO as key
     NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:@"TakenFoodAttr"];//food NO as key
     
-    NSDictionary *recommendFoodAmountDictOld = [recmdDict objectForKey:@"FoodAmountOld"];//food NO as key
-    NSDictionary *recommendFoodAttrDictOld = [recmdDict objectForKey:@"FoodAttrOld"];//food NO as key
+//    NSDictionary *recommendFoodAmountDictOld = [recmdDict objectForKey:@"FoodAmountOld"];//food NO as key
+//    NSDictionary *recommendFoodAttrDictOld = [recmdDict objectForKey:@"FoodAttrOld"];//food NO as key
     
     //int limitRecommendFoodCount = 0;//already discard this param
 //    if ([options objectForKey:@"limitRecommendFoodCount"]!=nil){
