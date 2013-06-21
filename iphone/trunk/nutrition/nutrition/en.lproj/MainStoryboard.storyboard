@@ -469,6 +469,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <view contentMode="scaleToFill" id="fxf-zI-FYW">
+                                                    <rect key="frame" x="5" y="0.0" width="310" height="42"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
                                                 <view contentMode="scaleToFill" id="M1r-b3-aE9" customClass="LZProgressView">
                                                     <rect key="frame" x="80" y="19" width="216" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -504,6 +509,7 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
+                                            <outlet property="backView" destination="fxf-zI-FYW" id="cxq-bF-Zhy"/>
                                             <outlet property="cellArrowImage" destination="byo-uy-Lf0" id="DVV-32-gDR"/>
                                             <outlet property="nutritionNameButton" destination="DKd-Ft-Rwc" id="LC6-ug-dHd"/>
                                             <outlet property="nutritionProgressView" destination="M1r-b3-aE9" id="nRS-Vs-T8f"/>
@@ -1015,7 +1021,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="mpK-nA-w0i">
-                                                            <rect key="frame" x="10" y="12" width="30" height="30"/>
+                                                            <rect key="frame" x="15" y="12" width="30" height="30"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                         </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WYz-0s-0Ub">
@@ -1207,6 +1213,7 @@
         <class className="LZFoodNutritionCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodNutritionCell.h"/>
             <relationships>
+                <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="cellArrowImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="nutritionNameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>

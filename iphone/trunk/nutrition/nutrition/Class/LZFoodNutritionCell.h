@@ -14,5 +14,6 @@
 -(void)adjustLabelAccordingToProgress:(float)progress forLabelWidth:(float)labelWith;
 @property (strong, nonatomic) IBOutlet UIButton *nutritionNameButton;
 @property (strong, nonatomic) IBOutlet UIImageView *cellArrowImage;
+@property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong, nonatomic) NSString *nutrientId;
 @end

@@ -38,14 +38,14 @@
     {
         [self.supplyPercentlabel setTextColor:[UIColor whiteColor]];
         //[self.nutritionNameButton.titleLabel setTextColor:[UIColor whiteColor]];
-        [self setBackgroundColor:[UIColor clearColor]];
+        [self.backView setBackgroundColor:[UIColor colorWithRed:198/255.f green:185/255.f blue:173/255.f alpha:1.0f]];
         [self.cellArrowImage setImage:[UIImage imageNamed:@"arrow_click.png"]];
     }
     else
     {
         [self.supplyPercentlabel setTextColor:[UIColor blackColor]];
         //[self.nutritionNameButton.titleLabel setTextColor:[UIColor darkTextColor]];
-        [self setBackgroundColor:[UIColor clearColor]];
+        [self.backView setBackgroundColor:[UIColor clearColor]];
         [self.cellArrowImage setImage:[UIImage imageNamed:@"arrow.png"]];
     }
 }
