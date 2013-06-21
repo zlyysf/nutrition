@@ -360,6 +360,25 @@
     UIActionSheet *shareSheet = [[UIActionSheet alloc]initWithTitle:@"分享到" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新浪微博", nil];
     [shareSheet showInView:self.view.superview];
 }
+-(NSString *)getShareContents
+{
+    if ([recommendFoodArray count]!= 0)
+    {
+        NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为您精心推荐:";
+        for (NSDictionary *aFood in recommendFoodArray)
+        {
+            NSString *name = [aFood objectForKey:@"Name"];
+            NSNumber *weight = [aFood objectForKey:@"Amount"];
+            contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
+        }
+        return contents;
+    }
+    else
+    {
+        NSString *contents = @"我使用 @买菜助手(http://t.cn/zH1gxw5 ) 已经挑选出一组含全面丰富营养的食物搭配，羡慕吧？";
+        return contents;
+    }
+}
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == actionSheet.cancelButtonIndex)
@@ -372,19 +391,7 @@
         {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
             LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-            NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为您精心推荐:";
-            for (NSDictionary *aFood in recommendFoodArray)
-            {
-                NSString *name = [aFood objectForKey:@"Name"];
-                NSNumber *weight = [aFood objectForKey:@"Amount"];
-                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
-            }
-//            买菜助手(http://t.cn/zHuwJxz )为您精心推荐:
-//                 食物1 123g
-//                 食物1 123g
-//                 食物1 123g
-//                 食物1 123g
-//
+            NSString *contents = [self getShareContents];
             shareViewController.preInsertText = contents;
             [self presentModalViewController:shareViewController animated:YES];
         }
@@ -406,14 +413,7 @@
                 {
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                     LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-                    NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为您精心推荐:";
-                    for (NSDictionary *aFood in recommendFoodArray)
-                    {
-                        NSString *name = [aFood objectForKey:@"Name"];
-                        NSNumber *weight = [aFood objectForKey:@"Amount"];
-                        contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
-                    }
-
+                    NSString * contents = [self getShareContents];
                     shareViewController.preInsertText = contents;
                     [self presentModalViewController:shareViewController animated:YES];
                 }
