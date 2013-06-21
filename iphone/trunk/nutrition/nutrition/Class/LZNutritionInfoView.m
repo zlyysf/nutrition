@@ -41,15 +41,15 @@
         closeButton.center = CGPointMake(descriptionView.frame.origin.x +descriptionView.frame.size.width-10, descriptionView.frame.origin.y+10);
         [backView addSubview: closeButton];
         
-        UILabel * nutrientNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 260, 18)];
-        [nutrientNameLabel setFont:[UIFont systemFontOfSize:15]];
+        UILabel * nutrientNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, 10, 260, 25)];
+        [nutrientNameLabel setFont:[UIFont boldSystemFontOfSize:18]];
         [nutrientNameLabel setBackgroundColor:[UIColor clearColor]];
         [nutrientNameLabel setTextColor:[UIColor blackColor]];
         nutrientNameLabel.text = [infoDict objectForKey:@"NutrientCnCaption"];
         [descriptionView addSubview:nutrientNameLabel];
         
         UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 38,280, 256)];
-        [textView setFont:[UIFont systemFontOfSize:12]];
+        [textView setFont:[UIFont systemFontOfSize:14]];
 //        NSString *contents = @"";
 //        for (NSString * key in [infoDict allKeys])
 //        {
