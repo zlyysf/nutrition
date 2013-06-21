@@ -18,16 +18,20 @@
  */
 +(NSArray*)getCustomNutrients
 {
-    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
-                                         @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",@"Folate_Tot_(µg)", nil];
-//    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
-//         @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
-//         @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-//         @"Vit_B12_(µg)",@"Panto_Acid_mg)",
-//         @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
-//         @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
-//         @"Protein_(g)",@"Lipid_Tot_(g)",
-//         @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
+    NSArray *limitedNutrientsCanBeCal = nil;
+    if (!KeyIsEnvironmentDebug){
+        limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
+                                    @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",@"Folate_Tot_(µg)", nil];
+    }else{
+        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
+                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
+                                    @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+                                    @"Vit_B12_(µg)",@"Panto_Acid_mg)",
+                                    @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
+                                    @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
+                                    @"Protein_(g)",@"Lipid_Tot_(g)",
+                                    @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
+    }
     return limitedNutrientsCanBeCal;
 }
 /*
