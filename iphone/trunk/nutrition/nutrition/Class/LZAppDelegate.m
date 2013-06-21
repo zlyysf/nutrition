@@ -35,12 +35,12 @@
     [MobClick checkUpdate:@"检测到新版本" cancelButtonTitle:@"下次再说" otherButtonTitles:@"去AppStore"];
     //initialize persons and days setting
     [ShareSDK registerApp:ShareSDKAPPKey];
-//    [ShareSDK connectSinaWeiboWithAppKey:SinaWeiboAppKey
-//                               appSecret:SinaWeiboAppSecret
-//                             redirectUri:@"http://www.lingzhi.com"];
-    [ShareSDK connectSinaWeiboWithAppKey:@"568898243"
-                               appSecret:@"38a4f8204cc784f81f9f0daaf31e02e3"
-                             redirectUri:@"http://www.sharesdk.cn"];
+    [ShareSDK connectSinaWeiboWithAppKey:SinaWeiboAppKey
+                               appSecret:SinaWeiboAppSecret
+                             redirectUri:@"http://www.lingzhimobile.com/"];
+//    [ShareSDK connectSinaWeiboWithAppKey:@"568898243"
+//                               appSecret:@"38a4f8204cc784f81f9f0daaf31e02e3"
+//                             redirectUri:@"http://www.sharesdk.cn"];
 
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
