@@ -78,7 +78,7 @@
     {
         self.listView.hidden = YES;
         HUD.hidden = NO;
-        HUD.labelText = @"";
+        HUD.labelText = @"智能推荐中...";
         [HUD show:YES];
 
     }
@@ -100,7 +100,7 @@
     [HUD show:YES];
     //self.listView.hidden = YES;
     
-    HUD.labelText = @"";
+    HUD.labelText = @"智能推荐中...";
     
     [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.5];
     //[self recommendOnePlan];

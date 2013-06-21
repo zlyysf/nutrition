@@ -8,10 +8,10 @@
 
 #import "GADMasterViewController.h"
 #import <AdSupport/ASIdentifierManager.h>
-
+#import "LZConstants.h"
 //#define MY_BANNER_UNIT_ID @"a14fb773a49c5c9"//a14f0800ac9dfad。a14fb76d4362e2a
 //#define MY_BANNER_UNIT_ID @"a151346bbb1e935"//zly quiz awesome
-#define MY_BANNER_UNIT_ID @"a151bfe57a8e242"//@"a15138373387ee2"//lingzhi.mobile Quiz Awesome
+//@"a15138373387ee2"//lingzhi.mobile Quiz Awesome
 //这里写你的id    admob上注册应用后获取自己的id
 //#define     IsEnvironmentProd 0
 @interface GADMasterViewController ()<GADBannerViewDelegate>

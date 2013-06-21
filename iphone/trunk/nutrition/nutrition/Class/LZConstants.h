@@ -9,7 +9,7 @@
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
 
-#define KeyIsEnvironmentDebug 1
+#define KeyIsEnvironmentDebug 0
 
 #define Config_needConsiderNutrientLoss TRUE
 #define Config_foodUpperLimit 1000 // unit g
@@ -122,6 +122,8 @@
 
 #define SinaWeiboAppKey @"3626415671"
 #define SinaWeiboAppSecret @"9d17e75a675323f5b719cb058c5b9d0d"
+
+#define MY_BANNER_UNIT_ID @"a151bfe57a8e242"//admob key
 
 #endif
 

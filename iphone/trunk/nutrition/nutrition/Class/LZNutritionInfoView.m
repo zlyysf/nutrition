@@ -48,7 +48,7 @@
         nutrientNameLabel.text = [infoDict objectForKey:@"NutrientCnCaption"];
         [descriptionView addSubview:nutrientNameLabel];
         
-        UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 38,280, 256)];
+        UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 38,280, 245)];
         [textView setFont:[UIFont systemFontOfSize:14]];
 //        NSString *contents = @"";
 //        for (NSString * key in [infoDict allKeys])
