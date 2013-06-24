@@ -20,7 +20,8 @@
 #import "LZReviewAppManager.h"
 #import <ShareSDK/ShareSDK.h>
 #import "MobClick.h"
-@interface LZRecommendFoodController ()<MBProgressHUDDelegate,UIActionSheetDelegate>
+#import "WXApi.h"
+@interface LZRecommendFoodController ()<MBProgressHUDDelegate,UIActionSheetDelegate,UIAlertViewDelegate>
 {
     MBProgressHUD *HUD;
 }
@@ -175,6 +176,7 @@
     [HUD hide:YES];
     self.listView.hidden = NO;
     [self.listView reloadData];
+    [self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
     [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -357,45 +359,113 @@
 }
 - (IBAction)shareButtonTapped:(id)sender
 {
-    UIActionSheet *shareSheet = [[UIActionSheet alloc]initWithTitle:@"分享到" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新浪微博", nil];
+    UIActionSheet *shareSheet = [[UIActionSheet alloc]initWithTitle:@"分享到" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新浪微博",@"微信好友",@"微信朋友圈", nil];
     [shareSheet showInView:self.view.superview];
 }
--(NSString *)getShareContents
+-(NSString *)getShareContentsForShareType:(ShareType)type
 {
-    if ([recommendFoodArray count]!= 0)
+    if(type == ShareTypeSinaWeibo)
     {
-        NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为您精心推荐:";
-        for (NSDictionary *aFood in recommendFoodArray)
+        if ([recommendFoodArray count]!= 0)
         {
-            NSString *name = [aFood objectForKey:@"Name"];
-            NSNumber *weight = [aFood objectForKey:@"Amount"];
-            contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
+            NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为您精心推荐:";
+            for (NSDictionary *aFood in recommendFoodArray)
+            {
+                NSString *name = [aFood objectForKey:@"Name"];
+                NSNumber *weight = [aFood objectForKey:@"Amount"];
+                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
+            }
+            return contents;
         }
-        return contents;
+        else
+        {
+            NSString *contents = @"我使用 @买菜助手(http://t.cn/zH1gxw5 ) 已经挑选出一组含全面丰富营养的食物搭配，羡慕吧？";
+            return contents;
+        }
     }
-    else
+    else //微信好友 或者微信朋友圈
     {
-        NSString *contents = @"我使用 @买菜助手(http://t.cn/zH1gxw5 ) 已经挑选出一组含全面丰富营养的食物搭配，羡慕吧？";
-        return contents;
+        if ([recommendFoodArray count]!= 0)
+        {
+            NSString *contents = @"买菜助手(http://t.cn/zHuwJxz )为您精心推荐:";
+            for (NSDictionary *aFood in recommendFoodArray)
+            {
+                NSString *name = [aFood objectForKey:@"Name"];
+                NSNumber *weight = [aFood objectForKey:@"Amount"];
+                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
+            }
+            return contents;
+        }
+        else
+        {
+            NSString *contents = @"我使用 买菜助手(http://t.cn/zH1gxw5 ) 已经挑选出一组含全面丰富营养的食物搭配，羡慕吧？";
+            return contents;
+        }
+
     }
 }
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)shareRecommendContentForType:(ShareType)type
 {
-    if(buttonIndex == actionSheet.cancelButtonIndex)
+    if(type == ShareTypeWeixiSession || type == ShareTypeWeixiTimeline)
     {
-        return;
+        if ([WXApi isWXAppInstalled])
+        {
+            //isWXAppInstalled
+            //getWXAppInstallUrl
+            NSString *contents = [self getShareContentsForShareType:type];
+            id<ISSContent> content = [ShareSDK content:contents
+                                        defaultContent:nil
+                                                 image:nil
+                                                 title:nil
+                                                   url:nil
+                                           description:nil
+                                             mediaType:SSPublishContentMediaTypeText];
+            
+            id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                                 allowCallback:YES
+                                                                 authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                                  viewDelegate:nil
+                                                       authManagerViewDelegate:nil];
+            [ShareSDK shareContent:content
+                              type:type
+                       authOptions:authOptions
+                     statusBarTips:YES
+                            result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                if (state == SSPublishContentStateSuccess)
+                                {
+                                    NSLog(@"success");
+                                }
+                                else if (state == SSPublishContentStateFail)
+                                {
+                                    if ([error errorCode] == -22003)
+                                    {
+                                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                                            message:[error errorDescription]
+                                                                                           delegate:nil
+                                                                                  cancelButtonTitle:@"知道了"
+                                                                                  otherButtonTitles:nil];
+                                        [alertView show];
+                                        
+                                    }
+                                }
+                            }];
+        }
+        else
+        {
+            [self popWeiChatInstallAlert];
+        }
     }
-    else
+    else if (type == ShareTypeSinaWeibo)
     {
-        if ([ShareSDK hasAuthorizedWithType:ShareTypeSinaWeibo])
+        if ([ShareSDK hasAuthorizedWithType:type])
         {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
             LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-            NSString *contents = [self getShareContents];
+            NSString *contents = [self getShareContentsForShareType:type ];
             shareViewController.preInsertText = contents;
             [self presentModalViewController:shareViewController animated:YES];
         }
-        else
+        else 
         {
             id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
                                                                  allowCallback:YES
@@ -404,16 +474,16 @@
                                                        authManagerViewDelegate:nil];
             [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
                                             [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"买菜助手"],
-                                            SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
+                                            SHARE_TYPE_NUMBER(type),
                                             //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
                                             //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
                                             nil]];
-            [ShareSDK authWithType:ShareTypeSinaWeibo options:authOptions result:^(SSAuthState state, id<ICMErrorInfo> error) {
+            [ShareSDK authWithType:type options:authOptions result:^(SSAuthState state, id<ICMErrorInfo> error) {
                 if (state == SSAuthStateSuccess)
                 {
                     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                     LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-                    NSString * contents = [self getShareContents];
+                    NSString * contents = [self getShareContentsForShareType:type];
                     shareViewController.preInsertText = contents;
                     [self presentModalViewController:shareViewController animated:YES];
                 }
@@ -421,9 +491,49 @@
             }];
             
         }
+
     }
 
 }
+- (void)popWeiChatInstallAlert
+{
+    UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:nil message:@"还没有安装微信 立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    [insallWeichatAlert show];
+}
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == alertView.cancelButtonIndex)
+    {
+        return;
+    }
+    else
+    {
+        NSString *weichatURL =[WXApi getWXAppInstallUrl];
+        NSURL *ourAppUrl = [ [ NSURL alloc ] initWithString: weichatURL ];
+        [[UIApplication sharedApplication] openURL:ourAppUrl];
+    }
+}
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == actionSheet.cancelButtonIndex)
+    {
+        return;
+    }
+    else if (buttonIndex == 0)//weibo
+    {
+        [self shareRecommendContentForType:ShareTypeSinaWeibo];
+    }
+    else if (buttonIndex == 1)//微信好友
+    {
+        [self shareRecommendContentForType:ShareTypeWeixiSession];
+    }
+    else//朋友圈
+    {
+        [self shareRecommendContentForType:ShareTypeWeixiTimeline];
+    }
+
+}
+
 #pragma mark MBProgressHUDDelegate methods
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {

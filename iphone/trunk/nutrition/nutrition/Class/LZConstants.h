@@ -120,10 +120,14 @@
 #define KeyIsAlreadyReviewdeOurApp @"KeyIsAlreadyReviewdeOurApp" // YES means already reviewed
 #define KeyReviewAlertControllCount @"KeyReviewAlertControllCount" // >=10 popAlert
 
+
+#define MY_BANNER_UNIT_ID @"a151bfe57a8e242"//admob key
+
+//share config info
 #define SinaWeiboAppKey @"3626415671"
 #define SinaWeiboAppSecret @"9d17e75a675323f5b719cb058c5b9d0d"
 
-#define MY_BANNER_UNIT_ID @"a151bfe57a8e242"//admob key
+#define WeChatAppId @"wxb842cd724ab15257"
 
 #endif
 

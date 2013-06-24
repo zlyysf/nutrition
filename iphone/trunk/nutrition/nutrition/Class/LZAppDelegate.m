@@ -10,6 +10,7 @@
 #import "LZConstants.h"
 #import "MobClick.h"
 #import <ShareSDK/ShareSDK.h>
+#import "WXApi.h"
 @implementation LZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -41,7 +42,7 @@
 //    [ShareSDK connectSinaWeiboWithAppKey:@"568898243"
 //                               appSecret:@"38a4f8204cc784f81f9f0daaf31e02e3"
 //                             redirectUri:@"http://www.sharesdk.cn"];
-
+    [ShareSDK connectWeChatWithAppId:WeChatAppId wechatCls:[WXApi class]];
     NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
     NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
     if (planPerson == nil)

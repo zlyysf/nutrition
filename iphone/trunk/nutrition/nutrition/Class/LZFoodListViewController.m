@@ -365,6 +365,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [MobClick endLogPageView:@"检测页面"];
+    [self.listView reloadData];
 //    if (self.listView.editing)
 //    {
 //        [self.editFoodItem setStyle:UIBarButtonItemStyleBordered];

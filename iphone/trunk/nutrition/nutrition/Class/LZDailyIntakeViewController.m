@@ -48,6 +48,7 @@
     UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
     
     self.navItem.leftBarButtonItem= customBarItem;
+    //[self.admobView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 //    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
 //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
 //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
