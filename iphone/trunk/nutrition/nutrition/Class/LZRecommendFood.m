@@ -546,6 +546,13 @@
 
 /*
  与recommendFoodForEnoughNuitritionWithPreIntake相比，补营养素的计算策略改为不是一定非要给一种补够，而是补了一定量再计算下一个最缺的。
+ 这里推荐算法的一些主要特征：
+     找最缺的营养素先补。
+     用某种食物给某种营养素进行补充时，不是一次一定要补够，而是根据上下限表里面的数据给出一个合适值来补充。这次没补够不管，找下一个最缺的营养素进行一次新的过程。
+     对于营养素，根据在实践中的一些经验，划分出了不需补充的和最后补充的。
+     专门设置了一个食物的上下限表，目前只用了上限值，以防止推荐出的食物的量过多
+ 
+ 
  参数：
      takenFoodAmountDict 已经决定使用的食物，比如已经吃过的或已经准备购买的。食物的NDB_No的值是key.
      DRIsDict 单人单天的DRI。
@@ -1083,7 +1090,9 @@
     return retDict;
 }
 
-
+/*
+ 这里考虑到了营养素的损失情况。目前只对营养素进行了损失系数的设置，其实不够科学，因为不同食物对于同一种营养素的损失情况是不一样的，而且还存在烹调加工的问题。比如熟吃的蔬菜和生吃的水果对于VC。
+ */
 -(NSMutableDictionary *) recommendFood3_AbstractPerson:(NSDictionary*)params withDecidedFoods:(NSDictionary*)decidedFoodAmountDict andOptions:(NSDictionary*)options
 {
     NSNumber *nm_personCount = [params objectForKey:@"personCount"];
@@ -1114,6 +1123,13 @@
 /*
  与recommendFoodForEnoughNuitritionWithPreIntake相比，补营养素的计算策略改为不是一定非要给一种补够，而是补了一定量再计算下一个最缺的。
  与recommendFood2WithPreIntake相比，加了一个对单人天时的同类食物合并。不过，目前主要是在上层函数做了改动，这里的差别不大。
+ 这里推荐算法的一些主要特征：
+     找最缺的营养素先补。
+     用某种食物给某种营养素进行补充时，不是一次一定要补够，而是根据上下限表里面的数据给出一个合适值来补充。这次没补够不管，找下一个最缺的营养素进行一次新的过程。
+     对于营养素，根据在实践中的一些经验，划分出了不需补充的和最后补充的。
+     专门设置了一个食物的上下限表，目前上限值、下限值、推荐值都用上了，以防止推荐出的食物的量过多.
+     另外还有一个营养素的损失系数的问题，不过不是在这里考虑，而是在上层函数中考虑。
+ 
  参数：
  takenFoodAmountDict 已经决定使用的食物，比如已经吃过的或已经准备购买的。食物的NDB_No的值是key.
  DRIsDict 单人单天的DRI。
@@ -1652,7 +1668,13 @@
     return retDict;
 }
 
-
+/*
+ 合并算法的主要需求是 在单人天的情况下 ，推荐出的食物如果存在某个细类的有好几种食物，如有好几种鱼，给人感觉不是太好，从而需要合并。
+ 但是，这也存在着严重bug。如下例：
+     当已经选了一些食物而缺钙缺VD时，会选出几种鱼。
+     含vd多的鱼含钙很少，含钙多的鱼含vd很少，没有交集。
+     这样，如果vd和钙都导致选出了鱼，最后合并鱼类，按现在的算法，会导致单种鱼的需要量很高。或者某些鱼这两项都含量低的时候更是如此。
+ */
 -(NSMutableDictionary*)mergeSomeSameClassFoodForRecommend1personDay:(NSMutableDictionary *)recommendResult
 {
     NSLog(@"mergeSomeSameClassFoodForRecommend1personDay enter");
