@@ -57,10 +57,192 @@
 }
 
 
+/*
+ 范围数值参考5_Summary Table Tables 1-4.pdf 也就是Dietary Reference Intakes: The Essential Guide to Nutrient Requirements（http://nal.usda.gov/fnic/DRI/Essential_Guide/DRIEssentialGuideNutReq.pdf）的PART II ENERGY, MACRONUTRIENTS,WATER, AND PHYSICAL ACTIVITY
+ 验证正确性是在http://fnic.nal.usda.gov/fnic/interactiveDRI/ usda的DRI计算器 
+ 先计算出energy摄入推荐量，然后根据数值范围得出 碳水化合物和脂肪的上限值，蛋白质和能量的上限值暂时设为-1
+ */
 
 
-
-
+-(NSDictionary*)getULForSex:(int )sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
+{
+    float PA;
+    float heightM = height/100.f;
+    int energyStandard;
+    int energyUL = -1;
+    int proteinUL = -1;
+    int carbohydrtUL;
+    int fatUL;
+    if (sex == 0)//male
+    {
+        if (age>=1 && age<3)
+        {
+            energyStandard = 89*weight-100+20;
+        }
+        else if (age>=3 && age<9)
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.13;
+                    break;
+                case 2:
+                    PA = 1.26;
+                    break;
+                case 3:
+                    PA = 1.42;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            energyStandard = 88.5 - 61.9*age +PA*(26.7 *weight +903*heightM)+20;
+        }
+        else if (age>=9 && age<19)
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.13;
+                    break;
+                case 2:
+                    PA = 1.26;
+                    break;
+                case 3:
+                    PA = 1.42;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            
+            energyStandard = 88.5 - 61.9*age +PA*(26.7 *weight +903*heightM)+25;
+        }
+        else
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.11;
+                    break;
+                case 2:
+                    PA = 1.25;
+                    break;
+                case 3:
+                    PA = 1.48;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            
+            energyStandard = 662 - 9.53*age +PA*(15.91 *weight +539.6*heightM);
+        }
+        
+    }
+    else//female
+    {
+        if (age>=1 && age<3)
+        {
+            energyStandard = 89*weight-100+20;
+        }
+        else if (age>=3 && age<9)
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.16;
+                    break;
+                case 2:
+                    PA = 1.31;
+                    break;
+                case 3:
+                    PA = 1.56;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            
+            energyStandard = 135.3 - 30.8*age +PA*(10 *weight +934*heightM)+20;
+        }
+        else if (age>=9 && age<19)
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.16;
+                    break;
+                case 2:
+                    PA = 1.31;
+                    break;
+                case 3:
+                    PA = 1.56;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            
+            energyStandard = 135.3 - 30.8*age +PA*(10 *weight +934*heightM)+25;
+        }
+        else
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.12;
+                    break;
+                case 2:
+                    PA = 1.27;
+                    break;
+                case 3:
+                    PA = 1.45;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            
+            energyStandard = 354 - 6.91*age +PA*(9.36 *weight +726*heightM);
+        }
+        
+        
+    }
+    carbohydrtUL = (int)(energyStandard*0.65*kCarbFactor+0.5);
+    
+    if (age>=1 && age<4)
+    {
+        fatUL = (int)(energyStandard*0.40*kFatFactor+0.5);
+    }
+    else
+    {
+        if(age >= 4 && age<19)
+        {
+            fatUL = (int)(energyStandard*0.35*kFatFactor+0.5);
+        }
+        else
+        {
+            fatUL = (int)(energyStandard*0.35*kFatFactor+0.5);
+        }
+    }
+    
+    NSLog(@"getStandardUL : energyStandard : %d \n Carbohydrt : %d \n Fat : %d \n Protein : %d",energyUL,carbohydrtUL,fatUL,proteinUL);
+    NSDictionary *ULResult = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:energyUL],@"Energ_Kcal",[NSNumber numberWithInt:carbohydrtUL],@"Carbohydrt_(g)",[NSNumber numberWithInt:fatUL],@"Lipid_Tot_(g)",[NSNumber numberWithInt:proteinUL],@"Protein_(g)",nil];
+    return ULResult;
+}
 
 
 
