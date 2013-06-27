@@ -111,6 +111,9 @@
 		5F789B231755B1F3002FE365 /* foodCellBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F789B221755B1F3002FE365 /* foodCellBack@2x.png */; };
 		5F94A86517531CC100664B57 /* LZFoodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZFoodListViewController.m */; };
 		5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86717531ED700664B57 /* LZSettingsViewController.m */; };
+		5F955F29177C2A0C00FCC976 /* Addfood_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F955F28177C2A0C00FCC976 /* Addfood_button@2x.png */; };
+		5F955F2C177C2A4800FCC976 /* LZAddFoodButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F955F2B177C2A4800FCC976 /* LZAddFoodButtonCell.m */; };
+		5F955F2E177C3A2F00FCC976 /* AddByNutrientButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F955F2D177C3A2F00FCC976 /* AddByNutrientButton@2x.png */; };
 		5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
 		5F9C128D17321935000E08E5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9C128C17321935000E08E5 /* MessageUI.framework */; };
 		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
@@ -286,6 +289,10 @@
 		5F94A86417531CC100664B57 /* LZFoodListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodListViewController.m; path = Class/LZFoodListViewController.m; sourceTree = "<group>"; };
 		5F94A86617531ED700664B57 /* LZSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSettingsViewController.h; path = Class/LZSettingsViewController.h; sourceTree = "<group>"; };
 		5F94A86717531ED700664B57 /* LZSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZSettingsViewController.m; path = Class/LZSettingsViewController.m; sourceTree = "<group>"; };
+		5F955F28177C2A0C00FCC976 /* Addfood_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Addfood_button@2x.png"; path = "nutrition/Resource/Addfood_button@2x.png"; sourceTree = "<group>"; };
+		5F955F2A177C2A4800FCC976 /* LZAddFoodButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZAddFoodButtonCell.h; path = Class/LZAddFoodButtonCell.h; sourceTree = "<group>"; };
+		5F955F2B177C2A4800FCC976 /* LZAddFoodButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZAddFoodButtonCell.m; path = Class/LZAddFoodButtonCell.m; sourceTree = "<group>"; };
+		5F955F2D177C3A2F00FCC976 /* AddByNutrientButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AddByNutrientButton@2x.png"; path = "nutrition/Resource/AddByNutrientButton@2x.png"; sourceTree = "<group>"; };
 		5F9995F4172BDBE400A36B4F /* LZFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodCell.h; path = Class/LZFoodCell.h; sourceTree = "<group>"; };
 		5F9995F5172BDBE400A36B4F /* LZFoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodCell.m; path = Class/LZFoodCell.m; sourceTree = "<group>"; };
 		5F9C128C17321935000E08E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -592,6 +599,8 @@
 				5FF632091772A94D0068CBFE /* LZAddFoodViewController.m */,
 				5FF6320B1772AB750068CBFE /* LZAddFoodCell.h */,
 				5FF6320C1772AB760068CBFE /* LZAddFoodCell.m */,
+				5F955F2A177C2A4800FCC976 /* LZAddFoodButtonCell.h */,
+				5F955F2B177C2A4800FCC976 /* LZAddFoodButtonCell.m */,
 			);
 			path = nutrition;
 			sourceTree = "<group>";
@@ -617,6 +626,7 @@
 				5FF6320E1772D8AA0068CBFE /* foodTypeIcon */,
 				5FF632061771C6530068CBFE /* close_button@2x.png */,
 				5FF632271772DA8E0068CBFE /* big_arrow_clicked@2x.png */,
+				5F955F28177C2A0C00FCC976 /* Addfood_button@2x.png */,
 				5FF631EA17715F0A0068CBFE /* big_arrow@2x.png */,
 				5FF631EB17715F0A0068CBFE /* button_bottom_normal@2x.png */,
 				5FF631EC17715F0B0068CBFE /* button_top_normal@2x.png */,
@@ -634,6 +644,7 @@
 				5FF847771758BCFB00DEA6DE /* settings_icon@2x.png */,
 				5FF847781758BCFB00DEA6DE /* tabbar_back@2x.png */,
 				5FF847731758A0CC00DEA6DE /* setting_text_back@2x.png */,
+				5F955F2D177C3A2F00FCC976 /* AddByNutrientButton@2x.png */,
 				5FF8474017587F0100DEA6DE /* nav_back_button@2x.png */,
 				5F789B221755B1F3002FE365 /* foodCellBack@2x.png */,
 				5F50961C17548FAB00461964 /* selector_back@2x.png */,
@@ -931,6 +942,8 @@
 				5FF632251772D91F0068CBFE /* 豆制品@2x.png in Resources */,
 				5FF632261772D91F0068CBFE /* 饮料@2x.png in Resources */,
 				5FF632281772DA8E0068CBFE /* big_arrow_clicked@2x.png in Resources */,
+				5F955F29177C2A0C00FCC976 /* Addfood_button@2x.png in Resources */,
+				5F955F2E177C3A2F00FCC976 /* AddByNutrientButton@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1005,6 +1018,7 @@
 				5FF6320517718E100068CBFE /* LZNutritionInfoView.m in Sources */,
 				5FF6320A1772A94D0068CBFE /* LZAddFoodViewController.m in Sources */,
 				5FF6320D1772AB760068CBFE /* LZAddFoodCell.m in Sources */,
+				5F955F2C177C2A4800FCC976 /* LZAddFoodButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -103,7 +103,7 @@
     
     HUD.labelText = @"智能推荐中...";
     
-    [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.5];
+    [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
     //[self recommendOnePlan];
 }
 - (void)recommendOnePlan

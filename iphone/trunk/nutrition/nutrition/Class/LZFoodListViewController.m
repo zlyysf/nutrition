@@ -18,6 +18,7 @@
 #import "LZAddByNutrientController.h"
 #import "GADMasterViewController.h"
 #import "MobClick.h"
+#import "LZAddFoodButtonCell.h"
 @interface LZFoodListViewController ()
 
 @end
@@ -123,7 +124,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)
-        return (takenFoodArray ==nil || [takenFoodArray count]==0) ? 1 : [takenFoodArray count];
+        return (takenFoodArray ==nil || [takenFoodArray count]==0) ? 2 : [takenFoodArray count]+1;
     else
         return [nutrientInfoArray count];
 //    if (section == 0)
@@ -136,36 +137,44 @@
 {
     if (indexPath.section == 0)
     {
-        if(takenFoodArray ==nil || [takenFoodArray count]==0)
+        if (indexPath.row == 0)
         {
-            LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
-            [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
-            cell.contentLabel.text = @"请添加计划要购买的食物，我们会分析其营养量是否达到标准，并推荐其他食物以全面摄入营养。";
+            LZAddFoodButtonCell  * cell = (LZAddFoodButtonCell*)[tableView dequeueReusableCellWithIdentifier:@"LZAddFoodButtonCell"];
             return cell;
         }
         else
         {
-            LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
-            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
-            //NSLog(@"picture path %@",aFood);
-            NSString *picturePath;
-            NSString *picPath = [aFood objectForKey:@"PicturePath"];
-            if (picPath == nil || [picPath isEqualToString:@""])
+            if(takenFoodArray ==nil || [takenFoodArray count]==0)
             {
-                picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
+                LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
+                [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
+                cell.contentLabel.text = @"请添加计划要购买的食物，我们会分析其营养量是否达到标准，并推荐其他食物以全面摄入营养。";
+                return cell;
             }
             else
             {
-                picturePath = [NSString stringWithFormat:@"%@/foodDealed/%@",[[NSBundle mainBundle] bundlePath],picPath];
-            }
-            UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
-            [cell.foodImageView setImage:foodImage];
+                LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
+                NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row-1];
+                //NSLog(@"picture path %@",aFood);
+                NSString *picturePath;
+                NSString *picPath = [aFood objectForKey:@"PicturePath"];
+                if (picPath == nil || [picPath isEqualToString:@""])
+                {
+                    picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
+                }
+                else
+                {
+                    picturePath = [NSString stringWithFormat:@"%@/foodDealed/%@",[[NSBundle mainBundle] bundlePath],picPath];
+                }
+                UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
+                [cell.foodImageView setImage:foodImage];
 
-            cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
-            NSNumber *weight = [aFood objectForKey:@"Amount"];
-            cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
-            //[cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
-            return cell;
+                cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
+                NSNumber *weight = [aFood objectForKey:@"Amount"];
+                cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
+                //[cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
+                return cell;
+            }
         }
     }
     else
@@ -187,8 +196,9 @@
         {
             radius = 2;
         }
-        [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,212,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
-        [cell adjustLabelAccordingToProgress:progress forLabelWidth:212];
+        [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,200,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
+        [cell adjustLabelAccordingToProgress:progress forLabelWidth:200];
+//        [cell.backView setBackgroundColor:[UIColor clearColor]];
         if (KeyIsEnvironmentDebug)
         {
             cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)([percent floatValue] *100)];
@@ -198,6 +208,7 @@
             cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(progress *100)];
             
         }
+        cell.addFoodButton.tag = indexPath.row;
         return cell;
     }
 }
@@ -240,7 +251,7 @@
     if (section == 0)
         sectionTitleLabel.text =  @"打算购买的食物";
     else
-        sectionTitleLabel.text =  @"检测结果";
+        sectionTitleLabel.text =  @"购买食物中的营养元素含量";
     
     return sectionView;
 }
@@ -253,13 +264,17 @@
     [self.listView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.section == 0)
     {
+        if (indexPath.row == 0)
+        {
+            return;
+        }
         if(takenFoodArray ==nil || [takenFoodArray count]==0)
         {
             return;
         }
         else
         {
-            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
+            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row-1];
             NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
             NSArray *nutrientSupplyArr = [[takenFoodDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
             NSArray *nutrientStandardArr = [[takenFoodDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
@@ -276,37 +291,7 @@
     }
     else
     {
-        NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
-        
-        NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-        NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                planPerson,@"personCount",
-                                planDays,@"dayCount", nil];
-        
-        
-        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-        NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
-        NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
-        NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
-        NSString *nutrientName = [nutrient objectForKey:@"Name"];
-        NSDictionary *DRIsDict = [retDict objectForKey:@"DRI"];//nutrient name as key, also column name
-        NSDictionary *nutrientInitialSupplyDict = [retDict objectForKey:@"nutrientInitialSupplyDict"];
-        NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientId];
-        double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientId]) doubleValue]*[planPerson intValue]*[planDays intValue];
-        double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
-        if (dNutrientLackVal <= 0)
-        {
-            return;
-        }
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
-        addByNutrientController.foodArray = recommendFoodArray;
-        addByNutrientController.nutrientTitle = nutrientName;
-        [self presentModalViewController:addByNutrientController animated:YES];
-
+        return;
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -314,15 +299,19 @@
     {
         return NO;
     }
-    else
+    else 
     {
+        if(indexPath.row == 0)
+        {
+            return NO;
+        }
         return !(takenFoodArray ==nil || [takenFoodArray count]==0);
     }
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:takenFoodAmountDict];
-    NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row];
+    NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row-1];
     NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
     [tempDict removeObjectForKey:ndb_No];
     [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:LZUserDailyIntakeKey];
@@ -374,13 +363,19 @@
 //        [self displayTakenFoodResult];
 //    }
 }
-- (IBAction)addFoodAction:(id)sender {
+- (void)addFood
+{
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-
+    
     LZAddFoodViewController *addFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddFoodViewController"];
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addFoodViewController];
     [navController setNavigationBarHidden:YES];
     [self presentModalViewController:navController animated:YES];
+}
+- (IBAction)addFoodAction:(id)sender {
+    [self performSelector:@selector(addFood) withObject:nil afterDelay:0.f];
+    
+    
     //UINavigationController *initialController = (UINavigationController*)[UIApplication
                                                                           //sharedApplication].keyWindow.rootViewController;
 
@@ -389,6 +384,47 @@
     //NSLog(@"%@",[initialController description]);
     //[initialController pushViewController:dailyIntakeController animated:YES];
     
+}
+- (void)addFoodForTag:(NSNumber *)tagNum
+{
+    int tag = [tagNum intValue];
+    NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+    
+    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            planPerson,@"personCount",
+                            planDays,@"dayCount", nil];
+    
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+    NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:tag];
+    NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+    NSString *nutrientName = [nutrient objectForKey:@"Name"];
+    NSDictionary *DRIsDict = [retDict objectForKey:@"DRI"];//nutrient name as key, also column name
+    NSDictionary *nutrientInitialSupplyDict = [retDict objectForKey:@"nutrientInitialSupplyDict"];
+    NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientId];
+    double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientId]) doubleValue]*[planPerson intValue]*[planDays intValue];
+    double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
+    if (dNutrientLackVal <= 0)
+    {
+        return;
+    }
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
+    addByNutrientController.foodArray = recommendFoodArray;
+    addByNutrientController.nutrientTitle = nutrientName;
+    [self presentModalViewController:addByNutrientController animated:YES];
+
+}
+- (IBAction)addFoodByNutrient:(UIButton *)sender {
+    int tag = sender.tag;
+    [self performSelector:@selector(addFoodForTag:) withObject:[NSNumber numberWithInt:tag] afterDelay:0.f];
+        
+
 }
 - (IBAction)clearFoodAction:(id)sender {
     NSDictionary *dailyIntake = [[NSDictionary alloc]init];

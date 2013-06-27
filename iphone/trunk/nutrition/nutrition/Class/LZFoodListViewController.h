@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LZFoodListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
-@property (strong, nonatomic) IBOutlet UIBarButtonItem *addFoodItem;
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic)NSMutableArray *takenFoodArray;
 @property (strong, nonatomic)NSMutableDictionary *takenFoodDict;
