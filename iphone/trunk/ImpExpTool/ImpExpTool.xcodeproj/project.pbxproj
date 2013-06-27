@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		08529CF1177C3672008E1397 /* Female_UL.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08529CEF177C3672008E1397 /* Female_UL.xls */; };
+		08529CF2177C3672008E1397 /* Male_UL.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08529CF0177C3672008E1397 /* Male_UL.xls */; };
 		088240811740924300E71E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240801740924300E71E6E /* UIKit.framework */; };
 		088240831740924300E71E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240821740924300E71E6E /* Foundation.framework */; };
 		088240851740924300E71E6E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240841740924300E71E6E /* CoreGraphics.framework */; };
@@ -66,6 +68,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		08529CEF177C3672008E1397 /* Female_UL.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Female_UL.xls; path = ../../../data/Female_UL.xls; sourceTree = "<group>"; };
+		08529CF0177C3672008E1397 /* Male_UL.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Male_UL.xls; path = ../../../data/Male_UL.xls; sourceTree = "<group>"; };
 		0882407D1740924300E71E6E /* ImpExpTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImpExpTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		088240801740924300E71E6E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		088240821740924300E71E6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -279,6 +283,8 @@
 		0882411A1740E02D00E71E6E /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				08529CEF177C3672008E1397 /* Female_UL.xls */,
+				08529CF0177C3672008E1397 /* Male_UL.xls */,
 				0882419917530AC500E71E6E /* Food_common.xls */,
 				08824154174F66B000E71E6E /* Food_PicPath.xls */,
 				0882414C174B615D00E71E6E /* NutrientInfo.xls */,
@@ -380,6 +386,8 @@
 				0882414D174B615D00E71E6E /* NutrientInfo.xls in Resources */,
 				08824155174F66B000E71E6E /* Food_PicPath.xls in Resources */,
 				0882419A17530AC500E71E6E /* Food_common.xls in Resources */,
+				08529CF1177C3672008E1397 /* Female_UL.xls in Resources */,
+				08529CF2177C3672008E1397 /* Male_UL.xls in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

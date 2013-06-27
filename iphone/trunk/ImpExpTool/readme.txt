@@ -28,7 +28,7 @@ FoodLimit表和Food_Limit.xls中的数据是一样的，包含各种食物摄取
     而normal_value介于上下限之间，目前的意义是适当值，即某种意义上的建议值，在某种算法中，首先以建议值为上限，当超过建议值时先使用别的食物，直到找不到别的未超过建议值的食物后，再使用上限值。
     另外，对于上下限值，normal值，应该会有一个地方给出默认值。
 
-
+Food_Supply_DRI_Amount,Food_Supply_DRI_Common 是衍生数据
 Food_Supply_DRI_Amount 这个表是以 某份DRI 为基准（male 25 175cm 75kg low sport），根据食物营养成分表计算出的 每种营养成分在DRI的量的情况下，分别所需食物的量。
 Food_Supply_DRI_Common 这个表中的数据源于 Food_Supply_DRI_Amount ，1000以上的作为0值，1000以下的除以100取整，这样分出一些level。可以用于食物含营养丰富程度的粗排序。
 
@@ -41,9 +41,10 @@ customUSDAdataV2.xls 和 Food.xls 其实是同一份文档，只是由于历史�
 
 
 
-
-
-
+DRIFemale，DRIMale，DRIULFemale，DRIULMale 是原始数据，DRIULrateFemale，DRIULrateMale是衍生数据。
+        DRIULFemale，DRIULMale 看来完全相等
+    注意DRI的UL的数据中 镁 magnesium 的情况很特殊。对于镁，表中标注的上限值仅表示从药理学的角度得出的摄入值，而并不包括从食物和水中摄入的量。  The ULs for magnesium represent intake from a pharmacological agent only and do not include intake from food and water.
+    水 和纤维没有标明上限 目前上限值设为-1（即非常大）， 胆固醇的上限为尽可能低，目前上限值设为0
 
 
 

@@ -23,6 +23,11 @@
 
 -(void)convertDRIFemaleDataFromExcelToSqlite;
 -(void)convertDRIMaleDataFromExcelToSqlite;
+-(void)convertDRIULFemaleDataFromExcelToSqlite;
+-(void)convertDRIULMaleDataFromExcelToSqlite;
+
+-(void)dealDRIandULdataFromExcelToSqliteForFemale;
+-(void)dealDRIandULdataFromExcelToSqliteForMale;
 
 -(void)convertExcelToSqlite_FoodCnDescription;
 -(void)convertExcelToSqlite_FoodLimit;

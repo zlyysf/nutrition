@@ -159,22 +159,26 @@
             
             cell = [reader cellInWorkSheetIndex:0 row:row col:col];
             if (j==1 || j==2){
-                
-                if (cell.type == cellBlank){
-                    [rowData addObject:@"0"];
-                }else if (cell.type == cellString){
-                    //[rowData addObject:[NSNumber numberWithInteger:[cell.str integerValue]]];
-                    [rowData addObject:cell.str];
+                assert(cell.type != cellBlank);
+                if (cell.type == cellString){
+                    //[rowData addObject:cell.str];
+                    [rowData addObject:[NSNumber numberWithInt:[cell.str intValue]]];
                 }else{
-                    [rowData addObject:cell.val];
+                    NSNumber *nmVd = (NSNumber*)cell.val;
+                    NSNumber *nmVi = [NSNumber numberWithInt:[nmVd intValue]];
+                    [rowData addObject:nmVi];
                 }
             }else{
                 if (cell.type == cellBlank){
-                    [rowData addObject:@"0"];
+                    //[rowData addObject:@"0"];
+                    [rowData addObject:[NSNumber numberWithInt:0]];
                 }else if (cell.type == cellString){
-                    [rowData addObject:cell.str];
+                    //[rowData addObject:cell.str];
+                    [rowData addObject:[NSNumber numberWithDouble:[cell.str doubleValue]]];
                 }else{
-                    [rowData addObject:cell.val];
+                    NSNumber *nmVd = (NSNumber*)cell.val;
+                    assert(nmVd!=nil);
+                    [rowData addObject:nmVd];
                 }
             }
         }
@@ -190,7 +194,7 @@
 
 
 /*
- 其作用是把female的DRI数据，即Female_DRI.xls中的数据导入到sqlite中，对应的表名为DRIFemale。
+ 其作用是把Male的DRI数据，即Female_DRI.xls中的数据导入到sqlite中，对应的表名为DRIFemale。
  */
 -(void)convertDRIFemaleDataFromExcelToSqlite
 {
@@ -223,10 +227,119 @@
     [db insertToDRItable:tableName andColumnNames:columns andData:rows2D];
 }
 
+-(void)dealDRIandULdataFromExcelToSqliteForFemale
+{
+    [self dealDRIandULdataFromExcelToSqliteWithDRIfileName:@"Female_DRI.xls" andULfileName:@"Female_UL.xls" andTableNameDRI:TABLE_NAME_DRIFemale andTableNameUL:TABLE_NAME_DRIULFemale andTableNameULvsDRI:TABLE_NAME_DRIULrateFemale];
+}
+-(void)dealDRIandULdataFromExcelToSqliteForMale
+{
+    [self dealDRIandULdataFromExcelToSqliteWithDRIfileName:@"Male_DRI.xls" andULfileName:@"Male_UL.xls" andTableNameDRI:TABLE_NAME_DRIMale andTableNameUL:TABLE_NAME_DRIULMale andTableNameULvsDRI:TABLE_NAME_DRIULrateMale];
+}
 
+-(void)dealDRIandULdataFromExcelToSqliteWithDRIfileName:(NSString *)fileNameDRI andULfileName:(NSString *)fileNameUL andTableNameDRI:(NSString *)tableNameDRI andTableNameUL:(NSString *)tableNameUL andTableNameULvsDRI:(NSString *)tableNameULvsDRI
+{
+    NSDictionary *dataDRI = [self readDRIdata_fromExcelFile:fileNameDRI];
+    NSArray *columnsDRI = [dataDRI objectForKey:@"columns"];
+    NSArray *rows2dDRI = [dataDRI objectForKey:@"rows2D"];
+    
+    NSDictionary *dataUL = [self readDRIdata_fromExcelFile:fileNameUL];
+    NSArray *columnsUL = [dataUL objectForKey:@"columns"];
+    NSArray *rows2dUL = [dataUL objectForKey:@"rows2D"];
 
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    NSString *tableName;
+    NSArray *columns ,*rows2D;
+    tableName = tableNameDRI;
+    columns = columnsDRI;
+    rows2D = rows2dDRI;
+    [db createDRItable:tableName andColumnNames:columns];
+    [db insertToDRItable:tableName andColumnNames:columns andData:rows2D];
+    tableName = tableNameUL;
+    columns = columnsUL;
+    rows2D = rows2dUL;
+    [db createDRItable:tableName andColumnNames:columns];
+    [db insertToDRItable:tableName andColumnNames:columns andData:rows2D];
+    
+    assert(columnsDRI.count>0);
+    assert(columnsDRI.count==columnsUL.count);
+    for(int i=0; i<columnsDRI.count; i++){
+        NSString *colNameDRI = columnsDRI[i];
+        NSString *colNameUL = columnsUL[i];
+        assert([colNameDRI isEqualToString:colNameUL]);
+    }
+    
+    assert(rows2dDRI.count>0);
+    assert(rows2dDRI.count==rows2dUL.count);
+    NSMutableArray *rows2dULvsDRI = [NSMutableArray arrayWithCapacity:rows2dDRI.count];
+    for(int i=0; i<rows2dDRI.count; i++){
+        NSArray *rowDRI = rows2dDRI[i];
+        NSArray *rowUL = rows2dUL[i];
+        NSMutableArray *rowULvsDRI = [NSMutableArray arrayWithCapacity:rowDRI.count];
+        assert(rowDRI.count>0);
+        assert(rowDRI.count==rowUL.count);
+        for(int j=0; j<rowDRI.count; j++){
+            NSString *colName = columnsDRI[j];
+            NSNumber *nmCellDRI = (NSNumber*)rowDRI[j];
+            NSNumber *nmCellUL = (NSNumber*)rowUL[j];
+            NSNumber *nmCellULvsDRI;
+            if (j<2){
+                nmCellULvsDRI = nmCellDRI;
+            }else{
+                if ([nmCellUL doubleValue]<0){//对应于没有上限的情况
+                    nmCellULvsDRI = [NSNumber numberWithInt:-1];
+                }else if([nmCellUL doubleValue]==0){//对应于上限值不明确的情况
+                    nmCellULvsDRI = [NSNumber numberWithInt:0];
+                }else{//([nmCellFemaleUL doubleValue]>0)//有上限值时
+                    assert([nmCellDRI doubleValue]>0);
+                    double vs;
+                    if ([colName isEqualToString:@"Magnesium_(mg)"]){
+                        vs = ([nmCellUL doubleValue]+[nmCellDRI doubleValue]) / [nmCellDRI doubleValue];
+                    }else{
+                        vs = [nmCellUL doubleValue] / [nmCellDRI doubleValue];
+                    }
+                    nmCellULvsDRI = [NSNumber numberWithDouble:vs];
+                }
+            }
+            [rowULvsDRI addObject:nmCellULvsDRI];
+        }//for j
+        [rows2dULvsDRI addObject:rowULvsDRI];
+    }//for i
+    
+    tableName = tableNameULvsDRI;
+    columns = columnsUL;
+    rows2D = rows2dULvsDRI;
+    [db createDRItable:tableName andColumnNames:columns];
+    [db insertToDRItable:tableName andColumnNames:columns andData:rows2D];
+}
 
-
+-(void)convertDRIULFemaleDataFromExcelToSqlite
+{
+    NSDictionary *data = [self readDRIdata_fromExcelFile:@"Female_UL.xls"];
+    NSArray *columns = [data objectForKey:@"columns"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    NSString *tableName = TABLE_NAME_DRIULFemale;// @"DRIULFemale";
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    [db createDRItable:tableName andColumnNames:columns];
+    [db insertToDRItable:tableName andColumnNames:columns andData:rows2D];
+}
+-(void)convertDRIULMaleDataFromExcelToSqlite
+{
+    NSDictionary *data = [self readDRIdata_fromExcelFile:@"Male_UL.xls"];
+    NSArray *columns = [data objectForKey:@"columns"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    NSString *tableName = TABLE_NAME_DRIULMale;// @"DRIULMale";
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    
+    [db createDRItable:tableName andColumnNames:columns];
+    [db insertToDRItable:tableName andColumnNames:columns andData:rows2D];
+}
 
 /*
 // USDAtable 是特指美国农业部的那份以excel格式存在的数据库的唯一一个各食物营养成分表。

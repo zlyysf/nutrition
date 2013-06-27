@@ -26,7 +26,11 @@
     
 //    [workRe convertDRIFemaleDataFromExcelToSqlite];
 //    [workRe convertDRIMaleDataFromExcelToSqlite];
-    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
+//    [workRe convertDRIULFemaleDataFromExcelToSqlite];
+//    [workRe convertDRIULMaleDataFromExcelToSqlite];
+    [workRe dealDRIandULdataFromExcelToSqliteForFemale];
+    [workRe dealDRIandULdataFromExcelToSqliteForMale];
+//    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
 //    [workRe convertExcelToSqlite_FoodLimit];
 //    [workRe convertExcelToSqlite_FoodCnDescription];
 //    [workRe convertExcelToSqlite_NutritionInfo];
@@ -102,8 +106,14 @@
 +(void)generateInitialDataWithFileNameOrPath:(LZReadExcel *)workRe
 {
 
-    [workRe convertDRIFemaleDataFromExcelToSqlite];
-    [workRe convertDRIMaleDataFromExcelToSqlite];
+//    [workRe convertDRIFemaleDataFromExcelToSqlite];
+//    [workRe convertDRIMaleDataFromExcelToSqlite];
+//    [workRe convertDRIULFemaleDataFromExcelToSqlite];
+//    [workRe convertDRIULMaleDataFromExcelToSqlite];
+
+    [workRe dealDRIandULdataFromExcelToSqliteForFemale];
+    [workRe dealDRIandULdataFromExcelToSqliteForMale];
+    
     [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
     [workRe convertExcelToSqlite_FoodLimit];
     [workRe convertExcelToSqlite_FoodCnDescription];

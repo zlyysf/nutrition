@@ -51,6 +51,12 @@
 #define TABLE_NAME_DRIFemale @"DRIFemale"
 #define TABLE_NAME_DRIMale @"DRIMale"
 
+#define TABLE_NAME_DRIULFemale @"DRIULFemale"
+#define TABLE_NAME_DRIULMale @"DRIULMale"
+
+#define TABLE_NAME_DRIULrateFemale @"DRIULrateFemale"
+#define TABLE_NAME_DRIULrateMale @"DRIULrateMale"
+
 #define TABLE_NAME_FoodNutritionCustom @"FoodNutritionCustom"
 #define COLUMN_NAME_CnCaption @"CnCaption"
 #define COLUMN_NAME_CnType @"CnType"
