@@ -148,9 +148,12 @@
                              [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
 //                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
                              nil];
-    //NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
-    NSMutableDictionary *retDict = [rf recommendFood3_AbstractPerson:params withDecidedFoods:dailyIntake andOptions:options];
-    NSMutableDictionary *uiDictionary = [rf formatRecommendResultForUI:retDict];
+//    //NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
+//    NSMutableDictionary *retDict = [rf recommendFood3_AbstractPerson:params withDecidedFoods:dailyIntake andOptions:options];
+//    NSMutableDictionary *uiDictionary = [rf formatRecommendResultForUI:retDict];
+    NSMutableDictionary *foodInfoDict =[rf getSomeFoodsToSupplyNutrientsCalculated];
+    NSMutableDictionary *uiDictionary =[rf tmp_formatFoodsInRecommendUI:foodInfoDict];
+    
     //NSLog(@"uiDictionary %@",[uiDictionary allKeys]);
     NSArray *recommendArray = [uiDictionary objectForKey:Key_recommendFoodInfoDictArray];
     [recommendFoodArray removeAllObjects];

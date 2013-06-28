@@ -17,12 +17,22 @@
 #define Config_foodNormalValue 250 // unit g
 #define Config_nearZero 0.0000001
 
+#define FoodClassify_gulei @"gulei"
+#define FoodClassify_gandoulei @"gandoulei"
+#define FoodClassify_shucai @"shucai"
+#define FoodClassify_shuiguo @"shuiguo"
+#define FoodClassify_ganguo @"ganguo"
+#define FoodClassify_nailei @"nailei"
+
+#define FoodClassify_rou @"rou"
 
 #define FoodClassify_rou_shui_yu @"rou-shui-yu"
 #define FoodClassify_rou_shui_xia @"rou-shui-xia"
 #define FoodClassify_rou_chu_rou @"rou-chu-rou"
 #define FoodClassify_rou_qin @"rou-qin"
 #define FoodClassify_danlei @"danlei"
+
+#define NutrientId_VD @"Vit_D_(µg)"
 
 
 #define kFatFactor 1/9 //means 1g fat contains 9Kcal energy
@@ -107,6 +117,9 @@
 
 #define Type_normalSet @"normalSet"
 #define Type_lastSet @"lastSet"
+
+#define Strategy_random  @"random"
+#define Strategy_max  @"max"
 
 #define kProgressBarRect CGRectMake(2,2,226,14)
 #define kKeyBoardToolBarRect CGRectMake(0,0,320,44)
