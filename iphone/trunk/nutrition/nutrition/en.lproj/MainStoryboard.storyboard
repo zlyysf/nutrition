@@ -469,6 +469,24 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="41"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="HM2-qs-uZI">
+                                                    <rect key="frame" x="0.0" y="0.0" width="74" height="42"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                                    <state key="normal">
+                                                        <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                                <view contentMode="scaleToFill" id="m4d-ia-brq">
+                                                    <rect key="frame" x="72" y="3" width="208" height="38"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
                                                 <view contentMode="scaleToFill" id="M1r-b3-aE9" customClass="LZProgressView">
                                                     <rect key="frame" x="74" y="19" width="204" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -482,7 +500,7 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" id="DKd-Ft-Rwc">
-                                                    <rect key="frame" x="10" y="5" width="64" height="32"/>
+                                                    <rect key="frame" x="10" y="2" width="64" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <state key="normal" title="维生素B6">
@@ -516,6 +534,7 @@
                                         </view>
                                         <connections>
                                             <outlet property="addFoodButton" destination="Eaq-wZ-RXR" id="A00-DK-FiR"/>
+                                            <outlet property="backView" destination="m4d-ia-brq" id="MVF-lE-vcV"/>
                                             <outlet property="nutritionNameButton" destination="DKd-Ft-Rwc" id="LC6-ug-dHd"/>
                                             <outlet property="nutritionProgressView" destination="M1r-b3-aE9" id="nRS-Vs-T8f"/>
                                             <outlet property="supplyPercentlabel" destination="hN3-f8-EtZ" id="p6V-y6-Idb"/>
@@ -833,7 +852,7 @@
                                                     <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" id="08f-Ca-4Cf">
-                                                    <rect key="frame" x="10" y="5" width="70" height="32"/>
+                                                    <rect key="frame" x="10" y="2" width="70" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <state key="normal">
@@ -941,7 +960,7 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" lineBreakMode="middleTruncation" id="Mm7-EQ-041">
-                                                    <rect key="frame" x="10" y="5" width="70" height="32"/>
+                                                    <rect key="frame" x="10" y="2" width="70" height="35"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="boldSystem" pointSize="14"/>
                                                     <state key="normal">
@@ -1189,6 +1208,8 @@
         <class className="LZAddByNutrientController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZAddByNutrientController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelButtonTapped:"/>
+                <relationship kind="action" name="saveButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="navItem" candidateClass="UINavigationItem"/>
             </relationships>
@@ -1217,6 +1238,7 @@
         <class className="LZDailyIntakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDailyIntakeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="backButtonTapped:"/>
                 <relationship kind="outlet" name="admobView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="navItem" candidateClass="UINavigationItem"/>
@@ -1242,6 +1264,9 @@
         <class className="LZFoodListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodListViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addFoodAction:"/>
+                <relationship kind="action" name="addFoodByNutrient:" candidateClass="UIButton"/>
+                <relationship kind="action" name="clearFoodAction:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1249,6 +1274,7 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodNutritionCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="addFoodButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="nutritionNameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
                 <relationship kind="outlet" name="supplyPercentlabel" candidateClass="UILabel"/>
@@ -1297,6 +1323,8 @@
         <class className="LZRecommendFoodController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZRecommendFoodController.h"/>
             <relationships>
+                <relationship kind="action" name="changeOnePlan:"/>
+                <relationship kind="action" name="shareButtonTapped:"/>
                 <relationship kind="outlet" name="changeOnePlanItem" candidateClass="UIBarButtonItem"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
                 <relationship kind="outlet" name="shareItem" candidateClass="UIBarButtonItem"/>

@@ -19,6 +19,7 @@
 #import "GADMasterViewController.h"
 #import "MobClick.h"
 #import "LZAddFoodButtonCell.h"
+#import <QuartzCore/QuartzCore.h>
 @interface LZFoodListViewController ()
 
 @end
@@ -196,6 +197,8 @@
         {
             radius = 2;
         }
+        [cell.backView.layer setMasksToBounds:YES];
+        [cell.backView.layer setCornerRadius:3.f];
         [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,200,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
         [cell adjustLabelAccordingToProgress:progress forLabelWidth:200];
 //        [cell.backView setBackgroundColor:[UIColor clearColor]];
@@ -251,7 +254,7 @@
     if (section == 0)
         sectionTitleLabel.text =  @"打算购买的食物";
     else
-        sectionTitleLabel.text =  @"购买食物中的营养元素含量";
+        sectionTitleLabel.text =  @"每日营养补充进度";
     
     return sectionView;
 }
@@ -291,7 +294,36 @@
     }
     else
     {
-        return;
+        NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+        
+        NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+        NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                                planPerson,@"personCount",
+                                planDays,@"dayCount", nil];
+        
+        
+        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+        NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+        NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
+        NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+        NSString *nutrientName = [nutrient objectForKey:@"Name"];
+        NSDictionary *DRIsDict = [retDict objectForKey:@"DRI"];//nutrient name as key, also column name
+        NSDictionary *nutrientInitialSupplyDict = [retDict objectForKey:@"nutrientInitialSupplyDict"];
+        NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientId];
+        double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientId]) doubleValue]*[planPerson intValue]*[planDays intValue];
+        double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
+        //    if (dNutrientLackVal <= 0)
+        //    {
+        //        return;
+        //    }
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
+        addByNutrientController.foodArray = recommendFoodArray;
+        addByNutrientController.nutrientTitle = nutrientName;
+        [self presentModalViewController:addByNutrientController animated:YES];
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -407,10 +439,10 @@
     NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientId];
     double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientId]) doubleValue]*[planPerson intValue]*[planDays intValue];
     double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
-    if (dNutrientLackVal <= 0)
-    {
-        return;
-    }
+//    if (dNutrientLackVal <= 0)
+//    {
+//        return;
+//    }
     LZDataAccess *da = [LZDataAccess singleton];
     NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];

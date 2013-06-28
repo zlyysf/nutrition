@@ -29,7 +29,7 @@
 {
     [super setHighlighted:highlighted animated:animated];
 
-    [self.addButton setHighlighted:highlighted];
+    //[self.addButton setHighlighted:highlighted];
 }
 
 @end
