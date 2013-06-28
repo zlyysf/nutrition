@@ -147,29 +147,29 @@
 - (IBAction)cancelButtonTapped:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
-- (IBAction)saveButtonTapped:(id)sender
-{
-    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
-    BOOL needSaveData = NO;
-    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
-    {
-        NSNumber *num = [self.foodIntakeDictionary objectForKey:NDB_No];
-        if ([num intValue]>=0)
-        {
-            needSaveData = YES;
-            if  ([num intValue]>0)
-            {
-                [intakeDict setObject:num forKey:NDB_No];
-            }
-        }
-    }
-    if (needSaveData) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
-        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
-        [[NSUserDefaults  standardUserDefaults]synchronize];
-    }
-    [self dismissModalViewControllerAnimated:YES];
-}
+//- (IBAction)saveButtonTapped:(id)sender
+//{
+//    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
+//    BOOL needSaveData = NO;
+//    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
+//    {
+//        NSNumber *num = [self.foodIntakeDictionary objectForKey:NDB_No];
+//        if ([num intValue]>=0)
+//        {
+//            needSaveData = YES;
+//            if  ([num intValue]>0)
+//            {
+//                [intakeDict setObject:num forKey:NDB_No];
+//            }
+//        }
+//    }
+//    if (needSaveData) {
+//        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+//        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
+//        [[NSUserDefaults  standardUserDefaults]synchronize];
+//    }
+//    [self dismissModalViewControllerAnimated:YES];
+//}
 
 - (void)didReceiveMemoryWarning
 {

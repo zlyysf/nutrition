@@ -38,7 +38,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"  返回" forState:UIControlStateNormal];
+    [button setTitle:@"  添加" forState:UIControlStateNormal];
     
     button.frame = CGRectMake(0, 0, 48, 30);
     [button.titleLabel setFont:[UIFont systemFontOfSize:13]];
@@ -332,6 +332,26 @@
         [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
         //NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
     }
+    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
+    BOOL needSaveData = NO;
+    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
+    {
+        NSNumber *num = [self.foodIntakeDictionary objectForKey:NDB_No];
+        if ([num intValue]>=0)
+        {
+            needSaveData = YES;
+            if  ([num intValue]>0)
+            {
+                [intakeDict setObject:num forKey:NDB_No];
+            }
+        }
+    }
+    if (needSaveData) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
+        [[NSUserDefaults  standardUserDefaults]synchronize];
+    }
+
 }
 - (void)keyboardWillShow:(NSNotification *)notification {
 	
@@ -390,6 +410,7 @@
         [self.listView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     });
 }
+
 //#pragma mark -
 //#pragma mark UISearchDisplayController Delegate Methods
 //
