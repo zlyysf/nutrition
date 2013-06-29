@@ -102,6 +102,10 @@
     NSNumber *foodAmount = [aFood objectForKey:Key_FoodAmount];
     NSNumber *intake= [self.tempIntakeDict objectForKey:NDB_No];
     int amount =(int)(ceilf([foodAmount floatValue]));
+    if(amount < 0)
+    {
+        amount = 0;
+    }
     cell.recommendAmountLabel.text = [NSString stringWithFormat:@"推荐量:%dg",amount];
     UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
     UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
@@ -121,11 +125,6 @@
 }
 - (IBAction)cancelButtonTapped:(id)sender
 {
-    [tempIntakeDict removeAllObjects];
-    [self dismissModalViewControllerAnimated:YES];
-}
-- (IBAction)saveButtonTapped:(id)sender {
-    //储存摄入量
     if(self.currentFoodInputTextField != nil)
     {
         [self.currentFoodInputTextField resignFirstResponder];
@@ -156,8 +155,43 @@
         [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
         [[NSUserDefaults  standardUserDefaults]synchronize];
     }
+
     [self dismissModalViewControllerAnimated:YES];
 }
+//- (IBAction)saveButtonTapped:(id)sender {
+//    //储存摄入量
+//    if(self.currentFoodInputTextField != nil)
+//    {
+//        [self.currentFoodInputTextField resignFirstResponder];
+//    }
+//    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
+//    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+//    if(dailyIntake != nil)
+//    {
+//        [intakeDict addEntriesFromDictionary:dailyIntake];
+//    }
+//    
+//    BOOL needSaveData = NO;
+//    for (NSString * NDB_No in [self.tempIntakeDict allKeys])
+//    {
+//        NSNumber *num = [self.tempIntakeDict objectForKey:NDB_No];
+//        if ([num intValue]>0)
+//        {
+//            needSaveData = YES;
+//            NSNumber *takenAmountNum = [intakeDict objectForKey:NDB_No];
+//            if (takenAmountNum)
+//                [intakeDict setObject:[NSNumber numberWithInt:[num intValue]+[takenAmountNum intValue]] forKey:NDB_No];
+//            else
+//                [intakeDict setObject:num forKey:NDB_No];
+//        }
+//    }
+//    if (needSaveData) {
+//        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+//        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
+//        [[NSUserDefaults  standardUserDefaults]synchronize];
+//    }
+//    [self dismissModalViewControllerAnimated:YES];
+//}
 - (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber
 {
     //[self.foodIntakeAmountArray replaceObjectAtIndex:index.row withObject:foodNumber];
