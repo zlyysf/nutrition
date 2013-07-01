@@ -33,7 +33,7 @@
 #define FoodClassify_danlei @"danlei"
 
 #define NutrientId_VD @"Vit_D_(µg)"
-
+#define NutrientId_Magnesium @"Magnesium_(mg)"
 
 #define kFatFactor 1/9 //means 1g fat contains 9Kcal energy
 #define kCarbFactor 1/4 //means 1g carbohydrt contains 4Kcal energy

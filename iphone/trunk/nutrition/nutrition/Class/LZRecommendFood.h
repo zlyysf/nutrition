@@ -37,6 +37,8 @@
 -(NSDictionary*) getSomeFoodsToSupplyNutrientsCalculated;
 -(NSMutableDictionary*)tmp_formatFoodsInRecommendUI:(NSMutableDictionary *)foodInfoDict;
 
+-(NSMutableDictionary*)formatFoodsStandardContentForUI;
+
 @end
 
 

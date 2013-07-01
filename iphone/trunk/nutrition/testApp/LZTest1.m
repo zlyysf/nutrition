@@ -23,10 +23,11 @@
     
     
     
-    [self.class testDA1];
+//    [self.class testDA1];
     
 //    [self.class testFormatResult1];
 //    [self.class testFormatResult2_taken];
+    [self.class testFormatResult_foodStarndard];
 }
 
 
@@ -1610,6 +1611,13 @@
     
 }
 
+
++(void)testFormatResult_foodStarndard
+{
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retFmtDict = [rf formatFoodsStandardContentForUI];
+
+}
 
 
 

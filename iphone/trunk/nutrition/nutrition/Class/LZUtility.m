@@ -204,7 +204,9 @@
     return str;
 }
 
-
+/*
+ 从数组去掉集合里也存在的元素，直接在数组上修改，返回数组本身
+ */
 +(NSMutableArray*)arrayMinusSet_withArray:(NSMutableArray*)srcAry andMinusSet:(NSSet*)minusSet
 {
     if (srcAry.count == 0 || minusSet.count == 0)
@@ -218,7 +220,9 @@
     }
     return toBeMinusAry;
 }
-
+/*
+ 数组与集合取交集，直接在数组上修改，返回数组本身
+ */
 +(NSMutableArray*)arrayIntersectSet_withArray:(NSMutableArray*)ary andSet:(NSSet*)set
 {
     if (ary.count == 0)
@@ -234,6 +238,22 @@
     return ary;
 }
 
+
+/*
+ 两个数组的所含元素的集合是否相等
+ */
++(BOOL)arrayEqualArrayInSetWay_withArray1:(NSArray*)ary1 andArray2:(NSArray*)ary2
+{
+    if(ary1.count != ary2.count)
+        return FALSE;
+    if(ary1.count==0)
+        return TRUE;
+    NSSet *set1 = [NSSet setWithArray:ary1];
+    NSSet *set2 = [NSSet setWithArray:ary2];
+    BOOL ret = [set1 isEqualToSet:set2];
+    return ret;
+}
+
 +(NSMutableDictionary*)dictionaryArrayTo2LevelDictionary_withKeyName:(NSString*)keyName andDicArray:(NSArray*)dicArray
 {
     if (dicArray.count==0)
@@ -247,7 +267,9 @@
     return dic2Level;
 }
 
-
+/*
+ 按 key,value,key,value..的方式把dictionary的数据放到一个array中
+ */
 +(NSMutableArray*)dictionaryAllToArray:(NSDictionary*)dict
 {
     if (dict==nil)

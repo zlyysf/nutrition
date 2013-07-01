@@ -43,8 +43,9 @@
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andTopN:(int)topN;
 -(NSDictionary *) getOneRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andGetStrategy:(NSString*)getStrategy;
 
--(NSArray *) getFoodOfIncludeClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass;
--(NSDictionary*) getOneFoodOfIncludeClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass;
+-(NSArray *) getFoodsByFilters_withIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds;
+-(NSDictionary *) getOneFoodByFilters_withIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds;
+
 
 -(NSArray *) getAllFood;
 -(NSArray *)getFoodByIds:(NSArray *)idAry;
@@ -54,6 +55,7 @@
 -(NSMutableDictionary*)getNutrientInfoAs2LevelDictionary_withNutrientIds:(NSArray*)nutrientIds;
 -(NSDictionary*)getNutrientInfo:(NSString*)nutrientId;
 
+-(NSArray *) getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds;
 -(bool) existAnyGivenFoodsBeRichOfNutrition:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds;
 
 @end
