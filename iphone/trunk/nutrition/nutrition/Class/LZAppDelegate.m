@@ -62,8 +62,14 @@
         [[NSUserDefaults standardUserDefaults]synchronize];
 
     }
-
-
+    //[7/2/13 2:31:44 PM] 芯如: 66c13e 102 193 62
+    //[7/2/13 2:31:53 PM] 芯如: 0f941a 15 148 26
+    //[7/2/13 2:32:08 PM] 芯如: 3aaa2c 58 170 44
+    //[[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:102/255.f green:193/255.f blue:62/255.f alpha:1.f]];
+    //[[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:15/255.f green:148/255.f blue:26/255.f alpha:1.f]];
+    [[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:58/255.f green:170/255.f blue:44/255.f alpha:1.f]];
+    //[[UISwitch appearance] setTintColor:[UIColor colorWithRed:1.000 green:0.989 blue:0.753 alpha:1.000]];
+    //[[UISwitch appearance] setThumbTintColor:[UIColor colorWithRed:0.211 green:0.550 blue:1.000 alpha:1.000]];
     return YES;
 }
 							

@@ -7,7 +7,7 @@
 //
 
 #import "LZEditProfileViewController.h"
-
+#import "LZConstants.h"
 @interface LZEditProfileViewController ()
 
 @end
@@ -48,6 +48,7 @@
 }
 - (void)saveButtonTapped
 {
+    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_SettingsChangedKey object:nil userInfo:nil];
     [self dismissModalViewControllerAnimated:YES];
 }
 @end

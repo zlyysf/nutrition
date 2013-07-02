@@ -14,6 +14,8 @@
 #import <ShareSDK/ShareSDK.h>
 #import "GADMasterViewController.h"
 #import "MobClick.h"
+#import "LZUtility.h"
+#import "LZEditProfileViewController.h"
 @interface LZSettingsViewController ()<LZKeyboardToolBarDelegate,MFMailComposeViewControllerDelegate,UIAlertViewDelegate>
 
 @end
@@ -41,28 +43,20 @@
     UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
     UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
     [self.personsBackImageView setImage:textBackImage];
-    [self.daysBackImageView setImage:textBackImage];
-    [self.tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
-    self.tipsLabel.text = @"我们默认向您推荐一个成年人一天的食物量，您在给家庭大采购时可以适当调整人数和天数，但只能输入一位数字。";
-    self.topSectionView.hidden = YES;
-    UIImage *greenButtonImage = [UIImage imageNamed:@"green_button.png"];
+
     [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.line2View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
-    [self.resetButton setBackgroundImage:greenButtonImage forState:UIControlStateNormal];
-    [self.saveButton setBackgroundImage:greenButtonImage forState:UIControlStateNormal];
+    [self.line3View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+    [self.line4View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+    [self.line5View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
     {
         [self.contentScrollView setContentSize:CGSizeMake(320, 455)];
     }
     else
     {
-        [self.contentScrollView setContentSize:CGSizeMake(320, 367)];
+        [self.contentScrollView setContentSize:CGSizeMake(320, 427)];
     }
-//    [ShareSDK addNotificationWithName:SSN_USER_AUTH
-//                               target:self
-//                               action:@selector(userInfoUpdateHandler:)];
-	// Do any additional setup after loading the view.
-    //显示目前设定的人数 天数
  }
 - (IBAction)authSwitchChangeHandler:(UISwitch *)sender
 {
@@ -108,10 +102,6 @@
     
 }
 
-//- (void)userInfoUpdateHandler:(NSNotification *)notif
-//{
-//    NSLog(@"notify user info %@",[notif userInfo]);
-//}
 - (void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"设置页面"];
@@ -119,64 +109,42 @@
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
 
-    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-    if (planPerson != nil)
-    {
-        self.personsTextField.text = [NSString stringWithFormat:@"%d",[planPerson intValue]];
-    }
-    else
-    {
-        self.personsTextField.text = [NSString stringWithFormat:@"%d",1];
-        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-    }
-    if (planDays != nil)
-    {
-        self.daysTextField.text = [NSString stringWithFormat:@"%d",[planDays intValue]];
-    }
-    else
-    {
-        self.daysTextField.text = [NSString stringWithFormat:@"%d",1];
-        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-    }
+    CGRect topFrame = self.topSectionView.frame;
+    topFrame.origin.y = 20;
+    self.topSectionView.frame = topFrame;
+    
+    CGRect midFrame = self.midSectionView.frame;
+    midFrame.origin.y = 200;
+    self.midSectionView.frame = midFrame;
+    
+    CGRect bottomFrame = self.bottomSectionView.frame;
+    bottomFrame.origin.y = 300;
+    self.bottomSectionView.frame = bottomFrame;
+
     if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
     {
-//        CGRect topFrame = self.topSectionView.frame;
-//        topFrame.origin.y = 30;
-//        self.topSectionView.frame = topFrame;
-        
-        CGRect midFrame = self.midSectionView.frame;
-        midFrame.origin.y = 30;//214
-        self.midSectionView.frame = midFrame;
-        
-        CGRect bottomFrame = self.bottomSectionView.frame;
-        bottomFrame.origin.y = 130;//325
-        self.bottomSectionView.frame = bottomFrame;
-        
+         
         CGRect mobFrame = self.admobView.frame;
         mobFrame.origin.y = 405;
         self.admobView.frame = mobFrame;
     }
     else
     {
-//        CGRect topFrame = self.topSectionView.frame;
-//        topFrame.origin.y = 10;
-//        self.topSectionView.frame = topFrame;
-        
-        CGRect midFrame = self.midSectionView.frame;
-        midFrame.origin.y = 30;//174
-        self.midSectionView.frame = midFrame;
-        
-        CGRect bottomFrame = self.bottomSectionView.frame;
-        bottomFrame.origin.y = 130;//265
-        self.bottomSectionView.frame = bottomFrame;
-        
         CGRect mobFrame = self.admobView.frame;
-        mobFrame.origin.y = 317;
+        mobFrame.origin.y = 377;
         self.admobView.frame = mobFrame;
     }
+    NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
+    NSNumber *userAge = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserAgeKey];
+    NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
+    NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
+    NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
+    self.userSexLabel.text = ([userSex intValue] == 0 ? [NSString stringWithFormat:@"%@",@"男"]:[NSString stringWithFormat:@"%@",@"女"]);
+    self.userAgeLabel.text = [NSString stringWithFormat:@"%d",[userAge intValue]];
+    self.userHeightLabel.text = [NSString stringWithFormat:@"%dcm",[userHeight intValue]];
+    self.userWeightLabel.text = [NSString stringWithFormat:@"%dkg",[userWeight intValue]];
+    NSString *levelDes = [[[LZUtility getActivityLevelInfo]objectForKey:@"levelArray"]objectAtIndex:[userActivityLevel intValue]];
+    self.userActivityLabel.text =levelDes;
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -215,15 +183,6 @@
     [mailPicker setToRecipients: toRecipients];
     
     [mailPicker setMessageBody:@"" isHTML:NO];
-    
-    //设置正文
-    //    //NSString *emailBody = self.recommendTextView.text;
-    //    NSString *emailBody = txtCalculateInfo;
-    //    [mailPicker setMessageBody:emailBody isHTML:NO];
-    //NSString *emailBody = htmlCalculateInfo;
-    //[mailPicker setMessageBody:emailBody isHTML:YES];
-    
-    
     
     [self presentViewController:mailPicker animated:YES completion:nil];
 }
@@ -264,68 +223,51 @@
     [alert show];
 }
 
-- (IBAction)saveChanges:(id)sender
-{
-    [currentTextField resignFirstResponder];
-    int persons = [self.personsTextField.text intValue];
-    int days = [self.daysTextField.text intValue];
-    if (persons <=0 || days <=0 || persons >= 10 || days>= 10)
+//- (IBAction)saveChanges:(id)sender
+//{
+//    [currentTextField resignFirstResponder];
+//    int persons = [self.personsTextField.text intValue];
+//    int days = [self.daysTextField.text intValue];
+//    if (persons <=0 || days <=0 || persons >= 10 || days>= 10)
+//    {
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请输入合适的数字" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+//        [alert show];
+//        NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+//        NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+//        if (planPerson != nil)
+//        {
+//            self.personsTextField.text = [NSString stringWithFormat:@"%d",[planPerson intValue]];
+//        }
+//        else
+//        {
+//            self.personsTextField.text = [NSString stringWithFormat:@"%d",1];
+//            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
+//            [[NSUserDefaults standardUserDefaults]synchronize];
+//        }
+//        if (planDays != nil)
+//        {
+//            self.daysTextField.text = [NSString stringWithFormat:@"%d",[planDays intValue]];
+//        }
+//        else
+//        {
+//            self.daysTextField.text = [NSString stringWithFormat:@"%d",1];
+//            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
+//            [[NSUserDefaults standardUserDefaults]synchronize];
+//        }
+//        return;
+//    }
+//    [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:days] forKey:LZPlanDaysKey];
+//    [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:persons] forKey:LZPlanPersonsKey];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
+
+//}
+- (IBAction)editUserProfile:(id)sender {
+    if (![LZUtility isUserProfileComplete])
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"请输入合适的数字" message:nil delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-        [alert show];
-        NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-        NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-        if (planPerson != nil)
-        {
-            self.personsTextField.text = [NSString stringWithFormat:@"%d",[planPerson intValue]];
-        }
-        else
-        {
-            self.personsTextField.text = [NSString stringWithFormat:@"%d",1];
-            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-        }
-        if (planDays != nil)
-        {
-            self.daysTextField.text = [NSString stringWithFormat:@"%d",[planDays intValue]];
-        }
-        else
-        {
-            self.daysTextField.text = [NSString stringWithFormat:@"%d",1];
-            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-        }
-        return;
-    }
-    [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:days] forKey:LZPlanDaysKey];
-    [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:persons] forKey:LZPlanPersonsKey];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_SettingsChangedKey object:nil userInfo:nil];
-}
-- (IBAction)cancelChanges:(id)sender
-{
-    [currentTextField resignFirstResponder];
-    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-    if (planPerson != nil)
-    {
-        self.personsTextField.text = [NSString stringWithFormat:@"%d",[planPerson intValue]];
-    }
-    else
-    {
-        self.personsTextField.text = [NSString stringWithFormat:@"%d",1];
-        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-    }
-    if (planDays != nil)
-    {
-        self.daysTextField.text = [NSString stringWithFormat:@"%d",[planDays intValue]];
-    }
-    else
-    {
-        self.daysTextField.text = [NSString stringWithFormat:@"%d",1];
-        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
+        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
+        [self presentModalViewController:navController animated:YES];
     }
 
 }
@@ -361,18 +303,23 @@
 
 - (void)viewDidUnload {
     [self setPersonsBackImageView:nil];
-    [self setDaysBackImageView:nil];
-    [self setTipsLabel:nil];
     [self setContentScrollView:nil];
     [self setWeiboAuthSwitch:nil];
     [self setAdmobView:nil];
     [self setTopSectionView:nil];
-    [self setResetButton:nil];
-    [self setSaveButton:nil];
     [self setMidSectionView:nil];
     [self setBottomSectionView:nil];
-    [self setLine1View:nil];
     [self setLine2View:nil];
+    [self setUserSexLabel:nil];
+    [self setUserHeightLabel:nil];
+    [self setUserWeightLabel:nil];
+    [self setUserActivityLabel:nil];
+    [self setUserSexLabel:nil];
+    [self setLine1View:nil];
+    [self setLine3View:nil];
+    [self setLine4View:nil];
+    [self setLine5View:nil];
+    [self setUserAgeLabel:nil];
     [super viewDidUnload];
 }
 @end
