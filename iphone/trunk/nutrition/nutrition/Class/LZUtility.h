@@ -36,4 +36,5 @@
 +(NSMutableArray*)dictionaryAllToArray:(NSDictionary*)dict;
 
 +(UIColor*)getNutrientColorForNutrientId:(NSString *)nutrientId;
++ (BOOL)isUserProfileComplete;
 @end
