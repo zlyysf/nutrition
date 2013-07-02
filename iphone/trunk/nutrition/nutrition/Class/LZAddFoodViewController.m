@@ -34,11 +34,14 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    self.title = @"添加";
     [[LZDataAccess singleton]getAllFood];
     allFood = [[LZDataAccess singleton]getAllFood];
     NSMutableSet *foodTypeSet = [NSMutableSet set];
     self.foodTypeArray = [[NSMutableArray alloc]init];
     self.foodNameArray = [[NSMutableArray alloc]init];
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped:)];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
     NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,

@@ -45,7 +45,9 @@
     [tipsLabel setBackgroundColor:[UIColor clearColor]];
     [headerView addSubview:tipsLabel];
     self.listView.tableHeaderView = headerView;
-    self.navItem.title = nutrientTitle;
+    self.title = nutrientTitle;
+    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped:)];
+    self.navigationItem.leftBarButtonItem = backButtonItem;
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
@@ -97,7 +99,7 @@
     UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
     [cell.foodPicView setImage:foodImage];
     
-    cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];//NDB_No
+    [cell.foodNameButton setTitle:[aFood objectForKey:@"CnCaption"] forState:UIControlStateNormal];
     NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
     NSNumber *foodAmount = [aFood objectForKey:Key_FoodAmount];
     NSNumber *intake= [self.tempIntakeDict objectForKey:NDB_No];
@@ -210,7 +212,7 @@
     
     CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height;
     CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = keyboardTop-TopNavigationBarHeight;
+	tableviewFrame.size.height = keyboardTop;
     
 	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -231,7 +233,7 @@
      Animate the resize so that it's in sync with the disappearance of the keyboard.
      */
 	CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = self.view.frame.size.height-TopNavigationBarHeight;
+	tableviewFrame.size.height = self.view.frame.size.height;
     
 	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -267,7 +269,7 @@
 
 - (void)viewDidUnload {
     [self setListView:nil];
-    [self setNavItem:nil];
+    //[self setNavItem:nil];
     [super viewDidUnload];
 }
 @end

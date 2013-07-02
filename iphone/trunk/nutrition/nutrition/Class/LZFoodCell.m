@@ -44,6 +44,12 @@
     }
     return YES;
 }
+- (IBAction)nameButtonTapped:(id)sender {
+    if(delegate && [delegate respondsToSelector:@selector(foodButtonTappedForIndex:)])
+    {
+        [self.delegate foodButtonTappedForIndex:self.cellIndexPath];
+    }
+}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     //记录用量

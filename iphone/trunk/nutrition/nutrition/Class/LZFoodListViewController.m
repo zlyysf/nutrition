@@ -323,7 +323,8 @@
         LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
         addByNutrientController.foodArray = recommendFoodArray;
         addByNutrientController.nutrientTitle = nutrientName;
-        [self presentModalViewController:addByNutrientController animated:YES];
+         UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addByNutrientController];
+        [self presentModalViewController:navController animated:YES];
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -401,7 +402,6 @@
     
     LZAddFoodViewController *addFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddFoodViewController"];
     UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addFoodViewController];
-    [navController setNavigationBarHidden:YES];
     [self presentModalViewController:navController animated:YES];
 }
 - (IBAction)addFoodAction:(id)sender {
@@ -449,7 +449,8 @@
     LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
     addByNutrientController.foodArray = recommendFoodArray;
     addByNutrientController.nutrientTitle = nutrientName;
-    [self presentModalViewController:addByNutrientController animated:YES];
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addByNutrientController];
+    [self presentModalViewController:navController animated:YES];
 
 }
 - (IBAction)addFoodByNutrient:(UIButton *)sender {

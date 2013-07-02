@@ -32,7 +32,7 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    self.navItem.title = titleString;
+    self.title = titleString;
     UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -46,8 +46,9 @@
     [button addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     
     UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = customBarItem;
     
-    self.navItem.leftBarButtonItem= customBarItem;
+    //self.navItem.leftBarButtonItem= customBarItem;
     //[self.admobView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 //    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
 //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
@@ -177,7 +178,7 @@
         UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
         [cell.foodPicView setImage:foodImage];
 
-        cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];//NDB_No
+        [cell.foodNameButton setTitle:[aFood objectForKey:@"CnCaption"] forState:UIControlStateNormal];
         NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
         NSNumber *intake = [self.foodIntakeDictionary objectForKey:NDB_No];
         UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
@@ -362,7 +363,7 @@
     
     CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height;
     CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = keyboardTop-TopNavigationBarHeight;
+	tableviewFrame.size.height = keyboardTop;
     
 	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -383,7 +384,7 @@
      Animate the resize so that it's in sync with the disappearance of the keyboard.
      */
 	CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = self.view.frame.size.height-TopNavigationBarHeight-CGSizeFromGADAdSize(kGADAdSizeBanner).height;
+	tableviewFrame.size.height = self.view.frame.size.height-CGSizeFromGADAdSize(kGADAdSizeBanner).height;
     
 	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
     NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
@@ -454,7 +455,6 @@
 //}
 - (void)viewDidUnload
 {
-    [self setNavItem:nil];
     [self setAdmobView:nil];
     [super viewDidUnload];
     // Release any retained subviews of the main view.
