@@ -347,11 +347,11 @@
 
 + (NSDictionary *)getActivityLevelInfo
 {
-    NSArray *levelArray = [[NSArray alloc]initWithObjects:@"低",@"中",@"高",@"强", nil];
-    NSDictionary *levelDescription = [[NSDictionary alloc]initWithObjectsAndKeys:@"低",@"低",
-                                                                                 @"中",@"中",
-                                                                                 @"高",@"高",
-                                                                                 @"强",@"强",nil];
+    NSArray *levelArray = [[NSArray alloc]initWithObjects:@"低",@"中",@"高",@"极高", nil];
+    NSDictionary *levelDescription = [[NSDictionary alloc]initWithObjectsAndKeys:@"低强度描述",@"低",
+                                                                                 @"中强度描述",@"中",
+                                                                                 @"高强度描述",@"高",
+                                                                                 @"极高强度描述",@"极高",nil];
     NSDictionary *activityDict = [[NSDictionary alloc]initWithObjectsAndKeys:levelArray,@"levelArray",levelDescription,@"levelDescription" ,nil];
     return activityDict;
     

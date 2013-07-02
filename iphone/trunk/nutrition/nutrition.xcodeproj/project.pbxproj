@@ -68,6 +68,12 @@
 		5F25849F17829DDA00D99C16 /* LZEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F25849E17829DD900D99C16 /* LZEditProfileViewController.m */; };
 		5F2584A21782A22200D99C16 /* LZMainTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2584A11782A22100D99C16 /* LZMainTabViewController.m */; };
 		5F2584A41782BD0D00D99C16 /* button_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A31782BD0C00D99C16 /* button_middle@2x.png */; };
+		5F2584AA1782F9AB00D99C16 /* edit_left_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A51782F9A600D99C16 /* edit_left_clicked@2x.png */; };
+		5F2584AB1782F9AB00D99C16 /* edit_mid_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A61782F9A700D99C16 /* edit_mid_clicked@2x.png */; };
+		5F2584AC1782F9AB00D99C16 /* edit_mid_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A71782F9A800D99C16 /* edit_mid_normal@2x.png */; };
+		5F2584AD1782F9AB00D99C16 /* edit_right_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A81782F9A900D99C16 /* edit_right_clicked@2x.png */; };
+		5F2584AE1782F9AB00D99C16 /* edit_right_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A91782F9AA00D99C16 /* edit_right_normal@2x.png */; };
+		5F2584B01782FA2100D99C16 /* edit_left_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */; };
 		5F3338A9172A407E0096E7AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338A8172A407E0096E7AE /* UIKit.framework */; };
 		5F3338AB172A407E0096E7AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AA172A407E0096E7AE /* Foundation.framework */; };
 		5F3338AD172A407E0096E7AE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AC172A407E0096E7AE /* CoreGraphics.framework */; };
@@ -230,6 +236,12 @@
 		5F2584A01782A22100D99C16 /* LZMainTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZMainTabViewController.h; path = Class/LZMainTabViewController.h; sourceTree = "<group>"; };
 		5F2584A11782A22100D99C16 /* LZMainTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZMainTabViewController.m; path = Class/LZMainTabViewController.m; sourceTree = "<group>"; };
 		5F2584A31782BD0C00D99C16 /* button_middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_middle@2x.png"; path = "nutrition/Resource/button_middle@2x.png"; sourceTree = "<group>"; };
+		5F2584A51782F9A600D99C16 /* edit_left_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_left_clicked@2x.png"; path = "nutrition/Resource/edit_left_clicked@2x.png"; sourceTree = "<group>"; };
+		5F2584A61782F9A700D99C16 /* edit_mid_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_mid_clicked@2x.png"; path = "nutrition/Resource/edit_mid_clicked@2x.png"; sourceTree = "<group>"; };
+		5F2584A71782F9A800D99C16 /* edit_mid_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_mid_normal@2x.png"; path = "nutrition/Resource/edit_mid_normal@2x.png"; sourceTree = "<group>"; };
+		5F2584A81782F9A900D99C16 /* edit_right_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_right_clicked@2x.png"; path = "nutrition/Resource/edit_right_clicked@2x.png"; sourceTree = "<group>"; };
+		5F2584A91782F9AA00D99C16 /* edit_right_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_right_normal@2x.png"; path = "nutrition/Resource/edit_right_normal@2x.png"; sourceTree = "<group>"; };
+		5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_left_normal@2x.png"; path = "nutrition/Resource/edit_left_normal@2x.png"; sourceTree = "<group>"; };
 		5F3338A5172A407E0096E7AE /* 买菜助手.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "买菜助手.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3338A8172A407E0096E7AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F3338AA172A407E0096E7AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -652,6 +664,12 @@
 				5FF847781758BCFB00DEA6DE /* tabbar_back@2x.png */,
 				5FF847731758A0CC00DEA6DE /* setting_text_back@2x.png */,
 				5F955F2D177C3A2F00FCC976 /* AddByNutrientButton@2x.png */,
+				5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */,
+				5F2584A51782F9A600D99C16 /* edit_left_clicked@2x.png */,
+				5F2584A61782F9A700D99C16 /* edit_mid_clicked@2x.png */,
+				5F2584A71782F9A800D99C16 /* edit_mid_normal@2x.png */,
+				5F2584A81782F9A900D99C16 /* edit_right_clicked@2x.png */,
+				5F2584A91782F9AA00D99C16 /* edit_right_normal@2x.png */,
 				5FF8474017587F0100DEA6DE /* nav_back_button@2x.png */,
 				5F789B221755B1F3002FE365 /* foodCellBack@2x.png */,
 				5F3605D11753623A0058EC98 /* button_back@2x.png */,
@@ -947,6 +965,12 @@
 				5F955F29177C2A0C00FCC976 /* Addfood_button@2x.png in Resources */,
 				5F955F2E177C3A2F00FCC976 /* AddByNutrientButton@2x.png in Resources */,
 				5F2584A41782BD0D00D99C16 /* button_middle@2x.png in Resources */,
+				5F2584AA1782F9AB00D99C16 /* edit_left_clicked@2x.png in Resources */,
+				5F2584AB1782F9AB00D99C16 /* edit_mid_clicked@2x.png in Resources */,
+				5F2584AC1782F9AB00D99C16 /* edit_mid_normal@2x.png in Resources */,
+				5F2584AD1782F9AB00D99C16 /* edit_right_clicked@2x.png in Resources */,
+				5F2584AE1782F9AB00D99C16 /* edit_right_normal@2x.png in Resources */,
+				5F2584B01782FA2100D99C16 /* edit_left_normal@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
