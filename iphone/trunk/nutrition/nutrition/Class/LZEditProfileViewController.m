@@ -15,7 +15,7 @@
 @end
 
 @implementation LZEditProfileViewController
-@synthesize currentTextField;
+@synthesize currentTextField,firstEnterEditView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,11 +32,20 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    UIBarButtonItem *cancelButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
-    self.navigationItem.leftBarButtonItem = cancelButtonItem;
+    if (!firstEnterEditView)
+    {
+        UIBarButtonItem *cancelButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
+        self.navigationItem.leftBarButtonItem = cancelButtonItem;
+        self.title = @"编辑个人资料";
+    }
+    else
+    {
+        self.title = @"填写个人资料";
+    }
+    
     UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;
-    self.title = @"编辑个人资料";
+    
     [self.mainScrollView setContentSize:CGSizeMake(320, 400)];
     UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
     UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
@@ -277,15 +286,15 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         if (tag == 200)
         {
-            [self.mainScrollView setContentOffset:CGPointMake(0, 0) animated:YES];
+            [self.mainScrollView setContentOffset:CGPointMake(0, 50) animated:YES];
         }
         else if (tag == 201)
         {
-            [self.mainScrollView setContentOffset:CGPointMake(0, 50) animated:YES];
+            [self.mainScrollView setContentOffset:CGPointMake(0, 100) animated:YES];
         }
         else if (tag == 202)
         {
-            [self.mainScrollView setContentOffset:CGPointMake(0, 100) animated:YES];
+            [self.mainScrollView setContentOffset:CGPointMake(0, 150) animated:YES];
         }
 
     });
@@ -293,6 +302,27 @@
     //[textField becomeFirstResponder];
     return YES;
 }
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+    //    NSCharacterSet *cs;
+    //    cs = [[NSCharacterSet characterSetWithCharactersInString:] invertedSet];
+    //    NSString *filtered =
+    //    [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+    //    BOOL basic = [string isEqualToString:filtered];
+    //    if (basic)
+    //    {
+    if ([string length]+[textField.text length]>3)
+    {
+        return NO;
+    }
+    return YES;
+    //    }
+    //    else {
+    //        return NO;
+    //    }
+    
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     //记录用量
@@ -345,14 +375,83 @@
     NSDictionary *dataToSave = [self checkValueValid];
     if(dataToSave)
     {
-       [[NSNotificationCenter defaultCenter]postNotificationName:Notification_SettingsChangedKey object:nil userInfo:nil]; 
+        [[NSUserDefaults standardUserDefaults]setObject:[dataToSave objectForKey:LZUserAgeKey] forKey:LZUserAgeKey];
+        [[NSUserDefaults standardUserDefaults]setObject:[dataToSave objectForKey:LZUserSexKey] forKey:LZUserSexKey];
+        [[NSUserDefaults standardUserDefaults]setObject:[dataToSave objectForKey:LZUserHeightKey] forKey:LZUserHeightKey];
+        [[NSUserDefaults standardUserDefaults]setObject:[dataToSave objectForKey:LZUserWeightKey] forKey:LZUserWeightKey];
+        [[NSUserDefaults standardUserDefaults]setObject:[dataToSave objectForKey:LZUserActivityLevelKey] forKey:LZUserActivityLevelKey];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+       [[NSNotificationCenter defaultCenter]postNotificationName:Notification_SettingsChangedKey object:nil userInfo:nil];
+        [self dismissModalViewControllerAnimated:YES];
     }
-    
-    [self dismissModalViewControllerAnimated:YES];
 }
 -(NSDictionary *)checkValueValid
 {
-    return nil;
+    //NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
+    //NSNumber *userAge = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserAgeKey];
+    //NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
+    //NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
+    NSMutableDictionary *dataToSave = [[NSMutableDictionary alloc]init];
+    if (self.currentSexSelection ==0 || self.currentSexSelection == 1)
+    {
+        [dataToSave setObject:[NSNumber numberWithInt:self.currentSexSelection] forKey:LZUserSexKey];
+    }
+    else
+    {
+        [self alertWithTitle:@"" msg:@"性别选择错误"];
+        return nil;
+    }
+    if (self.currentActivityLevelSelection >= 0 && self.currentActivityLevelSelection <= 3)
+    {
+        [dataToSave setObject:[NSNumber numberWithInt:self.currentActivityLevelSelection] forKey:LZUserActivityLevelKey];
+    }
+    else
+    {
+        [self alertWithTitle:@"" msg:@"活动强度选择错误"];
+        return nil;
+    }
+    int userAge = [self.ageTextField.text intValue];
+    if (userAge >= 1 && userAge <= 120)
+    {
+        [dataToSave setObject:[NSNumber numberWithInt:userAge] forKey:LZUserAgeKey];
+    }
+    else
+    {
+        [self alertWithTitle:@"" msg:@"年龄输入不合法"];
+        return nil;
+    }
+    int userHeight = [self.heightTextField.text intValue];
+    if (userHeight >= 0 && userAge <= 280)
+    {
+        [dataToSave setObject:[NSNumber numberWithInt:userHeight] forKey:LZUserHeightKey];
+    }
+    else
+    {
+        [self alertWithTitle:@"" msg:@"身高输入不合法"];
+        return nil;
+    }
+
+    int userWeight = [self.weightTextField.text intValue];
+    if (userWeight >= 0 && userWeight <= 300)
+    {
+        [dataToSave setObject:[NSNumber numberWithInt:userWeight] forKey:LZUserWeightKey];
+    }
+    else
+    {
+        [self alertWithTitle:@"" msg:@"体重输入不合法"];
+        return nil;
+    }
+
+    return dataToSave;
+}
+- (void) alertWithTitle: (NSString *)_title_ msg: (NSString *)msg
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_title_
+                                                    message:msg
+                                                   delegate:nil
+                                          cancelButtonTitle:@"确定"
+                                          otherButtonTitles:nil];
+    [alert show];
 }
 - (void)viewDidUnload {
     [self setMaleButton:nil];

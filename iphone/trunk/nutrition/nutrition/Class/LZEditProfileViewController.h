@@ -28,6 +28,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *level2Button;
 @property (strong, nonatomic) IBOutlet UIButton *level3Button;
 @property (strong, nonatomic) IBOutlet UILabel *levelDescriptionLabel;
+@property (nonatomic,readwrite)BOOL firstEnterEditView;
 @property (nonatomic, readwrite) int currentSexSelection;
 @property (nonatomic, readwrite) int currentActivityLevelSelection;
 @end

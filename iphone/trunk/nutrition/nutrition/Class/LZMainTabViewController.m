@@ -26,20 +26,21 @@
 
 //- (void)viewWillAppear:(BOOL)animated
 //{
-//    if (![LZUtility isUserProfileComplete])
-//    {
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-//        LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
-//        //addByNutrientController.foodArray = recommendFoodArray;
-//        //addByNutrientController.nutrientTitle = nutrientName;
-//        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
-//        [self presentModalViewController:navController animated:YES];
-//    }
-    
+ 
 //}
 - (void)viewDidAppear:(BOOL)animated
 {
-    
+    if (![LZUtility isUserProfileComplete])
+    {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
+        editProfileViewController.firstEnterEditView = YES;
+        //addByNutrientController.foodArray = recommendFoodArray;
+        //addByNutrientController.nutrientTitle = nutrientName;
+        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
+        [self presentModalViewController:navController animated:YES];
+    }
+
 }
 - (void)viewDidLoad
 {

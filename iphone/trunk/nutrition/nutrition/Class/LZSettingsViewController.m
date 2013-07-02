@@ -151,10 +151,17 @@
     [MobClick endLogPageView:@"设置页面"];
 }
 - (IBAction)reviewOurApp:(id)sender {
-
+    [self performSelector:@selector(reviewAppAction) withObject:nil afterDelay:0.f];
+}
+- (void)reviewAppAction
+{
     [[LZReviewAppManager SharedInstance]reviewOurAppDirectly];
 }
 - (IBAction)userFeedBack:(id)sender {
+    [self performSelector:@selector(feedbackAction) withObject:nil afterDelay:0.f];
+}
+- (void)feedbackAction
+{
     Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
     
     if (mailClass != nil)
@@ -167,6 +174,7 @@
             [self alertWithTitle:nil msg:@"对不起，你还没有邮件账户，请到系统设置里面创建一个。"];
         }
     }
+
 }
 -(void)displayComposerSheet
 {
@@ -262,16 +270,16 @@
 
 //}
 - (IBAction)editUserProfile:(id)sender {
-    if (![LZUtility isUserProfileComplete])
-    {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
-        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
-        [self presentModalViewController:navController animated:YES];
-    }
-
+    [self performSelector:@selector(editProfileAction) withObject:nil afterDelay:0.f];
 }
-
+- (void)editProfileAction
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
+    editProfileViewController.firstEnterEditView = NO;
+    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
+    [self presentModalViewController:navController animated:YES];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
