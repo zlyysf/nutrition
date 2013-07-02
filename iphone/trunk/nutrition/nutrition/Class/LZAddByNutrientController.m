@@ -11,12 +11,14 @@
 #import <math.h>
 #import "GADMasterViewController.h"
 #import "MobClick.h"
+#import "LZFoodInfoViewController.h"
+#import "LZRecommendFood.h"
 @interface LZAddByNutrientController ()
 
 @end
 
 @implementation LZAddByNutrientController
-@synthesize foodArray,currentFoodInputTextField,nutrientTitle,tempIntakeDict;
+@synthesize foodArray,currentFoodInputTextField,nutrientTitle,tempIntakeDict,foodStandardDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,8 +35,7 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
     UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 70)];
     UILabel *tipsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 300, 36)];
     tipsLabel.numberOfLines = 2;
@@ -52,14 +53,151 @@
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
     self.listView.tableFooterView = footerView;
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    self.foodStandardDict = [[rf formatFoodsStandardContentForUI] objectForKey:@"foodStandardNutrientsDataDict"];
+
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [MobClick beginLogPageView:@"按营养素添加食物页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"按营养素添加食物页面"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidUnload {
+    [self setListView:nil];
+    //[self setNavItem:nil];
+    [super viewDidUnload];
+}
+- (IBAction)cancelButtonTapped:(id)sender
+{
+    if(self.currentFoodInputTextField != nil)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
+    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
+    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+    if(dailyIntake != nil)
+    {
+        [intakeDict addEntriesFromDictionary:dailyIntake];
+    }
+    
+    BOOL needSaveData = NO;
+    for (NSString * NDB_No in [self.tempIntakeDict allKeys])
+    {
+        NSNumber *num = [self.tempIntakeDict objectForKey:NDB_No];
+        if ([num intValue]>0)
+        {
+            needSaveData = YES;
+            NSNumber *takenAmountNum = [intakeDict objectForKey:NDB_No];
+            if (takenAmountNum)
+                [intakeDict setObject:[NSNumber numberWithInt:[num intValue]+[takenAmountNum intValue]] forKey:NDB_No];
+            else
+                [intakeDict setObject:num forKey:NDB_No];
+        }
+    }
+    if (needSaveData) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
+        [[NSUserDefaults  standardUserDefaults]synchronize];
+    }
+    
+    [self dismissModalViewControllerAnimated:YES];
+}
+//- (IBAction)saveButtonTapped:(id)sender {
+//    //储存摄入量
+//    if(self.currentFoodInputTextField != nil)
+//    {
+//        [self.currentFoodInputTextField resignFirstResponder];
+//    }
+//    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
+//    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+//    if(dailyIntake != nil)
+//    {
+//        [intakeDict addEntriesFromDictionary:dailyIntake];
+//    }
+//
+//    BOOL needSaveData = NO;
+//    for (NSString * NDB_No in [self.tempIntakeDict allKeys])
+//    {
+//        NSNumber *num = [self.tempIntakeDict objectForKey:NDB_No];
+//        if ([num intValue]>0)
+//        {
+//            needSaveData = YES;
+//            NSNumber *takenAmountNum = [intakeDict objectForKey:NDB_No];
+//            if (takenAmountNum)
+//                [intakeDict setObject:[NSNumber numberWithInt:[num intValue]+[takenAmountNum intValue]] forKey:NDB_No];
+//            else
+//                [intakeDict setObject:num forKey:NDB_No];
+//        }
+//    }
+//    if (needSaveData) {
+//        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+//        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
+//        [[NSUserDefaults  standardUserDefaults]synchronize];
+//    }
+//    [self dismissModalViewControllerAnimated:YES];
+//}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+	
+    NSDictionary *userInfo = [notification userInfo];
+    
+    NSValue *boundsValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+	CGRect keyboardRect = [boundsValue CGRectValue];
+    
+    CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height;
+    CGRect tableviewFrame = self.listView.frame;
+	tableviewFrame.size.height = keyboardTop;
+    
+	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    self.listView.frame = tableviewFrame;
+    [UIView commitAnimations];
+}
+
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    NSDictionary* userInfo = [notification userInfo];
+    /*
+     Restore the size of the text view (fill self's view).
+     Animate the resize so that it's in sync with the disappearance of the keyboard.
+     */
+	CGRect tableviewFrame = self.listView.frame;
+	tableviewFrame.size.height = self.view.frame.size.height;
+    
+	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    self.listView.frame = tableviewFrame;
+    [UIView commitAnimations];
+    
+}
+
+#pragma mark- TableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.foodArray count];
@@ -125,125 +263,22 @@
     [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
     return cell;
 }
-- (IBAction)cancelButtonTapped:(id)sender
+#pragma mark- LZFoodCellDelegate
+- (void)foodButtonTappedForIndex:(NSIndexPath *)index
 {
     if(self.currentFoodInputTextField != nil)
     {
         [self.currentFoodInputTextField resignFirstResponder];
     }
-    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
-    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
-    if(dailyIntake != nil)
-    {
-        [intakeDict addEntriesFromDictionary:dailyIntake];
-    }
+    NSDictionary *aFood = [self.foodArray objectAtIndex:index.row];
+    NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
+    NSArray *standardArray = [self.foodStandardDict objectForKey:NDB_No];
     
-    BOOL needSaveData = NO;
-    for (NSString * NDB_No in [self.tempIntakeDict allKeys])
-    {
-        NSNumber *num = [self.tempIntakeDict objectForKey:NDB_No];
-        if ([num intValue]>0)
-        {
-            needSaveData = YES;
-            NSNumber *takenAmountNum = [intakeDict objectForKey:NDB_No];
-            if (takenAmountNum)
-                [intakeDict setObject:[NSNumber numberWithInt:[num intValue]+[takenAmountNum intValue]] forKey:NDB_No];
-            else
-                [intakeDict setObject:num forKey:NDB_No];
-        }
-    }
-    if (needSaveData) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
-        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
-        [[NSUserDefaults  standardUserDefaults]synchronize];
-    }
-
-    [self dismissModalViewControllerAnimated:YES];
-}
-//- (IBAction)saveButtonTapped:(id)sender {
-//    //储存摄入量
-//    if(self.currentFoodInputTextField != nil)
-//    {
-//        [self.currentFoodInputTextField resignFirstResponder];
-//    }
-//    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
-//    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
-//    if(dailyIntake != nil)
-//    {
-//        [intakeDict addEntriesFromDictionary:dailyIntake];
-//    }
-//    
-//    BOOL needSaveData = NO;
-//    for (NSString * NDB_No in [self.tempIntakeDict allKeys])
-//    {
-//        NSNumber *num = [self.tempIntakeDict objectForKey:NDB_No];
-//        if ([num intValue]>0)
-//        {
-//            needSaveData = YES;
-//            NSNumber *takenAmountNum = [intakeDict objectForKey:NDB_No];
-//            if (takenAmountNum)
-//                [intakeDict setObject:[NSNumber numberWithInt:[num intValue]+[takenAmountNum intValue]] forKey:NDB_No];
-//            else
-//                [intakeDict setObject:num forKey:NDB_No];
-//        }
-//    }
-//    if (needSaveData) {
-//        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
-//        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
-//        [[NSUserDefaults  standardUserDefaults]synchronize];
-//    }
-//    [self dismissModalViewControllerAnimated:YES];
-//}
-- (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber
-{
-    //[self.foodIntakeAmountArray replaceObjectAtIndex:index.row withObject:foodNumber];
-    self.currentFoodInputTextField = nil;
-    NSDictionary *afood = [self.foodArray objectAtIndex:index.row];
-    NSString *NDB_No = [afood objectForKey:@"NDB_No"];
-    [self.tempIntakeDict setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
-    //NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
-}
-- (void)keyboardWillShow:(NSNotification *)notification {
-	
-    NSDictionary *userInfo = [notification userInfo];
-    
-    NSValue *boundsValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-	CGRect keyboardRect = [boundsValue CGRectValue];
-    
-    CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height;
-    CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = keyboardTop;
-    
-	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:animationDuration];
-    self.listView.frame = tableviewFrame;
-    [UIView commitAnimations];
-}
-
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-    
-    NSDictionary* userInfo = [notification userInfo];
-    /*
-     Restore the size of the text view (fill self's view).
-     Animate the resize so that it's in sync with the disappearance of the keyboard.
-     */
-	CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = self.view.frame.size.height;
-    
-	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:animationDuration];
-    self.listView.frame = tableviewFrame;
-    [UIView commitAnimations];
-    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZFoodInfoViewController *foodInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodInfoViewController"];
+    foodInfoViewController.nutrientStandardArray = standardArray;
+    foodInfoViewController.title = [aFood objectForKey:@"CnCaption"];
+    [self.navigationController pushViewController:foodInfoViewController animated:YES];
 }
 - (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index textField:(UITextField *)currentTextField
 {
@@ -253,23 +288,13 @@
         [self.listView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
     });
 }
-
--(void)viewWillDisappear:(BOOL)animated
+- (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber
 {
-    [MobClick endLogPageView:@"按营养素添加食物页面"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidUnload {
-    [self setListView:nil];
-    //[self setNavItem:nil];
-    [super viewDidUnload];
+    //[self.foodIntakeAmountArray replaceObjectAtIndex:index.row withObject:foodNumber];
+    self.currentFoodInputTextField = nil;
+    NSDictionary *afood = [self.foodArray objectAtIndex:index.row];
+    NSString *NDB_No = [afood objectForKey:@"NDB_No"];
+    [self.tempIntakeDict setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
+    //NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
 }
 @end

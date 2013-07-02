@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZFoodInfoViewController : UIViewController
-
+@interface LZFoodInfoViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@property (strong, nonatomic) IBOutlet UITableView *listView;
+@property (strong, nonatomic) IBOutlet UIView *admobView;
+@property (strong,nonatomic)NSArray *nutrientStandardArray;
 @end

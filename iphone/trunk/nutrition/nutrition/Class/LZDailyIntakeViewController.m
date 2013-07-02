@@ -11,12 +11,14 @@
 #import "LZConstants.h"
 #import "GADMasterViewController.h"
 #import "MobClick.h"
+#import "LZFoodInfoViewController.h"
+#import "LZRecommendFood.h"
 @interface LZDailyIntakeViewController ()<LZFoodCellDelegate>
 
 @end
 
 @implementation LZDailyIntakeViewController
-@synthesize foodIntakeDictionary,foodArray,currentFoodInputTextField,titleString;
+@synthesize foodIntakeDictionary,foodArray,currentFoodInputTextField,titleString,foodStandardDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -33,21 +35,23 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.title = titleString;
-    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"  添加" forState:UIControlStateNormal];
-    
-    button.frame = CGRectMake(0, 0, 48, 30);
-    [button.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-    [button addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = customBarItem;
-    
+//    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+//    
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+//    [button setTitle:@"  添加" forState:UIControlStateNormal];
+//    
+//    button.frame = CGRectMake(0, 0, 48, 30);
+//    [button.titleLabel setFont:[UIFont systemFontOfSize:13]];
+//    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+//    [button addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    self.navigationItem.leftBarButtonItem = customBarItem;
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    self.foodStandardDict = [[rf formatFoodsStandardContentForUI] objectForKey:@"foodStandardNutrientsDataDict"];
+
     //self.navItem.leftBarButtonItem= customBarItem;
     //[self.admobView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 //    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
@@ -108,17 +112,107 @@
 //    self.selectorView.horizontalScrolling = YES;
 //    self.selectorView.debugEnabled = NO;
 //    self.currentSelectedIndex = 0;
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    
     
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [MobClick beginLogPageView:@"按种类添加页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
 
 }
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if(self.currentFoodInputTextField != nil)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
+    [MobClick endLogPageView:@"按种类添加页面"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)viewDidUnload
+{
+    [self setAdmobView:nil];
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+}
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+- (IBAction)backButtonTapped:(id)sender
+{
+       //    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
+    //    BOOL needSaveData = NO;
+    //    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
+    //    {
+    //        NSNumber *num = [self.foodIntakeDictionary objectForKey:NDB_No];
+    //        if ([num intValue]>0)
+    //        {
+    //            needSaveData = YES;
+    //            [intakeDict setObject:num forKey:NDB_No];
+    //        }
+    //    }
+    //    if (needSaveData) {
+    //        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+    //        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
+    //        [[NSUserDefaults  standardUserDefaults]synchronize];
+    //    }
+    
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+	
+    NSDictionary *userInfo = [notification userInfo];
+    
+    NSValue *boundsValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+	CGRect keyboardRect = [boundsValue CGRectValue];
+    
+    CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height;
+    CGRect tableviewFrame = self.listView.frame;
+	tableviewFrame.size.height = keyboardTop;
+    
+	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    self.listView.frame = tableviewFrame;
+    [UIView commitAnimations];
+}
+
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    NSDictionary* userInfo = [notification userInfo];
+    /*
+     Restore the size of the text view (fill self's view).
+     Animate the resize so that it's in sync with the disappearance of the keyboard.
+     */
+	CGRect tableviewFrame = self.listView.frame;
+	tableviewFrame.size.height = self.view.frame.size.height-CGSizeFromGADAdSize(kGADAdSizeBanner).height;
+    
+	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    self.listView.frame = tableviewFrame;
+    [UIView commitAnimations];
+    
+}
+
+#pragma mark- TableViewDelegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [self.foodArray count];
@@ -296,30 +390,22 @@
 //    currentSelectedIndex = index;
 //    [self.listView reloadData];
 //}
-- (IBAction)backButtonTapped:(id)sender
+#pragma mark- LZFoodCellDelegate
+- (void)foodButtonTappedForIndex:(NSIndexPath *)index
 {
     if(self.currentFoodInputTextField != nil)
     {
         [self.currentFoodInputTextField resignFirstResponder];
     }
-//    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
-//    BOOL needSaveData = NO;
-//    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
-//    {
-//        NSNumber *num = [self.foodIntakeDictionary objectForKey:NDB_No];
-//        if ([num intValue]>0)
-//        {
-//            needSaveData = YES;
-//            [intakeDict setObject:num forKey:NDB_No];
-//        }
-//    }
-//    if (needSaveData) {
-//        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
-//        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
-//        [[NSUserDefaults  standardUserDefaults]synchronize];
-//    }
-
-    [self.navigationController popViewControllerAnimated:YES];
+    NSDictionary *aFood = [self.foodArray objectAtIndex:index.row];
+    NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
+    NSArray *standardArray = [self.foodStandardDict objectForKey:NDB_No];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZFoodInfoViewController *foodInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodInfoViewController"];
+    foodInfoViewController.nutrientStandardArray = standardArray;
+    foodInfoViewController.title = [aFood objectForKey:@"CnCaption"];
+    [self.navigationController pushViewController:foodInfoViewController animated:YES];
 }
 
 - (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber
@@ -352,56 +438,7 @@
         [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
         [[NSUserDefaults  standardUserDefaults]synchronize];
     }
-
-}
-- (void)keyboardWillShow:(NSNotification *)notification {
-	
-    NSDictionary *userInfo = [notification userInfo];
     
-    NSValue *boundsValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
-	CGRect keyboardRect = [boundsValue CGRectValue];
-    
-    CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height;
-    CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = keyboardTop;
-    
-	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:animationDuration];
-    self.listView.frame = tableviewFrame;
-    [UIView commitAnimations];
-}
-
-
-- (void)keyboardWillHide:(NSNotification *)notification {
-    
-    NSDictionary* userInfo = [notification userInfo];
-    /*
-     Restore the size of the text view (fill self's view).
-     Animate the resize so that it's in sync with the disappearance of the keyboard.
-     */
-	CGRect tableviewFrame = self.listView.frame;
-	tableviewFrame.size.height = self.view.frame.size.height-CGSizeFromGADAdSize(kGADAdSizeBanner).height;
-    
-	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
-    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
-    NSTimeInterval animationDuration;
-    [animationDurationValue getValue:&animationDuration];
-    [UIView beginAnimations:nil context:NULL];
-    [UIView setAnimationDuration:animationDuration];
-    self.listView.frame = tableviewFrame;
-    [UIView commitAnimations];
-
-}
-
--(void)viewWillDisappear:(BOOL)animated
-{
-    [MobClick endLogPageView:@"按种类添加页面"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
 - (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index textField:(UITextField *)currentTextField
 {
@@ -412,58 +449,5 @@
     });
 }
 
-//#pragma mark -
-//#pragma mark UISearchDisplayController Delegate Methods
-//
-//- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
-//    [self.searchResultArray removeAllObjects];
-//    // Return YES to cause the search result table view to be reloaded.
-//    NSLog(@"%@",searchString);
-//    for (int i=0; i<[allFood count]; i++)
-//    {
-//        NSDictionary *aFood = [allFood objectAtIndex:i];
-//        NSString *cnName = [aFood objectForKey:@"CnCaption"];
-//        NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@",searchString];
-//        if ([pre evaluateWithObject:cnName])
-//        {
-//            [self.searchResultArray addObject:aFood];
-//        }
-//        
-//    }
-//    
-//   //NSArray *arrayPre=[allFood filteredArrayUsingPredicate: pre];
-//    //NSLog(@"result %@",arrayPre);
-//    return YES;
-//}
-//
-//- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption{
-//    // Return YES to cause the search result table view to be reloaded.
-//    return YES;
-//}
-//
-//- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller{
-//	/*
-//     Bob: Because the searchResultsTableView will be released and allocated automatically, so each time we start to begin search, we set its delegate here.
-//     */
-//	[foodSearchDisplayController.searchResultsTableView setDelegate:self];
-//    
-//}
-//
-//- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
-//	
-//    [foodSearchBar resignFirstResponder];
-//}
-- (void)viewDidUnload
-{
-    [self setAdmobView:nil];
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 @end
