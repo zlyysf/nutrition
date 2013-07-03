@@ -318,9 +318,9 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text =  @"推荐的食物";
+        sectionTitleLabel.text =  @"今日推荐食物";
     else
-        sectionTitleLabel.text =  @"提供的营养成分";
+        sectionTitleLabel.text =  @"推荐食物后营养补充进度";
 
     return sectionView;
 }
@@ -348,6 +348,7 @@
             foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
             foodDetailController.nutrientStandardArray = nutrientStandardArr;
             foodDetailController.foodName = foodName;
+            foodDetailController.isForRecomendFood = YES;
             UINavigationController *initialController = (UINavigationController*)[UIApplication
                                                                                   sharedApplication].keyWindow.rootViewController;
             

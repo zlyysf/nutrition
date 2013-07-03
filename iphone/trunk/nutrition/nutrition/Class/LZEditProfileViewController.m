@@ -411,7 +411,7 @@
         return nil;
     }
     int userAge = [self.ageTextField.text intValue];
-    if (userAge >= 1 && userAge <= 120)
+    if (userAge >= 1 && userAge <= 120)//年龄 岁
     {
         [dataToSave setObject:[NSNumber numberWithInt:userAge] forKey:LZUserAgeKey];
     }
@@ -421,7 +421,7 @@
         return nil;
     }
     int userHeight = [self.heightTextField.text intValue];
-    if (userHeight >= 0 && userAge <= 280)
+    if (userHeight >= 0 && userAge <= 280)//身高 cm
     {
         [dataToSave setObject:[NSNumber numberWithInt:userHeight] forKey:LZUserHeightKey];
     }
@@ -432,7 +432,7 @@
     }
 
     int userWeight = [self.weightTextField.text intValue];
-    if (userWeight >= 0 && userWeight <= 300)
+    if (userWeight >= 0 && userWeight <= 300)//体重 kg
     {
         [dataToSave setObject:[NSNumber numberWithInt:userWeight] forKey:LZUserWeightKey];
     }

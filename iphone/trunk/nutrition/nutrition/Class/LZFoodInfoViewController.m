@@ -121,7 +121,7 @@
     [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
     [sectionView addSubview:sectionTitleLabel];
     
-    sectionTitleLabel.text =  @"标准含量(100g)";
+    sectionTitleLabel.text =  @"营养成分标准含量(100g食物)";
     return sectionView;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

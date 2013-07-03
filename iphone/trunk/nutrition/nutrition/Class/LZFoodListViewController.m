@@ -149,7 +149,7 @@
             {
                 LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
                 [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
-                cell.contentLabel.text = @"请添加计划要购买的食物，我们会分析其营养量是否达到标准，并推荐其他食物以全面摄入营养。";
+                cell.contentLabel.text = @"请添加今日计划要购买的食物，我们会帮你分析今日摄入的营养量是否达到标准，并推荐相关的食物以达到标准，让菜买的顺当，吃的健康！";
                 return cell;
             }
             else
@@ -252,9 +252,9 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text =  @"打算购买的食物";
+        sectionTitleLabel.text =  @"今日打算购买的食物";
     else
-        sectionTitleLabel.text =  @"每日营养补充进度";
+        sectionTitleLabel.text =  @"今日营养补充进度";
     
     return sectionView;
 }
@@ -287,6 +287,7 @@
             foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
             foodDetailController.nutrientStandardArray = nutrientStandardArr;
             foodDetailController.foodName = foodName;
+            foodDetailController.isForRecomendFood = NO;
             UINavigationController *initialController = (UINavigationController*)[UIApplication
                                                                                   sharedApplication].keyWindow.rootViewController;
             [initialController pushViewController:foodDetailController animated:YES];
