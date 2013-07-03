@@ -96,6 +96,7 @@
 
 
 
+
 +(NSMutableString *) convert2DArrayToHtmlTable:(NSArray*)ary2D withColumnNames:(NSArray*)columnNames
 {
     NSLog(@"convert2DArrayToHtmlTable enter");
@@ -204,6 +205,19 @@
     return str;
 }
 
++(NSMutableArray*)getPropertyArrayFromDictionaryArray_withPropertyName:(NSString*)propertyName andDictionaryArray:(NSArray*)dicAry
+{
+    NSMutableArray *propAry = [NSMutableArray array];
+    if (dicAry.count == 0)
+        return propAry;
+    for(int i=0; i<dicAry.count; i++){
+        NSDictionary *dic = dicAry[i];
+        id val = [dic objectForKey:propertyName];
+        [propAry addObject:val];
+    }
+    return propAry;
+}
+
 /*
  从数组去掉集合里也存在的元素，直接在数组上修改，返回数组本身
  */
@@ -219,6 +233,13 @@
         }
     }
     return toBeMinusAry;
+}
++(NSMutableArray*)arrayMinusArray_withSrcArray:(NSMutableArray*)srcAry andMinusArray:(NSArray*)minusAry
+{
+    
+    if (srcAry.count == 0 || minusAry.count == 0)
+        return srcAry;
+    return [self.class arrayMinusSet_withArray:srcAry andMinusSet:[NSSet setWithArray:minusAry]];
 }
 /*
  数组与集合取交集，直接在数组上修改，返回数组本身
