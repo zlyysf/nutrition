@@ -398,7 +398,7 @@
     }
     else
     {
-        [self alertWithTitle:@"" msg:@"性别选择错误"];
+        [self alertWithTitle:@"" msg:@"性别选择错误，请重新选择"];
         return nil;
     }
     if (self.currentActivityLevelSelection >= 0 && self.currentActivityLevelSelection <= 3)
@@ -407,38 +407,38 @@
     }
     else
     {
-        [self alertWithTitle:@"" msg:@"活动强度选择错误"];
+        [self alertWithTitle:@"" msg:@"活动强度选择错误，请重新选择"];
         return nil;
     }
     int userAge = [self.ageTextField.text intValue];
-    if (userAge >= 1 && userAge <= 120)//年龄 岁
+    if (userAge >= 1)//年龄 岁
     {
         [dataToSave setObject:[NSNumber numberWithInt:userAge] forKey:LZUserAgeKey];
     }
     else
     {
-        [self alertWithTitle:@"" msg:@"年龄输入不合法"];
+        [self alertWithTitle:@"" msg:@"年龄数据填写错误，请重新填写"];
         return nil;
     }
     int userHeight = [self.heightTextField.text intValue];
-    if (userHeight >= 0 && userAge <= 280)//身高 cm
+    if (userHeight > 0)//身高 cm
     {
         [dataToSave setObject:[NSNumber numberWithInt:userHeight] forKey:LZUserHeightKey];
     }
     else
     {
-        [self alertWithTitle:@"" msg:@"身高输入不合法"];
+        [self alertWithTitle:@"" msg:@"身高数据填写错误，请重新填写"];
         return nil;
     }
 
     int userWeight = [self.weightTextField.text intValue];
-    if (userWeight >= 0 && userWeight <= 300)//体重 kg
+    if (userWeight > 0)//体重 kg
     {
         [dataToSave setObject:[NSNumber numberWithInt:userWeight] forKey:LZUserWeightKey];
     }
     else
     {
-        [self alertWithTitle:@"" msg:@"体重输入不合法"];
+        [self alertWithTitle:@"" msg:@"体重数据填写错误，请重新填写"];
         return nil;
     }
 
