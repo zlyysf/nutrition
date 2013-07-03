@@ -1194,8 +1194,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Lingzhi LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lingzhi LLC";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Lingzhi LLC (5F9UDRV872)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lingzhi LLC (5F9UDRV872)";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -1203,8 +1203,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
-				PROVISIONING_PROFILE = "8C70EA96-AABA-41BC-884D-1ED0FA721E82";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8C70EA96-AABA-41BC-884D-1ED0FA721E82";
+				PROVISIONING_PROFILE = "C275FD3E-7C38-44C3-ACC5-A4B24B3541A2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C275FD3E-7C38-44C3-ACC5-A4B24B3541A2";
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1244,8 +1244,8 @@
 		5F3338CA172A407F0096E7AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Lingzhi LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lingzhi LLC";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Lingzhi LLC (5F9UDRV872)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lingzhi LLC (5F9UDRV872)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/nutrition/ShareSDK_v2.2.2/Connection\"",
@@ -1266,8 +1266,8 @@
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "买菜助手";
-				PROVISIONING_PROFILE = "8C70EA96-AABA-41BC-884D-1ED0FA721E82";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "8C70EA96-AABA-41BC-884D-1ED0FA721E82";
+				PROVISIONING_PROFILE = "C275FD3E-7C38-44C3-ACC5-A4B24B3541A2";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C275FD3E-7C38-44C3-ACC5-A4B24B3541A2";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
