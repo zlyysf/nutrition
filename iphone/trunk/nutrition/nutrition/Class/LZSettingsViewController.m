@@ -40,7 +40,7 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
+    UIImage *textImage = [UIImage imageNamed:@"setting_cell_back.png"];
     UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
     [self.personsBackImageView setImage:textBackImage];
 
@@ -55,7 +55,7 @@
     }
     else
     {
-        [self.contentScrollView setContentSize:CGSizeMake(320, 427)];
+        [self.contentScrollView setContentSize:CGSizeMake(320, 423)];
     }
  }
 - (IBAction)authSwitchChangeHandler:(UISwitch *)sender
@@ -110,15 +110,15 @@
     [shared resetAdView:self andListView:self.admobView];
 
     CGRect topFrame = self.topSectionView.frame;
-    topFrame.origin.y = 20;
+    topFrame.origin.y = 17;
     self.topSectionView.frame = topFrame;
     
     CGRect midFrame = self.midSectionView.frame;
-    midFrame.origin.y = 200;
+    midFrame.origin.y = 187;
     self.midSectionView.frame = midFrame;
     
     CGRect bottomFrame = self.bottomSectionView.frame;
-    bottomFrame.origin.y = 300;
+    bottomFrame.origin.y = 287;
     self.bottomSectionView.frame = bottomFrame;
 
     if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
@@ -131,7 +131,7 @@
     else
     {
         CGRect mobFrame = self.admobView.frame;
-        mobFrame.origin.y = 377;
+        mobFrame.origin.y = 373;
         self.admobView.frame = mobFrame;
     }
     NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
@@ -140,7 +140,7 @@
     NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
     NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
     self.userSexLabel.text = ([userSex intValue] == 0 ? [NSString stringWithFormat:@"%@",@"男"]:[NSString stringWithFormat:@"%@",@"女"]);
-    self.userAgeLabel.text = [NSString stringWithFormat:@"%d",[userAge intValue]];
+    self.userAgeLabel.text = [NSString stringWithFormat:@"%d岁",[userAge intValue]];
     self.userHeightLabel.text = [NSString stringWithFormat:@"%dcm",[userHeight intValue]];
     self.userWeightLabel.text = [NSString stringWithFormat:@"%dkg",[userWeight intValue]];
     NSString *levelDes = [[[LZUtility getActivityLevelInfo]objectForKey:@"levelArray"]objectAtIndex:[userActivityLevel intValue]];
