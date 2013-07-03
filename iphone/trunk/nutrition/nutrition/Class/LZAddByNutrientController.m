@@ -18,7 +18,7 @@
 @end
 
 @implementation LZAddByNutrientController
-@synthesize foodArray,currentFoodInputTextField,nutrientTitle,tempIntakeDict,foodStandardDict;
+@synthesize foodArray,currentFoodInputTextField,nutrientTitle,tempIntakeDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -53,8 +53,6 @@
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
     self.listView.tableFooterView = footerView;
-    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    self.foodStandardDict = [[rf formatFoodsStandardContentForUI] objectForKey:@"foodStandardNutrientsDataDict"];
 
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -271,8 +269,8 @@
         [self.currentFoodInputTextField resignFirstResponder];
     }
     NSDictionary *aFood = [self.foodArray objectAtIndex:index.row];
-    NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
-    NSArray *standardArray = [self.foodStandardDict objectForKey:NDB_No];
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSArray *standardArray = [rf formatFoodStandardContentForFood:aFood];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZFoodInfoViewController *foodInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodInfoViewController"];

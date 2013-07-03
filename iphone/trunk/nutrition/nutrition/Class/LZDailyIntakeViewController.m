@@ -18,7 +18,7 @@
 @end
 
 @implementation LZDailyIntakeViewController
-@synthesize foodIntakeDictionary,foodArray,currentFoodInputTextField,titleString,foodStandardDict;
+@synthesize foodIntakeDictionary,foodArray,currentFoodInputTextField,titleString;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -49,8 +49,6 @@
 //    
 //    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
 //    self.navigationItem.leftBarButtonItem = customBarItem;
-    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    self.foodStandardDict = [[rf formatFoodsStandardContentForUI] objectForKey:@"foodStandardNutrientsDataDict"];
 
     //self.navItem.leftBarButtonItem= customBarItem;
     //[self.admobView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
@@ -398,8 +396,8 @@
         [self.currentFoodInputTextField resignFirstResponder];
     }
     NSDictionary *aFood = [self.foodArray objectAtIndex:index.row];
-    NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
-    NSArray *standardArray = [self.foodStandardDict objectForKey:NDB_No];
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSArray *standardArray = [rf formatFoodStandardContentForFood:aFood];
     
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZFoodInfoViewController *foodInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodInfoViewController"];

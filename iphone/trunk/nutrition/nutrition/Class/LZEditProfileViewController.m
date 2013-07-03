@@ -286,15 +286,15 @@
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         if (tag == 200)
         {
-            [self.mainScrollView setContentOffset:CGPointMake(0, 50) animated:YES];
+            [self.mainScrollView setContentOffset:CGPointMake(0, 55) animated:YES];
         }
         else if (tag == 201)
         {
-            [self.mainScrollView setContentOffset:CGPointMake(0, 100) animated:YES];
+            [self.mainScrollView setContentOffset:CGPointMake(0, 105) animated:YES];
         }
         else if (tag == 202)
         {
-            [self.mainScrollView setContentOffset:CGPointMake(0, 150) animated:YES];
+            [self.mainScrollView setContentOffset:CGPointMake(0, 155) animated:YES];
         }
 
     });

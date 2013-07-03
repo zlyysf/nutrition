@@ -1997,7 +1997,29 @@
 }
 
 //-----------------------------------------
-
+-(NSMutableArray*)formatFoodStandardContentForFood:(NSDictionary *)foodInfo
+{
+    NSMutableArray *resultArray = [[NSMutableArray alloc]init];
+    NSArray *customNutrients = [self.class getCustomNutrients];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
+    for(NSString *nutrientId in customNutrients)
+    {
+        NSNumber *nm_foodNutrientContent = foodInfo[nutrientId];
+        NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
+        NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
+        NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
+        
+        NSDictionary *foodStandardNutrientInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                  nutrientId,COLUMN_NAME_NutrientID,
+                                                  nm_foodNutrientContent,Key_foodNutrientContent,
+                                                  nutrientCnCaption,Key_Name,
+                                                  nutrientNutrientEnUnit,Key_Unit,
+                                                  nil];
+        [resultArray addObject:foodStandardNutrientInfo];
+    }
+    return resultArray;
+}
 
 -(NSMutableDictionary*)formatFoodsStandardContentForUI
 {

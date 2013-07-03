@@ -16,7 +16,6 @@
 //@property (strong, nonatomic)NSMutableArray *foodTypeArray;
 //@property (strong, nonatomic)NSArray *allFood;
 @property (strong,nonatomic)NSString *titleString;
-@property (strong,nonatomic)NSDictionary *foodStandardDict;
 //@property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
 @property (strong, nonatomic) IBOutlet UIView *admobView;
 @property (assign, nonatomic)UITextField *currentFoodInputTextField;
