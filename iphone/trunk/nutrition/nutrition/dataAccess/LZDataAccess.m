@@ -453,6 +453,8 @@
 }
 
 
+
+
 -(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int)activityLevel considerLoss:(BOOL)needConsiderLoss
 {
     NSDictionary *part1 = [self getStandardDRIForSex:sex age:age weight:weight height:height activityLevel:activityLevel];
@@ -488,6 +490,59 @@
     
     NSLog(@"getStandardDRIs ret:\n%@",ret);
     return ret;
+}
+
+-(NSDictionary*)getStandardDRIs_withUserInfo:(NSDictionary*)userInfo andOptions:(NSDictionary*)options
+{
+    NSNumber *nmSex = [userInfo objectForKey:ParamKey_sex];
+    NSNumber *nmAge = [userInfo objectForKey:ParamKey_age];
+    NSNumber *nmWeight = [userInfo objectForKey:ParamKey_weight];
+    NSNumber *nmHeight = [userInfo objectForKey:ParamKey_height];
+    NSNumber *nmActivityLevel = [userInfo objectForKey:ParamKey_activityLevel];
+    assert(nmSex != nil);
+    assert(nmAge != nil);
+    assert(nmWeight != nil);
+    assert(nmHeight != nil);
+    assert(nmActivityLevel != nil);
+    int sex = [nmSex intValue];
+    int age = [nmAge intValue];
+    float weight = [nmWeight floatValue];
+    float height = [nmHeight floatValue];
+    int activityLevel = [nmActivityLevel intValue];
+    
+    BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
+    if(options != nil){
+        NSNumber *nmFlag_needConsiderNutrientLoss = [options objectForKey:LZSettingKey_needConsiderNutrientLoss];
+        if (nmFlag_needConsiderNutrientLoss != nil)
+            needConsiderNutrientLoss = [nmFlag_needConsiderNutrientLoss boolValue];
+    }
+    return [self getStandardDRIs:sex age:age weight:weight height:height activityLevel:activityLevel considerLoss:needConsiderNutrientLoss];
+}
+-(NSDictionary*)getStandardDRIULs_withUserInfo:(NSDictionary*)userInfo andOptions:(NSDictionary*)options
+{
+    NSNumber *nmSex = [userInfo objectForKey:ParamKey_sex];
+    NSNumber *nmAge = [userInfo objectForKey:ParamKey_age];
+    NSNumber *nmWeight = [userInfo objectForKey:ParamKey_weight];
+    NSNumber *nmHeight = [userInfo objectForKey:ParamKey_height];
+    NSNumber *nmActivityLevel = [userInfo objectForKey:ParamKey_activityLevel];
+    assert(nmSex != nil);
+    assert(nmAge != nil);
+    assert(nmWeight != nil);
+    assert(nmHeight != nil);
+    assert(nmActivityLevel != nil);
+    int sex = [nmSex intValue];
+    int age = [nmAge intValue];
+    float weight = [nmWeight floatValue];
+    float height = [nmHeight floatValue];
+    int activityLevel = [nmActivityLevel intValue];
+    
+    BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
+    if(options != nil){
+        NSNumber *nmFlag_needConsiderNutrientLoss = [options objectForKey:LZSettingKey_needConsiderNutrientLoss];
+        if (nmFlag_needConsiderNutrientLoss != nil)
+            needConsiderNutrientLoss = [nmFlag_needConsiderNutrientLoss boolValue];
+    }
+    return [self getStandardDRIULs:sex age:age weight:weight height:height activityLevel:activityLevel considerLoss:needConsiderNutrientLoss];
 }
 
 -(NSDictionary*)getAbstractPersonDRIsWithConsiderLoss : (BOOL)needConsiderLoss
@@ -699,48 +754,74 @@
  */
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN
 {
-    return [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:nil andExcludeFoodClass:nil andTopN:topN];
+    return [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:nil andTopN:topN];
 }
 
 /*
  取富含某种营养素的前n个食物的清单
  注意food的class是一个树结构
  */
--(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andTopN:(int)topN
+-(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds andTopN:(int)topN
 {
+    NSLog(@"getRichNutritionFood enter");
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath, \n"];
-    [sqlStr appendString:@"D.["];
+    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath, "];
+    [sqlStr appendString:@"\n D.["];
     [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"] AS RichLevel \n"];
+    [sqlStr appendString:@"] AS RichLevel "];
     
-    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
-    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
-    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
-    [sqlStr appendString:@" WHERE "];
-    [sqlStr appendString:@"D.["];
+    [sqlStr appendString:@"\n  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
+    [sqlStr appendString:@"\n    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
+    [sqlStr appendString:@"\n    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
+    [sqlStr appendString:@"\n  WHERE "];
+    [sqlStr appendString:@"\n    D.["];
     [sqlStr appendString:nutrientAsColumnName];
     [sqlStr appendString:@"]"];
     [sqlStr appendString:@">0"];
     
-    [sqlStr appendString:@" AND D.["];
+    [sqlStr appendString:@"\n AND D.["];
     [sqlStr appendString:nutrientAsColumnName];
     [sqlStr appendString:@"]"];
     [sqlStr appendString:@"<1000 "];
     
     if(includeFoodClass.length > 0){
-        [sqlStr appendString:@"\n AND "];
+        [sqlStr appendString:@"\n    AND "];
         [sqlStr appendString:COLUMN_NAME_classify];
         [sqlStr appendString:@" LIKE '"];
         [sqlStr appendString:includeFoodClass];
         [sqlStr appendString:@"%' "];
     }
     if(excludeFoodClass.length > 0){
-        [sqlStr appendString:@"\n AND NOT "];
+        [sqlStr appendString:@"\n    AND NOT "];
         [sqlStr appendString:COLUMN_NAME_classify];
         [sqlStr appendString:@" LIKE '"];
         [sqlStr appendString:excludeFoodClass];
         [sqlStr appendString:@"%' "];
+    }
+    
+    NSMutableArray *allFoodIds = [NSMutableArray array];
+    if(includeFoodIds.count > 0){
+        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
+        for(int i=0; i<includeFoodIds.count; i++){
+            [placeholderAry addObject:@"?"];
+        }
+        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+
+        [sqlStr appendString:@"\n    AND F.NDB_No in ("];
+        [sqlStr appendString:placeholdersStr];
+        [sqlStr appendString:@") "];
+        [allFoodIds addObjectsFromArray:includeFoodIds];
+    }
+    if(excludeFoodIds.count > 0){
+        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:excludeFoodIds.count];
+        for(int i=0; i<excludeFoodIds.count; i++){
+            [placeholderAry addObject:@"?"];
+        }
+        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+        [sqlStr appendString:@"\n    AND NOT F.NDB_No in ("];
+        [sqlStr appendString:placeholdersStr];
+        [sqlStr appendString:@") "];
+        [allFoodIds addObjectsFromArray:excludeFoodIds];
     }
     
     [sqlStr appendString:@"\n ORDER BY "];
@@ -755,16 +836,17 @@
     
     NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
     
-    FMResultSet *rs = [dbfm executeQuery:sqlStr];
+//    FMResultSet *rs = [dbfm executeQuery:sqlStr];
+    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
     NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-    assert(dataAry.count > 0);
+
     NSLog(@"getRichNutritionFood ret:\n%@",dataAry);
     return dataAry;
 }
 
--(NSDictionary *) getOneRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andGetStrategy:(NSString*)getStrategy
+-(NSDictionary *) getOneRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass  andIncludeFoodIds:(NSArray*)includeFoodIds andExcludeFoodIds:(NSArray*)excludeFoodIds andGetStrategy:(NSString*)getStrategy
 {
-    NSArray * foodAry = [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:includeFoodClass andExcludeFoodClass:excludeFoodClass andTopN:0];
+    NSArray * foodAry = [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:includeFoodClass andExcludeFoodClass:excludeFoodClass andIncludeFoodIds:includeFoodIds andExcludeFoodIds:excludeFoodIds andTopN:0];
     if (foodAry.count == 0)
         return nil;
     if( [Strategy_random isEqualToString:getStrategy] && (foodAry.count > 1) ){
@@ -775,7 +857,57 @@
     }
 }
 
--(NSArray *) getFoodsByFilters_withIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds
+
+-(NSArray *) getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds
+{
+    NSLog(@"getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient enter");
+    if (givenFoodIds.count == 0)
+        return nil;
+
+//    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+//    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath \n"];
+//    [sqlStr appendString:@" ,D.["];
+//    [sqlStr appendString:nutrientAsColumnName];
+//    [sqlStr appendString:@"] AS RichLevel \n"];
+//    
+//    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
+//    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
+//    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
+//    
+//    [sqlStr appendString:@" WHERE "];
+//    [sqlStr appendString:@"D.["];
+//    [sqlStr appendString:nutrientAsColumnName];
+//    [sqlStr appendString:@"]"];
+//    [sqlStr appendString:@">0"];
+//    
+//    [sqlStr appendString:@" AND D.["];
+//    [sqlStr appendString:nutrientAsColumnName];
+//    [sqlStr appendString:@"]"];
+//    [sqlStr appendString:@"<1000 \n"];
+//    
+//    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:givenFoodIds.count];
+//    for(int i=0; i<givenFoodIds.count; i++){
+//        [placeholderAry addObject:@"?"];
+//    }
+//    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//    [sqlStr appendString:@" AND F.NDB_No in ("];
+//    [sqlStr appendString:placeholdersStr];
+//    [sqlStr appendString:@") \n"];
+//    
+//    NSLog(@"getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient sqlStr=%@",sqlStr);
+//    
+//    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:givenFoodIds];
+//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    NSLog(@"getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient ret:\n%@",dataAry);
+//    if (dataAry.count == 0)
+//        return nil;
+//    else
+//        return dataAry;
+    return [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:givenFoodIds andExcludeFoodIds:nil andTopN:0];
+}
+
+
+-(NSArray *) getFoodsByFilters_withIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andEqualClass:(NSString*)equalClass andIncludeFoodIds:(NSArray*)includeFoodIds andExcludeFoodIds:(NSArray*)excludeFoodIds
 {
 //    if (includeFoodClass == nil && excludeFoodClass == nil)
 //        return nil;
@@ -784,35 +916,48 @@
     [sqlStr appendString:@"  FROM FoodNutritionCustom F \n"];
     [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
     [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
-    [sqlStr appendString:@" WHERE "];
     
+    NSMutableString *sqlStrWherePart = [NSMutableString stringWithCapacity:1000*1];
     bool firstConditionAdded = false;
-    
     if(includeFoodClass.length > 0){
-        [sqlStr appendString:@"\n "];
+        [sqlStrWherePart appendString:@"\n "];
         if (firstConditionAdded){
-            [sqlStr appendString:@" AND "];
+            [sqlStrWherePart appendString:@" AND "];
         }else{
             firstConditionAdded = true;
         }
-        [sqlStr appendString:COLUMN_NAME_classify];
-        [sqlStr appendString:@" LIKE '"];
-        [sqlStr appendString:includeFoodClass];
-        [sqlStr appendString:@"%' "];
+        [sqlStrWherePart appendString:COLUMN_NAME_classify];
+        [sqlStrWherePart appendString:@" LIKE '"];
+        [sqlStrWherePart appendString:includeFoodClass];
+        [sqlStrWherePart appendString:@"%' "];
     }
     if(excludeFoodClass.length > 0){
-        [sqlStr appendString:@"\n "];
+        [sqlStrWherePart appendString:@"\n "];
         if (firstConditionAdded){
-            [sqlStr appendString:@" AND "];
+            [sqlStrWherePart appendString:@" AND "];
         }else{
             firstConditionAdded = true;
         }
-        [sqlStr appendString:@" NOT "];
-        [sqlStr appendString:COLUMN_NAME_classify];
-        [sqlStr appendString:@" LIKE '"];
-        [sqlStr appendString:excludeFoodClass];
-        [sqlStr appendString:@"%' "];
+        [sqlStrWherePart appendString:@" NOT "];
+        [sqlStrWherePart appendString:COLUMN_NAME_classify];
+        [sqlStrWherePart appendString:@" LIKE '"];
+        [sqlStrWherePart appendString:excludeFoodClass];
+        [sqlStrWherePart appendString:@"%' "];
     }
+    
+    if(equalClass.length > 0){
+        [sqlStrWherePart appendString:@"\n "];
+        if (firstConditionAdded){
+            [sqlStrWherePart appendString:@" AND "];
+        }else{
+            firstConditionAdded = true;
+        }
+        [sqlStrWherePart appendString:COLUMN_NAME_classify];
+        [sqlStrWherePart appendString:@" ='"];
+        [sqlStrWherePart appendString:equalClass];
+        [sqlStrWherePart appendString:@"' "];
+    }
+    
     NSMutableArray *allFoodIds = [NSMutableArray array];
     if(includeFoodIds.count > 0){
         NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
@@ -820,15 +965,15 @@
             [placeholderAry addObject:@"?"];
         }
         NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-        [sqlStr appendString:@"\n "];
+        [sqlStrWherePart appendString:@"\n "];
         if (firstConditionAdded){
-            [sqlStr appendString:@" AND "];
+            [sqlStrWherePart appendString:@" AND "];
         }else{
             firstConditionAdded = true;
         }
-        [sqlStr appendString:@" F.NDB_No in ("];
-        [sqlStr appendString:placeholdersStr];
-        [sqlStr appendString:@") "];
+        [sqlStrWherePart appendString:@" F.NDB_No in ("];
+        [sqlStrWherePart appendString:placeholdersStr];
+        [sqlStrWherePart appendString:@") "];
         [allFoodIds addObjectsFromArray:includeFoodIds];
     }
     if(excludeFoodIds.count > 0){
@@ -837,16 +982,20 @@
             [placeholderAry addObject:@"?"];
         }
         NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-        [sqlStr appendString:@"\n "];
+        [sqlStrWherePart appendString:@"\n "];
         if (firstConditionAdded){
-            [sqlStr appendString:@" AND "];
+            [sqlStrWherePart appendString:@" AND "];
         }else{
             firstConditionAdded = true;
         }
-        [sqlStr appendString:@" NOT F.NDB_No in ("];
-        [sqlStr appendString:placeholdersStr];
-        [sqlStr appendString:@") "];
+        [sqlStrWherePart appendString:@" NOT F.NDB_No in ("];
+        [sqlStrWherePart appendString:placeholdersStr];
+        [sqlStrWherePart appendString:@") "];
         [allFoodIds addObjectsFromArray:excludeFoodIds];
+    }
+    if (sqlStrWherePart.length > 0){
+        [sqlStr appendString:@" WHERE "];
+        [sqlStr appendString:sqlStrWherePart];
     }
 
     NSLog(@"getFoodsByFilters_withIncludeFoodClass sqlStr=%@",sqlStr);
@@ -856,9 +1005,9 @@
     NSLog(@"getFoodsByFilters_withIncludeFoodClass ret:\n%@",dataAry);
     return dataAry;
 }
--(NSDictionary *) getOneFoodByFilters_withIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds
+-(NSDictionary *) getOneFoodByFilters_withIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andEqualClass:(NSString*)equalClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds
 {
-    NSArray* foods = [self getFoodsByFilters_withIncludeFoodClass:includeFoodClass andExcludeFoodClass:excludeFoodClass andIncludeFoodIds:includeFoodIds andExcludeFoodIds:excludeFoodIds];
+    NSArray* foods = [self getFoodsByFilters_withIncludeFoodClass:includeFoodClass andExcludeFoodClass:excludeFoodClass andEqualClass:equalClass andIncludeFoodIds:includeFoodIds andExcludeFoodIds:excludeFoodIds];
     if(foods.count==0)
         return nil;
     if(foods.count==1)
@@ -866,51 +1015,15 @@
     int idx = random() % foods.count;
     return foods[idx];
 }
-
--(NSArray *) getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds
+-(NSDictionary *) getOneFoodByFilters_withIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds
 {
-    if (givenFoodIds.count == 0)
+    NSArray* foods = [self getFoodsByFilters_withIncludeFoodClass:includeFoodClass andExcludeFoodClass:excludeFoodClass andEqualClass:nil andIncludeFoodIds:includeFoodIds andExcludeFoodIds:excludeFoodIds];
+    if(foods.count==0)
         return nil;
-    
-    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath \n"];
-    [sqlStr appendString:@" ,D.["];
-    [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"] AS RichLevel \n"];
-    
-    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
-    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
-    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
-    
-    [sqlStr appendString:@" WHERE "];
-    [sqlStr appendString:@"D.["];
-    [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"]"];
-    [sqlStr appendString:@">0"];
-    
-    [sqlStr appendString:@" AND D.["];
-    [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"]"];
-    [sqlStr appendString:@"<1000 \n"];
-    
-    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:givenFoodIds.count];
-    for(int i=0; i<givenFoodIds.count; i++){
-        [placeholderAry addObject:@"?"];
-    }
-    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-    [sqlStr appendString:@" AND F.NDB_No in ("];
-    [sqlStr appendString:placeholdersStr];
-    [sqlStr appendString:@") \n"];
-    
-    NSLog(@"getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient sqlStr=%@",sqlStr);
-    
-    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:givenFoodIds];
-    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-    NSLog(@"getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient ret:\n%@",dataAry);
-    if (dataAry.count == 0)
-        return nil;
-    else
-        return dataAry;
+    if(foods.count==1)
+        return foods[0];
+    int idx = random() % foods.count;
+    return foods[idx];
 }
 
 -(bool) existAnyGivenFoodsBeRichOfNutrition:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds
@@ -956,47 +1069,50 @@
 
 -(NSArray *) getAllFood
 {
-    NSString *query = @""
-    "SELECT FNC.*,P.PicPath FROM FoodNutritionCustom FNC LEFT OUTER JOIN FoodPicPath P ON FNC.NDB_No=P.NDB_No"
-    " ORDER BY CnType, NDB_No"
-    ;
-
-    FMResultSet *rs = [dbfm executeQuery:query];
-    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-    assert(dataAry.count > 0);
-//    NSLog(@"getAllFood ret:\n%@",dataAry);
-    return dataAry;
+    NSLog(@"getAllFood begin");
+//    NSString *query = @""
+//    "SELECT FNC.*,P.PicPath FROM FoodNutritionCustom FNC LEFT OUTER JOIN FoodPicPath P ON FNC.NDB_No=P.NDB_No"
+//    " ORDER BY CnType, NDB_No"
+//    ;
+//
+//    FMResultSet *rs = [dbfm executeQuery:query];
+//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    assert(dataAry.count > 0);
+////    NSLog(@"getAllFood ret:\n%@",dataAry);
+//    return dataAry;
+    
+    return [self getFoodsByFilters_withIncludeFoodClass:nil andExcludeFoodClass:nil andEqualClass:nil andIncludeFoodIds:nil andExcludeFoodIds:nil];
 }
 
 
 
 
-/*
- idAry 的元素需要是字符串类型。
- 返回值是array。
- */
--(NSArray *)getFoodByIds:(NSArray *)idAry
-{
-    NSLog(@"getFoodByIds begin");
-    if (idAry==nil || idAry.count ==0)
-        return nil;
-    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:idAry.count];
-    for(int i=0; i<idAry.count; i++){
-        [placeholderAry addObject:@"?"];
-    }
-    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-    
-    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
-    [sqlStr appendString:@"SELECT * FROM FoodNutritionCustom WHERE NDB_No in ("];
-    [sqlStr appendString:placeholdersStr];
-    [sqlStr appendString:@")"];
-    
-    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:idAry];
-    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-    assert(dataAry.count > 0);
-    NSLog(@"getFoodByIds ret:\n%@",dataAry);
-    return dataAry;
-}
+///*
+// idAry 的元素需要是字符串类型。
+// 返回值是array。
+// */
+//-(NSArray *)getFoodByIds:(NSArray *)idAry
+//{
+//    NSLog(@"getFoodByIds begin");
+//    if (idAry==nil || idAry.count ==0)
+//        return nil;
+//    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:idAry.count];
+//    for(int i=0; i<idAry.count; i++){
+//        [placeholderAry addObject:@"?"];
+//    }
+//    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//    
+//    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
+//    [sqlStr appendString:@"SELECT * FROM FoodNutritionCustom WHERE NDB_No in ("];
+//    [sqlStr appendString:placeholdersStr];
+//    [sqlStr appendString:@")"];
+//    
+//    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:idAry];
+//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    assert(dataAry.count > 0);
+//    NSLog(@"getFoodByIds ret:\n%@",dataAry);
+//    return dataAry;
+//}
 
 /*
  idAry 的元素需要是字符串类型。
@@ -1007,26 +1123,27 @@
     NSLog(@"getFoodAttributesByIds begin");
     if (idAry==nil || idAry.count ==0)
         return nil;
-    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:idAry.count];
-    for(int i=0; i<idAry.count; i++){
-        [placeholderAry addObject:@"?"];
-    }
-    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-    
-    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
-    [sqlStr appendString:@"SELECT FNC.*,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath \n"];
-    [sqlStr appendString:@"  FROM FoodNutritionCustom FNC \n"];
-    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON FNC.NDB_No=FL.NDB_No \n"];
-    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON FNC.NDB_No=P.NDB_No \n"];
-    [sqlStr appendString:@"  WHERE FNC.NDB_No in ("];
-    [sqlStr appendString:placeholdersStr];
-    [sqlStr appendString:@")"];
-    NSLog(@"getFoodAttributesByIds sqlStr=%@",sqlStr);
-    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:idAry];
-    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-    assert(dataAry.count > 0);
-    NSLog(@"getFoodAttributesByIds ret:\n%@",dataAry);
-    return dataAry;
+//    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:idAry.count];
+//    for(int i=0; i<idAry.count; i++){
+//        [placeholderAry addObject:@"?"];
+//    }
+//    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//    
+//    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
+//    [sqlStr appendString:@"SELECT FNC.*,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath \n"];
+//    [sqlStr appendString:@"  FROM FoodNutritionCustom FNC \n"];
+//    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON FNC.NDB_No=FL.NDB_No \n"];
+//    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON FNC.NDB_No=P.NDB_No \n"];
+//    [sqlStr appendString:@"  WHERE FNC.NDB_No in ("];
+//    [sqlStr appendString:placeholdersStr];
+//    [sqlStr appendString:@")"];
+//    NSLog(@"getFoodAttributesByIds sqlStr=%@",sqlStr);
+//    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:idAry];
+//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    assert(dataAry.count > 0);
+//    NSLog(@"getFoodAttributesByIds ret:\n%@",dataAry);
+//    return dataAry;
+    return [self getFoodsByFilters_withIncludeFoodClass:nil andExcludeFoodClass:nil andEqualClass:nil andIncludeFoodIds:idAry andExcludeFoodIds:nil];
 }
 
 

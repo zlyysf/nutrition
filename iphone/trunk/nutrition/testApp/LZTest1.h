@@ -15,4 +15,6 @@
 +(void)test3;
 +(void)test4;
 
++(void)testRecommendFoodBySmallIncrement;
+
 @end

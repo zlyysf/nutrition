@@ -10,7 +10,7 @@
 #import "LZDataAccess.h"
 #import "LZRecommendFood.h"
 #import "LZUtility.h"
-
+#import "LZConstants.h"
 
 @implementation LZTest1
 
@@ -73,6 +73,11 @@
     [self.class caseAbstractUserWithRandToReproduce1];
 }
 
++(void)testRecommendFoodBySmallIncrement
+{
+    [self.class caseUser_recSI_preTaken_0];
+}
+
 +(NSString*)getParamsDigestStr_withUserInfo:(NSDictionary *)userInfo andOptions:(NSDictionary *)options andTakenFoodAmountDict:(NSDictionary *)takenFoodAmountDict
 {
     return [self.class getParamsDigestStr_withUserInfo:userInfo andParams:nil andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
@@ -114,33 +119,46 @@
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
     int limitRecommendFoodCount = 2;//0;//4;//只限制显示的
     BOOL needUseFoodLimitTableWhenCal = TRUE;
+    
+    BOOL needConsiderNutrientLoss = FALSE;
+    BOOL needUseLowLimitAsUnit = TRUE;
     assert(options != nil);
     
     NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
-    assert (nmFlag_notAllowSameFood != nil);
-    notAllowSameFood = [nmFlag_notAllowSameFood boolValue];
+    if (nmFlag_notAllowSameFood != nil)
+        notAllowSameFood = [nmFlag_notAllowSameFood boolValue];
         
     NSNumber *nmFlag_randomSelectFood = [options objectForKey:@"randomSelectFood"];
-    assert(nmFlag_randomSelectFood != nil);
-    randomSelectFood = [nmFlag_randomSelectFood boolValue];
+    if(nmFlag_randomSelectFood != nil)
+        randomSelectFood = [nmFlag_randomSelectFood boolValue];
         
     NSNumber *nm_randomRangeSelectFood = [options objectForKey:@"randomRangeSelectFood"];
-    assert(nm_randomRangeSelectFood != nil);
-    randomRangeSelectFood = [nm_randomRangeSelectFood intValue];
+    if(nm_randomRangeSelectFood != nil)
+        randomRangeSelectFood = [nm_randomRangeSelectFood intValue];
         
     NSNumber *nmFlag_needLimitNutrients = [options objectForKey:@"needLimitNutrients"];
-    assert(nmFlag_needLimitNutrients != nil);
-    needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
+    if(nmFlag_needLimitNutrients != nil)
+        needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
     
     NSNumber *nm_limitRecommendFoodCount = [options objectForKey:@"limitRecommendFoodCount"];
-    assert(nm_limitRecommendFoodCount != nil);
-    limitRecommendFoodCount = [nm_limitRecommendFoodCount intValue];
+    if(nm_limitRecommendFoodCount != nil)
+        limitRecommendFoodCount = [nm_limitRecommendFoodCount intValue];
     
     NSNumber *nmFlag_needUseFoodLimitTableWhenCal = [options objectForKey:@"needUseFoodLimitTableWhenCal"];
-    assert(nmFlag_needUseFoodLimitTableWhenCal != nil);
-    needUseFoodLimitTableWhenCal = [nmFlag_needUseFoodLimitTableWhenCal boolValue];
+    if(nmFlag_needUseFoodLimitTableWhenCal != nil)
+        needUseFoodLimitTableWhenCal = [nmFlag_needUseFoodLimitTableWhenCal boolValue];
     
-    [str appendFormat:@"_M%dr%drr%dLn%dLc%dFL%d", notAllowSameFood,randomSelectFood,randomRangeSelectFood,needLimitNutrients,limitRecommendFoodCount, needUseFoodLimitTableWhenCal];
+    NSNumber *nmFlag_needConsiderNutrientLoss = [options objectForKey:@"needConsiderNutrientLoss"];
+    if(nmFlag_needConsiderNutrientLoss != nil)
+        needConsiderNutrientLoss = [nmFlag_needConsiderNutrientLoss boolValue];
+    
+    NSNumber *nmFlag_needUseLowLimitAsUnit = [options objectForKey:@"needUseLowLimitAsUnit"];
+    if(nmFlag_needUseLowLimitAsUnit != nil)
+        needUseLowLimitAsUnit = [nmFlag_needUseLowLimitAsUnit boolValue];
+    
+    [str appendFormat:@"_M%dr%drr%dLn%dLc%dFL%dNL%dLLU%d",
+        notAllowSameFood,randomSelectFood,randomRangeSelectFood,needLimitNutrients,limitRecommendFoodCount, needUseFoodLimitTableWhenCal
+        ,needConsiderNutrientLoss,needUseLowLimitAsUnit];
     
     NSArray *keys = takenFoodAmountDict.allKeys;
     for(int i=0; i<keys.count; i++){
@@ -1621,6 +1639,48 @@
 
 
 
++(void)caseUser_recSI_preTaken_0
+{
+    NSDictionary *takenFoodAmountDict = nil;
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],ParamKey_sex, [NSNumber numberWithInt:age],ParamKey_age,
+                              [NSNumber numberWithFloat:weight],ParamKey_weight, [NSNumber numberWithFloat:height],ParamKey_height,
+                              [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
+
+    BOOL needConsiderNutrientLoss = FALSE;
+//    BOOL needLimitNutrients = FALSE;
+    BOOL needUseLowLimitAsUnit = TRUE;
+    int randSeed = 468952341; //2507026920;
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
+//                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
+                             [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                             [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
+                             nil];
+
+    
+    NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
+    NSString *csvFileName = [NSString stringWithFormat:@"recBySI_%@.csv",paramsDigestStr ];
+    NSString *htmlFileName = [NSString stringWithFormat:@"recBySI_%@.html",paramsDigestStr ];
+    NSLog(@"csvFileName=%@\nhtmlFileName=%@",csvFileName,htmlFileName);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
+    NSLog(@"htmlFilePath=%@",htmlFilePath);
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
+    NSString *strHtml = [rf generateHtml_RecommendFoodBySmallIncrement:retDict];
+    strHtml = [LZUtility getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
+}
 
 
 

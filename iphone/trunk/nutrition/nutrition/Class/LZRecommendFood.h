@@ -39,6 +39,10 @@
 
 -(NSMutableDictionary*)formatFoodsStandardContentForUI;
 
+-(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)takenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSDictionary*)options;
+-(NSArray*) generateData2D_RecommendFoodBySmallIncrement:(NSDictionary*)recmdDict;
+-(NSMutableString*) generateHtml_RecommendFoodBySmallIncrement:(NSDictionary*)recmdDict;
+
 @end
 
 

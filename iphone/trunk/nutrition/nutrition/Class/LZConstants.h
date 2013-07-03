@@ -16,6 +16,8 @@
 #define Config_foodLowerLimit 1 // unit g
 #define Config_foodNormalValue 250 // unit g
 #define Config_nearZero 0.0000001
+#define Config_defaultFoodIncreaseUnit 1
+
 
 #define FoodClassify_gulei @"gulei"
 #define FoodClassify_gandoulei @"gandoulei"
@@ -34,6 +36,7 @@
 
 #define NutrientId_VD @"Vit_D_(µg)"
 #define NutrientId_Magnesium @"Magnesium_(mg)"
+#define NutrientId_Fiber @"Fiber_TD_(g)"
 
 #define kFatFactor 1/9 //means 1g fat contains 9Kcal energy
 #define kCarbFactor 1/4 //means 1g carbohydrt contains 4Kcal energy
@@ -52,7 +55,15 @@
 #define LZSettingKey_limitRecommendFoodCount @"limitRecommendFoodCount" //int
 #define LZSettingKey_notAllowSameFood @"notAllowSameFood" //BOOL
 
+#define LZSettingKey_needConsiderNutrientLoss @"needConsiderNutrientLoss"
+#define LZSettingKey_needUseLowLimitAsUnit @"needUseLowLimitAsUnit"
+#define LZSettingKey_randSeed @"randSeed"
 
+#define ParamKey_sex @"sex"
+#define ParamKey_age @"age"
+#define ParamKey_weight @"weight"
+#define ParamKey_height @"height"
+#define ParamKey_activityLevel @"activityLevel"
 
 
 #define COLUMN_NAME_NDB_No @"NDB_No"
