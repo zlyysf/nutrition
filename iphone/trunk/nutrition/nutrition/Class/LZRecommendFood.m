@@ -3263,7 +3263,7 @@
     //看看每个营养素是否都存在一个富含该成分的食物
     NSMutableDictionary *arrangeParams = [NSMutableDictionary dictionaryWithObjectsAndKeys: foodInfoDict,@"foodInfoDict"
                                           ,nutrientNameAryToCal,@"nutrientNameAryToCal" ,getFoodsLogs,@"Out_getFoodsLogs"
-                                          ,@"getFoods1 RichFor",@"logDesc" ,[NSNumber numberWithBool:TRUE],@"NeedAssertExistRichFood"
+                                          ,@"getFoods1 RichFor",@"logDesc" ,[NSNumber numberWithBool:FALSE],@"NeedAssertExistRichFood"
                                           ,nutrientsWithoutRichFood,@"Out_nutrientsWithoutRichFood"
                                           ,nil];
     richFoodInfoAryDict = [self arrangeFoodsToNutrientRichFoods:arrangeParams];
