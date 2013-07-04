@@ -35,7 +35,6 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.title = @"添加";
-    [[LZDataAccess singleton]getAllFood];
     allFood = [[LZDataAccess singleton]getAllFood];
     NSMutableSet *foodTypeSet = [NSMutableSet set];
     self.foodTypeArray = [[NSMutableArray alloc]init];
