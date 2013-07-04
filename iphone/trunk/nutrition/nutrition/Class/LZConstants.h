@@ -58,6 +58,7 @@
 #define LZSettingKey_needConsiderNutrientLoss @"needConsiderNutrientLoss"
 #define LZSettingKey_needUseLowLimitAsUnit @"needUseLowLimitAsUnit"
 #define LZSettingKey_randSeed @"randSeed"
+#define LZSettingKey_randSeedOut @"randSeedOut"
 
 #define ParamKey_sex @"sex"
 #define ParamKey_age @"age"

@@ -3143,62 +3143,6 @@
 
 
 
-
-/*
- 从不同指定类别中选出一种食物取并集
- 如从现有的绝大部分内部类中选 谷类及制品, 干豆类及制品, 蔬菜类及制品, 水果类及制品, "坚果、种子类",泛肉类除鱼类,乳类及制品,蛋类及制品
- 中各选一个食物出来，并考虑VD、VC，然后取并集(9--10种食物)。
- 然后再对每个普通营养素检查，如果存在有某个营养素的富含食物不在已选取的食物集合中出现的，则补充一种这样的富含食物。
- 这样，可选食物集合与全集相比差别不大。也省去了出现多种同某些小类食物而让人感觉不合理的可能。
- */
-//-(NSDictionary*) getSomeFoodsToSupplyNutrientsCalculated
-//{
-//    
-//    NSArray * foodClassAry = [NSArray arrayWithObjects: FoodClassify_gulei, FoodClassify_gandoulei, FoodClassify_shucai, FoodClassify_shuiguo, FoodClassify_ganguo, FoodClassify_nailei, FoodClassify_danlei, nil];
-//    LZDataAccess *da = [LZDataAccess singleton];
-//    NSMutableDictionary *foodInfoDict = [NSMutableDictionary dictionary];
-//    for(int i=0; i<foodClassAry.count; i++){
-//        NSString *foodClass = foodClassAry[i];
-//        NSDictionary *foodInfo = [da getOneFoodByFilters_withIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:nil];
-//        assert(foodInfo!=nil);
-//        NSString *foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
-//        [foodInfoDict setObject:foodInfo forKey:foodId];
-//    }
-//    NSDictionary *foodInfo = [da getOneFoodByFilters_withIncludeFoodClass:FoodClassify_rou andExcludeFoodClass:FoodClassify_rou_shui_yu andIncludeFoodIds:nil andExcludeFoodIds:nil];
-//    assert(foodInfo!=nil);
-//    NSString *foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
-//    [foodInfoDict setObject:foodInfo forKey:foodId];
-//    
-//    foodInfo = [da getOneRichNutritionFood:NutrientId_VD andIncludeFoodClass:FoodClassify_rou_shui_yu andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:nil andGetStrategy:Strategy_random];
-////    foodInfo = [da getOneRichNutritionFood:NutrientId_VD andIncludeFoodClass:FoodClassify_rou_shui_yu andExcludeFoodClass:nil andGetStrategy:Strategy_random];
-//    assert(foodInfo!=nil);
-//    foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
-//    [foodInfoDict setObject:foodInfo forKey:foodId];
-//    
-//    NSArray * foodIds = foodInfoDict.allKeys;
-//    NSArray* nutrients = [self.class getCustomNutrients];
-//    NSMutableArray *nutrientsWithoutRichFood = [NSMutableArray array];
-//    for(int i=0; i<nutrients.count; i++){
-//        NSString *nutrient = nutrients[i];
-//        //看看每个营养素是否都存在一个富含该成分的食物
-//        if (![da existAnyGivenFoodsBeRichOfNutrition:nutrient andGivenFoodIds:foodIds]){
-//            [nutrientsWithoutRichFood addObject:nutrient];
-//        }
-//    }
-//    if(nutrientsWithoutRichFood.count > 0){
-//        for(int i=0; i<nutrientsWithoutRichFood.count; i++){
-//            NSString *nutrient = nutrientsWithoutRichFood[i];
-//            NSDictionary *foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:nil andGetStrategy:Strategy_random];
-////            NSDictionary *foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:nil andExcludeFoodClass:nil andGetStrategy:Strategy_random];
-//            assert(foodInfo!=nil);
-//            NSString *foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
-//            [foodInfoDict setObject:foodInfo forKey:foodId];
-//        }
-//    }
-//
-//    return foodInfoDict;
-//    
-//}
 /*
  从不同指定类别中选出一种食物取并集
  如从现有的绝大部分内部类中选 谷类及制品, 干豆类及制品, 蔬菜类及制品, 水果类及制品, "坚果、种子类",泛肉类除鱼类,乳类及制品,蛋类及制品
@@ -3420,61 +3364,6 @@
 }
 
 
-
--(NSMutableDictionary*)tmp_formatFoodsInRecommendUI:(NSMutableDictionary *)foodInfoDict
-{
-    NSLog(@"tmp_formatFoodsInRecommendUI enter");
-    
-    NSArray *customNutrients = [self.class getCustomNutrients];
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
-
-    NSMutableDictionary* formatResult = [NSMutableDictionary dictionary];
-    
-    if (foodInfoDict!=nil){
-        NSArray *foodIds = [foodInfoDict allKeys];
-        NSArray *orderedFoodIds = [da getOrderedFoodIds:foodIds];
-        assert(foodIds.count == orderedFoodIds.count);
-        
-        NSMutableArray *foodInfoDictArray = [NSMutableArray array];
-        for(int i=0; i<orderedFoodIds.count; i++){
-            NSString *foodId = orderedFoodIds[i];
-            NSDictionary *foodAttrs = foodInfoDict[foodId];
-            NSNumber *nmFoodAmount = [NSNumber numberWithInt:0];
-            NSString *foodName = foodAttrs[COLUMN_NAME_CnCaption];
-            NSString *foodPicPath = foodAttrs[COLUMN_NAME_PicPath];
-            NSDictionary *foodDataDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                   foodId,COLUMN_NAME_NDB_No,
-                                                   foodName,Key_Name,
-                                                   nmFoodAmount,Key_Amount,
-                                                   foodPicPath, Key_PicturePath,
-                                                   nil];
-            [foodInfoDictArray addObject:foodDataDict];
-        }//for
-        [formatResult setValue:foodInfoDictArray forKey:Key_recommendFoodInfoDictArray];
-    }
-    
-    //推荐后总的供给的营养比例
-    NSMutableArray *nutrientTotalSupplyRateInfoArray = [NSMutableArray array];
-    for(int i=0; i<customNutrients.count; i++){
-        NSString *nutrientId = customNutrients[i];
-
-        NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
-        NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
-        NSDictionary *nutrientTotalSupplyRateInfo= [NSDictionary dictionaryWithObjectsAndKeys:
-                                                    nutrientId,COLUMN_NAME_NutrientID,
-                                                    [NSNumber numberWithDouble:0],Key_nutrientInitialSupplyRate,
-                                                    nutrientCnCaption,Key_Name,
-                                                    nil];
-        [nutrientTotalSupplyRateInfoArray addObject:nutrientTotalSupplyRateInfo];
-    }
-    [formatResult setValue:nutrientTotalSupplyRateInfoArray forKey:Key_nutrientTotalSupplyRateInfoArray];
-    
-        
-    NSLog(@"tmp_formatFoodsInRecommendUI exit, result=%@",formatResult);
-    return formatResult;
-}
-
 /*
  options 里面用到了 needLimitNutrients 的key，现在暂且不用，有错未解决
  
@@ -3488,8 +3377,6 @@
 //            needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
 //    }
     
-    
-    
     //这里列出的营养素有专门而简单的食物补充，通过我们预置的那些食物反而不好补充
     NSArray *nutrientArrayNotCal =[NSArray arrayWithObjects:@"Water_(g)", @"Sodium_(mg)", nil];
     
@@ -3500,7 +3387,6 @@
 //    //    Calcium_(mg) 能补的食物种类虽多，但是量比较大--不过经试验特殊对待并无显著改进
 //    NSMutableArray *nutrientArrayLastCal = [NSMutableArray arrayWithObjects: @"Vit_D_(µg)",@"Choline_Tot_ (mg)",@"Fiber_TD_(g)", @"Carbohydrt_(g)",@"Energ_Kcal", nil];
     
-
     NSArray *limitedNutrientsCanBeCal = [self.class getCustomNutrients];
     
     //这是一个营养素的全集
@@ -3575,7 +3461,7 @@
  need flag Config_needConsiderNutrientLoss for getStandardDRIs_withUserInfo ..
  
  */
--(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)takenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSDictionary*)options
+-(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)takenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSMutableDictionary*)options
 {
 //    BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
 //    if(options != nil){
@@ -3596,7 +3482,7 @@
  need flag LZSettingKey_needLimitNutrients, LZSettingKey_needUseLowLimitAsUnit, LZSettingKey_randSeed
  
  */
--(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)takenFoodAmountDict andDRIdata:(NSDictionary*)DRIdata andOptions:(NSDictionary*)options
+-(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)takenFoodAmountDict andDRIdata:(NSDictionary*)DRIdata andOptions:(NSMutableDictionary*)options
 {
     
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
@@ -3619,6 +3505,8 @@
         NSNumber *nm_randSeed = [options objectForKey:LZSettingKey_randSeed];
         if (nm_randSeed != nil && [nm_randSeed unsignedIntValue] > 0)
             randSeed = [nm_randSeed unsignedIntValue];
+        else
+            [options setObject:[NSNumber numberWithUnsignedInt:randSeed] forKey:LZSettingKey_randSeedOut];
     }
     
     NSLog(@"in recommendFoodBySmallIncrementWithPreIntake, randSeed=%u",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
