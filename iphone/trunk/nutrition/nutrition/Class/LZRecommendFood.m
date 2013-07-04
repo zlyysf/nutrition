@@ -3154,8 +3154,15 @@
  
  返回值是一个总括型的dictionary，各个细项值才是具体的一些返回结果。
  */
--(NSDictionary*) getSomeFoodsToSupplyNutrientsCalculated2_withParams:(NSDictionary*)paramData
+-(NSDictionary*) getSomeFoodsToSupplyNutrientsCalculated2_withParams:(NSDictionary*)paramData andOptions:(NSDictionary*)options
 {
+    BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic;
+    if(options != nil){
+        NSNumber *nmFlag_needUseNormalLimitWhenSmallIncrementLogic = [options objectForKey:LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic];
+        if (nmFlag_needUseNormalLimitWhenSmallIncrementLogic != nil)
+            needUseNormalLimitWhenSmallIncrementLogic = [nmFlag_needUseNormalLimitWhenSmallIncrementLogic boolValue];
+    }
+    
     NSArray *excludeFoodIds = [paramData objectForKey:@"excludeFoodIds"];
     NSArray *nutrientNameAryToCal = [paramData objectForKey:@"nutrientNameAryToCal"];
     NSDictionary* DRIsDict = [paramData objectForKey:@"DRI"];
@@ -3262,12 +3269,12 @@
         richFoodInfoAryDict = [self arrangeFoodsToNutrientRichFoods:arrangeParams];
     }
     
-    //检查富含食物考虑到上限量的限制能否满足DRI
+    //检查富含食物考虑到某种上限量的限制能否满足DRI
     int whileCount = 1;
     while(TRUE){
         NSMutableArray *nutrientsLackFood = [NSMutableArray array];
         //    NSMutableArray *nutrientsLackAmount = [NSMutableArray array];
-        //找出把食物用到上限也没法补充够DRI的营养素
+        //找出把食物用到某种上限也没法补充够DRI的营养素
         for(int i=0; i<nutrientNameAryToCal.count; i++){
             NSString *nutrient = nutrientNameAryToCal[i];
             NSArray *richFoodInfoAry = [richFoodInfoAryDict objectForKey:nutrient];
@@ -3279,8 +3286,13 @@
                 NSDictionary *foodInfo = richFoodInfoAry[j];
                 NSNumber *nmNutrientContent = [foodInfo objectForKey:nutrient];
                 NSNumber *nmFoodUpperLimit = [foodInfo objectForKey:COLUMN_NAME_Upper_Limit];
-                assert(nmFoodUpperLimit!=nil);
-                double dSupply = [nmNutrientContent doubleValue]*[nmFoodUpperLimit doubleValue]/100.0;
+                NSNumber *nmFoodNormalLimit = [foodInfo objectForKey:COLUMN_NAME_normal_value];
+                assert(nmFoodUpperLimit!=nil && nmFoodNormalLimit!=nil);
+                double dFoodLimit = [nmFoodUpperLimit doubleValue];
+                if (needUseNormalLimitWhenSmallIncrementLogic){
+                    dFoodLimit = [nmFoodNormalLimit doubleValue];
+                }
+                double dSupply = [nmNutrientContent doubleValue]*dFoodLimit/100.0;
                 dFoodSupplyNutrientSum += dSupply;
             }//for j
             if (dFoodSupplyNutrientSum < [nmDRI doubleValue]){
@@ -3487,8 +3499,8 @@
     
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
 //    BOOL needUseFoodLimitTableWhenCal = TRUE;
-    
     BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic;
     
     uint randSeed = arc4random();
     
@@ -3501,6 +3513,9 @@
         if (nmFlag_needUseLowLimitAsUnit != nil)
             needUseLowLimitAsUnit = [nmFlag_needUseLowLimitAsUnit boolValue];
 
+        NSNumber *nmFlag_needUseNormalLimitWhenSmallIncrementLogic = [options objectForKey:LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic];
+        if (nmFlag_needUseNormalLimitWhenSmallIncrementLogic != nil)
+            needUseNormalLimitWhenSmallIncrementLogic = [nmFlag_needUseNormalLimitWhenSmallIncrementLogic boolValue];
         
         NSNumber *nm_randSeed = [options objectForKey:LZSettingKey_randSeed];
         if (nm_randSeed != nil && [nm_randSeed unsignedIntValue] > 0)
@@ -3543,7 +3558,7 @@
                                                     nil];
     if (takenFoodAmountDict.count > 0)
         [paramDataForChooseFoods setObject:[takenFoodAmountDict allKeys] forKey:@"excludeFoodIds"];
-    NSDictionary* preChooseFoodsData = [self getSomeFoodsToSupplyNutrientsCalculated2_withParams:paramDataForChooseFoods];
+    NSDictionary* preChooseFoodsData = [self getSomeFoodsToSupplyNutrientsCalculated2_withParams:paramDataForChooseFoods andOptions:options];
     NSDictionary* preChooseFoodInfoDict = [preChooseFoodsData objectForKey:@"foodInfoDict"];
     NSDictionary* preChooseRichFoodInfoAryDict = [preChooseFoodsData objectForKey:@"richFoodInfoAryDict"];
     NSArray* getFoodsLogs = [preChooseFoodsData objectForKey:@"getFoodsLogs"];
@@ -3618,6 +3633,7 @@
     NSMutableArray *nutrientNameAryToUpperLimit = [NSMutableArray array];
     NSMutableArray* foodSupplyNutrientSeqs = [NSMutableArray arrayWithCapacity:100];
     NSMutableArray *alreadyReachUpperLimitFoodIds = [NSMutableArray array];
+    NSMutableArray *alreadyReachNormalLimitFoodIds = [NSMutableArray array];
     //对每个还需补足的营养素进行计算
     while (TRUE) {
         NSString *nutrientNameToCal = nil;
@@ -3712,7 +3728,12 @@
             foundFoodWay = [NSMutableString stringWithString: @"only 1 food for nutrient"];
         }else{//foodsToSupplyOneNutrient.count > 1//富含食物超过一种时，需要选一种合适的
             NSMutableArray *foodIdsToSupplyOneNutrient = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_NDB_No andDictionaryArray:foodsToSupplyOneNutrient];
-            [LZUtility arrayMinusArray_withSrcArray:foodIdsToSupplyOneNutrient andMinusArray:alreadyReachUpperLimitFoodIds];
+            if (needUseNormalLimitWhenSmallIncrementLogic){
+                [LZUtility arrayMinusArray_withSrcArray:foodIdsToSupplyOneNutrient andMinusArray:alreadyReachNormalLimitFoodIds];
+            }else{
+                [LZUtility arrayMinusArray_withSrcArray:foodIdsToSupplyOneNutrient andMinusArray:alreadyReachUpperLimitFoodIds];
+            }
+            
             NSMutableArray *foodIdsNotReachUpperLimit = foodIdsToSupplyOneNutrient;
             assert(foodIdsNotReachUpperLimit.count>0);//否则是前面的计算有误，因为在选食物时考虑了上限的问题
             if (foodIdsNotReachUpperLimit.count==1){
@@ -3827,7 +3848,11 @@
         if (dCurrentToUpperLimit < Config_nearZero){
             [alreadyReachUpperLimitFoodIds addObject:foodIdToSupply];
         }
-        
+        NSNumber *nmNormalLimitOfCurrentRecFood = foodToSupplyOneNutrient[COLUMN_NAME_normal_value];
+        double dCurrentToNormalLimit = [nmNormalLimitOfCurrentRecFood doubleValue]- [nmAmountOfCurrentRecFood doubleValue];
+        if (dCurrentToNormalLimit < Config_nearZero){
+            [alreadyReachNormalLimitFoodIds addObject:foodIdToSupply];
+        }
     
         NSMutableArray *foodSupplyNutrientSeq = [NSMutableArray arrayWithCapacity:5];
         [foodSupplyNutrientSeq addObject:nutrientNameToCal];

@@ -126,11 +126,13 @@
     BOOL needConsiderNutrientLoss = FALSE;
     //    BOOL needLimitNutrients = FALSE;
     BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic;
     int randSeed = 0; 
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
                              //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
                              [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                             [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
                              [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                              nil];
     

@@ -1655,11 +1655,13 @@
     BOOL needConsiderNutrientLoss = FALSE;
 //    BOOL needLimitNutrients = FALSE;
     BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
     int randSeed = 0; //468952341; //2507026920;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
 //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
                              [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                             [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
                              [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                              nil];
 

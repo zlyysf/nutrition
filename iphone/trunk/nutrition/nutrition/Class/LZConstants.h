@@ -17,7 +17,7 @@
 #define Config_foodNormalValue 250 // unit g
 #define Config_nearZero 0.0000001
 #define Config_defaultFoodIncreaseUnit 1
-
+#define Config_needUseNormalLimitWhenSmallIncrementLogic TRUE
 
 #define FoodClassify_gulei @"gulei"
 #define FoodClassify_gandoulei @"gandoulei"
@@ -57,6 +57,7 @@
 
 #define LZSettingKey_needConsiderNutrientLoss @"needConsiderNutrientLoss"
 #define LZSettingKey_needUseLowLimitAsUnit @"needUseLowLimitAsUnit"
+#define LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic @"needUseNormalLimitWhenSmallIncrementLogic"
 #define LZSettingKey_randSeed @"randSeed"
 #define LZSettingKey_randSeedOut @"randSeedOut"
 
