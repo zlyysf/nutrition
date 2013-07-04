@@ -156,6 +156,22 @@
     NSDictionary *levelDes = [[LZUtility getActivityLevelInfo]objectForKey:@"levelDescription"];
     NSString *currentLevel = [levelArray objectAtIndex:tag-100];
     NSString *currentDes = [levelDes objectForKey:currentLevel];
+    CGSize descriptionSize = [currentDes sizeWithFont:[UIFont systemFontOfSize:12]constrainedToSize:CGSizeMake(299, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    NSString *onlineStr = @"1";
+    CGSize onlineSize = [onlineStr sizeWithFont:[UIFont systemFontOfSize:12]constrainedToSize:CGSizeMake(299, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    float onelineHeight = onlineSize.height;
+    float desHeight = descriptionSize.height;
+    if (desHeight > onelineHeight)
+    {
+        self.levelDescriptionLabel.textAlignment = UITextAlignmentLeft;
+    }
+    else
+    {
+        self.levelDescriptionLabel.textAlignment = UITextAlignmentCenter;
+    }
+    CGRect labelFrame = self.levelDescriptionLabel.frame;
+    labelFrame.size.height = descriptionSize.height;
+    self.levelDescriptionLabel.frame = labelFrame;
     self.levelDescriptionLabel.text = currentDes;
     
     switch (tag)
