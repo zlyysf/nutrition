@@ -368,17 +368,15 @@
 
 + (NSDictionary *)getActivityLevelInfo
 {
-    NSArray *levelArray = [[NSArray alloc]initWithObjects:@"静",@"低",@"中",@"高", nil];
-    NSDictionary *levelDescription = [[NSDictionary alloc]initWithObjectsAndKeys:@"每天的活动只限于一些家务活。",@"静",
-                                                                                 @"大概30分钟的适度锻炼，比如以每小时6公里快走。",@"低",  
-                                                                                 @"60分钟每小时6公里的快走或慢跑，或者30分钟每小时9公里的中速跑。",@"中",
-                                                                                 @"45到60分钟的剧烈运动。",@"高",nil];
+    NSArray *levelArray = [[NSArray alloc]initWithObjects:@"轻",@"中等",@"强",@"很强", nil];
+    NSDictionary *levelDescription = [[NSDictionary alloc]initWithObjectsAndKeys:@"每日仅做一些轻度运动，如散步，购物，做家务等。",@"轻",
+                                                                                 @"每日做大概30分钟中等运动，如快速步行，平地骑车，跳交谊舞等。",@"中等",  
+                                                                                 @"每日做大概60分钟中等运动；或30分钟的强度运动，如中速跑步，爬山，打羽毛球等。",@"强",
+                                                                                 @"每日做大概45~60分钟的剧烈运动，如快跑，游泳，打篮球等。",@"很强",nil];
     NSDictionary *activityDict = [[NSDictionary alloc]initWithObjectsAndKeys:levelArray,@"levelArray",levelDescription,@"levelDescription" ,nil];
     return activityDict;
     
 }
-
-
 @end
 
 
