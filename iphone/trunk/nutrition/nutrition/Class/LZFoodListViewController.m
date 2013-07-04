@@ -79,15 +79,31 @@
 {
     NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
 
-    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            planPerson,@"personCount",
-                            planDays,@"dayCount", nil];
+//    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+//    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+//    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+//                            planPerson,@"personCount",
+//                            planDays,@"dayCount", nil];
     
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+    NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+    NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+    NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+    NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              userSex,ParamKey_sex, userAge,ParamKey_age,
+                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                              userActivityLevel,ParamKey_activityLevel, nil];
+    
+    BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
+    NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss, nil];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+    
+    //    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_withUserInfo:userInfo andDecidedFoods:takenFoodAmountDict andOptions:options];
+
     NSMutableDictionary *retFmtDict = [rf formatTakenResultForUI:retDict];
     //NSLog(@"retFmtDict %@",retFmtDict);
     NSArray *takenArray = [retFmtDict objectForKey:Key_takenFoodInfoDictArray];
@@ -297,15 +313,33 @@
     {
         NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
         
-        NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-        NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                                planPerson,@"personCount",
-                                planDays,@"dayCount", nil];
+//        NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+//        NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+        NSNumber *planPerson = [NSNumber numberWithInt:1];
+        NSNumber *planDays = [NSNumber numberWithInt:1];
+//        NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                planPerson,@"personCount",
+//                                planDays,@"dayCount", nil];
         
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+        NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+        NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+        NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+        NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  userSex,ParamKey_sex, userAge,ParamKey_age,
+                                  userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                                  userActivityLevel,ParamKey_activityLevel, nil];
+        
+        BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
+        NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss, nil];
         
         LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-        NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+        
+        //    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+        NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_withUserInfo:userInfo andDecidedFoods:takenFoodAmountDict andOptions:options];
+
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
         NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
         NSString *nutrientName = [nutrient objectForKey:@"Name"];
@@ -423,15 +457,33 @@
     int tag = [tagNum intValue];
     NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
     
-    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            planPerson,@"personCount",
-                            planDays,@"dayCount", nil];
+//    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+//    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+//    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+//                            planPerson,@"personCount",
+//                            planDays,@"dayCount", nil];
+    NSNumber *planPerson = [NSNumber numberWithInt:1];
+    NSNumber *planDays = [NSNumber numberWithInt:1];
     
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+    NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+    NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+    NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+    NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              userSex,ParamKey_sex, userAge,ParamKey_age,
+                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                              userActivityLevel,ParamKey_activityLevel, nil];
+    
+    BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
+    NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss, nil];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+    
+//    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_withUserInfo:userInfo andDecidedFoods:takenFoodAmountDict andOptions:options];
     NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:tag];
     NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
     NSString *nutrientName = [nutrient objectForKey:@"Name"];

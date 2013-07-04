@@ -1918,6 +1918,18 @@
     return retDict;
     
 }
+-(NSMutableDictionary *) takenFoodSupplyNutrients_withUserInfo:(NSDictionary*)userInfo andDecidedFoods:(NSDictionary*)decidedFoodAmountDict andOptions:(NSDictionary*)options
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:options];
+    NSDictionary *params2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithUnsignedInt:1],@"personDayCount",
+                             nil];
+    NSMutableDictionary *retDict = [self takenFoodSupplyNutrients:decidedFoodAmountDict andDRIs:DRIsDict andParams:params2];
+    return retDict;
+    
+}
+
 -(NSMutableDictionary *) takenFoodSupplyNutrients:(NSDictionary*)takenFoodAmountDict andDRIs:(NSDictionary*)DRIsDict andParams:(NSDictionary*)params
 {
 //    if (takenFoodAmountDict == nil || takenFoodAmountDict.count == 0)
@@ -2294,6 +2306,20 @@
                                               nil];
         [nutrientTakenRateInfoArray addObject:nutrientTakenRateInfo];
     }
+    if(TRUE){
+        [nutrientTakenRateInfoArray sortUsingComparator:(NSComparator)^(NSDictionary *nutrientTakenRateInfo1, NSDictionary *nutrientTakenRateInfo2) {
+            NSNumber *nmSupplyRate1 = nutrientTakenRateInfo1[Key_nutrientInitialSupplyRate];
+            NSNumber *nmSupplyRate2 = nutrientTakenRateInfo2[Key_nutrientInitialSupplyRate];
+            if ( [nmSupplyRate1 doubleValue] == [nmSupplyRate2 doubleValue]){
+                return NSOrderedSame;
+            }else if ( [nmSupplyRate1 doubleValue] < [nmSupplyRate2 doubleValue]){
+                return NSOrderedDescending; //NSOrderedAscending;
+            }else{
+                return NSOrderedAscending;  //NSOrderedDescending;
+            }
+        } ];
+    }
+
     [formatResult setValue:nutrientTakenRateInfoArray forKey:Key_nutrientTakenRateInfoArray];
     
     //已经决定了的食物的每个食物的供给营养素的情况
@@ -2315,8 +2341,6 @@
                 double food1Supply1NutrientAmount = [nm_foodNutrientContent doubleValue]/100.0*[nmFoodAmount doubleValue];
                 double nutrientTotalDRI = [nm_DRI1unit doubleValue]*personDayCount;
                 double supplyRate = food1Supply1NutrientAmount / nutrientTotalDRI;
-//                if (supplyRate>1.0)
-//                    supplyRate = 1.0;
                 NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
                 NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
                 NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
@@ -2331,6 +2355,8 @@
                                                          nil];
                 [food1supplyNutrientArray addObject:food1Supply1NutrientInfo];
             }//for j
+            
+                        
             takenFoodSupplyNutrientInfoAryDict[foodId] = food1supplyNutrientArray;
         }//for i
         

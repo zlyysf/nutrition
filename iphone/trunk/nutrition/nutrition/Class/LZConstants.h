@@ -11,7 +11,7 @@
 
 #define KeyIsEnvironmentDebug 1
 
-#define Config_needConsiderNutrientLoss TRUE
+#define Config_needConsiderNutrientLoss FALSE
 #define Config_foodUpperLimit 1000 // unit g
 #define Config_foodLowerLimit 1 // unit g
 #define Config_foodNormalValue 250 // unit g
