@@ -112,47 +112,38 @@
     [self.shareItem setEnabled:NO];
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *dailyIntake = [userDefaults objectForKey:LZUserDailyIntakeKey];
-    
-    BOOL notAllowSameFood = TRUE;//这是一个策略标志位，偏好食物的多样化的标志位，即当选取食物补充营养时，优先选取以前没有用过的食物。
-    BOOL randomSelectFood = TRUE;
-    int randomRangeSelectFood = 40;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
-    BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
 
+    NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+    NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+    NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+    NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+    NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              userSex,ParamKey_sex, userAge,ParamKey_age,
+                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                              userActivityLevel,ParamKey_activityLevel, nil];
     
-    if ( [userDefaults objectForKey:LZSettingKey_randomSelectFood]!=nil ){
-        randomSelectFood = [userDefaults boolForKey:LZSettingKey_randomSelectFood];
-    }
-    if ( [userDefaults objectForKey:LZSettingKey_randomRangeSelectFood]!=nil ){
-        randomRangeSelectFood = [userDefaults integerForKey:LZSettingKey_randomRangeSelectFood];
-    }
-    if ( [userDefaults objectForKey:LZSettingKey_needLimitNutrients]!=nil ){
-        needLimitNutrients = [userDefaults boolForKey:LZSettingKey_needLimitNutrients];
-    }
-    if ( [userDefaults objectForKey:LZSettingKey_notAllowSameFood]!=nil ){
-        notAllowSameFood = [userDefaults boolForKey:LZSettingKey_notAllowSameFood];
-    }
-//    if ( [userDefaults objectForKey:LZSettingKey_limitRecommendFoodCount]!=nil ){
-//        limitRecommendFoodCount = [userDefaults integerForKey:LZSettingKey_limitRecommendFoodCount];
-//    }
-    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-                            planPerson,@"personCount",
-                            planDays,@"dayCount", nil];
+    BOOL needConsiderNutrientLoss = FALSE;
+    //    BOOL needLimitNutrients = FALSE;
+    BOOL needUseLowLimitAsUnit = TRUE;
+    int randSeed = 0; 
+    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
+                             [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
+                             //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
+                             [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                             [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
+                             nil];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
-                             [NSNumber numberWithBool:notAllowSameFood],@"notAllowSameFood",
-                             [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
-                             [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
-                             [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
-//                             [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
-                             nil];
 //    //NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
 //    NSMutableDictionary *retDict = [rf recommendFood3_AbstractPerson:params withDecidedFoods:dailyIntake andOptions:options];
 //    NSMutableDictionary *uiDictionary = [rf formatRecommendResultForUI:retDict];
-    NSMutableDictionary *foodInfoDict =[rf getSomeFoodsToSupplyNutrientsCalculated];
-    NSMutableDictionary *uiDictionary =[rf tmp_formatFoodsInRecommendUI:foodInfoDict];
+    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
+    NSMutableDictionary *uiDictionary = [rf formatRecommendResultBySmallIncrementForUI:retDict];
+
+//    NSMutableDictionary *foodInfoDict =[rf getSomeFoodsToSupplyNutrientsCalculated];
+//    NSMutableDictionary *uiDictionary =[rf tmp_formatFoodsInRecommendUI:foodInfoDict];
+    
     
     //NSLog(@"uiDictionary %@",[uiDictionary allKeys]);
     NSArray *recommendArray = [uiDictionary objectForKey:Key_recommendFoodInfoDictArray];

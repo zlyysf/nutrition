@@ -34,8 +34,8 @@
 -(NSMutableDictionary*)formatRecommendResultForUI:(NSMutableDictionary *)recommendResult;
 -(NSMutableDictionary*)formatTakenResultForUI:(NSMutableDictionary *)takenResult;
 
--(NSDictionary*) getSomeFoodsToSupplyNutrientsCalculated;
--(NSMutableDictionary*)tmp_formatFoodsInRecommendUI:(NSMutableDictionary *)foodInfoDict;
+//-(NSDictionary*) getSomeFoodsToSupplyNutrientsCalculated;
+//-(NSMutableDictionary*)tmp_formatFoodsInRecommendUI:(NSMutableDictionary *)foodInfoDict;
 
 -(NSMutableDictionary*)formatFoodsStandardContentForUI;
 
@@ -45,6 +45,8 @@
 -(NSMutableString*) generateHtml_RecommendFoodBySmallIncrement:(NSDictionary*)recmdDict;
 
 -(NSMutableArray*)formatFoodStandardContentForFood:(NSDictionary *)foodInfo;
+
+-(NSMutableDictionary*)formatRecommendResultBySmallIncrementForUI:(NSMutableDictionary *)recommendResult;
 
 @end
 
