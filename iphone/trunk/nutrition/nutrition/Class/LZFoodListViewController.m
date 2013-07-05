@@ -91,6 +91,10 @@
     NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
     NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
     NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+    if (!(userSex && userAge && userHeight && userWeight && userActivityLevel))
+    {
+        return;
+    }
     NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                               userSex,ParamKey_sex, userAge,ParamKey_age,
                               userWeight,ParamKey_weight, userHeight,ParamKey_height,
