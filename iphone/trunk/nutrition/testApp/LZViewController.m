@@ -21,11 +21,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
-//    [LZTest1 test1];
-//    [LZTest1 test2];
-//    [LZTest1 test3];
-//    [LZTest1 test4];
-    [LZTest1 testRecommendFoodBySmallIncrement];
+
 
 }
 
@@ -34,5 +30,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+- (IBAction)btnRunTestPressed:(id)sender {
+    //    [LZTest1 test1];
+    //    [LZTest1 test2];
+    //    [LZTest1 test3];
+    //    [LZTest1 test4];
+    [LZTest1 testRecommendFoodBySmallIncrement];
+}
+
 
 @end
