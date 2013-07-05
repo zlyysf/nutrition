@@ -365,7 +365,7 @@
     {
         if ([recommendFoodArray count]!= 0)
         {
-            NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为您精心推荐:";
+            NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为我精心推荐:";
             for (NSDictionary *aFood in recommendFoodArray)
             {
                 NSString *name = [aFood objectForKey:@"Name"];
@@ -376,7 +376,7 @@
         }
         else
         {
-            NSString *contents = @"我使用 @买菜助手(http://t.cn/zH1gxw5 ) 已经挑选出一组含全面丰富营养的食物搭配，羡慕吧？";
+            NSString *contents = @"我用 @买菜助手(http://t.cn/zH1gxw5 ) 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
             return contents;
         }
     }
@@ -384,18 +384,19 @@
     {
         if ([recommendFoodArray count]!= 0)
         {
-            NSString *contents = @"买菜助手(http://t.cn/zHuwJxz )为您精心推荐:";
+            NSString *contents = @"买菜助手(http://t.cn/zHuwJxz )为我推荐了:";
             for (NSDictionary *aFood in recommendFoodArray)
             {
                 NSString *name = [aFood objectForKey:@"Name"];
                 NSNumber *weight = [aFood objectForKey:@"Amount"];
                 contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
             }
+            contents = [contents stringByAppendingString:@"\n你也来试试吧!"];//:@"\n%@ %dg",name,[weight intValue]];
             return contents;
         }
         else
         {
-            NSString *contents = @"我使用 买菜助手(http://t.cn/zH1gxw5 ) 已经挑选出一组含全面丰富营养的食物搭配，羡慕吧？";
+            NSString *contents = @"我用 买菜助手(http://t.cn/zH1gxw5 ) 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
             return contents;
         }
 
