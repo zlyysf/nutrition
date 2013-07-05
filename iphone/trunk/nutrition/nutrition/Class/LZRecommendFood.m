@@ -3243,7 +3243,7 @@
                                           ,@"getFoods1 RichFor",@"logDesc" ,[NSNumber numberWithBool:FALSE],@"NeedAssertExistRichFood"
                                           ,nutrientsWithoutRichFood,@"Out_nutrientsWithoutRichFood"
                                           ,nil];
-    richFoodInfoAryDict = [self arrangeFoodsToNutrientRichFoods:arrangeParams];
+    richFoodInfoAryDict = [self arrangeFoodsToNutrientRichFoods:arrangeParams withOldRichFoodInfoAryDict:richFoodInfoAryDict];
     
     BOOL needRearrangeRichFood = false;
     if(nutrientsWithoutRichFood.count > 0){
@@ -3266,7 +3266,7 @@
         NSMutableDictionary *arrangeParams = [NSMutableDictionary dictionaryWithObjectsAndKeys: foodInfoDict,@"foodInfoDict"
                                               ,nutrientNameAryToCal,@"nutrientNameAryToCal" ,getFoodsLogs,@"Out_getFoodsLogs"
                                               ,@"getFoods2 RichFor",@"logDesc" ,[NSNumber numberWithBool:TRUE],@"NeedAssertExistRichFood",  nil];
-        richFoodInfoAryDict = [self arrangeFoodsToNutrientRichFoods:arrangeParams];
+        richFoodInfoAryDict = [self arrangeFoodsToNutrientRichFoods:arrangeParams withOldRichFoodInfoAryDict:richFoodInfoAryDict];
     }
     
     //检查富含食物考虑到某种上限量的限制能否满足DRI
@@ -3319,7 +3319,7 @@
             NSMutableDictionary *arrangeParams = [NSMutableDictionary dictionaryWithObjectsAndKeys: foodInfoDict,@"foodInfoDict"
                                                   ,nutrientNameAryToCal,@"nutrientNameAryToCal" ,getFoodsLogs,@"Out_getFoodsLogs"
                                                   ,logDesc,@"logDesc" ,[NSNumber numberWithBool:TRUE],@"NeedAssertExistRichFood",  nil];
-            richFoodInfoAryDict = [self arrangeFoodsToNutrientRichFoods:arrangeParams];
+            richFoodInfoAryDict = [self arrangeFoodsToNutrientRichFoods:arrangeParams withOldRichFoodInfoAryDict:richFoodInfoAryDict];
         }else{
             break;
         }
@@ -3333,7 +3333,7 @@
     return retData;
 }
 
--(NSMutableDictionary*)arrangeFoodsToNutrientRichFoods:(NSDictionary*)paramData
+-(NSMutableDictionary*)arrangeFoodsToNutrientRichFoods:(NSDictionary*)paramData withOldRichFoodInfoAryDict:(NSDictionary*)oldRichFoodInfoAryDict
 {
     NSDictionary* foodInfoDict = [paramData objectForKey:@"foodInfoDict"];
     NSArray *nutrientNameAryToCal = [paramData objectForKey:@"nutrientNameAryToCal"];
@@ -3349,7 +3349,19 @@
     NSArray *incFoodIds = foodInfoDict.allKeys;
     for(int i=0; i<nutrientNameAryToCal.count; i++){
         NSString *nutrient = nutrientNameAryToCal[i];
-        //看看每个营养素是否都存在一个富含该成分的食物
+
+        //暂不对维生素D特殊处理，因为调整了一下鱼的普通上限，试试看
+//        if ([NutrientId_VD isEqualToString:nutrient]){
+//            //对维生素D目前特殊处理，因为在前面专门找了鱼类来补，有某种鱼对应维生素D
+//            if (oldRichFoodInfoAryDict.count > 0){
+//                NSArray *richFoodInfoAry = [oldRichFoodInfoAryDict objectForKey:NutrientId_VD];
+//                assert(richFoodInfoAry.count > 0);
+//                [richFoodInfoAryDict setObject:richFoodInfoAry forKey:nutrient];
+//                continue;
+//            }
+//        }
+        
+        //看看每个普通营养素是否都存在一个富含该成分的食物
         NSArray * richFoodInfoAry = [da getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient:nutrient andGivenFoodIds:incFoodIds];
         if ([nmNeedAssertExistRichFood boolValue]){
             assert(richFoodInfoAry.count>0);
@@ -3371,6 +3383,7 @@
             getFoodsLog = [NSMutableArray arrayWithObjects:logDescNoExist,nutrient, nil];
             [getFoodsLogs addObject:getFoodsLog];
         }
+
     }//for i
     return richFoodInfoAryDict;
 }
