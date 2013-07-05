@@ -221,16 +221,16 @@
         [cell.backView.layer setCornerRadius:3.f];
         [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,200,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
         [cell adjustLabelAccordingToProgress:progress forLabelWidth:200];
-//        [cell.backView setBackgroundColor:[UIColor clearColor]];
-//        if (KeyIsEnvironmentDebug)
-//        {
+        //[cell.backView setBackgroundColor:[UIColor clearColor]];
+        if (KeyIsEnvironmentDebug)
+        {
             cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)([percent floatValue] *100)];
-//        }
-//        else
-//        {
-//            cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(progress *100)];
-//            
-//        }
+        }
+        else
+        {
+            cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(progress *100)];
+            
+        }
         cell.addFoodButton.tag = indexPath.row;
         return cell;
     }
