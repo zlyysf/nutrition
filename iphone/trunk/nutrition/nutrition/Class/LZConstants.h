@@ -9,7 +9,7 @@
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
 
-#define KeyIsEnvironmentDebug 1
+#define KeyIsEnvironmentDebug 0
 
 #define Config_needConsiderNutrientLoss FALSE
 #define Config_foodUpperLimit 1000 // unit g
@@ -37,6 +37,8 @@
 #define NutrientId_VD @"Vit_D_(µg)"
 #define NutrientId_Magnesium @"Magnesium_(mg)"
 #define NutrientId_Fiber @"Fiber_TD_(g)"
+#define NutrientId_Lipid @"Lipid_Tot_(g)"
+#define NutrientId_Protein @"Protein_(g)"
 
 #define kFatFactor 1/9 //means 1g fat contains 9Kcal energy
 #define kCarbFactor 1/4 //means 1g carbohydrt contains 4Kcal energy
