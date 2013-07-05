@@ -127,11 +127,11 @@
         //[cell adjustLabelAccordingToProgress:0.5];
         if(KeyIsEnvironmentDebug)
         {
-            cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%d/%d%@)",(int)([percent floatValue] *100),[food1Supply1NutrientAmount intValue],[nutrientTotalDRI intValue ],unit];
+            cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%.2f/%.2f%@)",(int)([percent floatValue] *100),[food1Supply1NutrientAmount floatValue],[nutrientTotalDRI floatValue ],unit];
         }
         else
         {
-            cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%d/%d%@)",(int)(progress *100),[food1Supply1NutrientAmount intValue],[nutrientTotalDRI intValue ],unit];
+            cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%.2f/%.2f%@)",(int)(progress *100),[food1Supply1NutrientAmount floatValue],[nutrientTotalDRI floatValue ],unit];
         }
 
 
