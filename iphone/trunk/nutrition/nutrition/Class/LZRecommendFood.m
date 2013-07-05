@@ -2316,19 +2316,20 @@
                                               nil];
         [nutrientTakenRateInfoArray addObject:nutrientTakenRateInfo];
     }
-    if(TRUE){
-        [nutrientTakenRateInfoArray sortUsingComparator:(NSComparator)^(NSDictionary *nutrientTakenRateInfo1, NSDictionary *nutrientTakenRateInfo2) {
-            NSNumber *nmSupplyRate1 = nutrientTakenRateInfo1[Key_nutrientInitialSupplyRate];
-            NSNumber *nmSupplyRate2 = nutrientTakenRateInfo2[Key_nutrientInitialSupplyRate];
-            if ( [nmSupplyRate1 doubleValue] == [nmSupplyRate2 doubleValue]){
-                return NSOrderedSame;
-            }else if ( [nmSupplyRate1 doubleValue] < [nmSupplyRate2 doubleValue]){
-                return NSOrderedDescending; //NSOrderedAscending;
-            }else{
-                return NSOrderedAscending;  //NSOrderedDescending;
-            }
-        } ];
-    }
+    //暂且取消这里的排序显示
+//    if(TRUE){
+//        [nutrientTakenRateInfoArray sortUsingComparator:(NSComparator)^(NSDictionary *nutrientTakenRateInfo1, NSDictionary *nutrientTakenRateInfo2) {
+//            NSNumber *nmSupplyRate1 = nutrientTakenRateInfo1[Key_nutrientInitialSupplyRate];
+//            NSNumber *nmSupplyRate2 = nutrientTakenRateInfo2[Key_nutrientInitialSupplyRate];
+//            if ( [nmSupplyRate1 doubleValue] == [nmSupplyRate2 doubleValue]){
+//                return NSOrderedSame;
+//            }else if ( [nmSupplyRate1 doubleValue] < [nmSupplyRate2 doubleValue]){
+//                return NSOrderedDescending; //NSOrderedAscending;
+//            }else{
+//                return NSOrderedAscending;  //NSOrderedDescending;
+//            }
+//        } ];
+//    }
 
     [formatResult setValue:nutrientTakenRateInfoArray forKey:Key_nutrientTakenRateInfoArray];
     
