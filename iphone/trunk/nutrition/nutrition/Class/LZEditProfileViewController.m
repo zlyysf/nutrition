@@ -31,7 +31,7 @@
 	// Do any additional setup after loading the view.
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    [self.mainScrollView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     if (!firstEnterEditView)
     {
         UIBarButtonItem *cancelButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
