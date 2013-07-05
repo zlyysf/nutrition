@@ -125,14 +125,14 @@
         }
         [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
         //[cell adjustLabelAccordingToProgress:0.5];
-        if(KeyIsEnvironmentDebug)
-        {
+//        if(KeyIsEnvironmentDebug)
+//        {
             cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%.2f/%.2f%@)",(int)([percent floatValue] *100),[food1Supply1NutrientAmount floatValue],[nutrientTotalDRI floatValue ],unit];
-        }
-        else
-        {
-            cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%.2f/%.2f%@)",(int)(progress *100),[food1Supply1NutrientAmount floatValue],[nutrientTotalDRI floatValue ],unit];
-        }
+//        }
+//        else
+//        {
+//            cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%.2f/%.2f%@)",(int)(progress *100),[food1Supply1NutrientAmount floatValue],[nutrientTotalDRI floatValue ],unit];
+//        }
 
 
 //        UIView *tempView = [[UIView alloc] init];
