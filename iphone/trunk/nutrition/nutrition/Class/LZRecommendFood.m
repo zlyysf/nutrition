@@ -3769,34 +3769,51 @@
             }else{//foodIdsNotReachUpperLimit.count > 1
                 //从多种富含此营养素的且未超数量上限的食物中选出最合适的一种
                 //优先使用蔬菜水果来补，但是脂肪除外
-                BOOL needFirstUseShucaiShuiguiToSupply = TRUE;
-                BOOL isGoodToFirstUseShucaiShuiguiToSupply = false;
-                BOOL doneToFirstUseShucaiShuiguiToSupply = false;
-                
-                if (needFirstUseShucaiShuiguiToSupply){
-                    NSSet * nutrientsBadToFirstUseShucaiShuiguiToSupply = [NSSet setWithObjects:NutrientId_Lipid, nil];
-                    isGoodToFirstUseShucaiShuiguiToSupply = ! [nutrientsBadToFirstUseShucaiShuiguiToSupply containsObject:nutrientNameToCal];
-                    if (isGoodToFirstUseShucaiShuiguiToSupply){
-                        NSArray *foodIdsOfShucaiShuiguo = [da getFoodIdsByFilters_withIncludeFoodClassAry:[NSArray arrayWithObjects:FoodClassify_shucai,FoodClassify_shuiguo, nil]  andExcludeFoodClassAry:nil andEqualFoodClass:nil andIncludeFoodIds:foodIdsNotReachUpperLimit andExcludeFoodIds:nil];
-                        if (foodIdsOfShucaiShuiguo.count >0){
-                            int idx = 0;
-                            long randval = 0;
-                            if (foodIdsOfShucaiShuiguo.count>1){
-                                randval = random();
-                                idx = randval % foodIdsOfShucaiShuiguo.count;
+                BOOL needPriorityFoodToSpecialNutrient = TRUE;
+                BOOL canUsePriorityFoodToSpecialNutrient = false;
+                BOOL doneUsePriorityFoodToSpecialNutrient = false;//表示是否已经取到食物了
+                //一般以蔬菜水果优先，但脂肪排除在外；另外当是纤维素时，以蔬菜水果豆类优先
+                if (needPriorityFoodToSpecialNutrient){
+                    
+                    NSSet * nutrientsNeedNoPriorityFood = [NSSet setWithObjects:NutrientId_Lipid, nil];//目前脂肪不该用蔬菜水果优先补充
+                    canUsePriorityFoodToSpecialNutrient = ! [nutrientsNeedNoPriorityFood containsObject:nutrientNameToCal];
+                    if (canUsePriorityFoodToSpecialNutrient){
+                        if ([NutrientId_Fiber isEqualToString:nutrientNameToCal]){//当是纤维素时，以蔬菜水果豆类优先
+                            NSArray *foodIdsOfPriority = [da getFoodIdsByFilters_withIncludeFoodClassAry: [NSArray arrayWithObjects:FoodClassify_shuiguo,FoodClassify_gandoulei, nil] andExcludeFoodClassAry:nil andIncludeEqualFoodClassAry:[NSArray arrayWithObjects:FoodClassify_shucai, nil] andIncludeFoodIds:foodIdsNotReachUpperLimit andExcludeFoodIds:nil];
+                            if (foodIdsOfPriority.count >0){
+                                int idx = 0;
+                                long randval = 0;
+                                if (foodIdsOfPriority.count>1){
+                                    randval = random();
+                                    idx = randval % foodIdsOfPriority.count;
+                                }
+                                NSString *foodId = foodIdsOfPriority[idx];
+                                foodToSupplyOneNutrient = [preChooseFoodInfoDict objectForKey:foodId];
+                                assert(foodToSupplyOneNutrient!=nil);
+                                foundFoodWay = [NSMutableString stringWithFormat: @"priorityFoodForFiber,%ld %d %d.",randval,foodIdsOfPriority.count,idx];
+                                doneUsePriorityFoodToSpecialNutrient= true;
                             }
-                            NSString *foodId = foodIdsOfShucaiShuiguo[idx];
-                            foodToSupplyOneNutrient = [preChooseFoodInfoDict objectForKey:foodId];
-                            assert(foodToSupplyOneNutrient!=nil);
-                            foundFoodWay = [NSMutableString stringWithFormat: @"foodShucaiShuiguo,%ld %d %d.",randval,foodIdsOfShucaiShuiguo.count,idx];
-                            doneToFirstUseShucaiShuiguiToSupply= true;
-                        }else{//foodIdsOfShucaiShuiguo.count ==0
-                            doneToFirstUseShucaiShuiguiToSupply = false;
-                        }//else foodIdsOfShucaiShuiguo.count ==0
+                        }else{//一般以蔬菜水果优先补充普通营养素,脂肪已排除在外
+                            NSArray *foodIdsOfShucaiShuiguo = [da getFoodIdsByFilters_withIncludeFoodClassAry:[NSArray arrayWithObjects:FoodClassify_shuiguo, nil] andExcludeFoodClassAry:nil andIncludeEqualFoodClassAry:[NSArray arrayWithObjects:FoodClassify_shucai, nil] andIncludeFoodIds:foodIdsNotReachUpperLimit andExcludeFoodIds:nil];
+                            if (foodIdsOfShucaiShuiguo.count >0){
+                                int idx = 0;
+                                long randval = 0;
+                                if (foodIdsOfShucaiShuiguo.count>1){
+                                    randval = random();
+                                    idx = randval % foodIdsOfShucaiShuiguo.count;
+                                }
+                                NSString *foodId = foodIdsOfShucaiShuiguo[idx];
+                                foodToSupplyOneNutrient = [preChooseFoodInfoDict objectForKey:foodId];
+                                assert(foodToSupplyOneNutrient!=nil);
+                                foundFoodWay = [NSMutableString stringWithFormat: @"priorityShucaiShuiguo,%ld %d %d.",randval,foodIdsOfShucaiShuiguo.count,idx];
+                                doneUsePriorityFoodToSpecialNutrient= true;
+                            }
+                        }
                     }//if (isGoodToFirstUseShucaiShuiguiToSupply)
                 }//if (needFirstUseShucaiShuiguiToSupply)
                 
-                if ( !(needFirstUseShucaiShuiguiToSupply && isGoodToFirstUseShucaiShuiguiToSupply && doneToFirstUseShucaiShuiguiToSupply) ){
+                //if ( !(needPriorityFoodToSpecialNutrient && canUsePriorityFoodToSpecialNutrient && doneUsePriorityFoodToSpecialNutrient) ){
+                if ( ! doneUsePriorityFoodToSpecialNutrient ){
                     //前面使用蔬菜水果来补的条件不具备
 
                     //先看看是否存在某种营养素已经超量
@@ -3877,7 +3894,7 @@
                             foundFoodWay = [NSMutableString stringWithFormat: @"m foods, have exceed, min m, random get %ld %d %d.",randval,foodIdxAry_MinOfMaxAddCauseExceedRateForFood.count,idx];
                         }
                     }//else exceedDRINutrients.count > 0 //存在有多种营养素超量，得选一种合适的富含食物
-                }//if ( !(needFirstUseShucaiShuiguiToSupply && isGoodToFirstUseShucaiShuiguiToSupply && doneToFirstUseShucaiShuiguiToSupply) )
+                }//if ( ! doneUsePriorityFoodToSpecialNutrient )
 
             }//foodIdsNotReachUpperLimit.count > 1
         }//else foodsToSupplyOneNutrient.count > 1 //富含食物超过一种时，需要选一种合适的

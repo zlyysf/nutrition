@@ -867,7 +867,7 @@
 }
 
 
--(NSArray *) getFoodIdsByFilters_withIncludeFoodClassAry:(NSArray*)includeFoodClassAry andExcludeFoodClassAry:(NSArray*)excludeFoodClassAry andEqualFoodClass:(NSString*)equalFoodClass andIncludeFoodIds:(NSArray*)includeFoodIds andExcludeFoodIds:(NSArray*)excludeFoodIds
+-(NSArray *) getFoodIdsByFilters_withIncludeFoodClassAry:(NSArray*)includeFoodClassAry andExcludeFoodClassAry:(NSArray*)excludeFoodClassAry andIncludeEqualFoodClassAry:(NSArray*)includeEqualFoodClassAry andIncludeFoodIds:(NSArray*)includeFoodIds andExcludeFoodIds:(NSArray*)excludeFoodIds
 {
     //    if (includeFoodClass == nil && excludeFoodClass == nil)
     //        return nil;
@@ -879,18 +879,35 @@
     
     NSMutableString *sqlStrWherePart = [NSMutableString stringWithCapacity:1000*1];
     bool firstConditionAdded = false;
-    if (includeFoodClassAry.count > 0){
+    if (includeFoodClassAry.count > 0 || includeEqualFoodClassAry>0){
         NSMutableString *strLocalConditions = [NSMutableString stringWithCapacity:1000*1];
+        bool firstInnerConditionAdd = false;
         for(int i=0; i<includeFoodClassAry.count; i++){
             NSString *includeFoodClass = includeFoodClassAry[i];
             assert(includeFoodClass.length>0);
-            if (i>0){
+            if (firstInnerConditionAdd){
                 [strLocalConditions appendString:@" OR "];
+            }else{
+                firstInnerConditionAdd = true;
             }
             [strLocalConditions appendString:COLUMN_NAME_classify];
             [strLocalConditions appendString:@" LIKE '"];
             [strLocalConditions appendString:includeFoodClass];
             [strLocalConditions appendString:@"%' "];
+        }//for
+        
+        for(int i=0; i<includeEqualFoodClassAry.count; i++){
+            NSString *includeEqualFoodClass = includeEqualFoodClassAry[i];
+            assert(includeEqualFoodClass.length>0);
+            if (firstInnerConditionAdd){
+                [strLocalConditions appendString:@" OR "];
+            }else{
+                firstInnerConditionAdd = true;
+            }
+            [strLocalConditions appendString:COLUMN_NAME_classify];
+            [strLocalConditions appendString:@" ='"];
+            [strLocalConditions appendString:includeEqualFoodClass];
+            [strLocalConditions appendString:@"' "];
         }//for
         
         [sqlStrWherePart appendString:@"\n "];
@@ -920,19 +937,6 @@
             [sqlStrWherePart appendString:@"%' "];
         }
     }//for
-
-    if(equalFoodClass.length > 0){
-        [sqlStrWherePart appendString:@"\n "];
-        if (firstConditionAdded){
-            [sqlStrWherePart appendString:@" AND "];
-        }else{
-            firstConditionAdded = true;
-        }
-        [sqlStrWherePart appendString:COLUMN_NAME_classify];
-        [sqlStrWherePart appendString:@" ='"];
-        [sqlStrWherePart appendString:equalFoodClass];
-        [sqlStrWherePart appendString:@"' "];
-    }
 
     NSMutableArray *allFoodIds = [NSMutableArray array];
     if(includeFoodIds.count > 0){
