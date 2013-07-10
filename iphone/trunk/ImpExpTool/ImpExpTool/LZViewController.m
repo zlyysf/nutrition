@@ -37,8 +37,8 @@
 }
 
 - (IBAction)btnInitDbClick:(id)sender {
-    [LZFacade generateInitialData];
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"run finish" message:@"run finish" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//    [LZFacade generateInitialData];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"old functions" message:@"old functions" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }
 

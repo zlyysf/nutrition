@@ -341,143 +341,211 @@
     [db insertToDRItable:tableName andColumnNames:columns andData:rows2D];
 }
 
+///*
+//// USDAtable 是特指美国农业部的那份以excel格式存在的数据库的唯一一个各食物营养成分表。
+//// 目前我们具体使用时，是根据常见的中国食物取了一些行，并加上了中文描述列。目前是这个文件customUSDAdata.xls 。
+//// 但是这个文件的原始来源数据由于在google doc中使用了隐藏列，再拷贝行从最原始数据到google doc出现数据错位的错误。
+//// 所以不能直接用里面的数据，而只能用其中的id和中文描述列。
+// 
+// 与ABBREV.xlsx中的数据很相似，只是多了两个中文描述性列在最前面。
+// 不过为了防止或尽量减少手工带来的错误，不直接用excel档中的数据，而只用其中的id列和中文描述列，
+// 并结合ABBREV已经被导入到sqlite的全数据来生成。
+// 返回的Dictionary包括这3列的数据，key分别是ids,ChineseCaptions,ChineseTypes
+// */
+//-(NSDictionary *)readCustomUSDAdata_V2
+//{
+//    NSLog(@"readCustomUSDAdata_V2 begin");
+//    //NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"customUSDAdataV2.xls"];
+////    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food.xls"];
+//    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
+//    NSLog(@"in readCustomUSDAdata_V2, xlsPath=%@",xlsPath);
+//    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+//	assert(reader);
+//    
+//    NSMutableArray * idAry = [NSMutableArray arrayWithCapacity:1000];
+//    NSMutableArray * cnCaptionAry = [NSMutableArray arrayWithCapacity:1000];
+//    NSMutableArray * cnTypeAry = [NSMutableArray arrayWithCapacity:1000];
+//    NSMutableArray * classifyAry = [NSMutableArray arrayWithCapacity:1000];
+//    int idxRow=2, colIdxCnCaption=1, colIdxCnType=2, colIdxId=3, colIdxClassify=4 ;
+//    DHcell *cellCnCaption,*cellCnType, *cellId, *cellClassify;
+//    cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnCaption];
+//    cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnType];
+//    cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxId];
+//    cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxClassify];
+//    NSLog(@"dealing row, %d, %@, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str, cellClassify.str);
+//    while (cellId.type!=cellBlank || cellCnCaption.type!=cellBlank || cellCnType.type!=cellBlank || cellClassify.type!=cellBlank) {
+//        if (cellId.type!=cellBlank && cellCnCaption.type!=cellBlank && cellCnType.type!=cellBlank && cellClassify.type!=cellBlank){
+//            assert(cellId.type == cellString);
+//            [idAry addObject:cellId.str];
+//            
+////            if (cellCnCaption.type == cellBlank){
+////                [cnCaptionAry addObject:@""];
+////            }else if (cellCnCaption.type == cellString){
+////                [cnCaptionAry addObject:cellCnCaption.str];
+////            }else{
+////                [cnCaptionAry addObject:@""];
+////            }
+//            [cnCaptionAry addObject:cellCnCaption.str];
+//            
+//            [cnTypeAry addObject:cellCnType.str];
+//            
+//            [classifyAry addObject:cellClassify.str];
+//            
+//            NSLog(@"GOODrow, %d",idxRow);
+////            NSLog(@"GOODrow, %d, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str);
+//        }else{
+//            NSLog(@"bad row, %d",idxRow);
+////            NSLog(@"bad row, %d, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str);
+//        }
+//        
+//        idxRow++;
+//        cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnCaption];
+//        cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnType];
+//        cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxId];
+//        cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxClassify];
+//        NSLog(@"dealing row, %d, %@, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str, cellClassify.str);
+//
+//    }
+////    NSLog(@"in readCustomUSDAdata_V2, idAry=%d, %@, cnCaptionAry=%d, %@, cnTypeAry=%d, %@",idAry.count,idAry,cnCaptionAry.count,cnCaptionAry,cnTypeAry.count,cnTypeAry);
+//    
+//    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+//    [retData setObject:idAry forKey:@"ids"];
+//    [retData setObject:cnCaptionAry forKey:@"ChineseCaptions"];
+//    [retData setObject:cnTypeAry forKey:@"ChineseTypes"];
+//    [retData setObject:classifyAry forKey:COLUMN_NAME_classify];
+//    return retData;
+//}
+//
+///*
+// 这是导增加了额外信息的食物营养成分数据。
+// 其作用是把Food.xls中包含的食物的中文描述数据，结合已经导入到sqlite的USDAFullDataInSqlite.dat的全部食物的营养成分表的数据，生成一份包含部分食物但附加了中文信息的数据，对应表为FoodNutritionCustom。
+// 这个FoodNutritionCustom表其实可以通过 FoodNutrition 和 FoodCnDescription 经过join得到，甚至根本用不着这个表。但由于历史原因，目前实际使用的是它。
+// */
+//-(void)generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2
+//{
+//    NSLog(@"generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2 begin");
+//    
+//    NSString *fullDataDbPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"USDAFullDataInSqlite.dat"];
+//    LZDBAccess *dbSrc = [[LZDBAccess alloc]init];
+//    [dbSrc myInitWithDbFilePath:fullDataDbPath andIfNeedClear:false];
+//    
+//    NSDictionary *customData = [self readCustomUSDAdata_V2];
+//    NSArray *idAry = [customData objectForKey:@"ids"];
+////    NSArray *cnCaptionAry = [customData objectForKey:@"ChineseCaptions"];
+////    NSArray *cnTypeAry = [customData objectForKey:@"ChineseTypes"];
+//    
+//    NSMutableDictionary * queryDataByIds = [dbSrc queryUSDADataByIds:idAry];
+//    NSMutableArray *columnNamesOfABBREV = [queryDataByIds objectForKey:@"columnNames"];
+//    
+//    assert(dbCon!=nil);
+//    LZDBAccess *dbDest = dbCon;
+//    [dbDest createCustomUSDAtable_V2:columnNamesOfABBREV andIfNeedDropTable:true];
+//    [dbDest insertToCustomUSDAtable_V2:customData andRowsAndColumns:queryDataByIds andIfNeedClearTable:true];
+//
+//}
+
+//
+///*
+// 返回值是一个dictionary，包括 以columnNames为key的一维数组和 以rows2D为key的二维数组
+// */
+//-(NSDictionary *)readFoodCnDescription
+//{
+//    NSLog(@"readFoodCnDescription begin");
+////    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_Limit.xls"];
+//    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
+//    NSLog(@"in readFoodCnDescription, xlsPath=%@",xlsPath);
+//    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+//	assert(reader);
+//    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No, COLUMN_NAME_CnCaption,COLUMN_NAME_CnType, nil];
+//    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+//    
+//    int idxInXls_Id = 3, idxInXls_CnCaption = 1, idxInXls_CnType = 2;
+//    int idxRow=2;
+//    DHcell *cellId, *cellCnCaption, *cellCnType;
+//    cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+//    cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+//    cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
+//    while (cellId.type != cellBlank) {
+//        assert(cellId.type == cellString);
+//        NSMutableArray *row = [NSMutableArray arrayWithCapacity:3];
+//        [row addObject:cellId.str];
+//        [row addObject:cellCnCaption.str];
+//        [row addObject:cellCnType.str];
+//        [rows2D addObject:row];
+//        idxRow++;
+//        cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+//        cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+//        cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
+//    }
+//    NSLog(@"in readFoodCnDescription, columnNames=%@, rows2D=%@",columnNames,rows2D);
+//    
+//    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+//    [retData setObject:columnNames forKey:@"columnNames"];
+//    [retData setObject:rows2D forKey:@"rows2D"];
+//    return retData;
+//}
+//
+///*
+// 其作用是把食物的中文描述信息从Food.xls导入到sqlite中，对应的表名为FoodCnDescription。
+// */
+//-(void)convertExcelToSqlite_FoodCnDescription
+//{
+//    NSDictionary *data = [self readFoodCnDescription];
+//    NSArray *columnNames = [data objectForKey:@"columnNames"];
+//    NSArray *rows2D = [data objectForKey:@"rows2D"];
+//    
+//    assert(dbCon!=nil);
+//    LZDBAccess *db = dbCon;
+//    NSString *tableName = TABLE_NAME_FoodCnDescription;
+//    NSString *primaryKey = COLUMN_NAME_NDB_No;
+//    [db createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:true];
+//    [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
+//}
+//
+
+
 /*
-// USDAtable 是特指美国农业部的那份以excel格式存在的数据库的唯一一个各食物营养成分表。
-// 目前我们具体使用时，是根据常见的中国食物取了一些行，并加上了中文描述列。目前是这个文件customUSDAdata.xls 。
-// 但是这个文件的原始来源数据由于在google doc中使用了隐藏列，再拷贝行从最原始数据到google doc出现数据错位的错误。
-// 所以不能直接用里面的数据，而只能用其中的id和中文描述列。
- 
- 与ABBREV.xlsx中的数据很相似，只是多了两个中文描述性列在最前面。
- 不过为了防止或尽量减少手工带来的错误，不直接用excel档中的数据，而只用其中的id列和中文描述列，
- 并结合ABBREV已经被导入到sqlite的全数据来生成。
- 返回的Dictionary包括这3列的数据，key分别是ids,ChineseCaptions,ChineseTypes
- */
--(NSDictionary *)readCustomUSDAdata_V2
-{
-    NSLog(@"readCustomUSDAdata_V2 begin");
-    //NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"customUSDAdataV2.xls"];
-//    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food.xls"];
-    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
-    NSLog(@"in readCustomUSDAdata_V2, xlsPath=%@",xlsPath);
-    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
-	assert(reader);
-    
-    NSMutableArray * idAry = [NSMutableArray arrayWithCapacity:1000];
-    NSMutableArray * cnCaptionAry = [NSMutableArray arrayWithCapacity:1000];
-    NSMutableArray * cnTypeAry = [NSMutableArray arrayWithCapacity:1000];
-    NSMutableArray * classifyAry = [NSMutableArray arrayWithCapacity:1000];
-    int idxRow=2, colIdxCnCaption=1, colIdxCnType=2, colIdxId=3, colIdxClassify=4 ;
-    DHcell *cellCnCaption,*cellCnType, *cellId, *cellClassify;
-    cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnCaption];
-    cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnType];
-    cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxId];
-    cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxClassify];
-    NSLog(@"dealing row, %d, %@, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str, cellClassify.str);
-    while (cellId.type!=cellBlank || cellCnCaption.type!=cellBlank || cellCnType.type!=cellBlank || cellClassify.type!=cellBlank) {
-        if (cellId.type!=cellBlank && cellCnCaption.type!=cellBlank && cellCnType.type!=cellBlank && cellClassify.type!=cellBlank){
-            assert(cellId.type == cellString);
-            [idAry addObject:cellId.str];
-            
-//            if (cellCnCaption.type == cellBlank){
-//                [cnCaptionAry addObject:@""];
-//            }else if (cellCnCaption.type == cellString){
-//                [cnCaptionAry addObject:cellCnCaption.str];
-//            }else{
-//                [cnCaptionAry addObject:@""];
-//            }
-            [cnCaptionAry addObject:cellCnCaption.str];
-            
-            [cnTypeAry addObject:cellCnType.str];
-            
-            [classifyAry addObject:cellClassify.str];
-            
-            NSLog(@"GOODrow, %d",idxRow);
-//            NSLog(@"GOODrow, %d, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str);
-        }else{
-            NSLog(@"bad row, %d",idxRow);
-//            NSLog(@"bad row, %d, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str);
-        }
-        
-        idxRow++;
-        cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnCaption];
-        cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxCnType];
-        cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxId];
-        cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:colIdxClassify];
-        NSLog(@"dealing row, %d, %@, %@, %@, %@",idxRow, cellId.str,cellCnCaption.str,cellCnType.str, cellClassify.str);
-
-    }
-//    NSLog(@"in readCustomUSDAdata_V2, idAry=%d, %@, cnCaptionAry=%d, %@, cnTypeAry=%d, %@",idAry.count,idAry,cnCaptionAry.count,cnCaptionAry,cnTypeAry.count,cnTypeAry);
-    
-    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
-    [retData setObject:idAry forKey:@"ids"];
-    [retData setObject:cnCaptionAry forKey:@"ChineseCaptions"];
-    [retData setObject:cnTypeAry forKey:@"ChineseTypes"];
-    [retData setObject:classifyAry forKey:COLUMN_NAME_classify];
-    return retData;
-}
-
-/*
- 这是导增加了额外信息的食物营养成分数据。
- 其作用是把Food.xls中包含的食物的中文描述数据，结合已经导入到sqlite的USDAFullDataInSqlite.dat的全部食物的营养成分表的数据，生成一份包含部分食物但附加了中文信息的数据，对应表为FoodNutritionCustom。
- 这个FoodNutritionCustom表其实可以通过 FoodNutrition 和 FoodCnDescription 经过join得到，甚至根本用不着这个表。但由于历史原因，目前实际使用的是它。
- */
--(void)generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2
-{
-    NSLog(@"generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2 begin");
-    
-    NSString *fullDataDbPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"USDAFullDataInSqlite.dat"];
-    LZDBAccess *dbSrc = [[LZDBAccess alloc]init];
-    [dbSrc myInitWithDbFilePath:fullDataDbPath andIfNeedClear:false];
-    
-    NSDictionary *customData = [self readCustomUSDAdata_V2];
-    NSArray *idAry = [customData objectForKey:@"ids"];
-//    NSArray *cnCaptionAry = [customData objectForKey:@"ChineseCaptions"];
-//    NSArray *cnTypeAry = [customData objectForKey:@"ChineseTypes"];
-    
-    NSMutableDictionary * queryDataByIds = [dbSrc queryUSDADataByIds:idAry];
-    NSMutableArray *columnNamesOfABBREV = [queryDataByIds objectForKey:@"columnNames"];
-    
-    assert(dbCon!=nil);
-    LZDBAccess *dbDest = dbCon;
-    [dbDest createCustomUSDAtable_V2:columnNamesOfABBREV andIfNeedDropTable:true];
-    [dbDest insertToCustomUSDAtable_V2:customData andRowsAndColumns:queryDataByIds andIfNeedClearTable:true];
-
-}
-
-
-/*
+ 与readFoodCnDescription逻辑类似。只是多了一列。
+ 但更主要的作用是拿 FoodCustom 与 FoodNutrition 的 join 结果来代替 FoodNutritionCustom
  返回值是一个dictionary，包括 以columnNames为key的一维数组和 以rows2D为key的二维数组
  */
--(NSDictionary *)readFoodCnDescription
+-(NSDictionary *)readFoodCustom
 {
-    NSLog(@"readFoodCnDescription begin");
-//    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_Limit.xls"];
+    NSLog(@"readFoodCustom begin");
     NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
-    NSLog(@"in readFoodCnDescription, xlsPath=%@",xlsPath);
+    NSLog(@"in readFoodCustom, xlsPath=%@",xlsPath);
     DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
 	assert(reader);
-    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No, COLUMN_NAME_CnCaption,COLUMN_NAME_CnType, nil];
+    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No, COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify, nil];
     NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
     
-    int idxInXls_Id = 3, idxInXls_CnCaption = 1, idxInXls_CnType = 2;
+    int idxInXls_Id = 3, idxInXls_CnCaption = 1, idxInXls_CnType = 2, idxInXls_Classify=4 ;
     int idxRow=2;
-    DHcell *cellId, *cellCnCaption, *cellCnType;
+    DHcell *cellId, *cellCnCaption, *cellCnType, *cellClassify;
     cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
     cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
     cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
-    while (cellId.type != cellBlank) {
-        assert(cellId.type == cellString);
-        NSMutableArray *row = [NSMutableArray arrayWithCapacity:3];
-        [row addObject:cellId.str];
-        [row addObject:cellCnCaption.str];
-        [row addObject:cellCnType.str];
-        [rows2D addObject:row];
+    cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
+    while (cellId.type!=cellBlank || cellCnCaption.type!=cellBlank || cellCnType.type!=cellBlank || cellClassify.type!=cellBlank) {
+        if (cellId.type!=cellBlank && cellCnCaption.type!=cellBlank && cellCnType.type!=cellBlank && cellClassify.type!=cellBlank){
+            assert(cellId.type == cellString);
+            NSString *strId = cellId.str;
+            assert(strId.length==5);
+            NSMutableArray *row = [NSMutableArray arrayWithCapacity:3];
+            [row addObject:strId];
+            [row addObject:cellCnCaption.str];
+            [row addObject:cellCnType.str];
+            [row addObject:cellClassify.str];
+            [rows2D addObject:row];
+        }        
         idxRow++;
         cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
         cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
         cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
+        cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];        
     }
-    NSLog(@"in readFoodCnDescription, columnNames=%@, rows2D=%@",columnNames,rows2D);
+
+    NSLog(@"in readFoodCustom, columnNames=%@, rows2D=\n%@",columnNames,rows2D);
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
     [retData setObject:columnNames forKey:@"columnNames"];
@@ -486,17 +554,18 @@
 }
 
 /*
- 其作用是把食物的中文描述信息从Food.xls导入到sqlite中，对应的表名为FoodCnDescription。
+ 其作用是把我们从USDA食物全集中挑出的食物，其含有中文描述信息和其他自定义信息的，从Food_common.xls导入到sqlite中，对应的表名为FoodCustom。
+ 这导致 convertExcelToSqlite_FoodCnDescription 和 generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2 不再使用。
  */
--(void)convertExcelToSqlite_FoodCnDescription
+-(void)convertExcelToSqlite_FoodCustom
 {
-    NSDictionary *data = [self readFoodCnDescription];
+    NSDictionary *data = [self readFoodCustom];
     NSArray *columnNames = [data objectForKey:@"columnNames"];
     NSArray *rows2D = [data objectForKey:@"rows2D"];
     
     assert(dbCon!=nil);
     LZDBAccess *db = dbCon;
-    NSString *tableName = TABLE_NAME_FoodCnDescription;
+    NSString *tableName = TABLE_NAME_FoodCustom;
     NSString *primaryKey = COLUMN_NAME_NDB_No;
     [db createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:true];
     [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];

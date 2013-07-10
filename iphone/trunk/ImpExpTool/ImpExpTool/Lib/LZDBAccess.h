@@ -28,6 +28,7 @@
 
 -(NSMutableDictionary *)queryUSDADataByIds:(NSArray *)idAry;
 
+-(void)createView_FoodNutritionCustom_andIfNeedDrop:(BOOL)needDrop;
 -(void)createTableUSDA_ABBREV_withColumnNames : (NSArray*)columnNames andIfNeedDropTable:(BOOL)needDrop;
 -(void)insertToTable_USDA_ABBREV_withColumnNames: (NSArray*)columnNames andRows2D:(NSArray*)rows2D andIfNeedClearTable:(BOOL)needClear;
 

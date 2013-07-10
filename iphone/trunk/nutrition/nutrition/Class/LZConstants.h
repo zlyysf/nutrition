@@ -82,10 +82,14 @@
 #define TABLE_NAME_DRIULrateFemale @"DRIULrateFemale"
 #define TABLE_NAME_DRIULrateMale @"DRIULrateMale"
 
-#define TABLE_NAME_FoodNutritionCustom @"FoodNutritionCustom"
+#define TABLE_NAME_FoodNutritionCustom @"FoodNutritionCustom" // TO be replaced by CustomFood join FoodNutrition OR same name view
+#define VIEW_NAME_FoodNutritionCustom @"FoodNutritionCustom" 
 #define COLUMN_NAME_CnCaption @"CnCaption"
 #define COLUMN_NAME_CnType @"CnType"
 #define COLUMN_NAME_classify @"classify"
+#define TABLE_NAME_FoodCnDescription @"FoodCnDescription" // TO BE changed to CustomFood
+#define TABLE_NAME_FoodCustom @"FoodCustom"
+
 
 #define TABLE_NAME_Food_Supply_DRI_Common @"Food_Supply_DRI_Common"
 #define TABLE_NAME_Food_Supply_DRI_Amount @"Food_Supply_DRI_Amount"
@@ -94,7 +98,7 @@
 #define COLUMN_NAME_Lower_Limit @"Lower_Limit(g)"
 #define COLUMN_NAME_Upper_Limit @"Upper_Limit(g)"
 #define COLUMN_NAME_normal_value @"normal_value"
-#define TABLE_NAME_FoodCnDescription @"FoodCnDescription"
+
 
 #define TABLE_NAME_NutritionInfo @"NutritionInfo"
 #define COLUMN_NAME_NutrientID @"NutrientID"

@@ -77,8 +77,10 @@
     [db convertFood_Supply_DRI_AmountWithExtraInfoToCsv:@"Food_Supply_DRI_Amount_Extra.csv"];
     
     
-    NSString *resFileName2 = @"dataAll.dat";
-    NSString *destDbFileName2 = @"dataAllt1.dat";
+//    NSString *resFileName2 = @"dataAll.dat";
+//    NSString *destDbFileName2 = @"dataAllt1.dat";
+    NSString *resFileName2 = @"CustomDB.dat";
+    NSString *destDbFileName2 = @"CustomDBt2.dat";
     NSString *destDbFilePath2 = [LZUtility copyResourceToDocumentWithResFileName:resFileName2 andDestFileName:destDbFileName2];
     if (destDbFilePath2 == nil){
         NSLog(@"generateVariousCsv fail, destDbFilePath2 == nil");
@@ -90,40 +92,41 @@
 }
 
 
-/*
- 生成食物营养推荐算法所需的各个数据表，依赖于USDAFullDataInSqlite.dat和其他所有的*.xls文件。
- 生成后的数据所在的文件的路径见log中的输出信息，可以用于更新算法所需的CustomDB.dat文件。
- */
-+(void)generateInitialData
-{
-    NSString *destDbFileName = @"data1.dat";
-    LZReadExcel *workRe = [[LZReadExcel alloc]init];
-    [workRe myInitDBConnectionWithFilePath:destDbFileName andIfNeedClear:true];
-    [self.class generateInitialDataWithFileNameOrPath:workRe];
-
-}
-
-+(void)generateInitialDataWithFileNameOrPath:(LZReadExcel *)workRe
-{
-
-//    [workRe convertDRIFemaleDataFromExcelToSqlite];
-//    [workRe convertDRIMaleDataFromExcelToSqlite];
-//    [workRe convertDRIULFemaleDataFromExcelToSqlite];
-//    [workRe convertDRIULMaleDataFromExcelToSqlite];
-
-    [workRe dealDRIandULdataFromExcelToSqliteForFemale];
-    [workRe dealDRIandULdataFromExcelToSqliteForMale];
-    
-    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
-    [workRe convertExcelToSqlite_FoodLimit];
-    [workRe convertExcelToSqlite_FoodCnDescription];
-    [workRe convertExcelToSqlite_NutritionInfo];
-    [workRe convertExcelToSqlite_FoodPicPath];
-
-    LZDBAccess *db = [workRe getDBconnection];
-    [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
-    [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
-}
+///*
+// 生成食物营养推荐算法所需的各个数据表，依赖于USDAFullDataInSqlite.dat和其他所有的*.xls文件。
+// 生成后的数据所在的文件的路径见log中的输出信息，可以用于更新算法所需的CustomDB.dat文件。
+// 由于 generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2 等已经被别的取代，这里不能再达到产生完整数据的效果了。
+// */
+//+(void)generateInitialData
+//{
+//    NSString *destDbFileName = @"data1.dat";
+//    LZReadExcel *workRe = [[LZReadExcel alloc]init];
+//    [workRe myInitDBConnectionWithFilePath:destDbFileName andIfNeedClear:true];
+//    [self.class generateInitialDataWithFileNameOrPath:workRe];
+//
+//}
+//
+//+(void)generateInitialDataWithFileNameOrPath:(LZReadExcel *)workRe
+//{
+//
+////    [workRe convertDRIFemaleDataFromExcelToSqlite];
+////    [workRe convertDRIMaleDataFromExcelToSqlite];
+////    [workRe convertDRIULFemaleDataFromExcelToSqlite];
+////    [workRe convertDRIULMaleDataFromExcelToSqlite];
+//
+//    [workRe dealDRIandULdataFromExcelToSqliteForFemale];
+//    [workRe dealDRIandULdataFromExcelToSqliteForMale];
+//    
+//    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
+//    [workRe convertExcelToSqlite_FoodCnDescription];
+//    [workRe convertExcelToSqlite_FoodLimit];
+//    [workRe convertExcelToSqlite_NutritionInfo];
+//    [workRe convertExcelToSqlite_FoodPicPath];
+//
+//    LZDBAccess *db = [workRe getDBconnection];
+//    [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
+//    [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
+//}
 
 /*
  与generateInitialData相比，多了合并USDAFullDataInSqlite.dat中的数据，这样形成一个包括所有数据的sqlite文件。
@@ -139,8 +142,22 @@
     }
     LZReadExcel *workRe = [[LZReadExcel alloc]init];
     [workRe myInitDBConnectionWithFilePath:destDbFilePath andIfNeedClear:FALSE];
+    LZDBAccess *db = [workRe getDBconnection];
     
-    [self.class generateInitialDataWithFileNameOrPath:workRe];
+    [workRe dealDRIandULdataFromExcelToSqliteForFemale];
+    [workRe dealDRIandULdataFromExcelToSqliteForMale];
+    
+    [workRe convertExcelToSqlite_FoodCustom];
+    [db createView_FoodNutritionCustom_andIfNeedDrop:true];
+    
+    [workRe convertExcelToSqlite_FoodLimit];
+    [workRe convertExcelToSqlite_NutritionInfo];
+    [workRe convertExcelToSqlite_FoodPicPath];
+    
+    
+    [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
+    [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
+
 
 }
 

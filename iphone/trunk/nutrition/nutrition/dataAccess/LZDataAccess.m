@@ -765,14 +765,17 @@
 {
     NSLog(@"getRichNutritionFood enter");
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath, "];
+    //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
+//    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath, "];
+    [sqlStr appendString:@"SELECT F.*,CnCaption,CnType,classify ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath, "];
     [sqlStr appendString:@"\n D.["];
     [sqlStr appendString:nutrientAsColumnName];
     [sqlStr appendString:@"] AS RichLevel "];
-    
-    [sqlStr appendString:@"\n  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
+//    [sqlStr appendString:@"\n  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
+    [sqlStr appendString:@"\n  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
     [sqlStr appendString:@"\n    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
     [sqlStr appendString:@"\n    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
+    
     [sqlStr appendString:@"\n  WHERE "];
     [sqlStr appendString:@"\n    D.["];
     [sqlStr appendString:nutrientAsColumnName];
@@ -872,8 +875,10 @@
     //    if (includeFoodClass == nil && excludeFoodClass == nil)
     //        return nil;
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+    //现在FoodNutritionCustom是view，这会导致F.NDB_No整个为dict的key值
     [sqlStr appendString:@"SELECT F.NDB_No \n"];
-    [sqlStr appendString:@"  FROM FoodNutritionCustom F \n"];
+//    [sqlStr appendString:@"  FROM FoodNutritionCustom F \n"];
+    [sqlStr appendString:@"  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No \n"];
     [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
     [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
     
@@ -1000,8 +1005,11 @@
 //    if (includeFoodClass == nil && excludeFoodClass == nil)
 //        return nil;
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath \n"];
-    [sqlStr appendString:@"  FROM FoodNutritionCustom F \n"];
+    //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
+//    [sqlStr appendString:@"SELECT F.* ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath \n"];
+    [sqlStr appendString:@"SELECT F.*,CnCaption,CnType,classify ,FL.[Lower_Limit(g)],FL.[Upper_Limit(g)],FL.normal_value,P.PicPath \n"];
+//    [sqlStr appendString:@"  FROM FoodNutritionCustom F \n"];
+    [sqlStr appendString:@"  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No \n"];
     [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
     [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
     
@@ -1120,7 +1128,8 @@
     
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
     [sqlStr appendString:@"SELECT F.NDB_No \n"];
-    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
+//    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
+    [sqlStr appendString:@"  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
     [sqlStr appendString:@" WHERE "];
     [sqlStr appendString:@"D.["];
     [sqlStr appendString:nutrientAsColumnName];

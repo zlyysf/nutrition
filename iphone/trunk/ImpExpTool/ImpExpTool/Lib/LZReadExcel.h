@@ -19,7 +19,9 @@
 -(void)convertExcelToSqlite_USDA_ABBREV_withDebugFlag : (BOOL)ifDebug;
 
 
--(void)generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2;
+//-(void)generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2;
+//-(void)convertExcelToSqlite_FoodCnDescription;
+-(void)convertExcelToSqlite_FoodCustom;
 
 -(void)convertDRIFemaleDataFromExcelToSqlite;
 -(void)convertDRIMaleDataFromExcelToSqlite;
@@ -29,7 +31,7 @@
 -(void)dealDRIandULdataFromExcelToSqliteForFemale;
 -(void)dealDRIandULdataFromExcelToSqliteForMale;
 
--(void)convertExcelToSqlite_FoodCnDescription;
+
 -(void)convertExcelToSqlite_FoodLimit;
 
 -(void)convertExcelToSqlite_NutritionInfo;

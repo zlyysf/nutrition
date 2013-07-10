@@ -21,7 +21,7 @@ USDAFullDataInSqlite.dat 含有USDA的ABBREV.xlsx中的全部数据，即所有�
 
 FoodNutritionCustom表和Food.xls中的数据可以说是一样的，都含有额外中文信息的部分食物营养成分数据。与FoodNutrition也很相似，只是多了一点中文信息列。
     但FoodNutritionCustom表的数据来源不是完全来自Food.xls中的数据，而是从Food.xls中取中文信息数据，并结合FoodNutrition的数据来连接生成。
-FoodCnDescription表包含Food.xls中的那些中文信息列的数据。可以与FoodNutrition连接生成FoodNutritionCustom的数据。
+FoodCustom表包含Food.xls中的那些中文信息列及自定义信息列的数据。可以与FoodNutrition连接生成FoodNutritionCustom的数据。
 
 FoodLimit表和Food_Limit.xls中的数据是一样的，包含各种食物摄取的符合情理的上下限值。这些值对应的是是一天的摄入量。
     下限值Lower_Limit(g)定义为至少需要量，即如果低于下限值，则取下限值。 对于上限值Upper_Limit(g)，如果高于上限值，则取上限值。
@@ -36,6 +36,7 @@ Food_Supply_DRI_Common 这个表中的数据源于 Food_Supply_DRI_Amount ，100
 CustomDB.dat 中的数据是通过调用LZFacade.generateInitialData以导入各个*.xls文件及结合USDAFullDataInSqlite.dat中的数据生成的数据文件改名而来。
     当生成一个新的.dat的数据文件后，应注意及时更新CustomDB.dat。
 dataAll.dat 是包含了 CustomDB.dat 和 USDAFullDataInSqlite.dat 中的所有数据。
+不过由于这次的改动，在CustomDB.dat 中加了 FoodCustom 取代了 FoodCnDescription 和 FoodNutritionCustom ，以及把 FoodNutrition 也合进来了。目前CustomDB.dat 就是全的了。dataAll.dat 没必要了。
 
 customUSDAdataV2.xls 和 Food.xls 其实是同一份文档，只是由于历史原因，先用的customUSDAdataV2.xls。而Food.xls应该是最新的。
 

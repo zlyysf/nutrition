@@ -259,6 +259,16 @@
     }
 }
 
+-(void)createView_FoodNutritionCustom_andIfNeedDrop:(BOOL)needDrop
+{
+    if (needDrop){
+        NSString *strDropView = @"DROP VIEW IF EXISTS FoodNutritionCustom";
+        [_db executeUpdate:strDropView];
+    }
+    NSString *strCreateView = @"CREATE VIEW IF NOT EXISTS FoodNutritionCustom AS Select CnCaption,CnType,classify,FN.* From FoodNutrition FN join FoodCustom FC on FN.NDB_No=FC.NDB_No";
+    [_db executeUpdate:strCreateView];
+}
+
 /*
  USDA_ABBREV
  USDAtable 是特指美国农业部的那份以excel格式存在的数据库的唯一一个各食物营养成分表。这里暂定其表名为FoodNutrition。
@@ -1043,25 +1053,29 @@
 -(NSString*)convertFood_Supply_DRI_AmountWithExtraInfoToCsv:(NSString*)csvFileName
 {
     NSString *sqlQuery = @""
-    "select c.CnCaption, c.CnType, a.*"
-    "  from Food_Supply_DRI_Amount a join FoodCnDescription c on a.NDB_No=c.NDB_No"
+    "select c.CnCaption, c.CnType, c.classify, a.*"
+    "  from Food_Supply_DRI_Amount a join FoodCustom c on a.NDB_No=c.NDB_No"
     "  order by a.NDB_No"
     ;
     return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
 }
 
 /*
- 结合FoodCnDescription和FoodNutrition表中的内容导出成一个csv文件。这个文件的数据实际上与Food.xls相同。
+ //结合FoodCustom和FoodNutrition表中的内容导出成一个csv文件。这个文件的数据实际上与Food.xls相同。
+ 现在可以通过FoodNutritionCustom 的view来得到了。
  这需要先做工作保证那两张表在同一个sqlite文件中。
- 有了这个工具后，Food.xls就只需提供FoodCnDescription所需列，而不必担心看FoodNutrition表对应的excel档缺乏中文信息了。
+ 有了这个工具后，Food.xls就只需提供FoodCustom所需列，而不必担心看FoodNutrition表对应的excel档缺乏中文信息了。
  虽然似乎可以通过sqlite的客户端工具进行，但是时不时出程序死掉的问题，还是自己做了个工具。
  */
 -(NSString*)convertCnFoodNutritionWithExtraInfoToCsv:(NSString*)csvFileName
 {
     NSString *sqlQuery = @""
-    "select c.CnCaption, c.CnType, f.*"
-    "  from FoodNutrition f join FoodCnDescription c on f.NDB_No=c.NDB_No"
-    "  order by f.NDB_No"
+//    "select c.CnCaption, c.CnType, c.classify, f.*"
+//    "  from FoodNutrition f join FoodCustom c on f.NDB_No=c.NDB_No"
+//    "  order by f.NDB_No"
+//    ;
+    "select * from FoodNutritionCustom"
+    "  order by NDB_No"
     ;
     return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
 }
