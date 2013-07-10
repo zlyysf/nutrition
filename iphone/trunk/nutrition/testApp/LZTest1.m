@@ -75,7 +75,8 @@
 
 +(void)testRecommendFoodBySmallIncrement
 {
-    [self.class caseUser_recSI_preTaken_0];
+//    [self.class caseUser_recSI_preTaken_0];
+    [self.class caseUser_recSI_preTaken_0_sameOptionsAsAppForLinearSystemCompare];
 }
 
 +(NSString*)getParamsDigestStr_withUserInfo:(NSDictionary *)userInfo andOptions:(NSDictionary *)options andTakenFoodAmountDict:(NSDictionary *)takenFoodAmountDict
@@ -1684,6 +1685,50 @@
     
 }
 
+
++(void)caseUser_recSI_preTaken_0_sameOptionsAsAppForLinearSystemCompare
+{
+    NSDictionary *takenFoodAmountDict = nil;
+    int sex = 0;//Male
+    int age = 25;
+    float weight=72;//kg
+    float height = 180;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],ParamKey_sex, [NSNumber numberWithInt:age],ParamKey_age,
+                              [NSNumber numberWithFloat:weight],ParamKey_weight, [NSNumber numberWithFloat:height],ParamKey_height,
+                              [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
+
+    BOOL needConsiderNutrientLoss = FALSE;
+    //    BOOL needLimitNutrients = FALSE;
+    BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic;
+    int randSeed = 0;
+    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
+                                    //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
+                                    [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                                    [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
+                                    [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
+                                    nil];
+    
+    NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
+    NSString *csvFileName = [NSString stringWithFormat:@"recBySI_Linear_%@.csv",paramsDigestStr ];
+    NSString *htmlFileName = [NSString stringWithFormat:@"recBySI_Linear_%@.html",paramsDigestStr ];
+    NSLog(@"csvFileName=%@\nhtmlFileName=%@",csvFileName,htmlFileName);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
+    NSLog(@"htmlFilePath=%@",htmlFilePath);
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
+    NSString *strHtml = [rf generateHtml_RecommendFoodBySmallIncrement:retDict];
+    strHtml = [LZUtility getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
+}
 
 
 
