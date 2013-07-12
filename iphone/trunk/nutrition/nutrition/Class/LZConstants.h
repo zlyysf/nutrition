@@ -116,12 +116,15 @@
 #define Key_Unit @"Unit"
 #define Key_PicturePath @"PicturePath"
 #define Key_FoodAmount @"FoodAmount"
+#define Key_DRI @"DRI"
+
 //#define Key_takenFoodInfo2LevelDict @"takenFoodInfo2LevelDict"
 //#define Key_recommendFoodInfo2LevelDict @"recommendFoodInfo2LevelDict"
 #define Key_takenFoodInfoDictArray @"takenFoodInfoDictArray"
 #define Key_recommendFoodInfoDictArray @"recommendFoodInfoDictArray"
 
 #define Key_nutrientInitialSupplyRate @"nutrientInitialSupplyRate"
+#define Key_nutrientSupplyRate @"nutrientSupplyRate"
 #define Key_nutrientTakenRateInfoArray @"nutrientTakenRateInfoArray"
 #define Key_nutrientTotalSupplyRateInfoArray @"nutrientTotalSupplyRateInfoArray"
 #define Key_food1Supply1NutrientAmount @"food1Supply1NutrientAmount"
@@ -132,6 +135,13 @@
 #define Key_foodStandardNutrientInfoAryDict @"foodStandardNutrientInfoAryDict"
 #define Key_takenFoodNutrientInfoAryDictDict @"takenFoodNutrientInfoAryDictDict"
 #define Key_recommendFoodNutrientInfoAryDictDict @"recommendFoodNutrientInfoAryDictDict"
+
+#define Key_orderedGivenFoodIds1 @"orderedGivenFoodIds1"
+#define Key_orderedGivenFoodIds2 @"orderedGivenFoodIds2"
+#define Key_orderedGivenFoodIds @"orderedGivenFoodIds"
+#define Key_givenFoodInfoDict2Level @"givenFoodInfoDict2Level"
+#define Key_nutrientSupplyRateInfoArray @"nutrientSupplyRateInfoArray"
+#define Key_nutrientSupplyDict @"nutrientSupplyDict"
 
 
 #define Type_normalSet @"normalSet"

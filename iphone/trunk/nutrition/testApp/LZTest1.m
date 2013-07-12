@@ -27,7 +27,8 @@
     
 //    [self.class testFormatResult1];
 //    [self.class testFormatResult2_taken];
-    [self.class testFormatResult_foodStarndard];
+//    [self.class testFormatResult_foodStarndard];
+    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI];
 }
 
 
@@ -1630,6 +1631,37 @@
     
 }
 
++(void)test_calculateGiveFoodsSupplyNutrientAndFormatForUI
+{
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],ParamKey_sex, [NSNumber numberWithInt:age],ParamKey_age,
+                              [NSNumber numberWithFloat:weight],ParamKey_weight, [NSNumber numberWithFloat:height],ParamKey_height,
+                              [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
+    
+    NSDictionary *givenFoodsAmount1 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:200.0],@"20450",//rice
+                                         [NSNumber numberWithDouble:100.0],@"16108",//huangdou
+                                         nil];
+
+    NSDictionary *givenFoodsAmount2 = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:200.0],@"11116",//youcai
+                                         [NSNumber numberWithDouble:150.0],@"16022",//doujiao
+                                         nil];
+
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            userInfo,@"userInfo",
+                            givenFoodsAmount1,@"givenFoodsAmount1",
+                            givenFoodsAmount2,@"givenFoodsAmount2",
+                            nil];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    [rf calculateGiveFoodsSupplyNutrientAndFormatForUI:params];
+}
 
 +(void)testFormatResult_foodStarndard
 {

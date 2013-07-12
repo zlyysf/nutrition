@@ -49,6 +49,8 @@
 
 -(NSMutableDictionary*)formatRecommendResultBySmallIncrementForUI:(NSMutableDictionary *)recommendResult;
 
+-(NSMutableDictionary*)calculateGiveFoodsSupplyNutrientAndFormatForUI:(NSDictionary *)paramsDict;
+
 @end
 
 

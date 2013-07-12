@@ -2405,6 +2405,173 @@
     return formatResult;
 }
 
+/*
+ 如果不传DRI，可以传userInfo。givenFoodsAmount1和givenFoodsAmount2都可选，不过如果都不传，则返回nil。
+ */
+-(NSMutableDictionary*)calculateGiveFoodsSupplyNutrientAndFormatForUI:(NSDictionary *)paramsDict
+{
+    NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI enter");
+    
+    NSDictionary *DRIsDict = [paramsDict objectForKey:@"DRI"];//nutrient name as key, also column name
+    NSDictionary *userInfo = [paramsDict objectForKey:@"userInfo"];
+    NSDictionary *givenFoodsAmount1Dict = [paramsDict objectForKey:@"givenFoodsAmount1"];//food NO as key
+    NSDictionary *givenFoodsAmount2Dict = [paramsDict objectForKey:@"givenFoodsAmount2"];//food NO as key
+    NSMutableDictionary *givenFoodsAmountDict = [NSMutableDictionary dictionaryWithDictionary:givenFoodsAmount1Dict];
+    
+    if (givenFoodsAmount2Dict.count > 0){
+        NSArray *foodIds = [givenFoodsAmount2Dict allKeys];
+        for(int i=0; i<foodIds.count; i++){//这样做是防止有同一个食物在不同的食物集合中出现
+            NSString *foodId = foodIds[i];
+            NSNumber *nmFoodAmount = [givenFoodsAmount2Dict objectForKey:foodId ];
+            [LZUtility addDoubleToDictionaryItem:[nmFoodAmount doubleValue] withDictionary:givenFoodsAmountDict andKey:foodId];
+        }
+    }
+    if (givenFoodsAmountDict.count == 0){
+        return nil;
+    }
+    NSMutableDictionary* formatResult = [NSMutableDictionary dictionary];
+    LZDataAccess *da = [LZDataAccess singleton];
+    if (DRIsDict == nil){
+        assert(userInfo!=nil);
+        DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
+        [formatResult setValue:DRIsDict forKey:Key_DRI];
+    }
+    
+    NSArray *givenFoodIds = [givenFoodsAmountDict allKeys];
+    NSArray *givenFoodAttrAry = [da getFoodAttributesByIds:givenFoodIds];
+    NSMutableDictionary *givenFoodAttrDict2Level = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:givenFoodAttrAry];
+    
+    NSArray *customNutrients = [self.class getCustomNutrients];// getCalculationNutrientsForSmallIncrementLogic_withDRI ..
+    NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
+    
+    //对给定的食物取显示所需信息
+    if (givenFoodsAmount1Dict.count > 0){
+        NSArray *givenFoodIds1 = [givenFoodsAmount1Dict allKeys];
+        NSArray *orderedGivenFoodIds1 = [da getOrderedFoodIds:givenFoodIds1];
+        [formatResult setValue:orderedGivenFoodIds1 forKey:Key_orderedGivenFoodIds1];
+    }
+    if (givenFoodsAmount2Dict.count > 0){
+        NSArray *givenFoodIds2 = [givenFoodsAmount2Dict allKeys];
+        NSArray *orderedGivenFoodIds2 = [da getOrderedFoodIds:givenFoodIds2];
+        [formatResult setValue:orderedGivenFoodIds2 forKey:Key_orderedGivenFoodIds2];
+    }
+
+    NSArray *orderedGivenFoodIds = [da getOrderedFoodIds:givenFoodIds];
+    assert(givenFoodIds.count == orderedGivenFoodIds.count);
+    [formatResult setValue:orderedGivenFoodIds forKey:Key_orderedGivenFoodIds];
+
+    NSMutableDictionary *givenFoodInfoDict2Level = [NSMutableDictionary dictionary];
+//    NSMutableArray *givenFoodInfoDictArray = [NSMutableArray array];
+    for(int i=0; i<orderedGivenFoodIds.count; i++){
+        NSString *foodId = orderedGivenFoodIds[i];
+        NSDictionary *foodAttrs = givenFoodAttrDict2Level[foodId];
+        NSNumber *nmFoodAmount = givenFoodsAmountDict[foodId];
+        NSString *foodName = foodAttrs[COLUMN_NAME_CnCaption];
+        NSString *foodPicPath = foodAttrs[COLUMN_NAME_PicPath];
+        NSDictionary *foodInfoDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                           foodId,COLUMN_NAME_NDB_No,
+                                           foodName,Key_Name,
+                                           nmFoodAmount,Key_Amount,
+                                           foodPicPath, Key_PicturePath,
+                                           nil];
+        [givenFoodInfoDict2Level setValue:foodInfoDict forKey:foodId];
+//        [givenFoodInfoDictArray addObject:foodInfoDict];
+    }//for
+    [formatResult setValue:givenFoodInfoDict2Level forKey:Key_givenFoodInfoDict2Level];
+    //[formatResult setValue:takenFoodInfoDictArray forKey:Key_takenFoodInfoDictArray];
+    
+    //所有给定食物提供的营养比例
+    NSMutableDictionary *nutrientSupplyDict = [NSMutableDictionary dictionaryWithDictionary:DRIsDict];
+    NSArray *nutrientNames1 = [nutrientSupplyDict allKeys];
+    for (int i=0; i<nutrientNames1.count; i++) {//初始化supply集合
+        [nutrientSupplyDict setObject:[NSNumber numberWithDouble:0.0] forKey:nutrientNames1[i]];
+    }
+    NSMutableDictionary *localOutFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
+    NSMutableDictionary *l1paramsDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:localOutFoodAttrDict,@"destFoodInfoDict", nil];
+    [self foodsSupplyNutrients:givenFoodAttrAry andAmounts:givenFoodsAmountDict andDestNutrientSupply:nutrientSupplyDict andOtherData:l1paramsDict];
+    [formatResult setValue:nutrientSupplyDict forKey:Key_nutrientSupplyDict];
+    NSMutableArray *nutrientSupplyRateInfoArray = [NSMutableArray array];
+    for(int i=0; i<customNutrients.count; i++){
+        NSString *nutrientId = customNutrients[i];
+        NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
+        NSNumber *nm_Supply = nutrientSupplyDict[nutrientId];
+        double supplyRate = [nm_Supply doubleValue]/([nm_DRI1unit doubleValue]);
+        NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
+        NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
+        NSDictionary *nutrientSupplyRateInfo= [NSDictionary dictionaryWithObjectsAndKeys:
+                                              nutrientId,COLUMN_NAME_NutrientID,
+                                              [NSNumber numberWithDouble:supplyRate],Key_nutrientSupplyRate,
+                                              nutrientCnCaption,Key_Name,
+                                              nil];
+        [nutrientSupplyRateInfoArray addObject:nutrientSupplyRateInfo];
+    }
+    [formatResult setValue:nutrientSupplyRateInfoArray forKey:Key_nutrientSupplyRateInfoArray];
+    
+    //已经决定了的食物的每个食物的供给营养素的情况
+    NSMutableDictionary *givenFoodNutrientInfoAryDictDict = [NSMutableDictionary dictionary];
+    NSMutableDictionary *givenFoodSupplyNutrientInfoAryDict = [NSMutableDictionary dictionary];
+    for(int i=0; i<givenFoodIds.count; i++){
+        NSString *foodId = givenFoodIds[i];
+        NSDictionary *foodAttrs = givenFoodAttrDict2Level[foodId];
+        NSNumber *nmFoodAmount = givenFoodsAmountDict[foodId];
+        
+        NSMutableArray *food1supplyNutrientArray = [NSMutableArray arrayWithCapacity:customNutrients.count];
+        for(int j=0; j<customNutrients.count; j++){
+            NSString *nutrientId = customNutrients[j];
+            NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
+            NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
+            double food1Supply1NutrientAmount = [nm_foodNutrientContent doubleValue]*[nmFoodAmount doubleValue]/100.0;
+            double nutrientTotalDRI = [nm_DRI1unit doubleValue];
+            double supplyRate = food1Supply1NutrientAmount / nutrientTotalDRI;
+            NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
+            NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
+            NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
+            
+            NSDictionary *food1Supply1NutrientInfo= [NSDictionary dictionaryWithObjectsAndKeys:
+                                                     nutrientId,COLUMN_NAME_NutrientID,
+                                                     [NSNumber numberWithDouble:food1Supply1NutrientAmount],Key_food1Supply1NutrientAmount,
+                                                     [NSNumber numberWithDouble:nutrientTotalDRI],Key_nutrientTotalDRI,
+                                                     [NSNumber numberWithDouble:supplyRate],Key_1foodSupply1NutrientRate,
+                                                     nutrientCnCaption,Key_Name,
+                                                     nutrientNutrientEnUnit,Key_Unit,
+                                                     nil];
+            [food1supplyNutrientArray addObject:food1Supply1NutrientInfo];
+        }//for j
+        givenFoodSupplyNutrientInfoAryDict[foodId] = food1supplyNutrientArray;
+    }//for i
+    NSMutableDictionary *givenFoodStandardNutrientInfoAryDict = [NSMutableDictionary dictionary];
+    for(int i=0; i<givenFoodIds.count; i++){
+        NSString *foodId = givenFoodIds[i];
+        NSDictionary *foodAttrs = givenFoodAttrDict2Level[foodId];
+        
+        NSMutableArray *foodStandardNutrientInfoAry = [NSMutableArray arrayWithCapacity:customNutrients.count];
+        for(int j=0; j<customNutrients.count; j++){
+            NSString *nutrientId = customNutrients[j];
+            NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
+            NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
+            NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
+            NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
+            
+            NSDictionary *foodStandardNutrientInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                      nutrientId,COLUMN_NAME_NutrientID,
+                                                      nm_foodNutrientContent,Key_foodNutrientContent,
+                                                      nutrientCnCaption,Key_Name,
+                                                      nutrientNutrientEnUnit,Key_Unit,
+                                                      nil];
+            [foodStandardNutrientInfoAry addObject:foodStandardNutrientInfo];
+        }//for j
+        givenFoodStandardNutrientInfoAryDict[foodId] = foodStandardNutrientInfoAry;
+    }//for i
+    [givenFoodNutrientInfoAryDictDict setValue:givenFoodSupplyNutrientInfoAryDict forKey:Key_foodSupplyNutrientInfoAryDict];
+    [givenFoodNutrientInfoAryDictDict setValue:givenFoodStandardNutrientInfoAryDict forKey:Key_foodStandardNutrientInfoAryDict];
+    [formatResult setValue:givenFoodNutrientInfoAryDictDict forKey:Key_takenFoodNutrientInfoAryDictDict];
+    
+    NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI exit, result=%@",formatResult);
+    return formatResult;
+}
+
+
+
 
 /*
                             营养素1		营养素2		...
