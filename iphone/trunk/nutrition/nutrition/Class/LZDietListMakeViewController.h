@@ -7,12 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface LZFoodListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+typedef enum listType
+{
+    dietListTypeNew = 0,
+    dietListTypeOld = 1
+}DietListType;
+@interface LZDietListMakeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
-@property (strong,nonatomic)NSMutableArray *takenFoodArray;
+@property (strong,nonatomic)NSMutableArray *takenFoodIdsArray;
 @property (strong, nonatomic)NSMutableDictionary *takenFoodDict;
 @property (strong,nonatomic)NSMutableArray *nutrientInfoArray;
+@property (strong,nonatomic)NSMutableDictionary *takenFoodNutrientInfoDict;
+@property (assign, nonatomic)DietListType listType;
 @property (assign,nonatomic)BOOL needRefresh;
-@property (readwrite,nonatomic)int changeTime;
 @end

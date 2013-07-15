@@ -35,22 +35,22 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    self.navItem.title = foodName;
-    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"  返回" forState:UIControlStateNormal];
-    
-    button.frame = CGRectMake(0, 0, 48, 30);
-    [button.titleLabel setFont:[UIFont systemFontOfSize:13]];
-    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-    [button addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    self.navItem.leftBarButtonItem= customBarItem;
+    self.title = foodName;
+//    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+//    
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+//    [button setTitle:@"  返回" forState:UIControlStateNormal];
+//    
+//    button.frame = CGRectMake(0, 0, 48, 30);
+//    [button.titleLabel setFont:[UIFont systemFontOfSize:13]];
+//    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+//    [button addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    
+//    self.navItem.leftBarButtonItem= customBarItem;
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
@@ -68,10 +68,10 @@
 {
     [MobClick endLogPageView:@"食物详情页面"];
 }
-- (void)backButtonTapped:(id)sender
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
+//- (void)backButtonTapped:(id)sender
+//{
+//    [self.navigationController popViewControllerAnimated:YES];
+//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)

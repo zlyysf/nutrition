@@ -119,10 +119,9 @@
 		5F746C3E176B1E9F00E68D0E /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C3D176B1E9F00E68D0E /* libicucore.dylib */; };
 		5F746C40176B1EA900E68D0E /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C3F176B1EA900E68D0E /* libz.1.2.5.dylib */; };
 		5F789B231755B1F3002FE365 /* foodCellBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F789B221755B1F3002FE365 /* foodCellBack@2x.png */; };
-		5F94A86517531CC100664B57 /* LZFoodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZFoodListViewController.m */; };
+		5F94A86517531CC100664B57 /* LZDietListMakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */; };
 		5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86717531ED700664B57 /* LZSettingsViewController.m */; };
 		5F955F29177C2A0C00FCC976 /* Addfood_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F955F28177C2A0C00FCC976 /* Addfood_button@2x.png */; };
-		5F955F2C177C2A4800FCC976 /* LZAddFoodButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F955F2B177C2A4800FCC976 /* LZAddFoodButtonCell.m */; };
 		5F955F2E177C3A2F00FCC976 /* AddByNutrientButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F955F2D177C3A2F00FCC976 /* AddByNutrientButton@2x.png */; };
 		5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
 		5F9C128D17321935000E08E5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9C128C17321935000E08E5 /* MessageUI.framework */; };
@@ -310,13 +309,11 @@
 		5F746C3D176B1E9F00E68D0E /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		5F746C3F176B1EA900E68D0E /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		5F789B221755B1F3002FE365 /* foodCellBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "foodCellBack@2x.png"; path = "nutrition/Resource/foodCellBack@2x.png"; sourceTree = "<group>"; };
-		5F94A86317531CC100664B57 /* LZFoodListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodListViewController.h; path = Class/LZFoodListViewController.h; sourceTree = "<group>"; };
-		5F94A86417531CC100664B57 /* LZFoodListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodListViewController.m; path = Class/LZFoodListViewController.m; sourceTree = "<group>"; };
+		5F94A86317531CC100664B57 /* LZDietListMakeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDietListMakeViewController.h; path = Class/LZDietListMakeViewController.h; sourceTree = "<group>"; };
+		5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDietListMakeViewController.m; path = Class/LZDietListMakeViewController.m; sourceTree = "<group>"; };
 		5F94A86617531ED700664B57 /* LZSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSettingsViewController.h; path = Class/LZSettingsViewController.h; sourceTree = "<group>"; };
 		5F94A86717531ED700664B57 /* LZSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZSettingsViewController.m; path = Class/LZSettingsViewController.m; sourceTree = "<group>"; };
 		5F955F28177C2A0C00FCC976 /* Addfood_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Addfood_button@2x.png"; path = "nutrition/Resource/Addfood_button@2x.png"; sourceTree = "<group>"; };
-		5F955F2A177C2A4800FCC976 /* LZAddFoodButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZAddFoodButtonCell.h; path = Class/LZAddFoodButtonCell.h; sourceTree = "<group>"; };
-		5F955F2B177C2A4800FCC976 /* LZAddFoodButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZAddFoodButtonCell.m; path = Class/LZAddFoodButtonCell.m; sourceTree = "<group>"; };
 		5F955F2D177C3A2F00FCC976 /* AddByNutrientButton@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "AddByNutrientButton@2x.png"; path = "nutrition/Resource/AddByNutrientButton@2x.png"; sourceTree = "<group>"; };
 		5F9995F4172BDBE400A36B4F /* LZFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodCell.h; path = Class/LZFoodCell.h; sourceTree = "<group>"; };
 		5F9995F5172BDBE400A36B4F /* LZFoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodCell.m; path = Class/LZFoodCell.m; sourceTree = "<group>"; };
@@ -609,8 +606,8 @@
 				5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */,
 				5F9995F4172BDBE400A36B4F /* LZFoodCell.h */,
 				5F9995F5172BDBE400A36B4F /* LZFoodCell.m */,
-				5F94A86317531CC100664B57 /* LZFoodListViewController.h */,
-				5F94A86417531CC100664B57 /* LZFoodListViewController.m */,
+				5F94A86317531CC100664B57 /* LZDietListMakeViewController.h */,
+				5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */,
 				5F94A86617531ED700664B57 /* LZSettingsViewController.h */,
 				5F94A86717531ED700664B57 /* LZSettingsViewController.m */,
 				5F627435175C6A18006E46CA /* LZRecommendEmptyCell.h */,
@@ -635,8 +632,6 @@
 				5FF632091772A94D0068CBFE /* LZAddFoodViewController.m */,
 				5FF6320B1772AB750068CBFE /* LZAddFoodCell.h */,
 				5FF6320C1772AB760068CBFE /* LZAddFoodCell.m */,
-				5F955F2A177C2A4800FCC976 /* LZAddFoodButtonCell.h */,
-				5F955F2B177C2A4800FCC976 /* LZAddFoodButtonCell.m */,
 				5F25849A178280ED00D99C16 /* LZFoodInfoViewController.h */,
 				5F25849B178280ED00D99C16 /* LZFoodInfoViewController.m */,
 				5F25849D17829DD900D99C16 /* LZEditProfileViewController.h */,
@@ -1058,7 +1053,7 @@
 				5F03D34B174B9241008EFB60 /* LZFoodDetailController.m in Sources */,
 				5F03D34C174B9241008EFB60 /* LZNutritionSupplyCell.m in Sources */,
 				5F03D34D174B9241008EFB60 /* LZStandardContentCell.m in Sources */,
-				5F94A86517531CC100664B57 /* LZFoodListViewController.m in Sources */,
+				5F94A86517531CC100664B57 /* LZDietListMakeViewController.m in Sources */,
 				5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */,
 				5F50961B1754777300461964 /* LZValueSelectorView.m in Sources */,
 				5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */,
@@ -1074,7 +1069,6 @@
 				5FF6320517718E100068CBFE /* LZNutritionInfoView.m in Sources */,
 				5FF6320A1772A94D0068CBFE /* LZAddFoodViewController.m in Sources */,
 				5FF6320D1772AB760068CBFE /* LZAddFoodCell.m in Sources */,
-				5F955F2C177C2A4800FCC976 /* LZAddFoodButtonCell.m in Sources */,
 				5F25849C178280ED00D99C16 /* LZFoodInfoViewController.m in Sources */,
 				5F25849F17829DDA00D99C16 /* LZEditProfileViewController.m in Sources */,
 				5F2584A21782A22200D99C16 /* LZMainTabViewController.m in Sources */,

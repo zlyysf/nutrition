@@ -47,8 +47,8 @@
     [headerView addSubview:tipsLabel];
     self.listView.tableHeaderView = headerView;
     self.title = nutrientTitle;
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped:)];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+//    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped:)];
+//    self.navigationItem.leftBarButtonItem = backButtonItem;
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
@@ -65,24 +65,6 @@
     [shared resetAdView:self andListView:footerView];
 }
 -(void)viewWillDisappear:(BOOL)animated
-{
-    [MobClick endLogPageView:@"按营养素添加食物页面"];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
-
-- (void)viewDidUnload {
-    [self setListView:nil];
-    //[self setNavItem:nil];
-    [super viewDidUnload];
-}
-- (IBAction)cancelButtonTapped:(id)sender
 {
     if(self.currentFoodInputTextField != nil)
     {
@@ -114,9 +96,58 @@
         [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
         [[NSUserDefaults  standardUserDefaults]synchronize];
     }
-    
-    [self dismissModalViewControllerAnimated:YES];
+
+    [MobClick endLogPageView:@"按营养素添加食物页面"];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
+
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
+
+- (void)viewDidUnload {
+    [self setListView:nil];
+    //[self setNavItem:nil];
+    [super viewDidUnload];
+}
+//- (IBAction)cancelButtonTapped:(id)sender
+//{
+//    if(self.currentFoodInputTextField != nil)
+//    {
+//        [self.currentFoodInputTextField resignFirstResponder];
+//    }
+//    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
+//    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+//    if(dailyIntake != nil)
+//    {
+//        [intakeDict addEntriesFromDictionary:dailyIntake];
+//    }
+//    
+//    BOOL needSaveData = NO;
+//    for (NSString * NDB_No in [self.tempIntakeDict allKeys])
+//    {
+//        NSNumber *num = [self.tempIntakeDict objectForKey:NDB_No];
+//        if ([num intValue]>0)
+//        {
+//            needSaveData = YES;
+//            NSNumber *takenAmountNum = [intakeDict objectForKey:NDB_No];
+//            if (takenAmountNum)
+//                [intakeDict setObject:[NSNumber numberWithInt:[num intValue]+[takenAmountNum intValue]] forKey:NDB_No];
+//            else
+//                [intakeDict setObject:num forKey:NDB_No];
+//        }
+//    }
+//    if (needSaveData) {
+//        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+//        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
+//        [[NSUserDefaults  standardUserDefaults]synchronize];
+//    }
+//    
+//    [self dismissModalViewControllerAnimated:YES];
+//}
 //- (IBAction)saveButtonTapped:(id)sender {
 //    //储存摄入量
 //    if(self.currentFoodInputTextField != nil)

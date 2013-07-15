@@ -6,7 +6,7 @@
 //  Copyright (c) 2013 lingzhi mobile. All rights reserved.
 //
 
-#import "LZFoodListViewController.h"
+#import "LZDietListMakeViewController.h"
 #import "LZAddFoodViewController.h"
 #import "LZRecommendFood.h"
 #import "LZRecommendFoodCell.h"
@@ -18,14 +18,13 @@
 #import "LZAddByNutrientController.h"
 #import "GADMasterViewController.h"
 #import "MobClick.h"
-#import "LZAddFoodButtonCell.h"
 #import <QuartzCore/QuartzCore.h>
-@interface LZFoodListViewController ()
+@interface LZDietListMakeViewController ()
 
 @end
 
-@implementation LZFoodListViewController
-@synthesize takenFoodArray,takenFoodDict,nutrientInfoArray,needRefresh;
+@implementation LZDietListMakeViewController
+@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -38,24 +37,59 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"检测";
+    if (self.listType == dietListTypeNew)
+    {
+        self.title = @"我来做营养师";
+    }
+    else
+    {
+        self.title = @"主题名字";
+    }
 	// Do any additional setup after loading the view.
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+
+    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setTitle:@"  取消" forState:UIControlStateNormal];
+
+    button.frame = CGRectMake(0, 0, 48, 30);
+    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [button addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+
+    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+
+    self.navigationItem.leftBarButtonItem = cancelItem;
+    
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
+    self.navigationItem.rightBarButtonItem = saveItem;
     needRefresh = NO;
-    takenFoodArray = [[NSMutableArray alloc]init];
+    takenFoodIdsArray = [[NSMutableArray alloc]init];
     takenFoodDict = [[NSMutableDictionary alloc]init];
     nutrientInfoArray = [[NSMutableArray alloc]init];
+    takenFoodNutrientInfoDict = [[NSMutableDictionary alloc]init];
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                              CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                              CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
     self.listView.tableFooterView = footerView;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
-    [self displayTakenFoodResult];
-    self.changeTime = 0;
-    
+    [self refreshFoodNureitentProcess];
+}
+- (void)cancelButtonTapped
+{
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    [self.navigationController  popViewControllerAnimated:YES];
+}
+- (void)saveButtonTapped
+{
+    [self.navigationController  popViewControllerAnimated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -65,7 +99,7 @@
     [shared resetAdView:self andListView:footerView];
     if(needRefresh)
     {
-        [self displayTakenFoodResult];
+        [self refreshFoodNureitentProcess];
         needRefresh = NO;
     }
 }
@@ -77,15 +111,9 @@
 {
     needRefresh = YES;
 }
--(void)displayTakenFoodResult
+-(void)refreshFoodNureitentProcess
 {
     NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
-
-//    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-//    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-//    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-//                            planPerson,@"personCount",
-//                            planDays,@"dayCount", nil];
     
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
@@ -101,41 +129,56 @@
                               userSex,ParamKey_sex, userAge,ParamKey_age,
                               userWeight,ParamKey_weight, userHeight,ParamKey_height,
                               userActivityLevel,ParamKey_activityLevel, nil];
+
     
-    BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
-    NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss, nil];
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            userInfo,@"userInfo",
+                            takenFoodAmountDict,@"givenFoodsAmount1",
+                            nil,@"givenFoodsAmount2",
+                            nil];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    
-    //    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
-    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_withUserInfo:userInfo andDecidedFoods:takenFoodAmountDict andOptions:options];
+    NSMutableDictionary *retFmtDict = [rf calculateGiveFoodsSupplyNutrientAndFormatForUI:params];
+    NSLog(@" allkeys  %@",[retFmtDict allKeys]);
+    NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI %@",retFmtDict);
 
-    NSMutableDictionary *retFmtDict = [rf formatTakenResultForUI:retDict];
-    //NSLog(@"retFmtDict %@",retFmtDict);
-    NSArray *takenArray = [retFmtDict objectForKey:Key_takenFoodInfoDictArray];
-    [takenFoodArray removeAllObjects];
-    if (takenArray != nil && [takenArray count]!=0) {
+    NSArray *takenArray1 = [retFmtDict objectForKey:Key_orderedGivenFoodIds1];
+    NSArray *takenArray2 = [retFmtDict objectForKey:Key_orderedGivenFoodIds2];
+    [takenFoodIdsArray removeAllObjects];
+    if (takenArray1 != nil && [takenArray1 count]!=0) {
         
-        [takenFoodArray addObjectsFromArray:takenArray];
+        [takenFoodIdsArray addObjectsFromArray:takenArray1];
     }
-    //NSLog(@"takenArray %@",takenFoodArray);
-    NSDictionary *takenDict = [retFmtDict objectForKey:Key_takenFoodNutrientInfoAryDictDict];
+    if (takenArray2 != nil && [takenArray2 count]!=0) {
+        
+        [takenFoodIdsArray addObjectsFromArray:takenArray2];
+    }
+
+    NSDictionary *takenDict = [retFmtDict objectForKey:Key_givenFoodInfoDict2Level];
     [takenFoodDict removeAllObjects];
     if (takenDict != nil )
     {
         
         [takenFoodDict addEntriesFromDictionary:takenDict];
-        //NSLog(@"takenFoodDict %@ ",takenFoodDict);
     }
-    NSArray *nutrientArray = [retFmtDict objectForKey:Key_nutrientTakenRateInfoArray];
+    
+    NSDictionary *takenFoodNutrientDict = [retFmtDict objectForKey:Key_takenFoodNutrientInfoAryDictDict];
+    [takenFoodNutrientInfoDict removeAllObjects];
+    if (takenFoodNutrientDict != nil )
+    {
+        
+        [takenFoodNutrientInfoDict addEntriesFromDictionary:takenFoodNutrientDict];
+    }
+
+    NSArray *nutrientArray = [retFmtDict objectForKey:Key_nutrientSupplyRateInfoArray];
     [nutrientInfoArray removeAllObjects];
     if (nutrientArray != nil && [nutrientArray count]!=0) {
         
         [nutrientInfoArray addObjectsFromArray:nutrientArray];
-        //NSLog(@"nutrientInfoArray %@",nutrientInfoArray);
     }
     
-
+    //NSIndexSet *reloadSet = [[NSIndexSet alloc]initWithIndex:1];
+    //[self.listView reloadSections:reloadSet withRowAnimation:UITableViewRowAnimationAutomatic];
     [self.listView reloadData];
 
 }
@@ -147,7 +190,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)
-        return (takenFoodArray ==nil || [takenFoodArray count]==0) ? 2 : [takenFoodArray count]+1;
+        return (takenFoodIdsArray ==nil || [takenFoodIdsArray count]==0) ? 1 : [takenFoodIdsArray count];
     else
         return [nutrientInfoArray count];
 //    if (section == 0)
@@ -160,14 +203,7 @@
 {
     if (indexPath.section == 0)
     {
-        if (indexPath.row == 0)
-        {
-            LZAddFoodButtonCell  * cell = (LZAddFoodButtonCell*)[tableView dequeueReusableCellWithIdentifier:@"LZAddFoodButtonCell"];
-            return cell;
-        }
-        else
-        {
-            if(takenFoodArray ==nil || [takenFoodArray count]==0)
+            if(takenFoodIdsArray ==nil || [takenFoodIdsArray count]==0)
             {
                 LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
                 [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
@@ -177,7 +213,8 @@
             else
             {
                 LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
-                NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row-1];
+                NSString *foodId = [takenFoodIdsArray objectAtIndex:indexPath.row];
+                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
                 //NSLog(@"picture path %@",aFood);
                 NSString *picturePath;
                 NSString *picPath = [aFood objectForKey:@"PicturePath"];
@@ -191,13 +228,10 @@
                 }
                 UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
                 [cell.foodImageView setImage:foodImage];
-                cell.cellInfo = aFood;
+                cell.cellFoodId = foodId;
                 cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
                 NSNumber *weight = [aFood objectForKey:@"Amount"];
                 cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
-                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGestureHandler:)];
-                tap.numberOfTapsRequired = 2;
-                [cell addGestureRecognizer:tap];
                 UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
                 swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
                 UISwipeGestureRecognizer *swipeRightGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
@@ -207,7 +241,6 @@
                 //[cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
                 return cell;
             }
-        }
     }
     else
     {
@@ -217,7 +250,7 @@
         NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
         cell.nutrientId = nutrientId;
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
-        NSNumber *percent = [nutrient objectForKey:@"nutrientInitialSupplyRate"];
+        NSNumber *percent = [nutrient objectForKey:@"nutrientSupplyRate"];
         float progress = [percent floatValue]>1.f ? 1.f :[percent floatValue];
         float radius;
         if (progress >0.03 )
@@ -230,15 +263,6 @@
         }
         [cell.backView.layer setMasksToBounds:YES];
         [cell.backView.layer setCornerRadius:3.f];
-        if (indexPath.row %2 == 0)
-        {
-            fillColor = [UIColor blackColor];
-        }
-        else
-        {
-            fillColor = [UIColor redColor];
-        }
-        self.changeTime +=1;
         [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,200,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
         [cell adjustLabelAccordingToProgress:progress forLabelWidth:200];
         //[cell.backView setBackgroundColor:[UIColor clearColor]];
@@ -255,31 +279,18 @@
         return cell;
     }
 }
-- (void)tapGestureHandler:(UITapGestureRecognizer*)sender
-{
-    if (sender.state == UIGestureRecognizerStateEnded)
-    {
-        NSIndexPath *index1 = [NSIndexPath indexPathForRow:0 inSection:0];
-        NSIndexPath *index2 = [NSIndexPath indexPathForRow:1 inSection:0];
-        
-        
-        [self.listView moveRowAtIndexPath:index1 toIndexPath:index2];
-    }
-    
-}
 - (void)foodCellSwiped:(UISwipeGestureRecognizer*)sender
 {
-
-
     if (sender.state == UIGestureRecognizerStateEnded)
     {
         NSLog(@"%d",sender.direction);
         LZRecommendFoodCell *cell = (LZRecommendFoodCell*)sender.view;
-        NSDictionary *cellInfoDict = cell.cellInfo;
-        int index = [self.takenFoodArray indexOfObject:cellInfoDict];
-         if (index >= 0 && index < [self.takenFoodArray count])
+        NSString *foodId = cell.cellFoodId;
+        NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
+        int index = [self.takenFoodIdsArray indexOfObject:foodId];
+         if (index >= 0 && index < [self.takenFoodIdsArray count])
         {
-            NSIndexPath *indexPathToDelete = [NSIndexPath indexPathForRow:index+1 inSection:0];
+            NSIndexPath *indexPathToDelete = [NSIndexPath indexPathForRow:index inSection:0];
             
             NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
             NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:takenFoodAmountDict];
@@ -289,9 +300,9 @@
             [[NSUserDefaults standardUserDefaults]synchronize];
             //[self displayTakenFoodResult];
             [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
-            [self.takenFoodArray removeObjectAtIndex:index];
+            [self.takenFoodIdsArray removeObjectAtIndex:index];
             NSArray *array = [[NSArray alloc]initWithObjects:indexPathToDelete, nil];
-            if ([self.takenFoodArray count]== 0)
+            if ([self.takenFoodIdsArray count]== 0)
             {
                 if(sender.direction == UISwipeGestureRecognizerDirectionLeft)
                 [self.listView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationLeft];
@@ -308,6 +319,7 @@
                     [self.listView deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationRight];
                 [self.listView endUpdates];
             }
+            [self refreshFoodNureitentProcess];
         }
     }
 }
@@ -363,20 +375,18 @@
     [self.listView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.section == 0)
     {
-        if (indexPath.row == 0)
-        {
-            return;
-        }
-        if(takenFoodArray ==nil || [takenFoodArray count]==0)
+        if(takenFoodIdsArray ==nil || [takenFoodIdsArray count]==0)
         {
             return;
         }
         else
         {
-            NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row-1];
+            NSString *foodId  = [takenFoodIdsArray objectAtIndex:indexPath.row];
+            
+            NSDictionary *aFood = [takenFoodDict objectForKey:foodId];//[takenFoodIdsArray objectAtIndex:indexPath.row];
             NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
-            NSArray *nutrientSupplyArr = [[takenFoodDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
-            NSArray *nutrientStandardArr = [[takenFoodDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
+            NSArray *nutrientSupplyArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
+            NSArray *nutrientStandardArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
             NSString *foodName = [aFood objectForKey:@"Name"];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
             LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
@@ -384,9 +394,9 @@
             foodDetailController.nutrientStandardArray = nutrientStandardArr;
             foodDetailController.foodName = foodName;
             foodDetailController.isForRecomendFood = NO;
-            UINavigationController *initialController = (UINavigationController*)[UIApplication
-                                                                                  sharedApplication].keyWindow.rootViewController;
-            [initialController pushViewController:foodDetailController animated:YES];
+            //UINavigationController *initialController = (UINavigationController*)[UIApplication
+                                                                                  //sharedApplication].keyWindow.rootViewController;
+            [self.navigationController pushViewController:foodDetailController animated:YES];
         }
     }
     else
@@ -438,8 +448,9 @@
         LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
         addByNutrientController.foodArray = recommendFoodArray;
         addByNutrientController.nutrientTitle = nutrientName;
-         UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addByNutrientController];
-        [self presentModalViewController:navController animated:YES];
+        // UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addByNutrientController];
+        //[self presentModalViewController:navController animated:YES];
+        [self.navigationController pushViewController:addByNutrientController animated:YES];
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -460,12 +471,12 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
     NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:takenFoodAmountDict];
-    NSDictionary *aFood = [takenFoodArray objectAtIndex:indexPath.row-1];
+    NSDictionary *aFood = [takenFoodIdsArray objectAtIndex:indexPath.row-1];
     NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
     [tempDict removeObjectForKey:ndb_No];
     [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    [self displayTakenFoodResult];
+    [self refreshFoodNureitentProcess];
     [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
 //    [self.takenFoodArray removeObjectAtIndex:indexPath.row];
 //    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
@@ -517,8 +528,8 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
     LZAddFoodViewController *addFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddFoodViewController"];
-    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addFoodViewController];
-    [self presentModalViewController:navController animated:YES];
+    //UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addFoodViewController];
+    [self.navigationController pushViewController:addFoodViewController animated:YES];
 }
 - (IBAction)addFoodAction:(id)sender {
     [self performSelector:@selector(addFood) withObject:nil afterDelay:0.f];
@@ -583,8 +594,9 @@
     LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
     addByNutrientController.foodArray = recommendFoodArray;
     addByNutrientController.nutrientTitle = nutrientName;
-    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addByNutrientController];
-    [self presentModalViewController:navController animated:YES];
+    //UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addByNutrientController];
+    [self.navigationController pushViewController:addByNutrientController animated:YES];
+    //[self presentModalViewController:navController animated:YES];
 
 }
 - (IBAction)addFoodByNutrient:(UIButton *)sender {

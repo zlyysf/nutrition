@@ -39,8 +39,8 @@
     NSMutableSet *foodTypeSet = [NSMutableSet set];
     self.foodTypeArray = [[NSMutableArray alloc]init];
     self.foodNameArray = [[NSMutableArray alloc]init];
-    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped:)];
-    self.navigationItem.leftBarButtonItem = backButtonItem;
+//    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped:)];
+//    self.navigationItem.leftBarButtonItem = backButtonItem;
     NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
@@ -145,9 +145,6 @@
     dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
     dailyIntakeViewController.titleString = [self.foodTypeArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:dailyIntakeViewController animated:YES];
-}
-- (IBAction)cancelButtonTapped:(id)sender {
-    [self dismissModalViewControllerAnimated:YES];
 }
 //- (IBAction)saveButtonTapped:(id)sender
 //{

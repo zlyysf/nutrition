@@ -12,6 +12,8 @@
 #import "LZEditProfileViewController.h"
 #import "LZSettingsViewController.h"
 #import "LZUtility.h"
+#import "LZDietListMakeViewController.h"
+#import "LZConstants.h"
 @interface LZUserDietListViewController ()
 
 @end
@@ -77,7 +79,12 @@
 
 - (void)addListAction
 {
-    
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
+    foodListViewController.listType = dietListTypeNew;
+    [self.navigationController pushViewController:foodListViewController animated:YES];
 }
 - (void)settingsAction
 {
