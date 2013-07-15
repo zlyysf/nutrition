@@ -2430,9 +2430,9 @@
             [LZUtility addDoubleToDictionaryItem:[nmFoodAmount doubleValue] withDictionary:givenFoodsAmountDict andKey:foodId];
         }
     }
-    if (givenFoodsAmountDict.count == 0){
-        return nil;
-    }
+//    if (givenFoodsAmountDict.count == 0){
+//        return nil;
+//    }
     NSMutableDictionary* formatResult = [NSMutableDictionary dictionary];
     LZDataAccess *da = [LZDataAccess singleton];
     if (DRIsDict == nil){
@@ -2462,7 +2462,8 @@
 
     NSArray *orderedGivenFoodIds = [da getOrderedFoodIds:givenFoodIds];
     assert(givenFoodIds.count == orderedGivenFoodIds.count);
-    [formatResult setValue:orderedGivenFoodIds forKey:Key_orderedGivenFoodIds];
+    if (orderedGivenFoodIds!=nil)
+        [formatResult setValue:orderedGivenFoodIds forKey:Key_orderedGivenFoodIds];
 
     NSMutableDictionary *givenFoodInfoDict2Level = [NSMutableDictionary dictionary];
 //    NSMutableArray *givenFoodInfoDictArray = [NSMutableArray array];

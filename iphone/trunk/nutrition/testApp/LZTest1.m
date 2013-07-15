@@ -22,13 +22,14 @@
 //    [self.class testDA1];
 //    [self.class test_insertFoodCollocationData_withCollocationName];
 //    [self.class test_updateFoodCollocationData_withCollocationId];
-    [self.class test_deleteFoodCollocationData_withCollocationId];
+//    [self.class test_deleteFoodCollocationData_withCollocationId];
     
 //    [self.class testFormatResult1];
 //    [self.class testFormatResult2_taken];
 //    [self.class testFormatResult_foodStarndard];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend];
+    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_empty];
 }
 
 
@@ -1662,6 +1663,28 @@
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     [rf calculateGiveFoodsSupplyNutrientAndFormatForUI:params];
 }
+
++(void)test_calculateGiveFoodsSupplyNutrientAndFormatForUI_empty
+{
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],ParamKey_sex, [NSNumber numberWithInt:age],ParamKey_age,
+                              [NSNumber numberWithFloat:weight],ParamKey_weight, [NSNumber numberWithFloat:height],ParamKey_height,
+                              [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
+    
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            userInfo,@"userInfo",
+                            nil];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    [rf calculateGiveFoodsSupplyNutrientAndFormatForUI:params];
+}
+
 
 +(void)test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend
 {
