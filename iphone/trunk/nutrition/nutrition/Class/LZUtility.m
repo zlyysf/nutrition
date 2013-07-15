@@ -379,6 +379,15 @@
     return activityDict;
     
 }
+
++(long long)getMillisecond:(NSDate*)datetime
+{
+    NSTimeInterval ti = [datetime timeIntervalSince1970];
+    long long llms = (long long)round(ti*1000);
+    return llms;
+}
+
+
 @end
 
 

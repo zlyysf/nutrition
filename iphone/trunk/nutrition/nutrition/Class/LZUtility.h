@@ -45,4 +45,9 @@
 + (BOOL)isUserProfileComplete;
 
 + (NSDictionary *)getActivityLevelInfo;
+
++(long long)getMillisecond:(NSDate*)datetime;
+
+
+
 @end

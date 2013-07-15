@@ -111,6 +111,14 @@
 #define TABLE_NAME_FoodPicPath @"FoodPicPath"
 #define COLUMN_NAME_PicPath @"PicPath"
 
+#define TABLE_NAME_FoodCollocation @"FoodCollocation"
+#define TABLE_NAME_CollocationFood @"CollocationFood"
+#define TABLE_NAME_FoodCollocationParam @"FoodCollocationParam"
+#define COLUMN_NAME_CollocationId @"CollocationId"
+#define COLUMN_NAME_FoodId @"FoodId"
+#define COLUMN_NAME_FoodAmount @"FoodAmount"
+
+
 #define Key_Amount @"Amount"
 #define Key_Name @"Name"
 #define Key_Unit @"Unit"

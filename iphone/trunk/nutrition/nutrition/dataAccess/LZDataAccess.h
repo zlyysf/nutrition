@@ -65,4 +65,44 @@
 -(NSArray *) getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds;
 -(bool) existAnyGivenFoodsBeRichOfNutrition:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds;
 
+
+-(BOOL)updateFoodCollocationName:(NSString*)collationName byId:(NSNumber*)nmCollocationId;
+-(NSArray*)getAllFoodCollocation;
+-(NSArray*)getCollocationFoodData_withCollocationId:(NSNumber*)nmCollocationId;
+-(NSDictionary*)getFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId;
+-(NSNumber *)insertFoodCollocationData_withCollocationName:(NSString*)collationName andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray;
+-(BOOL)updateFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId andNewCollocationName:(NSString*)collocationName andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray;
+-(BOOL)deleteFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId;
+
+
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -18,18 +18,17 @@
 {
 
 //    [self.class caseUser1_randseed_1];
-    
 //    [self.class caseUser1_preTaken_4full];
-    
-    
-    
 //    [self.class testDA1];
+//    [self.class test_insertFoodCollocationData_withCollocationName];
+//    [self.class test_updateFoodCollocationData_withCollocationId];
+    [self.class test_deleteFoodCollocationData_withCollocationId];
     
 //    [self.class testFormatResult1];
 //    [self.class testFormatResult2_taken];
 //    [self.class testFormatResult_foodStarndard];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI];
-    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend];
+//    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend];
 }
 
 
@@ -1820,6 +1819,57 @@
 
 
 
+
+
+
++(void)test_insertFoodCollocationData_withCollocationName
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSString *collocationName = @"collocationName";
+    NSMutableArray * foodAndAmountArray = [NSMutableArray array];
+    [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10010", [NSNumber numberWithDouble:123],nil]];
+    [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10011", [NSNumber numberWithDouble:234],nil]];    
+    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
+    assert(nmCollocationId!=nil);
+    [da getFoodCollocationData_withCollocationId:nmCollocationId];
+    
+}
+
++(void)test_updateFoodCollocationData_withCollocationId
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSString *collocationName = @"collocationName";
+    NSMutableArray * foodAndAmountArray = [NSMutableArray array];
+    [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10010", [NSNumber numberWithDouble:111],nil]];
+    [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10011", [NSNumber numberWithDouble:112],nil]];
+    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
+    assert(nmCollocationId!=nil);
+    
+    NSString *collocationName2 = @"collocationName2";
+    NSMutableArray * foodAndAmountArray2 = [NSMutableArray array];
+    [foodAndAmountArray2 addObject:[NSArray arrayWithObjects:@"20010", [NSNumber numberWithDouble:211],nil]];
+    [foodAndAmountArray2 addObject:[NSArray arrayWithObjects:@"20011", [NSNumber numberWithDouble:212],nil]];
+    [da updateFoodCollocationData_withCollocationId:nmCollocationId andNewCollocationName:collocationName2 andFoodAmount2LevelArray:foodAndAmountArray2];
+    
+    [da getFoodCollocationData_withCollocationId:nmCollocationId];
+    
+}
+
++(void)test_deleteFoodCollocationData_withCollocationId
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSString *collocationName = @"collocationName";
+    NSMutableArray * foodAndAmountArray = [NSMutableArray array];
+    [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10010", [NSNumber numberWithDouble:111],nil]];
+    [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10011", [NSNumber numberWithDouble:112],nil]];
+    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
+    assert(nmCollocationId!=nil);
+    
+    [da deleteFoodCollocationData_withCollocationId:nmCollocationId];
+    
+    [da getFoodCollocationData_withCollocationId:nmCollocationId];
+    
+}
 
 
 

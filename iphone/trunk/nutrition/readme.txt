@@ -23,13 +23,21 @@ CREATE TABLE Food_Supply_DRI_Common ('NDB_No' TEXT PRIMARY KEY,'Shrt_Desc' REAL,
 
 
 
+FoodCollocation 食物搭配历史表
+CollocationId, CollocationName, CollocationCreateTime
 
+CollocationFood 食物搭配详情，一个搭配包含多个食物
+CollocationId, FoodId, FoodAmount
 
+FoodCollocationParam 食物搭配相关参数，主要是用户信息，但是可能目前仅作记录。使用时仍用当前的。
+CollocationId, ParamName, ParamValue
 
-
-
-
-
+DROP TABLE IF EXISTS FoodCollocation;
+DROP TABLE IF EXISTS CollocationFood;
+DROP TABLE IF EXISTS FoodCollocationParam;
+CREATE TABLE FoodCollocation(CollocationId INTEGER PRIMARY KEY AUTOINCREMENT, CollocationName TEXT, CollocationCreateTime INTEGER);
+CREATE TABLE CollocationFood(CollocationId INTEGER, FoodId INTEGER, FoodAmount REAL);
+CREATE TABLE FoodCollocationParam(CollocationId INTEGER, ParamName TEXT, ParamValue TEXT);
 
 
 
