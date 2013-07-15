@@ -54,6 +54,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [self displayTakenFoodResult];
+    self.changeTime = 0;
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -189,10 +191,19 @@
                 }
                 UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
                 [cell.foodImageView setImage:foodImage];
-
+                cell.cellInfo = aFood;
                 cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
                 NSNumber *weight = [aFood objectForKey:@"Amount"];
                 cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
+                UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(tapGestureHandler:)];
+                tap.numberOfTapsRequired = 2;
+                [cell addGestureRecognizer:tap];
+                UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
+                swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
+                UISwipeGestureRecognizer *swipeRightGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
+                swipeRightGesture.direction = UISwipeGestureRecognizerDirectionRight;
+                [cell addGestureRecognizer:swipeLeftGesture];
+                [cell addGestureRecognizer:swipeRightGesture];
                 //[cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
                 return cell;
             }
@@ -219,6 +230,15 @@
         }
         [cell.backView.layer setMasksToBounds:YES];
         [cell.backView.layer setCornerRadius:3.f];
+        if (indexPath.row %2 == 0)
+        {
+            fillColor = [UIColor blackColor];
+        }
+        else
+        {
+            fillColor = [UIColor redColor];
+        }
+        self.changeTime +=1;
         [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,200,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
         [cell adjustLabelAccordingToProgress:progress forLabelWidth:200];
         //[cell.backView setBackgroundColor:[UIColor clearColor]];
@@ -233,6 +253,62 @@
 //        }
         cell.addFoodButton.tag = indexPath.row;
         return cell;
+    }
+}
+- (void)tapGestureHandler:(UITapGestureRecognizer*)sender
+{
+    if (sender.state == UIGestureRecognizerStateEnded)
+    {
+        NSIndexPath *index1 = [NSIndexPath indexPathForRow:0 inSection:0];
+        NSIndexPath *index2 = [NSIndexPath indexPathForRow:1 inSection:0];
+        
+        
+        [self.listView moveRowAtIndexPath:index1 toIndexPath:index2];
+    }
+    
+}
+- (void)foodCellSwiped:(UISwipeGestureRecognizer*)sender
+{
+
+
+    if (sender.state == UIGestureRecognizerStateEnded)
+    {
+        NSLog(@"%d",sender.direction);
+        LZRecommendFoodCell *cell = (LZRecommendFoodCell*)sender.view;
+        NSDictionary *cellInfoDict = cell.cellInfo;
+        int index = [self.takenFoodArray indexOfObject:cellInfoDict];
+         if (index >= 0 && index < [self.takenFoodArray count])
+        {
+            NSIndexPath *indexPathToDelete = [NSIndexPath indexPathForRow:index+1 inSection:0];
+            
+            NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:takenFoodAmountDict];
+            NSString *ndb_No = [cellInfoDict objectForKey:@"NDB_No"];
+            [tempDict removeObjectForKey:ndb_No];
+            [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:LZUserDailyIntakeKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            //[self displayTakenFoodResult];
+            [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
+            [self.takenFoodArray removeObjectAtIndex:index];
+            NSArray *array = [[NSArray alloc]initWithObjects:indexPathToDelete, nil];
+            if ([self.takenFoodArray count]== 0)
+            {
+                if(sender.direction == UISwipeGestureRecognizerDirectionLeft)
+                [self.listView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationLeft];
+                else
+                [self.listView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationRight];
+                
+            }
+            else
+            {
+                [self.listView beginUpdates];
+                if(sender.direction == UISwipeGestureRecognizerDirectionLeft)
+                [self.listView deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationLeft];
+                else
+                    [self.listView deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationRight];
+                [self.listView endUpdates];
+            }
+        }
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -367,18 +443,19 @@
     }
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section ==1)
-    {
-        return NO;
-    }
-    else 
-    {
-        if(indexPath.row == 0)
-        {
-            return NO;
-        }
-        return !(takenFoodArray ==nil || [takenFoodArray count]==0);
-    }
+    return NO;
+//    if (indexPath.section ==1)
+//    {
+//        return NO;
+//    }
+//    else 
+//    {
+//        if(indexPath.row == 0)
+//        {
+//            return NO;
+//        }
+//        return !(takenFoodArray ==nil || [takenFoodArray count]==0);
+//    }
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
@@ -517,13 +594,42 @@
 
 }
 - (IBAction)clearFoodAction:(id)sender {
-    NSDictionary *dailyIntake = [[NSDictionary alloc]init];
-    [[NSUserDefaults standardUserDefaults] setObject:dailyIntake forKey:LZUserDailyIntakeKey];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-    [self displayTakenFoodResult];
-    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
+    NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:1];
+    [nutrientInfoArray removeObjectAtIndex:1];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+    
+    NSArray *deleteArray = [NSArray arrayWithObject:indexPath];
+    [self.listView beginUpdates];
+    [self.listView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationLeft];
+    [self.listView endUpdates];
+    
+    
+    [nutrientInfoArray insertObject:nutrient atIndex:0];
+    NSIndexPath *indexPathAdd = [NSIndexPath indexPathForRow:0 inSection:1];
+    NSArray *addArray = [NSArray arrayWithObject:indexPathAdd];
+    [self.listView beginUpdates];
+    [self.listView insertRowsAtIndexPaths:addArray withRowAnimation:UITableViewRowAnimationRight];
+    [self.listView endUpdates];
+//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"保存食物" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    UITextField *tf = [alert textFieldAtIndex:0];
+//    tf.keyboardType = UIKeyboardTypeNumberPad;
+//    [alert show];
+    
+//    NSDictionary *dailyIntake = [[NSDictionary alloc]init];
+//    [[NSUserDefaults standardUserDefaults] setObject:dailyIntake forKey:LZUserDailyIntakeKey];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
+//    [self displayTakenFoodResult];
+//    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
 }
-
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    
+}
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    
+}
 - (void)viewDidUnload {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_SettingsChangedKey object:nil];

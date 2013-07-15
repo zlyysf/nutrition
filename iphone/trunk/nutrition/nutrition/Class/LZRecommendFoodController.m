@@ -498,7 +498,7 @@
     UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:nil message:@"还没有安装微信 立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [insallWeichatAlert show];
 }
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if (buttonIndex == alertView.cancelButtonIndex)
     {
@@ -511,7 +511,7 @@
         [[UIApplication sharedApplication] openURL:ourAppUrl];
     }
 }
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if(buttonIndex == actionSheet.cancelButtonIndex)
     {

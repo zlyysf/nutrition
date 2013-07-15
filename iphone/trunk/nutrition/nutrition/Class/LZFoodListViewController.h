@@ -14,4 +14,5 @@
 @property (strong, nonatomic)NSMutableDictionary *takenFoodDict;
 @property (strong,nonatomic)NSMutableArray *nutrientInfoArray;
 @property (assign,nonatomic)BOOL needRefresh;
+@property (readwrite,nonatomic)int changeTime;
 @end

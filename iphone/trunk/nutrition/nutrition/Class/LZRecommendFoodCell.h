@@ -14,6 +14,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *foodNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *foodWeightlabel;
 @property (strong, nonatomic) IBOutlet UIView *backView;
-
+@property (strong, nonatomic) NSDictionary * cellInfo;
 
 @end
