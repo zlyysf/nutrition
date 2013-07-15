@@ -51,11 +51,11 @@
     [self.line5View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
     {
-        [self.contentScrollView setContentSize:CGSizeMake(320, 455)];
+        [self.contentScrollView setContentSize:CGSizeMake(320, 504)];
     }
     else
     {
-        [self.contentScrollView setContentSize:CGSizeMake(320, 423)];
+        [self.contentScrollView setContentSize:CGSizeMake(320, 416)];
     }
  }
 - (IBAction)authSwitchChangeHandler:(UISwitch *)sender
@@ -125,13 +125,13 @@
     {
          
         CGRect mobFrame = self.admobView.frame;
-        mobFrame.origin.y = 405;
+        mobFrame.origin.y = 454;
         self.admobView.frame = mobFrame;
     }
     else
     {
         CGRect mobFrame = self.admobView.frame;
-        mobFrame.origin.y = 373;
+        mobFrame.origin.y = 366;
         self.admobView.frame = mobFrame;
     }
     NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
