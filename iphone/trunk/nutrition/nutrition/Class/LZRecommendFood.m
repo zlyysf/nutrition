@@ -2407,13 +2407,17 @@
 
 /*
  如果不传DRI，可以传userInfo。givenFoodsAmount1和givenFoodsAmount2都可选，不过如果都不传，则返回nil。
+ 输出： Key_orderedGivenFoodIds1, Key_orderedGivenFoodIds2, Key_orderedGivenFoodIds,
+     Key_givenFoodInfoDict2Level, Key_nutrientSupplyRateInfoArray,
+     Key_takenFoodNutrientInfoAryDictDict(Key_foodSupplyNutrientInfoAryDict, Key_foodStandardNutrientInfoAryDict)
+     
  */
 -(NSMutableDictionary*)calculateGiveFoodsSupplyNutrientAndFormatForUI:(NSDictionary *)paramsDict
 {
     NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI enter");
     
-    NSDictionary *DRIsDict = [paramsDict objectForKey:@"DRI"];//nutrient name as key, also column name
-    NSDictionary *userInfo = [paramsDict objectForKey:@"userInfo"];
+    NSDictionary *DRIsDict = [paramsDict objectForKey:Key_DRI];//nutrient name as key, also column name
+    NSDictionary *userInfo = [paramsDict objectForKey:Key_userInfo];
     NSDictionary *givenFoodsAmount1Dict = [paramsDict objectForKey:@"givenFoodsAmount1"];//food NO as key
     NSDictionary *givenFoodsAmount2Dict = [paramsDict objectForKey:@"givenFoodsAmount2"];//food NO as key
     NSMutableDictionary *givenFoodsAmountDict = [NSMutableDictionary dictionaryWithDictionary:givenFoodsAmount1Dict];
@@ -3665,7 +3669,7 @@
  need flag Config_needConsiderNutrientLoss for getStandardDRIs_withUserInfo ..
  
  */
--(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)takenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSMutableDictionary*)options
+-(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)givenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSMutableDictionary*)options
 {
 //    BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
 //    if(options != nil){
@@ -3677,8 +3681,8 @@
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:options];
     NSDictionary *DRIULsDict = [da getStandardDRIULs_withUserInfo:userInfo andOptions:options];
-    NSDictionary *DRIdata = [NSDictionary dictionaryWithObjectsAndKeys: DRIsDict,@"DRI", DRIULsDict,@"DRIUL", nil];
-    NSMutableDictionary * retData = [self recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andDRIdata:DRIdata andOptions:options];
+    NSDictionary *DRIdata = [NSDictionary dictionaryWithObjectsAndKeys: DRIsDict,Key_DRI, DRIULsDict,Key_DRIUL, nil];
+    NSMutableDictionary * retData = [self recommendFoodBySmallIncrementWithPreIntake:givenFoodAmountDict andDRIdata:DRIdata andOptions:options];
     [retData setObject:userInfo forKey:@"userInfoDict"];
     return retData;
 }
@@ -3686,7 +3690,7 @@
  need flag LZSettingKey_needLimitNutrients, LZSettingKey_needUseLowLimitAsUnit, LZSettingKey_randSeed
  
  */
--(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)takenFoodAmountDict andDRIdata:(NSDictionary*)DRIdata andOptions:(NSMutableDictionary*)options
+-(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)givenFoodAmountDict andDRIdata:(NSDictionary*)DRIdata andOptions:(NSMutableDictionary*)options
 {
     
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
@@ -3721,8 +3725,8 @@
     
     int defFoodIncreaseUnit = Config_defaultFoodIncreaseUnit;
     
-    NSDictionary* DRIsDict = [DRIdata objectForKey:@"DRI"];
-    NSDictionary* DRIULsDict = [DRIdata objectForKey:@"DRIUL"];
+    NSDictionary* DRIsDict = [DRIdata objectForKey:Key_DRI];
+    NSDictionary* DRIULsDict = [DRIdata objectForKey:Key_DRIUL];
     
     LZDataAccess *da = [LZDataAccess singleton];
     
@@ -3748,8 +3752,8 @@
                                                     originalNutrientNameAryToCal,@"nutrientNameAryToCal",
                                                     DRIsDict,@"DRI",
                                                     nil];
-    if (takenFoodAmountDict.count > 0)
-        [paramDataForChooseFoods setObject:[takenFoodAmountDict allKeys] forKey:@"excludeFoodIds"];
+    if (givenFoodAmountDict.count > 0)
+        [paramDataForChooseFoods setObject:[givenFoodAmountDict allKeys] forKey:@"excludeFoodIds"];
     NSDictionary* preChooseFoodsData = [self getSomeFoodsToSupplyNutrientsCalculated2_withParams:paramDataForChooseFoods andOptions:options];
     NSDictionary* preChooseFoodInfoDict = [preChooseFoodsData objectForKey:@"foodInfoDict"];
     NSDictionary* preChooseRichFoodInfoAryDict = [preChooseFoodsData objectForKey:@"richFoodInfoAryDict"];
@@ -3799,13 +3803,13 @@
     
     
     NSArray *takenFoodIDs = nil;
-    if (takenFoodAmountDict!=nil && takenFoodAmountDict.count>0)
-        takenFoodIDs = [takenFoodAmountDict allKeys];
+    if (givenFoodAmountDict!=nil && givenFoodAmountDict.count>0)
+        takenFoodIDs = [givenFoodAmountDict allKeys];
     NSArray *takenFoodAttrAry = [da getFoodAttributesByIds:takenFoodIDs];
     
     NSMutableDictionary *recommendFoodAmountDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
 //    NSMutableDictionary *recommendFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
-    NSMutableDictionary *foodSupplyAmountDict = [NSMutableDictionary dictionaryWithDictionary:takenFoodAmountDict];//包括takenFoodAmountDict 和 recommendFoodAmountDict。与nutrientSupplyDict对应。
+    NSMutableDictionary *foodSupplyAmountDict = [NSMutableDictionary dictionaryWithDictionary:givenFoodAmountDict];//包括takenFoodAmountDict 和 recommendFoodAmountDict。与nutrientSupplyDict对应。
     NSMutableDictionary *nutrientSupplyDict = [NSMutableDictionary dictionaryWithDictionary:DRIsDict];
     NSArray *nutrientNames1 = [nutrientSupplyDict allKeys];
     for (int i=0; i<nutrientNames1.count; i++) {//初始化supply集合
@@ -3815,7 +3819,7 @@
     NSMutableDictionary *takenFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
     if (takenFoodAttrAry != nil ){//已经吃了的各食物的各营养的量加到supply中
         NSMutableDictionary *paramsDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:takenFoodAttrDict,@"destFoodInfoDict", nil];
-        [self foodsSupplyNutrients:takenFoodAttrAry andAmounts:takenFoodAmountDict andDestNutrientSupply:nutrientSupplyDict andOtherData:paramsDict];
+        [self foodsSupplyNutrients:takenFoodAttrAry andAmounts:givenFoodAmountDict andDestNutrientSupply:nutrientSupplyDict andOtherData:paramsDict];
     }//if (takenFoodAttrAry != nil )
     
     NSDictionary *nutrientInitialSupplyDict = [NSDictionary dictionaryWithDictionary:nutrientSupplyDict];//记录already taken food提供的营养素的量
@@ -4122,7 +4126,7 @@
     [retDict setObject:DRIULsDict forKey:@"DRIUL"];//nutrient name as key, also column name
     [retDict setObject:nutrientInitialSupplyDict forKey:@"nutrientInitialSupplyDict"];
     [retDict setObject:nutrientSupplyDict forKey:@"NutrientSupply"];//nutrient name as key, also column name
-    [retDict setObject:recommendFoodAmountDict forKey:@"FoodAmount"];//food NO as key
+    [retDict setObject:recommendFoodAmountDict forKey:Key_recommendFoodAmountDict];//food NO as key
 //    [retDict setObject:recommendFoodAttrDict forKey:@"FoodAttr"];//food NO as key
     
     [retDict setObject:preChooseFoodInfoDict forKey:@"preChooseFoodInfoDict"];
@@ -4139,14 +4143,14 @@
     [retDict setObject:calculationLogs forKey:@"calculationLogs"];//2D array
     
     
-    NSArray *otherInfos = [NSArray arrayWithObjects:@"randSeed",[NSNumber numberWithUnsignedInt:randSeed],
-                           @"needLimitNutrients",[NSNumber numberWithBool:needLimitNutrients],
-                           @"needUseLowLimitAsUnit",[NSNumber numberWithBool:needUseLowLimitAsUnit],
-                           nil];
-    [retDict setObject:otherInfos forKey:@"OtherInfo"];
+//    NSArray *otherInfos = [NSArray arrayWithObjects:@"randSeed",[NSNumber numberWithUnsignedInt:randSeed],
+//                           @"needLimitNutrients",[NSNumber numberWithBool:needLimitNutrients],
+//                           @"needUseLowLimitAsUnit",[NSNumber numberWithBool:needUseLowLimitAsUnit],
+//                           nil];
+//    [retDict setObject:otherInfos forKey:@"OtherInfo"];
     
-    if (takenFoodAmountDict != nil && takenFoodAmountDict.count>0){
-        [retDict setObject:takenFoodAmountDict forKey:@"TakenFoodAmount"];//food NO as key
+    if (givenFoodAmountDict != nil && givenFoodAmountDict.count>0){
+        [retDict setObject:givenFoodAmountDict forKey:@"TakenFoodAmount"];//food NO as key
         [retDict setObject:takenFoodAttrDict forKey:@"TakenFoodAttr"];//food NO as key
     }
     return retDict;
@@ -4165,7 +4169,7 @@
     
     NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
     //    NSDictionary *nutrientInitialSupplyDict = [recmdDict objectForKey:@"nutrientInitialSupplyDict"];
-    NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:@"FoodAmount"];//food NO as key
+    NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:Key_recommendFoodAmountDict];//food NO as key
 //    NSDictionary *recommendFoodAttrDict = [recmdDict objectForKey:@"FoodAttr"];//food NO as key
     NSDictionary *preChooseFoodInfoDict = [recmdDict objectForKey:@"preChooseFoodInfoDict"];
     NSDictionary *preChooseRichFoodInfoAryDict = [recmdDict objectForKey:@"preChooseRichFoodInfoAryDict"];
@@ -4495,7 +4499,7 @@
 }
 
 
-
+//由于功能有所改变，这个函数将被废弃
 -(NSMutableDictionary*)formatRecommendResultBySmallIncrementForUI:(NSMutableDictionary *)recommendResult
 {
     NSLog(@"formatRecommendResultBySmallIncrementForUI enter");
@@ -4504,7 +4508,7 @@
     NSDictionary *DRIULsDict = [recommendResult objectForKey:@"DRIUL"];
     NSArray *originalNutrientNameAryToCal = [recommendResult objectForKey:@"originalNutrientNameAryToCal"];
     NSDictionary *nutrientSupplyDict = [recommendResult objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
-    NSDictionary *recommendFoodAmountDict = [recommendResult objectForKey:@"FoodAmount"];//food NO as key
+    NSDictionary *recommendFoodAmountDict = [recommendResult objectForKey:Key_recommendFoodAmountDict];//food NO as key
     NSDictionary *recommendFoodAttrDict = [recommendResult objectForKey:@"preChooseFoodInfoDict"];//food NO as key
     NSDictionary *preChooseRichFoodInfoAryDict = [recommendResult objectForKey:@"preChooseRichFoodInfoAryDict"];
     

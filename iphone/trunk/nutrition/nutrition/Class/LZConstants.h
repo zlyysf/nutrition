@@ -117,11 +117,14 @@
 #define Key_PicturePath @"PicturePath"
 #define Key_FoodAmount @"FoodAmount"
 #define Key_DRI @"DRI"
+#define Key_DRIUL @"DRIUL"
+#define Key_userInfo @"userInfo"
 
 //#define Key_takenFoodInfo2LevelDict @"takenFoodInfo2LevelDict"
 //#define Key_recommendFoodInfo2LevelDict @"recommendFoodInfo2LevelDict"
 #define Key_takenFoodInfoDictArray @"takenFoodInfoDictArray"
 #define Key_recommendFoodInfoDictArray @"recommendFoodInfoDictArray"
+#define Key_recommendFoodAmountDict @"recommendFoodAmountDict"
 
 #define Key_nutrientInitialSupplyRate @"nutrientInitialSupplyRate"
 #define Key_nutrientSupplyRate @"nutrientSupplyRate"
