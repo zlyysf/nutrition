@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "LZDataAccess.h"
 #define kSelectButtonSide 22.f
+#define kTagAddNum 20
 @implementation LZRecommendFilterView
 @synthesize backView,delegate,cancelButton,submitButton,filterArray;
 - (id)initWithFrame:(CGRect)frame
@@ -40,9 +41,11 @@
         float pointX = 10;
         
         UILabel *tipLabel = [[UILabel alloc]initWithFrame:CGRectMake(pointX, pointY, tipsLabelSize.width, tipsLabelSize.height)];
-        [tipLabel setFont:[UIFont boldSystemFontOfSize:15]];
+        [tipLabel setFont:[UIFont systemFontOfSize:15]];
         [tipLabel setBackgroundColor:[UIColor clearColor]];
         [tipLabel setTextColor:[UIColor blackColor]];
+        tipLabel.numberOfLines = 0;
+        tipLabel.lineBreakMode = UILineBreakModeWordWrap;
         tipLabel.text = title;
         [backView addSubview:tipLabel];
         pointY += tipsLabelSize.height+10;
@@ -59,6 +62,13 @@
         }
         [backView addSubview:self.selectallButton];
         
+        UILabel *selectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(pointX+20+kSelectButtonSide, pointY, 100, kSelectButtonSide)];
+        [selectAllLabel setFont:[UIFont systemFontOfSize:15]];
+        [selectAllLabel setBackgroundColor:[UIColor clearColor]];
+        [selectAllLabel setTextColor:[UIColor blackColor]];
+        selectAllLabel.text = @"全选";
+        [backView addSubview:selectAllLabel];
+        
         LZDataAccess *da = [LZDataAccess singleton];
         for (int i=0; i<[self.filterArray count]; i++)
         {
@@ -74,19 +84,19 @@
             {
                 pointY+= kSelectButtonSide+20;//换行
                 buttonX = pointX;
-                labelX = pointX+20;
+                labelX = pointX+20+kSelectButtonSide;
                 
             }
             else
             {
                 buttonX = pointX+150;
-                labelX = pointX+170;
+                labelX = pointX+170+kSelectButtonSide;
             }
             UIButton *nutrientButton = [[UIButton alloc]initWithFrame:CGRectMake(buttonX, pointY, kSelectButtonSide, kSelectButtonSide)];
-            nutrientButton.tag = i;
+            nutrientButton.tag = i+kTagAddNum;
             [nutrientButton addTarget:self action:@selector(nutrientButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            [backView addSubview:nutrientButton];
-            if (state)
+            
+            if ([state boolValue])
             {
                 [nutrientButton setImage:[UIImage imageNamed:@"nutrient_button_on.png"] forState:UIControlStateNormal];
             }
@@ -95,8 +105,10 @@
                 [nutrientButton setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
             }
             
-            UILabel *nutrientNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelX, pointY, 60, kSelectButtonSide)];
-            [nutrientNameLabel setFont:[UIFont boldSystemFontOfSize:15]];
+            [backView addSubview:nutrientButton];
+            
+            UILabel *nutrientNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelX, pointY, 100, kSelectButtonSide)];
+            [nutrientNameLabel setFont:[UIFont systemFontOfSize:15]];
             [nutrientNameLabel setBackgroundColor:[UIColor clearColor]];
             [nutrientNameLabel setTextColor:[UIColor blackColor]];
             nutrientNameLabel.text = name;
@@ -104,7 +116,7 @@
 
         }
         
-        pointY += 20;
+        pointY += kSelectButtonSide+20;
         UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
         self.cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(50, pointY, 75, 30)];
         [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
@@ -122,11 +134,84 @@
 }
 - (void)selectButtonTapped:(UIButton *)sender
 {
-    
+    if ([self isAllSelected:self.filterArray])
+    {
+        [self unselectAllNutrient];
+            
+    }
+    else
+    {
+        [self selectAllNutrient];
+    }
+}
+- (void)unselectAllNutrient
+{
+    for(int i=0;i< [self.filterArray count];i++)
+    {
+        NSDictionary *nutrientState = [self.filterArray objectAtIndex:i];
+        NSArray *keys = [nutrientState allKeys];
+        NSString *key = [keys objectAtIndex:0];
+        NSNumber *state = [nutrientState objectForKey:key];
+        if ([state boolValue])
+        {
+            NSDictionary *newState = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:NO],key ,nil];
+            [self.filterArray replaceObjectAtIndex:i withObject:newState];
+            UIButton *button = (UIButton *) [self.backView viewWithTag:i+kTagAddNum];
+            [button setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
+        }
+    }
+    [self.selectallButton setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
+
+}
+- (void)selectAllNutrient
+{
+    for(int i=0;i< [self.filterArray count];i++)
+    {
+        NSDictionary *nutrientState = [self.filterArray objectAtIndex:i];
+        NSArray *keys = [nutrientState allKeys];
+        NSString *key = [keys objectAtIndex:0];
+        NSNumber *state = [nutrientState objectForKey:key];
+        if (![state boolValue])
+        {
+            NSDictionary *newState = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:YES],key ,nil];
+            [self.filterArray replaceObjectAtIndex:i withObject:newState];
+            UIButton *button = (UIButton *) [self.backView viewWithTag:i+kTagAddNum];
+            [button setImage:[UIImage imageNamed:@"nutrient_button_on.png"] forState:UIControlStateNormal];
+        }
+    }
+    [self.selectallButton setImage:[UIImage imageNamed:@"nutrient_button_on.png"] forState:UIControlStateNormal];
 }
 - (void)nutrientButtonTapped:(UIButton *)sender
 {
-    
+    int tag = sender.tag-kTagAddNum;
+    NSDictionary *nutrientState = [self.filterArray objectAtIndex:tag];
+    NSArray *keys = [nutrientState allKeys];
+    NSString *key = [keys objectAtIndex:0];
+    NSNumber *state = [nutrientState objectForKey:key];
+    if ([state boolValue])
+    {
+        NSDictionary *newState = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:NO],key ,nil];
+        [self.filterArray replaceObjectAtIndex:tag withObject:newState];
+        [sender setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        NSDictionary *newState = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:YES],key ,nil];
+        [self.filterArray replaceObjectAtIndex:tag withObject:newState];
+        [sender setImage:[UIImage imageNamed:@"nutrient_button_on.png"] forState:UIControlStateNormal];
+    }
+    if (![self isAllSelected:self.filterArray])
+    {
+        [self.selectallButton setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.selectallButton setImage:[UIImage imageNamed:@"nutrient_button_on.png"] forState:UIControlStateNormal];
+    }
+//    else if ([self isAllUnSelected:self.filterArray])
+//    {
+//        [self.selectallButton setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
+//    }
 }
 - (void)cancelButtonTapped
 {
@@ -137,6 +222,12 @@
 }
 - (void)submitButtonTapped
 {
+    if ([self isAllUnSelected:self.filterArray])
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"请至少选择一个营养素" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [alert show];
+        return;
+    }
     if(self.delegate && [self.delegate respondsToSelector:@selector(filterViewSubmitted:forFilterInfo:)])
     {
         [self.delegate filterViewSubmitted:self forFilterInfo:self.filterArray];
@@ -150,14 +241,29 @@
         NSArray *keys = [nutrientState allKeys];
         NSString *key = [keys objectAtIndex:0];
         NSNumber *state = [nutrientState objectForKey:key];
-        if (!state)
+        if (![state boolValue])
         {
             allSelected = NO;
             break;
         }
     }
     return allSelected;
-    
+}
+- (BOOL)isAllUnSelected:(NSArray *)array
+{
+    BOOL allUnSelected = YES;
+    for (NSDictionary *nutrientState in array)
+    {
+        NSArray *keys = [nutrientState allKeys];
+        NSString *key = [keys objectAtIndex:0];
+        NSNumber *state = [nutrientState objectForKey:key];
+        if ([state boolValue])
+        {
+            allUnSelected = NO;
+            break;
+        }
+    }
+    return allUnSelected;
 }
 /*
 // Only override drawRect: if you perform custom drawing.

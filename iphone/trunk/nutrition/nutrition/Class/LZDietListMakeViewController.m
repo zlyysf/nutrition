@@ -551,7 +551,7 @@
     [viewtoAnimate.backView.layer addAnimation:group forKey:@"kFTAnimationPopIn"];
     
 }
-- (void)recommendOnePlan
+- (void)recommendOnePlan:(NSArray *)preferNutrient
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
     NSDictionary *takenFoodAmountDict = [userDefaults objectForKey:LZUserDailyIntakeKey];
@@ -577,8 +577,11 @@
                                     [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
                                     [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                                     nil];
+    NSArray *paramArray = [LZUtility convertPreferNutrientArrayToParamArray:preferNutrient];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:paramArray,Key_givenNutrients,nil];
+
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
+    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options andParams:params];
     NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
     //    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
     //                            userInfo,@"userInfo",
@@ -590,6 +593,8 @@
     [newIntakeDict addEntriesFromDictionary:recommendFoodAmountDict];
     //NSDictionary * formatResult = [rf calculateGiveFoodsSupplyNutrientAndFormatForUI:params];
     [userDefaults setObject:newIntakeDict forKey:LZUserDailyIntakeKey];
+    [userDefaults setObject:preferNutrient forKey:KeyUserRecommendPreferNutrientArray];
+    [userDefaults synchronize];
     [HUD hide:YES];
     self.listView.hidden = NO;
     [self refreshFoodNureitentProcessForAll:YES];
@@ -661,7 +666,7 @@
     
     HUD.labelText = @"智能推荐中...";
     
-    [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
+    [self performSelector:@selector(recommendOnePlan:) withObject:filterInfo afterDelay:0.f];
     
 }
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {

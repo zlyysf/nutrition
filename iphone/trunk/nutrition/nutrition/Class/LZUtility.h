@@ -50,5 +50,5 @@
 +(long long)getMillisecond:(NSDate*)datetime;
 
 +(void)initializePreferNutrient;
-
++(NSArray *)convertPreferNutrientArrayToParamArray:(NSArray *)preferArray;
 @end

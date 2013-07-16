@@ -415,6 +415,24 @@
         [[NSUserDefaults standardUserDefaults]setObject:newPreferArray forKey:KeyUserRecommendPreferNutrientArray];
     }
 }
+
++(NSArray *)convertPreferNutrientArrayToParamArray:(NSArray *)preferArray
+{
+    NSMutableArray *convertedArray = [NSMutableArray array];
+    for (NSDictionary *nutrientState in preferArray)
+    {
+        NSArray *keys = [nutrientState allKeys];
+        NSString *key = [keys objectAtIndex:0];
+        NSNumber *state = [nutrientState objectForKey:key];
+        if ([state boolValue])
+        {
+            [convertedArray addObject:key];
+        }
+    }
+    NSArray *result = [NSArray arrayWithArray:convertedArray];
+    return result;
+    
+}
 @end
 
 
