@@ -523,7 +523,12 @@
     }
 }
 
-
+-(void)getDifferenceFromFoodCustomAndFoodCustomT2
+{
+    NSString *sqlQuery = @"select * from FoodCustomT2 where not NDB_No in (select NDB_No from FoodCustom)";
+    NSString* csvfilePath = [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:@"diffFoodCustomT2.csv"];
+    NSLog(@"getDifferenceFromFoodCustomAndFoodCustomT2 diffFilePath = %@",csvfilePath);
+}
 
 //-------------------------------------------------
 

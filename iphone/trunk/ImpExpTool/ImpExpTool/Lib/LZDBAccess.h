@@ -53,6 +53,20 @@
 -(NSString*)convertFood_Supply_DRI_AmountWithExtraInfoToCsv:(NSString*)csvFileName;
 -(NSString*)convertCnFoodNutritionWithExtraInfoToCsv:(NSString*)csvFileName;
 
+
+
+
+
+
+-(void)getDifferenceFromFoodCustomAndFoodCustomT2;
+
+
+
+
+
+
+
+
 @end
 
 

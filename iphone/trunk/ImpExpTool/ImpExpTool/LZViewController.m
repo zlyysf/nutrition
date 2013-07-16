@@ -30,8 +30,8 @@
 }
 
 - (IBAction)btnTestClick:(id)sender {
-    [LZFacade test1];
-//    [LZFacade test2];
+
+    [LZFacade testMain];
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"run finish" message:@"run finish" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }

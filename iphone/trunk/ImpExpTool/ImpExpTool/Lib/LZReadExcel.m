@@ -573,6 +573,70 @@
 
 
 
+-(NSDictionary *)readFoodCustomT2
+{
+    NSLog(@"readFoodCustomT2 begin");
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
+    NSLog(@"in readFoodCustomT2, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+    int idxInXls_Id = 1, idxInXls_CnCaption = 3, idxInXls_CnType = 5, idxInXls_Classify=6 ;
+    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No, COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify, nil];
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+    
+    int idxRow=2;
+    DHcell *cellId, *cellCnCaption, *cellCnType, *cellClassify;
+    cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+    cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+    cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
+    cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
+    while (cellId.type!=cellBlank || cellCnCaption.type!=cellBlank || cellCnType.type!=cellBlank || cellClassify.type!=cellBlank) {
+        if (cellId.type!=cellBlank && cellCnCaption.type!=cellBlank && cellCnType.type!=cellBlank && cellClassify.type!=cellBlank){
+            assert(cellId.type == cellString);
+            NSString *strId = cellId.str;
+            assert(strId.length==5);
+            NSMutableArray *row = [NSMutableArray arrayWithCapacity:3];
+            [row addObject:strId];
+            [row addObject:cellCnCaption.str];
+            [row addObject:cellCnType.str];
+            [row addObject:cellClassify.str];
+            [rows2D addObject:row];
+        }
+        idxRow++;
+        cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+        cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+        cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
+        cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
+    }
+    
+    NSLog(@"in readFoodCustom, columnNames=%@, rows2D=\n%@",columnNames,rows2D);
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+    [retData setObject:columnNames forKey:@"columnNames"];
+    [retData setObject:rows2D forKey:@"rows2D"];
+    return retData;
+}
+
+-(void)dealExcelAndSqlite_FoodCustomT2
+{
+    NSDictionary *data = [self readFoodCustomT2];
+    NSArray *columnNames = [data objectForKey:@"columnNames"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    NSString *tableName = @"FoodCustomT2" ;
+    NSString *primaryKey = COLUMN_NAME_NDB_No;
+    [db createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:true];
+    [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
+    
+    [db getDifferenceFromFoodCustomAndFoodCustomT2];
+
+}
+
+
+
 /*
  返回值是一个dictionary，包括 以columnNames为key的一维数组和 以rows2D为key的二维数组
  */

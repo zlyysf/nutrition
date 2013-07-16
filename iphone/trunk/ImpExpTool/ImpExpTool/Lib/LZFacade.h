@@ -10,8 +10,8 @@
 
 @interface LZFacade : NSObject
 
-+(void)test1;
-+(void)test2;
++(void)testMain;
+
 //+(void)generateInitialData;
 +(void)generateInitialDataToAllInOne;
 +(void)generateVariousCsv;

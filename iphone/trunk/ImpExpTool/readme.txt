@@ -50,3 +50,20 @@ DRIFemale，DRIMale，DRIULFemale，DRIULMale 是原始数据，DRIULrateFemale�
 
 
 
+Food_common.xls 由于有新增食物和修改以前食物，但具体新增修改了哪些不清楚，需要和以前比对一下。
+这里先把旧版的数据保存下来
+CREATE TABLE FoodCustomOld AS SELECT * FROM FoodCustom;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

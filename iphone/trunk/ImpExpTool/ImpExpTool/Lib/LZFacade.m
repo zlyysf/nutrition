@@ -14,6 +14,15 @@
 
 @implementation LZFacade
 
++(void)testMain
+{
+    //    [LZFacade test1];
+    //    [LZFacade test2];
+    [LZFacade test_withSomeExist];
+}
+
+
+
 +(void)test1{
     
     LZReadExcel *workRe = [[LZReadExcel alloc]init];
@@ -62,6 +71,24 @@
 
 }
 
++(void)test_withSomeExist
+{
+    NSString *resFileName = @"CustomDB.dat";
+    NSString *destDbFileName = @"CustomDBt2.dat";
+    NSString *destDbFilePath = [LZUtility copyResourceToDocumentWithResFileName:resFileName andDestFileName:destDbFileName];
+    if (destDbFilePath == nil){
+        NSLog(@"generateInitialDataToAllInOne fail, destDbFilePath == nil");
+        return;
+    }
+    LZReadExcel *workRe = [[LZReadExcel alloc]init];
+    [workRe myInitDBConnectionWithFilePath:destDbFilePath andIfNeedClear:FALSE];
+//    LZDBAccess *db = [workRe getDBconnection];
+    
+    [workRe dealExcelAndSqlite_FoodCustomT2];
+    
+    
+    
+}
 
 +(void)generateVariousCsv
 {
