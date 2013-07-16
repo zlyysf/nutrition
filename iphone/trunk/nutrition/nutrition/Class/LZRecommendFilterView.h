@@ -1,13 +1,13 @@
 //
-//  LZViewController.h
+//  LZRecommendFilterView.h
 //  nutrition
 //
-//  Created by liu miao on 4/26/13.
+//  Created by liu miao on 7/16/13.
 //  Copyright (c) 2013 lingzhi mobile. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-@interface LZViewController : UIViewController
+@interface LZRecommendFilterView : UIView
 
 @end
