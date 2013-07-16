@@ -11,6 +11,7 @@
 #import "MobClick.h"
 #import <ShareSDK/ShareSDK.h>
 #import "WXApi.h"
+#import "LZUtility.h"
 @implementation LZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -36,6 +37,7 @@
     [[UITabBar appearance]setBackgroundImage:[UIImage imageNamed:@"tabbar_back.png"]];
     [[UITabBar appearance] setSelectedImageTintColor:[UIColor greenColor]];
     [[UITabBar appearance]setTintColor:[UIColor lightGrayColor]];
+    [LZUtility initializePreferNutrient];
     //友盟统计SDK启
     [MobClick startWithAppkey:UMSDKAPPKey];
     //检查更新

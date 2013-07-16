@@ -134,6 +134,8 @@
 		5FE436D4175F3EF5003947ED /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D0175F3EF5003947ED /* Icon-Small@2x.png */; };
 		5FE436D5175F3EF5003947ED /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D1175F3EF5003947ED /* Icon.png */; };
 		5FE436D6175F3EF5003947ED /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D2175F3EF5003947ED /* Icon@2x.png */; };
+		5FEC69361795372C00E80BE6 /* nutrient_button_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEC69341795372C00E80BE6 /* nutrient_button_off@2x.png */; };
+		5FEC69371795372C00E80BE6 /* nutrient_button_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */; };
 		5FF631D517702C690068CBFE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */; };
 		5FF631D617702C690068CBFE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5FF631D417702C690068CBFE /* README.txt */; };
 		5FF631D817702CD00068CBFE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D717702CD00068CBFE /* StoreKit.framework */; };
@@ -329,6 +331,8 @@
 		5FE436D0175F3EF5003947ED /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "nutrition/Icon-Small@2x.png"; sourceTree = "<group>"; };
 		5FE436D1175F3EF5003947ED /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = nutrition/Icon.png; sourceTree = "<group>"; };
 		5FE436D2175F3EF5003947ED /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "nutrition/Icon@2x.png"; sourceTree = "<group>"; };
+		5FEC69341795372C00E80BE6 /* nutrient_button_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_off@2x.png"; path = "nutrition/Resource/nutrient_button_off@2x.png"; sourceTree = "<group>"; };
+		5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_on@2x.png"; path = "nutrition/Resource/nutrient_button_on@2x.png"; sourceTree = "<group>"; };
 		5FF631CA17702C690068CBFE /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
 		5FF631CB17702C690068CBFE /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
 		5FF631CC17702C690068CBFE /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
@@ -598,6 +602,8 @@
 			children = (
 				5FF6320E1772D8AA0068CBFE /* foodTypeIcon */,
 				5FF632061771C6530068CBFE /* close_button@2x.png */,
+				5FEC69341795372C00E80BE6 /* nutrient_button_off@2x.png */,
+				5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */,
 				5FE2104F1784058100F45253 /* edit_profile_button@2x.png */,
 				5FE210501784058100F45253 /* feedback_icon@2x.png */,
 				5FE210511784058100F45253 /* review_icon@2x.png */,
@@ -1004,6 +1010,8 @@
 				5FE210541784058100F45253 /* feedback_icon@2x.png in Resources */,
 				5FE210551784058100F45253 /* review_icon@2x.png in Resources */,
 				5FE210561784058100F45253 /* setting_cell_back@2x.png in Resources */,
+				5FEC69361795372C00E80BE6 /* nutrient_button_off@2x.png in Resources */,
+				5FEC69371795372C00E80BE6 /* nutrient_button_on@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

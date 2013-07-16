@@ -24,7 +24,9 @@
 #import <ShareSDK/ShareSDK.h>
 #import "WXApi.h"
 #import "LZShareViewController.h"
-@interface LZDietListMakeViewController ()<MBProgressHUDDelegate,UIActionSheetDelegate,UIAlertViewDelegate>
+#import "LZRecommendFilterView.h"
+#import "LZAppDelegate.h"
+@interface LZDietListMakeViewController ()<MBProgressHUDDelegate,UIActionSheetDelegate,UIAlertViewDelegate,LZRecommendFilterViewDelegate>
 {
     MBProgressHUD *HUD;
 }
@@ -115,6 +117,19 @@
         needRefresh = NO;
     }
 }
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"检测页面"];
+    [self.listView reloadData];
+}
+
+- (void)viewDidUnload {
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_SettingsChangedKey object:nil];
+    [self setListView:nil];
+    [super viewDidUnload];
+}
+
 - (void)settingsChanged:(NSNotification *)notification
 {
     needRefresh = YES;
@@ -508,44 +523,33 @@
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewCellEditingStyleDelete;
 }
-//- (IBAction)editFoodAction:(id)sender {
-//    
-//    if(!self.listView.editing)
-//    {
-//        [self.editFoodItem setStyle:UIBarButtonItemStyleDone];
-//        [self.editFoodItem setTitle:@"完成"];
-//        self.listView.editing= !self.listView.editing;
-//    }
-//    else
-//    {
-//        [self.editFoodItem setStyle:UIBarButtonItemStyleBordered];
-//        [self.editFoodItem setTitle:@"编辑"];
-//        self.listView.editing= !self.listView.editing;
-//        [self displayTakenFoodResult];
-//    }
-//
-//}
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [MobClick endLogPageView:@"检测页面"];
-    [self.listView reloadData];
-//    if (self.listView.editing)
-//    {
-//        [self.editFoodItem setStyle:UIBarButtonItemStyleBordered];
-//        [self.editFoodItem setTitle:@"编辑"];
-//        self.listView.editing= !self.listView.editing;
-//        [self displayTakenFoodResult];
-//    }
-}
+#pragma mark- Recommend Function
 - (IBAction)recommendAction:(id)sender {
     //弹出选择元素框
-    HUD.hidden = NO;
-    [HUD show:YES];
-    //self.listView.hidden = YES;
+    float duration = 0.5;
+    CGSize screenSize = [[UIScreen mainScreen]bounds].size;
+    NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
+    NSString *title = @"哪些营养素是您重点关注且是不能缺少的，请选择：";
+    LZRecommendFilterView *viewtoAnimate = [[LZRecommendFilterView alloc]initWithFrame:CGRectMake(0, 20, screenSize.width, screenSize.height-20) backColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5] filterInfo:preferNutrient tipsStr:title delegate:self];
     
-    HUD.labelText = @"智能推荐中...";
+    LZAppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+    [appDelegate.window addSubview:viewtoAnimate];
+    CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    scale.duration = duration;
+    scale.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.5f],
+                    [NSNumber numberWithFloat:1.2f],
+                    [NSNumber numberWithFloat:.85f],
+                    [NSNumber numberWithFloat:1.f],
+                    nil];
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.animations = [NSArray arrayWithArray:[NSArray arrayWithObjects:scale, nil]];
+    group.delegate = nil;
+    group.duration = duration;
+    group.removedOnCompletion = YES;
     
-    [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
+    group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [viewtoAnimate.backView.layer addAnimation:group forKey:@"kFTAnimationPopIn"];
+    
 }
 - (void)recommendOnePlan
 {
@@ -576,11 +580,11 @@
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
     NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
-//    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
-//                            userInfo,@"userInfo",
-//                            takenFoodAmountDict,@"givenFoodsAmount1",
-//                            recommendFoodAmountDict,@"givenFoodsAmount2",
-//                            nil];
+    //    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+    //                            userInfo,@"userInfo",
+    //                            takenFoodAmountDict,@"givenFoodsAmount1",
+    //                            recommendFoodAmountDict,@"givenFoodsAmount2",
+    //                            nil];
     NSMutableDictionary *newIntakeDict = [[NSMutableDictionary alloc]init];
     [newIntakeDict addEntriesFromDictionary:takenFoodAmountDict];
     [newIntakeDict addEntriesFromDictionary:recommendFoodAmountDict];
@@ -591,8 +595,86 @@
     [self refreshFoodNureitentProcessForAll:YES];
     [self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
     [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
+    
+}
+
+#pragma mark- LZRecommendFilterView Deleagte
+- (void)filterViewCanceled:(LZRecommendFilterView *)filterView
+{
+    [filterView.layer removeAllAnimations];
+    float duration = 0.3;
+    CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    scale.duration = duration;
+    scale.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:1.f],
+                    [NSNumber numberWithFloat:1.2f],
+                    [NSNumber numberWithFloat:.75f],
+                    nil];
+    
+    CABasicAnimation *fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    fadeOut.duration = duration; //* .4f;
+    fadeOut.fromValue = [NSNumber numberWithFloat:1.f];
+    fadeOut.toValue = [NSNumber numberWithFloat:0.f];
+    fadeOut.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    //fadeOut.beginTime = duration * .6f;
+    //fadeOut.fillMode = kCAFillModeForwards;
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.animations = [NSArray arrayWithArray:[NSArray arrayWithObjects:scale, fadeOut, nil]];
+    group.delegate = self;
+    group.duration = duration;
+    group.removedOnCompletion = NO;
+    group.fillMode = kCAFillModeForwards;
+    group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [group setValue:filterView.backView forKey:@"kViewToRemove"];
+    [filterView.backView.layer addAnimation:group forKey:@"kFTAnimationPopOut"];
 
 }
+- (void)filterViewSubmitted:(LZRecommendFilterView *)filterView forFilterInfo:(NSArray *)filterInfo
+{
+    [filterView.layer removeAllAnimations];
+    float duration = 0.3;
+    CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+    scale.duration = duration;
+    scale.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:1.f],
+                    [NSNumber numberWithFloat:1.2f],
+                    [NSNumber numberWithFloat:.75f],
+                    nil];
+    
+    CABasicAnimation *fadeOut = [CABasicAnimation animationWithKeyPath:@"opacity"];
+    fadeOut.duration = duration; //* .4f;
+    fadeOut.fromValue = [NSNumber numberWithFloat:1.f];
+    fadeOut.toValue = [NSNumber numberWithFloat:0.f];
+    fadeOut.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseOut];
+    //fadeOut.beginTime = duration * .6f;
+    //fadeOut.fillMode = kCAFillModeForwards;
+    CAAnimationGroup *group = [CAAnimationGroup animation];
+    group.animations = [NSArray arrayWithArray:[NSArray arrayWithObjects:scale, fadeOut, nil]];
+    group.delegate = self;
+    group.duration = duration;
+    group.removedOnCompletion = NO;
+    group.fillMode = kCAFillModeForwards;
+    group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+    [group setValue:filterView.backView forKey:@"kViewToRemove"];
+    [filterView.backView.layer addAnimation:group forKey:@"kFTAnimationPopOut"];
+    HUD.hidden = NO;
+    [HUD show:YES];
+    //self.listView.hidden = YES;
+    
+    HUD.labelText = @"智能推荐中...";
+    
+    [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
+    
+}
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {
+    if(flag)
+    {
+        LZRecommendFilterView *view = (LZRecommendFilterView*)((UIView*)[theAnimation valueForKey:@"kViewToRemove"]).superview;
+        if(view)
+        {
+            [view removeFromSuperview];
+        }
+    }
+}
+#pragma mark- Add Food Function
 - (void)addFood
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
@@ -601,6 +683,7 @@
     //UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addFoodViewController];
     [self.navigationController pushViewController:addFoodViewController animated:YES];
 }
+
 - (IBAction)addFoodAction:(id)sender {
     [self performSelector:@selector(addFood) withObject:nil afterDelay:0.f];
     
@@ -675,23 +758,26 @@
         
 
 }
-- (IBAction)clearFoodAction:(id)sender {
-    NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:1];
-    [nutrientInfoArray removeObjectAtIndex:1];
-    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
-    
-    NSArray *deleteArray = [NSArray arrayWithObject:indexPath];
-    [self.listView beginUpdates];
-    [self.listView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationLeft];
-    [self.listView endUpdates];
-    
-    
-    [nutrientInfoArray insertObject:nutrient atIndex:0];
-    NSIndexPath *indexPathAdd = [NSIndexPath indexPathForRow:0 inSection:1];
-    NSArray *addArray = [NSArray arrayWithObject:indexPathAdd];
-    [self.listView beginUpdates];
-    [self.listView insertRowsAtIndexPaths:addArray withRowAnimation:UITableViewRowAnimationRight];
-    [self.listView endUpdates];
+//- (IBAction)clearFoodAction:(id)sender {
+//    NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:1];
+//    [nutrientInfoArray removeObjectAtIndex:1];
+//    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:1 inSection:1];
+//    
+//    NSArray *deleteArray = [NSArray arrayWithObject:indexPath];
+//    [self.listView beginUpdates];
+//    [self.listView deleteRowsAtIndexPaths:deleteArray withRowAnimation:UITableViewRowAnimationLeft];
+//    [self.listView endUpdates];
+//    
+//    
+//    [nutrientInfoArray insertObject:nutrient atIndex:0];
+//    NSIndexPath *indexPathAdd = [NSIndexPath indexPathForRow:0 inSection:1];
+//    NSArray *addArray = [NSArray arrayWithObject:indexPathAdd];
+//    [self.listView beginUpdates];
+//    [self.listView insertRowsAtIndexPaths:addArray withRowAnimation:UITableViewRowAnimationRight];
+//    [self.listView endUpdates];
+//}
+
+
 //    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"保存食物" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
 //    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
 //    UITextField *tf = [alert textFieldAtIndex:0];
@@ -703,14 +789,8 @@
 //    [[NSUserDefaults standardUserDefaults]synchronize];
 //    [self displayTakenFoodResult];
 //    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
-}
 
-- (void)viewDidUnload {
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_SettingsChangedKey object:nil];
-    [self setListView:nil];
-    [super viewDidUnload];
-}
+
 #pragma mark- Share Content Function
 - (IBAction)shareButtonTapped:(id)sender
 {

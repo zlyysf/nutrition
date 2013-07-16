@@ -8,6 +8,7 @@
 
 #import "LZUtility.h"
 #import "LZConstants.h"
+#import "LZRecommendFood.h"
 @implementation LZUtility
 
 
@@ -399,7 +400,21 @@
     return llms;
 }
 
-
++(void)initializePreferNutrient
+{
+    NSArray *preferArray = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
+    NSArray *nutrientArray = [LZRecommendFood getCustomNutrients];
+    if (preferArray == nil || ([preferArray count]!= [nutrientArray count]))
+    {
+        NSMutableArray *newPreferArray = [NSMutableArray array];
+        for (NSString *nutrinetId in nutrientArray)
+        {
+            NSDictionary *state = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:YES],nutrinetId ,nil];
+            [newPreferArray addObject:state];
+        }
+        [[NSUserDefaults standardUserDefaults]setObject:newPreferArray forKey:KeyUserRecommendPreferNutrientArray];
+    }
+}
 @end
 
 

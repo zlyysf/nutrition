@@ -49,6 +49,6 @@
 
 +(long long)getMillisecond:(NSDate*)datetime;
 
-
++(void)initializePreferNutrient;
 
 @end

@@ -156,7 +156,7 @@
 #define Key_nutrientSupplyRateInfoArray @"nutrientSupplyRateInfoArray"
 #define Key_nutrientSupplyDict @"nutrientSupplyDict"
 
-
+#define KeyUserRecommendPreferNutrientArray @"UserRecommendPreferNutrientArray"
 #define Type_normalSet @"normalSet"
 #define Type_lastSet @"lastSet"
 
