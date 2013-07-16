@@ -140,7 +140,7 @@
 //    //NSMutableDictionary *retDict = [rf recommendFoodForEnoughNuitritionWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
 //    NSMutableDictionary *retDict = [rf recommendFood3_AbstractPerson:params withDecidedFoods:dailyIntake andOptions:options];
 //    NSMutableDictionary *uiDictionary = [rf formatRecommendResultForUI:retDict];
-    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options];
+    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:dailyIntake andUserInfo:userInfo andOptions:options andParams:nil];
     NSMutableDictionary *uiDictionary = [rf formatRecommendResultBySmallIncrementForUI:retDict];
 
 //    NSMutableDictionary *foodInfoDict =[rf getSomeFoodsToSupplyNutrientsCalculated];

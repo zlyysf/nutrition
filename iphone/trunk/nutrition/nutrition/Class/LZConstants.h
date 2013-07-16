@@ -128,6 +128,8 @@
 #define Key_DRIUL @"DRIUL"
 #define Key_userInfo @"userInfo"
 
+#define Key_givenNutrients @"givenNutrients"
+
 //#define Key_takenFoodInfo2LevelDict @"takenFoodInfo2LevelDict"
 //#define Key_recommendFoodInfo2LevelDict @"recommendFoodInfo2LevelDict"
 #define Key_takenFoodInfoDictArray @"takenFoodInfoDictArray"

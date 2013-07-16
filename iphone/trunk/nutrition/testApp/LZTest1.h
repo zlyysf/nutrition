@@ -10,11 +10,7 @@
 
 @interface LZTest1 : NSObject
 
-+(void)test1;
-+(void)test2;
-+(void)test3;
-+(void)test4;
++(void)testMain;
 
-+(void)testRecommendFoodBySmallIncrement;
 
 @end

@@ -14,6 +14,15 @@
 
 @implementation LZTest1
 
++(void)testMain
+{
+//    [LZTest1 test1];
+//    [LZTest1 test2];
+//    [LZTest1 test3];
+//    [LZTest1 test4];
+    [LZTest1 testRecommendFoodBySmallIncrement];
+}
+
 +(void)test1
 {
 
@@ -77,8 +86,9 @@
 
 +(void)testRecommendFoodBySmallIncrement
 {
-//    [self.class caseUser_recSI_preTaken_0];
-    [self.class caseUser_recSI_preTaken_0_sameOptionsAsAppForLinearSystemCompare];
+    [self.class caseUser_recSI_preTaken_0];
+//    [self.class caseUser_recSI_preTaken_0_givenNutrients];
+//    [self.class caseUser_recSI_preTaken_0_sameOptionsAsAppForLinearSystemCompare];
 }
 
 +(NSString*)getParamsDigestStr_withUserInfo:(NSDictionary *)userInfo andOptions:(NSDictionary *)options andTakenFoodAmountDict:(NSDictionary *)takenFoodAmountDict
@@ -1729,7 +1739,7 @@
     NSLog(@"htmlFilePath=%@",htmlFilePath);
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
+    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options andParams:nil];
     NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -1787,12 +1797,63 @@
     NSLog(@"htmlFilePath=%@",htmlFilePath);
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
+    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options andParams:nil];
     NSString *strHtml = [rf generateHtml_RecommendFoodBySmallIncrement:retDict];
     strHtml = [LZUtility getFullHtml_withPart:strHtml];
     [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
     
 }
+
+
++(void)caseUser_recSI_preTaken_0_givenNutrients
+{
+    NSDictionary *takenFoodAmountDict = nil;
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],ParamKey_sex, [NSNumber numberWithInt:age],ParamKey_age,
+                              [NSNumber numberWithFloat:weight],ParamKey_weight, [NSNumber numberWithFloat:height],ParamKey_height,
+                              [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
+    
+    BOOL needConsiderNutrientLoss = FALSE;
+    //    BOOL needLimitNutrients = FALSE;
+    BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
+    int randSeed = 0; //0; //0;
+    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
+                                    //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
+                                    [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                                    [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
+                                    [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
+                                    nil];
+    
+    
+    NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
+    NSString *csvFileName = [NSString stringWithFormat:@"recBySI_%@.csv",paramsDigestStr ];
+    NSString *htmlFileName = [NSString stringWithFormat:@"recBySI_%@.html",paramsDigestStr ];
+    NSLog(@"csvFileName=%@\nhtmlFileName=%@",csvFileName,htmlFileName);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
+    NSLog(@"htmlFilePath=%@",htmlFilePath);
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",nil],Key_givenNutrients,
+                                    nil];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options andParams:params];
+    NSString *strHtml = [rf generateHtml_RecommendFoodBySmallIncrement:retDict];
+    strHtml = [LZUtility getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
+}
+
 
 
 +(void)caseUser_recSI_preTaken_0_sameOptionsAsAppForLinearSystemCompare
@@ -1832,7 +1893,7 @@
     NSLog(@"htmlFilePath=%@",htmlFilePath);
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options];
+    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options andParams:nil];
     NSString *strHtml = [rf generateHtml_RecommendFoodBySmallIncrement:retDict];
     strHtml = [LZUtility getFullHtml_withPart:strHtml];
     [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];

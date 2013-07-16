@@ -277,6 +277,18 @@
     return ret;
 }
 
++(BOOL)arrayContainArrayInSetWay_withOuterArray:(NSArray*)outerAry andInnerArray:(NSArray*)innerAry
+{
+    if (innerAry.count == 0)
+        return true;
+
+    NSSet *outerSet = [NSSet setWithArray:outerAry];
+    NSSet *innerSet = [NSSet setWithArray:innerAry];
+    BOOL ret = [innerSet isSubsetOfSet:outerSet];
+    return ret;
+}
+
+
 +(NSMutableDictionary*)dictionaryArrayTo2LevelDictionary_withKeyName:(NSString*)keyName andDicArray:(NSArray*)dicArray
 {
     if (dicArray.count==0)

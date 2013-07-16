@@ -2445,7 +2445,7 @@
     NSArray *givenFoodAttrAry = [da getFoodAttributesByIds:givenFoodIds];
     NSMutableDictionary *givenFoodAttrDict2Level = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:givenFoodAttrAry];
     
-    NSArray *customNutrients = [self.class getCustomNutrients];// getCalculationNutrientsForSmallIncrementLogic_withDRI ..
+    NSArray *customNutrients = [self.class getCustomNutrients];// 显示时将显示我们预定义的全部营养素，从而这里不用 getCalculationNutrientsForSmallIncrementLogic_withDRI ..
     NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
     
     //对给定的食物取显示所需信息
@@ -3574,10 +3574,12 @@
 
 
 /*
- options 里面用到了 needLimitNutrients 的key，现在暂且不用，有错未解决
+ options 里面用到了 needLimitNutrients 的key，现在暂且不用，有错未解决..这错应该是跟 getCustomNutrients 中注释掉的相关
+ 这里的输出的营养素只是用于计算的。显示的目前使用 getCustomNutrients 的即可。
+ 当givenNutrients不为nil时，将使用givenNutrients来限制要计算的营养素，由于在实际上一些需要排除计算的营养素已经在传入givenNutrients前就排除了，这里实际的作用是将givenNutrients排序。
  
  */
--(NSDictionary*) getCalculationNutrientsForSmallIncrementLogic_withDRI:(NSDictionary*)DRIsDict andOptions:(NSDictionary*)options
+-(NSDictionary*) getCalculationNutrientsForSmallIncrementLogic_withDRI:(NSDictionary*)DRIsDict andOptions:(NSDictionary*)options andParams:(NSDictionary*)params
 {
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合    
 //    if(options != nil){
@@ -3585,6 +3587,14 @@
 //        if (nmFlag_needLimitNutrients != nil)
 //            needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
 //    }
+    
+    NSArray *givenNutrients = nil;
+    if (params!=nil){
+        givenNutrients = [params objectForKey:Key_givenNutrients];//这些营养素的意义在于只要求这些要补足，即只有它们用于计算。注意这应该是getCustomNutrients的子集
+    }
+    
+    NSArray *customNutrients = [self.class getCustomNutrients];
+    assert([LZUtility arrayContainArrayInSetWay_withOuterArray:customNutrients andInnerArray:givenNutrients]);
     
     //这里列出的营养素有专门而简单的食物补充，通过我们预置的那些食物反而不好补充
     NSArray *nutrientArrayNotCal =[NSArray arrayWithObjects:@"Water_(g)", @"Sodium_(mg)", nil];
@@ -3596,23 +3606,26 @@
 //    //    Calcium_(mg) 能补的食物种类虽多，但是量比较大--不过经试验特殊对待并无显著改进
 //    NSMutableArray *nutrientArrayLastCal = [NSMutableArray arrayWithObjects: @"Vit_D_(µg)",@"Choline_Tot_ (mg)",@"Fiber_TD_(g)", @"Carbohydrt_(g)",@"Energ_Kcal", nil];
     
-    NSArray *limitedNutrientsCanBeCal = [self.class getCustomNutrients];
-    
+    NSMutableArray *normalNutrientsToCal = nil;
     //这是一个营养素的全集
     NSArray* nutrientNamesOrdered = [self.class getFullAndOrderedNutrients];
     NSArray* nutrientsInDRI = DRIsDict.allKeys;
     assert([LZUtility arrayEqualArrayInSetWay_withArray1:nutrientNamesOrdered andArray2:nutrientsInDRI]);
+    normalNutrientsToCal = [NSMutableArray arrayWithArray:nutrientNamesOrdered];
     
-    NSMutableArray *normalNutrientsToCal = [NSMutableArray arrayWithArray:nutrientNamesOrdered];
-    [LZUtility arrayMinusSet_withArray:normalNutrientsToCal andMinusSet:[NSSet setWithArray:nutrientArrayNotCal]];//先去掉不应计算的营养素
-
-    if (needLimitNutrients){//如果需要使用限制集中的营养素的话
-        //normalNutrientsToCal = [NSMutableArray arrayWithArray: limitedNutrientsCanBeCal];//这里不使用这条语句主要是由于要利用nutrientNamesOrdered中的顺序
-        [LZUtility arrayIntersectSet_withArray:normalNutrientsToCal andSet:[NSSet setWithArray:limitedNutrientsCanBeCal]];
+    if (TRUE){//(needLimitNutrients){//如果需要使用限制集中的营养素的话
+        //normalNutrientsToCal = [NSMutableArray arrayWithArray: customNutrients];//这里不使用这条语句主要是由于要利用nutrientNamesOrdered中的顺序以供后面计算用
+        [LZUtility arrayIntersectSet_withArray:normalNutrientsToCal andSet:[NSSet setWithArray:customNutrients]];
     }
     
-    //对以前那些需最后计算的营养素暂且不管，因为算法已经改变
+    if(givenNutrients.count > 0){
+        [LZUtility arrayIntersectSet_withArray:normalNutrientsToCal andSet:[NSSet setWithArray:givenNutrients]];
+    }
     
+    [LZUtility arrayMinusSet_withArray:normalNutrientsToCal andMinusSet:[NSSet setWithArray:nutrientArrayNotCal]];//去掉不应计算的营养素，虽然在前面那些限制性的营养素集合中可能已经去掉了
+    
+    //对以前那些需最后计算的营养素暂且不管，因为算法已经改变
+
     NSMutableDictionary *retData = [NSMutableDictionary dictionary];
     [retData setObject:normalNutrientsToCal forKey:@"normalNutrientsToCal"];
     return retData;
@@ -3668,9 +3681,10 @@
 
 /*
  need flag Config_needConsiderNutrientLoss for getStandardDRIs_withUserInfo ..
- 
+ options contain flag LZSettingKey_needLimitNutrients, LZSettingKey_needUseLowLimitAsUnit, LZSettingKey_randSeed
+ params contain Key_givenNutrients
  */
--(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)givenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSMutableDictionary*)options
+-(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)givenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSMutableDictionary*)options andParams:(NSDictionary*)params
 {
 //    BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
 //    if(options != nil){
@@ -3683,15 +3697,15 @@
     NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:options];
     NSDictionary *DRIULsDict = [da getStandardDRIULs_withUserInfo:userInfo andOptions:options];
     NSDictionary *DRIdata = [NSDictionary dictionaryWithObjectsAndKeys: DRIsDict,Key_DRI, DRIULsDict,Key_DRIUL, nil];
-    NSMutableDictionary * retData = [self recommendFoodBySmallIncrementWithPreIntake:givenFoodAmountDict andDRIdata:DRIdata andOptions:options];
+    NSMutableDictionary * retData = [self recommendFoodBySmallIncrementWithPreIntake:givenFoodAmountDict andDRIdata:DRIdata andOptions:options andParams:params];
     [retData setObject:userInfo forKey:@"userInfoDict"];
     return retData;
 }
 /*
- need flag LZSettingKey_needLimitNutrients, LZSettingKey_needUseLowLimitAsUnit, LZSettingKey_randSeed
- 
+ options contain flag LZSettingKey_needLimitNutrients, LZSettingKey_needUseLowLimitAsUnit, LZSettingKey_randSeed
+ params contain Key_givenNutrients
  */
--(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)givenFoodAmountDict andDRIdata:(NSDictionary*)DRIdata andOptions:(NSMutableDictionary*)options
+-(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)givenFoodAmountDict andDRIdata:(NSDictionary*)DRIdata andOptions:(NSMutableDictionary*)options andParams:(NSDictionary*)params
 {
     
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
@@ -3736,7 +3750,7 @@
     NSMutableString *logMsg;
     
     //算出需要计算的营养素清单及预置一定的顺序
-    NSDictionary *calNutrientsData = [self getCalculationNutrientsForSmallIncrementLogic_withDRI:DRIsDict andOptions:options];
+    NSDictionary *calNutrientsData = [self getCalculationNutrientsForSmallIncrementLogic_withDRI:DRIsDict andOptions:options andParams:params];
     NSMutableArray *normalNutrientsToCal = [calNutrientsData objectForKey:@"normalNutrientsToCal"];
     NSMutableArray *originalNutrientNameAryToCal = normalNutrientsToCal;
 
@@ -4444,7 +4458,8 @@
     row[0] = @"--------";
     [rows addObject:row];
     
-    [rows addObject:otherInfos];
+    if (otherInfos!=nil)
+        [rows addObject:otherInfos];
     
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------";
