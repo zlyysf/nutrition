@@ -18,7 +18,7 @@
 @end
 
 @implementation LZAddByNutrientController
-@synthesize foodArray,currentFoodInputTextField,nutrientTitle,tempIntakeDict;
+@synthesize foodArray,currentFoodInputTextField,nutrientTitle,tempIntakeDict,pushToNextView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -57,6 +57,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    self.pushToNextView = NO;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [MobClick beginLogPageView:@"按营养素添加食物页面"];
@@ -66,9 +67,13 @@
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
+
     if(self.currentFoodInputTextField != nil)
     {
         [self.currentFoodInputTextField resignFirstResponder];
+    }
+    if (self.pushToNextView) {
+        return;
     }
     NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
     NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
@@ -295,6 +300,7 @@
 #pragma mark- LZFoodCellDelegate
 - (void)foodButtonTappedForIndex:(NSIndexPath *)index
 {
+    self.pushToNextView = YES;
     if(self.currentFoodInputTextField != nil)
     {
         [self.currentFoodInputTextField resignFirstResponder];

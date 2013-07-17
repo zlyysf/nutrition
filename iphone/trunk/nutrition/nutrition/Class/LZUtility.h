@@ -51,4 +51,6 @@
 
 +(void)initializePreferNutrient;
 +(NSArray *)convertPreferNutrientArrayToParamArray:(NSArray *)preferArray;
++ (NSString *)stampFromInterval:(NSNumber *) seconds;
++ (BOOL)twoDateIsSameDay:(NSDate *)fist second:(NSDate *)second;
 @end

@@ -434,6 +434,52 @@
     return result;
     
 }
+
++ (NSString *)stampFromInterval:(NSNumber *) seconds
+{
+    if(seconds == nil || [seconds intValue] == 0)
+        return @"";
+    if ([[seconds stringValue] length] > 10) {
+        seconds	 = [NSNumber numberWithInteger:[[[seconds stringValue] substringToIndex:10] intValue]];
+    }
+    NSDate *_data = [NSDate dateWithTimeIntervalSince1970:[seconds doubleValue]];
+    NSDate *current = [NSDate date];
+    NSString *time;
+//    if ([LZUtility twoDateIsSameDay:_data second:current])
+//    {
+//        NSDateFormatter *formatter= [[NSDateFormatter alloc] init];
+//        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
+//        [formatter setAMSymbol:@"上午"];
+//        [formatter setPMSymbol:@"下午"];
+//        [formatter setDateFormat:@"HH:mm"];
+//        time = [formatter stringFromDate:_data];
+//        time = @"今天";
+//    }
+//    else
+//    {
+        NSDateFormatter *formatter= [[NSDateFormatter alloc] init];
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
+        [formatter setDateFormat:@"MM.dd"];
+        time = [formatter stringFromDate:_data];
+//    }
+    //MMM dd h:mm a
+    return time;
+}
+
++ (BOOL)twoDateIsSameDay:(NSDate *)fist second:(NSDate *)second
+{
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit |  NSDayCalendarUnit;
+    NSDateComponents* comp1 = [calendar components:unitFlags fromDate:fist];
+    NSDateComponents* comp2 = [calendar components:unitFlags fromDate:second];
+    return [comp1 day]   == [comp2 day] &&
+    
+    [comp1 month] == [comp2 month] &&
+    
+    [comp1 year]  == [comp2 year];
+    
+}
+
 @end
 
 

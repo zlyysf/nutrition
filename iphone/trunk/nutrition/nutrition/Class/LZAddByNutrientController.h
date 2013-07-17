@@ -15,4 +15,5 @@
 @property (assign, nonatomic)UITextField *currentFoodInputTextField;
 @property (strong, nonatomic)NSString *nutrientTitle;
 @property (strong, nonatomic)NSMutableDictionary *tempIntakeDict;
+@property (readwrite,nonatomic)BOOL pushToNextView;
 @end

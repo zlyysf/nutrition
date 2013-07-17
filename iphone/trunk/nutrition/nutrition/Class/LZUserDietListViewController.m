@@ -81,7 +81,7 @@
 }
 - (void)displayLocalDietList
 {
-    LZDataAccess *da = [[LZDataAccess alloc]init];
+    LZDataAccess *da = [LZDataAccess singleton];
     
     NSArray *localDietArray = [da getAllFoodCollocation];
     [self.dietArray removeAllObjects];
@@ -114,6 +114,10 @@
 {
     LZDiteCell * cell =(LZDiteCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDiteCell"];
     NSDictionary *aDiet = [self.dietArray objectAtIndex:indexPath.row];
+    cell.dietNameLabel.text = [aDiet objectForKey:@"CollocationName"];
+    NSNumber *dietId = [aDiet objectForKey:@"CollocationId"];
+    NSNumber *timeStamp = [aDiet objectForKey:@"CollocationCreateTime"];
+    cell.timeStampLabel.text = [LZUtility stampFromInterval:timeStamp];
     NSLog(@"%@ ",aDiet);
     return cell;
 }
