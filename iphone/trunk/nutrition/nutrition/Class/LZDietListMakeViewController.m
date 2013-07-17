@@ -129,7 +129,11 @@
     [self setListView:nil];
     [super viewDidUnload];
 }
-
+- (void)didReceiveMemoryWarning
+{
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
+}
 - (void)settingsChanged:(NSNotification *)notification
 {
     needRefresh = YES;
@@ -215,11 +219,52 @@
    
 
 }
-- (void)didReceiveMemoryWarning
+- (void)foodCellSwiped:(UISwipeGestureRecognizer*)sender
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    if (sender.state == UIGestureRecognizerStateEnded)
+    {
+        NSLog(@"%d",sender.direction);
+        LZRecommendFoodCell *cell = (LZRecommendFoodCell*)sender.view;
+        NSString *foodId = cell.cellFoodId;
+        NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
+        int index = [self.takenFoodIdsArray indexOfObject:foodId];
+        if (index >= 0 && index < [self.takenFoodIdsArray count])
+        {
+            NSIndexPath *indexPathToDelete = [NSIndexPath indexPathForRow:index inSection:0];
+            
+            NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:takenFoodAmountDict];
+            NSString *ndb_No = [cellInfoDict objectForKey:@"NDB_No"];
+            [tempDict removeObjectForKey:ndb_No];
+            [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:LZUserDailyIntakeKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            //[self displayTakenFoodResult];
+            [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
+            [self.takenFoodIdsArray removeObjectAtIndex:index];
+            NSArray *array = [[NSArray alloc]initWithObjects:indexPathToDelete, nil];
+            if ([self.takenFoodIdsArray count]== 0)
+            {
+                if(sender.direction == UISwipeGestureRecognizerDirectionLeft)
+                    [self.listView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationLeft];
+                else
+                    [self.listView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationRight];
+                
+            }
+            else
+            {
+                [self.listView beginUpdates];
+                if(sender.direction == UISwipeGestureRecognizerDirectionLeft)
+                    [self.listView deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationLeft];
+                else
+                    [self.listView deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationRight];
+                [self.listView endUpdates];
+            }
+            [self refreshFoodNureitentProcessForAll:NO];
+        }
+    }
 }
+
+#pragma mark- TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)
@@ -240,7 +285,7 @@
             {
                 LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
                 [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
-                cell.contentLabel.text = @"请添加今日计划要购买的食物，我们会帮你分析今日摄入的营养量是否达到标准，并推荐相关的食物以达到标准，让菜买的顺当，吃的健康！";
+                cell.contentLabel.text = @"我们app的作用是帮您找到一组营养全面的食物搭配，您可以通过我们的推荐功能快速得到，也可以加入自己的选择以找到最适合您的方案。";
                 return cell;
             }
             else
@@ -264,7 +309,7 @@
                 cell.cellFoodId = foodId;
                 cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
                 NSNumber *weight = [aFood objectForKey:@"Amount"];
-                cell.foodWeightlabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
+                cell.foodWeightlabel.text = [NSString stringWithFormat:@"%d",[weight intValue]];
                 UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
                 swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
                 UISwipeGestureRecognizer *swipeRightGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
@@ -312,50 +357,6 @@
         return cell;
     }
 }
-- (void)foodCellSwiped:(UISwipeGestureRecognizer*)sender
-{
-    if (sender.state == UIGestureRecognizerStateEnded)
-    {
-        NSLog(@"%d",sender.direction);
-        LZRecommendFoodCell *cell = (LZRecommendFoodCell*)sender.view;
-        NSString *foodId = cell.cellFoodId;
-        NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
-        int index = [self.takenFoodIdsArray indexOfObject:foodId];
-         if (index >= 0 && index < [self.takenFoodIdsArray count])
-        {
-            NSIndexPath *indexPathToDelete = [NSIndexPath indexPathForRow:index inSection:0];
-            
-            NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
-            NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:takenFoodAmountDict];
-            NSString *ndb_No = [cellInfoDict objectForKey:@"NDB_No"];
-            [tempDict removeObjectForKey:ndb_No];
-            [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:LZUserDailyIntakeKey];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-            //[self displayTakenFoodResult];
-            [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
-            [self.takenFoodIdsArray removeObjectAtIndex:index];
-            NSArray *array = [[NSArray alloc]initWithObjects:indexPathToDelete, nil];
-            if ([self.takenFoodIdsArray count]== 0)
-            {
-                if(sender.direction == UISwipeGestureRecognizerDirectionLeft)
-                [self.listView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationLeft];
-                else
-                [self.listView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationRight];
-                
-            }
-            else
-            {
-                [self.listView beginUpdates];
-                if(sender.direction == UISwipeGestureRecognizerDirectionLeft)
-                [self.listView deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationLeft];
-                else
-                    [self.listView deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationRight];
-                [self.listView endUpdates];
-            }
-            [self refreshFoodNureitentProcessForAll:NO];
-        }
-    }
-}
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
@@ -393,9 +394,9 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text =  @"今日打算购买的食物";
+        sectionTitleLabel.text =  @"食物";
     else
-        sectionTitleLabel.text =  @"今日营养补充进度";
+        sectionTitleLabel.text =  @"营养补充情况";
     
     return sectionView;
 }
@@ -486,8 +487,8 @@
         [self.navigationController pushViewController:addByNutrientController animated:YES];
     }
 }
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    return NO;
+//- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return NO;
 //    if (indexPath.section ==1)
 //    {
 //        return NO;
@@ -500,8 +501,8 @@
 //        }
 //        return !(takenFoodArray ==nil || [takenFoodArray count]==0);
 //    }
-}
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+//}
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
 //    NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
 //    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:takenFoodAmountDict];
 //    NSDictionary *aFood = [takenFoodIdsArray objectAtIndex:indexPath.row-1];
@@ -511,18 +512,18 @@
 //    [[NSUserDefaults standardUserDefaults]synchronize];
 //    [self refreshFoodNureitentProcessForAll:YES];
 //    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];    
-}
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return @"删除";
-}
-- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return YES;
-}
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleDelete;
-}
+//}
+//- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return @"删除";
+//}
+//- (BOOL)tableView:(UITableView *)tableView shouldIndentWhileEditingRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return YES;
+//}
+//- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+//    return UITableViewCellEditingStyleDelete;
+//}
 #pragma mark- Recommend Function
 - (IBAction)recommendAction:(id)sender {
     //弹出选择元素框
