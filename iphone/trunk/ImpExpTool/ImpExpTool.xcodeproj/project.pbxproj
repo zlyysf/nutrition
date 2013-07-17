@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		08529CF1177C3672008E1397 /* Female_UL.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08529CEF177C3672008E1397 /* Female_UL.xls */; };
 		08529CF2177C3672008E1397 /* Male_UL.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08529CF0177C3672008E1397 /* Male_UL.xls */; };
+		0853BDD717957DD300B05122 /* LZRecommendFood.m in Sources */ = {isa = PBXBuildFile; fileRef = 0853BDD617957DD300B05122 /* LZRecommendFood.m */; };
 		088240811740924300E71E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240801740924300E71E6E /* UIKit.framework */; };
 		088240831740924300E71E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240821740924300E71E6E /* Foundation.framework */; };
 		088240851740924300E71E6E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240841740924300E71E6E /* CoreGraphics.framework */; };
@@ -70,6 +71,8 @@
 /* Begin PBXFileReference section */
 		08529CEF177C3672008E1397 /* Female_UL.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Female_UL.xls; path = ../../../data/Female_UL.xls; sourceTree = "<group>"; };
 		08529CF0177C3672008E1397 /* Male_UL.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Male_UL.xls; path = ../../../data/Male_UL.xls; sourceTree = "<group>"; };
+		0853BDD517957DD300B05122 /* LZRecommendFood.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFood.h; path = ../nutrition/nutrition/Class/LZRecommendFood.h; sourceTree = "<group>"; };
+		0853BDD617957DD300B05122 /* LZRecommendFood.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFood.m; path = ../nutrition/nutrition/Class/LZRecommendFood.m; sourceTree = "<group>"; };
 		0882407D1740924300E71E6E /* ImpExpTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImpExpTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		088240801740924300E71E6E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		088240821740924300E71E6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -250,6 +253,8 @@
 		088240CB1740A1CA00E71E6E /* externalRef */ = {
 			isa = PBXGroup;
 			children = (
+				0853BDD517957DD300B05122 /* LZRecommendFood.h */,
+				0853BDD617957DD300B05122 /* LZRecommendFood.m */,
 				0882412117411C3A00E71E6E /* LZConstants.h */,
 				0882411A1740E02D00E71E6E /* Res */,
 				088240CF1740A66100E71E6E /* dataAccess */,
@@ -412,6 +417,7 @@
 				088240CE1740A1FF00E71E6E /* LZUtility.m in Sources */,
 				088240D21740A66100E71E6E /* LZDataAccess.m in Sources */,
 				088241251741E3CD00E71E6E /* LZFacade.m in Sources */,
+				0853BDD717957DD300B05122 /* LZRecommendFood.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

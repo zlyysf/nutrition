@@ -84,9 +84,9 @@
     [workRe myInitDBConnectionWithFilePath:destDbFilePath andIfNeedClear:FALSE];
 //    LZDBAccess *db = [workRe getDBconnection];
     
-    [workRe dealExcelAndSqlite_FoodCustomT2];
+//    [workRe dealExcelAndSqlite_FoodCustomT2];
     
-    
+    [workRe mergeFoodPicPathAndFoodLimitToFoodcommon];
     
 }
 

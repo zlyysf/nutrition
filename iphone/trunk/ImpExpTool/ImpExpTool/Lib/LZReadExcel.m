@@ -8,6 +8,7 @@
 
 //#import "LZConst.h"
 #import "LZConstants.h"
+#import "LZUtility.h"
 #import "LZReadExcel.h"
 
 @implementation LZReadExcel
@@ -610,7 +611,7 @@
         cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
     }
     
-    NSLog(@"in readFoodCustom, columnNames=%@, rows2D=\n%@",columnNames,rows2D);
+    NSLog(@"in readFoodCustomT2, columnNames=%@, rows2D=\n%@",columnNames,rows2D);
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
     [retData setObject:columnNames forKey:@"columnNames"];
@@ -635,6 +636,130 @@
 
 }
 
+-(void)mergeFoodPicPathAndFoodLimitToFoodcommon
+{
+    NSDictionary *dataFoodCustomT2 = [self readFoodCustomT2];
+    NSArray *rows2DFoodCustomT2 = [dataFoodCustomT2 objectForKey:@"rows2D"];
+    NSArray *columnNamesFoodCustomT2 = [dataFoodCustomT2 objectForKey:@"columnNames"];
+    NSMutableArray *idsFoodCustomT2 = [NSMutableArray array];
+    for(int i=0; i<rows2DFoodCustomT2.count; i++){
+        NSArray *rowFoodCustomT2 = rows2DFoodCustomT2[i];
+        NSString *foodId = rowFoodCustomT2[0];
+        [idsFoodCustomT2 addObject:foodId];
+    }
+    
+    NSDictionary *dataFoodPicPath = [self readFoodPicPath];
+    NSArray *rows2DFoodPicPath = [dataFoodPicPath objectForKey:@"rows2D"];
+    NSArray *columnNamesFoodPicPath = [dataFoodPicPath objectForKey:@"columnNames"];
+    NSMutableArray *idsFoodPicPath = [NSMutableArray array];
+    NSMutableDictionary *rowDictFoodPicPath = [NSMutableDictionary dictionary];
+    for(int i=0; i<rows2DFoodPicPath.count; i++){
+        NSArray *rowFoodPicPath = rows2DFoodPicPath[i];
+        NSString *foodId = rowFoodPicPath[0];
+        [idsFoodPicPath addObject:foodId];
+        [rowDictFoodPicPath setObject:rowFoodPicPath forKey:foodId];
+    }
+    
+    NSDictionary *dataFoodLimit = [self readFoodLimit];
+    NSArray *rows2DFoodLimit = [dataFoodLimit objectForKey:@"rows2D"];
+    NSArray *columnNamesFoodLimit = [dataFoodLimit objectForKey:@"columnNames"];
+    NSMutableArray *idsFoodLimit = [NSMutableArray array];
+    NSMutableDictionary *rowDictFoodLimit = [NSMutableDictionary dictionary];
+    for(int i=0; i<rows2DFoodLimit.count; i++){
+        NSArray *rowFoodLimit = rows2DFoodLimit[i];
+        NSString *foodId = rowFoodLimit[0];
+        [idsFoodLimit addObject:foodId];
+        [rowDictFoodLimit setObject:rowFoodLimit forKey:foodId];
+    }
+    
+    assert([LZUtility arrayContainArrayInSetWay_withOuterArray:idsFoodCustomT2 andInnerArray:idsFoodPicPath]);
+    assert([LZUtility arrayEqualArrayInSetWay_withArray1:idsFoodPicPath andArray2:idsFoodLimit]);
+    
+//    NSString *resFileName = @"Food_common.xls";
+//    NSString *destDbFileName = @"Food_commonE1.xls";
+//    NSString *destDbFilePath = [LZUtility copyResourceToDocumentWithResFileName:resFileName andDestFileName:destDbFileName];
+    
+    NSArray *rows2DFoodCommonOld1 = [self readFoodCommonOld1];
+    for (int i=0; i<rows2DFoodCommonOld1.count; i++){
+        NSMutableArray *row = rows2DFoodCommonOld1[i];
+        if (i==0){
+            [row addObject:columnNamesFoodPicPath[1]];
+            [row addObject:columnNamesFoodLimit[1]];
+            [row addObject:columnNamesFoodLimit[2]];
+            [row addObject:columnNamesFoodLimit[3]];
+        }else{
+            NSString *foodId = row[0];
+            bool addedContent = false;
+            if (foodId.length>0){
+                NSArray *rowFoodLimit = [rowDictFoodLimit objectForKey:foodId];
+                NSArray *rowFoodPicPath = [rowDictFoodPicPath objectForKey:foodId];
+                if (rowFoodLimit!=nil){
+                    assert(rowFoodPicPath!=nil);
+                    addedContent = true;
+                    [row addObject:rowFoodPicPath[1]];
+                    [row addObject:rowFoodLimit[1]];
+                    [row addObject:rowFoodLimit[2]];
+                    [row addObject:rowFoodLimit[3]];
+                }
+            }
+            if (!addedContent){
+                [row addObject:@""];
+                [row addObject:@""];
+                [row addObject:@""];
+                [row addObject:@""];
+            }
+        }
+    }//for
+    
+    NSString *csvFileName = @"FoodCommonE1.csv";
+
+    NSString *csvFilePath = [LZUtility convert2DArrayToCsv:csvFileName withColumnNames:nil andRows2D:rows2DFoodCommonOld1];
+    NSLog(@"csvFilePath= %@",csvFilePath);
+}
+
+
+-(NSMutableArray *)readFoodCommonOld1// TODO 按照8列读下来
+{
+    NSLog(@"readFoodCommonOld1 begin");
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
+    NSLog(@"in readFoodCommonOld1, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+    int columnCount = 8;
+    int idxRow=1;
+
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+    
+    NSMutableArray *row;
+    DHcell *cell;
+    bool allRowCellEmpty;
+    
+    do {
+        allRowCellEmpty = true;
+        row = [NSMutableArray arrayWithCapacity:columnCount];
+        for(int i=1; i<=columnCount; i++){
+            cell = [reader cellInWorkSheetIndex:0 row:idxRow col:i];
+            if (cell.type!=cellBlank){
+                NSString *cellStr = cell.str;
+                [row addObject:cellStr];
+                if (cellStr.length > 0){
+                    allRowCellEmpty = false;
+                }
+            }else{
+                [row addObject:@""];
+            }
+        }
+        
+        if (!allRowCellEmpty) {
+            [rows2D addObject:row];
+            idxRow++;
+        }
+    } while (!allRowCellEmpty);
+    
+    NSLog(@"in readFoodCommonOld1, rows2D=\n%@",rows2D);
+    return rows2D;
+}
 
 
 /*
@@ -834,7 +959,7 @@
     NSMutableArray *columns = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No,COLUMN_NAME_PicPath, nil];
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
-    [retData setObject:columns forKey:@"columns"];
+    [retData setObject:columns forKey:@"columnNames"];
     [retData setObject:rows2D forKey:@"rows2D"];
     return retData;
 }
@@ -843,7 +968,7 @@
 -(void)convertExcelToSqlite_FoodPicPath
 {
     NSDictionary *data = [self readFoodPicPath];
-    NSArray *columns = [data objectForKey:@"columns"];
+    NSArray *columns = [data objectForKey:@"columnNames"];
     NSArray *rows2D = [data objectForKey:@"rows2D"];
     
     NSString *tableName = TABLE_NAME_FoodPicPath;// @"FoodPicPath";

@@ -42,6 +42,7 @@
 
 
 -(void)dealExcelAndSqlite_FoodCustomT2;
+-(void)mergeFoodPicPathAndFoodLimitToFoodcommon;
 
 
 @end

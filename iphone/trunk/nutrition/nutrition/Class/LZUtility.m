@@ -90,7 +90,8 @@
 +(NSString *)convert2DArrayToCsv:(NSString*)csvFileName withColumnNames:(NSArray*)columnNames andRows2D:(NSArray*)rows2D
 {
     NSMutableArray * data = [NSMutableArray arrayWithCapacity:(1+rows2D.count)];
-    [data addObject:columnNames];
+    if (columnNames!=nil)
+        [data addObject:columnNames];
     [data addObjectsFromArray:rows2D];
     return [self convert2DArrayToCsv:csvFileName withData:data];
 }
