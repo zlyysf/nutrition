@@ -86,7 +86,7 @@
     
 //    [workRe dealExcelAndSqlite_FoodCustomT2];
     
-    [workRe mergeFoodPicPathAndFoodLimitToFoodcommon];
+//    [workRe mergeFoodPicPathAndFoodLimitToFoodcommon];
     
 }
 
@@ -171,21 +171,16 @@
     [workRe myInitDBConnectionWithFilePath:destDbFilePath andIfNeedClear:FALSE];
     LZDBAccess *db = [workRe getDBconnection];
     
+    [workRe convertExcelToSqlite_FoodCustom_v1_3];
+    [db createView_FoodNutritionCustom_andIfNeedDrop:true];
+    
     [workRe dealDRIandULdataFromExcelToSqliteForFemale];
     [workRe dealDRIandULdataFromExcelToSqliteForMale];
     
-    [workRe convertExcelToSqlite_FoodCustom];
-    [db createView_FoodNutritionCustom_andIfNeedDrop:true];
-    
-    [workRe convertExcelToSqlite_FoodLimit];
     [workRe convertExcelToSqlite_NutritionInfo];
-    [workRe convertExcelToSqlite_FoodPicPath];
-    
     
     [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
     [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
-
-
 }
 
 

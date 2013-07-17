@@ -21,7 +21,8 @@
 
 //-(void)generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2;
 //-(void)convertExcelToSqlite_FoodCnDescription;
--(void)convertExcelToSqlite_FoodCustom;
+//-(void)convertExcelToSqlite_FoodCustom;
+-(void)convertExcelToSqlite_FoodCustom_v1_3;
 
 -(void)convertDRIFemaleDataFromExcelToSqlite;
 -(void)convertDRIMaleDataFromExcelToSqlite;
@@ -32,17 +33,17 @@
 -(void)dealDRIandULdataFromExcelToSqliteForMale;
 
 
--(void)convertExcelToSqlite_FoodLimit;
+//-(void)convertExcelToSqlite_FoodLimit;
 
 -(void)convertExcelToSqlite_NutritionInfo;
 
--(void)convertExcelToSqlite_FoodPicPath;
+//-(void)convertExcelToSqlite_FoodPicPath;
 
 
 
 
 -(void)dealExcelAndSqlite_FoodCustomT2;
--(void)mergeFoodPicPathAndFoodLimitToFoodcommon;
+//-(void)mergeFoodPicPathAndFoodLimitToFoodcommon;
 
 
 @end

@@ -82,7 +82,7 @@
 #define TABLE_NAME_DRIULrateFemale @"DRIULrateFemale"
 #define TABLE_NAME_DRIULrateMale @"DRIULrateMale"
 
-#define TABLE_NAME_FoodNutritionCustom @"FoodNutritionCustom" // TO be replaced by CustomFood join FoodNutrition OR same name view
+//#define TABLE_NAME_FoodNutritionCustom @"FoodNutritionCustom" // TO be replaced by CustomFood join FoodNutrition OR same name view
 #define VIEW_NAME_FoodNutritionCustom @"FoodNutritionCustom" 
 #define COLUMN_NAME_CnCaption @"CnCaption"
 #define COLUMN_NAME_CnType @"CnType"
@@ -94,7 +94,7 @@
 #define TABLE_NAME_Food_Supply_DRI_Common @"Food_Supply_DRI_Common"
 #define TABLE_NAME_Food_Supply_DRI_Amount @"Food_Supply_DRI_Amount"
 
-#define TABLE_NAME_FoodLimit @"FoodLimit"
+//#define TABLE_NAME_FoodLimit @"FoodLimit"
 #define COLUMN_NAME_Lower_Limit @"Lower_Limit(g)"
 #define COLUMN_NAME_Upper_Limit @"Upper_Limit(g)"
 #define COLUMN_NAME_normal_value @"normal_value"
@@ -108,7 +108,7 @@
 #define COLUMN_NAME_LossRate @"LossRate"
 #define COLUMN_NAME_NutrientDescription @"NutrientDescription"
 
-#define TABLE_NAME_FoodPicPath @"FoodPicPath"
+//#define TABLE_NAME_FoodPicPath @"FoodPicPath"
 #define COLUMN_NAME_PicPath @"PicPath"
 
 #define TABLE_NAME_FoodCollocation @"FoodCollocation"

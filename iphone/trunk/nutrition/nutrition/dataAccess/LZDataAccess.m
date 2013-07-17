@@ -1298,7 +1298,8 @@
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
     [sqlStr appendString:@"SELECT "];
     [sqlStr appendString:COLUMN_NAME_NDB_No];
-    [sqlStr appendString:@"  FROM FoodNutritionCustom \n"];
+//    [sqlStr appendString:@"  FROM FoodNutritionCustom \n"];
+    [sqlStr appendString:@"  FROM FoodCustom \n"];
     [sqlStr appendString:@"  WHERE NDB_No in ("];
     [sqlStr appendString:placeholdersStr];
     [sqlStr appendString:@")\n"];

@@ -42,12 +42,9 @@
 		0882412217411C9A00E71E6E /* LZConstants.h in Sources */ = {isa = PBXBuildFile; fileRef = 0882412117411C3A00E71E6E /* LZConstants.h */; };
 		088241251741E3CD00E71E6E /* LZFacade.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241241741E3CD00E71E6E /* LZFacade.m */; };
 		0882412717422E7C00E71E6E /* Food.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882412617422E7C00E71E6E /* Food.xls */; };
-		0882412917422F4100E71E6E /* Food_Limit.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882412817422F4100E71E6E /* Food_Limit.xls */; };
 		0882412B1743342700E71E6E /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882412A1743342600E71E6E /* readme.txt */; };
 		0882412D174368E900E71E6E /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 0882412C174368E900E71E6E /* CustomDB.dat */; };
-		088241411744C59300E71E6E /* dataAll.dat in Resources */ = {isa = PBXBuildFile; fileRef = 088241401744C59300E71E6E /* dataAll.dat */; };
 		0882414D174B615D00E71E6E /* NutrientInfo.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882414C174B615D00E71E6E /* NutrientInfo.xls */; };
-		08824155174F66B000E71E6E /* Food_PicPath.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08824154174F66B000E71E6E /* Food_PicPath.xls */; };
 		0882419A17530AC500E71E6E /* Food_common.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882419917530AC500E71E6E /* Food_common.xls */; };
 /* End PBXBuildFile section */
 
@@ -121,12 +118,9 @@
 		088241231741E3CD00E71E6E /* LZFacade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZFacade.h; sourceTree = "<group>"; };
 		088241241741E3CD00E71E6E /* LZFacade.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZFacade.m; sourceTree = "<group>"; };
 		0882412617422E7C00E71E6E /* Food.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Food.xls; path = ../../../data/Food.xls; sourceTree = "<group>"; };
-		0882412817422F4100E71E6E /* Food_Limit.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Food_Limit.xls; path = ../../../data/Food_Limit.xls; sourceTree = "<group>"; };
 		0882412A1743342600E71E6E /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		0882412C174368E900E71E6E /* CustomDB.dat */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomDB.dat; path = ../nutrition/nutrition/Resource/CustomDB.dat; sourceTree = "<group>"; };
-		088241401744C59300E71E6E /* dataAll.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = dataAll.dat; sourceTree = "<group>"; };
 		0882414C174B615D00E71E6E /* NutrientInfo.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = NutrientInfo.xls; path = ../../../data/NutrientInfo.xls; sourceTree = "<group>"; };
-		08824154174F66B000E71E6E /* Food_PicPath.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Food_PicPath.xls; path = ../../../data/Food_PicPath.xls; sourceTree = "<group>"; };
 		0882419917530AC500E71E6E /* Food_common.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Food_common.xls; path = ../../../data/Food_common.xls; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -278,7 +272,6 @@
 		088240D41740A88700E71E6E /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				088241401744C59300E71E6E /* dataAll.dat */,
 				088240D51740A88700E71E6E /* ABBREV.xls */,
 				088240D91740A88700E71E6E /* customUSDAdataV2.xls */,
 			);
@@ -291,10 +284,8 @@
 				08529CEF177C3672008E1397 /* Female_UL.xls */,
 				08529CF0177C3672008E1397 /* Male_UL.xls */,
 				0882419917530AC500E71E6E /* Food_common.xls */,
-				08824154174F66B000E71E6E /* Food_PicPath.xls */,
 				0882414C174B615D00E71E6E /* NutrientInfo.xls */,
 				0882412C174368E900E71E6E /* CustomDB.dat */,
-				0882412817422F4100E71E6E /* Food_Limit.xls */,
 				0882412617422E7C00E71E6E /* Food.xls */,
 				0882411D17410E6300E71E6E /* Female_DRI.xls */,
 				0882411E17410E6300E71E6E /* Male_DRI.xls */,
@@ -384,12 +375,9 @@
 				0882411F17410E6300E71E6E /* Female_DRI.xls in Resources */,
 				0882412017410E6300E71E6E /* Male_DRI.xls in Resources */,
 				0882412717422E7C00E71E6E /* Food.xls in Resources */,
-				0882412917422F4100E71E6E /* Food_Limit.xls in Resources */,
 				0882412B1743342700E71E6E /* readme.txt in Resources */,
 				0882412D174368E900E71E6E /* CustomDB.dat in Resources */,
-				088241411744C59300E71E6E /* dataAll.dat in Resources */,
 				0882414D174B615D00E71E6E /* NutrientInfo.xls in Resources */,
-				08824155174F66B000E71E6E /* Food_PicPath.xls in Resources */,
 				0882419A17530AC500E71E6E /* Food_common.xls in Resources */,
 				08529CF1177C3672008E1397 /* Female_UL.xls in Resources */,
 				08529CF2177C3672008E1397 /* Male_UL.xls in Resources */,

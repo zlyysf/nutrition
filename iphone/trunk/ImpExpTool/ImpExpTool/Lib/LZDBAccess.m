@@ -259,13 +259,18 @@
     }
 }
 
+/*
+ 这个view在实际使用中发现一些跟sqlite相关的问题，主要是使用了view会导致列名前面的修饰符也会和单纯的列名一起成为实际的列名或key值，而导致使用上不便。
+ 从而只在很小的地方使用。
+ 注意目前没有把FoodCustom中的列用完，只用了一些显示性的列
+ */
 -(void)createView_FoodNutritionCustom_andIfNeedDrop:(BOOL)needDrop
 {
     if (needDrop){
         NSString *strDropView = @"DROP VIEW IF EXISTS FoodNutritionCustom";
         [_db executeUpdate:strDropView];
     }
-    NSString *strCreateView = @"CREATE VIEW IF NOT EXISTS FoodNutritionCustom AS Select CnCaption,CnType,classify,FN.* From FoodNutrition FN join FoodCustom FC on FN.NDB_No=FC.NDB_No";
+    NSString *strCreateView = @"CREATE VIEW IF NOT EXISTS FoodNutritionCustom AS Select CnCaption,CnType,classify,PicPath, FN.* From FoodNutrition FN join FoodCustom FC on FN.NDB_No=FC.NDB_No";
     [_db executeUpdate:strCreateView];
 }
 
@@ -402,127 +407,6 @@
 //    [_db executeUpdate:sqlStr];
 //}
 
--(NSMutableString*)generateCreateSqlForUSDA_ABBREV_CustomWithColumnNames:(NSArray*)columnNamesOfABBREV andCustomColumnNames:(NSArray*)columnNamesExtra
-{
-    NSLog(@"generateCreateSqlForUSDA_ABBREV_CustomWithColumnNames begin");
-    assert(columnNamesOfABBREV.count > 1 && columnNamesExtra.count>0);
-    NSString *tableName = TABLE_NAME_FoodNutritionCustom;
-    
-    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
-    NSString *s1;
-    [sqlStr appendString:@"CREATE TABLE "];
-    [sqlStr appendString:tableName];
-    [sqlStr appendString:@" ("];
-    for(int i=0; i<columnNamesOfABBREV.count; i++){
-        NSString *columnName = columnNamesOfABBREV[i];
-        if ([columnName isEqualToString:@"NDB_No"])
-            s1 = [NSString stringWithFormat:@"'%@' TEXT PRIMARY KEY",columnName];
-        else
-            s1 = [NSString stringWithFormat:@"'%@' REAL",columnName];//这里其实还有问题，不过看来sqlite不介意列的声明类型
-        if (i==0){
-            [sqlStr appendString:s1];
-        }else{
-            [sqlStr appendString:@","];
-            [sqlStr appendString:s1];
-        }
-    }
-    
-    for(int i=0; i<columnNamesExtra.count; i++){
-        NSString *columnName = columnNamesExtra[i];
-        s1 = [NSString stringWithFormat:@",'%@' TEXT",columnName];
-        [sqlStr appendString:s1];
-    }
-
-    [sqlStr appendString:@")"];
-    return sqlStr;
-}
-
-
--(void)createCustomUSDAtable_V2 : (NSArray*)columnNamesOfABBREV andIfNeedDropTable:(BOOL)needDrop
-{
-    NSLog(@"createCustomUSDAtable_V2 begin");
-    NSString *tableName = TABLE_NAME_FoodNutritionCustom;
-    if (needDrop){
-        [self dropTable:tableName];
-    }
-    
-    assert(columnNamesOfABBREV.count > 1);
-    NSArray *columnNamesCustom = [NSArray arrayWithObjects:COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify, nil];
-    
-    NSMutableString *sqlStr = [self generateCreateSqlForUSDA_ABBREV_CustomWithColumnNames:columnNamesOfABBREV andCustomColumnNames:columnNamesCustom];
-    [_db executeUpdate:sqlStr];
-}
-
-
-
-/*
- idAry和cnCaptionAry,cnTypeAry 来源于excel档。  dictRowsCols来源于已经转好的sqlite db。
- */
--(void)insertToCustomUSDAtable_V2 :(NSDictionary *)customData andRowsAndColumns:(NSMutableDictionary *)dictRowsCols andIfNeedClearTable:(BOOL)needClear
-{
-    NSLog(@"insertToCustomUSDAtable_V2 begin");
-    
-    NSString *tableName = TABLE_NAME_FoodNutritionCustom;
-    NSArray *columnNamesCustom = [NSArray arrayWithObjects:COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify, nil];
-    if (needClear){
-        [self deleteFromTable:tableName];
-    }
-
-    NSArray *idAry = [customData objectForKey:@"ids"];
-    NSArray *cnCaptionAry = [customData objectForKey:@"ChineseCaptions"];
-    NSArray *cnTypeAry = [customData objectForKey:@"ChineseTypes"];
-    NSArray *classifyAry = [customData objectForKey:COLUMN_NAME_classify];
-    
-    NSMutableArray *columnNamesOfABBREV = [dictRowsCols objectForKey:@"columnNames"];
-    NSMutableArray *rows = [dictRowsCols objectForKey:@"rows"];
-    assert(idAry.count == rows.count);
-    if (rows.count==0) return;
-
-    NSMutableArray *columnNamesAll = [NSMutableArray arrayWithArray:columnNamesOfABBREV];
-    [columnNamesAll addObjectsFromArray:columnNamesCustom];
-    NSString *sqlInsert = [self generateInsertSqlForTable:tableName andColumnNames:columnNamesAll];
-    NSLog(@"insertToCustomUSDAtable_V2 sqlInsert=%@",sqlInsert);
-    
-    NSMutableDictionary *dictIdToCnCaption = [NSMutableDictionary dictionaryWithCapacity:idAry.count];
-    NSMutableDictionary *dictIdToCnType = [NSMutableDictionary dictionaryWithCapacity:idAry.count];
-    NSMutableDictionary *dictIdToClassify = [NSMutableDictionary dictionaryWithCapacity:idAry.count];
-    for(int i=0; i<idAry.count; i++){
-        [dictIdToCnCaption setObject:cnCaptionAry[i] forKey:idAry[i]];
-        [dictIdToCnType setObject:cnTypeAry[i] forKey:idAry[i]];
-        [dictIdToClassify setObject:classifyAry[i] forKey:idAry[i]];
-    }
-    //NSLog(@"insertToCustomUSDAtable dictIdToCnCaption=%@, dictIdToCnType=%@",dictIdToCnCaption,dictIdToCnType);
-    
-    NSString *columnNameForId = @"NDB_No";
-    int columnIndexForId = -1;
-    for(int i=0; i<columnNamesOfABBREV.count; i++){
-        if ([columnNameForId isEqualToString:columnNamesOfABBREV[i]]){
-            columnIndexForId = i;
-            break;
-        }
-    }
-    NSLog(@"insertToCustomUSDAtable columnIndexForId=%d",columnIndexForId);
-    for(int i=0; i<rows.count; i++){
-        NSMutableArray *row = rows[i];
-        NSString *rowId = row[columnIndexForId];
-        NSString *cnCaption = [dictIdToCnCaption objectForKey:rowId];
-        NSString *cnType = [dictIdToCnType objectForKey:rowId];
-        NSString *classify = [dictIdToClassify objectForKey:rowId];
-        NSLog(@"i=%d,rowId=%@,cnCaption=%@,cnType=%@,classify=%@",i,rowId,cnCaption,cnType,classify);
-        
-        [row addObject:cnCaption];//这里直接在查询出的数据上改了
-        [row addObject:cnType];
-        [row addObject:classify];
-    }//for
-    
-    for(int i=0; i<rows.count; i++){
-        NSArray *row = rows[i];
-        //assert(columnNamesCustom.count == row.count);
-        
-        [_db executeUpdate:sqlInsert withArgumentsInArray:row];
-    }
-}
-
 -(void)getDifferenceFromFoodCustomAndFoodCustomT2
 {
     NSString *sqlQuery = @"select * from FoodCustomT2 where not NDB_No in (select NDB_No from FoodCustom)";
@@ -532,19 +416,19 @@
 
 //-------------------------------------------------
 
--(NSArray *) getAllFood
-{
-    NSString *query = @""
-    "SELECT * FROM FoodNutritionCustom"
-    " ORDER BY CnType, NDB_No"
-    ;
-    
-    FMResultSet *rs = [_db executeQuery:query];
-    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-    assert(dataAry.count > 0);
-    //NSLog(@"getAllFood ret:\n%@",dataAry);
-    return dataAry;
-}
+//-(NSArray *) getAllFood
+//{
+//    NSString *query = @""
+//    "SELECT * FROM FoodNutritionCustom"
+//    " ORDER BY CnType, NDB_No"
+//    ;
+//    
+//    FMResultSet *rs = [_db executeQuery:query];
+//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    assert(dataAry.count > 0);
+//    //NSLog(@"getAllFood ret:\n%@",dataAry);
+//    return dataAry;
+//}
 
 - (NSDictionary *)getDRIbyGender:(NSString*)gender andAge:(int)age {
     NSString *tableName = @"DRIMale";
@@ -706,7 +590,7 @@
     [allColumns addObjectsFromArray:allNutrientAry];
     
     //NSMutableDictionary *allNutrientDict = [NSMutableDictionary dictionaryWithObjects:allNutrientAry forKeys:allNutrientAry];
-    NSDictionary *foodNutritionData = [self getAllDataOfTable:TABLE_NAME_FoodNutritionCustom];
+    NSDictionary *foodNutritionData = [self getAllDataOfTable:VIEW_NAME_FoodNutritionCustom];
     NSArray *foodNutritionDataCols = [foodNutritionData objectForKey:@"cols"];
     NSArray *foodNutritionDataRows = [foodNutritionData objectForKey:@"rows"];
     //NSString *insertSql = [self generateInsertSqlForTable:tableName andColumnNames:foodNutritionDataCols];

@@ -38,8 +38,7 @@
 //-(void)createCustomUSDAtable_V1 : (NSArray*)columnNamesForUSDA;
 //-(void)insertToCustomUSDAtable_V1 :(NSArray *)idAry andCnCaptionArray:(NSArray*)cnCaptionAry andDictForRowsAndColumns:(NSMutableDictionary *)dictRowsCols;
 
--(void)createCustomUSDAtable_V2 : (NSArray*)columnNamesOfABBREV andIfNeedDropTable:(BOOL)needDrop;
--(void)insertToCustomUSDAtable_V2 :(NSDictionary *)customData andRowsAndColumns:(NSMutableDictionary *)dictRowsCols andIfNeedClearTable:(BOOL)needClear;
+
 
 
 //- (NSDictionary *)getDRIbyGender:(NSString*)gender andAge:(int)age;
