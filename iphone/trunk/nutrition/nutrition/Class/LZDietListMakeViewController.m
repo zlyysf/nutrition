@@ -26,6 +26,8 @@
 #import "LZShareViewController.h"
 #import "LZRecommendFilterView.h"
 #import "LZAppDelegate.h"
+#define KChangeFoodAmountAlertTag 101
+#define KSaveDietTitleAlertTag 102
 @interface LZDietListMakeViewController ()<MBProgressHUDDelegate,UIActionSheetDelegate,UIAlertViewDelegate,LZRecommendFilterViewDelegate>
 {
     MBProgressHUD *HUD;
@@ -34,7 +36,7 @@
 @end
 
 @implementation LZDietListMakeViewController
-@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict;
+@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,currentEditFoodId,recommendFoodDictForDisplay;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -59,6 +61,7 @@
     [self.view addSubview:HUD];
     HUD.hidden = YES;
     HUD.delegate = self;
+    self.currentEditFoodId = nil;
 	// Do any additional setup after loading the view.
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
@@ -87,6 +90,7 @@
     takenFoodDict = [[NSMutableDictionary alloc]init];
     nutrientInfoArray = [[NSMutableArray alloc]init];
     takenFoodNutrientInfoDict = [[NSMutableDictionary alloc]init];
+    recommendFoodDictForDisplay = [[NSMutableDictionary alloc]init];
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                              CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                              CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
@@ -263,7 +267,18 @@
         }
     }
 }
-
+-(void)editFoodButtonTapped:(LZEditFoodAmountButton*)sender
+{
+    NSString *foodId = sender.foodId;
+    //NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
+    currentEditFoodId = foodId;
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"请输入想修改的食物量" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = KChangeFoodAmountAlertTag;
+    UITextField *tf = [alert textFieldAtIndex:0];
+    tf.keyboardType = UIKeyboardTypeNumberPad;
+    [alert show];
+}
 #pragma mark- TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -293,7 +308,17 @@
                 LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
                 NSString *foodId = [takenFoodIdsArray objectAtIndex:indexPath.row];
                 NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+                cell.editFoodButton.foodId = foodId;
+                [cell.editFoodButton addTarget:self action:@selector(editFoodButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                 //NSLog(@"picture path %@",aFood);
+                if([self.recommendFoodDictForDisplay objectForKey:foodId])
+                {
+                    cell.recommendSignImageView.hidden = NO;
+                }
+                else
+                {
+                    cell.recommendSignImageView.hidden = YES;
+                }
                 NSString *picturePath;
                 NSString *picPath = [aFood objectForKey:@"PicturePath"];
                 if (picPath == nil || [picPath isEqualToString:@""])
@@ -584,6 +609,8 @@
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options andParams:params];
     NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
+    [recommendFoodDictForDisplay removeAllObjects];
+    [recommendFoodDictForDisplay addEntriesFromDictionary:recommendFoodAmountDict];
     //    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
     //                            userInfo,@"userInfo",
     //                            takenFoodAmountDict,@"givenFoodsAmount1",
@@ -946,15 +973,54 @@
 }
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if (buttonIndex == alertView.cancelButtonIndex)
+    if (alertView.tag == KChangeFoodAmountAlertTag)
     {
-        return;
+        if (buttonIndex == alertView.cancelButtonIndex)
+        {
+            return;
+        }
+        else
+        {
+            if (self.currentEditFoodId == nil)
+            {
+                return;
+            }
+            UITextField *textFiled = [alertView textFieldAtIndex:0];
+            int changed = [textFiled.text intValue];
+            NSDictionary* takenDict =  [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+            NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:takenDict];
+            
+            if (changed <=0)
+            {
+                [tempDict removeObjectForKey:self.currentEditFoodId];
+            }
+            else
+            {
+                [tempDict setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
+            }
+            self.currentEditFoodId = nil;
+            [[NSUserDefaults standardUserDefaults]setObject:tempDict forKey:LZUserDailyIntakeKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self refreshFoodNureitentProcessForAll:YES];
+
+        }
+    }
+    else if(alertView.tag == KSaveDietTitleAlertTag)
+    {
+        
     }
     else
     {
-        NSString *weichatURL =[WXApi getWXAppInstallUrl];
-        NSURL *ourAppUrl = [ [ NSURL alloc ] initWithString: weichatURL ];
-        [[UIApplication sharedApplication] openURL:ourAppUrl];
+        if (buttonIndex == alertView.cancelButtonIndex)
+        {
+            return;
+        }
+        else
+        {
+            NSString *weichatURL =[WXApi getWXAppInstallUrl];
+            NSURL *ourAppUrl = [ [ NSURL alloc ] initWithString: weichatURL ];
+            [[UIApplication sharedApplication] openURL:ourAppUrl];
+        }
     }
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex

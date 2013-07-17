@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LZEditFoodAmountButton.h"
 @interface LZRecommendFoodCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UIImageView *foodImageView;
@@ -16,5 +16,7 @@
 @property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong, nonatomic) NSString * cellFoodId;
 @property (strong, nonatomic) IBOutlet UILabel *foodUnitLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *recommendSignImageView;
+@property (strong, nonatomic) IBOutlet LZEditFoodAmountButton *editFoodButton;
 
 @end

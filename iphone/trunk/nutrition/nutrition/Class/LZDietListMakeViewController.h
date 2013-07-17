@@ -18,6 +18,8 @@ typedef enum listType
 @property (strong, nonatomic)NSMutableDictionary *takenFoodDict;
 @property (strong,nonatomic)NSMutableArray *nutrientInfoArray;
 @property (strong,nonatomic)NSMutableDictionary *takenFoodNutrientInfoDict;
+@property (strong,nonatomic)NSMutableDictionary *recommendFoodDictForDisplay;
 @property (assign, nonatomic)DietListType listType;
 @property (assign,nonatomic)BOOL needRefresh;
+@property (strong,nonatomic)NSString *currentEditFoodId;
 @end

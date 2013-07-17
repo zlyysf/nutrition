@@ -122,6 +122,8 @@
 		5F746C3E176B1E9F00E68D0E /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C3D176B1E9F00E68D0E /* libicucore.dylib */; };
 		5F746C40176B1EA900E68D0E /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C3F176B1EA900E68D0E /* libz.1.2.5.dylib */; };
 		5F789B231755B1F3002FE365 /* foodCellBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F789B221755B1F3002FE365 /* foodCellBack@2x.png */; };
+		5F7E5AA317965B47007CA18A /* recommend_sign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E5AA217965B47007CA18A /* recommend_sign@2x.png */; };
+		5F7E5AA617965C6E007CA18A /* LZEditFoodAmountButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E5AA517965C6E007CA18A /* LZEditFoodAmountButton.m */; };
 		5F8DEE9517951DB000C6E9F5 /* LZRecommendFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */; };
 		5F94A86517531CC100664B57 /* LZDietListMakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */; };
 		5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86717531ED700664B57 /* LZSettingsViewController.m */; };
@@ -313,6 +315,9 @@
 		5F746C3D176B1E9F00E68D0E /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		5F746C3F176B1EA900E68D0E /* libz.1.2.5.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.2.5.dylib; path = usr/lib/libz.1.2.5.dylib; sourceTree = SDKROOT; };
 		5F789B221755B1F3002FE365 /* foodCellBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "foodCellBack@2x.png"; path = "nutrition/Resource/foodCellBack@2x.png"; sourceTree = "<group>"; };
+		5F7E5AA217965B47007CA18A /* recommend_sign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "recommend_sign@2x.png"; path = "nutrition/Resource/recommend_sign@2x.png"; sourceTree = "<group>"; };
+		5F7E5AA417965C6E007CA18A /* LZEditFoodAmountButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZEditFoodAmountButton.h; path = Class/LZEditFoodAmountButton.h; sourceTree = "<group>"; };
+		5F7E5AA517965C6E007CA18A /* LZEditFoodAmountButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZEditFoodAmountButton.m; path = Class/LZEditFoodAmountButton.m; sourceTree = "<group>"; };
 		5F8DEE9317951DB000C6E9F5 /* LZRecommendFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFilterView.h; path = Class/LZRecommendFilterView.h; sourceTree = "<group>"; };
 		5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFilterView.m; path = Class/LZRecommendFilterView.m; sourceTree = "<group>"; };
 		5F94A86317531CC100664B57 /* LZDietListMakeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDietListMakeViewController.h; path = Class/LZDietListMakeViewController.h; sourceTree = "<group>"; };
@@ -612,6 +617,7 @@
 				5FEC69341795372C00E80BE6 /* nutrient_button_off@2x.png */,
 				5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */,
 				5FE2104F1784058100F45253 /* edit_profile_button@2x.png */,
+				5F7E5AA217965B47007CA18A /* recommend_sign@2x.png */,
 				5FE210501784058100F45253 /* feedback_icon@2x.png */,
 				5FE210511784058100F45253 /* review_icon@2x.png */,
 				5FE210521784058100F45253 /* setting_cell_back@2x.png */,
@@ -811,6 +817,8 @@
 				5FE436CD175F29D5003947ED /* LZKeyboardToolBar.m */,
 				5FF6320217718E0F0068CBFE /* LZNutritionInfoView.h */,
 				5FF6320317718E100068CBFE /* LZNutritionInfoView.m */,
+				5F7E5AA417965C6E007CA18A /* LZEditFoodAmountButton.h */,
+				5F7E5AA517965C6E007CA18A /* LZEditFoodAmountButton.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1020,6 +1028,7 @@
 				5F6A3F64179652E50029B8C9 /* recommend_icon_clicked@2x.png in Resources */,
 				5F6A3F65179652E50029B8C9 /* share_icon_clicked@2x.png in Resources */,
 				5F6A3F67179655650029B8C9 /* sepline@2x.png in Resources */,
+				5F7E5AA317965B47007CA18A /* recommend_sign@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1095,6 +1104,7 @@
 				5F25849F17829DDA00D99C16 /* LZEditProfileViewController.m in Sources */,
 				5F0971811793ABD3000030AA /* LZUserDietListViewController.m in Sources */,
 				5F8DEE9517951DB000C6E9F5 /* LZRecommendFilterView.m in Sources */,
+				5F7E5AA617965C6E007CA18A /* LZEditFoodAmountButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
