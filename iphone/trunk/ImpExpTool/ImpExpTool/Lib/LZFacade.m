@@ -174,6 +174,8 @@
     [workRe convertExcelToSqlite_FoodCustom_v1_3];
     [db createView_FoodNutritionCustom_andIfNeedDrop:true];
     
+    [db createEmptyTables_andIfNeedDrop:true];
+    
     [workRe dealDRIandULdataFromExcelToSqliteForFemale];
     [workRe dealDRIandULdataFromExcelToSqliteForMale];
     

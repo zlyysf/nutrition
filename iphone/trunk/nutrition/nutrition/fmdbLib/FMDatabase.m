@@ -908,12 +908,30 @@
     return result;
 }
 
-- (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments {
-    return [self executeUpdate:sql error:nil withArgumentsInArray:arguments orDictionary:nil orVAList:nil];
+- (BOOL)executeUpdate:(NSString*)sql error:(NSError**)outErr withArgumentsInArray:(NSArray *)arguments {
+    if (outErr!=nil)
+        return [self executeUpdate:sql error:outErr withArgumentsInArray:arguments orDictionary:nil orVAList:nil];
+    else{
+        NSError *err = nil ;
+        BOOL ret = [self executeUpdate:sql error:&err withArgumentsInArray:arguments orDictionary:nil orVAList:nil];
+        if (err!=nil){
+            NSLog(@"executeUpdate fail, err=%@",err);
+        }
+        return ret;
+    }
 }
 
-- (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments {
-    return [self executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:arguments orVAList:nil];
+- (BOOL)executeUpdate:(NSString*)sql error:(NSError**)outErr withParameterDictionary:(NSDictionary *)arguments {
+    if (outErr!=nil)
+        return [self executeUpdate:sql error:outErr withArgumentsInArray:nil orDictionary:arguments orVAList:nil];
+    else{
+        NSError *err = nil ;
+        BOOL ret = [self executeUpdate:sql error:&err withArgumentsInArray:nil orDictionary:arguments orVAList:nil];
+        if (err!=nil){
+            NSLog(@"executeUpdate fail, err=%@",err);
+        }
+        return ret;
+    }
 }
 
 - (BOOL)executeUpdateWithFormat:(NSString*)format, ... {
@@ -927,7 +945,7 @@
     
     va_end(args);
     
-    return [self executeUpdate:sql withArgumentsInArray:arguments];
+    return [self executeUpdate:sql error:nil withArgumentsInArray:arguments];
 }
 
 - (BOOL)update:(NSString*)sql withErrorAndBindings:(NSError**)outErr, ... {

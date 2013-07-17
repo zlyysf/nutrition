@@ -255,9 +255,28 @@
         NSArray *row = rows2D[i];
         assert(columnNames.count == row.count);
         
-        [_db executeUpdate:insertSql withArgumentsInArray:row];
+        [_db executeUpdate:insertSql error:nil withArgumentsInArray:row];
     }
 }
+
+-(void)createEmptyTables_andIfNeedDrop:(BOOL)needDrop
+{
+    if (needDrop){
+        NSString *strDrop = @"DROP TABLE IF EXISTS FoodCollocation;";
+        [_db executeUpdate:strDrop];
+        strDrop = @"DROP TABLE IF EXISTS CollocationFood;";
+        [_db executeUpdate:strDrop];
+        strDrop = @"DROP TABLE IF EXISTS FoodCollocationParam;";
+        [_db executeUpdate:strDrop];
+    }
+    NSString *strCreate = @"CREATE TABLE FoodCollocation(CollocationId INTEGER PRIMARY KEY AUTOINCREMENT, CollocationName TEXT, CollocationCreateTime INTEGER);";
+    [_db executeUpdate:strCreate];
+    strCreate = @"CREATE TABLE CollocationFood(CollocationId INTEGER, FoodId INTEGER, FoodAmount REAL);";
+    [_db executeUpdate:strCreate];
+    strCreate = @"CREATE TABLE FoodCollocationParam(CollocationId INTEGER, ParamName TEXT, ParamValue TEXT);";
+    [_db executeUpdate:strCreate];
+}
+
 
 /*
  这个view在实际使用中发现一些跟sqlite相关的问题，主要是使用了view会导致列名前面的修饰符也会和单纯的列名一起成为实际的列名或key值，而导致使用上不便。
@@ -330,7 +349,7 @@
         NSArray *row = rows[i];
         assert(columnNames.count == row.count);
         
-        [_db executeUpdate:insertSql withArgumentsInArray:row];
+        [_db executeUpdate:insertSql error:nil withArgumentsInArray:row];
     }
 }
 

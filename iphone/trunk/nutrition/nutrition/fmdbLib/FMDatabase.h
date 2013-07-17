@@ -106,8 +106,8 @@
 - (BOOL)update:(NSString*)sql withErrorAndBindings:(NSError**)outErr, ...;
 - (BOOL)executeUpdate:(NSString*)sql, ...;
 - (BOOL)executeUpdateWithFormat:(NSString *)format, ...;
-- (BOOL)executeUpdate:(NSString*)sql withArgumentsInArray:(NSArray *)arguments;
-- (BOOL)executeUpdate:(NSString*)sql withParameterDictionary:(NSDictionary *)arguments;
+- (BOOL)executeUpdate:(NSString*)sql error:(NSError**)outErr withArgumentsInArray:(NSArray *)arguments;
+- (BOOL)executeUpdate:(NSString*)sql error:(NSError**)outErr withParameterDictionary:(NSDictionary *)arguments;
 - (BOOL)executeUpdate:(NSString*)sql error:(NSError**)outErr withArgumentsInArray:(NSArray*)arrayArgs orDictionary:(NSDictionary *)dictionaryArgs orVAList:(va_list)args ;
 
 - (FMResultSet *)executeQuery:(NSString*)sql, ...;

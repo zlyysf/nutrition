@@ -22,12 +22,15 @@
     return shared;
 }
 
+
+
 + (NSString *)dbFilePath {
-//    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-//    NSString *documentsDirectory = [paths objectAtIndex:0];
-//    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:cDbFile];
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:cDbFile];
     
-    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
+    //    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
+    
     NSLog(@"dbFilePath=%@",filePath);
     return filePath;
 }
@@ -41,8 +44,16 @@
         NSFileManager * defFileManager = [NSFileManager defaultManager];
         BOOL fileExists,isDir;
         fileExists = [defFileManager fileExistsAtPath:dbFilePath isDirectory:&isDir];
-        if (!fileExists){            
-            NSLog(@"INFO in initDBConnection, db file not exist: %@",dbFilePath);
+        if (!fileExists){
+            NSError *err = nil;
+            NSString *preDbFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
+            [defFileManager copyItemAtPath:preDbFilePath toPath:dbFilePath error:&err];
+            if (err != nil){
+                NSLog(@"initDbMain, fail to copy prepareDbFile to dbFilePath");
+                return nil;
+            }else{
+                NSLog(@"initDbMain, init db data by to copy prepareDbFile to dbFilePath");
+            }
         }else{
             NSLog(@"INFO in initDBConnection, db file exist: %@",dbFilePath);
         }
@@ -55,6 +66,8 @@
     }
     return self;
 }
+
+
 
 
 /*
@@ -696,7 +709,7 @@
 {
     NSString *query = [NSString stringWithFormat: @"DELETE FROM %@ WHERE %@=:fieldValue",tableName,fieldName];
     NSDictionary *dictQueryParam = [NSDictionary dictionaryWithObjectsAndKeys:fieldValue, @"fieldValue", nil];
-    BOOL dbopState = [dbfm executeUpdate:query withParameterDictionary:dictQueryParam];
+    BOOL dbopState = [dbfm executeUpdate:query error:nil withParameterDictionary:dictQueryParam];
     return dbopState;
 }
 
@@ -1336,7 +1349,7 @@
                           @"  INSERT INTO FoodCollocation (CollocationName, CollocationCreateTime) VALUES (?,?);"
                           ];
     NSArray *paramAry = [NSArray arrayWithObjects:collationName, [NSNumber numberWithLongLong:llms],nil];
-    BOOL dbopState = [dbfm executeUpdate:insertSql withArgumentsInArray:paramAry];
+    BOOL dbopState = [dbfm executeUpdate:insertSql error:nil withArgumentsInArray:paramAry];
     NSNumber *nmAutoIncrColumnValue = nil;
     if (dbopState){
         NSString *sql = @"select last_insert_rowid();";
@@ -1358,7 +1371,7 @@
                         @" UPDATE FoodCollocation SET CollocationName=? WHERE CollocationId=?;"
                         ];
     NSArray *paramAry = [NSArray arrayWithObjects:collationName, nmCollocationId,nil];
-    BOOL dbopState = [dbfm executeUpdate:updSql withArgumentsInArray:paramAry];
+    BOOL dbopState = [dbfm executeUpdate:updSql error:nil withArgumentsInArray:paramAry];
     return dbopState;
 }
 -(BOOL)deleteFoodCollocationById:(NSNumber*)nmCollocationId
@@ -1408,7 +1421,7 @@
                            @"INSERT INTO CollocationFood (CollocationId, FoodId, FoodAmount) VALUES (?,?,?);"
                            ];
     NSArray *paramAry = [NSArray arrayWithObjects:nmCollocationId, foodId, foodAmount, nil];
-    BOOL dbopState = [dbfm executeUpdate:insertSql withArgumentsInArray:paramAry];
+    BOOL dbopState = [dbfm executeUpdate:insertSql error:nil withArgumentsInArray:paramAry];
     return dbopState;
 }
 -(BOOL)insertCollocationFoods_withCollocationId:(NSNumber*)nmCollocationId andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray andNeedTransaction:(BOOL)needTransaction andOuterTransactionExist:(BOOL)outerTransactionExist
