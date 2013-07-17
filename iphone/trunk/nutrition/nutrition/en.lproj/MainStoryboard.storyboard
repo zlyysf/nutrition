@@ -27,12 +27,82 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="wII-FU-65d">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="diet_empty_icon.png" id="Xd4-yC-iq4">
+                                <rect key="frame" x="133" y="80" width="54" height="76"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="暂无膳食清单" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Inf-Nl-cp2">
+                                <rect key="frame" x="60" y="170" width="200" height="18"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="制定您喜欢的膳食清单，保证每日吃的将抗营养！" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="DSM-3s-qwq">
+                                <rect key="frame" x="70" y="190" width="180" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="57" sectionHeaderHeight="22" sectionFooterHeight="22" id="wII-FU-65d">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="454"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZDiteCell" rowHeight="60" id="gCR-US-jRn" customClass="LZDiteCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="ToG-dU-Zxd">
+                                                    <rect key="frame" x="10" y="3" width="300" height="53"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cZT-8c-GH7">
+                                                            <rect key="frame" x="58" y="13" width="133" height="28"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="LDJ-2i-Ieg">
+                                                            <rect key="frame" x="6" y="0.0" width="44" height="53"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="geg-Sr-7EA">
+                                                            <rect key="frame" x="281" y="20" width="10" height="15"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="07.12" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dge-8l-eER">
+                                                            <rect key="frame" x="8" y="6" width="43" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="arrowImageView" destination="geg-Sr-7EA" id="KJe-iY-zFE"/>
+                                            <outlet property="backView" destination="ToG-dU-Zxd" id="oyO-gb-Snh"/>
+                                            <outlet property="dietNameLabel" destination="cZT-8c-GH7" id="b7b-lI-e4V"/>
+                                            <outlet property="timeStampLabel" destination="dge-8l-eER" id="w3j-Sg-Yx7"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="wkw-Su-9zz" id="G0a-co-lfc"/>
+                                    <outlet property="delegate" destination="wkw-Su-9zz" id="WCt-0e-vWg"/>
+                                </connections>
                             </tableView>
-                            <view contentMode="scaleToFill" id="DkR-1h-SzL">
+                            <view contentMode="scaleToFill" id="ttR-z5-QDY">
                                 <rect key="frame" x="0.0" y="454" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -43,7 +113,7 @@
                     <navigationItem key="navigationItem" id="Ekh-kw-TxX"/>
                     <connections>
                         <outlet property="listView" destination="wII-FU-65d" id="khP-Jq-oln"/>
-                        <outlet property="mobView" destination="DkR-1h-SzL" id="dK7-JO-lOm"/>
+                        <outlet property="mobView" destination="ttR-z5-QDY" id="pCt-BW-J4d"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oIA-dQ-3sT" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1368,6 +1438,7 @@
         <image name="button_middle.png" width="16" height="16"/>
         <image name="button_top_clicked.png" width="16" height="16"/>
         <image name="button_top_normal.png" width="16" height="16"/>
+        <image name="diet_empty_icon.png" width="16" height="16"/>
         <image name="edit_profile_button.png" width="16" height="16"/>
         <image name="feedback_icon.png" width="16" height="16"/>
         <image name="recommend_icon.png" width="16" height="16"/>
@@ -1413,6 +1484,15 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDietListMakeViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+        <class className="LZDiteCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDiteCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="arrowImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="backView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="dietNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="timeStampLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="LZEditFoodAmountButton" superclassName="UIButton">

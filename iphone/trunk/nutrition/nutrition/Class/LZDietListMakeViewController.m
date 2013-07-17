@@ -28,6 +28,7 @@
 #import "LZAppDelegate.h"
 #define KChangeFoodAmountAlertTag 101
 #define KSaveDietTitleAlertTag 102
+#define KInstallWechatAlertTag 103
 @interface LZDietListMakeViewController ()<MBProgressHUDDelegate,UIActionSheetDelegate,UIAlertViewDelegate,LZRecommendFilterViewDelegate>
 {
     MBProgressHUD *HUD;
@@ -55,6 +56,7 @@
     }
     else
     {
+#warning we need diet title here
         self.title = @"主题名字";
     }
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
@@ -107,7 +109,48 @@
 }
 - (void)saveButtonTapped
 {
-    [self.navigationController  popViewControllerAnimated:YES];
+
+    if([self.takenFoodIdsArray count] == 0)
+    {
+        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"请至少选择一种食物" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        [foodEmptyAlert show];
+        return;
+    }
+    if (self.listType == dietListTypeNew)
+    {
+        //新建一个表单，用insert
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"请输入清单的名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        alert.tag = KSaveDietTitleAlertTag;
+        [alert show];
+
+    }
+    else
+    {
+        //编辑已有的表单，用update
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSMutableArray * foodAndAmountArray = [NSMutableArray array];
+        for (NSString *foodId in self.takenFoodIdsArray)
+        {
+            NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+            NSNumber *weight = [aFood objectForKey:@"Amount"];
+            [foodAndAmountArray addObject:[NSArray arrayWithObjects:foodId, weight,nil]];
+        }
+#warning we need id here
+        if([da updateFoodCollocationData_withCollocationId:[NSNumber numberWithInt:1] andNewCollocationName:nil andFoodAmount2LevelArray:foodAndAmountArray])
+        {
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self.navigationController  popViewControllerAnimated:YES];
+        }
+        else
+        {
+            UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"保存失败请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            [saveFailedAlert show];
+        }
+    }
+
+    //[self.navigationController  popViewControllerAnimated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -969,6 +1012,7 @@
 - (void)popWeiChatInstallAlert
 {
     UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:nil message:@"还没有安装微信 立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    insallWeichatAlert.tag = KInstallWechatAlertTag;
     [insallWeichatAlert show];
 }
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
@@ -1007,9 +1051,38 @@
     }
     else if(alertView.tag == KSaveDietTitleAlertTag)
     {
-        
+        if (buttonIndex == alertView.cancelButtonIndex)
+        {
+            return;
+        }
+        else
+        {
+            LZDataAccess *da = [LZDataAccess singleton];
+            UITextField *textFiled = [alertView textFieldAtIndex:0];
+
+            NSString *collocationName = textFiled.text;
+            NSMutableArray * foodAndAmountArray = [NSMutableArray array];
+            for (NSString *foodId in self.takenFoodIdsArray)
+            {
+                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+                NSNumber *weight = [aFood objectForKey:@"Amount"];
+                [foodAndAmountArray addObject:[NSArray arrayWithObjects:foodId, weight,nil]];
+            }
+            NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
+            if(nmCollocationId)
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                [self.navigationController  popViewControllerAnimated:YES];
+            }
+            else
+            {
+                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"保存失败请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                [saveFailedAlert show];
+            }
+        }
     }
-    else
+    else if(alertView.tag == KInstallWechatAlertTag)
     {
         if (buttonIndex == alertView.cancelButtonIndex)
         {

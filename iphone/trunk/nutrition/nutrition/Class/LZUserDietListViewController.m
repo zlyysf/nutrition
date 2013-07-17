@@ -14,12 +14,14 @@
 #import "LZUtility.h"
 #import "LZDietListMakeViewController.h"
 #import "LZConstants.h"
+#import "LZDiteCell.h"
+#import "LZDataAccess.h"
 @interface LZUserDietListViewController ()
 
 @end
 
 @implementation LZUserDietListViewController
-
+@synthesize dietArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -44,14 +46,15 @@
     self.navigationItem.rightBarButtonItem = rightItem;
     
     self.title = @"精选膳食清单";
-    
+    self.dietArray = [[NSMutableArray alloc]init];
+
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"精选膳食清单页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.mobView];
-
+    [self displayLocalDietList];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -76,7 +79,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
+- (void)displayLocalDietList
+{
+    LZDataAccess *da = [[LZDataAccess alloc]init];
+    
+    NSArray *localDietArray = [da getAllFoodCollocation];
+    [self.dietArray removeAllObjects];
+    [self.dietArray addObjectsFromArray:localDietArray];
+    [self.listView reloadData];
+}
 - (void)addListAction
 {
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
@@ -94,6 +105,57 @@
                                                                           //sharedApplication].keyWindow.rootViewController;
     [self.navigationController pushViewController:settingsViewController animated:YES];
 }
+#pragma mark- TableView Delegate
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self.dietArray count];
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    LZDiteCell * cell =(LZDiteCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDiteCell"];
+    NSDictionary *aDiet = [self.dietArray objectAtIndex:indexPath.row];
+    NSLog(@"%@ ",aDiet);
+    return cell;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 60;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 15;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
+    [sectionView setBackgroundColor:[UIColor clearColor]];
+    return sectionView;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 15;
+}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
+    [sectionView setBackgroundColor:[UIColor clearColor]];
+    return sectionView;
+}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+//    [self.listView deselectRowAtIndexPath:indexPath animated:YES];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//    LZDailyIntakeViewController *dailyIntakeViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
+//    dailyIntakeViewController.foodArray = [self.foodNameArray objectAtIndex:indexPath.row];
+//    dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
+//    dailyIntakeViewController.titleString = [self.foodTypeArray objectAtIndex:indexPath.row];
+//    [self.navigationController pushViewController:dailyIntakeViewController animated:YES];
+}
+
 - (void)viewDidUnload {
     [self setListView:nil];
     [self setMobView:nil];

@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZUserDietListViewController : UIViewController
+@interface LZUserDietListViewController : UIViewController<UITableViewDelegate,UITableViewDataSource>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong, nonatomic) IBOutlet UIView *mobView;
-
+@property (strong, nonatomic) NSMutableArray *dietArray;
 @end
