@@ -36,7 +36,7 @@ DROP TABLE IF EXISTS FoodCollocation;
 DROP TABLE IF EXISTS CollocationFood;
 DROP TABLE IF EXISTS FoodCollocationParam;
 CREATE TABLE FoodCollocation(CollocationId INTEGER PRIMARY KEY AUTOINCREMENT, CollocationName TEXT, CollocationCreateTime INTEGER);
-CREATE TABLE CollocationFood(CollocationId INTEGER, FoodId INTEGER, FoodAmount REAL);
+CREATE TABLE CollocationFood(CollocationId INTEGER, FoodId TEXT, FoodAmount REAL);
 CREATE TABLE FoodCollocationParam(CollocationId INTEGER, ParamName TEXT, ParamValue TEXT);
 
 

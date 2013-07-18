@@ -16,11 +16,11 @@
 
 +(void)testMain
 {
-//    [LZTest1 test1];
+    [LZTest1 test1];
 //    [LZTest1 test2];
 //    [LZTest1 test3];
 //    [LZTest1 test4];
-    [LZTest1 testRecommendFoodBySmallIncrement];
+//    [LZTest1 testRecommendFoodBySmallIncrement];
 }
 
 +(void)test1
@@ -39,7 +39,7 @@
 //    [self.class testFormatResult_foodStarndard];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend];
-    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_empty];
+//    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_empty];
 }
 
 
@@ -1926,20 +1926,31 @@
     
     NSString *collocationName = @"collocationName";
     NSMutableArray * foodAndAmountArray = [NSMutableArray array];
-    [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10010", [NSNumber numberWithDouble:111],nil]];
+    [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"01010", [NSNumber numberWithDouble:111],nil]];
     [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10011", [NSNumber numberWithDouble:112],nil]];
     NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
     assert(nmCollocationId!=nil);
     
     NSString *collocationName2 = @"collocationName2";
     NSMutableArray * foodAndAmountArray2 = [NSMutableArray array];
-    [foodAndAmountArray2 addObject:[NSArray arrayWithObjects:@"20010", [NSNumber numberWithDouble:211],nil]];
+    [foodAndAmountArray2 addObject:[NSArray arrayWithObjects:@"02010", [NSNumber numberWithDouble:211],nil]];
     [foodAndAmountArray2 addObject:[NSArray arrayWithObjects:@"20011", [NSNumber numberWithDouble:212],nil]];
     NSNumber *nmCollocationId2 = [da insertFoodCollocationData_withCollocationName:collocationName2 andFoodAmount2LevelArray:foodAndAmountArray2];
     assert(nmCollocationId2!=nil);
    
     NSArray * fdClctAry = [da getAllFoodCollocation];
     NSLog(@"getAllFoodCollocation ret:%@",fdClctAry);
+    for(int i=0; i<fdClctAry.count; i++){
+        NSDictionary *fdClctDict = fdClctAry[i];
+        NSNumber *nmCollocationId = [fdClctDict objectForKey:COLUMN_NAME_CollocationId];
+        NSDictionary * fdClctData = [da getFoodCollocationData_withCollocationId:nmCollocationId];
+        NSArray *foodAndAmountArray = [fdClctData objectForKey:@"foodAndAmountArray"];
+        for(int j=0; j<foodAndAmountArray.count; j++){
+            NSDictionary *foodAndAmount = foodAndAmountArray[j];
+            NSObject *foodId = [foodAndAmount objectForKey:COLUMN_NAME_FoodId];
+            assert([foodId isKindOfClass:NSString.class]);
+        }
+    }
     
 
     

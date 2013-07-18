@@ -271,7 +271,7 @@
     }
     NSString *strCreate = @"CREATE TABLE FoodCollocation(CollocationId INTEGER PRIMARY KEY AUTOINCREMENT, CollocationName TEXT, CollocationCreateTime INTEGER);";
     [_db executeUpdate:strCreate];
-    strCreate = @"CREATE TABLE CollocationFood(CollocationId INTEGER, FoodId INTEGER, FoodAmount REAL);";
+    strCreate = @"CREATE TABLE CollocationFood(CollocationId INTEGER, FoodId TEXT, FoodAmount REAL);";
     [_db executeUpdate:strCreate];
     strCreate = @"CREATE TABLE FoodCollocationParam(CollocationId INTEGER, ParamName TEXT, ParamValue TEXT);";
     [_db executeUpdate:strCreate];
