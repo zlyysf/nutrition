@@ -16,11 +16,11 @@
 
 +(void)testMain
 {
-    [LZTest1 test1];
+//    [LZTest1 test1];
 //    [LZTest1 test2];
 //    [LZTest1 test3];
 //    [LZTest1 test4];
-//    [LZTest1 testRecommendFoodBySmallIncrement];
+    [LZTest1 testRecommendFoodBySmallIncrement];
 }
 
 +(void)test1
@@ -87,8 +87,8 @@
 
 +(void)testRecommendFoodBySmallIncrement
 {
-//    [self.class caseUser_recSI_preTaken_0];
-    [self.class caseUser_recSI_preTaken_0_givenNutrients];
+    [self.class caseUser_recSI_preTaken_0];
+//    [self.class caseUser_recSI_preTaken_0_givenNutrients];
 //    [self.class caseUser_recSI_preTaken_0_sameOptionsAsAppForLinearSystemCompare];
 }
 

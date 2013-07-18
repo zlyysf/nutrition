@@ -895,6 +895,346 @@
     return [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:givenFoodIds andExcludeFoodIds:nil andTopN:0];
 }
 
+/*
+ result contain :(NSString*) strCondition, (NSArray*)sqlParams(only 1 item at max)
+ */
++(NSDictionary*)getUnitCondition_withColumn:(NSString*)columnName andOp:(NSString*)operator andValue:(NSObject*)valObj andNotFlag:(BOOL)notFlag andOptions:(NSDictionary*)options
+{
+    NSNumber *nmVarBeParamWay = [options objectForKey:@"varBeParamWay"];
+    BOOL varBeParamWay = FALSE;
+    if (nmVarBeParamWay!=nil)
+        varBeParamWay = [nmVarBeParamWay boolValue];
+    
+    assert(columnName!=nil);
+    assert(operator!=nil);
+    assert(valObj!=nil);
+    NSMutableString *strCondition = [NSMutableString stringWithCapacity:100];
+    NSMutableArray *sqlParams = [NSMutableArray array];
+    if (notFlag) [strCondition appendString:@"NOT "];
+    [strCondition appendString:columnName];
+    [strCondition appendFormat:@" %@ ",operator];
+    if (varBeParamWay){
+        [strCondition appendString:@"?"];
+        [sqlParams addObject:valObj];
+    }else{
+        if ([valObj isKindOfClass:NSNumber.class]){
+            NSNumber *nmVal = (NSNumber *)valObj;
+            double dval = [nmVal doubleValue];
+            long lval = [nmVal longValue];
+            double dlval = lval;
+            long long llval = [nmVal longLongValue];
+            double dllval = llval;
+            if (dlval == dval){
+                [strCondition appendFormat:@"%ld",lval];
+            }else if(dllval == dval){
+                [strCondition appendFormat:@"%lld",llval];
+            }else{
+                [strCondition appendFormat:@"%f",dval];
+            }
+        }else{
+            NSString *strVal = nil;
+            if ([valObj isKindOfClass:NSString.class]){
+                strVal = (NSString*)valObj;
+            }else{
+                strVal = [NSString stringWithFormat:@"%@",valObj ];
+            }
+            strVal = [strVal stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+            if ([@"LIKE" isEqualToString:[operator uppercaseString]]){
+                [strCondition appendFormat:@"'%@%%'",strVal];
+            }else{
+                [strCondition appendFormat:@"'%@'",strVal];
+            }
+            
+            
+        }
+    }
+
+    NSDictionary *retDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                             strCondition,@"strCondition",
+                             sqlParams,@"sqlParams",
+                             nil];
+    NSLog(@"getUnitCondition_withColumn %@ %@ %@ %d ret:\n %@",columnName,operator,valObj,notFlag,retDict);
+    return retDict;
+}
+/*
+ result contain :(NSString*) strCondition, (NSArray*)sqlParams
+ */
++(NSDictionary*)getUnitCondition_withColumn:(NSString*)columnName andOp:(NSString*)operator andValues:(NSArray*)values andNotFlag:(BOOL)notFlag andOptions:(NSDictionary*)options
+{
+    NSNumber *nmVarBeParamWay = [options objectForKey:@"varBeParamWay"];
+    BOOL varBeParamWay = FALSE;
+    if (nmVarBeParamWay!=nil)
+        varBeParamWay = [nmVarBeParamWay boolValue];
+    
+    assert(columnName!=nil);
+    assert(operator!=nil);
+    assert(values.count>0);
+    assert([[operator uppercaseString] isEqualToString:@"IN"]);
+    NSMutableString *strCondition = [NSMutableString stringWithCapacity:100];
+    NSMutableArray *sqlParams = [NSMutableArray arrayWithCapacity:values.count];
+    if (notFlag) [strCondition appendString:@"NOT "];
+    [strCondition appendString:columnName];
+    [strCondition appendFormat:@" %@ ",operator];
+    if(varBeParamWay){
+        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:values.count];
+        for(int i=0; i<values.count; i++){
+            [placeholderAry addObject:@"?"];
+        }
+        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+        [strCondition appendFormat:@"(%@)",placeholdersStr];
+        [sqlParams addObjectsFromArray:values];
+    }else{
+        NSMutableArray *strValues = [NSMutableArray arrayWithCapacity:values.count];
+        NSObject *valObj0 = values[0];
+        if ([valObj0 isKindOfClass:NSNumber.class]){
+            for(int i=0; i<values.count; i++){
+                NSNumber *nmVal = values[i];
+                NSString *strVal = [NSString stringWithFormat:@"%@",nmVal];
+                [strValues addObject:strVal ];
+            }//for i
+        }else{
+            for(int i=0; i<values.count; i++){
+                NSObject *objVal = values[i];
+                NSString *strVal = nil;
+                if ([objVal isKindOfClass:NSString.class]){
+                    strVal = (NSString*)objVal;
+                }else{
+                    strVal = [NSString stringWithFormat:@"%@",objVal ];
+                }
+                strVal = [strVal stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+                [strValues addObject:strVal ];
+            }//for i
+        }
+        [strCondition appendFormat:@"(%@)",[strValues componentsJoinedByString:@","]];
+    }
+    NSDictionary *retDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                             strCondition,@"strCondition",
+                             sqlParams,@"sqlParams",
+                             nil];
+    NSLog(@"getUnitCondition_withColumn %@ %@ %@ %d ret:\n %@",columnName,operator,values,notFlag,retDict);
+    return retDict;
+}
+
+/*
+ notFlag1 column1 op1 values1
+ */
++(NSDictionary*)getMediumUnitCondition_withExpressionItems:(NSArray*)expressionItems andJoinBoolOp:(NSString*)joinBoolOp andOptions:(NSDictionary*)options
+{
+    NSLog(@"getMediumUnitCondition_withExpressionItems enter, %@ . %@ . %@",expressionItems,joinBoolOp,options);
+    NSNumber *nmVarBeParamWay = [options objectForKey:@"varBeParamWay"];
+    BOOL varBeParamWay = FALSE;
+    if (nmVarBeParamWay!=nil)
+        varBeParamWay = [nmVarBeParamWay boolValue];
+    
+    assert(expressionItems.count==4);
+    NSNumber *nmNotFlag = expressionItems[0];
+    NSString *strColumn = expressionItems[1];
+    NSString *strOp = expressionItems[2];
+    NSArray *values = expressionItems[3];
+//    assert(nmNotFlag!=nil);
+    assert(joinBoolOp.length>0);
+    assert(strColumn.length>0);
+    assert(strOp.length>0);
+    assert(values.count > 0);
+    
+    NSMutableString *strCondition = [NSMutableString stringWithCapacity:100];
+    NSMutableArray *sqlParams = [NSMutableArray arrayWithCapacity:10];
+    bool firstInnerConditionAdd = false;
+    
+    if ([[strOp uppercaseString] isEqualToString:@"IN"]){
+        NSDictionary *unitConditionData = [self getUnitCondition_withColumn:strColumn andOp:strOp andValues:values andNotFlag:[nmNotFlag boolValue] andOptions:options];
+        NSString * unitCondition = [unitConditionData objectForKey:@"strCondition"];
+        NSArray* localSqlParams = [unitConditionData objectForKey:@"sqlParams"];
+        [strCondition appendString:unitCondition];
+        [sqlParams addObjectsFromArray:localSqlParams];
+    }else{
+        for(int i=0 ; i<values.count; i++){
+            NSObject *valObj = values[i];
+            NSDictionary *unitConditionData = [self getUnitCondition_withColumn:strColumn andOp:strOp andValue:valObj andNotFlag:[nmNotFlag boolValue] andOptions:options];
+            NSString * unitCondition = [unitConditionData objectForKey:@"strCondition"];
+            NSArray* localSqlParams = [unitConditionData objectForKey:@"sqlParams"];
+            if (firstInnerConditionAdd){
+                [strCondition appendFormat:@" %@ ",joinBoolOp];
+            }else{
+                firstInnerConditionAdd = true;
+            }
+            [strCondition appendString:unitCondition];
+            [sqlParams addObjectsFromArray:localSqlParams];
+        }//for
+    }
+    NSDictionary *retDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                             strCondition,@"strCondition",
+                             sqlParams,@"sqlParams",
+                             nil];
+    NSLog(@"getMediumUnitCondition_withExpressionItems %@ %@ ret:\n %@",expressionItems,joinBoolOp,retDict);
+    return retDict;
+}
+
+/*
+ options contain: flag varBeParamWay(contrary is varDirectInSql)
+ [notFlag1 column1 op1 values1],[notFlag1 column1 op1 values1]
+ */
++(NSDictionary*)getBigUnitCondition_withExpressionItems:(NSArray*)expressionItemsArray andJoinBoolOp:(NSString*)joinBoolOp andOptions:(NSDictionary*)options
+{
+    NSNumber *nmVarBeParamWay = [options objectForKey:@"varBeParamWay"];
+    BOOL varBeParamWay = FALSE;
+    if (nmVarBeParamWay!=nil)
+        varBeParamWay = [nmVarBeParamWay boolValue];
+
+    assert(joinBoolOp.length>0);
+    assert(expressionItemsArray.count>0);
+    NSMutableString *strCondition = [NSMutableString stringWithCapacity:1000];
+    NSMutableArray *sqlParams = [NSMutableArray arrayWithCapacity:100];
+    bool firstInnerConditionAdd = false;
+    for(int i=0; i<expressionItemsArray.count; i++){
+        NSArray *expressionItems = expressionItemsArray[i];
+        assert(expressionItems.count==4);
+        NSDictionary *unitConditionData = [self getMediumUnitCondition_withExpressionItems:expressionItems andJoinBoolOp:joinBoolOp andOptions:options];
+        NSString * unitCondition = [unitConditionData objectForKey:@"strCondition"];
+        NSArray* localSqlParams = [unitConditionData objectForKey:@"sqlParams"];
+        if (firstInnerConditionAdd){
+            [strCondition appendFormat:@" %@ ",joinBoolOp];
+        }else{
+            firstInnerConditionAdd = true;
+        }
+        [strCondition appendFormat:@"(%@)",unitCondition];
+        [sqlParams addObjectsFromArray:localSqlParams];
+    }
+    NSDictionary *retDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                             strCondition,@"strCondition",
+                             sqlParams,@"sqlParams",
+                             nil];
+    NSLog(@"getBigUnitCondition_withExpressionItems %@ %@ ret:\n %@",expressionItemsArray,joinBoolOp,retDict);
+    return retDict;
+}
+
+/*
+ options contain: flag varBeParamWay(contrary is varDirectInSql)
+ filters contain:
+ flag needWhereWord
+ includeOR AND (cond1 OR cond2 OR cond3 ...)
+    expressionItemsArray
+         column1 op1 values1
+         column2 op2 values2
+ includeAND AND cond1 AND cond2 AND cond3 ...
+    expressionItemsArray
+         column1 op1 values1
+         column2 op2 values2
+ exclude --  AND NOT cond1 AND NOT cond2 AND NOT cond3 ...
+    expressionItemsArray
+         column1 op1 values1
+         column2 op2 values2
+ 
+ op can be = , like, in
+ */
++(NSDictionary*)getConditionsPart_withFilters:(NSDictionary*)filters andOptions:(NSDictionary*)options
+{
+        
+    NSNumber *nmNeedWhereWord = [filters objectForKey:@"needWhereWord"];
+    BOOL needWhereWord = FALSE;
+    if (nmNeedWhereWord!=nil)
+        needWhereWord = [nmNeedWhereWord boolValue];
+    
+    NSMutableString *strConditions = [NSMutableString stringWithCapacity:10000];
+    NSMutableArray *sqlParams = [NSMutableArray arrayWithCapacity:100];
+    if (needWhereWord){
+        [strConditions appendString:@"\n WHERE 1=1"];
+    }
+    NSArray *includeORdata = [filters objectForKey:@"includeOR"];
+    NSArray *includeANDdata = [filters objectForKey:@"includeAND"];
+    NSArray *excludeData = [filters objectForKey:@"exclude"];
+    
+    if (includeORdata.count>0){
+        NSNumber *nmNotFlag = [NSNumber numberWithBool:FALSE];
+        NSMutableArray * expressionItemsArray = [NSMutableArray arrayWithCapacity:includeORdata.count];
+        for(int i=0; i<includeORdata.count; i++){
+            NSArray *expressionItems = includeORdata[i];
+            NSMutableArray *expressionItems2 = [NSMutableArray arrayWithCapacity:(expressionItems.count+1)];
+            [expressionItems2 addObject:nmNotFlag];
+            [expressionItems2 addObjectsFromArray:expressionItems];
+            [expressionItemsArray addObject:expressionItems2];
+        }
+        NSDictionary *unitConditionData = [self getBigUnitCondition_withExpressionItems:expressionItemsArray andJoinBoolOp:@"OR" andOptions:options];
+        NSString * unitCondition = [unitConditionData objectForKey:@"strCondition"];
+        NSArray* localSqlParams = [unitConditionData objectForKey:@"sqlParams"];
+        [strConditions appendFormat:@" AND (%@)",unitCondition ];
+        [sqlParams addObjectsFromArray:localSqlParams];
+    }//if (includeORDict!=nil)
+    if (includeANDdata.count>0){
+        NSNumber *nmNotFlag = [NSNumber numberWithBool:FALSE];
+        NSMutableArray * expressionItemsArray = [NSMutableArray arrayWithCapacity:includeANDdata.count];
+        for(int i=0; i<includeANDdata.count; i++){
+            NSArray *expressionItems = includeANDdata[i];
+            NSMutableArray *expressionItems2 = [NSMutableArray arrayWithCapacity:(expressionItems.count+1)];
+            [expressionItems2 addObject:nmNotFlag];
+            [expressionItems2 addObjectsFromArray:expressionItems];
+            [expressionItemsArray addObject:expressionItems2];
+        }
+        NSDictionary *unitConditionData = [self getBigUnitCondition_withExpressionItems:expressionItemsArray andJoinBoolOp:@"AND" andOptions:options];
+        NSString * unitCondition = [unitConditionData objectForKey:@"strCondition"];
+        NSArray* localSqlParams = [unitConditionData objectForKey:@"sqlParams"];
+        [strConditions appendFormat:@" AND (%@)",unitCondition ];
+        [sqlParams addObjectsFromArray:localSqlParams];
+    }//if (includeANDDict!=nil)
+    if (excludeData.count>0){
+        NSNumber *nmNotFlag = [NSNumber numberWithBool:TRUE];
+        NSMutableArray * expressionItemsArray = [NSMutableArray arrayWithCapacity:excludeData.count];
+        for(int i=0; i<excludeData.count; i++){
+            NSArray *expressionItems = excludeData[i];
+            NSMutableArray *expressionItems2 = [NSMutableArray arrayWithCapacity:(expressionItems.count+1)];
+            [expressionItems2 addObject:nmNotFlag];
+            [expressionItems2 addObjectsFromArray:expressionItems];
+            [expressionItemsArray addObject:expressionItems2];
+        }
+        NSDictionary *unitConditionData = [self getBigUnitCondition_withExpressionItems:expressionItemsArray andJoinBoolOp:@"AND" andOptions:options];
+        NSString * unitCondition = [unitConditionData objectForKey:@"strCondition"];
+        NSArray* localSqlParams = [unitConditionData objectForKey:@"sqlParams"];
+        [strConditions appendFormat:@" AND (%@)",unitCondition ];
+        [sqlParams addObjectsFromArray:localSqlParams];
+    }//if (excludeDict!=nil)
+    NSDictionary *retDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                             strConditions,@"strCondition",
+                             sqlParams,@"sqlParams",
+                             nil];
+    NSLog(@"getBigUnitCondition_withExpressionItems %@ ret:%@",filters,retDict);
+    return retDict;
+}
+/*
+ options contain: flag varBeParamWay(contrary is varDirectInSql)
+ filters contain:
+    includeOR AND (cond1 OR cond2 OR cond3 ...)
+        expressionItemsArray
+            column1 op1 values1
+            column2 op2 values2
+    includeAND AND cond1 AND cond2 AND cond3 ...
+        expressionItemsArray
+            column1 op1 values1
+            column2 op2 values2
+    exclude --  AND NOT cond1 AND NOT cond2 AND NOT cond3 ...
+        expressionItemsArray
+            column1 op1 values1
+            column2 op2 values2
+ 
+ op can be = , like, in
+ */
+-(NSArray *)getRowsByQuery:(NSString*)strQuery andFilters:(NSDictionary*)filters andWhereExistInQuery:(BOOL)ifWhereExistInQuery andOptions:options
+{
+    NSMutableDictionary *filtersDict = [NSMutableDictionary dictionaryWithDictionary:filters];
+    [filtersDict setObject:[NSNumber numberWithBool:(!ifWhereExistInQuery)] forKey:@"needWhereWord"];
+    NSDictionary *conditionData = [self.class getConditionsPart_withFilters:filtersDict andOptions:options];
+    NSString *strCondition = [conditionData objectForKey:@"strCondition"];
+    NSArray *sqlParams = [conditionData objectForKey:@"sqlParams"];
+    NSMutableString *strWholeQuery = [NSMutableString stringWithString:strQuery];
+    [strWholeQuery appendString:strCondition];
+    
+    NSLog(@"getRowsByQuery:andFilters strWholeQuery=%@, \nParams=%@",strWholeQuery,sqlParams);
+    FMResultSet *rs = [dbfm executeQuery:strWholeQuery withArgumentsInArray:sqlParams];
+    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+    
+    return dataAry;
+}
+
+
 
 -(NSArray *) getFoodIdsByFilters_withIncludeFoodClassAry:(NSArray*)includeFoodClassAry andExcludeFoodClassAry:(NSArray*)excludeFoodClassAry andIncludeEqualFoodClassAry:(NSArray*)includeEqualFoodClassAry andIncludeFoodIds:(NSArray*)includeFoodIds andExcludeFoodIds:(NSArray*)excludeFoodIds
 {
@@ -908,110 +1248,180 @@
 //    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
 //    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
     
-    NSMutableString *sqlStrWherePart = [NSMutableString stringWithCapacity:1000*1];
-    bool firstConditionAdded = false;
-    if (includeFoodClassAry.count > 0 || includeEqualFoodClassAry>0){
-        NSMutableString *strLocalConditions = [NSMutableString stringWithCapacity:1000*1];
-        bool firstInnerConditionAdd = false;
+    NSMutableArray *exprIncludeORdata = [NSMutableArray array];
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+    NSMutableArray *exprExcludedata = [NSMutableArray array];
+    
+    if (includeFoodClassAry.count > 0){
+        NSString *strColumn = COLUMN_NAME_classify;
+        NSString *strOp = @"LIKE";
         for(int i=0; i<includeFoodClassAry.count; i++){
             NSString *includeFoodClass = includeFoodClassAry[i];
-            assert(includeFoodClass.length>0);
-            if (firstInnerConditionAdd){
-                [strLocalConditions appendString:@" OR "];
-            }else{
-                firstInnerConditionAdd = true;
-            }
-            [strLocalConditions appendString:COLUMN_NAME_classify];
-            [strLocalConditions appendString:@" LIKE '"];
-            [strLocalConditions appendString:includeFoodClass];
-            [strLocalConditions appendString:@"%' "];
-        }//for
-        
+            NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+            [expr addObject:strColumn];
+            [expr addObject:strOp];
+            [expr addObject:[NSArray arrayWithObjects:includeFoodClass, nil]];
+            [exprIncludeORdata addObject:expr];
+        }
+    }
+    if (includeEqualFoodClassAry.count > 0){
+        NSString *strColumn = COLUMN_NAME_classify;
+        NSString *strOp = @"=";
         for(int i=0; i<includeEqualFoodClassAry.count; i++){
-            NSString *includeEqualFoodClass = includeEqualFoodClassAry[i];
-            assert(includeEqualFoodClass.length>0);
-            if (firstInnerConditionAdd){
-                [strLocalConditions appendString:@" OR "];
-            }else{
-                firstInnerConditionAdd = true;
-            }
-            [strLocalConditions appendString:COLUMN_NAME_classify];
-            [strLocalConditions appendString:@" ='"];
-            [strLocalConditions appendString:includeEqualFoodClass];
-            [strLocalConditions appendString:@"' "];
-        }//for
-        
-        [sqlStrWherePart appendString:@"\n "];
-        if (firstConditionAdded){
-            [sqlStrWherePart appendString:@" AND "];
-        }else{
-            firstConditionAdded = true;
+            NSString *includeFoodClass = includeEqualFoodClassAry[i];
+            NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+            [expr addObject:strColumn];
+            [expr addObject:strOp];
+            [expr addObject:[NSArray arrayWithObjects:includeFoodClass, nil]];
+            [exprIncludeORdata addObject:expr];
         }
-        [sqlStrWherePart appendString:@"("];
-        [sqlStrWherePart appendString:strLocalConditions];
-        [sqlStrWherePart appendString:@")"];
     }
-    
-    for(int i=0; i<excludeFoodClassAry.count; i++){
-        NSString *excludeFoodClass = excludeFoodClassAry[i];
-        if(excludeFoodClass.length > 0){
-            [sqlStrWherePart appendString:@"\n "];
-            if (firstConditionAdded){
-                [sqlStrWherePart appendString:@" AND "];
-            }else{
-                firstConditionAdded = true;
-            }
-            [sqlStrWherePart appendString:@" NOT "];
-            [sqlStrWherePart appendString:COLUMN_NAME_classify];
-            [sqlStrWherePart appendString:@" LIKE '"];
-            [sqlStrWherePart appendString:excludeFoodClass];
-            [sqlStrWherePart appendString:@"%' "];
-        }
-    }//for
 
-    NSMutableArray *allFoodIds = [NSMutableArray array];
-    if(includeFoodIds.count > 0){
-        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
-        for(int i=0; i<includeFoodIds.count; i++){
-            [placeholderAry addObject:@"?"];
-        }
-        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-        [sqlStrWherePart appendString:@"\n "];
-        if (firstConditionAdded){
-            [sqlStrWherePart appendString:@" AND "];
-        }else{
-            firstConditionAdded = true;
-        }
-        [sqlStrWherePart appendString:@" F.NDB_No in ("];
-        [sqlStrWherePart appendString:placeholdersStr];
-        [sqlStrWherePart appendString:@") "];
-        [allFoodIds addObjectsFromArray:includeFoodIds];
+    if (includeFoodIds.count>0){
+        NSString *strColumn = @"F.NDB_No";
+        NSString *strOp = @"IN";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:includeFoodIds];
+        [exprIncludeANDdata addObject:expr];
     }
-    if(excludeFoodIds.count > 0){
-        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:excludeFoodIds.count];
-        for(int i=0; i<excludeFoodIds.count; i++){
-            [placeholderAry addObject:@"?"];
+
+    if (excludeFoodClassAry.count > 0){
+        NSString *strColumn = COLUMN_NAME_classify;
+        NSString *strOp = @"LIKE";
+        for(int i=0; i<excludeFoodClassAry.count; i++){
+            NSString *excludeFoodClass = excludeFoodClassAry[i];
+            NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+            [expr addObject:strColumn];
+            [expr addObject:strOp];
+            [expr addObject:[NSArray arrayWithObjects:excludeFoodClass, nil]];
+            [exprExcludedata addObject:expr];
         }
-        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-        [sqlStrWherePart appendString:@"\n "];
-        if (firstConditionAdded){
-            [sqlStrWherePart appendString:@" AND "];
-        }else{
-            firstConditionAdded = true;
-        }
-        [sqlStrWherePart appendString:@" NOT F.NDB_No in ("];
-        [sqlStrWherePart appendString:placeholdersStr];
-        [sqlStrWherePart appendString:@") "];
-        [allFoodIds addObjectsFromArray:excludeFoodIds];
     }
-    if (sqlStrWherePart.length > 0){
-        [sqlStr appendString:@" WHERE "];
-        [sqlStr appendString:sqlStrWherePart];
+    if (excludeFoodIds.count>0){
+        NSString *strColumn = @"F.NDB_No";
+        NSString *strOp = @"IN";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:excludeFoodIds];
+        [exprExcludedata addObject:expr];
     }
     
-    NSLog(@"getFoodIdsByFilters_withIncludeFoodClass sqlStr=%@",sqlStr);
-    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
-    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+                             exprIncludeORdata,@"includeOR",
+                             exprIncludeANDdata,@"includeAND",
+                             exprExcludedata,@"exclude",
+                             nil];
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andOptions:localOptions];
+    
+    
+//    NSMutableString *sqlStrWherePart = [NSMutableString stringWithCapacity:1000*1];
+//    bool firstConditionAdded = false;
+//    if (includeFoodClassAry.count > 0 || includeEqualFoodClassAry>0){
+//        NSMutableString *strLocalConditions = [NSMutableString stringWithCapacity:1000*1];
+//        bool firstInnerConditionAdd = false;
+//        for(int i=0; i<includeFoodClassAry.count; i++){
+//            NSString *includeFoodClass = includeFoodClassAry[i];
+//            assert(includeFoodClass.length>0);
+//            if (firstInnerConditionAdd){
+//                [strLocalConditions appendString:@" OR "];
+//            }else{
+//                firstInnerConditionAdd = true;
+//            }
+//            [strLocalConditions appendString:COLUMN_NAME_classify];
+//            [strLocalConditions appendString:@" LIKE '"];
+//            [strLocalConditions appendString:includeFoodClass];
+//            [strLocalConditions appendString:@"%' "];
+//        }//for
+//        
+//        for(int i=0; i<includeEqualFoodClassAry.count; i++){
+//            NSString *includeEqualFoodClass = includeEqualFoodClassAry[i];
+//            assert(includeEqualFoodClass.length>0);
+//            if (firstInnerConditionAdd){
+//                [strLocalConditions appendString:@" OR "];
+//            }else{
+//                firstInnerConditionAdd = true;
+//            }
+//            [strLocalConditions appendString:COLUMN_NAME_classify];
+//            [strLocalConditions appendString:@" ='"];
+//            [strLocalConditions appendString:includeEqualFoodClass];
+//            [strLocalConditions appendString:@"' "];
+//        }//for
+//        
+//        [sqlStrWherePart appendString:@"\n "];
+//        if (firstConditionAdded){
+//            [sqlStrWherePart appendString:@" AND "];
+//        }else{
+//            firstConditionAdded = true;
+//        }
+//        [sqlStrWherePart appendString:@"("];
+//        [sqlStrWherePart appendString:strLocalConditions];
+//        [sqlStrWherePart appendString:@")"];
+//    }
+//    
+//    for(int i=0; i<excludeFoodClassAry.count; i++){
+//        NSString *excludeFoodClass = excludeFoodClassAry[i];
+//        if(excludeFoodClass.length > 0){
+//            [sqlStrWherePart appendString:@"\n "];
+//            if (firstConditionAdded){
+//                [sqlStrWherePart appendString:@" AND "];
+//            }else{
+//                firstConditionAdded = true;
+//            }
+//            [sqlStrWherePart appendString:@" NOT "];
+//            [sqlStrWherePart appendString:COLUMN_NAME_classify];
+//            [sqlStrWherePart appendString:@" LIKE '"];
+//            [sqlStrWherePart appendString:excludeFoodClass];
+//            [sqlStrWherePart appendString:@"%' "];
+//        }
+//    }//for
+//
+//    NSMutableArray *allFoodIds = [NSMutableArray array];
+//    if(includeFoodIds.count > 0){
+//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
+//        for(int i=0; i<includeFoodIds.count; i++){
+//            [placeholderAry addObject:@"?"];
+//        }
+//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//        [sqlStrWherePart appendString:@"\n "];
+//        if (firstConditionAdded){
+//            [sqlStrWherePart appendString:@" AND "];
+//        }else{
+//            firstConditionAdded = true;
+//        }
+//        [sqlStrWherePart appendString:@" F.NDB_No in ("];
+//        [sqlStrWherePart appendString:placeholdersStr];
+//        [sqlStrWherePart appendString:@") "];
+//        [allFoodIds addObjectsFromArray:includeFoodIds];
+//    }
+//    if(excludeFoodIds.count > 0){
+//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:excludeFoodIds.count];
+//        for(int i=0; i<excludeFoodIds.count; i++){
+//            [placeholderAry addObject:@"?"];
+//        }
+//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//        [sqlStrWherePart appendString:@"\n "];
+//        if (firstConditionAdded){
+//            [sqlStrWherePart appendString:@" AND "];
+//        }else{
+//            firstConditionAdded = true;
+//        }
+//        [sqlStrWherePart appendString:@" NOT F.NDB_No in ("];
+//        [sqlStrWherePart appendString:placeholdersStr];
+//        [sqlStrWherePart appendString:@") "];
+//        [allFoodIds addObjectsFromArray:excludeFoodIds];
+//    }
+//    if (sqlStrWherePart.length > 0){
+//        [sqlStr appendString:@" WHERE "];
+//        [sqlStr appendString:sqlStrWherePart];
+//    }
+//    
+//    NSLog(@"getFoodIdsByFilters_withIncludeFoodClass sqlStr=%@",sqlStr);
+//    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
+//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
     
     NSMutableArray *foodIdAry = [NSMutableArray arrayWithCapacity:dataAry.count];
     for(int i=0; i<dataAry.count; i++){
@@ -1039,92 +1449,153 @@
 //    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
 //    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
     
-    NSMutableString *sqlStrWherePart = [NSMutableString stringWithCapacity:1000*1];
-    bool firstConditionAdded = false;
-    if(includeFoodClass.length > 0){
-        [sqlStrWherePart appendString:@"\n "];
-        if (firstConditionAdded){
-            [sqlStrWherePart appendString:@" AND "];
-        }else{
-            firstConditionAdded = true;
-        }
-        [sqlStrWherePart appendString:COLUMN_NAME_classify];
-        [sqlStrWherePart appendString:@" LIKE '"];
-        [sqlStrWherePart appendString:includeFoodClass];
-        [sqlStrWherePart appendString:@"%' "];
+    NSMutableArray *exprIncludeORdata = [NSMutableArray array];
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+    NSMutableArray *exprExcludedata = [NSMutableArray array];
+    
+    if (includeFoodClass.length>0){
+        NSString *strColumn = COLUMN_NAME_classify;
+        NSString *strOp = @"LIKE";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:[NSArray arrayWithObjects:includeFoodClass, nil]];
+        [exprIncludeANDdata addObject:expr];
     }
-    if(excludeFoodClass.length > 0){
-        [sqlStrWherePart appendString:@"\n "];
-        if (firstConditionAdded){
-            [sqlStrWherePart appendString:@" AND "];
-        }else{
-            firstConditionAdded = true;
-        }
-        [sqlStrWherePart appendString:@" NOT "];
-        [sqlStrWherePart appendString:COLUMN_NAME_classify];
-        [sqlStrWherePart appendString:@" LIKE '"];
-        [sqlStrWherePart appendString:excludeFoodClass];
-        [sqlStrWherePart appendString:@"%' "];
+    if (equalClass.length>0){
+        NSString *strColumn = COLUMN_NAME_classify;
+        NSString *strOp = @"=";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:[NSArray arrayWithObjects:equalClass, nil]];
+        [exprIncludeANDdata addObject:expr];
+    }
+    if (includeFoodIds.count>0){
+        NSString *strColumn = @"F.NDB_No";
+        NSString *strOp = @"IN";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:includeFoodIds];
+        [exprIncludeANDdata addObject:expr];
     }
     
-    if(equalClass.length > 0){
-        [sqlStrWherePart appendString:@"\n "];
-        if (firstConditionAdded){
-            [sqlStrWherePart appendString:@" AND "];
-        }else{
-            firstConditionAdded = true;
-        }
-        [sqlStrWherePart appendString:COLUMN_NAME_classify];
-        [sqlStrWherePart appendString:@" ='"];
-        [sqlStrWherePart appendString:equalClass];
-        [sqlStrWherePart appendString:@"' "];
+    if (excludeFoodClass.length > 0){
+        NSString *strColumn = COLUMN_NAME_classify;
+        NSString *strOp = @"LIKE";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:[NSArray arrayWithObjects:excludeFoodClass, nil]];
+        [exprExcludedata addObject:expr];
+    }
+    if (excludeFoodIds.count>0){
+        NSString *strColumn = @"F.NDB_No";
+        NSString *strOp = @"IN";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:excludeFoodIds];
+        [exprExcludedata addObject:expr];
     }
     
-    NSMutableArray *allFoodIds = [NSMutableArray array];
-    if(includeFoodIds.count > 0){
-        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
-        for(int i=0; i<includeFoodIds.count; i++){
-            [placeholderAry addObject:@"?"];
-        }
-        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-        [sqlStrWherePart appendString:@"\n "];
-        if (firstConditionAdded){
-            [sqlStrWherePart appendString:@" AND "];
-        }else{
-            firstConditionAdded = true;
-        }
-        [sqlStrWherePart appendString:@" F.NDB_No in ("];
-        [sqlStrWherePart appendString:placeholdersStr];
-        [sqlStrWherePart appendString:@") "];
-        [allFoodIds addObjectsFromArray:includeFoodIds];
-    }
-    if(excludeFoodIds.count > 0){
-        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:excludeFoodIds.count];
-        for(int i=0; i<excludeFoodIds.count; i++){
-            [placeholderAry addObject:@"?"];
-        }
-        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-        [sqlStrWherePart appendString:@"\n "];
-        if (firstConditionAdded){
-            [sqlStrWherePart appendString:@" AND "];
-        }else{
-            firstConditionAdded = true;
-        }
-        [sqlStrWherePart appendString:@" NOT F.NDB_No in ("];
-        [sqlStrWherePart appendString:placeholdersStr];
-        [sqlStrWherePart appendString:@") "];
-        [allFoodIds addObjectsFromArray:excludeFoodIds];
-    }
-    if (sqlStrWherePart.length > 0){
-        [sqlStr appendString:@" WHERE "];
-        [sqlStr appendString:sqlStrWherePart];
-    }
-
-    NSLog(@"getFoodsByFilters_withIncludeFoodClass sqlStr=%@",sqlStr);
-    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
-    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-    NSLog(@"getFoodsByFilters_withIncludeFoodClass ret:\n%@",dataAry);
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+                             exprIncludeORdata,@"includeOR",
+                             exprIncludeANDdata,@"includeAND",
+                             exprExcludedata,@"exclude",
+                             nil];
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andOptions:localOptions];
     return dataAry;
+    
+//    
+//    NSMutableString *sqlStrWherePart = [NSMutableString stringWithCapacity:1000*1];
+//    bool firstConditionAdded = false;
+//    if(includeFoodClass.length > 0){
+//        [sqlStrWherePart appendString:@"\n "];
+//        if (firstConditionAdded){
+//            [sqlStrWherePart appendString:@" AND "];
+//        }else{
+//            firstConditionAdded = true;
+//        }
+//        [sqlStrWherePart appendString:COLUMN_NAME_classify];
+//        [sqlStrWherePart appendString:@" LIKE '"];
+//        [sqlStrWherePart appendString:includeFoodClass];
+//        [sqlStrWherePart appendString:@"%' "];
+//    }
+//    if(excludeFoodClass.length > 0){
+//        [sqlStrWherePart appendString:@"\n "];
+//        if (firstConditionAdded){
+//            [sqlStrWherePart appendString:@" AND "];
+//        }else{
+//            firstConditionAdded = true;
+//        }
+//        [sqlStrWherePart appendString:@" NOT "];
+//        [sqlStrWherePart appendString:COLUMN_NAME_classify];
+//        [sqlStrWherePart appendString:@" LIKE '"];
+//        [sqlStrWherePart appendString:excludeFoodClass];
+//        [sqlStrWherePart appendString:@"%' "];
+//    }
+//    
+//    if(equalClass.length > 0){
+//        [sqlStrWherePart appendString:@"\n "];
+//        if (firstConditionAdded){
+//            [sqlStrWherePart appendString:@" AND "];
+//        }else{
+//            firstConditionAdded = true;
+//        }
+//        [sqlStrWherePart appendString:COLUMN_NAME_classify];
+//        [sqlStrWherePart appendString:@" ='"];
+//        [sqlStrWherePart appendString:equalClass];
+//        [sqlStrWherePart appendString:@"' "];
+//    }
+//    
+//    NSMutableArray *allFoodIds = [NSMutableArray array];
+//    if(includeFoodIds.count > 0){
+//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
+//        for(int i=0; i<includeFoodIds.count; i++){
+//            [placeholderAry addObject:@"?"];
+//        }
+//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//        [sqlStrWherePart appendString:@"\n "];
+//        if (firstConditionAdded){
+//            [sqlStrWherePart appendString:@" AND "];
+//        }else{
+//            firstConditionAdded = true;
+//        }
+//        [sqlStrWherePart appendString:@" F.NDB_No in ("];
+//        [sqlStrWherePart appendString:placeholdersStr];
+//        [sqlStrWherePart appendString:@") "];
+//        [allFoodIds addObjectsFromArray:includeFoodIds];
+//    }
+//    if(excludeFoodIds.count > 0){
+//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:excludeFoodIds.count];
+//        for(int i=0; i<excludeFoodIds.count; i++){
+//            [placeholderAry addObject:@"?"];
+//        }
+//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//        [sqlStrWherePart appendString:@"\n "];
+//        if (firstConditionAdded){
+//            [sqlStrWherePart appendString:@" AND "];
+//        }else{
+//            firstConditionAdded = true;
+//        }
+//        [sqlStrWherePart appendString:@" NOT F.NDB_No in ("];
+//        [sqlStrWherePart appendString:placeholdersStr];
+//        [sqlStrWherePart appendString:@") "];
+//        [allFoodIds addObjectsFromArray:excludeFoodIds];
+//    }
+//    if (sqlStrWherePart.length > 0){
+//        [sqlStr appendString:@" WHERE "];
+//        [sqlStr appendString:sqlStrWherePart];
+//    }
+//
+//    NSLog(@"getFoodsByFilters_withIncludeFoodClass sqlStr=%@",sqlStr);
+//    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
+//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    NSLog(@"getFoodsByFilters_withIncludeFoodClass ret:\n%@",dataAry);
+//    return dataAry;
 }
 -(NSDictionary *) getOneFoodByFilters_withIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andEqualClass:(NSString*)equalClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds
 {
