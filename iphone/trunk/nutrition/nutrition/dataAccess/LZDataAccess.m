@@ -987,6 +987,7 @@
         NSMutableArray *strValues = [NSMutableArray arrayWithCapacity:values.count];
         NSObject *valObj0 = values[0];
         if ([valObj0 isKindOfClass:NSNumber.class]){
+            //assert(![columnName isEqualToString:COLUMN_NAME_NDB_No]);// 存在情况 columnName 含 NDB_No
             for(int i=0; i<values.count; i++){
                 NSNumber *nmVal = values[i];
                 NSString *strVal = [NSString stringWithFormat:@"%@",nmVal];
@@ -1002,6 +1003,7 @@
                     strVal = [NSString stringWithFormat:@"%@",objVal ];
                 }
                 strVal = [strVal stringByReplacingOccurrencesOfString:@"'" withString:@"''"];
+                strVal = [NSString stringWithFormat:@"'%@'",strVal ];
                 [strValues addObject:strVal ];
             }//for i
         }

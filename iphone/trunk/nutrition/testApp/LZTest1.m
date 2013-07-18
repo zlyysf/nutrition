@@ -30,7 +30,7 @@
 //    [self.class caseUser1_preTaken_4full];
 //    [self.class testDA1];
 //    [self.class test_insertFoodCollocationData_withCollocationName];
-    [self.class test_getFoodCollocationData];
+//    [self.class test_getFoodCollocationData];
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
     
@@ -38,7 +38,7 @@
 //    [self.class testFormatResult2_taken];
 //    [self.class testFormatResult_foodStarndard];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI];
-//    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend];
+    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_empty];
 }
 
