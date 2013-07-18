@@ -222,9 +222,10 @@
     for (NSDictionary *aFood in array)
     {
         NSNumber* foodAmount = [aFood objectForKey:@"FoodAmount"];
-        NSNumber* foodId = [aFood objectForKey:@"FoodId"];
+        NSString* foodId = [aFood objectForKey:@"FoodId"];
         
-        [dietContentDict setObject:foodAmount forKey:[LZUtility convertNumberToFoodIdStr:foodId]];
+        //[dietContentDict setObject:foodAmount forKey:[LZUtility convertNumberToFoodIdStr:foodId]];
+        [dietContentDict setObject:foodAmount forKey:foodId];
     }
     NSString *dietTitle =  [aDiet objectForKey:@"CollocationName"];
     NSDictionary *temp = [[NSDictionary alloc]initWithDictionary:dietContentDict];
