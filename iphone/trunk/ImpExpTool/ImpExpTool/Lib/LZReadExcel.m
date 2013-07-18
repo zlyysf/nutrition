@@ -591,13 +591,15 @@
                                    , nil];
     
     int idxInXls_Id = 1, idxInXls_CnCaption = 3, idxInXls_CnType = 5, idxInXls_Classify=6,
-        idxInXls_PicPath = 7, idxInXls_Lower_Limit = 8, idxInXls_Upper_Limit = 10, idxInXls_normal_value=9;
+        idxInXls_PicPath = 7, idxInXls_Lower_Limit = 8, idxInXls_Upper_Limit = 10, idxInXls_normal_value=9,
+        idxInXls_Enable=11;
     int idxRow=2;
     
     NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray *row;
     DHcell *cell_Id, *cell_CnCaption, *cell_CnType, *cell_Classify,
-        *cell_PicPath, *cell_Lower_Limit, *cell_Upper_Limit, *cell_normal_value;
+        *cell_PicPath, *cell_Lower_Limit, *cell_Upper_Limit, *cell_normal_value,
+        *cell_Enable;
     bool allRowCellBlank;
     do {
         cell_Id = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
@@ -608,34 +610,42 @@
         cell_Lower_Limit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Lower_Limit];
         cell_Upper_Limit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Upper_Limit];
         cell_normal_value = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_normal_value];
+        cell_Enable = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Enable];
         allRowCellBlank = true;
         allRowCellBlank = (cell_Id.type==cellBlank && cell_CnCaption.type==cellBlank && cell_CnType.type==cellBlank && cell_Classify.type==cellBlank
-                           && cell_PicPath.type==cellBlank && cell_Lower_Limit.type==cellBlank && cell_Upper_Limit.type==cellBlank && cell_normal_value.type==cellBlank);
+                           && cell_PicPath.type==cellBlank && cell_Lower_Limit.type==cellBlank && cell_Upper_Limit.type==cellBlank && cell_normal_value.type==cellBlank
+                           && cell_Enable.type==cellBlank
+                           );
         if(allRowCellBlank)
             break;
         bool allRowCellNotBlank = false;
         allRowCellNotBlank = (cell_Id.type!=cellBlank && cell_CnCaption.type!=cellBlank && cell_CnType.type!=cellBlank && cell_Classify.type!=cellBlank
-                           && cell_PicPath.type!=cellBlank && cell_Lower_Limit.type!=cellBlank && cell_Upper_Limit.type!=cellBlank && cell_normal_value.type!=cellBlank);
+                        && cell_PicPath.type!=cellBlank && cell_Lower_Limit.type!=cellBlank && cell_Upper_Limit.type!=cellBlank && cell_normal_value.type!=cellBlank
+                              && cell_Enable.type!=cellBlank
+                              );
         if(allRowCellNotBlank){
             bool allRowCellNotEmpty = false;
             allRowCellNotEmpty = (cell_Id.str.length>0 && cell_CnCaption.str.length>0 && cell_CnType.str.length>0 && cell_Classify.str.length>0
                                   && cell_PicPath.str.length>0 && cell_Lower_Limit.str.length>0 && cell_Upper_Limit.str.length>0 && cell_normal_value.str.length>0
+                                  && cell_Enable.str.length>0
                                   );
             if (allRowCellNotEmpty){
-                row = [NSMutableArray arrayWithCapacity:15];
-                NSString *strId = cell_Id.str;
-                assert(strId.length==5);
-                [row addObject:strId];
-                [row addObject:cell_CnCaption.str];
-                [row addObject:cell_CnType.str];
-                [row addObject:cell_Classify.str];
-                [row addObject:cell_PicPath.str];
-                [row addObject:cell_Lower_Limit.val];
-                [row addObject:cell_Upper_Limit.val];
-                [row addObject:cell_normal_value.val];
-                [rows2D addObject:row];
-            }
-        }
+                if ([cell_Enable.val integerValue]==1){
+                    row = [NSMutableArray arrayWithCapacity:15];
+                    NSString *strId = cell_Id.str;
+                    assert(strId.length==5);
+                    [row addObject:strId];
+                    [row addObject:cell_CnCaption.str];
+                    [row addObject:cell_CnType.str];
+                    [row addObject:cell_Classify.str];
+                    [row addObject:cell_PicPath.str];
+                    [row addObject:cell_Lower_Limit.val];
+                    [row addObject:cell_Upper_Limit.val];
+                    [row addObject:cell_normal_value.val];
+                    [rows2D addObject:row];
+                }//if ([cell_Enable.val integerValue]==1)
+            }//if (allRowCellNotEmpty)
+        }//if(allRowCellNotBlank)
         idxRow++;
     } while (!allRowCellBlank);
     

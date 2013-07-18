@@ -33,7 +33,7 @@
 +(NSDictionary *)findRowByKey:(NSArray *)rows andKeyName:(NSString *)keyname andKeyValue:(NSString *)keyvalue;
 +(NSArray *)FMResultSetToDictionaryArray:(FMResultSet *)rs;
 - (NSArray *)selectAllForTable:(NSString *)tableName;
-- (NSArray *)selectTableByEqualFilter:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue;
+- (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue;
 
 - (NSDictionary *)getDRIbyGender:(NSString*)gender andAge:(int)age ;
 - (NSDictionary *)getDRIULbyGender:(NSString*)gender andAge:(int)age ;
