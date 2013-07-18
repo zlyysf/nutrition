@@ -443,7 +443,7 @@
         seconds	 = [NSNumber numberWithInteger:[[[seconds stringValue] substringToIndex:10] intValue]];
     }
     NSDate *_data = [NSDate dateWithTimeIntervalSince1970:[seconds doubleValue]];
-    NSDate *current = [NSDate date];
+//    NSDate *current = [NSDate date];
     NSString *time;
 //    if ([LZUtility twoDateIsSameDay:_data second:current])
 //    {
@@ -480,6 +480,15 @@
     
 }
 
++(NSString*)convertNumberToFoodIdStr:(NSNumber *)foodIdNum
+{
+    NSString *iDStr = [NSString stringWithFormat:@"%d",[foodIdNum intValue]];
+    if ([iDStr length]==4)
+    {
+        iDStr = [NSString stringWithFormat:@"0%@",iDStr];
+    }
+    return iDStr;
+}
 @end
 
 

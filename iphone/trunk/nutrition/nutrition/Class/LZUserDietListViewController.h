@@ -12,4 +12,7 @@
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong, nonatomic) IBOutlet UIView *mobView;
 @property (strong, nonatomic) NSMutableArray *dietArray;
+@property (strong, nonatomic) IBOutlet UIImageView *emptyImageView;
+@property (strong, nonatomic) IBOutlet UILabel *emptyTopLabel;
+@property (strong, nonatomic) IBOutlet UILabel *emptyBottomLabel;
 @end

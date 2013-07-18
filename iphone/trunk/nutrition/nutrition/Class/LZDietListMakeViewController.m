@@ -37,7 +37,7 @@
 @end
 
 @implementation LZDietListMakeViewController
-@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,currentEditFoodId,recommendFoodDictForDisplay;
+@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,currentEditFoodId,recommendFoodDictForDisplay,dietId;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -53,11 +53,6 @@
     if (self.listType == dietListTypeNew)
     {
         self.title = @"我来做营养师";
-    }
-    else
-    {
-#warning we need diet title here
-        self.title = @"主题名字";
     }
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
@@ -136,8 +131,7 @@
             NSNumber *weight = [aFood objectForKey:@"Amount"];
             [foodAndAmountArray addObject:[NSArray arrayWithObjects:foodId, weight,nil]];
         }
-#warning we need id here
-        if([da updateFoodCollocationData_withCollocationId:[NSNumber numberWithInt:1] andNewCollocationName:nil andFoodAmount2LevelArray:foodAndAmountArray])
+        if([da updateFoodCollocationData_withCollocationId:dietId andNewCollocationName:nil andFoodAmount2LevelArray:foodAndAmountArray])
         {
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
             [[NSUserDefaults standardUserDefaults]synchronize];

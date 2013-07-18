@@ -13,5 +13,5 @@
 @property (strong, nonatomic) IBOutlet UILabel *timeStampLabel;
 @property (strong, nonatomic) IBOutlet UILabel *dietNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *arrowImageView;
-
+@property (strong, nonatomic) NSDictionary *dietInfo;
 @end
