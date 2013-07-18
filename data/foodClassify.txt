@@ -9,22 +9,28 @@
         ganguo-putong
 		ganguo-qita
 干水果 ganshuiguo
+		ganshuiguo-putong
+		ganshuiguo-qita
   
 肉类
     畜肉 rou-chu 畜肉类及制品
 	  肉 rou-chu-rou
 	  内脏 rou-chu-neizang
     禽肉 rou-qin 禽肉类及制品
+			rou-qin-neizang
     鱼虾 rou-shui 鱼虾蟹贝类
 	  鱼 rou-shui-yu
 	  虾 rou-shui-xia
 	  蟹贝 rou-shui-xiebei
 	  其他 rou-shui-qita
+	其他 rou-qita
 	  
 奶类 nailei 乳类及制品
 蛋类 danlei 蛋类及制品
 油脂 youzhi
 调味品 tiaoweipin
+咸菜 xiancai
+零食 lingshi
 饮料类 yinliao
 含酒精饮料 jiuyinliao
 糖、果脯和蜜饯、蜂蜜 ..
