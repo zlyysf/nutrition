@@ -3714,6 +3714,7 @@
 //    BOOL needUseFoodLimitTableWhenCal = TRUE;
     BOOL needUseLowLimitAsUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic;
+    BOOL needUseFirstRecommendWhenSmallIncrementLogic = Config_needUseFirstRecommendWhenSmallIncrementLogic;
     
     uint randSeed = arc4random();
     
@@ -3729,6 +3730,10 @@
         NSNumber *nmFlag_needUseNormalLimitWhenSmallIncrementLogic = [options objectForKey:LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic];
         if (nmFlag_needUseNormalLimitWhenSmallIncrementLogic != nil)
             needUseNormalLimitWhenSmallIncrementLogic = [nmFlag_needUseNormalLimitWhenSmallIncrementLogic boolValue];
+        
+        NSNumber *nmFlag_needUseFirstRecommendWhenSmallIncrementLogic = [options objectForKey:LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic];
+        if (nmFlag_needUseFirstRecommendWhenSmallIncrementLogic != nil)
+            needUseFirstRecommendWhenSmallIncrementLogic = [nmFlag_needUseFirstRecommendWhenSmallIncrementLogic boolValue];
         
         NSNumber *nm_randSeed = [options objectForKey:LZSettingKey_randSeed];
         if (nm_randSeed != nil && [nm_randSeed unsignedIntValue] > 0)
@@ -4098,14 +4103,14 @@
         if (needUseLowLimitAsUnit){
             NSNumber *nmFoodLowerLimit = foodToSupplyOneNutrient[COLUMN_NAME_Lower_Limit];
             assert(nmFoodLowerLimit!=nil);
+            dFoodIncreaseUnit = [nmFoodLowerLimit doubleValue];
+        }
+        if(needUseFirstRecommendWhenSmallIncrementLogic){
             NSNumber *nmFood_first_recommend = foodToSupplyOneNutrient[COLUMN_NAME_first_recommend];
             assert(nmFood_first_recommend!=nil);
-            
             double foodAlreadyAmount = [LZUtility getDoubleFromDictionaryItem_withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];
             if (foodAlreadyAmount == 0)
                 dFoodIncreaseUnit = [nmFood_first_recommend doubleValue];
-            else
-                dFoodIncreaseUnit = [nmFoodLowerLimit doubleValue];
         }
         //这个食物的各营养的量加到supply中
         [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];
