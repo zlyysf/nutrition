@@ -32,6 +32,7 @@
         [self.foodNameLabel setTextColor:[UIColor whiteColor]];
         [self.foodWeightlabel setTextColor:[UIColor whiteColor]];
         [self.foodUnitLabel setTextColor:[UIColor whiteColor]];
+        [self.foodTotalUnitLabel setTextColor:[UIColor whiteColor]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellSelectedBack.png"]]];
     }
     else
@@ -39,6 +40,7 @@
         [self.foodNameLabel setTextColor:[UIColor blackColor]];
         [self.foodWeightlabel setTextColor:[UIColor blackColor]];
         [self.foodUnitLabel setTextColor:[UIColor blackColor]];
+        [self.foodTotalUnitLabel setTextColor:[UIColor darkGrayColor]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
     }
 }

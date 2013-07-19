@@ -37,7 +37,7 @@
 @end
 
 @implementation LZDietListMakeViewController
-@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,currentEditFoodId,recommendFoodDictForDisplay,dietId;
+@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,currentEditFoodId,recommendFoodDictForDisplay,dietId,allFoodUnitDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -88,6 +88,7 @@
     nutrientInfoArray = [[NSMutableArray alloc]init];
     takenFoodNutrientInfoDict = [[NSMutableDictionary alloc]init];
     recommendFoodDictForDisplay = [[NSMutableDictionary alloc]init];
+    allFoodUnitDict = [[NSMutableDictionary alloc]init];
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                              CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                              CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
@@ -225,7 +226,15 @@
         
         [takenFoodIdsArray addObjectsFromArray:takenArray2];
     }
+    NSDictionary *foodUnitDict = [retFmtDict objectForKey:Key_givenFoodAttrDict2Level];
+    [allFoodUnitDict removeAllObjects];
+    if (foodUnitDict != nil )
+    {
+        
+        [allFoodUnitDict addEntriesFromDictionary:foodUnitDict];
+    }
 
+    
     NSDictionary *takenDict = [retFmtDict objectForKey:Key_givenFoodInfoDict2Level];
     [takenFoodDict removeAllObjects];
     if (takenDict != nil )

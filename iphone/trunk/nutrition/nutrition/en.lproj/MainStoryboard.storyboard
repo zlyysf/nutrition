@@ -637,7 +637,7 @@
                                                             </state>
                                                         </button>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AYQ-FH-Xz5">
-                                                            <rect key="frame" x="81" y="15" width="138" height="22"/>
+                                                            <rect key="frame" x="81" y="15" width="80" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -661,6 +661,13 @@
                                                             <rect key="frame" x="1" y="27" width="75" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3uw-cD-eLJ">
+                                                            <rect key="frame" x="169" y="15" width="42" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -672,7 +679,8 @@
                                             <outlet property="editFoodButton" destination="fa6-nK-XgN" id="wRG-6a-JAW"/>
                                             <outlet property="foodImageView" destination="krY-Ac-UJo" id="7Po-lC-iwr"/>
                                             <outlet property="foodNameLabel" destination="AYQ-FH-Xz5" id="j87-ZI-Nzl"/>
-                                            <outlet property="foodUnitLabel" destination="uN3-79-R9q" id="ctI-IV-JRQ"/>
+                                            <outlet property="foodTotalUnitLabel" destination="3uw-cD-eLJ" id="8zx-kB-Gbc"/>
+                                            <outlet property="foodUnitLabel" destination="3uw-cD-eLJ" id="xSk-yi-ZXm"/>
                                             <outlet property="foodWeightlabel" destination="o1T-4N-j5C" id="qeY-lV-F3F"/>
                                             <outlet property="recommendSignImageView" destination="Rex-Qs-AQ5" id="uSI-Q7-y08"/>
                                         </connections>
@@ -1650,6 +1658,7 @@
         <class className="LZUserDietListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZUserDietListViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="emptyBottomLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="emptyImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="emptyTopLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>

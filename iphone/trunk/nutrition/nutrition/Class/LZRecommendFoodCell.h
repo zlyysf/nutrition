@@ -18,5 +18,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *foodUnitLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *recommendSignImageView;
 @property (strong, nonatomic) IBOutlet LZEditFoodAmountButton *editFoodButton;
+@property (strong, nonatomic) IBOutlet UILabel *foodTotalUnitLabel;
 
 @end
