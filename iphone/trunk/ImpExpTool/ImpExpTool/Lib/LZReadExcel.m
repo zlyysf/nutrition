@@ -588,18 +588,21 @@
                                    , COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify
                                    , COLUMN_NAME_PicPath
                                    , COLUMN_NAME_Lower_Limit,COLUMN_NAME_Upper_Limit,COLUMN_NAME_normal_value
+                                   , COLUMN_NAME_SingleItemUnitName,COLUMN_NAME_SingleItemUnitWeight
                                    , nil];
     
     int idxInXls_Id = 1, idxInXls_CnCaption = 3, idxInXls_CnType = 5, idxInXls_Classify=6,
         idxInXls_PicPath = 7, idxInXls_Lower_Limit = 8, idxInXls_Upper_Limit = 10, idxInXls_normal_value=9,
-        idxInXls_Enable=11;
+        idxInXls_Enable=11,
+        idxInXls_SingleItemUnitName = 12, idxInXls_SingleItemUnitWeight = 13;
     int idxRow=2;
     
     NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray *row;
     DHcell *cell_Id, *cell_CnCaption, *cell_CnType, *cell_Classify,
         *cell_PicPath, *cell_Lower_Limit, *cell_Upper_Limit, *cell_normal_value,
-        *cell_Enable;
+        *cell_Enable,
+        *cell_SingleItemUnitName, *cell_SingleItemUnitWeight;
     bool allRowCellBlank;
     do {
         cell_Id = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
@@ -611,7 +614,9 @@
         cell_Upper_Limit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Upper_Limit];
         cell_normal_value = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_normal_value];
         cell_Enable = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Enable];
-        allRowCellBlank = true;
+        cell_SingleItemUnitName = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_SingleItemUnitName];
+        cell_SingleItemUnitWeight = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_SingleItemUnitWeight];
+        allRowCellBlank = true;//注意cell_SingleItemUnitName 和 cell_SingleItemUnitWeight是可填项，不像其他的是必填项
         allRowCellBlank = (cell_Id.type==cellBlank && cell_CnCaption.type==cellBlank && cell_CnType.type==cellBlank && cell_Classify.type==cellBlank
                            && cell_PicPath.type==cellBlank && cell_Lower_Limit.type==cellBlank && cell_Upper_Limit.type==cellBlank && cell_normal_value.type==cellBlank
                            && cell_Enable.type==cellBlank
@@ -642,6 +647,16 @@
                     [row addObject:cell_Lower_Limit.val];
                     [row addObject:cell_Upper_Limit.val];
                     [row addObject:cell_normal_value.val];
+                    if(cell_SingleItemUnitName.type!=cellBlank){
+                        [row addObject:cell_SingleItemUnitName.str];
+                    }else{
+                        [row addObject:@""];
+                    }
+                    if(cell_SingleItemUnitWeight.type!=cellBlank){
+                        [row addObject:cell_SingleItemUnitWeight.val];
+                    }else{
+                        [row addObject:[NSNumber numberWithInt:0]];
+                    }
                     [rows2D addObject:row];
                 }//if ([cell_Enable.val integerValue]==1)
             }//if (allRowCellNotEmpty)
