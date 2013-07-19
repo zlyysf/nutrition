@@ -495,7 +495,7 @@
 }
 - (void)popWeiChatInstallAlert
 {
-    UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:nil message:@"还没有安装微信 立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"还没有安装微信 立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     [insallWeichatAlert show];
 }
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex

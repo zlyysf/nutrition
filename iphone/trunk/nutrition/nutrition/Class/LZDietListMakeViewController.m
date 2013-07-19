@@ -108,14 +108,14 @@
 
     if([self.takenFoodIdsArray count] == 0)
     {
-        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"请至少选择一种食物" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请至少选择一种食物" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
         [foodEmptyAlert show];
         return;
     }
     if (self.listType == dietListTypeNew)
     {
         //新建一个表单，用insert
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"请输入清单的名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存清单" message:@"请输入清单的名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         alert.tag = KSaveDietTitleAlertTag;
         [alert show];
@@ -140,7 +140,7 @@
         }
         else
         {
-            UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"保存失败请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
             [saveFailedAlert show];
         }
     }
@@ -266,7 +266,7 @@
         NSIndexSet *reloadSet = [[NSIndexSet alloc]initWithIndex:1];
         [self.listView reloadSections:reloadSet withRowAnimation:UITableViewRowAnimationAutomatic];
     }
-   [self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
+   //[self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
 
 }
 - (void)foodCellSwiped:(UISwipeGestureRecognizer*)sender
@@ -318,7 +318,7 @@
     NSString *foodId = sender.foodId;
     //NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
     currentEditFoodId = foodId;
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"请输入想修改的食物量" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"食物量更改" message:@"请输入新的的食物量" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = KChangeFoodAmountAlertTag;
     UITextField *tf = [alert textFieldAtIndex:0];
@@ -378,14 +378,15 @@
                 UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
                 [cell.foodImageView setImage:foodImage];
                 cell.cellFoodId = foodId;
-                cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
+                
                 NSNumber *weight = [aFood objectForKey:@"Amount"];
                 cell.foodWeightlabel.text = [NSString stringWithFormat:@"%d",[weight intValue]];
                 NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
                 NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
+                NSString *foodTotalUnit = @"";
                 if ([singleUnitName length]==0)
                 {
-                    cell.foodTotalUnitLabel.text = @"";
+                    foodTotalUnit = @"";
                 }
                 else
                 {
@@ -393,14 +394,15 @@
                     int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
                     if (unitCount <= 0)
                     {
-                        cell.foodTotalUnitLabel.text = @"";
+                        foodTotalUnit = @"";
                     }
                     else
                     {
-                        cell.foodTotalUnitLabel.text = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
+                        foodTotalUnit = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
                     }
                 }
-
+                NSString *foodName = [aFood objectForKey:@"Name"];
+                cell.foodNameLabel.text = [NSString stringWithFormat:@"%@ %@",foodName,foodTotalUnit];
                 UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
                 swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
                 UISwipeGestureRecognizer *swipeRightGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
@@ -675,6 +677,14 @@
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:takenFoodAmountDict andUserInfo:userInfo andOptions:options andParams:params];
     NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
+    if (recommendFoodAmountDict == nil || [recommendFoodAmountDict count]==0)
+    {
+        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"已有的这些食物搭配已经能够满足您一天的各营养需要，不需另行推荐了。您可以删掉一些已有的食物再使用推荐功能" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        [noRecommendAlert show];
+        [HUD hide:YES];
+        self.listView.hidden = NO;
+        return;
+    }
     [recommendFoodDictForDisplay removeAllObjects];
     [recommendFoodDictForDisplay addEntriesFromDictionary:recommendFoodAmountDict];
     //    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -1034,7 +1044,7 @@
 }
 - (void)popWeiChatInstallAlert
 {
-    UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:nil message:@"还没有安装微信 立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"还没有安装微信 立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     insallWeichatAlert.tag = KInstallWechatAlertTag;
     [insallWeichatAlert show];
 }
@@ -1100,7 +1110,7 @@
             }
             else
             {
-                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"" message:@"保存失败请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
                 [saveFailedAlert show];
             }
         }

@@ -186,7 +186,7 @@
     }
     else
     {
-        UIAlertView *deleteFailAlert = [[UIAlertView alloc]initWithTitle:nil message:@"清单删除失败，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *deleteFailAlert = [[UIAlertView alloc]initWithTitle:@"删除失败" message:@"请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
         [deleteFailAlert show];
     }
 //    NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];

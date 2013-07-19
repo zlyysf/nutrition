@@ -224,7 +224,7 @@
 {
     if ([self isAllUnSelected:self.filterArray])
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"请至少选择一个营养素" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请至少选择一个营养素" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
         [alert show];
         return;
     }
