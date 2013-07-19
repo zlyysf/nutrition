@@ -587,12 +587,13 @@
     NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No
                                    , COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify
                                    , COLUMN_NAME_PicPath
-                                   , COLUMN_NAME_Lower_Limit,COLUMN_NAME_normal_value,COLUMN_NAME_first_recommend,COLUMN_NAME_Upper_Limit
+                                   , COLUMN_NAME_Lower_Limit,COLUMN_NAME_first_recommend,COLUMN_NAME_normal_value,COLUMN_NAME_Upper_Limit
                                    , COLUMN_NAME_SingleItemUnitName,COLUMN_NAME_SingleItemUnitWeight
                                    , nil];
     
     int idxInXls_Id = 2, idxInXls_CnCaption = 3, idxInXls_CnType = 5, idxInXls_Classify=6,
-        idxInXls_PicPath = 7, idxInXls_Lower_Limit = 8, idxInXls_normal_value=9, idxInXls_first_recommend=10, idxInXls_Upper_Limit = 11,
+        idxInXls_PicPath = 7,
+        idxInXls_Lower_Limit=8, idxInXls_first_recommend=9, idxInXls_normal_value=10, idxInXls_Upper_Limit=11,
         idxInXls_Enable=12,
         idxInXls_SingleItemUnitName = 13, idxInXls_SingleItemUnitWeight = 14;
     int idxRow=2;
