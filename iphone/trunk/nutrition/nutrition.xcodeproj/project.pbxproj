@@ -133,6 +133,8 @@
 		5F955F2E177C3A2F00FCC976 /* AddByNutrientButton@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F955F2D177C3A2F00FCC976 /* AddByNutrientButton@2x.png */; };
 		5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
 		5F9C128D17321935000E08E5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9C128C17321935000E08E5 /* MessageUI.framework */; };
+		5FB735E31799511E005FA05C /* 调味品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FB735E11799511E005FA05C /* 调味品@2x.png */; };
+		5FB735E41799511E005FA05C /* 零食@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FB735E21799511E005FA05C /* 零食@2x.png */; };
 		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
 		5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */; };
 		5FDED102176F2E2D0026BCA3 /* text_clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */; };
@@ -335,6 +337,8 @@
 		5F9995F4172BDBE400A36B4F /* LZFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodCell.h; path = Class/LZFoodCell.h; sourceTree = "<group>"; };
 		5F9995F5172BDBE400A36B4F /* LZFoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodCell.m; path = Class/LZFoodCell.m; sourceTree = "<group>"; };
 		5F9C128C17321935000E08E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		5FB735E11799511E005FA05C /* 调味品@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "调味品@2x.png"; path = "nutrition/Resource/调味品@2x.png"; sourceTree = "<group>"; };
+		5FB735E21799511E005FA05C /* 零食@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "零食@2x.png"; path = "nutrition/Resource/零食@2x.png"; sourceTree = "<group>"; };
 		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = nutrition/Class/LZUtility.h; sourceTree = "<group>"; };
 		5FB8C0B7172BC61D00E90387 /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = nutrition/Class/LZUtility.m; sourceTree = "<group>"; };
 		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
@@ -856,6 +860,8 @@
 		5FF6320E1772D8AA0068CBFE /* foodTypeIcon */ = {
 			isa = PBXGroup;
 			children = (
+				5FB735E11799511E005FA05C /* 调味品@2x.png */,
+				5FB735E21799511E005FA05C /* 零食@2x.png */,
 				5FF6320F1772D91F0068CBFE /* 主食@2x.png */,
 				5FF632101772D91F0068CBFE /* 五谷@2x.png */,
 				5FF632111772D91F0068CBFE /* 奶制品@2x.png */,
@@ -1042,6 +1048,8 @@
 				5F7E5AA317965B47007CA18A /* recommend_sign@2x.png in Resources */,
 				5F7E5AAB17969463007CA18A /* diet_empty_icon@2x.png in Resources */,
 				5F7E5AAD1796AF5E007CA18A /* timestamp_icon@2x.png in Resources */,
+				5FB735E31799511E005FA05C /* 调味品@2x.png in Resources */,
+				5FB735E41799511E005FA05C /* 零食@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

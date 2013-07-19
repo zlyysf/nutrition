@@ -414,7 +414,7 @@
     }
     else
     {
-        [self alertWithTitle:@"" msg:@"性别选择错误，请重新选择"];
+        [self alertWithTitle:@"温馨提示" msg:@"性别选择错误，请重新选择"];
         return nil;
     }
     if (self.currentActivityLevelSelection >= 0 && self.currentActivityLevelSelection <= 3)
@@ -423,7 +423,7 @@
     }
     else
     {
-        [self alertWithTitle:@"" msg:@"活动强度选择错误，请重新选择"];
+        [self alertWithTitle:@"温馨提示" msg:@"活动强度选择错误，请重新选择"];
         return nil;
     }
     int userAge = [self.ageTextField.text intValue];
@@ -433,7 +433,7 @@
     }
     else
     {
-        [self alertWithTitle:@"" msg:@"年龄数据填写错误，请重新填写"];
+        [self alertWithTitle:@"温馨提示" msg:@"年龄数据填写错误，请重新填写"];
         return nil;
     }
     int userHeight = [self.heightTextField.text intValue];
@@ -443,7 +443,7 @@
     }
     else
     {
-        [self alertWithTitle:@"" msg:@"身高数据填写错误，请重新填写"];
+        [self alertWithTitle:@"温馨提示" msg:@"身高数据填写错误，请重新填写"];
         return nil;
     }
 
@@ -454,7 +454,7 @@
     }
     else
     {
-        [self alertWithTitle:@"" msg:@"体重数据填写错误，请重新填写"];
+        [self alertWithTitle:@"温馨提示" msg:@"体重数据填写错误，请重新填写"];
         return nil;
     }
 

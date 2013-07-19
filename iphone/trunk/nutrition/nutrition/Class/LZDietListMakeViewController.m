@@ -115,7 +115,7 @@
     if (self.listType == dietListTypeNew)
     {
         //新建一个表单，用insert
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存清单" message:@"请输入清单的名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物搭配" message:@"请输入这组食物搭配的名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         alert.tag = KSaveDietTitleAlertTag;
         [alert show];
@@ -346,7 +346,7 @@
             {
                 LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
                 [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
-                cell.contentLabel.text = @"我们app的作用是帮您找到一组营养全面的食物搭配，您可以通过我们的推荐功能快速得到，也可以加入自己的选择以找到最适合您的方案。";
+                cell.contentLabel.text = @"我们app的作用是帮您找到适合您一天的各营养需要量的食物搭配，您可以通过我们的推荐功能快速得到，也可以加入自己的选择以找到最适合您的方案。";
                 return cell;
             }
             else
@@ -453,7 +453,13 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
+    {
+        if(takenFoodIdsArray ==nil || [takenFoodIdsArray count]==0)
+        {
+            return 76;
+        }
         return 60;
+    }
     else
         return 42;
 }
@@ -487,9 +493,9 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text =  @"食物";
+        sectionTitleLabel.text =  @"一天的食物";
     else
-        sectionTitleLabel.text =  @"营养补充情况";
+        sectionTitleLabel.text =  @"提供营养情况";
     
     return sectionView;
 }
@@ -515,12 +521,14 @@
             NSArray *nutrientSupplyArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
             NSArray *nutrientStandardArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
             NSString *foodName = [aFood objectForKey:@"Name"];
+            NSNumber *weight = [aFood objectForKey:@"Amount"];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
             LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
+            NSString *sectionTitle = [NSString stringWithFormat:@"%dg%@",[weight intValue],foodName];
             foodDetailController.nutrientSupplyArray = nutrientSupplyArr;
             foodDetailController.nutrientStandardArray = nutrientStandardArr;
             foodDetailController.foodName = foodName;
-            foodDetailController.isForRecomendFood = NO;
+            foodDetailController.sectionTitle = sectionTitle;
             //UINavigationController *initialController = (UINavigationController*)[UIApplication
                                                                                   //sharedApplication].keyWindow.rootViewController;
             [self.navigationController pushViewController:foodDetailController animated:YES];
@@ -679,7 +687,7 @@
     NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
     if (recommendFoodAmountDict == nil || [recommendFoodAmountDict count]==0)
     {
-        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"已有的这些食物搭配已经能够满足您一天的各营养需要，不需另行推荐了。您可以删掉一些已有的食物再使用推荐功能" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"已有的这组食物搭配已经能够满足您一天的各营养需要，如需另行推荐，您可以删掉一些已有的食物再使用推荐功能。" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
         [noRecommendAlert show];
         [HUD hide:YES];
         self.listView.hidden = NO;

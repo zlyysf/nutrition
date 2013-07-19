@@ -39,13 +39,13 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"制定清单" style:UIBarButtonItemStyleBordered target:self action:@selector(addListAction)];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(addListAction)];
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(settingsAction)];
     
     self.navigationItem.leftBarButtonItem = leftItem;
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    self.title = @"精选膳食清单";
+    self.title = @"食物搭配清单";
     self.dietArray = [[NSMutableArray alloc]init];
 
 }

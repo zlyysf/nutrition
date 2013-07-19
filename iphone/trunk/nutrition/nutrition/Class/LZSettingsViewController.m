@@ -171,7 +171,7 @@
             [self displayComposerSheet];
         }
         else{
-            [self alertWithTitle:nil msg:@"对不起，你还没有邮件账户，请到系统设置里面创建一个。"];
+            [self alertWithTitle:@"温馨提示" msg:@"你还没有邮件账户，请到系统设置里面创建一个"];
         }
     }
 

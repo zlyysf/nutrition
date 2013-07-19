@@ -18,7 +18,7 @@
 @end
 
 @implementation LZFoodDetailController
-@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,isForRecomendFood;
+@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,sectionTitle;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -213,7 +213,7 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text = isForRecomendFood? @"推荐量所提供的营养成分含量": @"购买量所提供的营养成分含量";
+        sectionTitleLabel.text = [NSString stringWithFormat:@"%@所提供的营养成分含量",self.sectionTitle];
     else
         sectionTitleLabel.text =  @"营养成分标准含量(100g食物)";
     return sectionView;
@@ -237,7 +237,6 @@
 }
 
 - (void)viewDidUnload {
-    [self setNavItem:nil];
     [super viewDidUnload];
 }
 @end
