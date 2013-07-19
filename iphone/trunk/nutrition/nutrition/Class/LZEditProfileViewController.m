@@ -433,7 +433,7 @@
     }
     else
     {
-        [self alertWithTitle:@"温馨提示" msg:@"年龄数据填写错误，请重新填写"];
+        [self alertWithTitle:@"温馨提示" msg:@"年龄填写错误，请重新填写"];
         return nil;
     }
     int userHeight = [self.heightTextField.text intValue];
@@ -443,7 +443,7 @@
     }
     else
     {
-        [self alertWithTitle:@"温馨提示" msg:@"身高数据填写错误，请重新填写"];
+        [self alertWithTitle:@"温馨提示" msg:@"身高填写错误，请重新填写"];
         return nil;
     }
 
@@ -454,7 +454,7 @@
     }
     else
     {
-        [self alertWithTitle:@"温馨提示" msg:@"体重数据填写错误，请重新填写"];
+        [self alertWithTitle:@"温馨提示" msg:@"体重填写错误，请重新填写"];
         return nil;
     }
 
