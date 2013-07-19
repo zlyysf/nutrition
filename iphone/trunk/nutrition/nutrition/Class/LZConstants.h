@@ -100,6 +100,7 @@
 #define COLUMN_NAME_Lower_Limit @"Lower_Limit(g)"
 #define COLUMN_NAME_Upper_Limit @"Upper_Limit(g)"
 #define COLUMN_NAME_normal_value @"normal_value"
+#define COLUMN_NAME_first_recommend @"first_recommend"
 
 
 #define TABLE_NAME_NutritionInfo @"NutritionInfo"
