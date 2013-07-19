@@ -4098,7 +4098,14 @@
         if (needUseLowLimitAsUnit){
             NSNumber *nmFoodLowerLimit = foodToSupplyOneNutrient[COLUMN_NAME_Lower_Limit];
             assert(nmFoodLowerLimit!=nil);
-            dFoodIncreaseUnit = [nmFoodLowerLimit doubleValue];
+            NSNumber *nmFood_first_recommend = foodToSupplyOneNutrient[COLUMN_NAME_first_recommend];
+            assert(nmFood_first_recommend!=nil);
+            
+            double foodAlreadyAmount = [LZUtility getDoubleFromDictionaryItem_withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];
+            if (foodAlreadyAmount == 0)
+                dFoodIncreaseUnit = [nmFood_first_recommend doubleValue];
+            else
+                dFoodIncreaseUnit = [nmFoodLowerLimit doubleValue];
         }
         //这个食物的各营养的量加到supply中
         [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];

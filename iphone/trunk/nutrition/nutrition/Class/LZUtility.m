@@ -29,7 +29,18 @@
     return nmSum;
 }
 
-
++(double)getDoubleFromDictionaryItem_withDictionary:(NSMutableDictionary*)data andKey:(NSString *)datakey
+{
+    assert(data!=nil);
+    assert(datakey!=nil);
+    id dataVal = [data objectForKey:datakey];
+    if (dataVal==nil)
+        return 0;
+    else{
+        NSNumber *nmDataVal = dataVal;
+        return [nmDataVal doubleValue];
+    }
+}
 
 
 
