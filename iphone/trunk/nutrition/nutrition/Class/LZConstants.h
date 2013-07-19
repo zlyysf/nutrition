@@ -155,6 +155,7 @@
 #define Key_orderedGivenFoodIds2 @"orderedGivenFoodIds2"
 #define Key_orderedGivenFoodIds @"orderedGivenFoodIds"
 #define Key_givenFoodInfoDict2Level @"givenFoodInfoDict2Level"
+#define Key_givenFoodAttrDict2Level @"givenFoodAttrDict2Level"
 #define Key_nutrientSupplyRateInfoArray @"nutrientSupplyRateInfoArray"
 #define Key_nutrientSupplyDict @"nutrientSupplyDict"
 

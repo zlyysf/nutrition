@@ -2408,7 +2408,7 @@
 /*
  如果不传DRI，可以传userInfo。givenFoodsAmount1和givenFoodsAmount2都可选，不过如果都不传，则返回nil。
  输出： Key_orderedGivenFoodIds1, Key_orderedGivenFoodIds2, Key_orderedGivenFoodIds,
-     Key_givenFoodInfoDict2Level, Key_nutrientSupplyRateInfoArray,
+     Key_givenFoodInfoDict2Level,Key_givenFoodAttrDict2Level, Key_nutrientSupplyRateInfoArray,
      Key_takenFoodNutrientInfoAryDictDict(Key_foodSupplyNutrientInfoAryDict, Key_foodStandardNutrientInfoAryDict)
      
  */
@@ -2570,6 +2570,8 @@
     [givenFoodNutrientInfoAryDictDict setValue:givenFoodSupplyNutrientInfoAryDict forKey:Key_foodSupplyNutrientInfoAryDict];
     [givenFoodNutrientInfoAryDictDict setValue:givenFoodStandardNutrientInfoAryDict forKey:Key_foodStandardNutrientInfoAryDict];
     [formatResult setValue:givenFoodNutrientInfoAryDictDict forKey:Key_takenFoodNutrientInfoAryDictDict];
+    
+    [formatResult setValue:givenFoodAttrDict2Level forKey:Key_givenFoodAttrDict2Level];
     
     NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI exit, result=%@",formatResult);
     return formatResult;
