@@ -145,8 +145,8 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)backButtonTapped:(id)sender
-{
+//- (IBAction)backButtonTapped:(id)sender
+//{
        //    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
     //    BOOL needSaveData = NO;
     //    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
@@ -164,8 +164,8 @@
     //        [[NSUserDefaults  standardUserDefaults]synchronize];
     //    }
     
-    [self.navigationController popViewControllerAnimated:YES];
-}
+    //[self.navigationController popViewControllerAnimated:YES];
+//}
 
 - (void)keyboardWillShow:(NSNotification *)notification {
 	
@@ -284,6 +284,24 @@
         else
         {
             cell.intakeAmountTextField.text = [NSString stringWithFormat:@"%d",num];
+        }
+        NSString *singleUnitName = [aFood objectForKey:COLUMN_NAME_SingleItemUnitName];
+        if ([singleUnitName length]==0)
+        {
+            cell.foodTotalUnitLabel.text = @"";
+        }
+        else
+        {
+            NSNumber *singleUnitWeight = [aFood objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+            int unitCount = (int)((float)([intake floatValue]/[singleUnitWeight floatValue])+0.5);
+            if (unitCount <= 0)
+            {
+                cell.foodTotalUnitLabel.text = @"";
+            }
+            else
+            {
+                cell.foodTotalUnitLabel.text = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
+            }
         }
 
         [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
@@ -417,6 +435,29 @@
         [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
         //NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
     }
+    LZFoodCell* cell =(LZFoodCell*)[self.listView cellForRowAtIndexPath:index];
+    NSDictionary *aFood = [self.foodArray  objectAtIndex:index.row];
+    NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
+    NSNumber *intake = [self.foodIntakeDictionary objectForKey:NDB_No];
+    NSString *singleUnitName = [aFood objectForKey:COLUMN_NAME_SingleItemUnitName];
+    if ([singleUnitName length]==0)
+    {
+        cell.foodTotalUnitLabel.text = @"";
+    }
+    else
+    {
+        NSNumber *singleUnitWeight = [aFood objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+        int unitCount = (int)((float)([intake floatValue]/[singleUnitWeight floatValue])+0.5);
+        if (unitCount <= 0)
+        {
+            cell.foodTotalUnitLabel.text = @"";
+        }
+        else
+        {
+            cell.foodTotalUnitLabel.text = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
+        }
+    }
+
     NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
     BOOL needSaveData = NO;
     for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
@@ -436,6 +477,7 @@
         [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
         [[NSUserDefaults  standardUserDefaults]synchronize];
     }
+    
     
 }
 - (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index textField:(UITextField *)currentTextField

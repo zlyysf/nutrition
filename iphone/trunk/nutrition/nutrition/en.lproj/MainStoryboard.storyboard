@@ -458,7 +458,7 @@
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2dH-UG-dyC">
-                                                            <rect key="frame" x="81" y="4" width="100" height="27"/>
+                                                            <rect key="frame" x="81" y="4" width="121" height="27"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <state key="normal" title="Button">
@@ -637,7 +637,7 @@
                                                             </state>
                                                         </button>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AYQ-FH-Xz5">
-                                                            <rect key="frame" x="81" y="15" width="80" height="22"/>
+                                                            <rect key="frame" x="81" y="15" width="86" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -661,9 +661,10 @@
                                                             <rect key="frame" x="1" y="27" width="75" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3uw-cD-eLJ">
-                                                            <rect key="frame" x="169" y="15" width="42" height="21"/>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="3uw-cD-eLJ">
+                                                            <rect key="frame" x="169" y="15" width="49" height="21"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
@@ -680,7 +681,7 @@
                                             <outlet property="foodImageView" destination="krY-Ac-UJo" id="7Po-lC-iwr"/>
                                             <outlet property="foodNameLabel" destination="AYQ-FH-Xz5" id="j87-ZI-Nzl"/>
                                             <outlet property="foodTotalUnitLabel" destination="3uw-cD-eLJ" id="8zx-kB-Gbc"/>
-                                            <outlet property="foodUnitLabel" destination="3uw-cD-eLJ" id="xSk-yi-ZXm"/>
+                                            <outlet property="foodUnitLabel" destination="uN3-79-R9q" id="EY9-LD-Yf0"/>
                                             <outlet property="foodWeightlabel" destination="o1T-4N-j5C" id="qeY-lV-F3F"/>
                                             <outlet property="recommendSignImageView" destination="Rex-Qs-AQ5" id="uSI-Q7-y08"/>
                                         </connections>
@@ -895,7 +896,7 @@
                                                             <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         </label>
                                                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="73j-0S-PC3">
-                                                            <rect key="frame" x="81" y="13" width="100" height="26"/>
+                                                            <rect key="frame" x="81" y="13" width="80" height="26"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <state key="normal" title="Button">
@@ -909,6 +910,13 @@
                                                                 <action selector="nameButtonTapped:" destination="hwZ-7O-E4d" eventType="touchUpInside" id="LXw-2t-oig"/>
                                                             </connections>
                                                         </button>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="q3h-74-Vym">
+                                                            <rect key="frame" x="165" y="15" width="42" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 </view>
@@ -919,6 +927,7 @@
                                             <outlet property="backView" destination="LY8-dg-s9l" id="mAg-kZ-b7W"/>
                                             <outlet property="foodNameButton" destination="73j-0S-PC3" id="JBE-SS-KSR"/>
                                             <outlet property="foodPicView" destination="ppt-Hh-lbd" id="edm-Cc-bEt"/>
+                                            <outlet property="foodTotalUnitLabel" destination="q3h-74-Vym" id="67j-ij-cIG"/>
                                             <outlet property="intakeAmountTextField" destination="iA2-pX-NOM" id="DxY-hY-V6J"/>
                                             <outlet property="textFiledBackImage" destination="GxM-2b-yDH" id="e9e-Jm-i6h"/>
                                         </connections>
@@ -1488,7 +1497,6 @@
         <class className="LZDailyIntakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDailyIntakeViewController.h"/>
             <relationships>
-                <relationship kind="action" name="backButtonTapped:"/>
                 <relationship kind="outlet" name="admobView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
@@ -1496,10 +1504,6 @@
         <class className="LZDietListMakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDietListMakeViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addFoodAction:"/>
-                <relationship kind="action" name="addFoodByNutrient:" candidateClass="UIButton"/>
-                <relationship kind="action" name="recommendAction:"/>
-                <relationship kind="action" name="shareButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1541,10 +1545,10 @@
         <class className="LZFoodCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodCell.h"/>
             <relationships>
-                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="foodNameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="foodPicView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="foodTotalUnitLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="intakeAmountTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="textFiledBackImage" candidateClass="UIImageView"/>
             </relationships>
@@ -1566,7 +1570,6 @@
         <class className="LZFoodNutritionCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodNutritionCell.h"/>
             <relationships>
-                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="addFoodButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="nutritionNameButton" candidateClass="UIButton"/>
@@ -1583,7 +1586,6 @@
         <class className="LZNutritionSupplyCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionSupplyCell.h"/>
             <relationships>
-                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="nameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nutrientSupplyLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
@@ -1605,6 +1607,7 @@
                 <relationship kind="outlet" name="editFoodButton" candidateClass="LZEditFoodAmountButton"/>
                 <relationship kind="outlet" name="foodImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="foodNameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="foodTotalUnitLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="foodUnitLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="foodWeightlabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="recommendSignImageView" candidateClass="UIImageView"/>
@@ -1613,10 +1616,6 @@
         <class className="LZSettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZSettingsViewController.h"/>
             <relationships>
-                <relationship kind="action" name="authSwitchChangeHandler:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="editUserProfile:"/>
-                <relationship kind="action" name="reviewOurApp:"/>
-                <relationship kind="action" name="userFeedBack:"/>
                 <relationship kind="outlet" name="admobView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="bottomSectionView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="contentScrollView" candidateClass="UIScrollView"/>
@@ -1639,9 +1638,6 @@
         <class className="LZShareViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZShareViewController.h"/>
             <relationships>
-                <relationship kind="action" name="cancelButtonTapped:"/>
-                <relationship kind="action" name="clearButtonTapped:"/>
-                <relationship kind="action" name="publishButtonTapped:"/>
                 <relationship kind="outlet" name="contentBackgroundImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="contentTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="wordCountLabel" candidateClass="UILabel"/>

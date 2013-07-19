@@ -34,6 +34,10 @@
         [self.foodUnitLabel setTextColor:[UIColor whiteColor]];
         [self.foodTotalUnitLabel setTextColor:[UIColor whiteColor]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellSelectedBack.png"]]];
+        UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
+        UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
+        [self.editFoodButton setBackgroundImage:nil forState:UIControlStateNormal];
+        [self.editFoodButton setBackgroundImage:textBackImage forState:UIControlStateHighlighted];
     }
     else
     {
@@ -42,6 +46,11 @@
         [self.foodUnitLabel setTextColor:[UIColor blackColor]];
         [self.foodTotalUnitLabel setTextColor:[UIColor darkGrayColor]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
+        UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
+        UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
+        [self.editFoodButton setBackgroundImage:textBackImage forState:UIControlStateNormal];
+        [self.editFoodButton setBackgroundImage:textBackImage forState:UIControlStateHighlighted];
+
     }
 }
 @end

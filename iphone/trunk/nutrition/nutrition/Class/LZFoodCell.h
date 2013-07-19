@@ -15,6 +15,7 @@
 @end
 @interface LZFoodCell : UITableViewCell<UITextFieldDelegate,LZKeyboardToolBarDelegate>
 @property (strong, nonatomic) IBOutlet UIImageView *foodPicView;
+@property (strong, nonatomic) IBOutlet UILabel *foodTotalUnitLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *textFiledBackImage;
 @property (weak, nonatomic)id<LZFoodCellDelegate>delegate;
 @property (strong, nonatomic) IBOutlet UIButton *foodNameButton;

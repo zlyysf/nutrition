@@ -25,10 +25,7 @@
 - (void)drawRect:(CGRect)rect
 {
     // Drawing code
-    UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
-    UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
-    [self setBackgroundImage:textBackImage forState:UIControlStateNormal];
-    [self setBackgroundImage:textBackImage forState:UIControlStateHighlighted];
+    
     
 }
 

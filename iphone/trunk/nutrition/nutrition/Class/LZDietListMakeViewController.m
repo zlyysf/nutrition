@@ -266,7 +266,7 @@
         NSIndexSet *reloadSet = [[NSIndexSet alloc]initWithIndex:1];
         [self.listView reloadSections:reloadSet withRowAnimation:UITableViewRowAnimationAutomatic];
     }
-   
+   [self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
 
 }
 - (void)foodCellSwiped:(UISwipeGestureRecognizer*)sender
@@ -353,7 +353,7 @@
             {
                 LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
                 NSString *foodId = [takenFoodIdsArray objectAtIndex:indexPath.row];
-                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+                                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
                 cell.editFoodButton.foodId = foodId;
                 [cell.editFoodButton addTarget:self action:@selector(editFoodButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                 //NSLog(@"picture path %@",aFood);
@@ -381,6 +381,26 @@
                 cell.foodNameLabel.text = [aFood objectForKey:@"Name"];
                 NSNumber *weight = [aFood objectForKey:@"Amount"];
                 cell.foodWeightlabel.text = [NSString stringWithFormat:@"%d",[weight intValue]];
+                NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
+                NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
+                if ([singleUnitName length]==0)
+                {
+                    cell.foodTotalUnitLabel.text = @"";
+                }
+                else
+                {
+                    NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+                    int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
+                    if (unitCount <= 0)
+                    {
+                        cell.foodTotalUnitLabel.text = @"";
+                    }
+                    else
+                    {
+                        cell.foodTotalUnitLabel.text = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
+                    }
+                }
+
                 UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
                 swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
                 UISwipeGestureRecognizer *swipeRightGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
