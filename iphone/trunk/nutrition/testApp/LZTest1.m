@@ -1777,6 +1777,8 @@
 //    BOOL needLimitNutrients = FALSE;
     BOOL needUseLowLimitAsUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
+    BOOL needUseFirstRecommendWhenSmallIncrementLogic = FALSE;
+    BOOL needSpecialForFirstBatchFoods = TRUE;
     BOOL needFirstSpecialForShucaiShuiguo = TRUE;
     int randSeed = 0; //0;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
@@ -1784,7 +1786,9 @@
 //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
                              [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
                              [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
-                             [NSNumber numberWithBool:needFirstSpecialForShucaiShuiguo],LZSettingKey_needFirstSpecialForShucaiShuiguo,
+                            [NSNumber numberWithBool:needUseFirstRecommendWhenSmallIncrementLogic],LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic,
+                             [NSNumber numberWithBool:needSpecialForFirstBatchFoods],LZSettingKey_needSpecialForFirstBatchFoods,
+                            [NSNumber numberWithBool:needFirstSpecialForShucaiShuiguo],LZSettingKey_needFirstSpecialForShucaiShuiguo,
                              [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                              nil];
 

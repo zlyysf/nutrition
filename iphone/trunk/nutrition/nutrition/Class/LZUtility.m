@@ -29,6 +29,20 @@
     return nmSum;
 }
 
++(void)addDoubleDictionaryToDictionary_withSrcAmountDictionary:(NSDictionary*)srcAmountDict withDestDictionary:(NSMutableDictionary*)destAmountDict
+{
+    if (srcAmountDict.count==0)
+        return;
+    if (destAmountDict == nil)
+        return;
+    NSArray * keys = srcAmountDict.allKeys;
+    for(int i=0; i<keys.count; i++){
+        NSString *key = keys[i];
+        NSNumber *nmVal = srcAmountDict[key];
+        [self.class addDoubleToDictionaryItem:[nmVal doubleValue] withDictionary:destAmountDict andKey:key];
+    }
+}
+
 +(double)getDoubleFromDictionaryItem_withDictionary:(NSMutableDictionary*)data andKey:(NSString *)datakey
 {
     assert(data!=nil);
