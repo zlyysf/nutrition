@@ -11,6 +11,7 @@
 #import "LZDataAccess.h"
 #define kSelectButtonSide 22.f
 #define kTagAddNum 20
+#define kNameButtonAddNum 100
 @implementation LZRecommendFilterView
 @synthesize backView,delegate,cancelButton,submitButton,filterArray;
 - (id)initWithFrame:(CGRect)frame
@@ -62,12 +63,16 @@
         }
         [backView addSubview:self.selectallButton];
         
-        UILabel *selectAllLabel = [[UILabel alloc]initWithFrame:CGRectMake(pointX+20+kSelectButtonSide, pointY, 100, kSelectButtonSide)];
-        [selectAllLabel setFont:[UIFont systemFontOfSize:15]];
-        [selectAllLabel setBackgroundColor:[UIColor clearColor]];
-        [selectAllLabel setTextColor:[UIColor blackColor]];
-        selectAllLabel.text = @"全选";
-        [backView addSubview:selectAllLabel];
+        
+        UIButton *allselectButton = [[UIButton alloc]initWithFrame:CGRectMake(pointX+20+kSelectButtonSide, pointY, 80, kSelectButtonSide)];
+        [allselectButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        [allselectButton setTitle:@"全选" forState:UIControlStateNormal];
+        [allselectButton setTitle:@"全选" forState:UIControlStateHighlighted];
+        [allselectButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+        [allselectButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateHighlighted];
+        allselectButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+        [allselectButton addTarget:self action:@selector(selectButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [backView addSubview:allselectButton];
         
         LZDataAccess *da = [LZDataAccess singleton];
         for (int i=0; i<[self.filterArray count]; i++)
@@ -107,13 +112,16 @@
             
             [backView addSubview:nutrientButton];
             
-            UILabel *nutrientNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(labelX, pointY, 100, kSelectButtonSide)];
-            [nutrientNameLabel setFont:[UIFont systemFontOfSize:15]];
-            [nutrientNameLabel setBackgroundColor:[UIColor clearColor]];
-            [nutrientNameLabel setTextColor:[UIColor blackColor]];
-            nutrientNameLabel.text = name;
-            [backView addSubview:nutrientNameLabel];
-
+            UIButton *nutrientNameButton = [[UIButton alloc]initWithFrame:CGRectMake(labelX, pointY, 80, kSelectButtonSide)];
+            [nutrientNameButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
+            [nutrientNameButton setTitle:name forState:UIControlStateNormal];
+            [nutrientNameButton setTitle:name forState:UIControlStateHighlighted];
+            [nutrientNameButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
+            [nutrientNameButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateHighlighted];
+            nutrientNameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+            nutrientNameButton.tag = i+kNameButtonAddNum;
+            [nutrientNameButton addTarget:self action:@selector(nutrientNameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            [backView addSubview:nutrientNameButton];
         }
         
         pointY += kSelectButtonSide+20;
@@ -216,6 +224,37 @@
 //    {
 //        [self.selectallButton setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
 //    }
+}
+- (void)nutrientNameButtonTapped:(UIButton *)sender
+{
+    int tag = sender.tag-kNameButtonAddNum;
+    NSDictionary *nutrientState = [self.filterArray objectAtIndex:tag];
+    NSArray *keys = [nutrientState allKeys];
+    NSString *key = [keys objectAtIndex:0];
+    NSNumber *state = [nutrientState objectForKey:key];
+    if ([state boolValue])
+    {
+        NSDictionary *newState = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:NO],key ,nil];
+        [self.filterArray replaceObjectAtIndex:tag withObject:newState];
+        UIButton *button = (UIButton *) [self.backView viewWithTag:tag+kTagAddNum];
+        [button setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        NSDictionary *newState = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:YES],key ,nil];
+        [self.filterArray replaceObjectAtIndex:tag withObject:newState];
+        UIButton *button = (UIButton *) [self.backView viewWithTag:tag+kTagAddNum];
+        [button setImage:[UIImage imageNamed:@"nutrient_button_on.png"] forState:UIControlStateNormal];
+    }
+    if (![self isAllSelected:self.filterArray])
+    {
+        [self.selectallButton setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.selectallButton setImage:[UIImage imageNamed:@"nutrient_button_on.png"] forState:UIControlStateNormal];
+    }
+
 }
 - (void)cancelButtonTapped
 {

@@ -215,7 +215,7 @@
     if (section == 0)
         sectionTitleLabel.text = [NSString stringWithFormat:@"%@的一天营养比例",self.sectionTitle];
     else
-        sectionTitleLabel.text = [NSString stringWithFormat:@"100g%@的一天营养比例",self.foodName];
+        sectionTitleLabel.text = [NSString stringWithFormat:@"%@的营养成分标准含量(100g)",self.foodName];
     return sectionView;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section

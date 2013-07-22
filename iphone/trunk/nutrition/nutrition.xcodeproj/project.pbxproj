@@ -137,6 +137,8 @@
 		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
 		5FDD1CA8179CED200046F752 /* add_by_nutrient_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CA7179CED200046F752 /* add_by_nutrient_button@2x.png */; };
 		5FDD1CAA179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png */; };
+		5FDD1CAD179D19150046F752 /* change_name_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CAB179D19140046F752 /* change_name_button@2x.png */; };
+		5FDD1CAE179D19150046F752 /* change_name_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CAC179D19150046F752 /* change_name_clicked@2x.png */; };
 		5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */; };
 		5FDED102176F2E2D0026BCA3 /* text_clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */; };
 		5FE210531784058100F45253 /* edit_profile_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE2104F1784058100F45253 /* edit_profile_button@2x.png */; };
@@ -344,6 +346,8 @@
 		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
 		5FDD1CA7179CED200046F752 /* add_by_nutrient_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_by_nutrient_button@2x.png"; path = "nutrition/Resource/add_by_nutrient_button@2x.png"; sourceTree = "<group>"; };
 		5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_by_nutrient_clicked@2x.png"; path = "nutrition/Resource/add_by_nutrient_clicked@2x.png"; sourceTree = "<group>"; };
+		5FDD1CAB179D19140046F752 /* change_name_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_name_button@2x.png"; path = "nutrition/Resource/change_name_button@2x.png"; sourceTree = "<group>"; };
+		5FDD1CAC179D19150046F752 /* change_name_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_name_clicked@2x.png"; path = "nutrition/Resource/change_name_clicked@2x.png"; sourceTree = "<group>"; };
 		5FDED0FE176F1D8E0026BCA3 /* LZShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZShareViewController.h; path = Class/LZShareViewController.h; sourceTree = "<group>"; };
 		5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZShareViewController.m; path = Class/LZShareViewController.m; sourceTree = "<group>"; };
 		5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "text_clear@2x.png"; path = "nutrition/Resource/text_clear@2x.png"; sourceTree = "<group>"; };
@@ -631,6 +635,8 @@
 				5FEC69341795372C00E80BE6 /* nutrient_button_off@2x.png */,
 				5F7E5AAC1796AF5E007CA18A /* timestamp_icon@2x.png */,
 				5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */,
+				5FDD1CAB179D19140046F752 /* change_name_button@2x.png */,
+				5FDD1CAC179D19150046F752 /* change_name_clicked@2x.png */,
 				5FE2104F1784058100F45253 /* edit_profile_button@2x.png */,
 				5F7E5AA217965B47007CA18A /* recommend_sign@2x.png */,
 				5FE210501784058100F45253 /* feedback_icon@2x.png */,
@@ -1054,6 +1060,8 @@
 				5FB735E41799511E005FA05C /* 零食@2x.png in Resources */,
 				5FDD1CA8179CED200046F752 /* add_by_nutrient_button@2x.png in Resources */,
 				5FDD1CAA179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png in Resources */,
+				5FDD1CAD179D19150046F752 /* change_name_button@2x.png in Resources */,
+				5FDD1CAE179D19150046F752 /* change_name_clicked@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

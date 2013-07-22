@@ -1102,6 +1102,13 @@
             UITextField *textFiled = [alertView textFieldAtIndex:0];
 
             NSString *collocationName = textFiled.text;
+            NSString *trimedName = [collocationName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            if ([trimedName length] == 0)
+            {
+                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您输入的名字不规范，请重新输入" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                [invalidNameAlert show];
+                return;
+            }
             NSMutableArray * foodAndAmountArray = [NSMutableArray array];
             for (NSString *foodId in self.takenFoodIdsArray)
             {
