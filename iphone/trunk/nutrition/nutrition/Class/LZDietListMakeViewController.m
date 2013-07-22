@@ -396,7 +396,7 @@
     NSString *foodId = sender.foodId;
     //NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
     currentEditFoodId = foodId;
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"食物量更改" message:@"请输入新的的食物量" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改食物量" message:@"请输入新的食物量" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = KChangeFoodAmountAlertTag;
     UITextField *tf = [alert textFieldAtIndex:0];
@@ -1188,19 +1188,36 @@
             UITextField *textFiled = [alertView textFieldAtIndex:0];
             int changed = [textFiled.text intValue];
             NSDictionary* takenDict =  [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
-            NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:takenDict];
-            
-            if (changed <=0)
+            if ([takenDict objectForKey:currentEditFoodId])
             {
-                [tempDict removeObjectForKey:self.currentEditFoodId];
+                NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:takenDict];
+                
+                if (changed <=0)
+                {
+                    [tempDict removeObjectForKey:self.currentEditFoodId];
+                }
+                else
+                {
+                    [tempDict setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
+                }
+                self.currentEditFoodId = nil;
+                [[NSUserDefaults standardUserDefaults]setObject:tempDict forKey:LZUserDailyIntakeKey];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                
             }
-            else
+            else if ([self.recommendFoodDictForDisplay objectForKey:currentEditFoodId])
             {
-                [tempDict setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
+                if (changed <=0)
+                {
+                    [self.recommendFoodDictForDisplay removeObjectForKey:self.currentEditFoodId];
+                }
+                else
+                {
+                    [self.recommendFoodDictForDisplay setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
+                }
+                self.currentEditFoodId = nil;
+
             }
-            self.currentEditFoodId = nil;
-            [[NSUserDefaults standardUserDefaults]setObject:tempDict forKey:LZUserDailyIntakeKey];
-            [[NSUserDefaults standardUserDefaults]synchronize];
             [self refreshFoodNureitentProcessForAll:YES];
 
         }
@@ -1213,17 +1230,18 @@
         }
         else
         {
-            LZDataAccess *da = [LZDataAccess singleton];
+            
             UITextField *textFiled = [alertView textFieldAtIndex:0];
 
             NSString *collocationName = textFiled.text;
             NSString *trimedName = [collocationName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             if ([trimedName length] == 0)
             {
-                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您输入的名字不规范，请重新输入" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您输入的名称不规范，请重新输入" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
                 [invalidNameAlert show];
                 return;
             }
+            LZDataAccess *da = [LZDataAccess singleton];
             NSMutableArray * foodAndAmountArray = [NSMutableArray array];
             for (NSString *foodId in self.takenFoodIdsArray)
             {

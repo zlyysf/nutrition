@@ -83,7 +83,7 @@
                                                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kgg-N0-0l2">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kgg-N0-0l2" customClass="LZChangeDietNameButton">
                                                             <rect key="frame" x="47" y="10" width="34" height="34"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
@@ -104,6 +104,7 @@
                                         <connections>
                                             <outlet property="arrowImageView" destination="geg-Sr-7EA" id="KJe-iY-zFE"/>
                                             <outlet property="backView" destination="ToG-dU-Zxd" id="oyO-gb-Snh"/>
+                                            <outlet property="changeNameButton" destination="kgg-N0-0l2" id="haz-ze-9yW"/>
                                             <outlet property="dietNameLabel" destination="cZT-8c-GH7" id="b7b-lI-e4V"/>
                                             <outlet property="timeStampLabel" destination="dge-8l-eER" id="w3j-Sg-Yx7"/>
                                         </connections>
@@ -1493,6 +1494,9 @@
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
+        <class className="LZChangeDietNameButton" superclassName="UIButton">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZChangeDietNameButton.h"/>
+        </class>
         <class className="LZDailyIntakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDailyIntakeViewController.h"/>
             <relationships>
@@ -1503,6 +1507,10 @@
         <class className="LZDietListMakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDietListMakeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addFoodAction:"/>
+                <relationship kind="action" name="addFoodByNutrient:" candidateClass="UIButton"/>
+                <relationship kind="action" name="recommendAction:"/>
+                <relationship kind="action" name="shareButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1567,6 +1575,7 @@
         <class className="LZFoodNutritionCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodNutritionCell.h"/>
             <relationships>
+                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="addFoodButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="nutritionNameButton" candidateClass="UIButton"/>
@@ -1612,6 +1621,10 @@
         <class className="LZSettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZSettingsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="authSwitchChangeHandler:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="editUserProfile:"/>
+                <relationship kind="action" name="reviewOurApp:"/>
+                <relationship kind="action" name="userFeedBack:"/>
                 <relationship kind="outlet" name="admobView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="bottomSectionView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="contentScrollView" candidateClass="UIScrollView"/>

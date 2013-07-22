@@ -16,12 +16,14 @@
 #import "LZConstants.h"
 #import "LZDiteCell.h"
 #import "LZDataAccess.h"
-@interface LZUserDietListViewController ()
+#import "LZChangeDietNameButton.h"
+#define KChangeDietAlertTag 99
+@interface LZUserDietListViewController ()<UIAlertViewDelegate>
 
 @end
 
 @implementation LZUserDietListViewController
-@synthesize dietArray;
+@synthesize dietArray,currentEditDietId;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -47,6 +49,7 @@
     
     self.title = @"食物搭配清单";
     self.dietArray = [[NSMutableArray alloc]init];
+    currentEditDietId = nil;
 
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -120,6 +123,53 @@
                                                                           //sharedApplication].keyWindow.rootViewController;
     [self.navigationController pushViewController:settingsViewController animated:YES];
 }
+-(void)changeNameButtonTapped:(LZChangeDietNameButton*)sender
+{
+    NSNumber *dietId = sender.dietId;
+    //NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
+    currentEditDietId = dietId;
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改名称" message:@"请输入新的食物搭配名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = KChangeDietAlertTag;
+    [alert show];
+}
+- (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (alertView.tag == KChangeDietAlertTag)
+    {
+        if (buttonIndex == alertView.cancelButtonIndex)
+        {
+            return;
+        }
+        else
+        {
+            if (self.currentEditDietId == nil)
+            {
+                return;
+            }
+            UITextField *textFiled = [alertView textFieldAtIndex:0];
+            NSString *collocationName = textFiled.text;
+            NSString *trimedName = [collocationName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            if ([trimedName length] == 0)
+            {
+                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您输入的名称不规范，请重新输入" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                [invalidNameAlert show];
+                return;
+            }
+            LZDataAccess *da = [LZDataAccess singleton];
+            NSNumber *editId = self.currentEditDietId;
+            self.currentEditDietId = nil;
+            if([da updateFoodCollocationName:trimedName byId:editId])
+            {
+                [self displayLocalDietList];
+            }
+            else{
+                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"更改失败" message:@"请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                [saveFailedAlert show];
+            }
+        }
+    }
+}
 #pragma mark- TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -133,6 +183,9 @@
     NSNumber *timeStamp = [aDiet objectForKey:@"CollocationCreateTime"];
     cell.timeStampLabel.text = [LZUtility stampFromInterval:timeStamp];
     cell.dietInfo = aDiet;
+    NSNumber *dietId = [aDiet objectForKey:@"CollocationId"];
+    cell.changeNameButton.dietId = dietId;
+    [cell.changeNameButton addTarget:self action:@selector(changeNameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

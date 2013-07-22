@@ -139,6 +139,7 @@
 		5FDD1CAA179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png */; };
 		5FDD1CAD179D19150046F752 /* change_name_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CAB179D19140046F752 /* change_name_button@2x.png */; };
 		5FDD1CAE179D19150046F752 /* change_name_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CAC179D19150046F752 /* change_name_clicked@2x.png */; };
+		5FDD1CB1179D3EC90046F752 /* LZChangeDietNameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDD1CB0179D3EC90046F752 /* LZChangeDietNameButton.m */; };
 		5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */; };
 		5FDED102176F2E2D0026BCA3 /* text_clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */; };
 		5FE210531784058100F45253 /* edit_profile_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE2104F1784058100F45253 /* edit_profile_button@2x.png */; };
@@ -348,6 +349,8 @@
 		5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_by_nutrient_clicked@2x.png"; path = "nutrition/Resource/add_by_nutrient_clicked@2x.png"; sourceTree = "<group>"; };
 		5FDD1CAB179D19140046F752 /* change_name_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_name_button@2x.png"; path = "nutrition/Resource/change_name_button@2x.png"; sourceTree = "<group>"; };
 		5FDD1CAC179D19150046F752 /* change_name_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_name_clicked@2x.png"; path = "nutrition/Resource/change_name_clicked@2x.png"; sourceTree = "<group>"; };
+		5FDD1CAF179D3EC80046F752 /* LZChangeDietNameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZChangeDietNameButton.h; path = Class/LZChangeDietNameButton.h; sourceTree = "<group>"; };
+		5FDD1CB0179D3EC90046F752 /* LZChangeDietNameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZChangeDietNameButton.m; path = Class/LZChangeDietNameButton.m; sourceTree = "<group>"; };
 		5FDED0FE176F1D8E0026BCA3 /* LZShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZShareViewController.h; path = Class/LZShareViewController.h; sourceTree = "<group>"; };
 		5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZShareViewController.m; path = Class/LZShareViewController.m; sourceTree = "<group>"; };
 		5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "text_clear@2x.png"; path = "nutrition/Resource/text_clear@2x.png"; sourceTree = "<group>"; };
@@ -843,6 +846,8 @@
 				5FF6320317718E100068CBFE /* LZNutritionInfoView.m */,
 				5F7E5AA417965C6E007CA18A /* LZEditFoodAmountButton.h */,
 				5F7E5AA517965C6E007CA18A /* LZEditFoodAmountButton.m */,
+				5FDD1CAF179D3EC80046F752 /* LZChangeDietNameButton.h */,
+				5FDD1CB0179D3EC90046F752 /* LZChangeDietNameButton.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1139,6 +1144,7 @@
 				5F8DEE9517951DB000C6E9F5 /* LZRecommendFilterView.m in Sources */,
 				5F7E5AA617965C6E007CA18A /* LZEditFoodAmountButton.m in Sources */,
 				5F7E5AA917967A95007CA18A /* LZDiteCell.m in Sources */,
+				5FDD1CB1179D3EC90046F752 /* LZChangeDietNameButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

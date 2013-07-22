@@ -15,4 +15,5 @@
 @property (strong, nonatomic) IBOutlet UIImageView *emptyImageView;
 @property (strong, nonatomic) IBOutlet UILabel *emptyTopLabel;
 @property (strong, nonatomic) IBOutlet UILabel *emptyBottomLabel;
+@property (strong,nonatomic)NSNumber *currentEditDietId;
 @end
