@@ -52,7 +52,7 @@
     [super viewDidLoad];
     if (self.listType == dietListTypeNew)
     {
-        self.title = @"我来做营养师";
+        self.title = @"营养搭配指南";
     }
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
@@ -69,7 +69,7 @@
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"  取消" forState:UIControlStateNormal];
+    [button setTitle:@"  返回" forState:UIControlStateNormal];
 
     button.frame = CGRectMake(0, 0, 48, 30);
     [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
@@ -495,7 +495,7 @@
     if (section == 0)
         sectionTitleLabel.text =  @"一天的食物";
     else
-        sectionTitleLabel.text =  @"提供营养情况";
+        sectionTitleLabel.text =  @"一天的营养比例";
     
     return sectionView;
 }

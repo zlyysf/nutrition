@@ -26,7 +26,7 @@
         self.delegate = filterDelegate;
         self.filterArray = [[NSMutableArray alloc]initWithArray:filterInfo];
         float calculatedHeight = 0;
-        CGSize tipsLabelSize = [title sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        CGSize tipsLabelSize = [title sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(270, 9999) lineBreakMode:UILineBreakModeWordWrap];
         float count = [self.filterArray count];
         int floor =(int)(ceilf(count/2.f));
         calculatedHeight = 10+tipsLabelSize.height+10+kSelectButtonSide+20+floor*(kSelectButtonSide+20)+30+10;
@@ -38,7 +38,7 @@
         [self addSubview:backView];
         backView.center = CGPointMake(self.center.x, self.center.y-20);
         float pointY = 10;
-        float pointX = 10;
+        float pointX = 20;
         
         UILabel *tipLabel = [[UILabel alloc]initWithFrame:CGRectMake(pointX, pointY, tipsLabelSize.width, tipsLabelSize.height)];
         [tipLabel setFont:[UIFont systemFontOfSize:15]];
@@ -120,12 +120,16 @@
         UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
         self.cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(50, pointY, 75, 30)];
         [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+        [self.cancelButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+        [self.cancelButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         [self.cancelButton addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.cancelButton setBackgroundImage:button30 forState:UIControlStateNormal];
         [backView addSubview:self.cancelButton];
         
         self.submitButton = [[UIButton alloc]initWithFrame:CGRectMake(175, pointY, 75, 30)];
         [self.submitButton setTitle:@"确认" forState:UIControlStateNormal];
+        [self.submitButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+        [self.submitButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         [self.submitButton addTarget:self action:@selector(submitButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.submitButton setBackgroundImage:button30 forState:UIControlStateNormal];
         [backView addSubview:self.submitButton];
