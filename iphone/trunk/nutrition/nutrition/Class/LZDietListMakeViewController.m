@@ -207,7 +207,7 @@
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             userInfo,@"userInfo",
                             takenFoodAmountDict,@"givenFoodsAmount1",
-                            nil,@"givenFoodsAmount2",
+                            self.recommendFoodDictForDisplay,@"givenFoodsAmount2",
                             nil];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
@@ -269,6 +269,83 @@
    //[self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
 
 }
+-(void)refreshFoodNureitentProcessForTaken:(NSDictionary *)takenDict recommended:(NSDictionary*)recommendedDict
+{
+//    NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+    NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+    NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+    NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+    NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+    if (!(userSex && userAge && userHeight && userWeight && userActivityLevel))
+    {
+        return;
+    }
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              userSex,ParamKey_sex, userAge,ParamKey_age,
+                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                              userActivityLevel,ParamKey_activityLevel, nil];
+    
+    
+    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
+                            userInfo,@"userInfo",
+                            takenDict,@"givenFoodsAmount1",
+                            recommendedDict,@"givenFoodsAmount2",
+                            nil];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retFmtDict = [rf calculateGiveFoodsSupplyNutrientAndFormatForUI:params];
+    NSLog(@" allkeys  %@",[retFmtDict allKeys]);
+    NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI %@",retFmtDict);
+    
+    NSArray *takenArray1 = [retFmtDict objectForKey:Key_orderedGivenFoodIds1];
+    NSArray *takenArray2 = [retFmtDict objectForKey:Key_orderedGivenFoodIds2];
+    [takenFoodIdsArray removeAllObjects];
+    if (takenArray1 != nil && [takenArray1 count]!=0) {
+        
+        [takenFoodIdsArray addObjectsFromArray:takenArray1];
+    }
+    if (takenArray2 != nil && [takenArray2 count]!=0) {
+        
+        [takenFoodIdsArray addObjectsFromArray:takenArray2];
+    }
+    NSDictionary *foodUnitDict = [retFmtDict objectForKey:Key_givenFoodAttrDict2Level];
+    [allFoodUnitDict removeAllObjects];
+    if (foodUnitDict != nil )
+    {
+        
+        [allFoodUnitDict addEntriesFromDictionary:foodUnitDict];
+    }
+    
+    
+    NSDictionary *takeDict = [retFmtDict objectForKey:Key_givenFoodInfoDict2Level];
+    [takenFoodDict removeAllObjects];
+    if (takeDict != nil )
+    {
+        
+        [takenFoodDict addEntriesFromDictionary:takeDict];
+    }
+    
+    NSDictionary *takenFoodNutrientDict = [retFmtDict objectForKey:Key_takenFoodNutrientInfoAryDictDict];
+    [takenFoodNutrientInfoDict removeAllObjects];
+    if (takenFoodNutrientDict != nil )
+    {
+        
+        [takenFoodNutrientInfoDict addEntriesFromDictionary:takenFoodNutrientDict];
+    }
+    
+    NSArray *nutrientArray = [retFmtDict objectForKey:Key_nutrientSupplyRateInfoArray];
+    [nutrientInfoArray removeAllObjects];
+    if (nutrientArray != nil && [nutrientArray count]!=0) {
+        
+        [nutrientInfoArray addObjectsFromArray:nutrientArray];
+    }
+    
+    [self.listView reloadData];
+    
+}
 - (void)foodCellSwiped:(UISwipeGestureRecognizer*)sender
 {
     if (sender.state == UIGestureRecognizerStateEnded)
@@ -286,6 +363,7 @@
             NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:takenFoodAmountDict];
             NSString *ndb_No = [cellInfoDict objectForKey:@"NDB_No"];
             [tempDict removeObjectForKey:ndb_No];
+            [self.recommendFoodDictForDisplay removeObjectForKey:ndb_No];
             [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:LZUserDailyIntakeKey];
             [[NSUserDefaults standardUserDefaults]synchronize];
             //[self displayTakenFoodResult];
@@ -536,7 +614,17 @@
     }
     else
     {
-        NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+        NSMutableDictionary *takenFoodAmountDict = [[NSMutableDictionary alloc]init];
+        for (NSString *foodId in self.takenFoodIdsArray)
+        {
+            NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+            NSNumber *weight = [aFood objectForKey:@"Amount"];
+            [takenFoodAmountDict setObject:weight forKey:foodId];
+        }
+        [recommendFoodDictForDisplay removeAllObjects];
+        [[NSUserDefaults standardUserDefaults] setObject:takenFoodAmountDict forKey:LZUserDailyIntakeKey];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        needRefresh = YES;
         
 //        NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
 //        NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
@@ -655,8 +743,17 @@
 }
 - (void)recommendOnePlan:(NSArray *)preferNutrient
 {
+    NSMutableDictionary *takenFoodAmountDict = [[NSMutableDictionary alloc]init];
+    for (NSString *foodId in self.takenFoodIdsArray)
+    {
+        NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+        NSNumber *weight = [aFood objectForKey:@"Amount"];
+        [takenFoodAmountDict setObject:weight forKey:foodId];
+    }
+    
+
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSDictionary *takenFoodAmountDict = [userDefaults objectForKey:LZUserDailyIntakeKey];
+    
     
     NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
     NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
@@ -695,18 +792,14 @@
     }
     [recommendFoodDictForDisplay removeAllObjects];
     [recommendFoodDictForDisplay addEntriesFromDictionary:recommendFoodAmountDict];
+    [userDefaults setObject:takenFoodAmountDict forKey:LZUserDailyIntakeKey];
+    [userDefaults synchronize];
     //    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
     //                            userInfo,@"userInfo",
     //                            takenFoodAmountDict,@"givenFoodsAmount1",
     //                            recommendFoodAmountDict,@"givenFoodsAmount2",
     //                            nil];
-    NSMutableDictionary *newIntakeDict = [[NSMutableDictionary alloc]init];
-    [newIntakeDict addEntriesFromDictionary:takenFoodAmountDict];
-    [newIntakeDict addEntriesFromDictionary:recommendFoodAmountDict];
     //NSDictionary * formatResult = [rf calculateGiveFoodsSupplyNutrientAndFormatForUI:params];
-    [userDefaults setObject:newIntakeDict forKey:LZUserDailyIntakeKey];
-    [userDefaults setObject:preferNutrient forKey:KeyUserRecommendPreferNutrientArray];
-    [userDefaults synchronize];
     [HUD hide:YES];
     self.listView.hidden = NO;
     [self refreshFoodNureitentProcessForAll:YES];
@@ -794,6 +887,18 @@
 #pragma mark- Add Food Function
 - (void)addFood
 {
+    
+    NSMutableDictionary *takenFoodAmountDict = [[NSMutableDictionary alloc]init];
+    for (NSString *foodId in self.takenFoodIdsArray)
+    {
+        NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+        NSNumber *weight = [aFood objectForKey:@"Amount"];
+        [takenFoodAmountDict setObject:weight forKey:foodId];
+    }
+    [recommendFoodDictForDisplay removeAllObjects];
+    [[NSUserDefaults standardUserDefaults] setObject:takenFoodAmountDict forKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    needRefresh = YES;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
     LZAddFoodViewController *addFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddFoodViewController"];
@@ -817,7 +922,17 @@
 - (void)addFoodForTag:(NSNumber *)tagNum
 {
     int tag = [tagNum intValue];
-    NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+    NSMutableDictionary *takenFoodAmountDict = [[NSMutableDictionary alloc]init];
+    for (NSString *foodId in self.takenFoodIdsArray)
+    {
+        NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+        NSNumber *weight = [aFood objectForKey:@"Amount"];
+        [takenFoodAmountDict setObject:weight forKey:foodId];
+    }
+    [recommendFoodDictForDisplay removeAllObjects];
+    [[NSUserDefaults standardUserDefaults] setObject:takenFoodAmountDict forKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    needRefresh = YES;
     
 //    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
 //    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
