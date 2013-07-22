@@ -1777,12 +1777,14 @@
 //    BOOL needLimitNutrients = FALSE;
     BOOL needUseLowLimitAsUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
-    int randSeed = 0; //0; //0;
+    BOOL needFirstSpecialForShucaiShuiguo = TRUE;
+    int randSeed = 0; //0;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
 //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
                              [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
                              [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
+                             [NSNumber numberWithBool:needFirstSpecialForShucaiShuiguo],LZSettingKey_needFirstSpecialForShucaiShuiguo,
                              [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                              nil];
 

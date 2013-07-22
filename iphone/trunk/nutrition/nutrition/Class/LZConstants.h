@@ -19,6 +19,7 @@
 #define Config_defaultFoodIncreaseUnit 1
 #define Config_needUseNormalLimitWhenSmallIncrementLogic TRUE
 #define Config_needUseFirstRecommendWhenSmallIncrementLogic FALSE
+#define Config_needFirstSpecialForShucaiShuiguo TRUE
 
 #define FoodClassify_gulei @"gulei"
 #define FoodClassify_gandoulei @"gandoulei"
@@ -35,6 +36,7 @@
 #define FoodClassify_rou_qin @"rou-qin"
 #define FoodClassify_danlei @"danlei"
 
+#define NutrientId_VC @"Vit_C_(mg)"
 #define NutrientId_VD @"Vit_D_(µg)"
 #define NutrientId_Magnesium @"Magnesium_(mg)"
 #define NutrientId_Fiber @"Fiber_TD_(g)"
@@ -62,6 +64,7 @@
 #define LZSettingKey_needUseLowLimitAsUnit @"needUseLowLimitAsUnit"
 #define LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic @"needUseNormalLimitWhenSmallIncrementLogic"
 #define LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic @"needUseFirstRecommendWhenSmallIncrementLogic"
+#define LZSettingKey_needFirstSpecialForShucaiShuiguo @"needFirstSpecialForShucaiShuiguo"
 #define LZSettingKey_randSeed @"randSeed"
 #define LZSettingKey_randSeedOut @"randSeedOut"
 

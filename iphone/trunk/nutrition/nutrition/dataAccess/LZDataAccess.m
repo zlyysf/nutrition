@@ -895,6 +895,7 @@
 }
 
 /*
+ 注意columnName可能为 T1.columnName 的形式，而且如果columnName含有特殊字符，需在传入前自行处理，如 T1.[columnName]。
  result contain :(NSString*) strCondition, (NSArray*)sqlParams(only 1 item at max)
  */
 +(NSDictionary*)getUnitCondition_withColumn:(NSString*)columnName andOp:(NSString*)operator andValue:(NSObject*)valObj andNotFlag:(BOOL)notFlag andOptions:(NSDictionary*)options
@@ -910,8 +911,8 @@
     NSMutableString *strCondition = [NSMutableString stringWithCapacity:100];
     NSMutableArray *sqlParams = [NSMutableArray array];
     if (notFlag) [strCondition appendString:@"NOT "];
-    [strCondition appendString:columnName];
-    [strCondition appendFormat:@" %@ ",operator];
+    //[strCondition appendFormat:@"[%@] %@ ",columnName,operator];
+    [strCondition appendFormat:@" %@ %@ ",columnName,operator];
     if (varBeParamWay){
         [strCondition appendString:@"?"];
         [sqlParams addObject:valObj];
@@ -943,8 +944,6 @@
             }else{
                 [strCondition appendFormat:@"'%@'",strVal];
             }
-            
-            
         }
     }
 
@@ -956,6 +955,7 @@
     return retDict;
 }
 /*
+ 注意columnName可能为 T1.columnName 的形式，而且如果columnName含有特殊字符，需在传入前自行处理，如 T1.[columnName]。
  result contain :(NSString*) strCondition, (NSArray*)sqlParams
  */
 +(NSDictionary*)getUnitCondition_withColumn:(NSString*)columnName andOp:(NSString*)operator andValues:(NSArray*)values andNotFlag:(BOOL)notFlag andOptions:(NSDictionary*)options
@@ -972,8 +972,8 @@
     NSMutableString *strCondition = [NSMutableString stringWithCapacity:100];
     NSMutableArray *sqlParams = [NSMutableArray arrayWithCapacity:values.count];
     if (notFlag) [strCondition appendString:@"NOT "];
-    [strCondition appendString:columnName];
-    [strCondition appendFormat:@" %@ ",operator];
+//    [strCondition appendFormat:@"[%@] %@ ",columnName,operator];
+    [strCondition appendFormat:@" %@ %@ ",columnName,operator];
     if(varBeParamWay){
         NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:values.count];
         for(int i=0; i<values.count; i++){
