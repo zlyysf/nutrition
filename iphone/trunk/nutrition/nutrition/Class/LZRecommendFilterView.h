@@ -19,6 +19,7 @@
             tipsStr:(NSString *)title
            delegate:(id<LZRecommendFilterViewDelegate>)filterDelegate;
 @property (nonatomic,strong)UIView *backView;
+@property (nonatomic,strong)UIScrollView *listView;
 @property (nonatomic,strong)UIButton *cancelButton;
 @property (nonatomic,strong)UIButton *submitButton;
 @property (nonatomic,strong)UIButton *selectallButton;

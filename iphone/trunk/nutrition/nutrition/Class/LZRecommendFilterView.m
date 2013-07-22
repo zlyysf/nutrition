@@ -13,7 +13,7 @@
 #define kTagAddNum 20
 #define kNameButtonAddNum 100
 @implementation LZRecommendFilterView
-@synthesize backView,delegate,cancelButton,submitButton,filterArray;
+@synthesize backView,delegate,cancelButton,submitButton,filterArray,listView;
 - (id)initWithFrame:(CGRect)frame
           backColor:(UIColor*)backColor
          filterInfo:(NSArray*)filterInfo
@@ -30,7 +30,16 @@
         CGSize tipsLabelSize = [title sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(270, 9999) lineBreakMode:UILineBreakModeWordWrap];
         float count = [self.filterArray count];
         int floor =(int)(ceilf(count/2.f));
-        calculatedHeight = 10+tipsLabelSize.height+10+kSelectButtonSide+20+floor*(kSelectButtonSide+20)+30+10;
+        int totalFloor;
+        if (floor >5)
+        {
+            totalFloor =5;
+        }
+        else
+        {
+            totalFloor = floor;
+        }
+        calculatedHeight = 10+tipsLabelSize.height+10+kSelectButtonSide+20+totalFloor*(kSelectButtonSide+20)+30+10;
         backView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, calculatedHeight)];
         [backView setBackgroundColor:[UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.9]];
         backView.layer.masksToBounds = YES;
@@ -74,6 +83,13 @@
         [allselectButton addTarget:self action:@selector(selectButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [backView addSubview:allselectButton];
         
+        pointY+= kSelectButtonSide+20;
+        
+        self.listView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, pointY, 300, totalFloor*(kSelectButtonSide+20)-20)];
+        [self.listView setContentSize:CGSizeMake(300, floor*(kSelectButtonSide+20)-20)];
+        [backView addSubview:listView];
+        
+        float newPointY = -(kSelectButtonSide+20);
         LZDataAccess *da = [LZDataAccess singleton];
         for (int i=0; i<[self.filterArray count]; i++)
         {
@@ -87,7 +103,8 @@
             float labelX;
             if (i%2 == 0)
             {
-                pointY+= kSelectButtonSide+20;//换行
+                //换行
+                newPointY+= kSelectButtonSide+20;
                 buttonX = pointX;
                 labelX = pointX+20+kSelectButtonSide;
                 
@@ -97,7 +114,7 @@
                 buttonX = pointX+150;
                 labelX = pointX+170+kSelectButtonSide;
             }
-            UIButton *nutrientButton = [[UIButton alloc]initWithFrame:CGRectMake(buttonX, pointY, kSelectButtonSide, kSelectButtonSide)];
+            UIButton *nutrientButton = [[UIButton alloc]initWithFrame:CGRectMake(buttonX, newPointY, kSelectButtonSide, kSelectButtonSide)];
             nutrientButton.tag = i+kTagAddNum;
             [nutrientButton addTarget:self action:@selector(nutrientButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
             
@@ -110,9 +127,9 @@
                 [nutrientButton setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
             }
             
-            [backView addSubview:nutrientButton];
+            [listView addSubview:nutrientButton];
             
-            UIButton *nutrientNameButton = [[UIButton alloc]initWithFrame:CGRectMake(labelX, pointY, 80, kSelectButtonSide)];
+            UIButton *nutrientNameButton = [[UIButton alloc]initWithFrame:CGRectMake(labelX, newPointY, 80, kSelectButtonSide)];
             [nutrientNameButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
             [nutrientNameButton setTitle:name forState:UIControlStateNormal];
             [nutrientNameButton setTitle:name forState:UIControlStateHighlighted];
@@ -121,10 +138,10 @@
             nutrientNameButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
             nutrientNameButton.tag = i+kNameButtonAddNum;
             [nutrientNameButton addTarget:self action:@selector(nutrientNameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            [backView addSubview:nutrientNameButton];
+            [listView addSubview:nutrientNameButton];
         }
         
-        pointY += kSelectButtonSide+20;
+        pointY += self.listView.frame.size.height+20;
         UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
         self.cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(50, pointY, 75, 30)];
         [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
@@ -168,7 +185,7 @@
         {
             NSDictionary *newState = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:NO],key ,nil];
             [self.filterArray replaceObjectAtIndex:i withObject:newState];
-            UIButton *button = (UIButton *) [self.backView viewWithTag:i+kTagAddNum];
+            UIButton *button = (UIButton *) [self.listView viewWithTag:i+kTagAddNum];
             [button setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
         }
     }
@@ -187,7 +204,7 @@
         {
             NSDictionary *newState = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:YES],key ,nil];
             [self.filterArray replaceObjectAtIndex:i withObject:newState];
-            UIButton *button = (UIButton *) [self.backView viewWithTag:i+kTagAddNum];
+            UIButton *button = (UIButton *) [self.listView viewWithTag:i+kTagAddNum];
             [button setImage:[UIImage imageNamed:@"nutrient_button_on.png"] forState:UIControlStateNormal];
         }
     }
@@ -236,14 +253,14 @@
     {
         NSDictionary *newState = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:NO],key ,nil];
         [self.filterArray replaceObjectAtIndex:tag withObject:newState];
-        UIButton *button = (UIButton *) [self.backView viewWithTag:tag+kTagAddNum];
+        UIButton *button = (UIButton *) [self.listView viewWithTag:tag+kTagAddNum];
         [button setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
     }
     else
     {
         NSDictionary *newState = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithBool:YES],key ,nil];
         [self.filterArray replaceObjectAtIndex:tag withObject:newState];
-        UIButton *button = (UIButton *) [self.backView viewWithTag:tag+kTagAddNum];
+        UIButton *button = (UIButton *) [self.listView viewWithTag:tag+kTagAddNum];
         [button setImage:[UIImage imageNamed:@"nutrient_button_on.png"] forState:UIControlStateNormal];
     }
     if (![self isAllSelected:self.filterArray])
