@@ -13,12 +13,16 @@
 #import "MobClick.h"
 #import "LZFoodInfoViewController.h"
 #import "LZRecommendFood.h"
-@interface LZAddByNutrientController ()
-
+#import "MBProgressHUD.h"
+@interface LZAddByNutrientController ()<MBProgressHUDDelegate>
+{
+    MBProgressHUD *HUD;
+    BOOL isFirstLoad;
+}
 @end
 
 @implementation LZAddByNutrientController
-@synthesize foodArray,currentFoodInputTextField,nutrientTitle,tempIntakeDict,pushToNextView;
+@synthesize foodArray,currentFoodInputTextField,nutrientTitle,tempIntakeDict,pushToNextView,nutrientDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -53,17 +57,74 @@
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
     self.listView.tableFooterView = footerView;
-
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    HUD.hidden = YES;
+    HUD.delegate = self;
+    isFirstLoad = YES;
+    self.foodArray = [[NSArray alloc]init];
+    self.listView.hidden = YES;
 }
 - (void)viewWillAppear:(BOOL)animated
 {
     self.pushToNextView = NO;
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [MobClick beginLogPageView:@"按营养素添加食物页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (isFirstLoad) {
+        HUD.hidden = NO;
+        [HUD show:YES];
+        //self.listView.hidden = YES;
+        
+        //HUD.labelText = @"智能推荐中...";
+        
+        [self performSelector:@selector(loadDataForDisplay) withObject:nil afterDelay:0.f];
+    }
+}
+-(void)loadDataForDisplay
+{
+    NSNumber *planPerson = [NSNumber numberWithInt:1];
+    NSNumber *planDays = [NSNumber numberWithInt:1];
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+    NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+    NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+    NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+    NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              userSex,ParamKey_sex, userAge,ParamKey_age,
+                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                              userActivityLevel,ParamKey_activityLevel, nil];
+    
+    BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
+    NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss, nil];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+    //    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_withUserInfo:userInfo andDecidedFoods:takenFoodAmountDict andOptions:options];
+    
+    //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
+    NSString *nutrientId = [self.nutrientDict objectForKey:@"NutrientID"];
+    NSDictionary *DRIsDict = [retDict objectForKey:@"DRI"];//nutrient name as key, also column name
+    NSDictionary *nutrientInitialSupplyDict = [retDict objectForKey:@"nutrientInitialSupplyDict"];
+    NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientId];
+    double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientId]) doubleValue]*[planPerson intValue]*[planDays intValue];
+    double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
+    self.foodArray = [NSArray arrayWithArray:recommendFoodArray];
+    [self.listView reloadData];
+    [HUD hide:YES];
+    self.listView.hidden = NO;
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -331,5 +392,11 @@
     NSString *NDB_No = [afood objectForKey:@"NDB_No"];
     [self.tempIntakeDict setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
     //NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
+}
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+    HUD.hidden = YES;
 }
 @end

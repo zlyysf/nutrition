@@ -16,4 +16,5 @@
 @property (strong, nonatomic)NSString *nutrientTitle;
 @property (strong, nonatomic)NSMutableDictionary *tempIntakeDict;
 @property (readwrite,nonatomic)BOOL pushToNextView;
+@property (strong,nonatomic)NSDictionary *nutrientDict;
 @end
