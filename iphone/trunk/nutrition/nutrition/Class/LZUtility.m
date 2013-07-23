@@ -166,7 +166,7 @@
             }else if ([cell isKindOfClass:[NSNumber class]]){
                 NSNumber *nm = (NSNumber *)cell;
                 //s1 = [nm stringValue];
-                s1 = [NSString stringWithFormat:@"%.2f",[nm doubleValue] ] ;
+                s1 = [NSString stringWithFormat:@"%.4f",[nm doubleValue] ] ;
             }else{
                 s1 = [cell description];
             }

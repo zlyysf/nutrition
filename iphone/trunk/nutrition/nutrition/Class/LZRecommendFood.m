@@ -4402,124 +4402,169 @@
     bool haveReducedFood;
     while(true){
         haveReducedFood = FALSE;
-
+        
+        NSMutableArray *exceedDRIrateInfoAry = [NSMutableArray arrayWithCapacity:originalNutrientNameAryToCal.count];
         NSMutableArray *exceedULrateInfoAry = [NSMutableArray arrayWithCapacity:originalNutrientNameAryToCal.count];
         //找出超过UL的营养素集合。注意只在要计算的那些营养素找，这里作这样一个限制，是对应着只管要计算的那些营养素的思想。
         for(int i=0; i<originalNutrientNameAryToCal.count; i++){
             NSString *nutrient = originalNutrientNameAryToCal[i];
             NSNumber *nmSupply = [nutrientSupplyDict objectForKey:nutrient];
+            NSNumber *nmDRI = [DRIsDict objectForKey:nutrient];
             NSNumber *nmUL = [DRIULsDict objectForKey:nutrient];
             assert(nmSupply!=nil);
+            assert(nmDRI!=nil);
             assert(nmUL!=nil);
             if ([nmUL doubleValue]>0 && [nmSupply doubleValue]>[nmUL doubleValue]){
                 double rateSupplyVsUL = [nmSupply doubleValue] / [nmUL doubleValue];
                 NSDictionary *rateInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithDouble:rateSupplyVsUL],@"rate", nutrient,@"nutrient", nil];
                 [exceedULrateInfoAry addObject:rateInfo];
+            }else if ([nmSupply doubleValue]>[nmDRI doubleValue]){
+                double rateSupplyVsDRI = [nmSupply doubleValue] / [nmDRI doubleValue];
+                NSDictionary *rateInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithDouble:rateSupplyVsDRI],@"rate", nutrient,@"nutrient", nil];
+                [exceedDRIrateInfoAry addObject:rateInfo];
             }
         }//for
+        
+        NSComparisonResult (^compareBlockVar)(id obj1,id obj2) ;
+        compareBlockVar = ^(id obj1,id obj2){
+            NSDictionary *rateInfo1 = obj1;
+            NSDictionary *rateInfo2 = obj2;
+            NSNumber *nmRate1 = rateInfo1[@"rate"];
+            NSNumber *nmRate2 = rateInfo2[@"rate"];
+            //顺序是ascending
+            if ([nmRate1 doubleValue] > [nmRate2 doubleValue]){
+                return (NSComparisonResult)NSOrderedDescending;
+            }else if ([nmRate1 doubleValue] < [nmRate2 doubleValue]){
+                return (NSComparisonResult)NSOrderedAscending ;
+            }else{
+                return (NSComparisonResult)NSOrderedSame;
+            }
+        };
+        
         if (exceedULrateInfoAry.count > 0){
             //有超过UL的营养素，升序排序降序处理
-            [exceedULrateInfoAry sortUsingComparator:^(id obj1,id obj2){
-                NSDictionary *rateInfo1 = obj1;
-                NSDictionary *rateInfo2 = obj2;
-                NSNumber *nmRate1 = rateInfo1[@"rate"];
-                NSNumber *nmRate2 = rateInfo2[@"rate"];
-                //顺序是ascending
-                if ([nmRate1 doubleValue] > [nmRate2 doubleValue]){
-                    return (NSComparisonResult)NSOrderedDescending;
-                }else if ([nmRate1 doubleValue] < [nmRate2 doubleValue]){
-                    return (NSComparisonResult)NSOrderedAscending ;
-                }else{
-                    return (NSComparisonResult)NSOrderedSame;
-                }
-            }];
+            [exceedULrateInfoAry sortUsingComparator:compareBlockVar];
+        }
+        if (exceedDRIrateInfoAry.count > 0){
+            //有超过UL的营养素，升序排序降序处理
+            [exceedDRIrateInfoAry sortUsingComparator:compareBlockVar];
+        }
+        
+        while (exceedULrateInfoAry.count > 0 || exceedDRIrateInfoAry.count > 0){
             //对每个超过UL的营养素,尝试着减食物的量,从超得最多的来处理
-            for(int i=exceedULrateInfoAry.count-1; i>=0; i--){
-                NSDictionary *rateInfo = exceedULrateInfoAry[i];
-                NSNumber *nmRate = rateInfo[@"rate"];
-                NSString *nutrient = rateInfo[@"nutrient"];
-                
-                NSArray *richFoodInfoAry = preChooseRichFoodInfoAryDict[nutrient];
-                assert(richFoodInfoAry.count>0);
-                NSMutableArray *idxAry = [NSMutableArray arrayWithCapacity:richFoodInfoAry.count];
-                for(int i=0; i<richFoodInfoAry.count; i++){
-                    [idxAry addObject:[NSNumber numberWithInt:i]];
-                }//for
-//                NSDictionary *foodToReduce = nil;
-                //对当前的超过UL的营养素的每个富含食物，进行尝试减量。 这里是随机找出某种富含食物来减。至于如何找到最合适的食物来减，目前没想到合适的规则。
-                while (idxAry.count>0) {
-                    int chooseIdx = -1;
-                    if (idxAry.count==1){
-                        NSNumber *nmIdx = idxAry[0];
-                        chooseIdx = [nmIdx intValue];
-                        [idxAry removeObjectAtIndex:0];
-                    }else{
-                        int idx1 = random() % idxAry.count;
-                        NSNumber *nmIdx2 = idxAry[idx1];
-                        chooseIdx = [nmIdx2 intValue];
-                        [idxAry removeObjectAtIndex:idx1];
-                    }
-                    NSDictionary *foodInfo = richFoodInfoAry[chooseIdx];
-                    NSString *foodId = foodInfo[COLUMN_NAME_NDB_No];
-                    NSNumber *nmFoodAmount = recommendFoodAmountDict[foodId];
-                    if ([nmFoodAmount doubleValue] > Config_nearZero){//这种食物的使用量大于0，才有可能减它
-                        double maxDeltaFoodAmount = 0;
-                        //对于当前的食物，对每个营养素算最多能减的数量，这为各个值中的最小值
-                        for(int j=0; j<originalNutrientNameAryToCal.count; j++){
-                            NSString *nutrientL1 = originalNutrientNameAryToCal[j];
-                            NSNumber *nmSupply = [nutrientSupplyDict objectForKey:nutrientL1];
-                            NSNumber *nmDRI = [DRIsDict objectForKey:nutrientL1];
-                            
-                            NSNumber *nmFoodStandardSupplyNutrient = foodInfo[nutrientL1];
-                            if ([nmFoodStandardSupplyNutrient doubleValue]>0){//当前food含有当前这种营养素
-                                if ([nmSupply doubleValue]-[nmDRI doubleValue]<=Config_nearZero){
-                                    //此时这种营养素已经为DRI值，不能再往下减这种食物了
-                                    maxDeltaFoodAmount = 0;
-                                    break;
-                                }else{
-                                    double deltaFoodAmount = ([nmSupply doubleValue]-[nmDRI doubleValue])*100.0/[nmFoodStandardSupplyNutrient doubleValue];
-                                    if (maxDeltaFoodAmount == 0)
-                                        maxDeltaFoodAmount = deltaFoodAmount;
-                                    else if (maxDeltaFoodAmount > deltaFoodAmount)
-                                        maxDeltaFoodAmount = deltaFoodAmount;
-                                }
-                            }
-                        }//for j
-                        if (maxDeltaFoodAmount > [nmFoodAmount doubleValue]){//这种食物能够减少的上限是它的使用量
-                            maxDeltaFoodAmount = [nmFoodAmount doubleValue];
-                        }
-                        if (maxDeltaFoodAmount > 0){//可以减少这种食物
-                            double reduceFoodAmount = -1 * maxDeltaFoodAmount;//这里暂且一减到底
-                            [self oneFoodSupplyNutrients:foodInfo andAmount:reduceFoodAmount andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
-                            [LZUtility addDoubleToDictionaryItem:reduceFoodAmount withDictionary:recommendFoodAmountDict andKey:foodId];//推荐量累加
-                            [LZUtility addDoubleToDictionaryItem:reduceFoodAmount withDictionary:foodSupplyAmountDict andKey:foodId];//供给量累加
-                            
-                            NSMutableArray *foodSupplyNutrientSeq = [NSMutableArray arrayWithCapacity:5];
-                            [foodSupplyNutrientSeq addObject:nutrient];
-                            [foodSupplyNutrientSeq addObject:nmRate];
-                            [foodSupplyNutrientSeq addObject:[foodInfo objectForKey:@"CnCaption"]];
-                            [foodSupplyNutrientSeq addObject:foodId];
-                            [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:reduceFoodAmount]];
-                            [foodSupplyNutrientSeq addObject:[foodInfo objectForKey:@"Shrt_Desc"]];
-                            [foodSupplyNutrientSeq addObject:@"reduce food"];
-                            [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
-                            logMsg = [NSMutableString stringWithFormat:@"reduce food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-                            NSLog(@"%@",logMsg);
-                            calculationLog = [NSMutableArray array];
-                            [calculationLog addObject:@"reduce food"];
-                            [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
-                            [calculationLogs addObject:calculationLog];
-                            
-                            haveReducedFood = true;
-                            break;
-                        }//if (minReduceFoodAmount > 0)
-                    }//if ([nmFoodAmount doubleValue] > Config_nearZero)           
-                }//while (idxAry.count>0)
-                if (haveReducedFood){
-                    break;
+            NSString *nutrientExceedType = nil;
+            NSString *exceedNutrient = nil;
+            NSNumber *nmRate = nil;
+            if (exceedULrateInfoAry.count > 0){
+                NSDictionary *exceedNutrientInfo = exceedULrateInfoAry[exceedULrateInfoAry.count-1];
+                [exceedULrateInfoAry removeLastObject];
+                nutrientExceedType = @"exceedUL";
+                exceedNutrient = exceedNutrientInfo[@"nutrient"];
+                nmRate = exceedNutrientInfo[@"rate"];
+            }else if (exceedDRIrateInfoAry.count > 0){
+                NSDictionary *exceedNutrientInfo = exceedDRIrateInfoAry[exceedDRIrateInfoAry.count-1];
+                [exceedDRIrateInfoAry removeLastObject];
+                nutrientExceedType = @"exceedDRI";
+                exceedNutrient = exceedNutrientInfo[@"nutrient"];
+                nmRate = exceedNutrientInfo[@"rate"];
+            }
+            assert(exceedNutrient!=nil);
+            NSString *nutrient = exceedNutrient;
+
+            NSArray *richFoodInfoAry = preChooseRichFoodInfoAryDict[nutrient];
+            assert(richFoodInfoAry.count>0);
+            NSMutableArray *idxAry = [NSMutableArray arrayWithCapacity:richFoodInfoAry.count];
+            for(int i=0; i<richFoodInfoAry.count; i++){
+                [idxAry addObject:[NSNumber numberWithInt:i]];
+            }//for
+            //对当前的超过UL或DRI的营养素的每个富含食物，进行尝试减量。 这里是随机找出某种富含食物来减。至于如何找到最合适的食物来减，目前没想到合适的规则。
+            while (idxAry.count>0) {
+                int chooseIdx = -1;
+                if (idxAry.count==1){
+                    NSNumber *nmIdx = idxAry[0];
+                    chooseIdx = [nmIdx intValue];
+                    [idxAry removeObjectAtIndex:0];
+                }else{
+                    int idx1 = random() % idxAry.count;
+                    NSNumber *nmIdx2 = idxAry[idx1];
+                    chooseIdx = [nmIdx2 intValue];
+                    [idxAry removeObjectAtIndex:idx1];
                 }
-            }//for(int i=exceedULrateInfoAry.count-1;
-        }//if (exceedULrateInfoAry.count > 0)
+                NSDictionary *foodInfo = richFoodInfoAry[chooseIdx];
+                NSString *foodId = foodInfo[COLUMN_NAME_NDB_No];
+                NSNumber *nmFoodAmount = recommendFoodAmountDict[foodId];
+                if ([nmFoodAmount doubleValue] > Config_nearZero){//这种食物的使用量大于0，才有可能减它
+                    double maxDeltaFoodAmount = 0;
+                    //对于当前的食物，对每个营养素算最多能减的数量，这为各个值中的最小值
+                    for(int j=0; j<originalNutrientNameAryToCal.count; j++){
+                        NSString *nutrientL1 = originalNutrientNameAryToCal[j];
+                        NSNumber *nmSupply = [nutrientSupplyDict objectForKey:nutrientL1];
+                        NSNumber *nmDRI = [DRIsDict objectForKey:nutrientL1];
+                        
+                        NSNumber *nmFoodStandardSupplyNutrient = foodInfo[nutrientL1];
+                        if ([nmFoodStandardSupplyNutrient doubleValue]>0){//当前food含有当前这种营养素
+                            if ([nmSupply doubleValue]-[nmDRI doubleValue]<=Config_nearZero){
+                                //此时这种营养素已经为DRI值，不能再往下减这种食物了
+                                maxDeltaFoodAmount = 0;
+                                break;
+                            }else{
+                                double deltaFoodAmount = ([nmSupply doubleValue]-[nmDRI doubleValue])*100.0/[nmFoodStandardSupplyNutrient doubleValue];
+                                if (maxDeltaFoodAmount == 0)
+                                    maxDeltaFoodAmount = deltaFoodAmount;
+                                else if (maxDeltaFoodAmount > deltaFoodAmount)
+                                    maxDeltaFoodAmount = deltaFoodAmount;
+                            }
+                        }
+                    }//for j
+                    if (maxDeltaFoodAmount >= [nmFoodAmount doubleValue]){//这种食物能够减少的上限是它的使用量
+                        maxDeltaFoodAmount = [nmFoodAmount doubleValue];
+                    }else{//now maxDeltaFoodAmount < [nmFoodAmount doubleValue]
+                        if([nmFoodAmount doubleValue] - maxDeltaFoodAmount < Config_nearZero){// 可以认为 [nmFoodAmount doubleValue] == maxDeltaFoodAmount
+                            maxDeltaFoodAmount = [nmFoodAmount doubleValue];
+                        }else if([nmFoodAmount doubleValue] - maxDeltaFoodAmount < 1){
+                            maxDeltaFoodAmount = [nmFoodAmount doubleValue] - 1;//避免显示时四舍五入为0的情况。
+                            if (maxDeltaFoodAmount < 0){//此时说明 [nmFoodAmount doubleValue] < 1 ,但是这种情况应该不会发生(除去微小的误差情况)。因为最开始它>=1，之后减的话，要么彻底减掉，要么间距至少为1，这样保证减掉之后得到的值仍>=1
+                                maxDeltaFoodAmount = 0;
+                            }
+                        }else{//[nmFoodAmount doubleValue] - maxDeltaFoodAmount >= 1
+                            //do nothing about maxDeltaFoodAmount
+                        }
+                    }
+                    if (maxDeltaFoodAmount < Config_nearZero){
+                        maxDeltaFoodAmount = 0;
+                    }
+                    if (maxDeltaFoodAmount > 0){//可以减少这种食物
+                        double reduceFoodAmount = -1 * maxDeltaFoodAmount;//这里暂且一减到底
+                        [self oneFoodSupplyNutrients:foodInfo andAmount:reduceFoodAmount andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
+                        [LZUtility addDoubleToDictionaryItem:reduceFoodAmount withDictionary:recommendFoodAmountDict andKey:foodId];//推荐量累加
+                        [LZUtility addDoubleToDictionaryItem:reduceFoodAmount withDictionary:foodSupplyAmountDict andKey:foodId];//供给量累加
+                        
+                        NSMutableArray *foodSupplyNutrientSeq = [NSMutableArray arrayWithCapacity:5];
+                        [foodSupplyNutrientSeq addObject:nutrient];
+                        [foodSupplyNutrientSeq addObject:nmRate];
+                        [foodSupplyNutrientSeq addObject:[foodInfo objectForKey:@"CnCaption"]];
+                        [foodSupplyNutrientSeq addObject:foodId];
+                        [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:reduceFoodAmount]];
+                        [foodSupplyNutrientSeq addObject:[foodInfo objectForKey:@"Shrt_Desc"]];
+                        [foodSupplyNutrientSeq addObject:nutrientExceedType];
+                        [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
+                        logMsg = [NSMutableString stringWithFormat:@"reduce food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
+                        NSLog(@"%@",logMsg);
+                        calculationLog = [NSMutableArray array];
+                        [calculationLog addObject:@"reduce food"];
+                        [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
+                        [calculationLogs addObject:calculationLog];
+                        
+                        haveReducedFood = true;
+                        break;
+                    }//if (minReduceFoodAmount > 0)
+                }//if ([nmFoodAmount doubleValue] > Config_nearZero)
+            }//while (idxAry.count>0)
+            if (haveReducedFood){
+                break;
+            }
+
+        }//while (exceedULrateInfoAry.count > 0 || exceedDRIrateInfoAry.count > 0)
         if (!haveReducedFood){
             break;//由于上面的计算是完全遍历，如果一个食物都没减量，说明确实是没有食物可以减量了，计算完成。
         }
@@ -4530,6 +4575,8 @@
         NSNumber *nmRecAmount = recommendFoodAmountDict[key];
         if ([nmRecAmount doubleValue] < Config_nearZero){
             [recommendFoodAmountDict removeObjectForKey:key];
+        }else{
+            assert([nmRecAmount doubleValue] >= 1);
         }
     }
 }
