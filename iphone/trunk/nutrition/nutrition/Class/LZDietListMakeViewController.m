@@ -370,6 +370,7 @@
             [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
             [self.takenFoodIdsArray removeObjectAtIndex:index];
             NSArray *array = [[NSArray alloc]initWithObjects:indexPathToDelete, nil];
+            self.listView.userInteractionEnabled = NO;
             if ([self.takenFoodIdsArray count]== 0)
             {
                 if(sender.direction == UISwipeGestureRecognizerDirectionLeft)
@@ -387,6 +388,7 @@
                     [self.listView deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationRight];
                 [self.listView endUpdates];
             }
+            self.listView.userInteractionEnabled = YES;
             [self refreshFoodNureitentProcessForAll:NO];
         }
     }
