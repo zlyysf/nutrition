@@ -40,12 +40,14 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     
+    NSString *tipsStr = [NSString stringWithFormat:@"下列是富含%@的食物，您可以根据我们提供的推荐量来挑选适合自己的食物,推荐量为0时表示已经补满。", nutrientTitle];
+    CGSize tipSize = [tipsStr sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
     UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 70)];
-    UILabel *tipsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 300, 36)];
-    tipsLabel.numberOfLines = 2;
+    UILabel *tipsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, (70-tipSize.height)/2, 300, tipSize.height)];
+    tipsLabel.numberOfLines = 0;
     [tipsLabel setFont:[UIFont systemFontOfSize:15]];
     [tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
-    tipsLabel.text = [NSString stringWithFormat:@"下列是富含%@的食物，您可以根据我们提供的推荐量来挑选适合自己的食物。", nutrientTitle];
+    tipsLabel.text = tipsStr;
     tempIntakeDict = [[NSMutableDictionary alloc]init];
     [tipsLabel setBackgroundColor:[UIColor clearColor]];
     [headerView addSubview:tipsLabel];

@@ -15,4 +15,5 @@
 @property (strong, nonatomic) IBOutlet UIImageView *arrowImageView;
 @property (strong, nonatomic) IBOutlet LZChangeDietNameButton *changeNameButton;
 @property (strong, nonatomic) NSDictionary *dietInfo;
+-(void)adjustLabelAccordingToDietName:(NSString *)dietName;
 @end

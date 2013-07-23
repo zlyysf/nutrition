@@ -179,7 +179,8 @@
 {
     LZDiteCell * cell =(LZDiteCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDiteCell"];
     NSDictionary *aDiet = [self.dietArray objectAtIndex:indexPath.row];
-    cell.dietNameLabel.text = [aDiet objectForKey:@"CollocationName"];
+    NSString *dietName = [aDiet objectForKey:@"CollocationName"];
+    [cell adjustLabelAccordingToDietName:dietName];
     NSNumber *timeStamp = [aDiet objectForKey:@"CollocationCreateTime"];
     cell.timeStampLabel.text = [LZUtility stampFromInterval:timeStamp];
     cell.dietInfo = aDiet;

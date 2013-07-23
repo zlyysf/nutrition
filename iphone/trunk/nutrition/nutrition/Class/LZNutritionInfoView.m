@@ -20,12 +20,12 @@
         self.backgroundColor = backColor;
         self.delegate = nutrientDelegate;
         // Initialization code
-        backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 330)];
+        backView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, frame.size.height)];
         [backView setBackgroundColor:[UIColor clearColor]];
         [self addSubview:backView];
         backView.center = CGPointMake(self.center.x, self.center.y-20);
         
-       UIView * descriptionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 304)];
+       UIView * descriptionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, frame.size.height-20)];
         [descriptionView setBackgroundColor:[UIColor colorWithRed:1.f green:1.f blue:1.f alpha:0.9]];
         descriptionView.layer.masksToBounds = YES;
         descriptionView.layer.cornerRadius = 10.f;
@@ -48,7 +48,7 @@
         nutrientNameLabel.text = [infoDict objectForKey:@"NutrientCnCaption"];
         [descriptionView addSubview:nutrientNameLabel];
         
-        UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 38,280, 245)];
+        UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 38,280, frame.size.height-65)];
         [textView setFont:[UIFont systemFontOfSize:14]];
 //        NSString *contents = @"";
 //        for (NSString * key in [infoDict allKeys])
@@ -57,7 +57,7 @@
 //            contents = [contents stringByAppendingFormat:@" %@ : %@ \n",key,content];
 //        }
         textView.text =[infoDict objectForKey:@"NutrientDescription"];// [NSString stringWithFormat:@"%@",infoDict];//[infoDict description];
-        textView.showsVerticalScrollIndicator = NO;
+        textView.showsVerticalScrollIndicator = YES;
         [textView setBackgroundColor:[UIColor clearColor]];
         textView.editable = NO;
         [descriptionView addSubview:textView];
