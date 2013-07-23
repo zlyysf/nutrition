@@ -140,11 +140,20 @@
 
 #define Key_givenNutrients @"givenNutrients"
 
+#define Key_originalNutrientNameAryToCal @"originalNutrientNameAryToCal"
 //#define Key_takenFoodInfo2LevelDict @"takenFoodInfo2LevelDict"
 //#define Key_recommendFoodInfo2LevelDict @"recommendFoodInfo2LevelDict"
 #define Key_takenFoodInfoDictArray @"takenFoodInfoDictArray"
 #define Key_recommendFoodInfoDictArray @"recommendFoodInfoDictArray"
 #define Key_recommendFoodAmountDict @"recommendFoodAmountDict"
+
+#define Key_TakenFoodAmount @"TakenFoodAmount"
+#define Key_TakenFoodAttr @"TakenFoodAttr"
+
+#define Key_outRows @"outRows"
+
+#define Key_preChooseFoodInfoDict @"preChooseFoodInfoDict"
+#define Key_preChooseRichFoodInfoAryDict @"preChooseRichFoodInfoAryDict"
 
 #define Key_nutrientInitialSupplyRate @"nutrientInitialSupplyRate"
 #define Key_nutrientSupplyRate @"nutrientSupplyRate"
