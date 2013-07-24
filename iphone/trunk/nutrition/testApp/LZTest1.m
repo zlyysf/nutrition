@@ -1777,7 +1777,7 @@
 //    BOOL needLimitNutrients = FALSE;
     BOOL needUseLowLimitAsUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
-    BOOL needUseFirstRecommendWhenSmallIncrementLogic = FALSE;
+    BOOL needUseFirstRecommendWhenSmallIncrementLogic = TRUE;//FALSE;
     BOOL needSpecialForFirstBatchFoods = TRUE;
     BOOL needFirstSpecialForShucaiShuiguo = TRUE;
     int randSeed = 0; //0;

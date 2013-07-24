@@ -3402,7 +3402,7 @@
     //补维生素D中只有鱼类最适合，故特殊处理。从而上面选肉类的时候排除鱼类，避免一次推荐包含多种鱼。
     nutrient = NutrientId_VD;
     foodClass = FoodClassify_rou_shui_yu;
-    foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:nil andGetStrategy:Strategy_random];
+    foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random];
     assert(foodInfo!=nil);
     foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
     [foodInfoDict setObject:foodInfo forKey:foodId];
@@ -3414,10 +3414,10 @@
     nutrient = NutrientId_Fiber;
     foodClass = FoodClassify_shucai;
     incFoodIds = foodInfoDict.allKeys;
-    foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:incFoodIds andExcludeFoodIds:nil andGetStrategy:Strategy_random];
+    foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:incFoodIds andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random];
     if (foodInfo==nil){
         excFoodIds = foodInfoDict.allKeys;
-        foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:excFoodIds andGetStrategy:Strategy_random];
+        foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random];
         foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
         [foodInfoDict setObject:foodInfo forKey:foodId];
         getFoodsLog = [NSMutableArray arrayWithObjects:@"specialForFiber",nutrient,foodId,foodInfo[COLUMN_NAME_CnCaption], nil];
@@ -3443,7 +3443,7 @@
         needRearrangeRichFood = true;
         for(int i=0; i<nutrientsWithoutRichFood.count; i++){
             NSString *nutrient = nutrientsWithoutRichFood[i];
-            NSDictionary *foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:nil andGetStrategy:Strategy_random];
+            NSDictionary *foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random];
             assert(foodInfo!=nil);
             NSString *foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
             assert([foodInfoDict objectForKey:foodId]==nil);
