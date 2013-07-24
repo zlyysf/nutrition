@@ -801,75 +801,147 @@
 //    [sqlStr appendString:@"\n    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
 //    [sqlStr appendString:@"\n    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
     
-    [sqlStr appendString:@"\n  WHERE "];
-    [sqlStr appendString:@"\n    D.["];
-    [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"]"];
-    [sqlStr appendString:@">0"];
+    NSMutableArray *exprIncludeORdata = [NSMutableArray array];
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+    NSMutableArray *exprExcludedata = [NSMutableArray array];
     
-    [sqlStr appendString:@"\n AND D.["];
-    [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"]"];
-    [sqlStr appendString:@"<1000 "];
-    
-    if(includeFoodClass.length > 0){
-        [sqlStr appendString:@"\n    AND "];
-        [sqlStr appendString:COLUMN_NAME_classify];
-        [sqlStr appendString:@" LIKE '"];
-        [sqlStr appendString:includeFoodClass];
-        [sqlStr appendString:@"%' "];
-    }
-    if(excludeFoodClass.length > 0){
-        [sqlStr appendString:@"\n    AND NOT "];
-        [sqlStr appendString:COLUMN_NAME_classify];
-        [sqlStr appendString:@" LIKE '"];
-        [sqlStr appendString:excludeFoodClass];
-        [sqlStr appendString:@"%' "];
-    }
-    
-    NSMutableArray *allFoodIds = [NSMutableArray array];
-    if(includeFoodIds.count > 0){
-        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
-        for(int i=0; i<includeFoodIds.count; i++){
-            [placeholderAry addObject:@"?"];
-        }
-        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+    NSString *strColumn;
+    NSString *strOp;
+    NSMutableArray *expr;
+    strColumn = [NSString stringWithFormat:@"D.[%@]",nutrientAsColumnName];
+    strOp = @">";
+    expr = [NSMutableArray arrayWithCapacity:3];
+    [expr addObject:strColumn];
+    [expr addObject:strOp];
+    [expr addObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:0], nil]];
+    [exprIncludeANDdata addObject:expr];
 
-        [sqlStr appendString:@"\n    AND F.NDB_No in ("];
-        [sqlStr appendString:placeholdersStr];
-        [sqlStr appendString:@") "];
-        [allFoodIds addObjectsFromArray:includeFoodIds];
-    }
-    if(excludeFoodIds.count > 0){
-        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:excludeFoodIds.count];
-        for(int i=0; i<excludeFoodIds.count; i++){
-            [placeholderAry addObject:@"?"];
-        }
-        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-        [sqlStr appendString:@"\n    AND NOT F.NDB_No in ("];
-        [sqlStr appendString:placeholdersStr];
-        [sqlStr appendString:@") "];
-        [allFoodIds addObjectsFromArray:excludeFoodIds];
-    }
+    strColumn = [NSString stringWithFormat:@"D.[%@]",nutrientAsColumnName];
+    strOp = @"<";
+    expr = [NSMutableArray arrayWithCapacity:3];
+    [expr addObject:strColumn];
+    [expr addObject:strOp];
+    [expr addObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:1000], nil]];
+    [exprIncludeANDdata addObject:expr];
     
-    [sqlStr appendString:@"\n ORDER BY "];
-    [sqlStr appendString:@"D.["];
-    [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"] ASC"];
+    if (includeFoodClass.length>0){
+        NSString *strColumn = COLUMN_NAME_classify;
+        NSString *strOp = @"LIKE";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:[NSArray arrayWithObjects:includeFoodClass, nil]];
+        [exprIncludeANDdata addObject:expr];
+    }
+
+    if (excludeFoodClass.length > 0){
+        NSString *strColumn = COLUMN_NAME_classify;
+        NSString *strOp = @"LIKE";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:[NSArray arrayWithObjects:excludeFoodClass, nil]];
+        [exprExcludedata addObject:expr];
+    }
+
+    if (includeFoodIds.count>0){
+        NSString *strColumn = @"F.NDB_No";
+        NSString *strOp = @"IN";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:includeFoodIds];
+        [exprIncludeANDdata addObject:expr];
+    }
+    if (excludeFoodIds.count>0){
+        NSString *strColumn = @"F.NDB_No";
+        NSString *strOp = @"IN";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:excludeFoodIds];
+        [exprExcludedata addObject:expr];
+    }
+//    [sqlStr appendString:@"\n  WHERE "];
+//    [sqlStr appendString:@"\n    D.["];
+//    [sqlStr appendString:nutrientAsColumnName];
+//    [sqlStr appendString:@"]"];
+//    [sqlStr appendString:@">0"];
+//    
+//    [sqlStr appendString:@"\n AND D.["];
+//    [sqlStr appendString:nutrientAsColumnName];
+//    [sqlStr appendString:@"]"];
+//    [sqlStr appendString:@"<1000 "];
+    
+//    if(includeFoodClass.length > 0){
+//        [sqlStr appendString:@"\n    AND "];
+//        [sqlStr appendString:COLUMN_NAME_classify];
+//        [sqlStr appendString:@" LIKE '"];
+//        [sqlStr appendString:includeFoodClass];
+//        [sqlStr appendString:@"%' "];
+//    }
+//    if(excludeFoodClass.length > 0){
+//        [sqlStr appendString:@"\n    AND NOT "];
+//        [sqlStr appendString:COLUMN_NAME_classify];
+//        [sqlStr appendString:@" LIKE '"];
+//        [sqlStr appendString:excludeFoodClass];
+//        [sqlStr appendString:@"%' "];
+//    }
+    
+//    NSMutableArray *allFoodIds = [NSMutableArray array];
+//    if(includeFoodIds.count > 0){
+//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
+//        for(int i=0; i<includeFoodIds.count; i++){
+//            [placeholderAry addObject:@"?"];
+//        }
+//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//
+//        [sqlStr appendString:@"\n    AND F.NDB_No in ("];
+//        [sqlStr appendString:placeholdersStr];
+//        [sqlStr appendString:@") "];
+//        [allFoodIds addObjectsFromArray:includeFoodIds];
+//    }
+//    if(excludeFoodIds.count > 0){
+//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:excludeFoodIds.count];
+//        for(int i=0; i<excludeFoodIds.count; i++){
+//            [placeholderAry addObject:@"?"];
+//        }
+//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//        [sqlStr appendString:@"\n    AND NOT F.NDB_No in ("];
+//        [sqlStr appendString:placeholdersStr];
+//        [sqlStr appendString:@") "];
+//        [allFoodIds addObjectsFromArray:excludeFoodIds];
+//    }
+    
+    NSMutableString *afterWherePart = [NSMutableString string ];
+    
+    [afterWherePart appendString:@"\n ORDER BY "];
+    [afterWherePart appendString:@"D.["];
+    [afterWherePart appendString:nutrientAsColumnName];
+    [afterWherePart appendString:@"] ASC"];
     
     if (topN){
-        [sqlStr appendString:@"\n LIMIT "];
-        [sqlStr appendString:[[NSNumber numberWithInt:topN] stringValue]];
+        [afterWherePart appendString:@"\n LIMIT "];
+        [afterWherePart appendString:[[NSNumber numberWithInt:topN] stringValue]];
     }
     
-    NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
-    
-//    FMResultSet *rs = [dbfm executeQuery:sqlStr];
-    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
-    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-
-    NSLog(@"getRichNutritionFood ret:\n%@",dataAry);
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+                             exprIncludeORdata,@"includeOR",
+                             exprIncludeANDdata,@"includeAND",
+                             exprExcludedata,@"exclude",
+                             nil];
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:afterWherePart andOptions:localOptions];
     return dataAry;
+    
+//    NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
+//    
+////    FMResultSet *rs = [dbfm executeQuery:sqlStr];
+//    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
+//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//
+//    NSLog(@"getRichNutritionFood ret:\n%@",dataAry);
+//    return dataAry;
 }
 
 -(NSDictionary *) getOneRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass  andIncludeFoodIds:(NSArray*)includeFoodIds andExcludeFoodIds:(NSArray*)excludeFoodIds andGetStrategy:(NSString*)getStrategy
@@ -1218,7 +1290,7 @@
  
  op can be = , like, in
  */
--(NSArray *)getRowsByQuery:(NSString*)strQuery andFilters:(NSDictionary*)filters andWhereExistInQuery:(BOOL)ifWhereExistInQuery andOptions:options
+-(NSArray *)getRowsByQuery:(NSString*)strQuery andFilters:(NSDictionary*)filters andWhereExistInQuery:(BOOL)ifWhereExistInQuery andAfterWherePart:(NSString*)afterWherePart andOptions:options
 {
     NSMutableDictionary *filtersDict = [NSMutableDictionary dictionaryWithDictionary:filters];
     [filtersDict setObject:[NSNumber numberWithBool:(!ifWhereExistInQuery)] forKey:@"needWhereWord"];
@@ -1227,6 +1299,7 @@
     NSArray *sqlParams = [conditionData objectForKey:@"sqlParams"];
     NSMutableString *strWholeQuery = [NSMutableString stringWithString:strQuery];
     [strWholeQuery appendString:strCondition];
+    if (afterWherePart.length>0) [strWholeQuery appendString:afterWherePart];
     
     NSLog(@"getRowsByQuery:andFilters strWholeQuery=%@, \nParams=%@",strWholeQuery,sqlParams);
     FMResultSet *rs = [dbfm executeQuery:strWholeQuery withArgumentsInArray:sqlParams];
@@ -1316,7 +1389,7 @@
                              exprExcludedata,@"exclude",
                              nil];
     NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
-    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andOptions:localOptions];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:nil andOptions:localOptions];
     
     
 //    NSMutableString *sqlStrWherePart = [NSMutableString stringWithCapacity:1000*1];
@@ -1506,7 +1579,7 @@
                              exprExcludedata,@"exclude",
                              nil];
     NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
-    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andOptions:localOptions];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:nil andOptions:localOptions];
     return dataAry;
     
 //    
