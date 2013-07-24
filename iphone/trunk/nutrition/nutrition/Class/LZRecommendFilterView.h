@@ -10,7 +10,7 @@
 @class LZRecommendFilterView;
 @protocol LZRecommendFilterViewDelegate<NSObject>
 - (void)filterViewCanceled:(LZRecommendFilterView *)filterView;
-- (void)filterViewSubmitted:(LZRecommendFilterView *)filterView forFilterInfo:(NSArray *)filterInfo;
+- (void)filterViewSubmitted:(LZRecommendFilterView *)filterView;
 @end
 @interface LZRecommendFilterView : UIView
 - (id)initWithFrame:(CGRect)frame

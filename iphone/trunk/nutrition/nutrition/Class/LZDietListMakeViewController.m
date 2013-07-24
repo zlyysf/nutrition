@@ -519,7 +519,7 @@
         //[cell.backView setBackgroundColor:[UIColor clearColor]];
 //        if (KeyIsEnvironmentDebug)
 //        {
-            cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)([percent floatValue] *100)];
+            cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(floorf([percent floatValue] *100))];
 //        }
 //        else
 //        {
@@ -702,7 +702,7 @@
     [viewtoAnimate.backView.layer addAnimation:group forKey:@"kFTAnimationPopIn"];
     
 }
-- (void)recommendOnePlan:(NSArray *)preferNutrient
+- (void)recommendOnePlan
 {
     NSMutableDictionary *takenFoodAmountDict = [[NSMutableDictionary alloc]init];
     for (NSString *foodId in self.takenFoodIdsArray)
@@ -737,6 +737,7 @@
                                     [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
                                     [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                                     nil];
+    NSArray *preferNutrient = [userDefaults objectForKey:KeyUserRecommendPreferNutrientArray];
     NSArray *paramArray = [LZUtility convertPreferNutrientArrayToParamArray:preferNutrient];
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:paramArray,Key_givenNutrients,nil];
 
@@ -754,6 +755,7 @@
     [recommendFoodDictForDisplay removeAllObjects];
     [recommendFoodDictForDisplay addEntriesFromDictionary:recommendFoodAmountDict];
     [userDefaults setObject:takenFoodAmountDict forKey:LZUserDailyIntakeKey];
+    
     [userDefaults synchronize];
     //    NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
     //                            userInfo,@"userInfo",
@@ -799,7 +801,7 @@
     [filterView.backView.layer addAnimation:group forKey:@"kFTAnimationPopOut"];
 
 }
-- (void)filterViewSubmitted:(LZRecommendFilterView *)filterView forFilterInfo:(NSArray *)filterInfo
+- (void)filterViewSubmitted:(LZRecommendFilterView *)filterView
 {
     [filterView.layer removeAllAnimations];
     float duration = 0.3;
@@ -832,7 +834,7 @@
     
     HUD.labelText = @"智能推荐中...";
     
-    [self performSelector:@selector(recommendOnePlan:) withObject:filterInfo afterDelay:0.f];
+    [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
     
 }
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag {

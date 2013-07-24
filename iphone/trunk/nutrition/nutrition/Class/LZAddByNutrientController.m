@@ -40,7 +40,7 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     
-    NSString *tipsStr = [NSString stringWithFormat:@"下列是富含%@的食物，您可以根据我们提供的推荐量来挑选适合自己的食物,推荐量为0时表示已经补满。", nutrientTitle];
+    NSString *tipsStr = [NSString stringWithFormat:@"下列是富含%@的食物，您可以根据我们提供的推荐量来挑选适合自己的食物,没有推荐量时表示已经补满。", nutrientTitle];
     CGSize tipSize = [tipsStr sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
     UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 70)];
     UILabel *tipsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, (70-tipSize.height)/2, 300, tipSize.height)];
@@ -123,6 +123,7 @@
     double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
     LZDataAccess *da = [LZDataAccess singleton];
     NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
+    isFirstLoad = NO;
     self.foodArray = [NSArray arrayWithArray:recommendFoodArray];
     [self.listView reloadData];
     [HUD hide:YES];
@@ -339,9 +340,13 @@
     NSNumber *foodAmount = [aFood objectForKey:Key_FoodAmount];
     NSNumber *intake= [self.tempIntakeDict objectForKey:NDB_No];
     int amount =(int)(ceilf([foodAmount floatValue]));
-    if(amount < 0)
+    if(amount <= 0)
     {
-        amount = 0;
+        cell.recommendAmountLabel.hidden = YES;
+    }
+    else
+    {
+        cell.recommendAmountLabel.hidden = NO;
     }
     cell.recommendAmountLabel.text = [NSString stringWithFormat:@"推荐量:%dg",amount];
     UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];

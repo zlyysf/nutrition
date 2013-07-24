@@ -9,6 +9,7 @@
 #import "LZRecommendFilterView.h"
 #import <QuartzCore/QuartzCore.h>
 #import "LZDataAccess.h"
+#import "LZConstants.h"
 #define kSelectButtonSide 22.f
 #define kTagAddNum 20
 #define kNameButtonAddNum 100
@@ -288,9 +289,11 @@
         [alert show];
         return;
     }
-    if(self.delegate && [self.delegate respondsToSelector:@selector(filterViewSubmitted:forFilterInfo:)])
+    if(self.delegate && [self.delegate respondsToSelector:@selector(filterViewSubmitted:)])
     {
-        [self.delegate filterViewSubmitted:self forFilterInfo:self.filterArray];
+        [[NSUserDefaults standardUserDefaults] setObject:self.filterArray forKey:KeyUserRecommendPreferNutrientArray];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        [self.delegate filterViewSubmitted:self];
     }
 }
 -(BOOL)isAllSelected:(NSArray *)array
