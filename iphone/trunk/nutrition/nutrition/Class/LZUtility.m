@@ -314,7 +314,14 @@
     }
     return ary;
 }
-
++(NSMutableArray*)arrayIntersectArray_withSrcArray:(NSMutableArray*)srcAry andIntersectArray:(NSArray*)intersectAry
+{
+    if (intersectAry.count == 0)
+        return [NSMutableArray array];
+    if (srcAry.count == 0)
+        return srcAry;
+    return [self.class arrayIntersectSet_withArray:srcAry andSet:[NSSet setWithArray:intersectAry]];
+}
 
 /*
  两个数组的所含元素的集合是否相等

@@ -21,6 +21,8 @@
 #define Config_needUseFirstRecommendWhenSmallIncrementLogic TRUE //FALSE //它为TRUE时，会导致补得过量经常发生，从而删掉某个少量的推荐的食物后再推荐可能会报营养已满不用推荐，从而让用户觉得算法有问题。不过，即使设置为false，算法仍然没有能彻底避免这种情况。但是，现在由于算法加了推荐后再减少食物的功能，这个问题不存在了。
 #define Config_needFirstSpecialForShucaiShuiguo TRUE
 #define Config_needSpecialForFirstBatchFoods TRUE
+#define Config_alreadyChoosedFoodHavePriority TRUE //主要用于减少食物种类
+#define Config_needPriorityFoodToSpecialNutrient FALSE //有了 alreadyChoosedFoodHavePriority 为true，感觉needPriorityFoodToSpecialNutrient的特色没必要了
 
 #define FoodClassify_gulei @"gulei"
 #define FoodClassify_gandoulei @"gandoulei"
@@ -67,6 +69,8 @@
 #define LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic @"needUseFirstRecommendWhenSmallIncrementLogic"
 #define LZSettingKey_needFirstSpecialForShucaiShuiguo @"needFirstSpecialForShucaiShuiguo"
 #define LZSettingKey_needSpecialForFirstBatchFoods @"needSpecialForFirstBatchFoods"
+#define LZSettingKey_alreadyChoosedFoodHavePriority @"alreadyChoosedFoodHavePriority"
+#define LZSettingKey_needPriorityFoodToSpecialNutrient @"needPriorityFoodToSpecialNutrient"
 #define LZSettingKey_randSeed @"randSeed"
 #define LZSettingKey_randSeedOut @"randSeedOut"
 
