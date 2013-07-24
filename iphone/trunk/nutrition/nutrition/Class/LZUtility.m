@@ -121,7 +121,15 @@
     return [self convert2DArrayToCsv:csvFileName withData:data];
 }
 
-
++(NSString *)convert3DArrayToCsv:(NSString*)csvFileName andRows2DAry:(NSArray*)rows2DAry
+{
+    NSMutableArray * data2D = [NSMutableArray arrayWithCapacity:(1000)];
+    for(int i=0; i<rows2DAry.count; i++){
+        NSArray *rows2D = rows2DAry[i];
+        [data2D addObjectsFromArray:rows2D ];
+    }
+    return [self convert2DArrayToCsv:csvFileName withData:data2D];
+}
 
 
 +(NSMutableString *) convert2DArrayToHtmlTable:(NSArray*)ary2D withColumnNames:(NSArray*)columnNames
@@ -134,7 +142,7 @@
         return strTable;//return nil will cause following error
     }
     strTable = [NSMutableString stringWithCapacity:1000*ary2D.count];
-    [strTable appendString:@"\n<table style=\"border=1px;\">\n"];
+    [strTable appendString:@"\n<table style=\"border=1px;text-align:right;\">\n"];
     
     if (columnNames != nil && columnNames.count > 0){
         NSMutableString *rowStr = [NSMutableString stringWithCapacity:1000];
@@ -183,6 +191,25 @@
     
     [strTable appendString:@"</table>\n"];
     return strTable;
+}
+
+
++(NSMutableString *) convert3DArrayToHtmlTables:(NSArray*)ary3D
+{
+    NSLog(@"convert3DArrayToHtmlTables enter");
+    
+    NSMutableString *strTables = nil;
+    if (ary3D == nil || ary3D.count == 0){
+        strTables = [NSMutableString stringWithString:@"<div>NONE</div>"];
+        return strTables;//return nil will cause following error
+    }
+    strTables = [NSMutableString string];
+    for(int i=0 ; i<ary3D.count; i++){
+        NSArray *ary2D = ary3D[i];
+        NSMutableString * strTable = [self convert2DArrayToHtmlTable:ary2D withColumnNames:nil];
+        [strTables appendString:strTable];
+    }//for
+    return strTables;
 }
 
 

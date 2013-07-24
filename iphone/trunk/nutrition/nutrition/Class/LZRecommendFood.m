@@ -4854,9 +4854,9 @@
 
 
 
--(NSArray*) generateData2D_RecommendFoodBySmallIncrement:(NSDictionary*)recmdDict
+-(NSArray*) generateData3D_RecommendFoodBySmallIncrement:(NSDictionary*)recmdDict
 {
-    NSLog(@"generateData2D_RecommendFoodBySmallIncrement enter");
+    NSLog(@"generateData3D_RecommendFoodBySmallIncrement enter");
     
     NSDictionary *DRIsDict = [recmdDict objectForKey:Key_DRI];//nutrient name as key, also column name
     NSDictionary *DRIULsDict = [recmdDict objectForKey:Key_DRIUL];
@@ -4891,7 +4891,7 @@
 //    NSDictionary *nutrientSupplyDictOld = [recmdDict objectForKey:@"NutrientSupplyOld"];//nutrient name as key, also column name
 //    NSArray *mergeLogs = [recmdDict objectForKey:@"mergeLogs"];
     
-    
+    NSMutableArray *rowsAry = [NSMutableArray arrayWithCapacity:10];
     NSMutableArray *rows = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray* row;
     
@@ -4963,6 +4963,8 @@
         }//for i
     }
     
+    [rowsAry addObject:rows];
+    rows = [NSMutableArray arrayWithCapacity:100];
     
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------";
@@ -4984,24 +4986,33 @@
 //    if(params != nil){
 //        [rows addObject:[LZUtility dictionaryAllToArray:params]];
 //    }
-    
+    [rowsAry addObject:rows];
+    rows = [NSMutableArray arrayWithCapacity:1000];
+
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------getFoodsLogs";
     [rows addObject:row];
     [rows addObjectsFromArray:getFoodsLogs];
+    
+    [rowsAry addObject:rows];
+    rows = [NSMutableArray arrayWithCapacity:1000];
     
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------foodSupplyNutrientSeqs";
     [rows addObject:row];
     [rows addObjectsFromArray:foodSupplyNutrientSeqs];
     
+    [rowsAry addObject:rows];
+    rows = [NSMutableArray arrayWithCapacity:1000];
+    
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------calculationLogs";
     [rows addObject:row];
     [rows addObjectsFromArray:calculationLogs];
     
+    [rowsAry addObject:rows];
         
-    return rows;
+    return rowsAry;
 }
 
 -(NSMutableString*) generateHtml_RecommendFoodBySmallIncrement:(NSDictionary*)recmdDict
@@ -5013,11 +5024,11 @@
     [strHtml appendString:@"td {border:1px solid;}\n"];
     [strHtml appendString:@"</style>\n"];
     [strHtml appendString:@"<body>\n"];
-    
 
     [strHtml appendString:@"<br/><hr/><br/>\n"];
-    NSArray *detailData = [self generateData2D_RecommendFoodBySmallIncrement:recmdDict];
-    NSString *detailHtml = [LZUtility convert2DArrayToHtmlTable:detailData withColumnNames:nil];
+    NSArray *detailData = [self generateData3D_RecommendFoodBySmallIncrement:recmdDict];
+//    NSString *detailHtml = [LZUtility convert2DArrayToHtmlTable:detailData withColumnNames:nil];
+    NSString *detailHtml = [LZUtility convert3DArrayToHtmlTables:detailData];
     [strHtml appendString:detailHtml];
     
     [strHtml appendString:@"</body>\n"];
