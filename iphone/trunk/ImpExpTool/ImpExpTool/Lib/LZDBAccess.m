@@ -982,7 +982,7 @@
 //    "  from FoodNutrition f join FoodCustom c on f.NDB_No=c.NDB_No"
 //    "  order by f.NDB_No"
 //    ;
-    "select * from FoodNutritionCustom"
+    "select c.*,f.* from FoodCustom c join FoodNutrition f on c.NDB_No=f.NDB_No"
     "  order by NDB_No"
     ;
     return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
