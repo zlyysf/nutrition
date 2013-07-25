@@ -3748,9 +3748,50 @@
     return retData;
 }
 /*
- options contain flag 
+  渐进增量算法的主要思想是：
+      先选出一定数量的属于各个种类的食物，然后根据营养素补充动态情况来不断递增动态的某个食物，直到补满DRI。
+      另外，又多了一个减量算法，即对于补得太多超过dri的上限值的一些营养素，尝试减少某些食物。
+
+目前增量算法的主要脉络：
+    先选出n种食物，选的规则或方法会在下面单列出来，需要至少满足这些食物所含要计算的营养素的总和能够覆盖那些营养素的DRI。
+    先对所有食物取一个初始供应量（根据标识位可以是0也可以是初始推荐量），再逐步按某种规则选出某单个食物加单位增量。
+         (1)先选出最缺乏的一种营养素，
+         (2)再选出一种合适的食物
+             从这n种食物中选，且是富含这种营养素的食物中选，
+                 有标识位控制优先从已选的富含食物中随机选，没有已选的则随机选。或者使用下面的复杂逻辑
+                     如果不存在任何一种营养素的量已经超过DRI的情况，随机选一种
+                     如果存在一些营养素的量已经超过DRI的情况，选一种导致超标最少的食物。
+                         当超标的营养素都不存在上限时，随机选一种
+                         当超标的营养素中只有一个存在上限时，
+                             补充单位目标营养素导致的唯一的那个超标营养素的量增长最少的食物可以入选。
+                             但是当多个营养素超标且有多个营养素存在上限时，如何定义导致超标最少呢？-- 下面的策略的总的思想是尽可能晚的突破上限。
+                             对每个食物的各个这样的营养素，算出某种导致超标的指数(见2-C-rate2)，
+                             取其中的最大值。
+                             然后取出最大值中最小的那个食物。
+         (3)给这个食物加单位增量(目前各个食物有自己的单位增量)， 然后给各营养素增加相应的供给量。
+         (4)然后再选出相对DRI最缺的一种营养素 进入同于(1)的下一个同样的循环，直到都不缺为止。
+ 
+ 预选n种食物的逻辑
+     首先从不同指定类别中选出一种食物取并集，
+     如从现有的绝大部分内部类中选 谷类及制品, 干豆类及制品, 蔬菜类及制品, 水果类及制品, "坚果、种子类",泛肉类除鱼类,乳类及制品,蛋类及制品 等这些类中各选一个食物出来，
+     特殊考虑VD选一种鱼类
+     再特殊考虑其他选出某种或某些食物
+     然后再对每个要计算的营养素检查，
+     如果存在某个营养素的DRI还不能被达到上限量的这些食物满足时，则补充一种富含这种营养素的食物。直到所有营养素的DRI都能够被满足。
+
+(2-C-rate2)
+某种导致超标的指数 如下定义：
+    这种食物导致的dest营养素的增长比例 = 增加单位量这种食物导致的dest营养素的增量 / DRI_Ofdest营养素
+    这种食物导致的营养素A的超量比例 = 增加单位量这种食物导致的营养素A的增量 / (营养素A的上限 - DRI_Of营养素A)
+    这种食物针对目标营养素补充导致的营养素A的超量指数 = 这种食物导致的营养素A的超量比例 / 这种食物导致的dest营养素的增长比例
+    找出 这种食物针对目标营养素补充导致的营养素A的超量指数 的最大值
+    再找出 最大值中的最小值，取最小值对应的食物。
+        点评：这里的意思是，在使用某种食物给dest营养素进行补充带来单位增长的同时， 导致的其他已超标中的营养素往上限的增长比例的最大值尽可能小.
+        这样防止某个超标营养素遥遥领先于其他营养素突破自己的上限。平均情况暂且不予考虑。
+ 
+ options contain flag
         LZSettingKey_needLimitNutrients,
-        LZSettingKey_needUseLowLimitAsUnit, 
+        LZSettingKey_needUseLowLimitAsUnit,
         LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
         LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic, //注意需要预选食物没有时才有效，这是一个粗略判断，虽然预选食物少到某种程度也可以有效，但是这难以判断。
  LZSettingKey_needFirstSpecialForShucaiShuiguo, //注意当needSpecialForFirstBatchFoods 发挥作用时，它无效，因为needSpecialForFirstBatchFoods实际包含了它.而且需要VC的补充量为0时才有效。
@@ -3763,7 +3804,7 @@
     
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
 //    BOOL needUseFoodLimitTableWhenCal = TRUE;
-    BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseLowLimitAsUnit = TRUE;// 食物的增量是使用下限值还是通用的1g的增量
     BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic; //对于食物的限量是使用普通限制还是使用上限限制
     BOOL needUseFirstRecommendWhenSmallIncrementLogic = Config_needUseFirstRecommendWhenSmallIncrementLogic; //食物第一次的增量是否使用最初推荐量
     BOOL needFirstSpecialForShucaiShuiguo = Config_needFirstSpecialForShucaiShuiguo; //对于最开始选出来的蔬菜水果，在最开始使用最初推荐量。这被 needSpecialForFirstBatchFoods 所覆盖。
@@ -4400,6 +4441,15 @@
 
 }
 
+/*
+减量算法的主要逻辑是
+    找出超过DRI的上限的那些营养素。后来也包括超过DRI的营养素，不过优先级靠后。
+    对每个这样的营养素，尝试对其富含的那些食物的每个食物进行计算，
+        计算其能否被减少，最多能减多少
+        目前的策略是一次减到底
+        有可以减的食物，则减去计算出的量，再循环，全部重新计算。直到没有一个食物能够减量，此时计算结束。
+ 
+ */
 -(void)reduceFoodsToNotExceed_ecommendFoodBySmallIncrement:(NSMutableDictionary*)recmdDict
 {
     NSDictionary *DRIsDict = [recmdDict objectForKey:Key_DRI];//nutrient name as key, also column name
