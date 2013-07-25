@@ -32,6 +32,7 @@
 @interface LZDietListMakeViewController ()<MBProgressHUDDelegate,UIActionSheetDelegate,UIAlertViewDelegate,LZRecommendFilterViewDelegate>
 {
     MBProgressHUD *HUD;
+    BOOL isCapturing;
 }
 
 @end
@@ -63,7 +64,7 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-
+    [self.listView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
 
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -96,6 +97,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [self refreshFoodNureitentProcessForAll:YES];
+    isCapturing = NO;
 }
 - (void)cancelButtonTapped
 {
@@ -108,7 +110,7 @@
 
     if([self.takenFoodIdsArray count] == 0)
     {
-        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请至少选择一种食物" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
         [foodEmptyAlert show];
         return;
     }
@@ -150,6 +152,7 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"检测页面"];
+    self.listView.tableFooterView.hidden = NO;
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
@@ -545,10 +548,17 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
+    if (isCapturing)
+    {
+        return 0;
+    }
     return 5;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
+    if (isCapturing) {
+        return nil;
+    }
     UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
     [sectionView setBackgroundColor:[UIColor clearColor]];
     return sectionView;
@@ -556,10 +566,17 @@
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
+    if(isCapturing)
+    {
+        return 0;
+    }
     return 32;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
+    if (isCapturing) {
+        return nil;
+    }
     UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 32)];
     UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
     [sectionView addSubview:sectionBarView];
@@ -947,53 +964,131 @@
 #pragma mark- Share Content Function
 - (IBAction)shareButtonTapped:(id)sender
 {
+    if([self.takenFoodIdsArray count] == 0)
+    {
+        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        [foodEmptyAlert show];
+        return;
+    }
     UIActionSheet *shareSheet = [[UIActionSheet alloc]initWithTitle:@"分享到" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新浪微博",@"微信好友",@"微信朋友圈", nil];
     [shareSheet showInView:self.view];
 }
+//- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+//    NSString *message;
+//    NSString *title;
+//    if (!error) {
+//        title = NSLocalizedString(@"储存成功", @"");
+//        message = NSLocalizedString(@"您的图片已正确的储存至照片数据", @"");
+//    }
+//    else {
+//        title = NSLocalizedString(@"储存失败", @"");
+//        message = [error description];
+//    }
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+//                                                    message:message
+//                                                   delegate:nil
+//                                          cancelButtonTitle:NSLocalizedString(@"好", @"")
+//                                          otherButtonTitles:nil];
+//    [alert show];
+//}
 -(NSString *)getShareContentsForShareType:(ShareType)type
 {
     if(type == ShareTypeSinaWeibo)
     {
-        if ([takenFoodIdsArray count]!= 0)
-        {
-            NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为我精心推荐:";
-            for (NSString *foodId in takenFoodIdsArray)
-            {
-                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
-                NSString *name = [aFood objectForKey:@"Name"];
-                NSNumber *weight = [aFood objectForKey:@"Amount"];
-                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
-            }
+//        if ([takenFoodIdsArray count]!= 0)
+//        {
+//            NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为我精心推荐:";
+//            for (NSString *foodId in takenFoodIdsArray)
+//            {
+//                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+//                NSString *name = [aFood objectForKey:@"Name"];
+//                NSNumber *weight = [aFood objectForKey:@"Amount"];
+//                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
+//            }
+//            return contents;
+//        }
+//        else
+//        {
+            NSString *contents = @"我用@全面营养宝典(http://t.cn/zH1gxw5 )挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
             return contents;
-        }
-        else
-        {
-            NSString *contents = @"我用 @买菜助手(http://t.cn/zH1gxw5 ) 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
-            return contents;
-        }
+//        }
     }
     else //微信好友 或者微信朋友圈
     {
-        if ([takenFoodIdsArray count]!= 0)
-        {
-            NSString *contents = @"买菜助手(http://t.cn/zHuwJxz )为我推荐了:";
-            for (NSString *foodId in takenFoodIdsArray)
-            {
-                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
-                NSString *name = [aFood objectForKey:@"Name"];
-                NSNumber *weight = [aFood objectForKey:@"Amount"];
-                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
-            }
-            contents = [contents stringByAppendingString:@"\n你也来试试吧!"];//:@"\n%@ %dg",name,[weight intValue]];
+//        if ([takenFoodIdsArray count]!= 0)
+//        {
+//            NSString *contents = @"买菜助手(http://t.cn/zHuwJxz )为我推荐了:";
+//            for (NSString *foodId in takenFoodIdsArray)
+//            {
+//                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+//                NSString *name = [aFood objectForKey:@"Name"];
+//                NSNumber *weight = [aFood objectForKey:@"Amount"];
+//                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
+//            }
+//            contents = [contents stringByAppendingString:@"\n你也来试试吧!"];//:@"\n%@ %dg",name,[weight intValue]];
+//            return contents;
+//        }
+//        else
+//        {
+            NSString *contents = @"我用 全面营养宝典(http://t.cn/zH1gxw5 ) 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
             return contents;
+//        }
+        
+    }
+}
+-(NSData *)getShareData
+{
+    if (isCapturing)
+    {
+        return nil;
+    }
+    else
+    {
+        isCapturing = YES;
+        self.listView.userInteractionEnabled = NO;
+        self.listView.tableFooterView.hidden=YES;
+        [self.listView reloadData];
+        CGPoint offset = [self.listView contentOffset];
+        self.listView.contentOffset = CGPointMake(0.0, 0.0);
+        
+        CGRect visibleRect = self.listView.bounds;
+        
+        UIGraphicsBeginImageContextWithOptions(self.listView.contentSize, self.listView.opaque, 0.0);
+        
+        [self.listView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        
+        while (self.listView.contentSize.height>= (visibleRect.origin.y+visibleRect.size.height)) {
+            
+            visibleRect.origin.y += visibleRect.size.height;
+            
+            [self.listView scrollRectToVisible:visibleRect animated:NO];
+            [self.listView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        }
+        
+        UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+        NSData *lowQualityData = UIImageJPEGRepresentation(image, 0.1);
+        image =nil;
+        //UIImage *lowImage = [UIImage imageWithData:lowQualityData scale:0.1]; scale do nothing
+        self.listView.contentOffset = offset;
+        isCapturing = NO;
+        [self.listView reloadData];
+        self.listView.tableFooterView.hidden=NO;
+        self.listView.userInteractionEnabled = YES;
+        if (lowQualityData)
+        {
+            return lowQualityData;
         }
         else
         {
-            NSString *contents = @"我用 买菜助手(http://t.cn/zH1gxw5 ) 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
-            return contents;
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"出现错误，请重试" delegate:nil cancelButtonTitle:@"我知道了" otherButtonTitles: nil];
+            [alert show];
+            return nil;
         }
+        //UIImageWriteToSavedPhotosAlbum(lowImage, self, @selector(imageSavedToPhotosAlbum: didFinishSavingWithError: contextInfo:), nil);
         
     }
+
 }
 - (void)shareRecommendContentForType:(ShareType)type
 {
@@ -1001,45 +1096,61 @@
     {
         if ([WXApi isWXAppInstalled])
         {
+            NSData *shareData = [self getShareData];
             //isWXAppInstalled
             //getWXAppInstallUrl
-            NSString *contents = [self getShareContentsForShareType:type];
-            id<ISSContent> content = [ShareSDK content:contents
-                                        defaultContent:nil
-                                                 image:nil
-                                                 title:nil
-                                                   url:nil
-                                           description:nil
-                                             mediaType:SSPublishContentMediaTypeText];
-            
-            id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
-                                                                 allowCallback:YES
-                                                                 authViewStyle:SSAuthViewStyleFullScreenPopup
-                                                                  viewDelegate:nil
-                                                       authManagerViewDelegate:nil];
-            [ShareSDK shareContent:content
-                              type:type
-                       authOptions:authOptions
-                     statusBarTips:YES
-                            result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                if (state == SSPublishContentStateSuccess)
-                                {
-                                    NSLog(@"success");
-                                }
-                                else if (state == SSPublishContentStateFail)
-                                {
-                                    if ([error errorCode] == -22003)
+            if(shareData)
+            {
+                NSString *contents = [self getShareContentsForShareType:type];
+                UIImage *shareImage = [UIImage imageWithData:shareData];
+                id<ISSContent> content = [ShareSDK content:contents
+                                            defaultContent:@"default"
+                                                     image:[ShareSDK jpegImageWithImage:shareImage quality:0.1]
+                                                     title:@"title"
+                                                       url:nil
+                                               description:@"description"
+                                                 mediaType:SSPublishContentMediaTypeImage];
+                shareImage = nil;
+                [content addWeixinSessionUnitWithType:INHERIT_VALUE
+                                              content:contents
+                                                title:@"title"
+                                                  url:INHERIT_VALUE
+                                                image:INHERIT_VALUE
+                                         musicFileUrl:nil
+                                              extInfo:nil
+                                             fileData:nil
+                                         emoticonData:nil];
+
+                id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                                     allowCallback:YES
+                                                                     authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                                      viewDelegate:nil
+                                                           authManagerViewDelegate:nil];
+                [ShareSDK shareContent:content
+                                  type:type
+                           authOptions:authOptions
+                         statusBarTips:YES
+                                result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+                                    if (state == SSPublishContentStateSuccess)
                                     {
-                                        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享失败"
-                                                                                            message:[error errorDescription]
-                                                                                           delegate:nil
-                                                                                  cancelButtonTitle:@"知道了"
-                                                                                  otherButtonTitles:nil];
-                                        [alertView show];
-                                        
+                                        NSLog(@"success");
                                     }
-                                }
-                            }];
+                                    else if (state == SSPublishContentStateFail)
+                                    {
+                                        if ([error errorCode] == -22003)
+                                        {
+                                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                                                                                message:[error errorDescription]
+                                                                                               delegate:nil
+                                                                                      cancelButtonTitle:@"知道了"
+                                                                                      otherButtonTitles:nil];
+                                            [alertView show];
+                                            
+                                        }
+                                    }
+                                }];
+                }
+
         }
         else
         {
@@ -1048,39 +1159,46 @@
     }
     else if (type == ShareTypeSinaWeibo)
     {
-        if ([ShareSDK hasAuthorizedWithType:type])
+       // UIImageJPEGRepresentation
+        NSData *shareData = [self getShareData];
+        if(shareData)
         {
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-            LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-            NSString *contents = [self getShareContentsForShareType:type ];
-            shareViewController.preInsertText = contents;
-            [self presentModalViewController:shareViewController animated:YES];
-        }
-        else
-        {
-            id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
-                                                                 allowCallback:YES
-                                                                 authViewStyle:SSAuthViewStyleFullScreenPopup
-                                                                  viewDelegate:nil
-                                                       authManagerViewDelegate:nil];
-            [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
-                                            [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"买菜助手"],
-                                            SHARE_TYPE_NUMBER(type),
-                                            //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
-                                            //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
-                                            nil]];
-            [ShareSDK authWithType:type options:authOptions result:^(SSAuthState state, id<ICMErrorInfo> error) {
-                if (state == SSAuthStateSuccess)
-                {
-                    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                    LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-                    NSString * contents = [self getShareContentsForShareType:type];
-                    shareViewController.preInsertText = contents;
-                    [self presentModalViewController:shareViewController animated:YES];
-                }
-                //NSLog(@"ssauthState %d",state);
-            }];
-            
+            if ([ShareSDK hasAuthorizedWithType:type])
+            {
+                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
+                NSString *contents = [self getShareContentsForShareType:type ];
+                shareViewController.preInsertText = contents;
+                shareViewController.shareImageData = shareData;
+                [self presentModalViewController:shareViewController animated:YES];
+            }
+            else
+            {
+                id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+                                                                     allowCallback:YES
+                                                                     authViewStyle:SSAuthViewStyleFullScreenPopup
+                                                                      viewDelegate:nil
+                                                           authManagerViewDelegate:nil];
+                [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"营养宝典"],
+                                                SHARE_TYPE_NUMBER(type),
+                                                //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
+                                                //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
+                                                nil]];
+                [ShareSDK authWithType:type options:authOptions result:^(SSAuthState state, id<ICMErrorInfo> error) {
+                    if (state == SSAuthStateSuccess)
+                    {
+                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                        LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
+                        NSString * contents = [self getShareContentsForShareType:type];
+                        shareViewController.preInsertText = contents;
+                        shareViewController.shareImageData = shareData;
+                        [self presentModalViewController:shareViewController animated:YES];
+                    }
+                    //NSLog(@"ssauthState %d",state);
+                }];
+                
+            }
         }
         
     }
@@ -1198,9 +1316,9 @@
         }
     }
 }
-- (void)actionSheet:(UIActionSheet *)actionSheet willDismissWithButtonIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if(buttonIndex == actionSheet.cancelButtonIndex)
+     if(buttonIndex == actionSheet.cancelButtonIndex)
     {
         return;
     }

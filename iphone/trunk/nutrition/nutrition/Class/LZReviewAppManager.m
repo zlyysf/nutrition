@@ -34,7 +34,7 @@
         {
             [[NSUserDefaults standardUserDefaults]setInteger:0 forKey:KeyReviewAlertControllCount];
             [[NSUserDefaults standardUserDefaults]synchronize];
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"评分" message:@"如果你喜欢买菜助手, 你是否愿意花一点时间为我们的产品评分? 谢谢您的支持!" delegate:self cancelButtonTitle:@"稍后评分" otherButtonTitles:@"现在就评分", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"评分" message:@"如果你喜欢营养宝典, 你是否愿意花一点时间为我们的产品评分? 谢谢您的支持!" delegate:self cancelButtonTitle:@"稍后评分" otherButtonTitles:@"现在就评分", nil];
             [alert show];
         }
         else

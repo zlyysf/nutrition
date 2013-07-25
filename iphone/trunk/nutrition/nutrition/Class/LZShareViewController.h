@@ -13,4 +13,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *contentBackgroundImage;
 @property (strong, nonatomic) IBOutlet UILabel *wordCountLabel;
 @property (strong,nonatomic)NSString *preInsertText;
+@property (strong,nonatomic)NSData *shareImageData;
+@property (strong, nonatomic) IBOutlet UIImageView *previewImageView;
 @end

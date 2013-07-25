@@ -67,7 +67,7 @@
                                                               viewDelegate:nil
                                                    authManagerViewDelegate:nil];
         [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
-                                        [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"买菜助手"],
+                                        [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"营养宝典"],
                                         SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
                                         //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
                                         //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),

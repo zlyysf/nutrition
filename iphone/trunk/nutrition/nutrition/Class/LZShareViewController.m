@@ -14,7 +14,7 @@
 @end
 
 @implementation LZShareViewController
-@synthesize preInsertText;
+@synthesize preInsertText,shareImageData;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -51,6 +51,15 @@
 {
     [MobClick beginLogPageView:@"微博分享页面"];
     [self.contentTextView becomeFirstResponder];
+    if (self.shareImageData)
+    {
+        if (!self.previewImageView.image)
+        {
+            UIImage *shareImage = [UIImage imageWithData:self.shareImageData];
+            [self.previewImageView setImage:shareImage];
+            shareImage = nil;
+        }
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -97,13 +106,17 @@
 - (IBAction)publishButtonTapped:(id)sender {
     //NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"jpg"];
     
+    if (self.previewImageView.image)
+    {
+        UIImage *shareImage = self.previewImageView.image;
     id<ISSContent> publishContent = [ShareSDK content:self.contentTextView.text
                                        defaultContent:@""
-                                                image:nil//[ShareSDK imageWithPath:imagePath]
+                                                image:[ShareSDK jpegImageWithImage:shareImage quality:0.1]
                                                 title:nil
                                                   url:nil
                                           description:nil
                                             mediaType:SSPublishContentMediaTypeText];
+        shareImage = nil;
     
     [ShareSDK shareContent:publishContent
                       type:ShareTypeSinaWeibo
@@ -120,6 +133,7 @@
                             [alert show];
                         }
                     }];
+    }
 
 }
 - (IBAction)cancelButtonTapped:(id)sender {
@@ -136,6 +150,7 @@
     [self setContentTextView:nil];
     [self setContentBackgroundImage:nil];
     [self setWordCountLabel:nil];
+    [self setPreviewImageView:nil];
     [super viewDidUnload];
 }
 @end

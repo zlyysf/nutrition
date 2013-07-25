@@ -229,8 +229,6 @@
 		5F0122A7174C731900AC0156 /* cell_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_top@2x.png"; path = "nutrition/Resource/cell_top@2x.png"; sourceTree = "<group>"; };
 		5F0122AD174C83AF00AC0156 /* nav_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nav_bar@2x.png"; path = "nutrition/Resource/nav_bar@2x.png"; sourceTree = "<group>"; };
 		5F0122AE174C83AF00AC0156 /* section_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "section_bar@2x.png"; path = "nutrition/Resource/section_bar@2x.png"; sourceTree = "<group>"; };
-		5F03D339174B923F008EFB60 /* LZRecommendFoodController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFoodController.h; path = Class/LZRecommendFoodController.h; sourceTree = "<group>"; };
-		5F03D33A174B923F008EFB60 /* LZRecommendFoodController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFoodController.m; path = Class/LZRecommendFoodController.m; sourceTree = "<group>"; };
 		5F03D33B174B923F008EFB60 /* LZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZProgressView.h; path = Class/LZProgressView.h; sourceTree = "<group>"; };
 		5F03D33C174B923F008EFB60 /* LZProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZProgressView.m; path = Class/LZProgressView.m; sourceTree = "<group>"; };
 		5F03D33D174B923F008EFB60 /* LZRecommendFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFoodCell.h; path = Class/LZRecommendFoodCell.h; sourceTree = "<group>"; };
@@ -780,8 +778,6 @@
 				5F0971801793ABD3000030AA /* LZUserDietListViewController.m */,
 				5F94A86317531CC100664B57 /* LZDietListMakeViewController.h */,
 				5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */,
-				5F03D339174B923F008EFB60 /* LZRecommendFoodController.h */,
-				5F03D33A174B923F008EFB60 /* LZRecommendFoodController.m */,
 				5FF631DD17702D630068CBFE /* GADMasterViewController.h */,
 				5FF631DE17702D630068CBFE /* GADMasterViewController.m */,
 				5F03D341174B9240008EFB60 /* LZFoodDetailController.h */,

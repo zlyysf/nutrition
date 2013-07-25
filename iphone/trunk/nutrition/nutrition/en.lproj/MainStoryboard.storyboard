@@ -985,7 +985,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="LJy-jr-qTd">
-                                <rect key="frame" x="22" y="64" width="276" height="118"/>
+                                <rect key="frame" x="22" y="64" width="178" height="118"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -1016,12 +1016,17 @@
                                     <action selector="clearButtonTapped:" destination="EzZ-Uo-mzC" eventType="touchUpInside" id="2aJ-z2-Wd2"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="9ML-9H-Iaw">
+                                <rect key="frame" x="200" y="64" width="97" height="118"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="contentBackgroundImage" destination="RoX-T6-MMg" id="pVX-wj-5k3"/>
                         <outlet property="contentTextView" destination="LJy-jr-qTd" id="M8M-JK-8Cj"/>
+                        <outlet property="previewImageView" destination="9ML-9H-Iaw" id="sZi-cW-dwG"/>
                         <outlet property="wordCountLabel" destination="WzU-fq-UiF" id="mz5-3I-QN2"/>
                     </connections>
                 </viewController>
@@ -1507,6 +1512,10 @@
         <class className="LZDietListMakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDietListMakeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addFoodAction:"/>
+                <relationship kind="action" name="addFoodByNutrient:" candidateClass="UIButton"/>
+                <relationship kind="action" name="recommendAction:"/>
+                <relationship kind="action" name="shareButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1549,6 +1558,7 @@
         <class className="LZFoodCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodCell.h"/>
             <relationships>
+                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="foodNameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="foodPicView" candidateClass="UIImageView"/>
@@ -1572,6 +1582,7 @@
         <class className="LZFoodNutritionCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodNutritionCell.h"/>
             <relationships>
+                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="addFoodButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="nutritionNameButton" candidateClass="UIButton"/>
@@ -1588,6 +1599,7 @@
         <class className="LZNutritionSupplyCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionSupplyCell.h"/>
             <relationships>
+                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="nameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nutrientSupplyLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
@@ -1617,6 +1629,10 @@
         <class className="LZSettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZSettingsViewController.h"/>
             <relationships>
+                <relationship kind="action" name="authSwitchChangeHandler:" candidateClass="UISwitch"/>
+                <relationship kind="action" name="editUserProfile:"/>
+                <relationship kind="action" name="reviewOurApp:"/>
+                <relationship kind="action" name="userFeedBack:"/>
                 <relationship kind="outlet" name="admobView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="bottomSectionView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="contentScrollView" candidateClass="UIScrollView"/>
@@ -1639,6 +1655,9 @@
         <class className="LZShareViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZShareViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelButtonTapped:"/>
+                <relationship kind="action" name="clearButtonTapped:"/>
+                <relationship kind="action" name="publishButtonTapped:"/>
                 <relationship kind="outlet" name="contentBackgroundImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="contentTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="wordCountLabel" candidateClass="UILabel"/>

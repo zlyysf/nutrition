@@ -212,7 +212,7 @@
 #define SinaWeiboAppKey @"3626415671"
 #define SinaWeiboAppSecret @"9d17e75a675323f5b719cb058c5b9d0d"
 
-#define WeChatAppId @"wxb842cd724ab15257"
+#define WeChatAppId @"wx2398a361bd7de2c7"
 
 #endif
 
