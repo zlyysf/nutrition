@@ -9,7 +9,7 @@
 #import "LZDBAccess.h"
 #import "LZUtility.h"
 #import "LZConstants.h"
-
+#import "LZRecommendFood.h"
 
 @implementation LZDBAccess{
     NSString * _dbFilePath;
@@ -919,7 +919,93 @@
 
 
 
+
+
 //------------------------
+
+/*
+ 用以支持得到nutrients的信息数据，并可以通过普通的nutrient的列名取到相应的nutrient信息。
+ */
+-(NSMutableDictionary*)getNutrientInfoAs2LevelDictionary_withNutrientIds:(NSArray*)nutrientIds
+{
+    NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds begin");
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
+    [sqlStr appendString:@"SELECT * FROM NutritionInfo"];
+    if (nutrientIds!=nil && nutrientIds.count >0){
+        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:nutrientIds.count];
+        for(int i=0; i<nutrientIds.count; i++){
+            [placeholderAry addObject:@"?"];
+        }
+        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+        
+        [sqlStr appendString:@"  WHERE NutrientID in ("];
+        [sqlStr appendString:placeholdersStr];
+        [sqlStr appendString:@")"];
+    }
+    
+    FMResultSet *rs = [_db executeQuery:sqlStr withArgumentsInArray:nutrientIds];
+    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+    NSMutableDictionary *dic2Level = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:@"NutrientID" andDicArray:dataAry];
+    
+    NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds ret:\n%@",dic2Level);
+    return dic2Level;
+}
+
+-(NSArray*) getFoods_withColumns_richOfNutrient:(NSString *)nutrientAsColumnName
+{
+    NSLog(@"getRichNutritionFood enter");
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+    //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
+    [sqlStr appendFormat:@"SELECT a.NDB_No, c.CnCaption, f.Shrt_Desc, f.[%@], a.[%@] as Amount ",nutrientAsColumnName,nutrientAsColumnName];
+    [sqlStr appendString:@"\n  FROM Food_Supply_DRI_Amount a "];
+    [sqlStr appendString:@"\n      join FoodCustom c on a.NDB_No=c.NDB_No "];
+    [sqlStr appendString:@"\n      join FoodNutrition f on c.NDB_No=f.NDB_No "];
+    
+    [sqlStr appendString:@"\n  WHERE "];
+    [sqlStr appendFormat:@"\n    a.[%@]>0 AND a.[%@]<=1000",nutrientAsColumnName,nutrientAsColumnName];
+    
+    [sqlStr appendFormat:@"\n  ORDER BY a.[%@] ASC",nutrientAsColumnName];
+    
+    NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
+    
+    NSDictionary *retData = [self queryDataAndMetaDataBySelectSql:sqlStr];
+    NSMutableArray *columnNames = retData[@"columnNames"];
+    NSMutableArray *rows2D = retData[@"rows2D"];
+    if (columnNames.count > 0)    [rows2D insertObject:columnNames atIndex:0];
+    return rows2D;
+}
+
+-(NSMutableArray*) getFoods_withColumns_richOfNutrientOfAll
+{
+    NSArray * nutrients = [LZRecommendFood getDRItableNutrientsWithSameOrder];
+    NSDictionary * nutrientInfoDict = [self getNutrientInfoAs2LevelDictionary_withNutrientIds:nutrients];
+    
+    int columnCount= 4;
+    NSMutableArray *rowForInit = [NSMutableArray arrayWithCapacity:columnCount];
+    for(int i=0; i<columnCount; i++){
+        [rowForInit addObject:[NSNull null]];
+    }
+    
+    NSMutableArray* row;
+    
+    NSMutableArray *rows2Dall = [NSMutableArray arrayWithCapacity:1000];
+    
+    for(int i=0 ; i<nutrients.count; i++){
+        NSString *nutrient = nutrients[i];
+        NSDictionary *nutrientInfo = nutrientInfoDict[nutrient];
+        row = [NSMutableArray arrayWithArray:rowForInit];
+        row[0] = nutrient;
+        if (nutrientInfo != nil) row[1] = nutrientInfo[COLUMN_NAME_NutrientCnCaption];
+        [rows2Dall addObject:row ];
+        
+        NSArray *rows2D = [self getFoods_withColumns_richOfNutrient:nutrient];
+        if (rows2D != nil)    [rows2Dall addObjectsFromArray:rows2D];
+        [rows2Dall addObject:rowForInit];
+    }
+    return rows2Dall;
+}
+
 
 
 -(NSDictionary*)queryDataAndMetaDataBySelectSql:(NSString*)sqlSelect
@@ -938,9 +1024,18 @@
     NSLog(@"queryDataBySelectSql get columnNames=\n%@,\nrows=\n%@",columnNames,rowAry);
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:3];
-    [retData setObject:columnNames forKey:@"columnNames"];
-    [retData setObject:rowAry forKey:@"rows2D"];
+    if (rowAry.count > 0){
+        [retData setObject:columnNames forKey:@"columnNames"];
+        [retData setObject:rowAry forKey:@"rows2D"];
+    }
     return retData;
+}
+
+
+-(NSString *)convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:(NSString*)csvFileName
+{
+    NSArray *rows2D = [self getFoods_withColumns_richOfNutrientOfAll];
+    return [LZUtility convert2DArrayToCsv:csvFileName withColumnNames:nil andRows2D:rows2D];
 }
 
 

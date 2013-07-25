@@ -116,6 +116,8 @@
     LZDBAccess *db2 = [[LZDBAccess alloc]init];
     [db2 myInitWithDbFilePath:destDbFilePath2 andIfNeedClear:FALSE];
     [db2 convertCnFoodNutritionWithExtraInfoToCsv:@"FoodNutritionCustomByJoin.csv"];
+    
+    [db2 convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"RichFoodsOfEveryNutrients.csv"];
 }
 
 
