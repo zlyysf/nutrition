@@ -679,9 +679,12 @@
 }
 
 
-- (NSArray *)selectAllForTable:(NSString *)tableName
+- (NSArray *)selectAllForTable:(NSString *)tableName andOrderBy:(NSString *)partOrderBy
 {
-    NSString *query = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
+    NSMutableString *query = [NSMutableString stringWithFormat: @"SELECT * FROM %@",tableName];
+    if (partOrderBy.length > 0){
+        [query appendFormat:@" %@",partOrderBy ];
+    }
     FMResultSet *rs = [dbfm executeQuery:query];
     NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
     return ary;
@@ -1918,6 +1921,16 @@
     BOOL dbopState = [dbfm executeUpdate:updSql error:nil withArgumentsInArray:paramAry];
     return dbopState;
 }
+-(BOOL)updateFoodCollocationTime:(long long)collationTime byId:(NSNumber*)nmCollocationId
+{
+    NSString *updSql = [NSString stringWithFormat:
+                        @" UPDATE FoodCollocation SET CollocationCreateTime=? WHERE CollocationId=?;"
+                        ];
+    NSNumber *nm_collationTime = [NSNumber numberWithLongLong:collationTime];
+    NSArray *paramAry = [NSArray arrayWithObjects:nm_collationTime, nmCollocationId,nil];
+    BOOL dbopState = [dbfm executeUpdate:updSql error:nil withArgumentsInArray:paramAry];
+    return dbopState;
+}
 -(BOOL)deleteFoodCollocationById:(NSNumber*)nmCollocationId
 {
     return [self deleteTableByEqualFilter_withTableName:TABLE_NAME_FoodCollocation andField:COLUMN_NAME_CollocationId andValue:nmCollocationId];
@@ -1938,7 +1951,7 @@
 
 -(NSArray*)getAllFoodCollocation
 {
-    NSArray * rows = [self selectAllForTable:TABLE_NAME_FoodCollocation];
+    NSArray * rows = [self selectAllForTable:TABLE_NAME_FoodCollocation andOrderBy:@" ORDER BY CollocationCreateTime DESC"];
     return rows;
 }
 
@@ -2068,6 +2081,15 @@
         if (needTransaction)
             //[dbfm rollback];//should not rollback here because inner codes has rollbacked.
             return false;
+    }
+    
+    NSDate *dtNow = [NSDate date];
+    long long llmsNow = [LZUtility getMillisecond:dtNow];
+    dbopState = [self updateFoodCollocationTime:llmsNow byId:nmCollocationId];
+    if (!dbopState){
+        if (needTransaction)
+            [dbfm rollback];
+        return false;
     }
     
     if (needTransaction){
