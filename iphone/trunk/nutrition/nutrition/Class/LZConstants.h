@@ -154,6 +154,7 @@
 #define Key_TakenFoodAmount @"TakenFoodAmount"
 #define Key_TakenFoodAttr @"TakenFoodAttr"
 
+#define Key_optionsDict @"optionsDict"
 #define Key_outRows @"outRows"
 
 #define Key_preChooseFoodInfoDict @"preChooseFoodInfoDict"

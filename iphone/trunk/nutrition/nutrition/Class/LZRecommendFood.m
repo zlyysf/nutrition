@@ -3764,12 +3764,12 @@
     BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
 //    BOOL needUseFoodLimitTableWhenCal = TRUE;
     BOOL needUseLowLimitAsUnit = TRUE;
-    BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic;
-    BOOL needUseFirstRecommendWhenSmallIncrementLogic = Config_needUseFirstRecommendWhenSmallIncrementLogic;
-    BOOL needFirstSpecialForShucaiShuiguo = Config_needFirstSpecialForShucaiShuiguo;
-    BOOL needSpecialForFirstBatchFoods = Config_needSpecialForFirstBatchFoods;
-    BOOL alreadyChoosedFoodHavePriority = Config_alreadyChoosedFoodHavePriority;
-    BOOL needPriorityFoodToSpecialNutrient = Config_needPriorityFoodToSpecialNutrient;
+    BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic; //对于食物的限量是使用普通限制还是使用上限限制
+    BOOL needUseFirstRecommendWhenSmallIncrementLogic = Config_needUseFirstRecommendWhenSmallIncrementLogic; //食物第一次的增量是否使用最初推荐量
+    BOOL needFirstSpecialForShucaiShuiguo = Config_needFirstSpecialForShucaiShuiguo; //对于最开始选出来的蔬菜水果，在最开始使用最初推荐量。这被 needSpecialForFirstBatchFoods 所覆盖。
+    BOOL needSpecialForFirstBatchFoods = Config_needSpecialForFirstBatchFoods; //第一批选出的食物在最开始时使用到各自的最初推荐量
+    BOOL alreadyChoosedFoodHavePriority = Config_alreadyChoosedFoodHavePriority;//是否已经用过的食物优先使用
+    BOOL needPriorityFoodToSpecialNutrient = Config_needPriorityFoodToSpecialNutrient; //对于某些营养素，优先使用某些种类的食物，如蔬菜
     
     BOOL needSpecialForFirstBatchFoods_applied = FALSE;
     
@@ -4377,7 +4377,7 @@
 
     [retDict setObject:originalNutrientNameAryToCal forKey:Key_originalNutrientNameAryToCal];
 
-    [retDict setObject:options forKey:@"optionsDict"];
+    [retDict setObject:options forKey:Key_optionsDict];
 //    [retDict setObject:params forKey:@"paramsDict"];
     [retDict setObject:foodSupplyNutrientSeqs forKey:@"foodSupplyNutrientSeqs"];//2D array
     [retDict setObject:calculationLogs forKey:@"calculationLogs"];//2D array
@@ -4418,7 +4418,7 @@
     
     //    NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];
     NSDictionary *userInfo = [recmdDict objectForKey:@"userInfoDict"];
-    NSDictionary *options = [recmdDict objectForKey:@"optionsDict"];
+    NSDictionary *options = [recmdDict objectForKey:Key_optionsDict];
     //    NSDictionary *params = [recmdDict objectForKey:@"paramsDict"];
     NSArray *otherInfos = [recmdDict objectForKey:@"OtherInfo"];
     
@@ -4427,6 +4427,51 @@
     
     NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:Key_TakenFoodAmount];//food NO as key
     NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:Key_TakenFoodAttr];//food NO as key
+    
+//    BOOL needLimitNutrients = TRUE;
+//    BOOL needUseLowLimitAsUnit = TRUE;
+//    BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic;
+//    BOOL needUseFirstRecommendWhenSmallIncrementLogic = Config_needUseFirstRecommendWhenSmallIncrementLogic;
+    BOOL needFirstSpecialForShucaiShuiguo = Config_needFirstSpecialForShucaiShuiguo;
+//    BOOL needSpecialForFirstBatchFoods = Config_needSpecialForFirstBatchFoods;
+//    BOOL alreadyChoosedFoodHavePriority = Config_alreadyChoosedFoodHavePriority;
+//    BOOL needPriorityFoodToSpecialNutrient = Config_needPriorityFoodToSpecialNutrient;
+    
+    if(options != nil){
+//        NSNumber *nmFlag_needLimitNutrients = [options objectForKey:LZSettingKey_needLimitNutrients];
+//        if (nmFlag_needLimitNutrients != nil)
+//            needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
+//        
+//        NSNumber *nmFlag_needUseLowLimitAsUnit = [options objectForKey:LZSettingKey_needUseLowLimitAsUnit];
+//        if (nmFlag_needUseLowLimitAsUnit != nil)
+//            needUseLowLimitAsUnit = [nmFlag_needUseLowLimitAsUnit boolValue];
+//        
+//        NSNumber *nmFlag_needUseNormalLimitWhenSmallIncrementLogic = [options objectForKey:LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic];
+//        if (nmFlag_needUseNormalLimitWhenSmallIncrementLogic != nil)
+//            needUseNormalLimitWhenSmallIncrementLogic = [nmFlag_needUseNormalLimitWhenSmallIncrementLogic boolValue];
+//        
+//        NSNumber *nmFlag_needUseFirstRecommendWhenSmallIncrementLogic = [options objectForKey:LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic];
+//        if (nmFlag_needUseFirstRecommendWhenSmallIncrementLogic != nil)
+//            needUseFirstRecommendWhenSmallIncrementLogic = [nmFlag_needUseFirstRecommendWhenSmallIncrementLogic boolValue];
+
+        NSNumber *nmFlag_needFirstSpecialForShucaiShuiguo = [options objectForKey:LZSettingKey_needFirstSpecialForShucaiShuiguo];
+        if (nmFlag_needFirstSpecialForShucaiShuiguo != nil)
+            needFirstSpecialForShucaiShuiguo = [nmFlag_needFirstSpecialForShucaiShuiguo boolValue];
+
+//        NSNumber *nmFlag_needSpecialForFirstBatchFoods = [options objectForKey:LZSettingKey_needSpecialForFirstBatchFoods];
+//        if (nmFlag_needSpecialForFirstBatchFoods != nil)
+//            needSpecialForFirstBatchFoods = [nmFlag_needSpecialForFirstBatchFoods boolValue];
+//        
+//        NSNumber *nmFlag_alreadyChoosedFoodHavePriority = [options objectForKey:LZSettingKey_alreadyChoosedFoodHavePriority];
+//        if (nmFlag_alreadyChoosedFoodHavePriority != nil)
+//            alreadyChoosedFoodHavePriority = [nmFlag_alreadyChoosedFoodHavePriority boolValue];
+//        
+//        NSNumber *nmFlag_needPriorityFoodToSpecialNutrient = [options objectForKey:LZSettingKey_needPriorityFoodToSpecialNutrient];
+//        if (nmFlag_needPriorityFoodToSpecialNutrient != nil)
+//            needPriorityFoodToSpecialNutrient = [nmFlag_needPriorityFoodToSpecialNutrient boolValue];
+        
+    }
+
     
     NSMutableDictionary *recommendFoodAmountDictOld = [NSMutableDictionary dictionaryWithDictionary:recommendFoodAmountDict];
     NSMutableDictionary *foodSupplyAmountDictOld = [NSMutableDictionary dictionaryWithDictionary:foodSupplyAmountDict];
@@ -4443,7 +4488,7 @@
         
         NSMutableArray *exceedDRIrateInfoAry = [NSMutableArray arrayWithCapacity:originalNutrientNameAryToCal.count];
         NSMutableArray *exceedULrateInfoAry = [NSMutableArray arrayWithCapacity:originalNutrientNameAryToCal.count];
-        //找出超过UL的营养素集合。注意只在要计算的那些营养素找，这里作这样一个限制，是对应着只管要计算的那些营养素的思想。
+        //找出超过UL和DRI的营养素集合。注意只在要计算的那些营养素找，这里作这样一个限制，是对应着只管要计算的那些营养素的思想。
         for(int i=0; i<originalNutrientNameAryToCal.count; i++){
             NSString *nutrient = originalNutrientNameAryToCal[i];
             NSNumber *nmSupply = [nutrientSupplyDict objectForKey:nutrient];
@@ -4457,9 +4502,13 @@
                 NSDictionary *rateInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithDouble:rateSupplyVsUL],@"rate", nutrient,@"nutrient", nil];
                 [exceedULrateInfoAry addObject:rateInfo];
             }else if ([nmSupply doubleValue]>[nmDRI doubleValue]){
-                double rateSupplyVsDRI = [nmSupply doubleValue] / [nmDRI doubleValue];
-                NSDictionary *rateInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithDouble:rateSupplyVsDRI],@"rate", nutrient,@"nutrient", nil];
-                [exceedDRIrateInfoAry addObject:rateInfo];
+                if ( needFirstSpecialForShucaiShuiguo && [NutrientId_VC isEqualToString:nutrient]){
+                    //此时对于 VC 特殊处理，因为这个flag是特意多补蔬菜水果，而蔬菜水果主要与VC相关。VC如果只超过DRI就不用减食物了，免得特意加上的蔬菜水果又被减掉。
+                }else{
+                    double rateSupplyVsDRI = [nmSupply doubleValue] / [nmDRI doubleValue];
+                    NSDictionary *rateInfo = [NSDictionary dictionaryWithObjectsAndKeys: [NSNumber numberWithDouble:rateSupplyVsDRI],@"rate", nutrient,@"nutrient", nil];
+                    [exceedDRIrateInfoAry addObject:rateInfo];
+                }
             }
         }//for
         
@@ -4705,6 +4754,8 @@
             [rows addObject:row];
         }//for i
     }//if (takenFoodAmountDict != nil)
+
+        
     
     //推荐的各种食物具体的量和提供各种营养素的量
     if (preChooseFoodInfoDict != nil){
@@ -4827,6 +4878,23 @@
     [rows addObject:rowSupplyToULRatio];
     [rows addObject:exceedULnutrients];
     
+    
+    int takenFoodCount = 0, recommendFoodCount = 0;
+    if (takenFoodAmountDict != nil)  takenFoodCount = takenFoodAmountDict.count;
+    if (recommendFoodAmountDict.count > 0){
+        for(id key in recommendFoodAmountDict){
+            NSNumber *nmVal = recommendFoodAmountDict[key];
+            if ([nmVal doubleValue]>0) recommendFoodCount++;
+        }
+    }
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    row[0] = @"takenFoodCount";
+    row[1] = [NSNumber numberWithInt:takenFoodCount];
+    row[2] = @"recommendFoodCount";
+    row[3] = [NSNumber numberWithInt:recommendFoodCount];
+    row[4] = @"allFoodCount";
+    row[5] = [NSNumber numberWithInt:takenFoodCount+recommendFoodCount];
+    [rows addObject:row];
     
     row = [NSMutableArray arrayWithArray:rowForInit];
     row[0] = @"--------";

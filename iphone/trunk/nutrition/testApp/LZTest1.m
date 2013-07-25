@@ -1778,10 +1778,10 @@
     BOOL needUseLowLimitAsUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
     BOOL needUseFirstRecommendWhenSmallIncrementLogic = TRUE;//FALSE;
-    BOOL needSpecialForFirstBatchFoods = TRUE;
+    BOOL needSpecialForFirstBatchFoods = FALSE; //TRUE;
     BOOL needFirstSpecialForShucaiShuiguo = TRUE;
     BOOL alreadyChoosedFoodHavePriority = TRUE;
-    bool needPriorityFoodToSpecialNutrient = FALSE;
+    BOOL needPriorityFoodToSpecialNutrient = FALSE;
     int randSeed = 0; //0;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                         [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
