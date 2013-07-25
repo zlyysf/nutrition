@@ -108,14 +108,19 @@
     
     if (self.previewImageView.image)
     {
+        NSString *content = [self.contentTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+        if ([content length]==0)
+        {
+            content = @"来自@全面营养宝典";
+        }
         UIImage *shareImage = self.previewImageView.image;
-    id<ISSContent> publishContent = [ShareSDK content:self.contentTextView.text
-                                       defaultContent:@""
+    id<ISSContent> publishContent = [ShareSDK content:content
+                                       defaultContent:nil
                                                 image:[ShareSDK jpegImageWithImage:shareImage quality:0.1]
                                                 title:nil
                                                   url:nil
                                           description:nil
-                                            mediaType:SSPublishContentMediaTypeText];
+                                            mediaType:SSPublishContentMediaTypeImage];
         shareImage = nil;
     
     [ShareSDK shareContent:publishContent
@@ -129,7 +134,7 @@
                         }
                         else if (state == SSPublishContentStateFail)
                         {
-                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享失败" message:@"请稍后再试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享失败" message:[error errorDescription] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
                             [alert show];
                         }
                     }];
