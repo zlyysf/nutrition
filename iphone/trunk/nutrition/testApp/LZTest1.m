@@ -1864,7 +1864,8 @@
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 //                                   [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",nil],Key_givenNutrients,
-                                   [NSArray arrayWithObjects: @"Vit_A_RAE",nil],Key_givenNutrients,
+//                                   [NSArray arrayWithObjects: @"Vit_A_RAE",nil],Key_givenNutrients,
+                                   [NSArray arrayWithObjects: @"Vit_E_(mg)",nil],Key_givenNutrients,
                                     nil];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];

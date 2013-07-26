@@ -4,6 +4,7 @@
 蔬菜 shucai 蔬菜类及制品
   薯类 shucai-shulei 薯类、淀粉及制品
   菌藻 shucai-junzao 菌藻类
+  辅菜 shucai-fucai
 水果 shuiguo 水果类及制品
 干果 ganguo 坚果、种子类
         ganguo-putong
