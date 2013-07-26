@@ -3971,7 +3971,9 @@
     NSMutableArray *alreadyReachNormalLimitFoodIds = [NSMutableArray array];
     
     if (needSpecialForFirstBatchFoods){
-        if (givenFoodAmountDict.count == 0){
+        if (givenFoodAmountDict.count == 0 && originalNutrientNameAryToCal.count>=6){
+            //如果有预选食物，由于难以判断预选的多少，所以干脆认为多而不特殊的批量加上第一批。
+            //如果营养素太少，又使用了第一批批量的话，可能造成即使选了1个营养素也有约6个食物来补，使人不符常理。
             needSpecialForFirstBatchFoods_applied = true;
             NSArray *foodIds = [firstBatchFoodInfoDict allKeys];
             NSMutableDictionary *firstBatchFoodAmountDict = [NSMutableDictionary dictionaryWithCapacity:foodIds.count];
@@ -4001,73 +4003,75 @@
             [self foodsSupplyNutrients_withAmounts:firstBatchFoodAmountDict andFoodInfoDict:preChooseFoodInfoDict andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
             [LZUtility addDoubleDictionaryToDictionary_withSrcAmountDictionary:firstBatchFoodAmountDict withDestDictionary:recommendFoodAmountDict];//推荐量累加
             [LZUtility addDoubleDictionaryToDictionary_withSrcAmountDictionary:firstBatchFoodAmountDict withDestDictionary:foodSupplyAmountDict];//供给量累加
-        }//if (givenFoodAmountDict.count == 0)
+        }//if (givenFoodAmountDict.count == 0 && originalNutrientNameAryToCal.count>=6)
     }//if (needSpecialForFirstBatchFoods)
     
     if (needFirstSpecialForShucaiShuiguo && !needSpecialForFirstBatchFoods_applied){
-        double dSupplyVC = [LZUtility getDoubleFromDictionaryItem_withDictionary:nutrientSupplyDict andKey:NutrientId_VC];
-        if (dSupplyVC == 0 ){
-            //由于存在少数不富含任何一种营养素的食物，这里只选富含食物就会把它们漏了。这里从返回结果中直接取。
-            NSDictionary *food_shucai = preChooseFoodInfo_shucai;
-            NSDictionary *food_shuiguo = preChooseFoodInfo_shuiguo;
-            if (food_shucai != nil){
-                NSString *nutrientNameToCal = NutrientId_VC;
-                NSDictionary * foodToSupplyOneNutrient = food_shucai;
-                NSString *foodIdToSupply = foodToSupplyOneNutrient[COLUMN_NAME_NDB_No];
-                NSNumber *nmFood_first_recommend = foodToSupplyOneNutrient[COLUMN_NAME_first_recommend];
-                assert(nmFood_first_recommend!=nil);
-                double dFoodIncreaseUnit = [nmFood_first_recommend doubleValue];
-                
-                [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
-                [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:recommendFoodAmountDict andKey:foodIdToSupply];//推荐量累加
-                [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];//供给量累加
-                
-                NSMutableArray *foodSupplyNutrientSeq = [NSMutableArray arrayWithCapacity:5];
-                [foodSupplyNutrientSeq addObject:nutrientNameToCal];
-                [foodSupplyNutrientSeq addObject:@"special first for VC"];
-                [foodSupplyNutrientSeq addObject:[foodToSupplyOneNutrient objectForKey:@"CnCaption"]];
-                [foodSupplyNutrientSeq addObject:foodIdToSupply];
-                [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:dFoodIncreaseUnit]];
-                [foodSupplyNutrientSeq addObject:[foodToSupplyOneNutrient objectForKey:@"Shrt_Desc"]];
-                [foodSupplyNutrientSeq addObject:FoodClassify_shucai];
-                [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
-                logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-                NSLog(@"%@",logMsg);
-                calculationLog = [NSMutableArray array];
-                [calculationLog addObject:@"supply food:"];
-                [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
-                [calculationLogs addObject:calculationLog];
-            }
-            if (food_shuiguo != nil){
-                NSString *nutrientNameToCal = NutrientId_VC;
-                NSDictionary * foodToSupplyOneNutrient = food_shuiguo;
-                NSString *foodIdToSupply = foodToSupplyOneNutrient[COLUMN_NAME_NDB_No];
-                NSNumber *nmFood_first_recommend = foodToSupplyOneNutrient[COLUMN_NAME_first_recommend];
-                assert(nmFood_first_recommend!=nil);
-                double dFoodIncreaseUnit = [nmFood_first_recommend doubleValue];
-                
-                [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
-                [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:recommendFoodAmountDict andKey:foodIdToSupply];//推荐量累加
-                [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];//供给量累加
-                
-                
-                NSMutableArray *foodSupplyNutrientSeq = [NSMutableArray arrayWithCapacity:5];
-                [foodSupplyNutrientSeq addObject:nutrientNameToCal];
-                [foodSupplyNutrientSeq addObject:@"special first for VC"];
-                [foodSupplyNutrientSeq addObject:[foodToSupplyOneNutrient objectForKey:@"CnCaption"]];
-                [foodSupplyNutrientSeq addObject:foodIdToSupply];
-                [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:dFoodIncreaseUnit]];
-                [foodSupplyNutrientSeq addObject:[foodToSupplyOneNutrient objectForKey:@"Shrt_Desc"]];
-                [foodSupplyNutrientSeq addObject:FoodClassify_shuiguo];
-                [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
-                logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-                NSLog(@"%@",logMsg);
-                calculationLog = [NSMutableArray array];
-                [calculationLog addObject:@"supply food:"];
-                [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
-                [calculationLogs addObject:calculationLog];
-            }
-        }//if (dSupplyVC == 0)
+        if (originalNutrientNameAryToCal.count>=4){//为了避免所选营养素太少而推荐食物相对感觉太多的情况
+            double dSupplyVC = [LZUtility getDoubleFromDictionaryItem_withDictionary:nutrientSupplyDict andKey:NutrientId_VC];
+            if (dSupplyVC == 0 ){
+                //由于存在少数不富含任何一种营养素的食物，这里只选富含食物就会把它们漏了。这里从返回结果中直接取。
+                NSDictionary *food_shucai = preChooseFoodInfo_shucai;
+                NSDictionary *food_shuiguo = preChooseFoodInfo_shuiguo;
+                if (food_shucai != nil){
+                    NSString *nutrientNameToCal = NutrientId_VC;
+                    NSDictionary * foodToSupplyOneNutrient = food_shucai;
+                    NSString *foodIdToSupply = foodToSupplyOneNutrient[COLUMN_NAME_NDB_No];
+                    NSNumber *nmFood_first_recommend = foodToSupplyOneNutrient[COLUMN_NAME_first_recommend];
+                    assert(nmFood_first_recommend!=nil);
+                    double dFoodIncreaseUnit = [nmFood_first_recommend doubleValue];
+                    
+                    [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
+                    [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:recommendFoodAmountDict andKey:foodIdToSupply];//推荐量累加
+                    [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];//供给量累加
+                    
+                    NSMutableArray *foodSupplyNutrientSeq = [NSMutableArray arrayWithCapacity:5];
+                    [foodSupplyNutrientSeq addObject:nutrientNameToCal];
+                    [foodSupplyNutrientSeq addObject:@"special first for VC"];
+                    [foodSupplyNutrientSeq addObject:[foodToSupplyOneNutrient objectForKey:@"CnCaption"]];
+                    [foodSupplyNutrientSeq addObject:foodIdToSupply];
+                    [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:dFoodIncreaseUnit]];
+                    [foodSupplyNutrientSeq addObject:[foodToSupplyOneNutrient objectForKey:@"Shrt_Desc"]];
+                    [foodSupplyNutrientSeq addObject:FoodClassify_shucai];
+                    [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
+                    logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
+                    NSLog(@"%@",logMsg);
+                    calculationLog = [NSMutableArray array];
+                    [calculationLog addObject:@"supply food:"];
+                    [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
+                    [calculationLogs addObject:calculationLog];
+                }
+                if (food_shuiguo != nil){
+                    NSString *nutrientNameToCal = NutrientId_VC;
+                    NSDictionary * foodToSupplyOneNutrient = food_shuiguo;
+                    NSString *foodIdToSupply = foodToSupplyOneNutrient[COLUMN_NAME_NDB_No];
+                    NSNumber *nmFood_first_recommend = foodToSupplyOneNutrient[COLUMN_NAME_first_recommend];
+                    assert(nmFood_first_recommend!=nil);
+                    double dFoodIncreaseUnit = [nmFood_first_recommend doubleValue];
+                    
+                    [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
+                    [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:recommendFoodAmountDict andKey:foodIdToSupply];//推荐量累加
+                    [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];//供给量累加
+                    
+                    
+                    NSMutableArray *foodSupplyNutrientSeq = [NSMutableArray arrayWithCapacity:5];
+                    [foodSupplyNutrientSeq addObject:nutrientNameToCal];
+                    [foodSupplyNutrientSeq addObject:@"special first for VC"];
+                    [foodSupplyNutrientSeq addObject:[foodToSupplyOneNutrient objectForKey:@"CnCaption"]];
+                    [foodSupplyNutrientSeq addObject:foodIdToSupply];
+                    [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:dFoodIncreaseUnit]];
+                    [foodSupplyNutrientSeq addObject:[foodToSupplyOneNutrient objectForKey:@"Shrt_Desc"]];
+                    [foodSupplyNutrientSeq addObject:FoodClassify_shuiguo];
+                    [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
+                    logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
+                    NSLog(@"%@",logMsg);
+                    calculationLog = [NSMutableArray array];
+                    [calculationLog addObject:@"supply food:"];
+                    [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
+                    [calculationLogs addObject:calculationLog];
+                }
+            }//if (dSupplyVC == 0)
+        }//if (originalNutrientNameAryToCal.count>=4)
     }//needFirstSpecialForShucaiShuiguo
 
     //对每个还需补足的营养素进行计算

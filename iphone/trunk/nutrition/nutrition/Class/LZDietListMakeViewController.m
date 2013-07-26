@@ -750,7 +750,8 @@
     BOOL needSpecialForFirstBatchFoods = FALSE; //TRUE;
     BOOL needFirstSpecialForShucaiShuiguo = TRUE;
     BOOL alreadyChoosedFoodHavePriority = TRUE;
-    BOOL needPriorityFoodToSpecialNutrient = FALSE;
+    BOOL needPriorityFoodToSpecialNutrient = TRUE;
+    
     int randSeed = 0; //0;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,

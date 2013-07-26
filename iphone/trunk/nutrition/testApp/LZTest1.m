@@ -87,8 +87,8 @@
 
 +(void)testRecommendFoodBySmallIncrement
 {
-    [self.class caseUser_recSI_preTaken_0];
-//    [self.class caseUser_recSI_preTaken_0_givenNutrients];
+//    [self.class caseUser_recSI_preTaken_0];
+    [self.class caseUser_recSI_preTaken_0_givenNutrients];
 //    [self.class caseUser_recSI_preTaken_0_sameOptionsAsAppForLinearSystemCompare];
 }
 
@@ -1781,7 +1781,7 @@
     BOOL needSpecialForFirstBatchFoods = FALSE; //TRUE;
     BOOL needFirstSpecialForShucaiShuiguo = TRUE;
     BOOL alreadyChoosedFoodHavePriority = TRUE;
-    BOOL needPriorityFoodToSpecialNutrient = FALSE;
+    BOOL needPriorityFoodToSpecialNutrient = TRUE;
     int randSeed = 0; //0;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                         [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
@@ -1833,15 +1833,24 @@
     //    BOOL needLimitNutrients = FALSE;
     BOOL needUseLowLimitAsUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
-    int randSeed = 0; //0; //0;
+    BOOL needUseFirstRecommendWhenSmallIncrementLogic = TRUE;//FALSE;
+    BOOL needSpecialForFirstBatchFoods = FALSE; //TRUE;
+    BOOL needFirstSpecialForShucaiShuiguo = TRUE;
+    BOOL alreadyChoosedFoodHavePriority = TRUE;
+    BOOL needPriorityFoodToSpecialNutrient = TRUE;
+    int randSeed = 0; //0;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
-                                    //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
+    //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
                                     [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
                                     [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
+                                    [NSNumber numberWithBool:needUseFirstRecommendWhenSmallIncrementLogic],LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic,
+                                    [NSNumber numberWithBool:needSpecialForFirstBatchFoods],LZSettingKey_needSpecialForFirstBatchFoods,
+                                    [NSNumber numberWithBool:needFirstSpecialForShucaiShuiguo],LZSettingKey_needFirstSpecialForShucaiShuiguo,
+                                    [NSNumber numberWithBool:alreadyChoosedFoodHavePriority],LZSettingKey_alreadyChoosedFoodHavePriority,
+                                    [NSNumber numberWithBool:needPriorityFoodToSpecialNutrient],LZSettingKey_needPriorityFoodToSpecialNutrient,
                                     [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                                     nil];
-    
     
     NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
     NSString *csvFileName = [NSString stringWithFormat:@"recBySI_%@.csv",paramsDigestStr ];
@@ -1854,7 +1863,8 @@
     NSLog(@"htmlFilePath=%@",htmlFilePath);
     
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",nil],Key_givenNutrients,
+//                                   [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",nil],Key_givenNutrients,
+                                   [NSArray arrayWithObjects: @"Vit_A_RAE",nil],Key_givenNutrients,
                                     nil];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
