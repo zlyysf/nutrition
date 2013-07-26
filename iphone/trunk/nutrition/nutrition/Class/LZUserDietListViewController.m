@@ -47,7 +47,7 @@
     self.navigationItem.leftBarButtonItem = leftItem;
     self.navigationItem.rightBarButtonItem = rightItem;
     
-    self.title = @"食物搭配清单";
+    self.title = @"膳食清单";
     self.dietArray = [[NSMutableArray alloc]init];
     currentEditDietId = nil;
 

@@ -111,7 +111,7 @@
         NSString *content = [self.contentTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if ([content length]==0)
         {
-            content = @"来自@全面营养宝典";
+            content = @"来自@营养膳食指南";
         }
         UIImage *shareImage = self.previewImageView.image;
     id<ISSContent> publishContent = [ShareSDK content:content

@@ -256,7 +256,7 @@
 		5F2584A81782F9A900D99C16 /* edit_right_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_right_clicked@2x.png"; path = "nutrition/Resource/edit_right_clicked@2x.png"; sourceTree = "<group>"; };
 		5F2584A91782F9AA00D99C16 /* edit_right_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_right_normal@2x.png"; path = "nutrition/Resource/edit_right_normal@2x.png"; sourceTree = "<group>"; };
 		5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_left_normal@2x.png"; path = "nutrition/Resource/edit_left_normal@2x.png"; sourceTree = "<group>"; };
-		5F3338A5172A407E0096E7AE /* 营养宝典.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "营养宝典.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F3338A5172A407E0096E7AE /* 营养膳食指南.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "营养膳食指南.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3338A8172A407E0096E7AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		5F3338AA172A407E0096E7AE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5F3338AC172A407E0096E7AE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -570,7 +570,7 @@
 		5F3338A6172A407E0096E7AE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				5F3338A5172A407E0096E7AE /* 营养宝典.app */,
+				5F3338A5172A407E0096E7AE /* 营养膳食指南.app */,
 				085C8D5717336A29001A1ABB /* testApp.app */,
 			);
 			name = Products;
@@ -932,7 +932,7 @@
 			);
 			name = nutrition;
 			productName = nutrition;
-			productReference = 5F3338A5172A407E0096E7AE /* 营养宝典.app */;
+			productReference = 5F3338A5172A407E0096E7AE /* 营养膳食指南.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1310,7 +1310,7 @@
 					"\"$(SRCROOT)/nutrition/AdMob\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "营养宝典";
+				PRODUCT_NAME = "营养膳食指南";
 				PROVISIONING_PROFILE = "4657BC38-C652-4082-9417-DF391598F514";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4657BC38-C652-4082-9417-DF391598F514";
 				WRAPPER_EXTENSION = app;
@@ -1341,7 +1341,7 @@
 					"\"$(SRCROOT)/nutrition/AdMob\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
-				PRODUCT_NAME = "营养宝典";
+				PRODUCT_NAME = "营养膳食指南";
 				PROVISIONING_PROFILE = "C275FD3E-7C38-44C3-ACC5-A4B24B3541A2";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "C275FD3E-7C38-44C3-ACC5-A4B24B3541A2";
 				WRAPPER_EXTENSION = app;

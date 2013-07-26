@@ -53,7 +53,7 @@
     [super viewDidLoad];
     if (self.listType == dietListTypeNew)
     {
-        self.title = @"营养搭配指南";
+        self.title = @"营养搭配";
     }
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
@@ -773,7 +773,7 @@
     NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
     if (recommendFoodAmountDict == nil || [recommendFoodAmountDict count]==0)
     {
-        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"已有的这组食物搭配已经能够满足您一天的各营养需要，如需另行推荐，您可以删掉一些已有的食物再使用推荐功能。" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"已有的这组食物搭配已经能够满足您一天的各营养需要，如需另行推荐，您可以通过左右滑动来删掉一些食物再使用推荐功能。" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
         [noRecommendAlert show];
         [HUD hide:YES];
         self.listView.hidden = NO;
@@ -1019,7 +1019,7 @@
 //        }
 //        else
 //        {
-            NSString *contents = @"我用@全面营养宝典(http://t.cn/zH1gxw5 )挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
+            NSString *contents = @"我用@营养膳食指南(http://t.cn/zH1gxw5 )挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
             return contents;
 //        }
     }
@@ -1040,7 +1040,7 @@
 //        }
 //        else
 //        {
-            NSString *contents = @"我用 全面营养宝典(http://t.cn/zH1gxw5 ) 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
+            NSString *contents = @"我用 营养膳食指南(http://t.cn/zH1gxw5 ) 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
             return contents;
 //        }
         
@@ -1190,7 +1190,7 @@
                                                                       viewDelegate:nil
                                                            authManagerViewDelegate:nil];
                 [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"营养宝典"],
+                                                [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"营养膳食指南"],
                                                 SHARE_TYPE_NUMBER(type),
                                                 //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
                                                 //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
