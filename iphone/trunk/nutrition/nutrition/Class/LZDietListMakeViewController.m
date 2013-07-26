@@ -117,7 +117,7 @@
     if (self.listType == dietListTypeNew)
     {
         //新建一个表单，用insert
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物搭配" message:@"请输入这组食物搭配的名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物搭配" message:@"给你的食物搭配加个名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         alert.tag = KSaveDietTitleAlertTag;
         [alert show];
@@ -142,7 +142,7 @@
         }
         else
         {
-            UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
             [saveFailedAlert show];
         }
     }
@@ -401,7 +401,7 @@
     NSString *foodId = sender.foodId;
     //NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
     currentEditFoodId = foodId;
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改食物量" message:@"请输入新的食物量" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改食物量" message:@"请输入更适合你的食物量" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = KChangeFoodAmountAlertTag;
     UITextField *tf = [alert textFieldAtIndex:0];
@@ -1091,7 +1091,7 @@
         }
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"出现错误，请重试" delegate:nil cancelButtonTitle:@"我知道了" otherButtonTitles: nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"我知道了" otherButtonTitles: nil];
             [alert show];
             return nil;
         }
@@ -1307,7 +1307,7 @@
             }
             else
             {
-                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
                 [saveFailedAlert show];
             }
         }

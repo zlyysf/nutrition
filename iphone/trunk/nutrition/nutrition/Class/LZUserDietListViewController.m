@@ -128,7 +128,7 @@
     NSNumber *dietId = sender.dietId;
     //NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
     currentEditDietId = dietId;
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改名称" message:@"请输入新的食物搭配名称" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改搭配名称" message:@"填一个你更喜欢的名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = KChangeDietAlertTag;
     [alert show];
@@ -164,7 +164,7 @@
                 [self displayLocalDietList];
             }
             else{
-                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"更改失败" message:@"请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"更改失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
                 [saveFailedAlert show];
             }
         }
@@ -240,7 +240,7 @@
     }
     else
     {
-        UIAlertView *deleteFailAlert = [[UIAlertView alloc]initWithTitle:@"删除失败" message:@"请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *deleteFailAlert = [[UIAlertView alloc]initWithTitle:@"删除失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
         [deleteFailAlert show];
     }
 //    NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
