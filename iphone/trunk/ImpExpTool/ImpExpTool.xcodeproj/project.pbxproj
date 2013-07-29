@@ -47,6 +47,7 @@
 		0882414D174B615D00E71E6E /* NutrientInfo.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882414C174B615D00E71E6E /* NutrientInfo.xls */; };
 		0882419A17530AC500E71E6E /* Food_common.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882419917530AC500E71E6E /* Food_common.xls */; };
 		08CDEAD117A652DD00AFA47E /* foodDealed in Resources */ = {isa = PBXBuildFile; fileRef = 08CDEAD017A652DD00AFA47E /* foodDealed */; };
+		08CDEAD417A6865E00AFA47E /* CustomRichFood.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -124,6 +125,7 @@
 		0882414C174B615D00E71E6E /* NutrientInfo.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = NutrientInfo.xls; path = ../../../data/NutrientInfo.xls; sourceTree = "<group>"; };
 		0882419917530AC500E71E6E /* Food_common.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Food_common.xls; path = ../../../data/Food_common.xls; sourceTree = "<group>"; };
 		08CDEAD017A652DD00AFA47E /* foodDealed */ = {isa = PBXFileReference; lastKnownFileType = folder; name = foodDealed; path = ../../../ui/pictures/foodDealed; sourceTree = "<group>"; };
+		08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomRichFood.xls; path = ../../../data/CustomRichFood.xls; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -284,6 +286,7 @@
 		0882411A1740E02D00E71E6E /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */,
 				08529CEF177C3672008E1397 /* Female_UL.xls */,
 				08529CF0177C3672008E1397 /* Male_UL.xls */,
 				0882419917530AC500E71E6E /* Food_common.xls */,
@@ -385,6 +388,7 @@
 				08529CF1177C3672008E1397 /* Female_UL.xls in Resources */,
 				08529CF2177C3672008E1397 /* Male_UL.xls in Resources */,
 				08CDEAD117A652DD00AFA47E /* foodDealed in Resources */,
+				08CDEAD417A6865E00AFA47E /* CustomRichFood.xls in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

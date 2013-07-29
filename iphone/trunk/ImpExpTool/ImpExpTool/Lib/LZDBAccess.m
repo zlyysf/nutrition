@@ -176,7 +176,9 @@
         [self dropTable:tableName];
     }
     NSMutableDictionary *columnDict = [NSMutableDictionary dictionaryWithObjects:columnNames forKeys:columnNames];
-    assert([columnDict objectForKey:primaryKey]!=nil);
+    if (primaryKey != nil ){
+        assert([columnDict objectForKey:primaryKey]!=nil);
+    }
     NSArray *row = rows2D[0];
     assert(row.count==columnNames.count);
     

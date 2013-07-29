@@ -60,6 +60,28 @@ CREATE TABLE FoodCustomOld AS SELECT * FROM FoodCustom;
 
 
 
+CREATE TABLE CustomRichFood ('NutrientID' TEXT,'NDB_No' TEXT KEY);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

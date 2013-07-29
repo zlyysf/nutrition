@@ -25,6 +25,7 @@
 -(void)convertExcelToSqlite_FoodCustom_v1_3;
 
 -(void)checkExcelForFoodPicPath;
+-(void)convertExcelToSqlite_CustomRichFood;
 
 
 -(void)convertDRIFemaleDataFromExcelToSqlite;

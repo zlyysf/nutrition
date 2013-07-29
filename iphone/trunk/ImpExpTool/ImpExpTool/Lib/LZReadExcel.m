@@ -10,6 +10,7 @@
 #import "LZConstants.h"
 #import "LZUtility.h"
 #import "LZReadExcel.h"
+#import "LZRecommendFood.h"
 
 @implementation LZReadExcel
 
@@ -22,7 +23,7 @@
 {
     return dbCon;
 }
-            
+
 
 
 /*
@@ -1060,6 +1061,126 @@
 
 
 
+
+
+
+
+-(NSDictionary *)readCustomRichFood
+{
+    NSString *fileName = @"CustomRichFood.xls";
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
+    NSLog(@"in readCustomRichFood, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NutrientID, COLUMN_NAME_NDB_No
+                                   , nil];
+    NSArray * fullNutrients = [LZRecommendFood getDRItableNutrientsWithSameOrder];
+    NSSet *fullNutrientSet = [NSSet setWithArray:fullNutrients];
+    int idxInXls_NutrientId = 1, idxInXls_NutrientName = 2;
+    int idxInXls_FoodId = 1, idxInXls_FoodName = 2, idxInXls_choose = 6;
+    int idxRow=1;
+    
+
+    int continueEmptyRowCount = 0;
+    int continueEmptyRowLimit = 10;
+    
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+    NSMutableArray *row;
+    DHcell *cell_NutrientId, *cell_NutrientName,
+            *cell_FoodId, *cell_FoodName, *cell_choose;
+    do {
+        continueEmptyRowCount = 0;
+        BOOL nutrientIdGot = false;
+        NSString *nutrientId = nil;
+        do {
+            cell_NutrientId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_NutrientId];
+            cell_NutrientName = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_NutrientName];
+            idxRow++;
+            if (cell_NutrientId.type!=cellBlank){
+                nutrientIdGot = true;
+                nutrientId = cell_NutrientId.str;
+                assert(nutrientId.length > 0);
+                assert( [fullNutrientSet containsObject:nutrientId] );
+                NSLog(@"current nutrientId:%@",nutrientId);
+                continueEmptyRowCount = 0;
+            }else{
+                continueEmptyRowCount ++;
+            }
+        } while (continueEmptyRowCount<continueEmptyRowLimit && !nutrientIdGot);
+        if (!nutrientIdGot){
+            break;
+        }
+        
+        bool foundEmptyRow = false;
+        do{
+            cell_FoodId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_FoodId];
+            cell_FoodName = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_FoodName];
+            cell_choose = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_choose];
+            idxRow++;
+            if (cell_FoodId.type!=cellBlank || cell_FoodName.type!=cellBlank || cell_choose.type!=cellBlank){
+                if ([COLUMN_NAME_NDB_No isEqualToString:cell_FoodId.str]){
+                    continue;
+                }else{
+                    
+                    int iChoose = 0;
+                    if (cell_choose.type!=cellBlank){
+                        NSNumber *nmChoose = cell_choose.val;
+                        iChoose = [nmChoose intValue];
+                    }
+                    if (iChoose == 1){
+                        NSString *foodId = nil;
+                        if (cell_FoodId.type == cellString){
+                            foodId = cell_FoodId.str;
+                        }else{
+                            NSNumber *nmFoodId = cell_FoodId.val;
+                            foodId = [NSString stringWithFormat:@"%d",[nmFoodId intValue]];
+                        }
+                        if (foodId.length<=4){
+                            foodId = [NSString stringWithFormat:@"0%@",foodId];
+                        }
+                        if (foodId.length<=4){
+                            foodId = [NSString stringWithFormat:@"0%@",foodId];
+                        }
+                        if (foodId.length<=4){
+                            foodId = [NSString stringWithFormat:@"0%@",foodId];
+                        }
+                        
+                        
+                        NSMutableArray *row = [NSMutableArray arrayWithCapacity:2];
+                        [row addObject:nutrientId];
+                        [row addObject:foodId];
+                        [rows2D addObject:row];
+                        NSLog(@"%@ %@, %@ %@",nutrientId,cell_NutrientName.str,foodId,cell_FoodName.str);
+                    }
+                }
+            }else{
+                foundEmptyRow = true;
+            }
+        }while (!foundEmptyRow);
+    } while (continueEmptyRowCount < continueEmptyRowLimit);
+//    NSLog(@"in readCustomRichFood, columnNames=%@, rows2D=\n%@",columnNames,rows2D);
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+    [retData setObject:columnNames forKey:@"columnNames"];
+    [retData setObject:rows2D forKey:@"rows2D"];
+    return retData;
+}
+
+
+
+-(void)convertExcelToSqlite_CustomRichFood
+{
+    NSDictionary *data = [self readCustomRichFood];
+    NSArray *columns = [data objectForKey:@"columnNames"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    NSString *tableName = TABLE_NAME_CustomRichFood;
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    [db createTable_withTableName:tableName withColumnNames:columns withRows2D:rows2D withPrimaryKey:nil andIfNeedDropTable:true];
+    [db insertToTable_withTableName:tableName withColumnNames:columns andRows2D:rows2D andIfNeedClearTable:true];
+}
 
 
 

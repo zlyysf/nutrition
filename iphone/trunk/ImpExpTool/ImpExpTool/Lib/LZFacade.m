@@ -16,9 +16,9 @@
 
 +(void)testMain
 {
-    //    [LZFacade test1];
-    //    [LZFacade test2];
-    [LZFacade test_withSomeExist];
+    [LZFacade test1];
+//    [LZFacade test2];
+//    [LZFacade test_withSomeExist];
 }
 
 
@@ -37,14 +37,14 @@
 //    [workRe convertDRIMaleDataFromExcelToSqlite];
 //    [workRe convertDRIULFemaleDataFromExcelToSqlite];
 //    [workRe convertDRIULMaleDataFromExcelToSqlite];
-    [workRe dealDRIandULdataFromExcelToSqliteForFemale];
-    [workRe dealDRIandULdataFromExcelToSqliteForMale];
+//    [workRe dealDRIandULdataFromExcelToSqliteForFemale];
+//    [workRe dealDRIandULdataFromExcelToSqliteForMale];
 //    [workRe generateCustomUSDASqliteDataFromFullSqliteDataAndExcelDigestData_V2];
 //    [workRe convertExcelToSqlite_FoodLimit];
 //    [workRe convertExcelToSqlite_FoodCnDescription];
 //    [workRe convertExcelToSqlite_NutritionInfo];
 //    [workRe convertExcelToSqlite_FoodPicPath];
-    
+    [workRe convertExcelToSqlite_CustomRichFood];
     
 //    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];
 //    LZDBAccess *db = [workRe getDBconnection];

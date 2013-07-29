@@ -132,6 +132,8 @@
 #define COLUMN_NAME_FoodId @"FoodId"
 #define COLUMN_NAME_FoodAmount @"FoodAmount"
 
+#define TABLE_NAME_CustomRichFood @"CustomRichFood"
+
 
 #define Key_Amount @"Amount"
 #define Key_Name @"Name"
