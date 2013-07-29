@@ -330,7 +330,8 @@
     }
     else
     {
-        picturePath = [NSString stringWithFormat:@"%@/foodDealed/%@",[[NSBundle mainBundle] bundlePath],picPath];
+        NSString * picFolderPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"foodDealed"];
+        picturePath = [picFolderPath stringByAppendingPathComponent:picPath];
     }
     UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
     [cell.foodPicView setImage:foodImage];

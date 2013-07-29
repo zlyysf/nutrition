@@ -131,6 +131,8 @@
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改搭配名称" message:@"填一个你更喜欢的名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = KChangeDietAlertTag;
+    UITextField *tf = [alert textFieldAtIndex:0];
+    tf.clearButtonMode = UITextFieldViewModeAlways;
     [alert show];
 }
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex

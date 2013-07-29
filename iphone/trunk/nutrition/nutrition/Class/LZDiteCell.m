@@ -46,24 +46,39 @@
 }
 -(void)adjustLabelAccordingToDietName:(NSString *)dietName
 {
-    CGSize nameSize = [dietName sizeWithFont:[UIFont systemFontOfSize:20]constrainedToSize:CGSizeMake(195, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    float bigFontSize = 20;
+    float smallFontSize = 16;
+    CGSize nameSize = [dietName sizeWithFont:[UIFont systemFontOfSize:bigFontSize]constrainedToSize:CGSizeMake(195, 9999) lineBreakMode:UILineBreakModeWordWrap];
     NSString *onelineStr = @"1";
-    CGSize onelineSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:20]constrainedToSize:CGSizeMake(195, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize onelineSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:bigFontSize]constrainedToSize:CGSizeMake(195, 9999) lineBreakMode:UILineBreakModeWordWrap];
     float onelineHeight = onelineSize.height;
     float nameHeight = nameSize.height;
     if (nameHeight > onelineHeight)
     {
-        self.dietNameLabel.frame = CGRectMake(KLabelPointX, (KLabelSuperViewHeight-onelineHeight*2)/2, 190, onelineHeight*2);
-        
-        self.dietNameLabel.lineBreakMode  = UILineBreakModeWordWrap|UILineBreakModeTailTruncation;
+        CGSize nameSmallSize = [dietName sizeWithFont:[UIFont systemFontOfSize:smallFontSize]constrainedToSize:CGSizeMake(195, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        CGSize onelineSmallSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:smallFontSize]constrainedToSize:CGSizeMake(195, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        float onelineSmallHeight = onelineSmallSize.height;
+        float nameSmallHeight = nameSmallSize.height;
+        if (nameSmallHeight > onelineSmallHeight)
+        {
+            self.dietNameLabel.frame = CGRectMake(KLabelPointX, (KLabelSuperViewHeight-onelineSmallHeight*2)/2, 190, onelineSmallHeight*2);
+            self.dietNameLabel.lineBreakMode  = UILineBreakModeWordWrap|UILineBreakModeTailTruncation;
+            
+        }
+        else
+        {
+            self.dietNameLabel.frame = CGRectMake(KLabelPointX, (KLabelSuperViewHeight-nameSmallHeight)/2, 190, nameSmallHeight);
+            self.dietNameLabel.lineBreakMode  = UILineBreakModeWordWrap;
+        }
+        [self.dietNameLabel setFont:[UIFont systemFontOfSize:smallFontSize]];
     }
     else
     {
         self.dietNameLabel.frame = CGRectMake(KLabelPointX, (KLabelSuperViewHeight-nameHeight)/2, 190, nameHeight);
         self.dietNameLabel.lineBreakMode = UILineBreakModeWordWrap;
-        
+        [self.dietNameLabel setFont:[UIFont systemFontOfSize:bigFontSize]];
     }
-    [self.dietNameLabel setFont:[UIFont systemFontOfSize:20]];
+    
     self.dietNameLabel.text = dietName;
 }
 @end

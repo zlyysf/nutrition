@@ -81,8 +81,8 @@
 
     self.navigationItem.leftBarButtonItem = cancelItem;
     
-    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
-    self.navigationItem.rightBarButtonItem = saveItem;
+//    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
+//    self.navigationItem.rightBarButtonItem = saveItem;
     needRefresh = NO;
     takenFoodIdsArray = [[NSMutableArray alloc]init];
     takenFoodDict = [[NSMutableDictionary alloc]init];
@@ -101,9 +101,60 @@
 }
 - (void)cancelButtonTapped
 {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-    [self.navigationController  popViewControllerAnimated:YES];
+    if([self.takenFoodIdsArray count] == 0)
+    {
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        [self.navigationController  popViewControllerAnimated:YES];
+
+//        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+//        [foodEmptyAlert show];
+    }
+    else
+    {
+        if (self.listType == dietListTypeNew)
+        {
+            //新建一个表单，用insert
+            NSDate *now = [NSDate date];
+            NSDateFormatter *formatter= [[NSDateFormatter alloc] init];
+            [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
+            [formatter setDateFormat:@"MM月dd号"];
+            NSString* time = [formatter stringFromDate:now];
+            NSString *text = [NSString stringWithFormat:@"%@的饮食计划",time];
+            //7月29号的饮食计划
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物搭配" message:@"给你的食物搭配加个名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+            alert.tag = KSaveDietTitleAlertTag;
+            UITextField *tf = [alert textFieldAtIndex:0];
+            tf.clearButtonMode = UITextFieldViewModeAlways;
+            tf.text = text;
+            [alert show];
+            
+        }
+        else
+        {
+            //编辑已有的表单，用update
+            LZDataAccess *da = [LZDataAccess singleton];
+            NSMutableArray * foodAndAmountArray = [NSMutableArray array];
+            for (NSString *foodId in self.takenFoodIdsArray)
+            {
+                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+                NSNumber *weight = [aFood objectForKey:@"Amount"];
+                [foodAndAmountArray addObject:[NSArray arrayWithObjects:foodId, weight,nil]];
+            }
+            if([da updateFoodCollocationData_withCollocationId:dietId andNewCollocationName:nil andFoodAmount2LevelArray:foodAndAmountArray])
+            {
+                [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                [self.navigationController  popViewControllerAnimated:YES];
+            }
+            else
+            {
+                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                [saveFailedAlert show];
+            }
+        }
+    }
 }
 - (void)saveButtonTapped
 {
@@ -205,7 +256,6 @@
                               userSex,ParamKey_sex, userAge,ParamKey_age,
                               userWeight,ParamKey_weight, userHeight,ParamKey_height,
                               userActivityLevel,ParamKey_activityLevel, nil];
-
     
     NSDictionary *params = [NSDictionary dictionaryWithObjectsAndKeys:
                             userInfo,@"userInfo",
@@ -456,7 +506,8 @@
                 }
                 else
                 {
-                    picturePath = [NSString stringWithFormat:@"%@/foodDealed/%@",[[NSBundle mainBundle] bundlePath],picPath];
+                    NSString * picFolderPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"foodDealed"];
+                    picturePath = [picFolderPath stringByAppendingPathComponent:picPath];
                 }
                 UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
                 [cell.foodImageView setImage:foodImage];
@@ -1217,7 +1268,7 @@
 }
 - (void)popWeiChatInstallAlert
 {
-    UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"还没有安装微信 立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"还没有安装微信，立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     insallWeichatAlert.tag = KInstallWechatAlertTag;
     [insallWeichatAlert show];
 }
@@ -1276,7 +1327,9 @@
     {
         if (buttonIndex == alertView.cancelButtonIndex)
         {
-            return;
+            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self.navigationController  popViewControllerAnimated:YES];
         }
         else
         {
