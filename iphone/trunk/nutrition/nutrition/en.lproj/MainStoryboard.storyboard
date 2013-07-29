@@ -638,27 +638,8 @@
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
-                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="fa6-nK-XgN" customClass="LZEditFoodAmountButton">
-                                                            <rect key="frame" x="215" y="11" width="60" height="30"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
-                                                            <state key="normal">
-                                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                            <state key="highlighted">
-                                                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                            </state>
-                                                        </button>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="AYQ-FH-Xz5">
                                                             <rect key="frame" x="81" y="15" width="134" height="22"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="o1T-4N-j5C">
-                                                            <rect key="frame" x="220" y="15" width="50" height="22"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -671,6 +652,19 @@
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="MIH-IZ-P0o">
+                                                            <rect key="frame" x="217" y="11" width="60" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" id="vdn-9e-Quj">
+                                                            <rect key="frame" x="222" y="11" width="50" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                            <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
+                                                            <connections>
+                                                                <outlet property="delegate" destination="2DJ-QD-3Nk" id="etw-E6-wj1"/>
+                                                            </connections>
+                                                        </textField>
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
@@ -683,12 +677,12 @@
                                         </view>
                                         <connections>
                                             <outlet property="backView" destination="AyL-hD-eR6" id="1JB-1q-uy2"/>
-                                            <outlet property="editFoodButton" destination="fa6-nK-XgN" id="wRG-6a-JAW"/>
+                                            <outlet property="foodAmountTextField" destination="vdn-9e-Quj" id="7L8-TT-Ll8"/>
                                             <outlet property="foodImageView" destination="krY-Ac-UJo" id="7Po-lC-iwr"/>
                                             <outlet property="foodNameLabel" destination="AYQ-FH-Xz5" id="j87-ZI-Nzl"/>
                                             <outlet property="foodUnitLabel" destination="uN3-79-R9q" id="EY9-LD-Yf0"/>
-                                            <outlet property="foodWeightlabel" destination="o1T-4N-j5C" id="qeY-lV-F3F"/>
                                             <outlet property="recommendSignImageView" destination="Rex-Qs-AQ5" id="uSI-Q7-y08"/>
+                                            <outlet property="textBackImage" destination="MIH-IZ-P0o" id="ba5-Ct-9Ey"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZFoodNutritionCell" rowHeight="42" id="Aok-1x-Uk1" customClass="LZFoodNutritionCell">
@@ -1512,6 +1506,10 @@
         <class className="LZDietListMakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDietListMakeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addFoodAction:"/>
+                <relationship kind="action" name="addFoodByNutrient:" candidateClass="UIButton"/>
+                <relationship kind="action" name="recommendAction:"/>
+                <relationship kind="action" name="shareButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1524,9 +1522,6 @@
                 <relationship kind="outlet" name="dietNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="timeStampLabel" candidateClass="UILabel"/>
             </relationships>
-        </class>
-        <class className="LZEditFoodAmountButton" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZEditFoodAmountButton.h"/>
         </class>
         <class className="LZEditProfileViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZEditProfileViewController.h"/>
@@ -1611,21 +1606,17 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZRecommendFoodCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="backView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="editFoodButton" candidateClass="LZEditFoodAmountButton"/>
+                <relationship kind="outlet" name="foodAmountTextField" candidateClass="UITextField"/>
                 <relationship kind="outlet" name="foodImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="foodNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="foodUnitLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="foodWeightlabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="recommendSignImageView" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="textBackImage" candidateClass="UIImageView"/>
             </relationships>
         </class>
         <class className="LZSettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZSettingsViewController.h"/>
             <relationships>
-                <relationship kind="action" name="authSwitchChangeHandler:" candidateClass="UISwitch"/>
-                <relationship kind="action" name="editUserProfile:"/>
-                <relationship kind="action" name="reviewOurApp:"/>
-                <relationship kind="action" name="userFeedBack:"/>
                 <relationship kind="outlet" name="admobView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="bottomSectionView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="contentScrollView" candidateClass="UIScrollView"/>

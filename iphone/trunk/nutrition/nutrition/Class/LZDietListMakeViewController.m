@@ -29,7 +29,7 @@
 #define KChangeFoodAmountAlertTag 101
 #define KSaveDietTitleAlertTag 102
 #define KInstallWechatAlertTag 103
-@interface LZDietListMakeViewController ()<MBProgressHUDDelegate,UIActionSheetDelegate,UIAlertViewDelegate,LZRecommendFilterViewDelegate>
+@interface LZDietListMakeViewController ()<MBProgressHUDDelegate,UIActionSheetDelegate,UIAlertViewDelegate,LZRecommendFilterViewDelegate,LZRecommendFoodCellDelegate>
 {
     MBProgressHUD *HUD;
     BOOL isCapturing;
@@ -38,7 +38,7 @@
 @end
 
 @implementation LZDietListMakeViewController
-@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,currentEditFoodId,recommendFoodDictForDisplay,dietId,allFoodUnitDict;
+@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,recommendFoodDictForDisplay,dietId,allFoodUnitDict,currentFoodInputTextField;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -59,7 +59,7 @@
     [self.view addSubview:HUD];
     HUD.hidden = YES;
     HUD.delegate = self;
-    self.currentEditFoodId = nil;
+    //self.currentEditFoodId = nil;
 	// Do any additional setup after loading the view.
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
@@ -101,6 +101,10 @@
 }
 - (void)cancelButtonTapped
 {
+    if (self.currentFoodInputTextField)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
     if([self.takenFoodIdsArray count] == 0)
     {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
@@ -156,52 +160,56 @@
         }
     }
 }
-- (void)saveButtonTapped
-{
-
-    if([self.takenFoodIdsArray count] == 0)
-    {
-        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-        [foodEmptyAlert show];
-        return;
-    }
-    if (self.listType == dietListTypeNew)
-    {
-        //新建一个表单，用insert
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物搭配" message:@"给你的食物搭配加个名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-        alert.tag = KSaveDietTitleAlertTag;
-        [alert show];
-
-    }
-    else
-    {
-        //编辑已有的表单，用update
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSMutableArray * foodAndAmountArray = [NSMutableArray array];
-        for (NSString *foodId in self.takenFoodIdsArray)
-        {
-            NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
-            NSNumber *weight = [aFood objectForKey:@"Amount"];
-            [foodAndAmountArray addObject:[NSArray arrayWithObjects:foodId, weight,nil]];
-        }
-        if([da updateFoodCollocationData_withCollocationId:dietId andNewCollocationName:nil andFoodAmount2LevelArray:foodAndAmountArray])
-        {
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-            [self.navigationController  popViewControllerAnimated:YES];
-        }
-        else
-        {
-            UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-            [saveFailedAlert show];
-        }
-    }
-
-    //[self.navigationController  popViewControllerAnimated:YES];
-}
+//- (void)saveButtonTapped
+//{
+//
+//
+//    if([self.takenFoodIdsArray count] == 0)
+//    {
+//        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+//        [foodEmptyAlert show];
+//        return;
+//    }
+//    if (self.listType == dietListTypeNew)
+//    {
+//        //新建一个表单，用insert
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物搭配" message:@"给你的食物搭配加个名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//        alert.tag = KSaveDietTitleAlertTag;
+//        [alert show];
+//
+//    }
+//    else
+//    {
+//        //编辑已有的表单，用update
+//        LZDataAccess *da = [LZDataAccess singleton];
+//        NSMutableArray * foodAndAmountArray = [NSMutableArray array];
+//        for (NSString *foodId in self.takenFoodIdsArray)
+//        {
+//            NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+//            NSNumber *weight = [aFood objectForKey:@"Amount"];
+//            [foodAndAmountArray addObject:[NSArray arrayWithObjects:foodId, weight,nil]];
+//        }
+//        if([da updateFoodCollocationData_withCollocationId:dietId andNewCollocationName:nil andFoodAmount2LevelArray:foodAndAmountArray])
+//        {
+//            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+//            [[NSUserDefaults standardUserDefaults]synchronize];
+//            [self.navigationController  popViewControllerAnimated:YES];
+//        }
+//        else
+//        {
+//            UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+//            [saveFailedAlert show];
+//        }
+//    }
+//
+//    //[self.navigationController  popViewControllerAnimated:YES];
+//}
 -(void)viewWillAppear:(BOOL)animated
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(nutrientShowNotification:) name:Notification_ShowNutrientInfoKey object:nil];
     [MobClick beginLogPageView:@"检测页面"];
     self.listView.tableFooterView.hidden = NO;
     GADMasterViewController *shared = [GADMasterViewController singleton];
@@ -215,8 +223,14 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
+    if (self.currentFoodInputTextField)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_ShowNutrientInfoKey object:nil];
     [MobClick endLogPageView:@"检测页面"];
-    [self.listView reloadData];
 }
 
 - (void)viewDidUnload {
@@ -229,6 +243,14 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+- (void)nutrientShowNotification:(NSNotification *)notification
+{
+    if (self.currentFoodInputTextField)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
+    
 }
 - (void)settingsChanged:(NSNotification *)notification
 {
@@ -399,10 +421,62 @@
 //    [self.listView reloadData];
 //    
 //}
+- (void)deleteOneCell:(NSString *)foodId
+{
+    //NSString *foodId = cell.cellFoodId;
+    if (self.currentFoodInputTextField)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
+    NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
+    int index = [self.takenFoodIdsArray indexOfObject:foodId];
+    if (index >= 0 && index < [self.takenFoodIdsArray count])
+    {
+        NSIndexPath *indexPathToDelete = [NSIndexPath indexPathForRow:index inSection:0];
+        
+        NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+        NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]initWithDictionary:takenFoodAmountDict];
+        NSString *ndb_No = [cellInfoDict objectForKey:@"NDB_No"];
+        [tempDict removeObjectForKey:ndb_No];
+        [self.recommendFoodDictForDisplay removeObjectForKey:ndb_No];
+        [[NSUserDefaults standardUserDefaults] setObject:tempDict forKey:LZUserDailyIntakeKey];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        //[self displayTakenFoodResult];
+        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodDeletedKey object:nil userInfo:nil];
+        [self.takenFoodIdsArray removeObjectAtIndex:index];
+        NSArray *array = [[NSArray alloc]initWithObjects:indexPathToDelete, nil];
+        self.listView.userInteractionEnabled = NO;
+        if ([self.takenFoodIdsArray count]== 0)
+        {
+//            if(sender.direction == UISwipeGestureRecognizerDirectionLeft)
+//                [self.listView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationLeft];
+//            else
+                [self.listView reloadRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationRight];
+            
+        }
+        else
+        {
+            [self.listView beginUpdates];
+//            if(sender.direction == UISwipeGestureRecognizerDirectionLeft)
+//                [self.listView deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationLeft];
+//            else
+                [self.listView deleteRowsAtIndexPaths:array withRowAnimation:UITableViewRowAnimationRight];
+            [self.listView endUpdates];
+        }
+        self.listView.userInteractionEnabled = YES;
+        [self refreshFoodNureitentProcessForAll:NO];
+    }
+
+}
 - (void)foodCellSwiped:(UISwipeGestureRecognizer*)sender
 {
+    
     if (sender.state == UIGestureRecognizerStateEnded)
     {
+        if (self.currentFoodInputTextField)
+        {
+            [self.currentFoodInputTextField resignFirstResponder];
+        }
         NSLog(@"%d",sender.direction);
         LZRecommendFoodCell *cell = (LZRecommendFoodCell*)sender.view;
         NSString *foodId = cell.cellFoodId;
@@ -446,17 +520,142 @@
         }
     }
 }
--(void)editFoodButtonTapped:(LZEditFoodAmountButton*)sender
+//-(void)editFoodButtonTapped:(LZEditFoodAmountButton*)sender
+//{
+//    NSString *foodId = sender.foodId;
+//    //NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
+//    currentEditFoodId = foodId;
+//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改食物量" message:@"请输入更适合你的食物量" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+//    alert.tag = KChangeFoodAmountAlertTag;
+//    UITextField *tf = [alert textFieldAtIndex:0];
+//    tf.keyboardType = UIKeyboardTypeNumberPad;
+//    [alert show];
+//}
+- (void)keyboardWillShow:(NSNotification *)notification {
+	
+    NSDictionary *userInfo = [notification userInfo];
+    
+    NSValue *boundsValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+	CGRect keyboardRect = [boundsValue CGRectValue];
+    
+    CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height-44;
+    CGRect tableviewFrame = self.listView.frame;
+	tableviewFrame.size.height = keyboardTop;
+    
+	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    self.listView.frame = tableviewFrame;
+    [UIView commitAnimations];
+}
+
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    NSDictionary* userInfo = [notification userInfo];
+    /*
+     Restore the size of the text view (fill self's view).
+     Animate the resize so that it's in sync with the disappearance of the keyboard.
+     */
+	CGRect tableviewFrame = self.listView.frame;
+	tableviewFrame.size.height = self.view.frame.size.height-44;
+    
+	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    self.listView.frame = tableviewFrame;
+    [UIView commitAnimations];
+    
+}
+#pragma mark- LZRecommendFoodCell Delegate
+- (void)textFieldDidReturnForId:(NSString*)foodId andText:(NSString*)foodNumber
 {
-    NSString *foodId = sender.foodId;
-    //NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
-    currentEditFoodId = foodId;
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改食物量" message:@"请输入更适合你的食物量" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    alert.tag = KChangeFoodAmountAlertTag;
-    UITextField *tf = [alert textFieldAtIndex:0];
-    tf.keyboardType = UIKeyboardTypeNumberPad;
-    [alert show];
+    self.currentFoodInputTextField = nil;
+    
+
+    int changed = [foodNumber intValue];
+    if (changed <=0)
+    {
+        [self deleteOneCell:foodId];
+        return;
+    }
+    int i = [self.takenFoodIdsArray indexOfObject:foodId];
+    NSIndexPath *index = [NSIndexPath indexPathForRow:i inSection:0];
+    NSDictionary* takenDict =  [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+    if ([takenDict objectForKey:foodId])
+    {
+        NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:takenDict];
+        
+        if (changed <=0)
+        {
+            [tempDict removeObjectForKey:foodId];
+        }
+        else
+        {
+            [tempDict setObject:[NSNumber numberWithInt:changed] forKey:foodId];
+        }
+        [[NSUserDefaults standardUserDefaults]setObject:tempDict forKey:LZUserDailyIntakeKey];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        
+    }
+    else if ([self.recommendFoodDictForDisplay objectForKey:foodId])
+    {
+        if (changed <=0)
+        {
+            [self.recommendFoodDictForDisplay removeObjectForKey:foodId];
+        }
+        else
+        {
+            [self.recommendFoodDictForDisplay setObject:[NSNumber numberWithInt:changed] forKey:foodId];
+        }
+        
+    }
+    LZRecommendFoodCell* cell =(LZRecommendFoodCell*)[self.listView cellForRowAtIndexPath:index];
+    NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+    NSNumber *weight = [NSNumber numberWithInt:changed];
+    cell.foodAmountTextField.text = [NSString stringWithFormat:@"%d",[weight intValue]];
+    NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
+    NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
+    NSString *foodTotalUnit = @"";
+    if ([singleUnitName length]==0)
+    {
+        foodTotalUnit = @"";
+    }
+    else
+    {
+        NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+        int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
+        if (unitCount <= 0)
+        {
+            foodTotalUnit = @"";
+        }
+        else
+        {
+            foodTotalUnit = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
+        }
+    }
+    NSString *foodName = [aFood objectForKey:@"Name"];
+    cell.foodNameLabel.text = [NSString stringWithFormat:@"%@ %@",foodName,foodTotalUnit];
+
+    [self refreshFoodNureitentProcessForAll:NO];
+    
+}
+- (void)textFieldDidBeginEditingForId:(NSString *)foodId textField:(UITextField*)currentTextField
+{
+    int i = [self.takenFoodIdsArray indexOfObject:foodId];
+    NSIndexPath *index = [NSIndexPath indexPathForRow:i inSection:0];
+    self.currentFoodInputTextField = currentTextField;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 50 * USEC_PER_SEC);
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    [self.listView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+    });
 }
 #pragma mark- TableView Delegate
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -486,9 +685,7 @@
             {
                 LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
                 NSString *foodId = [takenFoodIdsArray objectAtIndex:indexPath.row];
-                                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
-                cell.editFoodButton.foodId = foodId;
-                [cell.editFoodButton addTarget:self action:@selector(editFoodButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
                 //NSLog(@"picture path %@",aFood);
                 if([self.recommendFoodDictForDisplay objectForKey:foodId])
                 {
@@ -498,6 +695,7 @@
                 {
                     cell.recommendSignImageView.hidden = YES;
                 }
+                cell.delegate = self;
                 NSString *picturePath;
                 NSString *picPath = [aFood objectForKey:@"PicturePath"];
                 if (picPath == nil || [picPath isEqualToString:@""])
@@ -514,7 +712,7 @@
                 cell.cellFoodId = foodId;
                 
                 NSNumber *weight = [aFood objectForKey:@"Amount"];
-                cell.foodWeightlabel.text = [NSString stringWithFormat:@"%d",[weight intValue]];
+                cell.foodAmountTextField.text = [NSString stringWithFormat:@"%d",[weight intValue]];
                 NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
                 NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
                 NSString *foodTotalUnit = @"";
@@ -653,6 +851,10 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if(self.currentFoodInputTextField)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
     [self.listView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.section == 0)
     {
@@ -745,6 +947,10 @@
 #pragma mark- Recommend Function
 - (IBAction)recommendAction:(id)sender {
     //弹出选择元素框
+    if (self.currentFoodInputTextField)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
     float duration = 0.5;
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
     NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
@@ -949,6 +1155,10 @@
 }
 
 - (IBAction)addFoodAction:(id)sender {
+    if (self.currentFoodInputTextField)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
     [self performSelector:@selector(addFood) withObject:nil afterDelay:0.f];
     
     
@@ -985,6 +1195,10 @@
     [self.navigationController pushViewController:addByNutrientController animated:YES];
 }
 - (IBAction)addFoodByNutrient:(UIButton *)sender {
+    if(self.currentFoodInputTextField)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
     int tag = sender.tag;
     [self performSelector:@selector(addFoodForTag:) withObject:[NSNumber numberWithInt:tag] afterDelay:0.f];
         
@@ -1026,6 +1240,10 @@
 #pragma mark- Share Content Function
 - (IBAction)shareButtonTapped:(id)sender
 {
+    if (self.currentFoodInputTextField)
+    {
+        [self.currentFoodInputTextField resignFirstResponder];
+    }
     if([self.takenFoodIdsArray count] == 0)
     {
         UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
@@ -1274,56 +1492,56 @@
 }
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    if (alertView.tag == KChangeFoodAmountAlertTag)
-    {
-        if (buttonIndex == alertView.cancelButtonIndex)
-        {
-            return;
-        }
-        else
-        {
-            if (self.currentEditFoodId == nil)
-            {
-                return;
-            }
-            UITextField *textFiled = [alertView textFieldAtIndex:0];
-            int changed = [textFiled.text intValue];
-            NSDictionary* takenDict =  [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
-            if ([takenDict objectForKey:currentEditFoodId])
-            {
-                NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:takenDict];
-                
-                if (changed <=0)
-                {
-                    [tempDict removeObjectForKey:self.currentEditFoodId];
-                }
-                else
-                {
-                    [tempDict setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
-                }
-                self.currentEditFoodId = nil;
-                [[NSUserDefaults standardUserDefaults]setObject:tempDict forKey:LZUserDailyIntakeKey];
-                [[NSUserDefaults standardUserDefaults]synchronize];
-                
-            }
-            else if ([self.recommendFoodDictForDisplay objectForKey:currentEditFoodId])
-            {
-                if (changed <=0)
-                {
-                    [self.recommendFoodDictForDisplay removeObjectForKey:self.currentEditFoodId];
-                }
-                else
-                {
-                    [self.recommendFoodDictForDisplay setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
-                }
-                self.currentEditFoodId = nil;
-
-            }
-            [self refreshFoodNureitentProcessForAll:YES];
-
-        }
-    }
-    else if(alertView.tag == KSaveDietTitleAlertTag)
+//    if (alertView.tag == KChangeFoodAmountAlertTag)
+//    {
+//        if (buttonIndex == alertView.cancelButtonIndex)
+//        {
+//            return;
+//        }
+//        else
+//        {
+//            if (self.currentEditFoodId == nil)
+//            {
+//                return;
+//            }
+//            UITextField *textFiled = [alertView textFieldAtIndex:0];
+//            int changed = [textFiled.text intValue];
+//            NSDictionary* takenDict =  [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+//            if ([takenDict objectForKey:currentEditFoodId])
+//            {
+//                NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:takenDict];
+//                
+//                if (changed <=0)
+//                {
+//                    [tempDict removeObjectForKey:self.currentEditFoodId];
+//                }
+//                else
+//                {
+//                    [tempDict setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
+//                }
+//                self.currentEditFoodId = nil;
+//                [[NSUserDefaults standardUserDefaults]setObject:tempDict forKey:LZUserDailyIntakeKey];
+//                [[NSUserDefaults standardUserDefaults]synchronize];
+//                
+//            }
+//            else if ([self.recommendFoodDictForDisplay objectForKey:currentEditFoodId])
+//            {
+//                if (changed <=0)
+//                {
+//                    [self.recommendFoodDictForDisplay removeObjectForKey:self.currentEditFoodId];
+//                }
+//                else
+//                {
+//                    [self.recommendFoodDictForDisplay setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
+//                }
+//                self.currentEditFoodId = nil;
+//
+//            }
+//            [self refreshFoodNureitentProcessForAll:YES];
+//
+//        }
+//    }
+    if(alertView.tag == KSaveDietTitleAlertTag)
     {
         if (buttonIndex == alertView.cancelButtonIndex)
         {

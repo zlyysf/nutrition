@@ -8,6 +8,7 @@
 
 #import "LZFoodNutritionCell.h"
 #import "LZNutrientionManager.h"
+#import "LZConstants.h"
 @implementation LZFoodNutritionCell
 @synthesize nutrientId;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -52,6 +53,7 @@
     }
 }
 - (IBAction)nameButtonTapped:(id)sender {
+    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_ShowNutrientInfoKey object:nil];
     [[LZNutrientionManager SharedInstance]showNutrientInfo:self.nutrientId];
 }
 
