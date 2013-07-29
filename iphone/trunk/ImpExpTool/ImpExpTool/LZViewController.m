@@ -54,5 +54,11 @@
     [alert show];
 }
 
+- (IBAction)btnSomeToolClick:(id)sender {
+    [LZFacade runSomeTool];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"run finish" message:@"run finish" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
+
 
 @end

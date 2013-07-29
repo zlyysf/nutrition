@@ -90,6 +90,12 @@
     
 }
 
++(void)runSomeTool
+{
+    LZReadExcel *workRe = [[LZReadExcel alloc]init];
+    [workRe checkExcelForFoodPicPath];
+}
+
 +(void)generateVariousCsv
 {
     NSString *resFileName = @"CustomDB.dat";

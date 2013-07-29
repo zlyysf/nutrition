@@ -16,4 +16,6 @@
 +(void)generateInitialDataToAllInOne;
 +(void)generateVariousCsv;
 
++(void)runSomeTool;
+
 @end

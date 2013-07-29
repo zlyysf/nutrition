@@ -690,6 +690,42 @@
     [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
 }
 
+-(void)checkExcelForFoodPicPath
+{
+    NSDictionary *data = [self readFoodCustom_v1_3];
+    NSArray *columnNames = [data objectForKey:@"columnNames"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    int idx_foodId = 0;
+    int idx_picPath = -1, idx_foodName = -1;
+    for(int i=0; i<columnNames.count; i++){
+        NSString * columnName = columnNames[i];
+        if ( [COLUMN_NAME_PicPath isEqualToString:columnName]){
+            idx_picPath = i;
+        }
+        if ( [COLUMN_NAME_CnCaption isEqualToString:columnName]){
+            idx_foodName = i;
+        }
+    }//for
+    assert(idx_picPath>0);
+    NSLog(@"in checkExcelForFoodPicPath, the problems are as below:");
+    NSString *picDirPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"foodDealed"];
+    for(int i=0; i<rows2D.count; i++){
+        NSArray *row = rows2D[i];
+        NSString *foodId = row[idx_foodId];
+        NSString *picPath = row[idx_picPath];
+        NSString *foodName = row[idx_foodName];
+        NSString *fullPicPath = [picDirPath stringByAppendingPathComponent:picPath];
+        
+        NSFileManager * defFileManager = [NSFileManager defaultManager];
+        BOOL fileExists = [defFileManager fileExistsAtPath:fullPicPath];
+        if (!fileExists){
+            NSString *errMsg = [NSString stringWithFormat:@"%@ %@ %@",foodId,foodName,picPath];
+            NSLog(@"%@",errMsg);
+        }
+    }//for
+}
+
 -(NSDictionary *)readFoodCustomT2
 {
     NSLog(@"readFoodCustomT2 begin");
