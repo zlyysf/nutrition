@@ -77,6 +77,7 @@
         [self.foodAmountTextField setTextColor:[UIColor whiteColor]];
         [self.foodUnitLabel setTextColor:[UIColor whiteColor]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellSelectedBack.png"]]];
+        self.foodAmountTextField.userInteractionEnabled = NO;
         [self.textBackImage setImage:nil];
     }
     else
@@ -88,6 +89,7 @@
         UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
         UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
         [self.textBackImage setImage:textBackImage];
+        self.foodAmountTextField.userInteractionEnabled = YES;
 
     }
 }

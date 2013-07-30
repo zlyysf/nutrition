@@ -156,9 +156,9 @@
     NSDictionary *levelDes = [[LZUtility getActivityLevelInfo]objectForKey:@"levelDescription"];
     NSString *currentLevel = [levelArray objectAtIndex:tag-100];
     NSString *currentDes = [levelDes objectForKey:currentLevel];
-    CGSize descriptionSize = [currentDes sizeWithFont:[UIFont systemFontOfSize:12]constrainedToSize:CGSizeMake(299, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize descriptionSize = [currentDes sizeWithFont:[UIFont systemFontOfSize:13]constrainedToSize:CGSizeMake(299, 9999) lineBreakMode:UILineBreakModeWordWrap];
     NSString *onlineStr = @"1";
-    CGSize onlineSize = [onlineStr sizeWithFont:[UIFont systemFontOfSize:12]constrainedToSize:CGSizeMake(299, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize onlineSize = [onlineStr sizeWithFont:[UIFont systemFontOfSize:13]constrainedToSize:CGSizeMake(299, 9999) lineBreakMode:UILineBreakModeWordWrap];
     float onelineHeight = onlineSize.height;
     float desHeight = descriptionSize.height;
     if (desHeight > onelineHeight)

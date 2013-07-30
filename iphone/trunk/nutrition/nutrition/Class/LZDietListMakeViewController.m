@@ -126,7 +126,7 @@
             NSString* time = [formatter stringFromDate:now];
             NSString *text = [NSString stringWithFormat:@"%@的饮食计划",time];
             //7月29号的饮食计划
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物搭配" message:@"给你的食物搭配加个名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物清单" message:@"给你的食物清单加个名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             alert.alertViewStyle = UIAlertViewStylePlainTextInput;
             alert.tag = KSaveDietTitleAlertTag;
             UITextField *tf = [alert textFieldAtIndex:0];
@@ -578,73 +578,108 @@
 - (void)textFieldDidReturnForId:(NSString*)foodId andText:(NSString*)foodNumber
 {
     self.currentFoodInputTextField = nil;
-    
-
-    int changed = [foodNumber intValue];
-    if (changed <=0)
-    {
-        [self deleteOneCell:foodId];
-        return;
-    }
     int i = [self.takenFoodIdsArray indexOfObject:foodId];
     NSIndexPath *index = [NSIndexPath indexPathForRow:i inSection:0];
-    NSDictionary* takenDict =  [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
-    if ([takenDict objectForKey:foodId])
+
+    if ([foodNumber length]==0)
     {
-        NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:takenDict];
-        
-        if (changed <=0)
-        {
-            [tempDict removeObjectForKey:foodId];
-        }
-        else
-        {
-            [tempDict setObject:[NSNumber numberWithInt:changed] forKey:foodId];
-        }
-        [[NSUserDefaults standardUserDefaults]setObject:tempDict forKey:LZUserDailyIntakeKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        
-    }
-    else if ([self.recommendFoodDictForDisplay objectForKey:foodId])
-    {
-        if (changed <=0)
-        {
-            [self.recommendFoodDictForDisplay removeObjectForKey:foodId];
-        }
-        else
-        {
-            [self.recommendFoodDictForDisplay setObject:[NSNumber numberWithInt:changed] forKey:foodId];
-        }
-        
-    }
-    LZRecommendFoodCell* cell =(LZRecommendFoodCell*)[self.listView cellForRowAtIndexPath:index];
-    NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
-    NSNumber *weight = [NSNumber numberWithInt:changed];
-    cell.foodAmountTextField.text = [NSString stringWithFormat:@"%d",[weight intValue]];
-    NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
-    NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
-    NSString *foodTotalUnit = @"";
-    if ([singleUnitName length]==0)
-    {
-        foodTotalUnit = @"";
+        LZRecommendFoodCell* cell =(LZRecommendFoodCell*)[self.listView cellForRowAtIndexPath:index];
+        NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+        NSNumber *weight = [aFood objectForKey:@"Amount"];
+        cell.foodAmountTextField.text = [NSString stringWithFormat:@"%d",[weight intValue]];
+
+//        NSNumber *weight = [NSNumber numberWithInt:changed];
+//        cell.foodAmountTextField.text = [NSString stringWithFormat:@"%d",[weight intValue]];
+//        NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
+//        NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
+//        NSString *foodTotalUnit = @"";
+//        if ([singleUnitName length]==0)
+//        {
+//            foodTotalUnit = @"";
+//        }
+//        else
+//        {
+//            NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+//            int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
+//            if (unitCount <= 0)
+//            {
+//                foodTotalUnit = @"";
+//            }
+//            else
+//            {
+//                foodTotalUnit = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
+//            }
+//        }
+//        NSString *foodName = [aFood objectForKey:@"Name"];
+//        cell.foodNameLabel.text = [NSString stringWithFormat:@"%@ %@",foodName,foodTotalUnit];
     }
     else
     {
-        NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
-        int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
-        if (unitCount <= 0)
+
+        int changed = [foodNumber intValue];
+        if (changed <=0)
+        {
+            [self deleteOneCell:foodId];
+            return;
+        }
+        NSDictionary* takenDict =  [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+        if ([takenDict objectForKey:foodId])
+        {
+            NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:takenDict];
+            
+            if (changed <=0)
+            {
+                [tempDict removeObjectForKey:foodId];
+            }
+            else
+            {
+                [tempDict setObject:[NSNumber numberWithInt:changed] forKey:foodId];
+            }
+            [[NSUserDefaults standardUserDefaults]setObject:tempDict forKey:LZUserDailyIntakeKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            
+        }
+        else if ([self.recommendFoodDictForDisplay objectForKey:foodId])
+        {
+            if (changed <=0)
+            {
+                [self.recommendFoodDictForDisplay removeObjectForKey:foodId];
+            }
+            else
+            {
+                [self.recommendFoodDictForDisplay setObject:[NSNumber numberWithInt:changed] forKey:foodId];
+            }
+            
+        }
+        LZRecommendFoodCell* cell =(LZRecommendFoodCell*)[self.listView cellForRowAtIndexPath:index];
+        NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+        NSNumber *weight = [NSNumber numberWithInt:changed];
+        cell.foodAmountTextField.text = [NSString stringWithFormat:@"%d",[weight intValue]];
+        NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
+        NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
+        NSString *foodTotalUnit = @"";
+        if ([singleUnitName length]==0)
         {
             foodTotalUnit = @"";
         }
         else
         {
-            foodTotalUnit = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
+            NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+            int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
+            if (unitCount <= 0)
+            {
+                foodTotalUnit = @"";
+            }
+            else
+            {
+                foodTotalUnit = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
+            }
         }
-    }
-    NSString *foodName = [aFood objectForKey:@"Name"];
-    cell.foodNameLabel.text = [NSString stringWithFormat:@"%@ %@",foodName,foodTotalUnit];
+        NSString *foodName = [aFood objectForKey:@"Name"];
+        cell.foodNameLabel.text = [NSString stringWithFormat:@"%@ %@",foodName,foodTotalUnit];
 
-    [self refreshFoodNureitentProcessForAll:NO];
+        [self refreshFoodNureitentProcessForAll:NO];
+    }
     
 }
 - (void)textFieldDidBeginEditingForId:(NSString *)foodId textField:(UITextField*)currentTextField
