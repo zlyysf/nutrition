@@ -10,5 +10,5 @@
 
 @interface LZNutrientFoodAddCell : LZFoodCell
 @property (strong, nonatomic) IBOutlet UILabel *recommendAmountLabel;
-
+- (void)centeredFoodNameButton:(BOOL)centered;
 @end

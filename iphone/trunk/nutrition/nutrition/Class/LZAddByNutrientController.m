@@ -344,10 +344,12 @@
     if(amount <= 0)
     {
         cell.recommendAmountLabel.hidden = YES;
+        [cell centeredFoodNameButton:YES];
     }
     else
     {
         cell.recommendAmountLabel.hidden = NO;
+        [cell centeredFoodNameButton:NO];
     }
     cell.recommendAmountLabel.text = [NSString stringWithFormat:@"推荐量:%dg",amount];
     UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
