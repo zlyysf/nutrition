@@ -1058,8 +1058,9 @@
 -(NSString*)convertFood_Supply_DRI_AmountWithExtraInfoToCsv:(NSString*)csvFileName
 {
     NSString *sqlQuery = @""
-    "select c.CnCaption, c.CnType, c.classify, a.*"
+    "select c.classify, c.CnType, c.CnCaption, fn.Shrt_Desc, a.*"
     "  from Food_Supply_DRI_Amount a join FoodCustom c on a.NDB_No=c.NDB_No"
+    "    join FoodNutrition fn on a.NDB_No=fn.NDB_No"
     "  order by a.NDB_No"
     ;
     return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];

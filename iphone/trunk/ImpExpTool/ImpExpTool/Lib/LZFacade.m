@@ -99,31 +99,35 @@
 +(void)generateVariousCsv
 {
     NSString *resFileName = @"CustomDB.dat";
-    NSString *destDbFileName = @"CustomDBt1.dat";
-    NSString *destDbFilePath = [LZUtility copyResourceToDocumentWithResFileName:resFileName andDestFileName:destDbFileName];
-    if (destDbFilePath == nil){
-        NSLog(@"generateVariousCsv fail, destDbFilePath == nil");
-        return;
-    }
+    NSString *resFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:resFileName];
+//    NSString *destDbFileName = @"CustomDBt1.dat";
+//    NSString *destDbFilePath = [LZUtility copyResourceToDocumentWithResFileName:resFileName andDestFileName:destDbFileName];
+//    if (destDbFilePath == nil){
+//        NSLog(@"generateVariousCsv fail, destDbFilePath == nil");
+//        return;
+//    }
     LZDBAccess *db = [[LZDBAccess alloc]init];
-    [db myInitWithDbFilePath:destDbFilePath andIfNeedClear:FALSE];
+//    [db myInitWithDbFilePath:destDbFilePath andIfNeedClear:FALSE];
+    [db myInitWithDbFilePath:resFilePath andIfNeedClear:FALSE];
     [db convertFood_Supply_DRI_AmountWithExtraInfoToCsv:@"Food_Supply_DRI_Amount_Extra.csv"];
     
+
+//    NSString *resFileName2 = @"CustomDB.dat";
+//    NSString *destDbFileName2 = @"CustomDBt2.dat";
+//    NSString *destDbFilePath2 = [LZUtility copyResourceToDocumentWithResFileName:resFileName2 andDestFileName:destDbFileName2];
+//    if (destDbFilePath2 == nil){
+//        NSLog(@"generateVariousCsv fail, destDbFilePath2 == nil");
+//        return;
+//    }
+//    LZDBAccess *db2 = [[LZDBAccess alloc]init];
+//    [db2 myInitWithDbFilePath:destDbFilePath2 andIfNeedClear:FALSE];
+//    [db2 convertCnFoodNutritionWithExtraInfoToCsv:@"FoodNutritionCustomByJoin.csv"];
+//    
+//    [db2 convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"RichFoodsOfEveryNutrients.csv"];
     
-//    NSString *resFileName2 = @"dataAll.dat";
-//    NSString *destDbFileName2 = @"dataAllt1.dat";
-    NSString *resFileName2 = @"CustomDB.dat";
-    NSString *destDbFileName2 = @"CustomDBt2.dat";
-    NSString *destDbFilePath2 = [LZUtility copyResourceToDocumentWithResFileName:resFileName2 andDestFileName:destDbFileName2];
-    if (destDbFilePath2 == nil){
-        NSLog(@"generateVariousCsv fail, destDbFilePath2 == nil");
-        return;
-    }
-    LZDBAccess *db2 = [[LZDBAccess alloc]init];
-    [db2 myInitWithDbFilePath:destDbFilePath2 andIfNeedClear:FALSE];
-    [db2 convertCnFoodNutritionWithExtraInfoToCsv:@"FoodNutritionCustomByJoin.csv"];
+    [db convertCnFoodNutritionWithExtraInfoToCsv:@"FoodNutritionCustomByJoin.csv"];
     
-    [db2 convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"RichFoodsOfEveryNutrients.csv"];
+    [db convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"RichFoodsOfEveryNutrients.csv"];
 }
 
 
