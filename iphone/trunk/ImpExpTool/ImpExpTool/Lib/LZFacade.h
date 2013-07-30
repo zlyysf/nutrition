@@ -14,7 +14,7 @@
 
 //+(void)generateInitialData;
 +(void)generateInitialDataToAllInOne;
-+(void)generateVariousCsv;
++(void)generateVariousCsv_withDBFilePath:(NSString *)dbFilePath;
 
 +(void)runSomeTool;
 

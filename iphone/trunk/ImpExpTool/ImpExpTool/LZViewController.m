@@ -49,7 +49,7 @@
 }
 
 - (IBAction)btnGenCsvClick:(id)sender {
-    [LZFacade generateVariousCsv];
+    [LZFacade generateVariousCsv_withDBFilePath:nil];
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"run finish" message:@"run finish" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
     [alert show];
 }

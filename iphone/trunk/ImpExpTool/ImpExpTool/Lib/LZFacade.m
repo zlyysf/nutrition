@@ -96,38 +96,22 @@
     [workRe checkExcelForFoodPicPath];
 }
 
-+(void)generateVariousCsv
++(void)generateVariousCsv_withDBFilePath:(NSString *)dbFilePath
 {
-    NSString *resFileName = @"CustomDB.dat";
-    NSString *resFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:resFileName];
-//    NSString *destDbFileName = @"CustomDBt1.dat";
-//    NSString *destDbFilePath = [LZUtility copyResourceToDocumentWithResFileName:resFileName andDestFileName:destDbFileName];
-//    if (destDbFilePath == nil){
-//        NSLog(@"generateVariousCsv fail, destDbFilePath == nil");
-//        return;
-//    }
+    NSString *dbFilePath1 = dbFilePath;
+    if (dbFilePath1==nil){
+        NSString *resFileName = @"CustomDB.dat";
+        NSString *resFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:resFileName];
+        dbFilePath1 = resFilePath;
+    }
+    
     LZDBAccess *db = [[LZDBAccess alloc]init];
-//    [db myInitWithDbFilePath:destDbFilePath andIfNeedClear:FALSE];
-    [db myInitWithDbFilePath:resFilePath andIfNeedClear:FALSE];
+    [db myInitWithDbFilePath:dbFilePath1 andIfNeedClear:FALSE];
     [db convertFood_Supply_DRI_AmountWithExtraInfoToCsv:@"Food_Supply_DRI_Amount_Extra.csv"];
-    
-
-//    NSString *resFileName2 = @"CustomDB.dat";
-//    NSString *destDbFileName2 = @"CustomDBt2.dat";
-//    NSString *destDbFilePath2 = [LZUtility copyResourceToDocumentWithResFileName:resFileName2 andDestFileName:destDbFileName2];
-//    if (destDbFilePath2 == nil){
-//        NSLog(@"generateVariousCsv fail, destDbFilePath2 == nil");
-//        return;
-//    }
-//    LZDBAccess *db2 = [[LZDBAccess alloc]init];
-//    [db2 myInitWithDbFilePath:destDbFilePath2 andIfNeedClear:FALSE];
-//    [db2 convertCnFoodNutritionWithExtraInfoToCsv:@"FoodNutritionCustomByJoin.csv"];
-//    
-//    [db2 convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"RichFoodsOfEveryNutrients.csv"];
-    
     [db convertCnFoodNutritionWithExtraInfoToCsv:@"FoodNutritionCustomByJoin.csv"];
-    
     [db convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"RichFoodsOfEveryNutrients.csv"];
+    
+    
 }
 
 
@@ -183,6 +167,10 @@
     [workRe myInitDBConnectionWithFilePath:destDbFilePath andIfNeedClear:FALSE];
     LZDBAccess *db = [workRe getDBconnection];
     
+    if (![workRe checkExcelForFoodPicPath]){
+        return;
+    }
+    
     [workRe convertExcelToSqlite_FoodCustom_v1_3];
     [db createView_FoodNutritionCustom_andIfNeedDrop:true];
     
@@ -196,6 +184,8 @@
     
     [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
     [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
+    
+    [self generateVariousCsv_withDBFilePath:destDbFilePath];
 }
 
 

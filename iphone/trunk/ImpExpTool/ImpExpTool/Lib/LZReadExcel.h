@@ -24,7 +24,8 @@
 //-(void)convertExcelToSqlite_FoodCustom;
 -(void)convertExcelToSqlite_FoodCustom_v1_3;
 
--(void)checkExcelForFoodPicPath;
+
+-(BOOL)checkExcelForFoodPicPath;
 -(void)convertExcelToSqlite_CustomRichFood;
 
 

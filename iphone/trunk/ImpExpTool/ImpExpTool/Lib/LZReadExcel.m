@@ -691,8 +691,9 @@
     [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
 }
 
--(void)checkExcelForFoodPicPath
+-(BOOL)checkExcelForFoodPicPath
 {
+    BOOL retval = TRUE;
     NSDictionary *data = [self readFoodCustom_v1_3];
     NSArray *columnNames = [data objectForKey:@"columnNames"];
     NSArray *rows2D = [data objectForKey:@"rows2D"];
@@ -721,10 +722,13 @@
         NSFileManager * defFileManager = [NSFileManager defaultManager];
         BOOL fileExists = [defFileManager fileExistsAtPath:fullPicPath];
         if (!fileExists){
+            retval = FALSE;
             NSString *errMsg = [NSString stringWithFormat:@"%@ %@ %@",foodId,foodName,picPath];
             NSLog(@"%@",errMsg);
         }
     }//for
+    NSLog(@"checkExcelForFoodPicPath ret:%d",retval);
+    return retval;
 }
 
 -(NSDictionary *)readFoodCustomT2
@@ -1073,8 +1077,7 @@
     DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
 	assert(reader);
     
-    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NutrientID, COLUMN_NAME_NDB_No
-                                   , nil];
+    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NutrientID, COLUMN_NAME_NDB_No, nil];
     NSArray * fullNutrients = [LZRecommendFood getDRItableNutrientsWithSameOrder];
     NSSet *fullNutrientSet = [NSSet setWithArray:fullNutrients];
     int idxInXls_NutrientId = 1, idxInXls_NutrientName = 2;
