@@ -954,7 +954,7 @@
     return dic2Level;
 }
 
--(NSArray*) getFoods_withColumns_richOfNutrient:(NSString *)nutrientAsColumnName
+-(NSMutableArray*) getFoods_withColumns_richOfNutrient:(NSString *)nutrientAsColumnName
 {
     NSLog(@"getRichNutritionFood enter");
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
@@ -978,21 +978,48 @@
     return rows2D;
 }
 
+- (NSArray *)selectAllForTable:(NSString *)tableName andOrderBy:(NSString *)partOrderBy
+{
+    NSMutableString *query = [NSMutableString stringWithFormat: @"SELECT * FROM %@",tableName];
+    if (partOrderBy.length > 0){
+        [query appendFormat:@" %@",partOrderBy ];
+    }
+    FMResultSet *rs = [_db executeQuery:query];
+    NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
+    return ary;
+}
+-(NSSet*)getCustomRichFood_1LevelSet
+{
+    NSArray *rows = [self selectAllForTable:TABLE_NAME_CustomRichFood andOrderBy:nil];
+    NSMutableSet * set1Level = [NSMutableSet set];
+    for(int i=0; i<rows.count; i++){
+        NSDictionary *row = rows[i];
+        NSString *nutrientId = row[COLUMN_NAME_NutrientID];
+        NSString *foodId = row[COLUMN_NAME_NDB_No];
+        assert(nutrientId.length>0 && foodId.length>0);
+        NSString *key = [NSString stringWithFormat:@"%@:%@",nutrientId,foodId];
+        [set1Level addObject:key];
+    }//for
+    return set1Level;
+}
+
 -(NSMutableArray*) getFoods_withColumns_richOfNutrientOfAll
 {
     NSArray * nutrients = [LZRecommendFood getDRItableNutrientsWithSameOrder];
     NSDictionary * nutrientInfoDict = [self getNutrientInfoAs2LevelDictionary_withNutrientIds:nutrients];
+    NSSet * richFoodSet = [self getCustomRichFood_1LevelSet];
     
-    int columnCount= 4;
+    int columnCount= 5;
     NSMutableArray *rowForInit = [NSMutableArray arrayWithCapacity:columnCount];
     for(int i=0; i<columnCount; i++){
         [rowForInit addObject:[NSNull null]];
     }
     
     NSMutableArray* row;
-    
     NSMutableArray *rows2Dall = [NSMutableArray arrayWithCapacity:1000];
-    
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    row[4] = @"choose";
+    [rows2Dall addObject:row ];
     for(int i=0 ; i<nutrients.count; i++){
         NSString *nutrient = nutrients[i];
         NSDictionary *nutrientInfo = nutrientInfoDict[nutrient];
@@ -1002,7 +1029,29 @@
         [rows2Dall addObject:row ];
         
         NSArray *rows2D = [self getFoods_withColumns_richOfNutrient:nutrient];
-        if (rows2D != nil)    [rows2Dall addObjectsFromArray:rows2D];
+        if (rows2D.count > 0){
+//            [rows2Dall addObjectsFromArray:rows2D];
+            assert(rows2D.count>=2);
+            row = rows2D[0];
+            NSMutableArray *row2 = [NSMutableArray arrayWithArray:row];
+            [row2 addObject:@"choose"];
+            [rows2Dall addObject:row2];
+            
+            for(int j=1; j<rows2D.count; j++){
+                row = rows2D[j];
+                assert(row.count==columnCount);
+                NSString *foodId = row[0];
+                NSMutableArray *row2 = [NSMutableArray arrayWithArray:row];
+
+                NSString *key = [NSString stringWithFormat:@"%@:%@",nutrient,foodId];
+                if ([richFoodSet containsObject:key]){
+                    [row2 addObject:@"1"];
+                }else{
+                    [row2 addObject:@""];
+                }
+                [rows2Dall addObject:row2];
+            }//for
+        }
         [rows2Dall addObject:rowForInit];
     }
     return rows2Dall;
@@ -1023,7 +1072,7 @@
         NSArray *row = rs.resultArray;
         [rowAry addObject:row];
     }
-    NSLog(@"queryDataBySelectSql get columnNames=\n%@,\nrows=\n%@",columnNames,rowAry);
+    NSLog(@"queryDataAndMetaDataBySelectSql get columnNames=\n%@,\nrows=\n%@",columnNames,rowAry);
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:3];
     if (rowAry.count > 0){

@@ -1819,7 +1819,24 @@
 
 
 
-
+-(NSDictionary*)getCustomRichFood_SetDict
+{
+    NSArray *rows = [self selectAllForTable:TABLE_NAME_CustomRichFood andOrderBy:nil];
+    NSMutableDictionary * dict2Level = [NSMutableDictionary dictionary];
+    for(int i=0; i<rows.count; i++){
+        NSDictionary *row = rows[i];
+        NSString *nutrientId = row[COLUMN_NAME_NutrientID];
+        NSString *foodId = row[COLUMN_NAME_NDB_No];
+        assert(nutrientId.length>0 && foodId.length>0);
+        NSMutableSet *foodIdSet = dict2Level[nutrientId];
+        if (foodIdSet==nil){
+            foodIdSet = [NSMutableSet set];
+            [dict2Level setObject:foodIdSet forKey:nutrientId];
+        }
+        [foodIdSet addObject:foodId];
+    }//for
+    return dict2Level;
+}
 
 
 -(NSArray *) getRichNutritionFoodForNutrient:(NSString *)nutrientName andNutrientAmount:(NSNumber*)nutrientAmount

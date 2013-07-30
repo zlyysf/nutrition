@@ -541,13 +541,16 @@
 
 +(NSString*)convertNumberToFoodIdStr:(NSNumber *)foodIdNum
 {
-    NSString *iDStr = [NSString stringWithFormat:@"%d",[foodIdNum intValue]];
-    if ([iDStr length]==4)
-    {
-        iDStr = [NSString stringWithFormat:@"0%@",iDStr];
-    }
-    return iDStr;
+    NSString *s = [NSString stringWithFormat:@"%05d",[foodIdNum intValue]];
+    return s;
+//    NSString *iDStr = [NSString stringWithFormat:@"%d",[foodIdNum intValue]];
+//    if ([iDStr length]==4)
+//    {
+//        iDStr = [NSString stringWithFormat:@"0%@",iDStr];
+//    }
+//    return iDStr;
 }
+
 @end
 
 

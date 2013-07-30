@@ -1134,19 +1134,8 @@
                             foodId = cell_FoodId.str;
                         }else{
                             NSNumber *nmFoodId = cell_FoodId.val;
-                            foodId = [NSString stringWithFormat:@"%d",[nmFoodId intValue]];
+                            foodId = [LZUtility convertNumberToFoodIdStr:nmFoodId];
                         }
-                        if (foodId.length<=4){
-                            foodId = [NSString stringWithFormat:@"0%@",foodId];
-                        }
-                        if (foodId.length<=4){
-                            foodId = [NSString stringWithFormat:@"0%@",foodId];
-                        }
-                        if (foodId.length<=4){
-                            foodId = [NSString stringWithFormat:@"0%@",foodId];
-                        }
-                        
-                        
                         NSMutableArray *row = [NSMutableArray arrayWithCapacity:2];
                         [row addObject:nutrientId];
                         [row addObject:foodId];
