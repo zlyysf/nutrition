@@ -1066,7 +1066,7 @@
     NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
     if (recommendFoodAmountDict == nil || [recommendFoodAmountDict count]==0)
     {
-        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"已有的这组食物搭配已经能够满足您一天的各营养需要，如需另行推荐，您可以通过左右滑动来删掉一些食物再使用推荐功能。" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"已有的这组食物搭配已经能够满足您所关注的营养需要，如需另行推荐，您可以通过左右滑动来删掉一些食物再使用推荐功能。" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
         [noRecommendAlert show];
         [HUD hide:YES];
         self.listView.hidden = NO;
