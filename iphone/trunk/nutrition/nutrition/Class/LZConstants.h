@@ -213,8 +213,10 @@
 #define MY_BANNER_UNIT_ID @"a151bfe57a8e242"//admob key
 
 //share config info
-#define SinaWeiboAppKey @"2194086998"
-#define SinaWeiboAppSecret @"626218cc582db24b710fcb5510801393"
+//#define SinaWeiboAppKey @"2194086998"
+//#define SinaWeiboAppSecret @"626218cc582db24b710fcb5510801393"
+#define SinaWeiboAppKey @"3626415671"
+#define SinaWeiboAppSecret @"9d17e75a675323f5b719cb058c5b9d0d"
 
 #define WeChatAppId @"wxe7284abf139401f5"
 
