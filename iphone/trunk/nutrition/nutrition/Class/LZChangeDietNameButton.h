@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LZChangeDietNameButton : UIButton
-@property (nonatomic,strong)NSNumber *dietId;
+@property (nonatomic,strong)NSDictionary *dietInfo;
 @end

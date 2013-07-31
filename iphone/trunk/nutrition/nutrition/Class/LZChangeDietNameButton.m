@@ -9,7 +9,7 @@
 #import "LZChangeDietNameButton.h"
 
 @implementation LZChangeDietNameButton
-@synthesize dietId;
+@synthesize dietInfo;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

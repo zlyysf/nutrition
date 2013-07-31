@@ -125,13 +125,15 @@
 }
 -(void)changeNameButtonTapped:(LZChangeDietNameButton*)sender
 {
-    NSNumber *dietId = sender.dietId;
-    //NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
+    NSDictionary *dietInfo = sender.dietInfo;
+    NSNumber *dietId = [dietInfo objectForKey:@"CollocationId"];
     currentEditDietId = dietId;
+    NSString *dietName = [dietInfo objectForKey:@"CollocationName"];
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改名称" message:@"填一个你更喜欢的名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = KChangeDietAlertTag;
     UITextField *tf = [alert textFieldAtIndex:0];
+    tf.text = dietName;
     tf.clearButtonMode = UITextFieldViewModeAlways;
     [alert show];
 }
@@ -186,8 +188,8 @@
     NSNumber *timeStamp = [aDiet objectForKey:@"CollocationCreateTime"];
     cell.timeStampLabel.text = [LZUtility stampFromInterval:timeStamp];
     cell.dietInfo = aDiet;
-    NSNumber *dietId = [aDiet objectForKey:@"CollocationId"];
-    cell.changeNameButton.dietId = dietId;
+
+    cell.changeNameButton.dietInfo = aDiet;
     [cell.changeNameButton addTarget:self action:@selector(changeNameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
