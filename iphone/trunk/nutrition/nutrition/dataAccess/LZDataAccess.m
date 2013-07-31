@@ -1968,7 +1968,8 @@
 
 -(NSArray*)getAllFoodCollocation
 {
-    NSArray * rows = [self selectAllForTable:TABLE_NAME_FoodCollocation andOrderBy:@" ORDER BY CollocationCreateTime DESC"];
+//    NSArray * rows = [self selectAllForTable:TABLE_NAME_FoodCollocation andOrderBy:@" ORDER BY CollocationCreateTime DESC"];
+    NSArray * rows = [self selectAllForTable:TABLE_NAME_FoodCollocation andOrderBy:nil];
     return rows;
 }
 
