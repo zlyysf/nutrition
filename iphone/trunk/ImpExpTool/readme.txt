@@ -29,7 +29,7 @@ FoodLimit表和Food_Limit.xls中的数据是一样的，包含各种食物摄取
     另外，对于上下限值，normal值，应该会有一个地方给出默认值。
     现在有几个值，上下限，normal_value，first_recommend 。关系是:下限 <= first_recommend <= normal_value <= 上限 . normal_value可以看作是普通限制，first_recommend 可以看做是一般推荐值。first_recommend是基于膳食宝塔中的推荐值，但是这个值比起某些需要或需求来显得不足。
     目前在渐进增量算法中，
-        下限值作为对应食物的单位增量值。
+        有标志位needUseLowLimitAsUnit来控制下限值是否作为对应食物的单位增量值。
         有标志位needUseNormalLimitWhenSmallIncrementLogic控制上限值是使用normal_value还是Upper_Limit(g)。目前实际使用的是normal_value。
         有标志位needUseFirstRecommendWhenSmallIncrementLogic控制食物第一次的增量是否使用first_recommend。
         

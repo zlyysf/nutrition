@@ -19,32 +19,43 @@
 +(NSArray*)getCustomNutrients
 {
     NSArray *limitedNutrientsCanBeCal = nil;
+    limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
+                                @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",
+                                @"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+                                @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",
+                                @"Protein_(g)", //@"Energ_Kcal",
+                                nil];
     if (!KeyIsEnvironmentDebug){
-        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
-                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",
-                                    @"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-                                    @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",
-                                    @"Protein_(g)", //@"Energ_Kcal",
-                                    nil];
+        //not change
     }else{
-//        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
-//                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
-//                                    @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-//                                    @"Vit_B12_(µg)",@"Panto_Acid_mg)",
-//                                    @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
-//                                    @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
-//                                    @"Protein_(g)",@"Lipid_Tot_(g)",
-//                                    @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
+        NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
+        BOOL needLimitNutrients = Config_needLimitNutrients;
+        if (flagsDict.count > 0){
+            NSNumber *nmFlag_needLimitNutrients = [flagsDict objectForKey:LZSettingKey_needLimitNutrients];
+            if (nmFlag_needLimitNutrients != nil)
+                needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
+        }
         
-        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
-                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
-                                    @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-                                    @"Vit_B12_(µg)",@"Panto_Acid_mg)",
-                                    @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
-                                    @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
-                                    @"Protein_(g)",
-                                    @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
-
+        if (needLimitNutrients){
+            //not change
+        }else{
+            //        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
+            //                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
+            //                                    @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+            //                                    @"Vit_B12_(µg)",@"Panto_Acid_mg)",
+            //                                    @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
+            //                                    @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
+            //                                    @"Protein_(g)",@"Lipid_Tot_(g)",
+            //                                    @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
+            limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
+                                        @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
+                                        @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+                                        @"Vit_B12_(µg)",@"Panto_Acid_mg)",
+                                        @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
+                                        @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
+                                        @"Protein_(g)",
+                                        @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
+        }
     }
     return limitedNutrientsCanBeCal;
 }
@@ -3806,9 +3817,9 @@
 -(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)givenFoodAmountDict andDRIdata:(NSDictionary*)DRIdata andOptions:(NSMutableDictionary*)options andParams:(NSDictionary*)params
 {
     
-    BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
+    BOOL needLimitNutrients = Config_needLimitNutrients;//是否要根据需求限制计算的营养素集合
 //    BOOL needUseFoodLimitTableWhenCal = TRUE;
-    BOOL needUseLowLimitAsUnit = TRUE;// 食物的增量是使用下限值还是通用的1g的增量
+    BOOL needUseLowLimitAsUnit = Config_needUseLowLimitAsUnit;// 食物的增量是使用下限值还是通用的1g的增量
     BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic; //对于食物的限量是使用普通限制还是使用上限限制
     BOOL needUseFirstRecommendWhenSmallIncrementLogic = Config_needUseFirstRecommendWhenSmallIncrementLogic; //食物第一次的增量是否使用最初推荐量
     BOOL needFirstSpecialForShucaiShuiguo = Config_needFirstSpecialForShucaiShuiguo; //对于最开始选出来的蔬菜水果，在最开始使用最初推荐量。这被 needSpecialForFirstBatchFoods 所覆盖。

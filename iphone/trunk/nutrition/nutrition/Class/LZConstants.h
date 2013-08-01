@@ -19,6 +19,9 @@
 #define Config_foodNormalValue 250 // unit g
 #define Config_nearZero 0.0000001
 #define Config_defaultFoodIncreaseUnit 1
+
+#define Config_needLimitNutrients TRUE
+#define Config_needUseLowLimitAsUnit TRUE
 #define Config_needUseNormalLimitWhenSmallIncrementLogic TRUE
 #define Config_needUseFirstRecommendWhenSmallIncrementLogic TRUE //FALSE //它为TRUE时，会导致补得过量经常发生，从而删掉某个少量的推荐的食物后再推荐可能会报营养已满不用推荐，从而让用户觉得算法有问题。不过，即使设置为false，算法仍然没有能彻底避免这种情况。但是，现在由于算法加了推荐后再减少食物的功能，这个问题不存在了。
 #define Config_needFirstSpecialForShucaiShuiguo TRUE

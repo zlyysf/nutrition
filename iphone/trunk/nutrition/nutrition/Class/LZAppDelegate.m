@@ -129,10 +129,17 @@
     {
         //add settings
         NSDictionary *newDict = [[NSDictionary alloc]initWithObjectsAndKeys:
-                                                    [NSNumber numberWithBool:YES],@"Key1",
-                                                    [NSNumber numberWithBool:NO],@"Key2",
-                                                    [NSNumber numberWithBool:NO],@"Key3",
-                                                    [NSNumber numberWithBool:YES],@"Key4",nil];
+                            [NSNumber numberWithBool:Config_needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
+                                 
+                            [NSNumber numberWithBool:Config_needLimitNutrients],LZSettingKey_needLimitNutrients,
+                            [NSNumber numberWithBool:Config_needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                            [NSNumber numberWithBool:Config_needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
+                            [NSNumber numberWithBool:Config_needUseFirstRecommendWhenSmallIncrementLogic],LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic,
+                             [NSNumber numberWithBool:Config_needFirstSpecialForShucaiShuiguo],LZSettingKey_needFirstSpecialForShucaiShuiguo,
+                             [NSNumber numberWithBool:Config_needSpecialForFirstBatchFoods],LZSettingKey_needSpecialForFirstBatchFoods,
+                             [NSNumber numberWithBool:Config_alreadyChoosedFoodHavePriority],LZSettingKey_alreadyChoosedFoodHavePriority,
+                             [NSNumber numberWithBool:Config_needPriorityFoodToSpecialNutrient],LZSettingKey_needPriorityFoodToSpecialNutrient,
+                             nil];
         [[NSUserDefaults standardUserDefaults]setObject:newDict forKey:KeyDebugSettingsDict];
         [[NSUserDefaults standardUserDefaults]synchronize];
     }
