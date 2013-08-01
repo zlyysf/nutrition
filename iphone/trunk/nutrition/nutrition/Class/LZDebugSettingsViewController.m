@@ -91,13 +91,15 @@
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:CellIdentifier];
     }
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     NSMutableDictionary *aSettingDict = [self.debugSettingsArray objectAtIndex:indexPath.row];
     NSString *key = [[aSettingDict allKeys]objectAtIndex:0];
-    cell.textLabel.text = key;
-    cell.textLabel.font = [cell.textLabel.font fontWithSize:14];
+    cell.textLabel.text = @" ";
+    [cell.detailTextLabel setFont:[UIFont systemFontOfSize:12]];
+    [cell.detailTextLabel setTextColor:[UIColor blackColor]];
+    cell.detailTextLabel.text = key;
     for (UIView *subView in cell.contentView.subviews)
     {
         if([subView isMemberOfClass:[UISwitch class]])
@@ -108,8 +110,8 @@
     UISwitch *settingSwitch = [[UISwitch alloc]init];
     [cell.contentView addSubview:settingSwitch];
     CGRect switchFrame = settingSwitch.frame;
-    switchFrame.origin.x = cell.contentView.frame.size.width - switchFrame.size.width-20;
-    switchFrame.origin.y = 0;//(cell.contentView.frame.size.height - switchFrame.size.height);
+    switchFrame.origin.x = cell.contentView.frame.size.width - switchFrame.size.width-10;
+    switchFrame.origin.y = 5;//(cell.contentView.frame.size.height - switchFrame.size.height);
     settingSwitch.frame = switchFrame;
     NSNumber *value = [aSettingDict objectForKey:key];
     
@@ -123,7 +125,7 @@
 }
 -(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 80;
+    return 60;
 }
 - (void)switchValueChanged:(UISwitch*)sender
 {
