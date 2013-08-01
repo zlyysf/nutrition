@@ -112,7 +112,7 @@
 #define COLUMN_NAME_Upper_Limit @"Upper_Limit(g)"
 #define COLUMN_NAME_normal_value @"normal_value"
 #define COLUMN_NAME_first_recommend @"first_recommend"
-
+#define COLUMN_NAME_increment_unit @"increment_unit"
 
 #define TABLE_NAME_NutritionInfo @"NutritionInfo"
 #define COLUMN_NAME_NutrientID @"NutrientID"
