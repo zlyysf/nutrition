@@ -13,6 +13,7 @@
 #define kSelectButtonSide 22.f
 #define kTagAddNum 20
 #define kNameButtonAddNum 100
+#define kMaxFilterLine 5
 @implementation LZRecommendFilterView
 @synthesize backView,delegate,cancelButton,submitButton,filterArray,listView;
 - (id)initWithFrame:(CGRect)frame
@@ -32,9 +33,9 @@
         float count = [self.filterArray count];
         int floor =(int)(ceilf(count/2.f));
         int totalFloor;
-        if (floor >5)
+        if (floor >kMaxFilterLine)
         {
-            totalFloor =5;
+            totalFloor =kMaxFilterLine;
         }
         else
         {
