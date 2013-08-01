@@ -20,8 +20,12 @@
 {
     NSArray *limitedNutrientsCanBeCal = nil;
     if (!KeyIsEnvironmentDebug){
-        limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
-                                    @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",@"Folate_Tot_(µg)", nil];
+        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
+                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",
+                                    @"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+                                    @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",
+                                    @"Protein_(g)", //@"Energ_Kcal",
+                                    nil];
     }else{
 //        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
 //                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
@@ -5011,6 +5015,299 @@
 
 
 
+/*
+ 主要用于显示随着食物的增加，各营养素的供应量相对于DRI和UL的变化情况
+ */
+-(NSArray*) generateTableFoodSmallIncrementSupplyNutrient:(NSDictionary*)recmdDict
+{
+    NSLog(@"generateTableFoodSmallIncrementSupplyNutrient enter");
+    
+    NSDictionary *DRIsDict = [recmdDict objectForKey:Key_DRI];//nutrient name as key, also column name
+    NSDictionary *DRIULsDict = [recmdDict objectForKey:Key_DRIUL];
+    NSArray *originalNutrientNameAryToCal = [recmdDict objectForKey:Key_originalNutrientNameAryToCal];
+    NSSet *originalNutrientNameSetToCal = [NSSet setWithArray:originalNutrientNameAryToCal];
+    
+    //    NSDictionary *nutrientSupplyDictOld = [recmdDict objectForKey:@"nutrientSupplyDictOld"];
+    //    NSDictionary *recommendFoodAmountDictOld = [recmdDict objectForKey:@"recommendFoodAmountDictOld"];
+    
+    NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:Key_nutrientSupplyDict];//nutrient name as key, also column name
+    NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:Key_recommendFoodAmountDict];//food NO as key
+    
+    NSDictionary *preChooseFoodInfoDict = [recmdDict objectForKey:Key_preChooseFoodInfoDict];
+    NSDictionary *preChooseRichFoodInfoAryDict = [recmdDict objectForKey:Key_preChooseRichFoodInfoAryDict];
+    
+    
+    NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:Key_TakenFoodAmount];//food NO as key
+    NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:Key_TakenFoodAttr];//food NO as key
+    
+    NSArray *foodSupplyNutrientSeqs = [recmdDict objectForKey:@"foodSupplyNutrientSeqs"];//2D array
+    
+    NSMutableArray *outRows = [recmdDict objectForKey:Key_outRows];
+    NSMutableArray *rows = outRows;
+    
+    int colIdx_NutrientStart = 5;
+    NSArray* nutrientNames = [DRIsDict allKeys];
+    NSArray* allNutrientNamesOrdered = [self.class getDRItableNutrientsWithSameOrder];
+    assert([LZUtility arrayEqualArrayInSetWay_withArray1:nutrientNames andArray2:allNutrientNamesOrdered]);
+    nutrientNames = allNutrientNamesOrdered;
+    
+    int columnCount = colIdx_NutrientStart+nutrientNames.count;
+    NSMutableArray *rowForInit = [LZUtility generateArrayWithFillItem:[NSNull null] andArrayLength:columnCount];
+    
+    NSMutableArray* row;
+    NSMutableArray *rowsRateToDriAllNutrients = [NSMutableArray arrayWithCapacity:1000];
+    
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    row[0] = @"incr rate to DRI";
+    [rowsRateToDriAllNutrients addObject:row];
+    
+    
+    //营养素列名集合的行
+    NSMutableArray* rowNutrientNames = [NSMutableArray arrayWithArray:rowForInit];
+    row = rowNutrientNames;
+    for(int i=0; i<nutrientNames.count; i++){
+        NSString *nutrientName = nutrientNames[i];
+        if ( [originalNutrientNameSetToCal containsObject:nutrientName]){
+            NSMutableString *s1 = [NSMutableString stringWithFormat:@"%@ *",nutrientName ];
+            row[i+colIdx_NutrientStart] = s1;
+        }else{
+            row[i+colIdx_NutrientStart] = nutrientName;
+        }
+    }
+    [rowsRateToDriAllNutrients addObject:row];
+    
+    //各种营养素DRI
+    NSMutableArray *rowDRI = [NSMutableArray arrayWithArray:rowForInit];
+    rowDRI[0] = @"DRI";
+    for(int i=0; i<nutrientNames.count; i++){
+        NSString *nutrientName = nutrientNames[i];
+        NSNumber *nmNutrientDRI1unit = [DRIsDict objectForKey:nutrientName];
+        if (nmNutrientDRI1unit != nil && (NSNull*)nmNutrientDRI1unit != [NSNull null])
+            rowDRI[i+colIdx_NutrientStart] = nmNutrientDRI1unit;
+        else
+            rowDRI[i+colIdx_NutrientStart] = [NSNumber numberWithDouble:0.0];
+    }
+    [rowsRateToDriAllNutrients addObject:rowDRI];
+    
+    //各种营养素DRI UL
+    NSMutableArray *rowDRIul = [NSMutableArray arrayWithArray:rowForInit];
+    rowDRIul[0] = @"DRIUL";
+    for(int i=0; i<nutrientNames.count; i++){
+        NSString *nutrientName = nutrientNames[i];
+        NSNumber *nmNutrientDRIul = [DRIULsDict objectForKey:nutrientName];
+        if (nmNutrientDRIul != nil && (NSNull*)nmNutrientDRIul != [NSNull null])
+            rowDRIul[i+colIdx_NutrientStart] = nmNutrientDRIul;
+        else
+            rowDRIul[i+colIdx_NutrientStart] = [NSNumber numberWithDouble:0.0];
+    }
+    [rowsRateToDriAllNutrients addObject:rowDRIul];
+    
+//    NSMutableArray *rowNutrientSupplyingAmount = [LZUtility generateArrayWithFillItem:[NSNumber numberWithDouble:0] andArrayLength:columnCount];
+    NSMutableDictionary *nutrientSupplySumDict = [NSMutableDictionary dictionary];
+    NSMutableArray *nutrientSupplyingDictArray = [NSMutableArray arrayWithCapacity:1000];
+    
+//    int rowIdx_foodItemStart = rows.count;
+    NSArray* takenFoodIDs = nil;
+    if (takenFoodAmountDict != nil){
+        takenFoodIDs = takenFoodAmountDict.allKeys;
+        //已经摄取的各种食物具体的量和提供各种营养素的量
+        for(int i=0; i<takenFoodIDs.count; i++){
+            NSString *foodID = takenFoodIDs[i];
+            NSNumber *nmFoodAmount = [takenFoodAmountDict objectForKey:foodID];
+            NSDictionary *foodAttrs = [takenFoodAttrDict objectForKey:foodID];
+            row = [NSMutableArray arrayWithArray:rowForInit];
+            row[0] = @"given food";
+            row[2+0] = foodID;
+            row[2+1] = foodAttrs[@"CnCaption"];
+            row[2+2] = nmFoodAmount;
+
+//            for(int j=0; j<nutrientNames.count;j++){
+//                NSString *nutrientName = nutrientNames[j];
+//                NSNumber *nmFoodAttrValue = [foodAttrs objectForKey:nutrientName];
+//                if (nmFoodAttrValue == nil || (NSNull*)nmFoodAttrValue == [NSNull null]){//有warning没事，试过了没问题
+//                    //do nothing
+//                }else{
+//                    double foodSupplyNutrientAmount = [nmFoodAttrValue doubleValue]*[nmFoodAmount doubleValue]/100.0;
+//                    rowNutrientSupplyingAmount[j+colIdx_NutrientStart] = [LZUtility addNumberWithDouble:foodSupplyNutrientAmount andNumber2:rowNutrientSupplyingAmount[j+colIdx_NutrientStart]] ;
+//                }
+//                row[j+colIdx_NutrientStart] = [LZUtility divideNSNumberByDouble_withDividend:rowNutrientSupplyingAmount[j+colIdx_NutrientStart] andDivider:rowDRI[j+colIdx_NutrientStart]];//已经补充的量相对于DRI的比例
+//            }//for j
+            for(int j=0; j<nutrientNames.count;j++){
+                NSString *nutrientName = nutrientNames[j];
+                NSNumber *nmFoodAttrValue = [foodAttrs objectForKey:nutrientName];
+                NSNumber * nmNutrientSupply = nil;
+                if (nmFoodAttrValue == nil || (NSNull*)nmFoodAttrValue == [NSNull null]){//有warning没事，试过了没问题
+                    nmNutrientSupply = [NSNumber numberWithDouble:[LZUtility getDoubleFromDictionaryItem_withDictionary:nutrientSupplySumDict andKey:nutrientName]];
+                }else{
+                    double foodSupplyNutrientAmount = [nmFoodAttrValue doubleValue]*[nmFoodAmount doubleValue]/100.0;
+                    nmNutrientSupply = [LZUtility addDoubleToDictionaryItem:foodSupplyNutrientAmount withDictionary:nutrientSupplySumDict andKey:nutrientName];
+                }
+                row[j+colIdx_NutrientStart] = [LZUtility divideNSNumberByDouble_withDividend:nmNutrientSupply andDivider:[DRIsDict objectForKey:nutrientName]];//已经补充的量相对于DRI的比例
+            }//for j
+            NSMutableDictionary *nutrientSupplyingDict = [NSMutableDictionary dictionaryWithDictionary:nutrientSupplySumDict];
+            [nutrientSupplyingDictArray addObject:nutrientSupplyingDict];
+            [rowsRateToDriAllNutrients addObject:row];
+        }//for i
+    }//if (takenFoodAmountDict != nil)
+    
+
+    for(int i=0; i<foodSupplyNutrientSeqs.count; i++){
+        NSArray *foodSupplyNutrientSeq = foodSupplyNutrientSeqs[i];
+        row = [NSMutableArray arrayWithArray:rowForInit];
+        NSString *nutrient = foodSupplyNutrientSeq[0];
+        NSNumber *nmNutrientLackRate = foodSupplyNutrientSeq[1];
+        NSString *foodName = foodSupplyNutrientSeq[2];
+        NSString *foodId = foodSupplyNutrientSeq[3];
+        NSNumber *nmFoodAmount = foodSupplyNutrientSeq[4];
+        row[0] = nutrient;
+        row[1] = nmNutrientLackRate;
+        row[2] = foodName;
+        row[3] = foodId;
+        row[4] = nmFoodAmount;
+        NSDictionary *foodAttrs = [preChooseFoodInfoDict objectForKey:foodId];
+//        double dFoodAmount = [nmFoodAmount doubleValue];
+//        for(int j=0; j<nutrientNames.count;j++){
+//            NSString *nutrientName = nutrientNames[j];
+//            NSNumber *nmFoodAttrValue = [foodAttrs objectForKey:nutrientName];
+//            if (nmFoodAttrValue == nil || (NSNull*)nmFoodAttrValue == [NSNull null]){//有warning没事，试过了没问题
+//                //do nothing
+//            }else{
+//                double foodSupplyNutrientAmount = [nmFoodAttrValue doubleValue]*[nmFoodAmount doubleValue]/100.0;
+//                rowNutrientSupplyingAmount[j+colIdx_NutrientStart] = [LZUtility addNumberWithDouble:foodSupplyNutrientAmount andNumber2:rowNutrientSupplyingAmount[j+colIdx_NutrientStart]] ;
+//            }
+//            row[j+colIdx_NutrientStart] = [LZUtility divideNSNumberByDouble_withDividend:rowNutrientSupplyingAmount[j+colIdx_NutrientStart] andDivider:rowDRI[j+colIdx_NutrientStart]];//已经补充的量相对于DRI的比例
+//        }//for j
+        for(int j=0; j<nutrientNames.count;j++){
+            NSString *nutrientName = nutrientNames[j];
+            NSNumber *nmFoodAttrValue = [foodAttrs objectForKey:nutrientName];
+            NSNumber * nmNutrientSupply = nil;
+            if (nmFoodAttrValue == nil || (NSNull*)nmFoodAttrValue == [NSNull null]){//有warning没事，试过了没问题
+                nmNutrientSupply = [NSNumber numberWithDouble:[LZUtility getDoubleFromDictionaryItem_withDictionary:nutrientSupplySumDict andKey:nutrientName]];
+            }else{
+                double foodSupplyNutrientAmount = [nmFoodAttrValue doubleValue]*[nmFoodAmount doubleValue]/100.0;
+                nmNutrientSupply = [LZUtility addDoubleToDictionaryItem:foodSupplyNutrientAmount withDictionary:nutrientSupplySumDict andKey:nutrientName];
+//                rowNutrientSupplyingAmount[j+colIdx_NutrientStart] = [LZUtility addNumberWithDouble:foodSupplyNutrientAmount andNumber2:rowNutrientSupplyingAmount[j+colIdx_NutrientStart]] ;
+            }
+            row[j+colIdx_NutrientStart] = [LZUtility divideNSNumberByDouble_withDividend:nmNutrientSupply andDivider:[DRIsDict objectForKey:nutrientName]];//已经补充的量相对于DRI的比例
+        }//for j
+        NSMutableDictionary *nutrientSupplyingDict = [NSMutableDictionary dictionaryWithDictionary:nutrientSupplySumDict];
+        [nutrientSupplyingDictArray addObject:nutrientSupplyingDict];
+        [rowsRateToDriAllNutrients addObject:row];
+    }//for
+    
+//    [rows addObjectsFromArray:rowsRateToDriAllNutrients];
+    
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    row[0] = @"incr rate to DRI 2";
+    [rows addObject:row];
+    
+    NSMutableArray* rowNutrientNamesCustom = [NSMutableArray arrayWithArray:rowForInit];
+    for(int i=0; i<originalNutrientNameAryToCal.count; i++){
+        NSString *nutrientName = originalNutrientNameAryToCal[i];
+        NSMutableString *s1 = [NSMutableString stringWithFormat:@"%@ *",nutrientName ];
+        rowNutrientNamesCustom[i+colIdx_NutrientStart] = s1;
+    }
+        
+    NSMutableArray *rowsRateToDriCustomNutrients = [NSMutableArray arrayWithCapacity:1000];
+    [rowsRateToDriCustomNutrients addObject:rowNutrientNamesCustom];
+    NSMutableArray *rowsRateToDriUlCustomNutrients = [NSMutableArray arrayWithCapacity:1000];
+    [rowsRateToDriUlCustomNutrients addObject:rowNutrientNamesCustom];
+
+    int rowIdx = 0;
+    for(int i=0; i<takenFoodIDs.count; i++){
+        NSString *foodID = takenFoodIDs[i];
+        NSMutableDictionary *nutrientSupplyingDict = nutrientSupplyingDictArray[rowIdx];
+        NSNumber *nmFoodAmount = [takenFoodAmountDict objectForKey:foodID];
+        NSDictionary *foodAttrs = [takenFoodAttrDict objectForKey:foodID];
+        
+        NSMutableArray * rowRateToDriCustomNutrients = [NSMutableArray arrayWithArray:rowForInit];
+        rowRateToDriCustomNutrients[0] = @"given food";
+        rowRateToDriCustomNutrients[2+0] = foodID;
+        rowRateToDriCustomNutrients[2+1] = foodAttrs[@"CnCaption"];
+        rowRateToDriCustomNutrients[2+2] = nmFoodAmount;
+        NSMutableArray * rowRateToDriUlCustomNutrients = [NSMutableArray arrayWithArray:rowForInit];
+        rowRateToDriUlCustomNutrients[0] = @"given food";
+        rowRateToDriUlCustomNutrients[2+0] = foodID;
+        rowRateToDriUlCustomNutrients[2+1] = foodAttrs[@"CnCaption"];
+        rowRateToDriUlCustomNutrients[2+2] = nmFoodAmount;
+
+        for(int j=0; j<originalNutrientNameAryToCal.count;j++){
+            NSString *nutrientName = originalNutrientNameAryToCal[j];
+            rowRateToDriCustomNutrients[j+colIdx_NutrientStart] = [LZUtility divideNSNumberByDouble_withDividend:[nutrientSupplyingDict objectForKey:nutrientName] andDivider:[DRIsDict objectForKey:nutrientName]];
+            
+            NSNumber *nm_nutrientUL = [DRIULsDict objectForKey:nutrientName];
+            if ([nm_nutrientUL doubleValue]>0){
+                rowRateToDriUlCustomNutrients[j+colIdx_NutrientStart] = [LZUtility divideNSNumberByDouble_withDividend:[nutrientSupplyingDict objectForKey:nutrientName] andDivider:nm_nutrientUL];
+            }else{
+                rowRateToDriUlCustomNutrients[j+colIdx_NutrientStart] = @"N/A";
+            }
+            
+        }
+        [rowsRateToDriCustomNutrients addObject:rowRateToDriCustomNutrients];
+        [rowsRateToDriUlCustomNutrients addObject:rowRateToDriUlCustomNutrients];
+        rowIdx ++;
+    }
+    for(int i=0; i<foodSupplyNutrientSeqs.count; i++){
+        NSArray *foodSupplyNutrientSeq = foodSupplyNutrientSeqs[i];
+        NSMutableDictionary *nutrientSupplyingDict = nutrientSupplyingDictArray[rowIdx];
+
+        NSString *nutrient = foodSupplyNutrientSeq[0];
+        NSNumber *nmNutrientLackRate = foodSupplyNutrientSeq[1];
+        NSString *foodName = foodSupplyNutrientSeq[2];
+        NSString *foodId = foodSupplyNutrientSeq[3];
+        NSNumber *nmFoodAmount = foodSupplyNutrientSeq[4];
+        
+        NSMutableArray * rowRateToDriCustomNutrients = [NSMutableArray arrayWithArray:rowForInit];
+        rowRateToDriCustomNutrients[0] = nutrient;
+        rowRateToDriCustomNutrients[1] = nmNutrientLackRate;
+        rowRateToDriCustomNutrients[2] = foodName;
+        rowRateToDriCustomNutrients[3] = foodId;
+        rowRateToDriCustomNutrients[4] = nmFoodAmount;
+        
+        NSMutableArray * rowRateToDriUlCustomNutrients = [NSMutableArray arrayWithArray:rowForInit];
+        rowRateToDriUlCustomNutrients[0] = nutrient;
+        rowRateToDriUlCustomNutrients[1] = nmNutrientLackRate;
+        rowRateToDriUlCustomNutrients[2] = foodName;
+        rowRateToDriUlCustomNutrients[3] = foodId;
+        rowRateToDriUlCustomNutrients[4] = nmFoodAmount;
+        
+        NSDictionary *foodAttrs = [preChooseFoodInfoDict objectForKey:foodId];
+    
+        for(int j=0; j<originalNutrientNameAryToCal.count;j++){
+            NSString *nutrientName = originalNutrientNameAryToCal[j];
+            rowRateToDriCustomNutrients[j+colIdx_NutrientStart] = [LZUtility divideNSNumberByDouble_withDividend:[nutrientSupplyingDict objectForKey:nutrientName] andDivider:[DRIsDict objectForKey:nutrientName]];
+            
+            NSNumber *nm_nutrientUL = [DRIULsDict objectForKey:nutrientName];
+            if ([nm_nutrientUL doubleValue]>0){
+                rowRateToDriUlCustomNutrients[j+colIdx_NutrientStart] = [LZUtility divideNSNumberByDouble_withDividend:[nutrientSupplyingDict objectForKey:nutrientName] andDivider:nm_nutrientUL];
+            }else{
+                rowRateToDriUlCustomNutrients[j+colIdx_NutrientStart] = @"N/A";
+            }
+            
+        }//for j
+
+        [rowsRateToDriCustomNutrients addObject:rowRateToDriCustomNutrients];
+        [rowsRateToDriUlCustomNutrients addObject:rowRateToDriUlCustomNutrients];
+        rowIdx ++;
+    }//for
+    
+    [rows addObjectsFromArray:rowsRateToDriCustomNutrients];
+    
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    row[0] = @"incr rate to DRI UL 2";
+    [rows addObject:row];
+    [rows addObjectsFromArray:rowsRateToDriUlCustomNutrients];
+    
+    row = [NSMutableArray arrayWithArray:rowForInit];
+    row[0] = @"--------";
+    [rows addObject:row];
+    
+        
+    return rows;
+}
+
+
+
 
 
 
@@ -5165,10 +5462,25 @@
     [rowsAry addObject:rows];
     rows = [NSMutableArray arrayWithCapacity:1000];
     
-    row = [NSMutableArray arrayWithArray:rowForInit];
-    row[0] = @"--------calculationLogs";
-    [rows addObject:row];
-    [rows addObjectsFromArray:calculationLogs];
+    inoutParams = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                   DRIsDict,Key_DRI,
+                   DRIULsDict,Key_DRIUL,
+                   originalNutrientNameAryToCal,Key_originalNutrientNameAryToCal,
+                   nutrientSupplyDictOld,Key_nutrientSupplyDict,
+                   recommendFoodAmountDictOld,Key_recommendFoodAmountDict,
+                   preChooseFoodInfoDict,Key_preChooseFoodInfoDict,
+                   preChooseRichFoodInfoAryDict,Key_preChooseRichFoodInfoAryDict,
+                   foodSupplyNutrientSeqs,@"foodSupplyNutrientSeqs",
+                   rows,Key_outRows,
+                   nil];
+    if (takenFoodAmountDict!=nil) [inoutParams setObject:takenFoodAmountDict forKey:Key_TakenFoodAmount];
+    if (takenFoodAttrDict!=nil) [inoutParams setObject:takenFoodAttrDict forKey:Key_TakenFoodAttr];
+    [self generateTableFoodSmallIncrementSupplyNutrient:inoutParams];
+    
+//    row = [NSMutableArray arrayWithArray:rowForInit];
+//    row[0] = @"--------calculationLogs";
+//    [rows addObject:row];
+//    [rows addObjectsFromArray:calculationLogs];
     
     [rowsAry addObject:rows];
         

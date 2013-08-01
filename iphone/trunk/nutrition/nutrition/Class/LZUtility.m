@@ -11,6 +11,30 @@
 #import "LZRecommendFood.h"
 @implementation LZUtility
 
++(NSNumber *)add2NSNumberByDouble_withNumber1:(NSNumber*)nm1 andNumber2:(NSNumber*)nm2
+{
+    double d1 = 0;
+    if (nm1 != nil && (NSNull*)nm1 != [NSNull null]) d1 = [nm1 doubleValue];
+    double d2 = 0;
+    if (nm2 != nil && (NSNull*)nm2 != [NSNull null]) d2 = [nm2 doubleValue];
+    double d = d1 +d2;
+    return [NSNumber numberWithDouble:d];
+}
++(NSNumber *)addNumberWithDouble:(double)d1 andNumber2:(NSNumber*)nm2
+{
+    double d2 = 0;
+    if (nm2 != nil && (NSNull*)nm2 != [NSNull null]) d2 = [nm2 doubleValue];
+    double d = d1 +d2;
+    return [NSNumber numberWithDouble:d];
+}
+
+// dividend / divider
++(NSNumber *)divideNSNumberByDouble_withDividend:(NSNumber*)dividend andDivider:(NSNumber*)divider
+{
+    if ([divider doubleValue]==0) return [NSNumber numberWithDouble:0];
+    double d = [dividend doubleValue] / [divider doubleValue];
+    return [NSNumber numberWithDouble:d];
+}
 
 +(NSNumber *)addDoubleToDictionaryItem:(double)valAdd withDictionary:(NSMutableDictionary*)data andKey:(NSString *)datakey
 {
@@ -18,7 +42,7 @@
     assert(datakey!=nil);
     id dataVal = [data objectForKey:datakey];
     double sum = 0 ;
-    if (dataVal != nil){
+    if (dataVal != nil && dataVal != [NSNull null]){
         NSNumber *nmDataVal = dataVal;
         sum = [nmDataVal doubleValue]+valAdd;
     }else{
@@ -48,7 +72,7 @@
     assert(data!=nil);
     assert(datakey!=nil);
     id dataVal = [data objectForKey:datakey];
-    if (dataVal==nil)
+    if (dataVal==nil || dataVal == [NSNull null])
         return 0;
     else{
         NSNumber *nmDataVal = dataVal;
@@ -56,7 +80,14 @@
     }
 }
 
-
++(NSMutableArray*)generateArrayWithFillItem:(NSObject*)fillItem andArrayLength:(int)length
+{
+    NSMutableArray *ary = [NSMutableArray arrayWithCapacity:length];
+    for(int i=0; i<length; i++){
+        [ary addObject:fillItem];
+    }
+    return ary;
+}
 
 
 +(NSString *) convert2DArrayToCsv: (NSString *)csvFileName withData:(NSArray*)ary2D

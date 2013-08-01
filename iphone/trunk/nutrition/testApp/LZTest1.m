@@ -87,8 +87,8 @@
 
 +(void)testRecommendFoodBySmallIncrement
 {
-//    [self.class caseUser_recSI_preTaken_0];
-    [self.class caseUser_recSI_preTaken_0_givenNutrients];
+    [self.class caseUser_recSI_preTaken_0];
+//    [self.class caseUser_recSI_preTaken_0_givenNutrients];
 //    [self.class caseUser_recSI_preTaken_0_sameOptionsAsAppForLinearSystemCompare];
 }
 
