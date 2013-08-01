@@ -9,7 +9,9 @@
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
 
-#define KeyIsEnvironmentDebug 0
+#define KeyIsEnvironmentDebug 1
+
+#define KeyDebugSettingsDict @"KeyDebugSettingsDict"
 
 #define Config_needConsiderNutrientLoss FALSE
 #define Config_foodUpperLimit 1000 // unit g

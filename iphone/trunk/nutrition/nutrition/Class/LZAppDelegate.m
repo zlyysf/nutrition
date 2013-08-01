@@ -17,9 +17,16 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
-
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
     //custom navigationbar and barbuttonitem
+    if(KeyIsEnvironmentDebug)
+    {
+        [self initialDebugSettings];//add some debug settings key in user default
+    }
+    else
+    {
+        [self cleanDebugSettings];
+    }
     NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
     UIImage * navImage = [UIImage imageWithContentsOfFile:path];
     UIImage *gradientImage44 = [navImage
@@ -114,6 +121,26 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+-(void)initialDebugSettings
+{
+    NSDictionary *dict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
+    if (dict == nil || [[dict allKeys]count]==0)
+    {
+        //add settings
+        NSDictionary *newDict = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                                    [NSNumber numberWithBool:YES],@"Key1",
+                                                    [NSNumber numberWithBool:NO],@"Key2",
+                                                    [NSNumber numberWithBool:NO],@"Key3",
+                                                    [NSNumber numberWithBool:YES],@"Key4",nil];
+        [[NSUserDefaults standardUserDefaults]setObject:newDict forKey:KeyDebugSettingsDict];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+}
+-(void)cleanDebugSettings
+{
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:KeyDebugSettingsDict];
+    [[NSUserDefaults standardUserDefaults]synchronize];
 }
 - (BOOL)application:(UIApplication *)application
       handleOpenURL:(NSURL *)url

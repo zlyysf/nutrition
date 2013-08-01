@@ -16,6 +16,7 @@
 #import "MobClick.h"
 #import "LZUtility.h"
 #import "LZEditProfileViewController.h"
+#import "LZDebugSettingsViewController.h"
 @interface LZSettingsViewController ()<LZKeyboardToolBarDelegate,MFMailComposeViewControllerDelegate,UIAlertViewDelegate>
 
 @end
@@ -157,7 +158,16 @@
     [[LZReviewAppManager SharedInstance]reviewOurAppDirectly];
 }
 - (IBAction)userFeedBack:(id)sender {
-    [self performSelector:@selector(feedbackAction) withObject:nil afterDelay:0.f];
+    if (KeyIsEnvironmentDebug)
+    {
+        LZDebugSettingsViewController * debugController = [[LZDebugSettingsViewController alloc]init];
+        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:debugController];
+        [self presentModalViewController:nav animated:YES];
+    }
+    else
+    {
+        [self performSelector:@selector(feedbackAction) withObject:nil afterDelay:0.f];
+    }
 }
 - (void)feedbackAction
 {
