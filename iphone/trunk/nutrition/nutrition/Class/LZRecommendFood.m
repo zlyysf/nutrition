@@ -4834,24 +4834,25 @@
             NSString *foodID = foodIDs[i];
             NSNumber *nmFoodAmount = [recommendFoodAmountDict objectForKey:foodID];
             double dFoodAmount = 0;
-            if (nmFoodAmount != nil)
+            if (nmFoodAmount != nil && [nmFoodAmount doubleValue]!=0){
                 dFoodAmount = [nmFoodAmount doubleValue];
-            NSDictionary *foodAttrs = [preChooseFoodInfoDict objectForKey:foodID];
-            row = [NSMutableArray arrayWithArray:rowForInit];
-            row[0] = foodID;
-            row[1] = foodAttrs[@"CnCaption"];
-            row[2] = [NSNumber numberWithDouble:dFoodAmount];
-            for(int j=0; j<nutrientNames.count;j++){
-                NSString *nutrientName = nutrientNames[j];
-                NSNumber *nmFoodAttrValue = [foodAttrs objectForKey:nutrientName];
-                if (nmFoodAttrValue == nil || (NSNull*)nmFoodAttrValue == [NSNull null]){//有warning没事，试过了没问题
-                    //do nothing
-                }else{
-                    double foodSupplyNutrientAmount = [nmFoodAttrValue doubleValue]*dFoodAmount/100.0;
-                    row[j+colIdx_NutrientStart] = [NSNumber numberWithDouble:foodSupplyNutrientAmount];
-                }
-            }//for j
-            [rows addObject:row];
+                NSDictionary *foodAttrs = [preChooseFoodInfoDict objectForKey:foodID];
+                row = [NSMutableArray arrayWithArray:rowForInit];
+                row[0] = foodID;
+                row[1] = foodAttrs[@"CnCaption"];
+                row[2] = [NSNumber numberWithDouble:dFoodAmount];
+                for(int j=0; j<nutrientNames.count;j++){
+                    NSString *nutrientName = nutrientNames[j];
+                    NSNumber *nmFoodAttrValue = [foodAttrs objectForKey:nutrientName];
+                    if (nmFoodAttrValue == nil || (NSNull*)nmFoodAttrValue == [NSNull null]){//有warning没事，试过了没问题
+                        //do nothing
+                    }else{
+                        double foodSupplyNutrientAmount = [nmFoodAttrValue doubleValue]*dFoodAmount/100.0;
+                        row[j+colIdx_NutrientStart] = [NSNumber numberWithDouble:foodSupplyNutrientAmount];
+                    }
+                }//for j
+                [rows addObject:row];
+            }
         }//for i
     }//if (preChooseFoodInfoDict != nil)
     
