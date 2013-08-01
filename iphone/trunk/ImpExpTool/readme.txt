@@ -28,6 +28,13 @@ FoodLimit表和Food_Limit.xls中的数据是一样的，包含各种食物摄取
     而normal_value介于上下限之间，目前的意义是适当值，即某种意义上的建议值，在某种算法中，首先以建议值为上限，当超过建议值时先使用别的食物，直到找不到别的未超过建议值的食物后，再使用上限值。
     另外，对于上下限值，normal值，应该会有一个地方给出默认值。
     现在有几个值，上下限，normal_value，first_recommend 。关系是:下限 <= first_recommend <= normal_value <= 上限 . normal_value可以看作是普通限制，first_recommend 可以看做是一般推荐值。first_recommend是基于膳食宝塔中的推荐值，但是这个值比起某些需要或需求来显得不足。
+    目前在渐进增量算法中，
+        下限值作为对应食物的单位增量值。
+        有标志位needUseNormalLimitWhenSmallIncrementLogic控制上限值是使用normal_value还是Upper_Limit(g)。目前实际使用的是normal_value。
+        有标志位needUseFirstRecommendWhenSmallIncrementLogic控制食物第一次的增量是否使用first_recommend。
+        
+        
+        
 
 Food_Supply_DRI_Amount,Food_Supply_DRI_Common 是衍生数据
 Food_Supply_DRI_Amount 这个表是以 某份DRI 为基准（male 25 175cm 75kg low sport），根据食物营养成分表计算出的 每种营养成分在DRI的量的情况下，分别所需食物的量。
