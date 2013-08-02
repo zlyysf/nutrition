@@ -517,79 +517,50 @@
 
 }
 
+
+
+
+
 /*
  生成Food_Supply_DRI_Common表中的数据，参考readme
  */
--(void)generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:(BOOL)needClear
+-(void)generateTableAndData_Food_Supply_DRI_Common_withIfNeedClearTable:(BOOL)needClear
 {
-    [self createTable_Food_Supply_DRI_Common_withIfNeedDropTable:needClear];
-    [self initTable_Food_Supply_DRI_Common_withIfNeedClearTable:needClear];
-}
-/*
- 生成Food_Supply_DRI_Amount表中的数据，参考readme
- */
--(void)generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:(BOOL)needClear
-{
-    [self createTable_Food_Supply_DRI_Amount_withIfNeedDropTable:needClear];
-    [self initTable_Food_Supply_DRI_Amount_withIfNeedClearTable:needClear];
-}
-
-
--(void)createTable_Food_Supply_DRI_Common_withIfNeedDropTable:(BOOL)needDrop{
     NSString *tableName = TABLE_NAME_Food_Supply_DRI_Common;
-    [self createTable_Food_Supply_DRI_Various_withTableName:tableName andIfNeedDropTable:needDrop];
-}
--(void)createTable_Food_Supply_DRI_Amount_withIfNeedDropTable:(BOOL)needDrop{
-    NSString *tableName = TABLE_NAME_Food_Supply_DRI_Amount;
-    [self createTable_Food_Supply_DRI_Various_withTableName:tableName andIfNeedDropTable:needDrop];
-}
-
--(void)createTable_Food_Supply_DRI_Various_withTableName:(NSString*)tableName andIfNeedDropTable:(BOOL)needDrop
-{
-    if (needDrop){
-        [self dropTable:tableName];
-    }
-    
-    NSArray * allNutrientAry = [self getAllNutrientColumns];
-    
-    NSMutableString *sqlCreate = [NSMutableString stringWithCapacity:1000*100];
-    NSString *s1;
-    [sqlCreate appendString:@"CREATE TABLE "];
-    [sqlCreate appendString:tableName];
-    [sqlCreate appendString:@" ("];
-    s1 = [NSString stringWithFormat:@"'%@' TEXT PRIMARY KEY",COLUMN_NAME_NDB_No];
-    [sqlCreate appendString:s1];
-    for(int i=0; i<allNutrientAry.count; i++){
-        s1 = [NSString stringWithFormat:@",'%@' REAL",allNutrientAry[i]];
-        [sqlCreate appendString:s1];
-    }
-    [sqlCreate appendString:@")"];
-    [_db executeUpdate:sqlCreate];
-}
-
--(void)initTable_Food_Supply_DRI_Common_withIfNeedClearTable:(BOOL)needClear
-{
-    NSString *tableName = TABLE_NAME_Food_Supply_DRI_Common; //@"Food_Supply_DRI_Common";// @"Food_Supply_DRI_M19";
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              @"originalAndUpLimit",@"supplyAmountType",
                              [NSNumber numberWithBool:TRUE],@"needAmountToLevel", nil];
-    [self initTable_Food_Supply_DRI_Various_withTableName:tableName andIfNeedClearTable:needClear andOptions:options];
+    NSDictionary *data = [self generateData_Food_Supply_DRI_Various_withTableName:tableName andOptions:options];
+    NSArray *columnNames = [data objectForKey:@"columnNames"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    NSString *primaryKey = COLUMN_NAME_NDB_No;
+    [self createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:needClear];
+    [self insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:needClear];
 }
 
--(void)initTable_Food_Supply_DRI_Amount_withIfNeedClearTable:(BOOL)needClear
+/*
+ 生成Food_Supply_DRI_Amount表中的数据，参考readme
+ */
+-(void)generateTableAndData_Food_Supply_DRI_Amount_withIfNeedClearTable:(BOOL)needClear
 {
-    NSString *tableName = TABLE_NAME_Food_Supply_DRI_Amount; 
+    NSString *tableName = TABLE_NAME_Food_Supply_DRI_Amount;
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              @"original",@"supplyAmountType",
                              [NSNumber numberWithBool:FALSE],@"needAmountToLevel", nil];
-    [self initTable_Food_Supply_DRI_Various_withTableName:tableName andIfNeedClearTable:needClear andOptions:options];
+    NSDictionary *data = [self generateData_Food_Supply_DRI_Various_withTableName:tableName andOptions:options];
+    NSArray *columnNames = [data objectForKey:@"columnNames"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+
+    NSString *primaryKey = COLUMN_NAME_NDB_No;
+    [self createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:needClear];
+    [self insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:needClear];
 }
 
--(void)initTable_Food_Supply_DRI_Various_withTableName:(NSString*)tableName andIfNeedClearTable:(BOOL)needClear andOptions:(NSDictionary*)options
+
+-(NSMutableDictionary*)generateData_Food_Supply_DRI_Various_withTableName:(NSString*)tableName andOptions:(NSDictionary*)options
 {
-    if (needClear){
-        [self deleteFromTable:tableName];
-    }
+
     NSString * supplyAmountType = @"originalAndUpLimit"; // @"original"; // @"originalAndUpLimit"
     BOOL needAmountToLevel = TRUE;
     BOOL needRoundAmount = TRUE;
@@ -610,42 +581,31 @@
     NSMutableArray *allColumns = [NSMutableArray arrayWithObjects:COLUMN_NAME_NDB_No, nil];
     [allColumns addObjectsFromArray:allNutrientAry];
     
-    //NSMutableDictionary *allNutrientDict = [NSMutableDictionary dictionaryWithObjects:allNutrientAry forKeys:allNutrientAry];
     NSDictionary *foodNutritionData = [self getAllDataOfTable:VIEW_NAME_FoodNutritionCustom];
     NSArray *foodNutritionDataCols = [foodNutritionData objectForKey:@"cols"];
     NSArray *foodNutritionDataRows = [foodNutritionData objectForKey:@"rows"];
-    //NSString *insertSql = [self generateInsertSqlForTable:tableName andColumnNames:foodNutritionDataCols];
-    NSString *insertSql = [self generateInsertSqlForTable:tableName andColumnNames:allColumns];
-    NSLog(@"initTable_Food_Supply_DRI_Common_withIfNeedClearTable insertSql=%@",insertSql);
+    assert(foodNutritionDataRows.count>100);//>0
 
-    //NSDictionary *DRIdata = [self getDRIbyGender:@"male" andAge:19];
     NSDictionary *DRIdata = [self.class getStandardDRIs:0 age:19 weight:75 height:175 activityLevel:0 andDBcon:self];
     
-    NSMutableArray *fsdRows = [NSMutableArray arrayWithCapacity:foodNutritionDataRows.count];
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:foodNutritionDataRows.count];
     for(int i=0; i<foodNutritionDataRows.count; i++){
         NSDictionary *foodNutritionDataRowDict = foodNutritionDataRows[i];
         NSMutableArray *fsdRow = [NSMutableArray arrayWithCapacity:foodNutritionDataCols.count];
         [fsdRow addObject:[foodNutritionDataRowDict objectForKey:COLUMN_NAME_NDB_No]];
-        //for(int j=0; j<foodNutritionDataCols.count; j++){
+
         for(int j=0; j<allNutrientAry.count; j++){
-            //NSString *columnName = foodNutritionDataCols[j];
             NSString *columnNameNutrient = allNutrientAry[j];
-            
-            NSObject *cell = [foodNutritionDataRowDict objectForKey:columnNameNutrient];
-//            if ([allNutrientDict objectForKey:columnNameNutrient] == nil){
-//                [fsdRow addObject:cell];
-//            }else{
-//                
-//            }
             id nutrientDRI = [DRIdata objectForKey:columnNameNutrient];
             if (nutrientDRI == nil){
                 [fsdRow addObject:[NSNumber numberWithInt:0]];//没有DRI，没法计算
-            }else{
+            }else{//NOT if (nutrientDRI == nil)
                 NSNumber *nmNutrientDRI = (NSNumber*)nutrientDRI;
-                NSNumber *nmFoodNutrientAmount = (NSNumber *)cell;
+                 NSNumber *nmFoodNutrientAmount = [foodNutritionDataRowDict objectForKey:columnNameNutrient];
                 if ([nmFoodNutrientAmount doubleValue ]==0.0){//food的营养成分含量为0，也没法计算
                     [fsdRow addObject:[NSNumber numberWithInt:0]];
                 }else{
+                   
                     double foodSupplyAmount = [nmNutrientDRI doubleValue]/[nmFoodNutrientAmount doubleValue] * 100.0;
                     if ([@"originalAndUpLimit" isEqualToString:supplyAmountType]){
                         if (foodSupplyAmount >= 1000.0){
@@ -671,23 +631,15 @@
                     
                     [fsdRow addObject:[NSNumber numberWithDouble:foodSupplyAmount]];
                 }
-            }
-
+            }//NOT if (nutrientDRI == nil)
         }//for j
-        [fsdRows addObject:fsdRow];
+        [rows2D addObject:fsdRow];
     }//for i
     
-    for(int i=0; i<fsdRows.count; i++){
-        NSArray *row = fsdRows[i];
-        assert(allColumns.count == row.count);
-        
-        //[_db executeUpdate:insertSql withArgumentsInArray:row];
-        NSError *err = nil;
-        [_db executeUpdate:insertSql error:&err withArgumentsInArray:row orDictionary:nil orVAList:nil];
-        if (err!=nil){
-            NSLog(@"initTable_Food_Supply_DRI_Common_withIfNeedClearTable i=%d,err=%@",i,err);
-        }
-    }
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+    [retData setObject:allColumns forKey:@"columnNames"];
+    [retData setObject:rows2D forKey:@"rows2D"];
+    return retData;
 }
 
 

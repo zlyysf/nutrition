@@ -183,8 +183,8 @@
     [workRe convertExcelToSqlite_NutritionInfo];
     [workRe convertExcelToSqlite_CustomRichFood];
     
-    [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
-    [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
+    [db generateTableAndData_Food_Supply_DRI_Common_withIfNeedClearTable:true];
+    [db generateTableAndData_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
     [db generateTableAndData_Food_Supply_DRIUL_Amount_withIfNeedClearTable:true];
     
     [self generateVariousCsv_withDBFilePath:destDbFilePath];
@@ -198,3 +198,29 @@
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
