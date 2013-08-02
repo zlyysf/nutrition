@@ -579,6 +579,9 @@
     
     NSArray * allNutrientAry = [self getAllNutrientColumns];
     NSMutableArray *allColumns = [NSMutableArray arrayWithObjects:COLUMN_NAME_NDB_No, nil];
+    if (!needAmountToLevel){
+        [allColumns addObjectsFromArray:[NSArray arrayWithObjects:COLUMN_NAME_MaxAdequateAmount,COLUMN_NAME_NutrientID,nil]];
+    }
     [allColumns addObjectsFromArray:allNutrientAry];
     
     NSDictionary *foodNutritionData = [self getAllDataOfTable:VIEW_NAME_FoodNutritionCustom];
@@ -593,7 +596,13 @@
         NSDictionary *foodNutritionDataRowDict = foodNutritionDataRows[i];
         NSMutableArray *fsdRow = [NSMutableArray arrayWithCapacity:foodNutritionDataCols.count];
         [fsdRow addObject:[foodNutritionDataRowDict objectForKey:COLUMN_NAME_NDB_No]];
+        if (!needAmountToLevel){
+            [fsdRow addObject:[NSNumber numberWithDouble:0]];
+            [fsdRow addObject:@""];
+        }
 
+        double dMaxFoodAdequateAmount = 0;
+        NSString *nutrientToMaxFoodAdequateAmount = nil;
         for(int j=0; j<allNutrientAry.count; j++){
             NSString *columnNameNutrient = allNutrientAry[j];
             id nutrientDRI = [DRIdata objectForKey:columnNameNutrient];
@@ -606,10 +615,10 @@
                     [fsdRow addObject:[NSNumber numberWithInt:0]];
                 }else{
                    
-                    double foodSupplyAmount = [nmNutrientDRI doubleValue]/[nmFoodNutrientAmount doubleValue] * 100.0;
+                    double dFoodSupplyAmount = [nmNutrientDRI doubleValue]/[nmFoodNutrientAmount doubleValue] * 100.0;
                     if ([@"originalAndUpLimit" isEqualToString:supplyAmountType]){
-                        if (foodSupplyAmount >= 1000.0){
-                            foodSupplyAmount = 0;
+                        if (dFoodSupplyAmount >= Config_foodUpperLimit){
+                            dFoodSupplyAmount = 0;
                         }else{
                             //do nothing
                         }
@@ -617,8 +626,8 @@
                         //do nothing
                     }
                     if (needAmountToLevel){
-                        if (foodSupplyAmount > 0){
-                            foodSupplyAmount = round((foodSupplyAmount + 100) / 100.0);
+                        if (dFoodSupplyAmount > 0){
+                            dFoodSupplyAmount = round((dFoodSupplyAmount + 100) / 100.0);
                         }else{
                             //when foodSupplyAmount be 0, not right to convert to level value
                         }
@@ -626,13 +635,34 @@
                         //do nothing
                     }
                     if (needRoundAmount){
-                        foodSupplyAmount = round(foodSupplyAmount);
+                        dFoodSupplyAmount = round(dFoodSupplyAmount);
                     }
                     
-                    [fsdRow addObject:[NSNumber numberWithDouble:foodSupplyAmount]];
+                    if (!needAmountToLevel){
+                        if (dMaxFoodAdequateAmount == 0){
+                            if (dFoodSupplyAmount > 0 && dFoodSupplyAmount <= Config_foodUpperLimit){
+                                dMaxFoodAdequateAmount = dFoodSupplyAmount;
+                                nutrientToMaxFoodAdequateAmount = columnNameNutrient;
+                            }
+                        }else{//dMaxFoodAdequateAmount > 0
+                            if (dFoodSupplyAmount > 0 && dFoodSupplyAmount <= Config_foodUpperLimit && dMaxFoodAdequateAmount < dFoodSupplyAmount){
+                                dMaxFoodAdequateAmount = dFoodSupplyAmount;
+                                nutrientToMaxFoodAdequateAmount = columnNameNutrient;
+                            }
+                        }
+                    }
+                    
+                    [fsdRow addObject:[NSNumber numberWithDouble:dFoodSupplyAmount]];
                 }
             }//NOT if (nutrientDRI == nil)
         }//for j
+        if (!needAmountToLevel){
+            if (nutrientToMaxFoodAdequateAmount != nil){
+                assert(dMaxFoodAdequateAmount>0);
+                fsdRow[1] = [NSNumber numberWithDouble:dMaxFoodAdequateAmount];
+                fsdRow[2] = nutrientToMaxFoodAdequateAmount;
+            }
+        }
         [rows2D addObject:fsdRow];
     }//for i
     
@@ -643,7 +673,7 @@
 }
 
 
-//-----
+
 -(void)generateTableAndData_Food_Supply_DRIUL_Amount_withIfNeedClearTable:(BOOL)needClear
 {
     NSDictionary *data = [self generateData_Food_Supply_DRIUL_Amount];
@@ -654,7 +684,9 @@
     [self createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:needClear];
     [self insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:needClear];
 }
-
+/*
+ 这个工具用来生成每个食物要供给每个营养素到上限的量，并找出单个食物供给每个营养素到上限的量的最小值，这个最小值的作用是如果这个食物的供给量不超过这个值时，就不会导致任一营养素超上限。
+ */
 -(NSMutableDictionary*)generateData_Food_Supply_DRIUL_Amount
 {
     BOOL needRoundAmount = TRUE;

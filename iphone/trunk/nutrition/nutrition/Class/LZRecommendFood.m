@@ -198,7 +198,7 @@
     
     srandom(randSeed);
     
-    int upperLimit = 1000; // 1000 g
+    int upperLimit = Config_foodUpperLimit; // 1000 g
     int topN = 20;
     NSString *colName_NO = @"NDB_No";
 

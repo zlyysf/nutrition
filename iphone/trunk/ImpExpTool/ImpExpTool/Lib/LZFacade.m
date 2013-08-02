@@ -112,7 +112,12 @@
     [db convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"RichFoodsOfEveryNutrients.csv"];
     [db convertFood_Supply_DRIUL_AmountWithExtraInfoToCsv:@"Food_Supply_DRIUL_Amount_Extra.csv"];
     
+    LZReadExcel *workRe = [[LZReadExcel alloc]init];
+    [workRe myInitDBConnectionWithFilePath:dbFilePath1 andIfNeedClear:FALSE];
+    LZDBAccess *db2 = [workRe getDBconnection];
     
+    [workRe generateCsv_ToMerge_FoodCustomnAndDRIULAmount_withCsvFileName:@"ToMerge_FoodCustomAndDRIULAmount.csv"];
+
 }
 
 

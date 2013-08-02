@@ -50,6 +50,8 @@
 -(void)dealExcelAndSqlite_FoodCustomT2;
 //-(void)mergeFoodPicPathAndFoodLimitToFoodcommon;
 
+-(NSString*)generateCsv_ToMerge_FoodCustomnAndDRIULAmount_withCsvFileName:(NSString*)csvFileName;
+
 
 @end
 

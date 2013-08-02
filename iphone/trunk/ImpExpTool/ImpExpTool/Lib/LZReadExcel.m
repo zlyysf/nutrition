@@ -575,6 +575,108 @@
 
 
 /*
+ 这个工具用来比对定义的食物上限和计算出的阀值（ 单个食物供给每个营养素到上限的量的最小值 ）的情况。并且行的顺序与Food_common.xls完全一致。这样方便人工比对修改。 
+ */
+-(NSString*)generateCsv_ToMerge_FoodCustomnAndDRIULAmount_withCsvFileName:(NSString*)csvFileName
+{
+    NSArray *rows2DFoodIdName = [self readFoodIds_FromFoodCustom_WithOriginalRowPos_ForManualMergeOtherColumn];
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    NSDictionary * dataFoodSupplyDRIul = [db getAllDataOfTable:TABLE_NAME_Food_Supply_DRIUL_Amount];
+    NSArray *rowsFoodSupplyDRIul = dataFoodSupplyDRIul[@"rows"];
+    NSDictionary *dict2levelFoodSupplyDRIul = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:rowsFoodSupplyDRIul];
+    
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:rows2DFoodIdName.count];
+    for(int i=0 ; i<rows2DFoodIdName.count ; i++){
+        NSMutableArray *row = [NSMutableArray arrayWithCapacity:10];
+        [row addObjectsFromArray:rows2DFoodIdName[i]];
+        NSString *foodId = row[0];
+        NSNumber *nm_normal_value = row[2];
+        NSNumber *nm_Upper_Limit = row[3];
+        NSDictionary * dictFoodSupplyDRIul = dict2levelFoodSupplyDRIul[foodId];
+        if (dictFoodSupplyDRIul != nil){
+            NSNumber *nm_MinUpperAmount = dictFoodSupplyDRIul[COLUMN_NAME_MinUpperAmount];
+            [row addObject:nm_MinUpperAmount];
+            [row addObject:dictFoodSupplyDRIul[COLUMN_NAME_NutrientID]];
+            if ([nm_MinUpperAmount doubleValue]<[nm_normal_value doubleValue]){
+                [row addObject:@"<"];
+            }else{
+                [row addObject:@""];
+            }
+            if ([nm_MinUpperAmount doubleValue]<[nm_Upper_Limit doubleValue]){
+                [row addObject:@"<"];
+            }else{
+                [row addObject:@""];
+            }
+        }else{
+            [row addObject:@""];
+            [row addObject:@""];
+            [row addObject:@""];
+            [row addObject:@""];
+        }
+        [rows2D addObject:row ];
+    }
+    return [LZUtility convert2DArrayToCsv:csvFileName withColumnNames:nil andRows2D:rows2D];
+}
+
+
+-(NSArray*)readFoodIds_FromFoodCustom_WithOriginalRowPos_ForManualMergeOtherColumn
+{
+    NSLog(@"readFoodIds_FromFoodCustom_WithOriginalRowPos_ForManualMergeOtherColumn begin");
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
+    NSLog(@"in readFoodIds_FromFoodCustom_WithOriginalRowPos_ForManualMergeOtherColumn, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    int idxInXls_Id = 2, idxInXls_CnCaption = 3, idxInXls_normal_value=11, idxInXls_Upper_Limit=12;
+    int idxRow=1;
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+    NSMutableArray *row;
+    DHcell *cell_Id, *cell_CnCaption, *cell_normal_value, *cell_Upper_Limit;
+    
+    bool allImportantRowCellBlank;
+    do {
+        cell_Id = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+        cell_CnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+        cell_normal_value = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_normal_value];
+        cell_Upper_Limit = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Upper_Limit];
+       
+        allImportantRowCellBlank = true;//注意cell_SingleItemUnitName 和 cell_SingleItemUnitWeight是可填项，不像其他的是必填项
+        allImportantRowCellBlank = (cell_Id.type==cellBlank && cell_CnCaption.type==cellBlank );
+        if(allImportantRowCellBlank)
+            break;
+        if(cell_Id.type!=cellBlank || cell_CnCaption.type!=cellBlank){
+            row = [NSMutableArray arrayWithCapacity:2];
+            NSString *foodId = @"";
+            if (cell_Id.str != nil)
+                foodId = cell_Id.str;
+            NSString *foodName = @"";
+            if (cell_CnCaption.str != nil)
+                foodName = cell_CnCaption.str;
+            
+            NSNumber *nm_normal_value = [NSNumber numberWithDouble:0];
+            if (cell_normal_value.val != nil)
+                nm_normal_value = cell_normal_value.val;
+            
+            NSNumber *nm_Upper_Limit = [NSNumber numberWithDouble:0];
+            if (cell_Upper_Limit.val != nil)
+                nm_Upper_Limit = cell_Upper_Limit.val;
+            
+            [row addObject:foodId];
+            [row addObject:foodName];
+            [row addObject:nm_normal_value];
+            [row addObject:nm_Upper_Limit];
+            
+            [rows2D addObject:row];
+        }//if(allRowCellNotBlank)
+        idxRow++;
+    } while (!allImportantRowCellBlank);
+    
+    NSLog(@"in readFoodIds_FromFoodCustom_WithOriginalRowPos_ForManualMergeOtherColumn, rows2D=\n%@",rows2D);
+    return rows2D;
+}
+
+
+/*
  目前 Food_common.xls 的数据已经包含了原有的 Food_common.xls 和 Food_PicPath.xls 和 Food_Limit.xls 中的数据。
  返回值是一个dictionary，包括 以columnNames为key的一维数组和 以rows2D为key的二维数组
  */
@@ -733,67 +835,68 @@
     return retval;
 }
 
--(NSDictionary *)readFoodCustomT2
-{
-    NSLog(@"readFoodCustomT2 begin");
-    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
-    NSLog(@"in readFoodCustomT2, xlsPath=%@",xlsPath);
-    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
-	assert(reader);
-    
-    int idxInXls_Id = 1, idxInXls_CnCaption = 3, idxInXls_CnType = 5, idxInXls_Classify=6 ;
-    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No, COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify, nil];
-    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
-    
-    int idxRow=2;
-    DHcell *cellId, *cellCnCaption, *cellCnType, *cellClassify;
-    cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
-    cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
-    cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
-    cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
-    while (cellId.type!=cellBlank || cellCnCaption.type!=cellBlank || cellCnType.type!=cellBlank || cellClassify.type!=cellBlank) {
-        if (cellId.type!=cellBlank && cellCnCaption.type!=cellBlank && cellCnType.type!=cellBlank && cellClassify.type!=cellBlank){
-            assert(cellId.type == cellString);
-            NSString *strId = cellId.str;
-            assert(strId.length==5);
-            NSMutableArray *row = [NSMutableArray arrayWithCapacity:3];
-            [row addObject:strId];
-            [row addObject:cellCnCaption.str];
-            [row addObject:cellCnType.str];
-            [row addObject:cellClassify.str];
-            [rows2D addObject:row];
-        }
-        idxRow++;
-        cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
-        cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
-        cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
-        cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
-    }
-    
-    NSLog(@"in readFoodCustomT2, columnNames=%@, rows2D=\n%@",columnNames,rows2D);
-    
-    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
-    [retData setObject:columnNames forKey:@"columnNames"];
-    [retData setObject:rows2D forKey:@"rows2D"];
-    return retData;
-}
+//-(NSDictionary *)readFoodCustomT2
+//{
+//    NSLog(@"readFoodCustomT2 begin");
+//    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
+//    NSLog(@"in readFoodCustomT2, xlsPath=%@",xlsPath);
+//    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+//	assert(reader);
+//    
+//    int idxInXls_Id = 1, idxInXls_CnCaption = 3, idxInXls_CnType = 5, idxInXls_Classify=6 ;
+//    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No, COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify, nil];
+//    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+//    
+//    int idxRow=2;
+//    DHcell *cellId, *cellCnCaption, *cellCnType, *cellClassify;
+//    cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+//    cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+//    cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
+//    cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
+//    while (cellId.type!=cellBlank || cellCnCaption.type!=cellBlank || cellCnType.type!=cellBlank || cellClassify.type!=cellBlank) {
+//        if (cellId.type!=cellBlank && cellCnCaption.type!=cellBlank && cellCnType.type!=cellBlank && cellClassify.type!=cellBlank){
+//            assert(cellId.type == cellString);
+//            NSString *strId = cellId.str;
+//            assert(strId.length==5);
+//            NSMutableArray *row = [NSMutableArray arrayWithCapacity:3];
+//            [row addObject:strId];
+//            [row addObject:cellCnCaption.str];
+//            [row addObject:cellCnType.str];
+//            [row addObject:cellClassify.str];
+//            [rows2D addObject:row];
+//        }
+//        idxRow++;
+//        cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+//        cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+//        cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
+//        cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
+//    }
+//    
+//    NSLog(@"in readFoodCustomT2, columnNames=%@, rows2D=\n%@",columnNames,rows2D);
+//    
+//    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+//    [retData setObject:columnNames forKey:@"columnNames"];
+//    [retData setObject:rows2D forKey:@"rows2D"];
+//    return retData;
+//}
+//
+//-(void)dealExcelAndSqlite_FoodCustomT2
+//{
+//    NSDictionary *data = [self readFoodCustomT2];
+//    NSArray *columnNames = [data objectForKey:@"columnNames"];
+//    NSArray *rows2D = [data objectForKey:@"rows2D"];
+//    
+//    assert(dbCon!=nil);
+//    LZDBAccess *db = dbCon;
+//    NSString *tableName = @"FoodCustomT2" ;
+//    NSString *primaryKey = COLUMN_NAME_NDB_No;
+//    [db createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:true];
+//    [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
+//    
+//    [db getDifferenceFromFoodCustomAndFoodCustomT2];
+//
+//}
 
--(void)dealExcelAndSqlite_FoodCustomT2
-{
-    NSDictionary *data = [self readFoodCustomT2];
-    NSArray *columnNames = [data objectForKey:@"columnNames"];
-    NSArray *rows2D = [data objectForKey:@"rows2D"];
-    
-    assert(dbCon!=nil);
-    LZDBAccess *db = dbCon;
-    NSString *tableName = @"FoodCustomT2" ;
-    NSString *primaryKey = COLUMN_NAME_NDB_No;
-    [db createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:true];
-    [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
-    
-    [db getDifferenceFromFoodCustomAndFoodCustomT2];
-
-}
 //
 //-(void)mergeFoodPicPathAndFoodLimitToFoodcommon
 //{

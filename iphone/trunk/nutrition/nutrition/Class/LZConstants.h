@@ -141,7 +141,7 @@
 #define TABLE_NAME_CustomRichFood @"CustomRichFood"
 
 #define COLUMN_NAME_MinUpperAmount @"MinUpperAmount"
-
+#define COLUMN_NAME_MaxAdequateAmount @"MaxAdequateAmount"
 
 #define Key_Amount @"Amount"
 #define Key_Name @"Name"
