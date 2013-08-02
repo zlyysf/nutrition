@@ -501,7 +501,7 @@
         ret = [self letDRIULConsiderLoss:ret];
     }
     
-    NSLog(@"getStandardDRIs ret:\n%@",ret);
+    NSLog(@"getStandardDRIULs ret:\n%@",ret);
     return ret;
 }
 

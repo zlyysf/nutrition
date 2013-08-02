@@ -110,6 +110,7 @@
     [db convertFood_Supply_DRI_AmountWithExtraInfoToCsv:@"Food_Supply_DRI_Amount_Extra.csv"];
     [db convertCnFoodNutritionWithExtraInfoToCsv:@"FoodNutritionCustomByJoin.csv"];
     [db convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"RichFoodsOfEveryNutrients.csv"];
+    [db convertFood_Supply_DRIUL_AmountWithExtraInfoToCsv:@"Food_Supply_DRIUL_Amount_Extra.csv"];
     
     
 }
@@ -184,6 +185,7 @@
     
     [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
     [db generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
+    [db generateTableAndData_Food_Supply_DRIUL_Amount_withIfNeedClearTable:true];
     
     [self generateVariousCsv_withDBFilePath:destDbFilePath];
 }

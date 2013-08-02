@@ -111,6 +111,7 @@
 
 #define TABLE_NAME_Food_Supply_DRI_Common @"Food_Supply_DRI_Common"
 #define TABLE_NAME_Food_Supply_DRI_Amount @"Food_Supply_DRI_Amount"
+#define TABLE_NAME_Food_Supply_DRIUL_Amount @"Food_Supply_DRIUL_Amount"
 
 //#define TABLE_NAME_FoodLimit @"FoodLimit"
 #define COLUMN_NAME_Lower_Limit @"Lower_Limit(g)"
@@ -138,6 +139,8 @@
 #define COLUMN_NAME_FoodAmount @"FoodAmount"
 
 #define TABLE_NAME_CustomRichFood @"CustomRichFood"
+
+#define COLUMN_NAME_MinUpperAmount @"MinUpperAmount"
 
 
 #define Key_Amount @"Amount"

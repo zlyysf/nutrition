@@ -691,6 +691,94 @@
 }
 
 
+//-----
+-(void)generateTableAndData_Food_Supply_DRIUL_Amount_withIfNeedClearTable:(BOOL)needClear
+{
+    NSDictionary *data = [self generateData_Food_Supply_DRIUL_Amount];
+    NSArray *columnNames = [data objectForKey:@"columnNames"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    NSString *tableName = TABLE_NAME_Food_Supply_DRIUL_Amount;
+    NSString *primaryKey = COLUMN_NAME_NDB_No;
+    [self createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:needClear];
+    [self insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:needClear];
+}
+
+-(NSMutableDictionary*)generateData_Food_Supply_DRIUL_Amount
+{
+    BOOL needRoundAmount = TRUE;
+
+    NSArray * allNutrientAry = [self getAllNutrientColumns];
+    NSMutableArray *allColumns = [NSMutableArray arrayWithObjects:COLUMN_NAME_NDB_No,COLUMN_NAME_MinUpperAmount,COLUMN_NAME_NutrientID, nil];
+    [allColumns addObjectsFromArray:allNutrientAry];
+    
+
+    NSDictionary *foodNutritionData = [self getAllDataOfTable:VIEW_NAME_FoodNutritionCustom];
+    NSArray *foodNutritionDataCols = [foodNutritionData objectForKey:@"cols"];
+    NSArray *foodNutritionDataRows = [foodNutritionData objectForKey:@"rows"];
+    assert(foodNutritionDataRows.count>100);
+   
+    
+    NSDictionary *DRIULdata = [self.class getStandardDRIULs:0 age:19 weight:75 height:175 activityLevel:0 andDBcon:self];
+    
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:foodNutritionDataRows.count];
+    for(int i=0; i<foodNutritionDataRows.count; i++){
+        NSDictionary *foodNutritionDataRowDict = foodNutritionDataRows[i];
+        NSMutableArray *fsdRow = [NSMutableArray arrayWithCapacity:foodNutritionDataCols.count];
+        [fsdRow addObject:[foodNutritionDataRowDict objectForKey:COLUMN_NAME_NDB_No]];
+        [fsdRow addObject:[NSNumber numberWithDouble:0]];
+        [fsdRow addObject:@""];
+
+        double dMinFoodSupplyAmount = 0;
+        NSString *nutrientToMinFood = @"";
+        for(int j=0; j<allNutrientAry.count; j++){
+            NSString *columnNameNutrient = allNutrientAry[j];
+            
+            id nutrientDRIUL = [DRIULdata objectForKey:columnNameNutrient];
+            if (nutrientDRIUL == nil){
+                [fsdRow addObject:[NSNumber numberWithInt:0]];//没有 DRI ul，没法计算
+            }else{//NOT if (nutrientDRIUL == nil)
+                NSNumber *nmNutrientDRIUL = (NSNumber*)nutrientDRIUL;
+                if ([nmNutrientDRIUL doubleValue]<=0){
+                    [fsdRow addObject:[NSNumber numberWithInt:0]];//没有 DRI ul，没法计算
+                }else{//NOT if ([nmNutrientDRIUL doubleValue]<=0)
+                    NSNumber *nmFoodNutrientAmount = [foodNutritionDataRowDict objectForKey:columnNameNutrient];
+                    assert(nmFoodNutrientAmount!=nil);
+                    if ([nmFoodNutrientAmount doubleValue]==0.0){//food的营养成分含量为0，也没法计算
+                        [fsdRow addObject:[NSNumber numberWithInt:0]];
+                    }else{
+                        double dFoodSupplyAmount = [nmNutrientDRIUL doubleValue]/[nmFoodNutrientAmount doubleValue] * 100.0;
+                        if (dFoodSupplyAmount >= 10000)
+                            dFoodSupplyAmount = 0;//这个食物要10000g才能超过营养素的上限，不用担心了。
+                        if (needRoundAmount){
+                            dFoodSupplyAmount = round(dFoodSupplyAmount);
+                        }
+                        if (![NutrientId_Magnesium isEqualToString:columnNameNutrient]){
+                            if (dMinFoodSupplyAmount == 0){
+                                dMinFoodSupplyAmount = dFoodSupplyAmount;
+                                nutrientToMinFood = columnNameNutrient;
+                            }else if (dFoodSupplyAmount > 0 && dMinFoodSupplyAmount > dFoodSupplyAmount){
+                                dMinFoodSupplyAmount = dFoodSupplyAmount;
+                                nutrientToMinFood = columnNameNutrient;
+                            }
+                        }
+                        [fsdRow addObject:[NSNumber numberWithDouble:dFoodSupplyAmount]];
+                    }
+                }//NOT if ([nmNutrientDRIUL doubleValue]<=0)
+            }//NOT if (nutrientDRIUL == nil)
+        }//for j
+        fsdRow[1] = [NSNumber numberWithDouble:dMinFoodSupplyAmount];
+        fsdRow[2] = nutrientToMinFood;
+        [rows2D addObject:fsdRow];
+    }//for i
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+    [retData setObject:allColumns forKey:@"columnNames"];
+    [retData setObject:rows2D forKey:@"rows2D"];
+    return retData;
+
+}
+
+
 
 
 
@@ -922,6 +1010,245 @@
 
 
 
+/*
+ 范围数值参考5_Summary Table Tables 1-4.pdf 也就是Dietary Reference Intakes: The Essential Guide to Nutrient Requirements（http://nal.usda.gov/fnic/DRI/Essential_Guide/DRIEssentialGuideNutReq.pdf）的PART II ENERGY, MACRONUTRIENTS,WATER, AND PHYSICAL ACTIVITY
+ 验证正确性是在http://fnic.nal.usda.gov/fnic/interactiveDRI/ usda的DRI计算器
+ 先计算出energy摄入推荐量，然后根据数值范围得出 碳水化合物和脂肪的上限值，蛋白质和能量的上限值暂时设为-1
+ */
+
+
++(NSDictionary*)getStandardDRIULForSex:(int )sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel
+{
+    float PA;
+    float heightM = height/100.f;
+    int energyStandard;
+    int energyUL = -1;
+    int proteinUL = -1;
+    int carbohydrtUL;
+    int fatUL;
+    if (sex == 0)//male
+    {
+        if (age>=1 && age<3)
+        {
+            energyStandard = 89*weight-100+20;
+        }
+        else if (age>=3 && age<9)
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.13;
+                    break;
+                case 2:
+                    PA = 1.26;
+                    break;
+                case 3:
+                    PA = 1.42;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            energyStandard = 88.5 - 61.9*age +PA*(26.7 *weight +903*heightM)+20;
+        }
+        else if (age>=9 && age<19)
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.13;
+                    break;
+                case 2:
+                    PA = 1.26;
+                    break;
+                case 3:
+                    PA = 1.42;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            
+            energyStandard = 88.5 - 61.9*age +PA*(26.7 *weight +903*heightM)+25;
+        }
+        else
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.11;
+                    break;
+                case 2:
+                    PA = 1.25;
+                    break;
+                case 3:
+                    PA = 1.48;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            
+            energyStandard = 662 - 9.53*age +PA*(15.91 *weight +539.6*heightM);
+        }
+        
+    }
+    else//female
+    {
+        if (age>=1 && age<3)
+        {
+            energyStandard = 89*weight-100+20;
+        }
+        else if (age>=3 && age<9)
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.16;
+                    break;
+                case 2:
+                    PA = 1.31;
+                    break;
+                case 3:
+                    PA = 1.56;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            
+            energyStandard = 135.3 - 30.8*age +PA*(10 *weight +934*heightM)+20;
+        }
+        else if (age>=9 && age<19)
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.16;
+                    break;
+                case 2:
+                    PA = 1.31;
+                    break;
+                case 3:
+                    PA = 1.56;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            
+            energyStandard = 135.3 - 30.8*age +PA*(10 *weight +934*heightM)+25;
+        }
+        else
+        {
+            switch (activityLevel) {
+                case 0:
+                    PA = 1.0;
+                    break;
+                case 1:
+                    PA = 1.12;
+                    break;
+                case 2:
+                    PA = 1.27;
+                    break;
+                case 3:
+                    PA = 1.45;
+                    break;
+                default:
+                    PA = 1.0;
+                    break;
+            }
+            
+            energyStandard = 354 - 6.91*age +PA*(9.36 *weight +726*heightM);
+        }
+        
+        
+    }
+    carbohydrtUL = (int)(energyStandard*0.65*kCarbFactor+0.5);
+    
+    if (age>=1 && age<4)
+    {
+        fatUL = (int)(energyStandard*0.40*kFatFactor+0.5);
+    }
+    else
+    {
+        if(age >= 4 && age<19)
+        {
+            fatUL = (int)(energyStandard*0.35*kFatFactor+0.5);
+        }
+        else
+        {
+            fatUL = (int)(energyStandard*0.35*kFatFactor+0.5);
+        }
+    }
+    
+    NSLog(@"getStandardUL : energyStandard : %d \n Carbohydrt : %d \n Fat : %d \n Protein : %d",energyUL,carbohydrtUL,fatUL,proteinUL);
+    NSDictionary *ULResult = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:energyUL],@"Energ_Kcal",[NSNumber numberWithInt:carbohydrtUL],@"Carbohydrt_(g)",[NSNumber numberWithInt:fatUL],@"Lipid_Tot_(g)",[NSNumber numberWithInt:proteinUL],@"Protein_(g)",nil];
+    return ULResult;
+}
+
+
+
+
+- (NSDictionary *)getDRIULbyGender:(NSString*)gender andAge:(int)age {
+    NSString *tableName = TABLE_NAME_DRIULMale;
+    if ([@"female" isEqualToString:gender]){
+        tableName = TABLE_NAME_DRIULFemale;
+    }
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+    [sqlStr appendString:@"SELECT * FROM "];
+    [sqlStr appendString:tableName];
+    [sqlStr appendString:@" WHERE Start <= ? "];
+    [sqlStr appendString:@" ORDER BY Start desc"];
+    
+    NSArray * argAry = [NSArray arrayWithObjects:[NSNumber numberWithInt:age], nil];
+    NSDictionary *rowDict = nil;
+    FMResultSet *rs = [_db executeQuery:sqlStr withArgumentsInArray:argAry];
+    if ([rs next]) {
+        rowDict = rs.resultDictionary;
+    }
+    //    NSLog(@"getDRIULbyGender get:\n%@",rowDict);
+    NSMutableDictionary *retDict = [NSMutableDictionary dictionaryWithDictionary:rowDict];
+    [retDict removeObjectForKey:@"Start"];
+    [retDict removeObjectForKey:@"End"];
+    NSLog(@"getDRIULbyGender ret:\n%@",retDict);
+    return retDict;
+}
+
+
+
+
++(NSDictionary*)getStandardDRIULs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int)activityLevel andDBcon:(LZDBAccess *)da
+{
+    NSDictionary *part1 = [self getStandardDRIULForSex:sex age:age weight:weight height:height activityLevel:activityLevel];
+//    LZDataAccess *da = [LZDataAccess singleton];
+    NSString *gender = @"male";
+    if (sex !=0)
+        gender = @"female";
+    NSDictionary *part2 = [da getDRIULbyGender:gender andAge:age];
+    NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithDictionary:part1];
+    [ret addEntriesFromDictionary:part2];
+    
+//    if (needConsiderLoss){
+//        ret = [self letDRIULConsiderLoss:ret];
+//    }
+    
+    NSLog(@"getStandardDRIULs ret:\n%@",ret);
+    return ret;
+}
+
+
 
 //------------------------
 
@@ -1109,6 +1436,17 @@
     NSString *sqlQuery = @""
     "select c.classify, c.CnType, c.CnCaption, fn.Shrt_Desc, a.*"
     "  from Food_Supply_DRI_Amount a join FoodCustom c on a.NDB_No=c.NDB_No"
+    "    join FoodNutrition fn on a.NDB_No=fn.NDB_No"
+    "  order by a.NDB_No"
+    ;
+    return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
+}
+
+-(NSString*)convertFood_Supply_DRIUL_AmountWithExtraInfoToCsv:(NSString*)csvFileName
+{
+    NSString *sqlQuery = @""
+    "select c.classify, c.CnType, c.CnCaption, fn.Shrt_Desc, a.*"
+    "  from Food_Supply_DRIUL_Amount a join FoodCustom c on a.NDB_No=c.NDB_No"
     "    join FoodNutrition fn on a.NDB_No=fn.NDB_No"
     "  order by a.NDB_No"
     ;

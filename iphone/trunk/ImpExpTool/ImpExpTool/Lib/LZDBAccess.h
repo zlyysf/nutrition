@@ -49,10 +49,14 @@
 -(void)generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:(BOOL)needClear;
 -(void)generateDataTable_Food_Supply_DRI_Amount_withIfNeedClearTable:(BOOL)needClear;
 
+-(void)generateTableAndData_Food_Supply_DRIUL_Amount_withIfNeedClearTable:(BOOL)needClear;
+
 -(NSString *)convertSelectSqlToCsv_withSelectSql:(NSString*)sqlSelect andCsvFileName:(NSString*)csvFileName;
 -(NSString*)convertFood_Supply_DRI_AmountWithExtraInfoToCsv:(NSString*)csvFileName;
 -(NSString*)convertCnFoodNutritionWithExtraInfoToCsv:(NSString*)csvFileName;
 -(NSString *)convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:(NSString*)csvFileName;
+
+-(NSString*)convertFood_Supply_DRIUL_AmountWithExtraInfoToCsv:(NSString*)csvFileName;
 
 
 
