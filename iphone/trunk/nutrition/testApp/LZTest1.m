@@ -1774,7 +1774,7 @@
                               [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
 
     BOOL needConsiderNutrientLoss = FALSE;
-//    BOOL needLimitNutrients = FALSE;
+    BOOL needLimitNutrients = TRUE;  //FALSE;
     BOOL needUseLowLimitAsUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
     BOOL needUseFirstRecommendWhenSmallIncrementLogic = TRUE;//FALSE;
@@ -1785,7 +1785,7 @@
     int randSeed = 0; //0;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                         [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
-//                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
+                        [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
                         [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
                         [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
                         [NSNumber numberWithBool:needUseFirstRecommendWhenSmallIncrementLogic],LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic,

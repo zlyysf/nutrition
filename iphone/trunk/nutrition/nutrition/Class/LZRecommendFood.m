@@ -16,49 +16,68 @@
 /*
  自定义要计算的营养素的清单
  */
-+(NSArray*)getCustomNutrients
+//+(NSArray*)getCustomNutrients
+//{
+//    
+//}
+
++(NSArray*)getCustomNutrients:(NSDictionary*)options
 {
-    NSArray *limitedNutrientsCanBeCal = nil;
-    limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
-                                @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",
-                                @"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-                                @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",
-                                @"Protein_(g)", //@"Energ_Kcal",
-                                nil];
+    BOOL needLimitNutrients = Config_needLimitNutrients;
+    if (options.count > 0){//options param has priority
+        NSNumber *nmFlag_needLimitNutrients = [options objectForKey:LZSettingKey_needLimitNutrients];
+        if (nmFlag_needLimitNutrients != nil){
+            needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
+            return [self.class getCustomNutrients_withFlag_needLimitNutrients:needLimitNutrients];
+        }
+    }
+    //options param not have the flag, check other conditions
     if (!KeyIsEnvironmentDebug){
-        //not change
+        //just use config value
     }else{
         NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
-        BOOL needLimitNutrients = Config_needLimitNutrients;
         if (flagsDict.count > 0){
             NSNumber *nmFlag_needLimitNutrients = [flagsDict objectForKey:LZSettingKey_needLimitNutrients];
             if (nmFlag_needLimitNutrients != nil)
                 needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
         }
-        
-        if (needLimitNutrients){
-            //not change
-        }else{
-            //        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
-            //                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
-            //                                    @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-            //                                    @"Vit_B12_(µg)",@"Panto_Acid_mg)",
-            //                                    @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
-            //                                    @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
-            //                                    @"Protein_(g)",@"Lipid_Tot_(g)",
-            //                                    @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
-            limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
-                                        @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
-                                        @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-                                        @"Vit_B12_(µg)",@"Panto_Acid_mg)",
-                                        @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
-                                        @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
-                                        @"Protein_(g)",
-                                        @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
-        }
+    }
+    return [self.class getCustomNutrients_withFlag_needLimitNutrients:needLimitNutrients];
+}
+
+
+
++(NSArray*)getCustomNutrients_withFlag_needLimitNutrients:(BOOL)needLimitNutrients
+{
+    NSArray *limitedNutrientsCanBeCal = nil;
+    if (needLimitNutrients){
+        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
+                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",
+                                    @"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+                                    @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",
+                                    @"Protein_(g)", //@"Energ_Kcal",
+                                    nil];
+    }else{
+//        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
+//                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
+//                                    @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+//                                    @"Vit_B12_(µg)",@"Panto_Acid_mg)",
+//                                    @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
+//                                    @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
+//                                    @"Protein_(g)",@"Lipid_Tot_(g)",
+//                                    @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
+        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
+                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
+                                    @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+                                    @"Vit_B12_(µg)",@"Panto_Acid_mg)",
+                                    @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
+                                    @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
+                                    @"Protein_(g)",
+                                    @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
     }
     return limitedNutrientsCanBeCal;
 }
+
 /*
  营养素的一个全集，应该与DRI表中的营养素集合相同。顺序不一样，这个顺序用于计算，是经过特定算法的经验调整。
  */
@@ -213,7 +232,7 @@
     //这是需求中规定只计算哪些营养素
 //    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
 //                                         @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",@"Folate_Tot_(µg)", nil];
-    NSArray *limitedNutrientsCanBeCal = [self.class getCustomNutrients];
+    NSArray *limitedNutrientsCanBeCal = [self.class getCustomNutrients:options];
     NSDictionary *limitedNutrientDictCanBeCal = [NSDictionary dictionaryWithObjects:limitedNutrientsCanBeCal forKeys:limitedNutrientsCanBeCal];
     
     LZDataAccess *da = [LZDataAccess singleton];
@@ -669,7 +688,7 @@
     //这是需求中规定只计算哪些营养素
 //    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
 //                                         @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",@"Folate_Tot_(µg)", nil];
-    NSArray *limitedNutrientsCanBeCal = [self.class getCustomNutrients];
+    NSArray *limitedNutrientsCanBeCal = [self.class getCustomNutrients:options];
     NSSet *limitedNutrientSetCanBeCal = [NSSet setWithArray:limitedNutrientsCanBeCal];
     NSDictionary *limitedNutrientDictCanBeCal = [NSDictionary dictionaryWithObjects:limitedNutrientsCanBeCal forKeys:limitedNutrientsCanBeCal];
     
@@ -1247,7 +1266,7 @@
     //这是需求中规定只计算哪些营养素
     //    NSArray *limitedNutrientsCanBeCal = [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",
     //                                         @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",@"Folate_Tot_(µg)", nil];
-    NSArray *limitedNutrientsCanBeCal = [self.class getCustomNutrients];
+    NSArray *limitedNutrientsCanBeCal = [self.class getCustomNutrients:options];
     NSSet *limitedNutrientSetCanBeCal = [NSSet setWithArray:limitedNutrientsCanBeCal];
     NSDictionary *limitedNutrientDictCanBeCal = [NSDictionary dictionaryWithObjects:limitedNutrientsCanBeCal forKeys:limitedNutrientsCanBeCal];
     
@@ -2037,7 +2056,7 @@
 -(NSMutableArray*)formatFoodStandardContentForFood:(NSDictionary *)foodInfo
 {
     NSMutableArray *resultArray = [[NSMutableArray alloc]init];
-    NSArray *customNutrients = [self.class getCustomNutrients];
+    NSArray *customNutrients = [self.class getCustomNutrients:nil];
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
     for(NSString *nutrientId in customNutrients)
@@ -2062,7 +2081,7 @@
 {
     NSLog(@"formatFoodsStandardContentForUI enter");
     
-    NSArray *customNutrients = [self.class getCustomNutrients];
+    NSArray *customNutrients = [self.class getCustomNutrients:nil];
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
     
@@ -2117,7 +2136,7 @@
 //    NSDictionary *limitedNutrientDictCanBeCal = [recommendResult objectForKey:@"limitedNutrientDictCanBeCal"];
     
 //    NSArray *userInfos = [recommendResult objectForKey:@"UserInfo"];
-//    NSDictionary *options = [recommendResult objectForKey:@"optionsDict"];
+    NSDictionary *options = [recommendResult objectForKey:@"optionsDict"];
 //    NSArray *otherInfos = [recommendResult objectForKey:@"OtherInfo"];
 //    NSArray *foodSupplyNutrientSeqs = [recommendResult objectForKey:@"foodSupplyNutrientSeqs"];//2D array
 //    NSArray *calculationLogs = [recommendResult objectForKey:@"calculationLogs"];//2D array
@@ -2133,7 +2152,7 @@
         personDayCount = [nm_personDayCount intValue];
     }
     
-    NSArray *customNutrients = [self.class getCustomNutrients];
+    NSArray *customNutrients = [self.class getCustomNutrients:options];
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
 
@@ -2270,6 +2289,8 @@
     NSDictionary *takenFoodAmountDict = [takenResult objectForKey:@"TakenFoodAmount"];//food NO as key
     NSDictionary *takenFoodAttrDict = [takenResult objectForKey:@"TakenFoodAttr"];//food NO as key
     
+    NSDictionary *options = [takenResult objectForKey:@"optionsDict"];
+
     NSDictionary *params = [takenResult objectForKey:@"paramsDict"];
     int personDayCount = 1;
     if (params != nil){
@@ -2278,7 +2299,7 @@
         personDayCount = [nm_personDayCount intValue];
     }
     
-    NSArray *customNutrients = [self.class getCustomNutrients];
+    NSArray *customNutrients = [self.class getCustomNutrients:options];
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
     
@@ -2460,7 +2481,7 @@
     NSArray *givenFoodAttrAry = [da getFoodAttributesByIds:givenFoodIds];
     NSMutableDictionary *givenFoodAttrDict2Level = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:givenFoodAttrAry];
     
-    NSArray *customNutrients = [self.class getCustomNutrients];// 显示时将显示我们预定义的全部营养素，从而这里不用 getCalculationNutrientsForSmallIncrementLogic_withDRI ..
+    NSArray *customNutrients = [self.class getCustomNutrients:nil];// 显示时将显示我们预定义的全部营养素，从而这里不用 getCalculationNutrientsForSmallIncrementLogic_withDRI ..
     NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
     
     //对给定的食物取显示所需信息
@@ -3601,14 +3622,14 @@
 
 
 /*
- options 里面用到了 needLimitNutrients 的key，现在暂且不用，有错未解决..这错应该是跟 getCustomNutrients 中注释掉的相关
+ options 里面用到了 needLimitNutrients 的key，现在虽然用了。但，有错未解决..这错应该是跟 getCustomNutrients 中注释掉的相关
  这里的输出的营养素只是用于计算的。显示的目前使用 getCustomNutrients 的即可。
  当givenNutrients不为nil时，将使用givenNutrients来限制要计算的营养素，由于在实际上一些需要排除计算的营养素已经在传入givenNutrients前就排除了，这里实际的作用是将givenNutrients排序。
  
  */
 -(NSDictionary*) getCalculationNutrientsForSmallIncrementLogic_withDRI:(NSDictionary*)DRIsDict andOptions:(NSDictionary*)options andParams:(NSDictionary*)params
 {
-    BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合    
+//    BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合    
 //    if(options != nil){
 //        NSNumber *nmFlag_needLimitNutrients = [options objectForKey:LZSettingKey_needLimitNutrients];
 //        if (nmFlag_needLimitNutrients != nil)
@@ -3620,7 +3641,7 @@
         givenNutrients = [params objectForKey:Key_givenNutrients];//这些营养素的意义在于只要求这些要补足，即只有它们用于计算。注意这应该是getCustomNutrients的子集
     }
     
-    NSArray *customNutrients = [self.class getCustomNutrients];
+    NSArray *customNutrients = [self.class getCustomNutrients:options];
     assert([LZUtility arrayContainArrayInSetWay_withOuterArray:customNutrients andInnerArray:givenNutrients]);
     
     //这里列出的营养素有专门而简单的食物补充，通过我们预置的那些食物反而不好补充

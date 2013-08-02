@@ -494,7 +494,7 @@
 +(void)initializePreferNutrient
 {
     NSArray *preferArray = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
-    NSArray *nutrientArray = [LZRecommendFood getCustomNutrients];
+    NSArray *nutrientArray = [LZRecommendFood getCustomNutrients:nil];
     if (preferArray == nil || ([preferArray count]!= [nutrientArray count]))
     {
         NSMutableArray *newPreferArray = [NSMutableArray array];
