@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "BaiduMobAdDelegateProtocol.h"
 #import "GADBannerView.h"
-@interface GADMasterViewController : UIViewController {
-    GADBannerView *adBanner_;
+@interface GADMasterViewController : UIViewController <BaiduMobAdViewDelegate>{
+    //GADBannerView *adBanner_;
     BOOL didCloseWebsiteView_;
     BOOL isLoaded_;
     id currentDelegate_;
+    BaiduMobAdView* sharedAdView;
 }
 +(GADMasterViewController *)singleton;
 -(void)resetAdView:(UIViewController *)rootViewController andListView :(UIView *)superView;
--(void)removeAds;
+//-(void)removeAds;
 @end

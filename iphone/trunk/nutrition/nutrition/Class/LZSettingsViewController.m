@@ -24,6 +24,7 @@
 @implementation LZSettingsViewController
 @synthesize currentTextField;
 @synthesize topSectionView;
+@synthesize baiduAdWall;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -57,6 +58,9 @@
     {
         [self.contentScrollView setContentSize:CGSizeMake(320, 416)];
     }
+    self.baiduAdWall = [[BaiduMobAdWall alloc] init];
+    self.baiduAdWall.delegate = self;
+
  }
 - (IBAction)authSwitchChangeHandler:(UISwitch *)sender
 {
@@ -155,7 +159,8 @@
 }
 - (void)reviewAppAction
 {
-    [[LZReviewAppManager SharedInstance]reviewOurAppDirectly];
+    [self.baiduAdWall showOffers];
+    //[[LZReviewAppManager SharedInstance]reviewOurAppDirectly];
 }
 - (IBAction)userFeedBack:(id)sender {
     if (KeyIsEnvironmentDebug)
@@ -339,4 +344,24 @@
     [self setEditProfileButton:nil];
     [super viewDidUnload];
 }
+#pragma mark BaiduMobAdWallDelegate
+- (NSString *)publisherId
+{
+    return @"debug";
+}
+
+
+- (NSString*) appSpec
+{
+    return @"debug";
+}
+
+-(void) didGetPoints: (NSInteger) points
+{
+    NSLog(@"didGetPoints: %d",points);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""message:[NSString stringWithFormat:@"新增积分:%d", points] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
+    
+    [alert show];
+}
+
 @end

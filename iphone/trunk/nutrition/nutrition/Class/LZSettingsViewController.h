@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface LZSettingsViewController : UIViewController<UITextFieldDelegate>
+#import "BaiduMobAdWall.h"
+@interface LZSettingsViewController : UIViewController<UITextFieldDelegate,BaiduMobAdWallDelegate>
 @property (strong, nonatomic) IBOutlet UIView *line2View;
 @property (strong, nonatomic) IBOutlet UIView *line3View;
 @property (strong, nonatomic) IBOutlet UIView *line4View;
@@ -27,5 +27,5 @@
 @property (strong, nonatomic) IBOutlet UILabel *userWeightLabel;
 @property (strong, nonatomic) IBOutlet UILabel *userActivityLabel;
 @property (strong, nonatomic) IBOutlet UILabel *userAgeLabel;
-
+@property (nonatomic, strong) BaiduMobAdWall *baiduAdWall;
 @end
