@@ -354,6 +354,18 @@
     return [self.class arrayIntersectSet_withArray:srcAry andSet:[NSSet setWithArray:intersectAry]];
 }
 
++(NSMutableArray *)arrayAddArrayInSetWay_withArray1:(NSArray*)ary1 andArray2:(NSArray*)ary2{
+    NSMutableArray *ary = [NSMutableArray arrayWithArray:ary1];
+    NSSet *set1 = [NSSet setWithArray:ary1];
+    for(int i=0 ; i<ary2.count; i++){
+        id obj1 = ary2[i];
+        if (![set1 containsObject:obj1]){
+            [ary addObject:obj1];
+        }
+    }
+    return ary;
+}
+
 /*
  两个数组的所含元素的集合是否相等
  */

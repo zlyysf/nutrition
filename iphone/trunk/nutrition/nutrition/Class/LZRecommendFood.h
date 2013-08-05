@@ -11,7 +11,8 @@
 
 @interface LZRecommendFood : NSObject
 
-//+(NSArray*)getCustomNutrients;
++(NSArray*)getOnlyToShowNutrients;
+
 +(NSArray*)getCustomNutrients:(NSDictionary*)options;
 +(NSArray*)getDRItableNutrientsWithSameOrder;
 
@@ -49,7 +50,7 @@
 
 -(NSMutableArray*)formatFoodStandardContentForFood:(NSDictionary *)foodInfo;
 
--(NSMutableDictionary*)formatRecommendResultBySmallIncrementForUI:(NSMutableDictionary *)recommendResult;
+
 
 -(NSMutableDictionary*)calculateGiveFoodsSupplyNutrientAndFormatForUI:(NSDictionary *)paramsDict;
 

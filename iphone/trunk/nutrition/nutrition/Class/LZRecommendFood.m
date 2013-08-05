@@ -13,14 +13,15 @@
 
 @implementation LZRecommendFood
 
++(NSArray*)getOnlyToShowNutrients
+{
+    NSArray *ary = [NSArray arrayWithObjects: @"Energ_Kcal", nil];
+    return ary;
+}
+
 /*
  自定义要计算的营养素的清单
  */
-//+(NSArray*)getCustomNutrients
-//{
-//    
-//}
-
 +(NSArray*)getCustomNutrients:(NSDictionary*)options
 {
     BOOL needLimitNutrients = Config_needLimitNutrients;
@@ -2482,7 +2483,9 @@
     NSMutableDictionary *givenFoodAttrDict2Level = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:givenFoodAttrAry];
     
     NSArray *customNutrients = [self.class getCustomNutrients:nil];// 显示时将显示我们预定义的全部营养素，从而这里不用 getCalculationNutrientsForSmallIncrementLogic_withDRI ..
-    NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
+    NSArray *onlyToShowNutrients =[self.class getOnlyToShowNutrients];
+    NSMutableArray *allShowNutrients = [LZUtility arrayAddArrayInSetWay_withArray1:customNutrients andArray2:onlyToShowNutrients];
+    NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:allShowNutrients];
     
     //对给定的食物取显示所需信息
     if (givenFoodsAmount1Dict.count > 0){
@@ -2532,8 +2535,8 @@
     [self foodsSupplyNutrients:givenFoodAttrAry andAmounts:givenFoodsAmountDict andDestNutrientSupply:nutrientSupplyDict andOtherData:l1paramsDict];
     [formatResult setValue:nutrientSupplyDict forKey:Key_nutrientSupplyDict];
     NSMutableArray *nutrientSupplyRateInfoArray = [NSMutableArray array];
-    for(int i=0; i<customNutrients.count; i++){
-        NSString *nutrientId = customNutrients[i];
+    for(int i=0; i<allShowNutrients.count; i++){
+        NSString *nutrientId = allShowNutrients[i];
         NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
         NSNumber *nm_Supply = nutrientSupplyDict[nutrientId];
         double supplyRate = [nm_Supply doubleValue]/([nm_DRI1unit doubleValue]);
@@ -2556,9 +2559,9 @@
         NSDictionary *foodAttrs = givenFoodAttrDict2Level[foodId];
         NSNumber *nmFoodAmount = givenFoodsAmountDict[foodId];
         
-        NSMutableArray *food1supplyNutrientArray = [NSMutableArray arrayWithCapacity:customNutrients.count];
-        for(int j=0; j<customNutrients.count; j++){
-            NSString *nutrientId = customNutrients[j];
+        NSMutableArray *food1supplyNutrientArray = [NSMutableArray arrayWithCapacity:allShowNutrients.count];
+        for(int j=0; j<allShowNutrients.count; j++){
+            NSString *nutrientId = allShowNutrients[j];
             NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
             NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
             double food1Supply1NutrientAmount = [nm_foodNutrientContent doubleValue]*[nmFoodAmount doubleValue]/100.0;
@@ -2585,9 +2588,9 @@
         NSString *foodId = givenFoodIds[i];
         NSDictionary *foodAttrs = givenFoodAttrDict2Level[foodId];
         
-        NSMutableArray *foodStandardNutrientInfoAry = [NSMutableArray arrayWithCapacity:customNutrients.count];
-        for(int j=0; j<customNutrients.count; j++){
-            NSString *nutrientId = customNutrients[j];
+        NSMutableArray *foodStandardNutrientInfoAry = [NSMutableArray arrayWithCapacity:allShowNutrients.count];
+        for(int j=0; j<allShowNutrients.count; j++){
+            NSString *nutrientId = allShowNutrients[j];
             NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
             NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
             NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
@@ -5538,143 +5541,6 @@
     
     [strHtml appendString:@"</body>\n"];
     return strHtml;
-}
-
-
-//由于功能有所改变，这个函数将被废弃
--(NSMutableDictionary*)formatRecommendResultBySmallIncrementForUI:(NSMutableDictionary *)recommendResult
-{
-    NSLog(@"formatRecommendResultBySmallIncrementForUI enter");
-    
-    NSDictionary *DRIsDict = [recommendResult objectForKey:@"DRI"];//nutrient name as key, also column name
-    NSDictionary *DRIULsDict = [recommendResult objectForKey:@"DRIUL"];
-    NSArray *originalNutrientNameAryToCal = [recommendResult objectForKey:@"originalNutrientNameAryToCal"];
-    NSDictionary *nutrientSupplyDict = [recommendResult objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
-    NSDictionary *recommendFoodAmountDict = [recommendResult objectForKey:Key_recommendFoodAmountDict];//food NO as key
-    NSDictionary *recommendFoodAttrDict = [recommendResult objectForKey:@"preChooseFoodInfoDict"];//food NO as key
-    NSDictionary *preChooseRichFoodInfoAryDict = [recommendResult objectForKey:@"preChooseRichFoodInfoAryDict"];
-    
-    
-    
-    NSArray *customNutrients = originalNutrientNameAryToCal;
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
-    
-    //    NSMutableDictionary* formatResult = [NSMutableDictionary dictionary];
-    NSMutableDictionary* formatResult = [self formatTakenResultForUI:recommendResult];
-    
-    //推荐食物
-    if (recommendFoodAmountDict!=nil && recommendFoodAmountDict.count>0){
-        NSArray *recommendFoodIds = [recommendFoodAmountDict allKeys];
-        NSArray *orderedFoodIds = [da getOrderedFoodIds:recommendFoodIds];
-        assert(recommendFoodIds.count == orderedFoodIds.count);
-        
-        NSMutableArray *recommendFoodInfoDictArray = [NSMutableArray array];
-        for(int i=0; i<orderedFoodIds.count; i++){
-            NSString *foodId = orderedFoodIds[i];
-            NSDictionary *foodAttrs = recommendFoodAttrDict[foodId];
-            NSNumber *nmFoodAmount = recommendFoodAmountDict[foodId];
-            if ([nmFoodAmount intValue]>0){//如果是小于1的double，转成整数会得到0，显示不妥
-                NSDictionary *recommendFoodInfoDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                       foodId,COLUMN_NAME_NDB_No,
-                                                       foodAttrs[COLUMN_NAME_CnCaption],Key_Name,
-                                                       nmFoodAmount,Key_Amount,
-                                                       foodAttrs[COLUMN_NAME_PicPath], Key_PicturePath,
-                                                       nil];
-                [recommendFoodInfoDictArray addObject:recommendFoodInfoDict];
-            }
-        }//for
-        [formatResult setValue:recommendFoodInfoDictArray forKey:Key_recommendFoodInfoDictArray];
-    }
-    
-    //推荐后总的供给的营养比例
-    NSMutableArray *nutrientTotalSupplyRateInfoArray = [NSMutableArray array];
-    for(int i=0; i<customNutrients.count; i++){
-        NSString *nutrientId = customNutrients[i];
-        NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
-        NSNumber *nm_TotalSupply = nutrientSupplyDict[nutrientId];
-        double supplyRate = [nm_TotalSupply doubleValue]/([nm_DRI1unit doubleValue]);
-        NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
-        NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
-        NSDictionary *nutrientTotalSupplyRateInfo= [NSDictionary dictionaryWithObjectsAndKeys:
-                                                    nutrientId,COLUMN_NAME_NutrientID,
-                                                    [NSNumber numberWithDouble:supplyRate],Key_nutrientInitialSupplyRate,
-                                                    nutrientCnCaption,Key_Name,
-                                                    nil];
-        [nutrientTotalSupplyRateInfoArray addObject:nutrientTotalSupplyRateInfo];
-    }
-    [formatResult setValue:nutrientTotalSupplyRateInfoArray forKey:Key_nutrientTotalSupplyRateInfoArray];
-    
-    
-    //推荐食物的每个食物的供给营养素的情况
-    if (recommendFoodAmountDict!=nil && recommendFoodAmountDict.count>0){
-        NSArray *recommendFoodIds = [recommendFoodAmountDict allKeys];
-        NSMutableDictionary *recommendFoodNutrientInfoAryDictDict = [NSMutableDictionary dictionary];
-        
-        NSMutableDictionary *recommendFoodSupplyNutrientInfoAryDict = [NSMutableDictionary dictionary];
-        for(int i=0; i<recommendFoodIds.count; i++){
-            NSString *foodId = recommendFoodIds[i];
-            NSDictionary *foodAttrs = recommendFoodAttrDict[foodId];
-            NSNumber *nmFoodAmount = recommendFoodAmountDict[foodId];
-            
-            NSMutableArray *food1supplyNutrientArray = [NSMutableArray arrayWithCapacity:customNutrients.count];
-            for(int j=0; j<customNutrients.count; j++){
-                NSString *nutrientId = customNutrients[j];
-                NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
-                NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
-                double food1Supply1NutrientAmount = [nm_foodNutrientContent doubleValue]*[nmFoodAmount doubleValue]/100.0;
-                double nutrientTotalDRI = [nm_DRI1unit doubleValue];
-                double supplyRate = food1Supply1NutrientAmount / nutrientTotalDRI;
-                NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
-                NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
-                NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
-                
-                NSDictionary *food1Supply1NutrientInfo= [NSDictionary dictionaryWithObjectsAndKeys:
-                                                         nutrientId,COLUMN_NAME_NutrientID,
-                                                         [NSNumber numberWithDouble:food1Supply1NutrientAmount],Key_food1Supply1NutrientAmount,
-                                                         [NSNumber numberWithDouble:nutrientTotalDRI],Key_nutrientTotalDRI,
-                                                         [NSNumber numberWithDouble:supplyRate],Key_1foodSupply1NutrientRate,
-                                                         nutrientCnCaption,Key_Name,
-                                                         nutrientNutrientEnUnit,Key_Unit,
-                                                         nil];
-                [food1supplyNutrientArray addObject:food1Supply1NutrientInfo];
-            }//for j
-            recommendFoodSupplyNutrientInfoAryDict[foodId] = food1supplyNutrientArray;
-        }//for i
-        
-        NSMutableDictionary *recommendFoodStandardNutrientInfoAryDict = [NSMutableDictionary dictionary];
-        for(int i=0; i<recommendFoodIds.count; i++){
-            NSString *foodId = recommendFoodIds[i];
-            NSDictionary *foodAttrs = recommendFoodAttrDict[foodId];
-            
-            NSMutableArray *foodStandardNutrientInfoAry = [NSMutableArray arrayWithCapacity:customNutrients.count];
-            for(int j=0; j<customNutrients.count; j++){
-                NSString *nutrientId = customNutrients[j];
-                NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
-                NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
-                NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
-                NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
-                
-                NSDictionary *foodStandardNutrientInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                          nutrientId,COLUMN_NAME_NutrientID,
-                                                          nm_foodNutrientContent,Key_foodNutrientContent,
-                                                          nutrientCnCaption,Key_Name,
-                                                          nutrientNutrientEnUnit,Key_Unit,
-                                                          nil];
-                [foodStandardNutrientInfoAry addObject:foodStandardNutrientInfo];
-            }//for j
-            recommendFoodStandardNutrientInfoAryDict[foodId] = foodStandardNutrientInfoAry;
-        }//for i
-        
-        
-        [recommendFoodNutrientInfoAryDictDict setValue:recommendFoodSupplyNutrientInfoAryDict forKey:Key_foodSupplyNutrientInfoAryDict];
-        [recommendFoodNutrientInfoAryDictDict setValue:recommendFoodStandardNutrientInfoAryDict forKey:Key_foodStandardNutrientInfoAryDict];
-        
-        [formatResult setValue:recommendFoodNutrientInfoAryDictDict forKey:Key_recommendFoodNutrientInfoAryDictDict];
-    }
-    
-    NSLog(@"formatRecommendResultBySmallIncrementForUI exit, result=%@",formatResult);
-    return formatResult;
 }
 
 
