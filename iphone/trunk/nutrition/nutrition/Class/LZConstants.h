@@ -50,6 +50,7 @@
 #define NutrientId_Fiber @"Fiber_TD_(g)"
 #define NutrientId_Lipid @"Lipid_Tot_(g)"
 #define NutrientId_Protein @"Protein_(g)"
+#define NutrientId_Folate @"Folate_Tot_(µg)"
 
 #define kFatFactor 1/9 //means 1g fat contains 9Kcal energy
 #define kCarbFactor 1/4 //means 1g carbohydrt contains 4Kcal energy
@@ -141,7 +142,10 @@
 #define TABLE_NAME_CustomRichFood @"CustomRichFood"
 
 #define COLUMN_NAME_MinUpperAmount @"MinUpperAmount"
+#define COLUMN_NAME_MinAdequateAmount @"MinAdequateAmount"
 #define COLUMN_NAME_MaxAdequateAmount @"MaxAdequateAmount"
+#define COLUMN_NAME_NutrientID_max @"NutrientID_max"
+#define COLUMN_NAME_NutrientID_min @"NutrientID_min"
 
 #define Key_Amount @"Amount"
 #define Key_Name @"Name"

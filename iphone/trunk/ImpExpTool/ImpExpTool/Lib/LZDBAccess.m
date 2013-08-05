@@ -580,7 +580,10 @@
     NSArray * allNutrientAry = [self getAllNutrientColumns];
     NSMutableArray *allColumns = [NSMutableArray arrayWithObjects:COLUMN_NAME_NDB_No, nil];
     if (!needAmountToLevel){
-        [allColumns addObjectsFromArray:[NSArray arrayWithObjects:COLUMN_NAME_MaxAdequateAmount,COLUMN_NAME_NutrientID,nil]];
+        [allColumns addObjectsFromArray:[NSArray arrayWithObjects:
+                                         COLUMN_NAME_MinAdequateAmount,COLUMN_NAME_NutrientID_min,
+                                         COLUMN_NAME_MaxAdequateAmount,COLUMN_NAME_NutrientID_max,
+                                         nil]];
     }
     [allColumns addObjectsFromArray:allNutrientAry];
     
@@ -599,10 +602,14 @@
         if (!needAmountToLevel){
             [fsdRow addObject:[NSNumber numberWithDouble:0]];
             [fsdRow addObject:@""];
+            [fsdRow addObject:[NSNumber numberWithDouble:0]];
+            [fsdRow addObject:@""];
         }
 
         double dMaxFoodAdequateAmount = 0;
         NSString *nutrientToMaxFoodAdequateAmount = nil;
+        double dMinFoodAdequateAmount = 0;
+        NSString *nutrientToMinFoodAdequateAmount = nil;
         for(int j=0; j<allNutrientAry.count; j++){
             NSString *columnNameNutrient = allNutrientAry[j];
             id nutrientDRI = [DRIdata objectForKey:columnNameNutrient];
@@ -643,11 +650,20 @@
                             if (dFoodSupplyAmount > 0 && dFoodSupplyAmount <= Config_foodUpperLimit){
                                 dMaxFoodAdequateAmount = dFoodSupplyAmount;
                                 nutrientToMaxFoodAdequateAmount = columnNameNutrient;
+                                
+                                dMinFoodAdequateAmount = dFoodSupplyAmount;
+                                nutrientToMinFoodAdequateAmount = columnNameNutrient;
                             }
                         }else{//dMaxFoodAdequateAmount > 0
-                            if (dFoodSupplyAmount > 0 && dFoodSupplyAmount <= Config_foodUpperLimit && dMaxFoodAdequateAmount < dFoodSupplyAmount){
-                                dMaxFoodAdequateAmount = dFoodSupplyAmount;
-                                nutrientToMaxFoodAdequateAmount = columnNameNutrient;
+                            if (dFoodSupplyAmount > 0 && dFoodSupplyAmount <= Config_foodUpperLimit){
+                                if (dMaxFoodAdequateAmount < dFoodSupplyAmount){
+                                    dMaxFoodAdequateAmount = dFoodSupplyAmount;
+                                    nutrientToMaxFoodAdequateAmount = columnNameNutrient;
+                                }
+                                if (dMinFoodAdequateAmount > dFoodSupplyAmount){
+                                    dMinFoodAdequateAmount = dFoodSupplyAmount;
+                                    nutrientToMinFoodAdequateAmount = columnNameNutrient;
+                                }
                             }
                         }
                     }
@@ -659,8 +675,10 @@
         if (!needAmountToLevel){
             if (nutrientToMaxFoodAdequateAmount != nil){
                 assert(dMaxFoodAdequateAmount>0);
-                fsdRow[1] = [NSNumber numberWithDouble:dMaxFoodAdequateAmount];
-                fsdRow[2] = nutrientToMaxFoodAdequateAmount;
+                fsdRow[1] = [NSNumber numberWithDouble:dMinFoodAdequateAmount];
+                fsdRow[2] = nutrientToMinFoodAdequateAmount;
+                fsdRow[3] = [NSNumber numberWithDouble:dMaxFoodAdequateAmount];
+                fsdRow[4] = nutrientToMaxFoodAdequateAmount;
             }
         }
         [rows2D addObject:fsdRow];

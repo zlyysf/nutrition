@@ -4247,7 +4247,7 @@
                     //一般以蔬菜水果优先，但脂肪排除在外；另外当是纤维素时，以蔬菜水果豆类优先
                     if (needPriorityFoodToSpecialNutrient){
                         
-                        NSSet * nutrientsNeedNoPriorityFood = [NSSet setWithObjects:NutrientId_Lipid, nil];//目前脂肪不该用蔬菜水果优先补充
+                        NSSet * nutrientsNeedNoPriorityFood = [NSSet setWithObjects:NutrientId_Lipid, NutrientId_Folate, nil];//目前脂肪不该用蔬菜水果优先补充
                         canUsePriorityFoodToSpecialNutrient = ! [nutrientsNeedNoPriorityFood containsObject:nutrientNameToCal];
                         if (canUsePriorityFoodToSpecialNutrient){
                             if ([NutrientId_Fiber isEqualToString:nutrientNameToCal]){//当是纤维素时，以蔬菜水果豆类优先
