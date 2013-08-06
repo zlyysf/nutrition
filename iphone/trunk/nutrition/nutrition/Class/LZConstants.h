@@ -232,6 +232,10 @@
 
 #define WeChatAppId @"wxe7284abf139401f5"
 
+
+//百度广告APP SID 和计费名
+#define BaiduAdsAppSID @"f06ac562"
+#define BaiduAdsAppSpec @"f06ac562"
 #endif
 
 

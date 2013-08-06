@@ -68,11 +68,11 @@
 
     } else {
         sharedAdView.AdType = BaiduMobAdViewTypeBanner;
-        
+    
         sharedAdView.delegate = self;
         [superView addSubview:sharedAdView];
-        [sharedAdView start];
-
+        [self adBannerLoadRequest];
+        isLoaded_ = YES;
         
 //        adBanner_.delegate = self;
 //        adBanner_.rootViewController = rootViewController;
@@ -81,7 +81,7 @@
 //        [self adBannerLoadRequest];
 //
 //        [superView addSubview:adBanner_];
-        isLoaded_ = YES;
+        
     }
 }
 //-(void)adBannerLoadRequest
@@ -100,7 +100,10 @@
 //    
 //    [adBanner_ loadRequest:request];
 //}
-
+-(void)adBannerLoadRequest
+{
+    [sharedAdView start];
+}
 
 
 //-(void)removeAds
@@ -143,13 +146,13 @@
 }
 - (NSString *)publisherId
 {
-    return  @"debug"; //@"your_own_app_id";
+    return  BaiduAdsAppSID;//@"f06ac562"; //@"your_own_app_id";
 }
 
 - (NSString*) appSpec
 {
     //注意：该计费名为测试用途，不会产生计费，请测试广告展示无误以后，替换为您的应用计费名，然后提交AppStore.
-    return @"debug";
+    return BaiduAdsAppSpec;
 }
 
 -(BOOL) enableLocation
@@ -177,6 +180,8 @@
 -(void) failedDisplayAd:(BaiduMobFailReason) reason;
 {
     NSLog(@"delegate: failedDisplayAd %d", reason);
+    NSTimeInterval delaySec = 30.0;
+    [self performSelector:@selector(adBannerLoadRequest) withObject:nil afterDelay:delaySec];
 }
 
 @end

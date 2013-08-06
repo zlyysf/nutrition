@@ -210,7 +210,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(nutrientShowNotification:) name:Notification_ShowNutrientInfoKey object:nil];
-    [MobClick beginLogPageView:@"检测页面"];
+    [MobClick beginLogPageView:@"营养搭配页面"];
     self.listView.tableFooterView.hidden = NO;
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
@@ -230,7 +230,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_ShowNutrientInfoKey object:nil];
-    [MobClick endLogPageView:@"检测页面"];
+    [MobClick endLogPageView:@"营养搭配页面"];
 }
 
 - (void)viewDidUnload {

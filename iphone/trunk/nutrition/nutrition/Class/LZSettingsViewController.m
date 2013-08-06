@@ -56,7 +56,7 @@
     }
     else
     {
-        [self.contentScrollView setContentSize:CGSizeMake(320, 416)];
+        [self.contentScrollView setContentSize:CGSizeMake(320, 456)];
     }
     self.baiduAdWall = [[BaiduMobAdWall alloc] init];
     self.baiduAdWall.delegate = self;
@@ -122,7 +122,7 @@
     self.midSectionView.frame = midFrame;
     
     CGRect bottomFrame = self.bottomSectionView.frame;
-    bottomFrame.origin.y = 287;
+    bottomFrame.origin.y = 327;
     self.bottomSectionView.frame = bottomFrame;
 
     if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
@@ -135,7 +135,7 @@
     else
     {
         CGRect mobFrame = self.admobView.frame;
-        mobFrame.origin.y = 366;
+        mobFrame.origin.y = 406;
         self.admobView.frame = mobFrame;
     }
     NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
@@ -154,13 +154,16 @@
 {
     [MobClick endLogPageView:@"设置页面"];
 }
+- (IBAction)recommendAppAction:(id)sender
+{
+    [self.baiduAdWall showOffers];
+}
 - (IBAction)reviewOurApp:(id)sender {
     [self performSelector:@selector(reviewAppAction) withObject:nil afterDelay:0.f];
 }
 - (void)reviewAppAction
 {
-    [self.baiduAdWall showOffers];
-    //[[LZReviewAppManager SharedInstance]reviewOurAppDirectly];
+    [[LZReviewAppManager SharedInstance]reviewOurAppDirectly];
 }
 - (IBAction)userFeedBack:(id)sender {
     if (KeyIsEnvironmentDebug)
@@ -347,21 +350,13 @@
 #pragma mark BaiduMobAdWallDelegate
 - (NSString *)publisherId
 {
-    return @"debug";
+    return BaiduAdsAppSID;
 }
 
 
 - (NSString*) appSpec
 {
-    return @"debug";
-}
-
--(void) didGetPoints: (NSInteger) points
-{
-    NSLog(@"didGetPoints: %d",points);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@""message:[NSString stringWithFormat:@"新增积分:%d", points] delegate:nil cancelButtonTitle:@"确定" otherButtonTitles:nil];
-    
-    [alert show];
+    return BaiduAdsAppSpec;
 }
 
 @end

@@ -159,6 +159,8 @@
 		5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86717531ED700664B57 /* LZSettingsViewController.m */; };
 		5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
 		5F9C128D17321935000E08E5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9C128C17321935000E08E5 /* MessageUI.framework */; };
+		5FA3D1FB17B0F0E0004F9D39 /* store_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */; };
+		5FA3D1FD17B0F410004F9D39 /* button_middle_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FA3D1FC17B0F40F004F9D39 /* button_middle_clicked@2x.png */; };
 		5FB735E31799511E005FA05C /* 调味品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FB735E11799511E005FA05C /* 调味品@2x.png */; };
 		5FB735E41799511E005FA05C /* 零食@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FB735E21799511E005FA05C /* 零食@2x.png */; };
 		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
@@ -416,6 +418,8 @@
 		5F9995F4172BDBE400A36B4F /* LZFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodCell.h; path = Class/LZFoodCell.h; sourceTree = "<group>"; };
 		5F9995F5172BDBE400A36B4F /* LZFoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodCell.m; path = Class/LZFoodCell.m; sourceTree = "<group>"; };
 		5F9C128C17321935000E08E5 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "store_icon@2x.png"; path = "nutrition/Resource/store_icon@2x.png"; sourceTree = "<group>"; };
+		5FA3D1FC17B0F40F004F9D39 /* button_middle_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_middle_clicked@2x.png"; path = "nutrition/Resource/button_middle_clicked@2x.png"; sourceTree = "<group>"; };
 		5FB735E11799511E005FA05C /* 调味品@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "调味品@2x.png"; path = "nutrition/Resource/调味品@2x.png"; sourceTree = "<group>"; };
 		5FB735E21799511E005FA05C /* 零食@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "零食@2x.png"; path = "nutrition/Resource/零食@2x.png"; sourceTree = "<group>"; };
 		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = nutrition/Class/LZUtility.h; sourceTree = "<group>"; };
@@ -637,7 +641,6 @@
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
-				5F90D82517AF8E69000AEC06 /* Security.framework */,
 				5F90D81E17AF8E43000AEC06 /* BaiduWallSDK */,
 				5F90D7D017AF8873000AEC06 /* BaiduSDK */,
 				5FF631C917702C690068CBFE /* AdMob */,
@@ -670,6 +673,7 @@
 		5F3338A7172A407E0096E7AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5F90D82517AF8E69000AEC06 /* Security.framework */,
 				5F90D81C17AF8921000AEC06 /* CoreLocation.framework */,
 				5F90D81A17AF8916000AEC06 /* MediaPlayer.framework */,
 				5F90D81817AF88F0000AEC06 /* AVFoundation.framework */,
@@ -725,6 +729,7 @@
 			isa = PBXGroup;
 			children = (
 				5FF6320E1772D8AA0068CBFE /* foodTypeIcon */,
+				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
 				5FF632061771C6530068CBFE /* close_button@2x.png */,
 				5F6A3F5A17964D7F0029B8C9 /* addfood_icon@2x.png */,
 				5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */,
@@ -776,6 +781,7 @@
 				5F0122A7174C731900AC0156 /* cell_top@2x.png */,
 				5F03D34E174B924B008EFB60 /* background@2x.png */,
 				5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */,
+				5FA3D1FC17B0F40F004F9D39 /* button_middle_clicked@2x.png */,
 				5F03D34F174B924B008EFB60 /* defaulFoodPic@2x.png */,
 				085C8D4D17336744001A1ABB /* CustomDB.dat */,
 			);
@@ -1295,6 +1301,8 @@
 				5FDD1CAE179D19150046F752 /* change_name_clicked@2x.png in Resources */,
 				5F90D80117AF8873000AEC06 /* baidumobadsdk.bundle in Resources */,
 				5F90D82317AF8E43000AEC06 /* baidumobadwallsdk.bundle in Resources */,
+				5FA3D1FB17B0F0E0004F9D39 /* store_icon@2x.png in Resources */,
+				5FA3D1FD17B0F410004F9D39 /* button_middle_clicked@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
