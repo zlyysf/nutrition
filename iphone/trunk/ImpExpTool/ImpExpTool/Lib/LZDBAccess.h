@@ -71,7 +71,7 @@
 
 
 
-
+-(NSNumber *)insertFoodCollocationData_withCollocationName:(NSString*)collationName andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray;
 
 
 

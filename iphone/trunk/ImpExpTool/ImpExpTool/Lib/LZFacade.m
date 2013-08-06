@@ -192,6 +192,27 @@
     [db generateTableAndData_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
     [db generateTableAndData_Food_Supply_DRIUL_Amount_withIfNeedClearTable:true];
     
+    NSMutableArray *foodAmountAry;
+    foodAmountAry = [NSMutableArray array];
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"01152",[NSNumber numberWithDouble:150], nil]];//牛奶 
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"01256",[NSNumber numberWithDouble:100], nil]];//酸奶
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"13359",[NSNumber numberWithDouble:60], nil]];//牛肉
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"11024",[NSNumber numberWithDouble:50], nil]];//苦瓜
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"11695",[NSNumber numberWithDouble:150], nil]];//西红柿
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"09003",[NSNumber numberWithDouble:200], nil]];//苹果
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"09040",[NSNumber numberWithDouble:200], nil]];//香蕉 
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"11090",[NSNumber numberWithDouble:100], nil]];//西兰花
+    [db insertFoodCollocationData_withCollocationName:@"减肥瘦身" andFoodAmount2LevelArray:foodAmountAry];
+    
+    foodAmountAry = [NSMutableArray array];
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"12154",[NSNumber numberWithDouble:50], nil]];//核桃
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"09146",[NSNumber numberWithDouble:50], nil]];//枣
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"11167",[NSNumber numberWithDouble:80], nil]];//玉米
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"18035",[NSNumber numberWithDouble:50], nil]];//面包
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"05018",[NSNumber numberWithDouble:80], nil]];//鸡皮
+    [foodAmountAry addObject:[NSArray arrayWithObjects:@"09003",[NSNumber numberWithDouble:250], nil]];//苹果
+    [db insertFoodCollocationData_withCollocationName:@"美容养颜" andFoodAmount2LevelArray:foodAmountAry];
+    
     [self generateVariousCsv_withDBFilePath:destDbFilePath];
 }
 
