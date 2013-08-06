@@ -381,7 +381,7 @@
         double toAddForNutrient = [nmTotalNeed doubleValue]-[nmSupplied doubleValue];
         assert(toAddForNutrient>Config_nearZero);
         
-        NSArray * foodsToSupplyOneNutrient = [da getRichNutritionFood:nutrientNameToCal andTopN:topN];//找一些对于这种营养素含量最高的食物
+        NSArray * foodsToSupplyOneNutrient = [da getRichNutritionFood:nutrientNameToCal andTopN:topN andIfNeedCustomDefinedFoods:FALSE];//找一些对于这种营养素含量最高的食物
         NSMutableArray *normalFoodsToSupplyOneNutrient = [NSMutableArray arrayWithArray:foodsToSupplyOneNutrient];
         NSMutableArray *alreadyUsedFoodsWhenOtherNutrients = [NSMutableArray arrayWithCapacity:foodsToSupplyOneNutrient.count];
         //先根据食物是否用过和多样性标识把补当前营养素的食物分为两类
@@ -910,7 +910,7 @@
         double toAddForNutrient = [nmTotalNeed1Unit doubleValue]*personDayCount-[nmSupplied doubleValue];
         assert(toAddForNutrient>Config_nearZero);
         
-        NSArray * foodsToSupplyOneNutrient = [da getRichNutritionFood:nutrientNameToCal andTopN:topN];//找一些对于这种营养素含量最高的食物
+        NSArray * foodsToSupplyOneNutrient = [da getRichNutritionFood:nutrientNameToCal andTopN:topN andIfNeedCustomDefinedFoods:FALSE];//找一些对于这种营养素含量最高的食物
         NSMutableArray *normalFoodsToSupplyOneNutrient = [NSMutableArray arrayWithArray:foodsToSupplyOneNutrient];
         NSMutableArray *alreadyUsedFoodsWhenOtherNutrients = [NSMutableArray array];
         //先根据食物是否用过和多样性标识把补当前营养素的食物分为两类
@@ -1484,7 +1484,7 @@
         double toAddForNutrient = [nmTotalNeed1Unit doubleValue]*personDayCount-[nmSupplied doubleValue];
         assert(toAddForNutrient>Config_nearZero);
         
-        NSArray * foodsToSupplyOneNutrient = [da getRichNutritionFood:nutrientNameToCal andTopN:topN];//找一些对于这种营养素含量最高的食物
+        NSArray * foodsToSupplyOneNutrient = [da getRichNutritionFood:nutrientNameToCal andTopN:topN andIfNeedCustomDefinedFoods:false];//找一些对于这种营养素含量最高的食物
         NSMutableArray *normalFoodsToSupplyOneNutrient = [NSMutableArray arrayWithArray:foodsToSupplyOneNutrient];
         NSMutableArray *alreadyUsedFoodsWhenOtherNutrients = [NSMutableArray array];
         //先根据食物是否用过和多样性标识把补当前营养素的食物分为两类
@@ -3387,6 +3387,8 @@
             needUseNormalLimitWhenSmallIncrementLogic = [nmFlag_needUseNormalLimitWhenSmallIncrementLogic boolValue];
     }
     
+    BOOL ifNeedCustomDefinedFoods = Config_ifNeedCustomDefinedFoods;
+    
     NSArray *excludeFoodIds = [paramData objectForKey:@"excludeFoodIds"];
     NSArray *nutrientNameAryToCal = [paramData objectForKey:@"nutrientNameAryToCal"];
     NSDictionary* DRIsDict = [paramData objectForKey:@"DRI"];
@@ -3441,7 +3443,7 @@
     //补维生素D中只有鱼类最适合，故特殊处理。从而上面选肉类的时候排除鱼类，避免一次推荐包含多种鱼。
     nutrient = NutrientId_VD;
     foodClass = FoodClassify_rou_shui_yu;
-    foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random];
+    foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random andIfNeedCustomDefinedFoods:ifNeedCustomDefinedFoods ];
     assert(foodInfo!=nil);
     foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
     [foodInfoDict setObject:foodInfo forKey:foodId];
@@ -3453,10 +3455,10 @@
     nutrient = NutrientId_Fiber;
     foodClass = FoodClassify_shucai;
     incFoodIds = foodInfoDict.allKeys;
-    foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:incFoodIds andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random];
+    foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:incFoodIds andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random andIfNeedCustomDefinedFoods:ifNeedCustomDefinedFoods];
     if (foodInfo==nil){
         excFoodIds = foodInfoDict.allKeys;
-        foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random];
+        foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:foodClass andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random andIfNeedCustomDefinedFoods:ifNeedCustomDefinedFoods];
         foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
         [foodInfoDict setObject:foodInfo forKey:foodId];
         getFoodsLog = [NSMutableArray arrayWithObjects:@"specialForFiber",nutrient,foodId,foodInfo[COLUMN_NAME_CnCaption], nil];
@@ -3482,7 +3484,7 @@
         needRearrangeRichFood = true;
         for(int i=0; i<nutrientsWithoutRichFood.count; i++){
             NSString *nutrient = nutrientsWithoutRichFood[i];
-            NSDictionary *foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random];
+            NSDictionary *foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:excludeFoodIds andGetStrategy:Strategy_random andIfNeedCustomDefinedFoods:ifNeedCustomDefinedFoods];
             assert(foodInfo!=nil);
             NSString *foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
             assert([foodInfoDict objectForKey:foodId]==nil);
@@ -3536,7 +3538,7 @@
             if (excludeFoodIds.count>0) [exFoodIds addObjectsFromArray:excludeFoodIds];
             for(int i=0; i<nutrientsLackFood.count; i++){
                 NSString *nutrient = nutrientsLackFood[i];
-                NSDictionary *foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:exFoodIds andGetStrategy:Strategy_random];
+                NSDictionary *foodInfo = [da getOneRichNutritionFood:nutrient andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:exFoodIds andGetStrategy:Strategy_random andIfNeedCustomDefinedFoods:ifNeedCustomDefinedFoods];
                 assert(foodInfo!=nil);
                 NSString *foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
 //                assert([foodInfoDict objectForKey:foodId]==nil);//由于同一个食物可能富含多种营养素，从而可能根据不同营养素选到同一个食物，从而不能做这个assert
@@ -3597,7 +3599,7 @@
 //        }
         
         //看看每个普通营养素是否都存在一个富含该成分的食物
-        NSArray * richFoodInfoAry = [da getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient:nutrient andGivenFoodIds:incFoodIds];
+        NSArray * richFoodInfoAry = [da getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient:nutrient andGivenFoodIds:incFoodIds andIfNeedCustomDefinedFoods:false];//这里由于只是检查，不必用自定义的富含食物来限制
         if ([nmNeedAssertExistRichFood boolValue]){
             assert(richFoodInfoAry.count>0);
         }

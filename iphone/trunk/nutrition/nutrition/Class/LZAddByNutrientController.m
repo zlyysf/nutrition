@@ -122,7 +122,7 @@
     double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientId]) doubleValue]*[planPerson intValue]*[planDays intValue];
     double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
     LZDataAccess *da = [LZDataAccess singleton];
-    NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
+    NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal] andIfNeedCustomDefinedFoods:false];//显示时不用自定义的富含食物清单来限制
     isFirstLoad = NO;
     self.foodArray = [NSArray arrayWithArray:recommendFoodArray];
     [self.listView reloadData];

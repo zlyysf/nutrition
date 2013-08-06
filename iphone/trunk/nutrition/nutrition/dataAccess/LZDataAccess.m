@@ -781,28 +781,27 @@
 /*
  取富含某种营养素的前n个食物的清单
  */
--(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN
+-(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andTopN:(int)topN andIfNeedCustomDefinedFoods:(BOOL) ifNeedCustomDefinedFoods
 {
-    return [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:nil andTopN:topN];
+    return [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:nil andExcludeFoodIds:nil andTopN:topN andIfNeedCustomDefinedFoods:ifNeedCustomDefinedFoods];
 }
 
 /*
  取富含某种营养素的前n个食物的清单
  注意food的class是一个树结构
  */
--(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds andTopN:(int)topN
+-(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds andTopN:(int)topN andIfNeedCustomDefinedFoods:(BOOL) ifNeedCustomDefinedFoods
 {
     NSLog(@"getRichNutritionFood enter");
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
     //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
     [sqlStr appendString:@"SELECT F.*,CnCaption,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight, "];
-    [sqlStr appendString:@"\n D.["];
-    [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"] AS RichLevel "];
+    [sqlStr appendFormat:@"\n D.[%@] AS RichLevel ",nutrientAsColumnName];
 //    [sqlStr appendString:@"\n  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
     [sqlStr appendString:@"\n  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
-//    [sqlStr appendString:@"\n    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
-//    [sqlStr appendString:@"\n    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
+    if (ifNeedCustomDefinedFoods){
+        [sqlStr appendFormat:@"\n    JOIN CustomRichFood CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='%@' \n",nutrientAsColumnName];
+    }
     
     NSMutableArray *exprIncludeORdata = [NSMutableArray array];
     NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
@@ -865,56 +864,7 @@
         [expr addObject:excludeFoodIds];
         [exprExcludedata addObject:expr];
     }
-//    [sqlStr appendString:@"\n  WHERE "];
-//    [sqlStr appendString:@"\n    D.["];
-//    [sqlStr appendString:nutrientAsColumnName];
-//    [sqlStr appendString:@"]"];
-//    [sqlStr appendString:@">0"];
-//    
-//    [sqlStr appendString:@"\n AND D.["];
-//    [sqlStr appendString:nutrientAsColumnName];
-//    [sqlStr appendString:@"]"];
-//    [sqlStr appendString:@"<1000 "];
-    
-//    if(includeFoodClass.length > 0){
-//        [sqlStr appendString:@"\n    AND "];
-//        [sqlStr appendString:COLUMN_NAME_classify];
-//        [sqlStr appendString:@" LIKE '"];
-//        [sqlStr appendString:includeFoodClass];
-//        [sqlStr appendString:@"%' "];
-//    }
-//    if(excludeFoodClass.length > 0){
-//        [sqlStr appendString:@"\n    AND NOT "];
-//        [sqlStr appendString:COLUMN_NAME_classify];
-//        [sqlStr appendString:@" LIKE '"];
-//        [sqlStr appendString:excludeFoodClass];
-//        [sqlStr appendString:@"%' "];
-//    }
-    
-//    NSMutableArray *allFoodIds = [NSMutableArray array];
-//    if(includeFoodIds.count > 0){
-//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
-//        for(int i=0; i<includeFoodIds.count; i++){
-//            [placeholderAry addObject:@"?"];
-//        }
-//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-//
-//        [sqlStr appendString:@"\n    AND F.NDB_No in ("];
-//        [sqlStr appendString:placeholdersStr];
-//        [sqlStr appendString:@") "];
-//        [allFoodIds addObjectsFromArray:includeFoodIds];
-//    }
-//    if(excludeFoodIds.count > 0){
-//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:excludeFoodIds.count];
-//        for(int i=0; i<excludeFoodIds.count; i++){
-//            [placeholderAry addObject:@"?"];
-//        }
-//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-//        [sqlStr appendString:@"\n    AND NOT F.NDB_No in ("];
-//        [sqlStr appendString:placeholdersStr];
-//        [sqlStr appendString:@") "];
-//        [allFoodIds addObjectsFromArray:excludeFoodIds];
-//    }
+
     
     NSMutableString *afterWherePart = [NSMutableString string ];
     
@@ -937,19 +887,12 @@
     NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:afterWherePart andOptions:localOptions];
     return dataAry;
     
-//    NSLog(@"getRichNutritionFood sqlStr=%@",sqlStr);
-//    
-////    FMResultSet *rs = [dbfm executeQuery:sqlStr];
-//    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
-//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-//
-//    NSLog(@"getRichNutritionFood ret:\n%@",dataAry);
-//    return dataAry;
+
 }
 
--(NSDictionary *) getOneRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass  andIncludeFoodIds:(NSArray*)includeFoodIds andExcludeFoodIds:(NSArray*)excludeFoodIds andGetStrategy:(NSString*)getStrategy
+-(NSDictionary *) getOneRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass  andIncludeFoodIds:(NSArray*)includeFoodIds andExcludeFoodIds:(NSArray*)excludeFoodIds andGetStrategy:(NSString*)getStrategy  andIfNeedCustomDefinedFoods:(BOOL) ifNeedCustomDefinedFoods
 {
-    NSArray * foodAry = [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:includeFoodClass andExcludeFoodClass:excludeFoodClass andIncludeFoodIds:includeFoodIds andExcludeFoodIds:excludeFoodIds andTopN:0];
+    NSArray * foodAry = [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:includeFoodClass andExcludeFoodClass:excludeFoodClass andIncludeFoodIds:includeFoodIds andExcludeFoodIds:excludeFoodIds andTopN:0 andIfNeedCustomDefinedFoods:ifNeedCustomDefinedFoods];
     if (foodAry.count == 0)
         return nil;
     if( [Strategy_random isEqualToString:getStrategy] && (foodAry.count > 1) ){
@@ -961,12 +904,12 @@
 }
 
 
--(NSArray *) getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds
+-(NSArray *) getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds andIfNeedCustomDefinedFoods:(BOOL) ifNeedCustomDefinedFoods
 {
     NSLog(@"getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient enter");
     if (givenFoodIds.count == 0)
         return nil;
-    return [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:givenFoodIds andExcludeFoodIds:nil andTopN:0];
+    return [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:givenFoodIds andExcludeFoodIds:nil andTopN:0 andIfNeedCustomDefinedFoods:ifNeedCustomDefinedFoods];
 }
 
 /*
@@ -1839,9 +1782,9 @@
 }
 
 
--(NSArray *) getRichNutritionFoodForNutrient:(NSString *)nutrientName andNutrientAmount:(NSNumber*)nutrientAmount
+-(NSArray *) getRichNutritionFoodForNutrient:(NSString *)nutrientName andNutrientAmount:(NSNumber*)nutrientAmount andIfNeedCustomDefinedFoods:(BOOL) ifNeedCustomDefinedFoods
 {
-    NSArray * foods = [self getRichNutritionFood:nutrientName andTopN:0];
+    NSArray * foods = [self getRichNutritionFood:nutrientName andTopN:0 andIfNeedCustomDefinedFoods:ifNeedCustomDefinedFoods];
     
     for(int i=0; i<foods.count; i++){
         NSMutableDictionary *food = foods[i];

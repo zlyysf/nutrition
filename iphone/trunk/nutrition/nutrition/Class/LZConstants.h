@@ -20,6 +20,8 @@
 #define Config_nearZero 0.0000001
 #define Config_defaultFoodIncreaseUnit 1
 
+#define Config_ifNeedCustomDefinedFoods TRUE
+
 #define Config_needLimitNutrients TRUE
 #define Config_needUseLowLimitAsUnit TRUE
 #define Config_needUseNormalLimitWhenSmallIncrementLogic TRUE

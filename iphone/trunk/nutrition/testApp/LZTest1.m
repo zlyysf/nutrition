@@ -1638,7 +1638,7 @@
     double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientName1]) doubleValue]*personCount*dayCount;
     double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
     LZDataAccess *da = [LZDataAccess singleton];
-    [da getRichNutritionFoodForNutrient:nutrientName1 andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal]];
+    [da getRichNutritionFoodForNutrient:nutrientName1 andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal] andIfNeedCustomDefinedFoods:false];
     
     
 }
@@ -1774,7 +1774,7 @@
                               [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
 
     BOOL needConsiderNutrientLoss = FALSE;
-    BOOL needLimitNutrients = FALSE; //TRUE;  //FALSE;
+    BOOL needLimitNutrients = TRUE; //TRUE;  //FALSE;
     BOOL needUseLowLimitAsUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
     BOOL needUseFirstRecommendWhenSmallIncrementLogic = TRUE;//FALSE;
