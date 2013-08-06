@@ -1193,6 +1193,7 @@
     int continueEmptyRowCount = 0;
     int continueEmptyRowLimit = 10;
     
+    NSMutableDictionary *nutrientHaveFoodIdDict = [NSMutableDictionary dictionary];
     NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray *row;
     DHcell *cell_NutrientId, *cell_NutrientName,
@@ -1219,6 +1220,8 @@
         if (!nutrientIdGot){
             break;
         }
+        
+        
         
         bool foundEmptyRow = false;
         do{
@@ -1247,6 +1250,7 @@
                         NSMutableArray *row = [NSMutableArray arrayWithCapacity:2];
                         [row addObject:nutrientId];
                         [row addObject:foodId];
+                        [nutrientHaveFoodIdDict setObject:[NSNumber numberWithInt:1] forKey:nutrientId];
                         [rows2D addObject:row];
                         NSLog(@"%@ %@, %@ %@",nutrientId,cell_NutrientName.str,foodId,cell_FoodName.str);
                     }
@@ -1256,6 +1260,14 @@
             }
         }while (!foundEmptyRow);
     } while (continueEmptyRowCount < continueEmptyRowLimit);
+    
+    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
+    for(int i=0 ; i<customNutrients.count; i++){
+        NSString * nutrient = customNutrients[i];
+        NSNumber *nmHaveFoodId = nutrientHaveFoodIdDict[nutrient];
+        assert([nmHaveFoodId intValue]>0);
+    }
+    
 //    NSLog(@"in readCustomRichFood, columnNames=%@, rows2D=\n%@",columnNames,rows2D);
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
     [retData setObject:columnNames forKey:@"columnNames"];
