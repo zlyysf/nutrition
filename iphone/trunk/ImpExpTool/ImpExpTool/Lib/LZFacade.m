@@ -44,7 +44,8 @@
 //    [workRe convertExcelToSqlite_FoodCnDescription];
 //    [workRe convertExcelToSqlite_NutritionInfo];
 //    [workRe convertExcelToSqlite_FoodPicPath];
-    [workRe convertExcelToSqlite_CustomRichFood];
+//    [workRe convertExcelToSqlite_CustomRichFood];
+    [workRe readNutrientDisease];
     
 //    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];
 //    LZDBAccess *db = [workRe getDBconnection];

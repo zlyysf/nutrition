@@ -149,6 +149,8 @@
 #define COLUMN_NAME_NutrientID_max @"NutrientID_max"
 #define COLUMN_NAME_NutrientID_min @"NutrientID_min"
 
+#define COLUMN_NAME_Disease @"Disease"
+
 #define Key_Amount @"Amount"
 #define Key_Name @"Name"
 #define Key_Unit @"Unit"

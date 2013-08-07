@@ -52,6 +52,8 @@
 
 -(NSString*)generateCsv_ToMerge_FoodCustomnAndDRIULAmount_withCsvFileName:(NSString*)csvFileName;
 
+-(NSDictionary *)readNutrientDisease;
+
 
 @end
 
