@@ -3768,7 +3768,7 @@
 
 /*
  need flag Config_needConsiderNutrientLoss for getStandardDRIs_withUserInfo ..
- options contain flag LZSettingKey_needLimitNutrients, LZSettingKey_needUseLowLimitAsUnit, LZSettingKey_randSeed
+ options contain flag LZSettingKey_needLimitNutrients, LZSettingKey_randSeed
  params contain Key_givenNutrients
  */
 -(NSMutableDictionary *) recommendFoodBySmallIncrementWithPreIntake:(NSDictionary*)givenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSMutableDictionary*)options andParams:(NSDictionary*)params
@@ -3832,7 +3832,7 @@
  
  options contain flag
         LZSettingKey_needLimitNutrients,
-        LZSettingKey_needUseLowLimitAsUnit,
+        LZSettingKey_needUseDefinedIncrementUnit,
         LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
         LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic, //注意需要预选食物没有时才有效，这是一个粗略判断，虽然预选食物少到某种程度也可以有效，但是这难以判断。
  LZSettingKey_needFirstSpecialForShucaiShuiguo, //注意当needSpecialForFirstBatchFoods 发挥作用时，它无效，因为needSpecialForFirstBatchFoods实际包含了它.而且需要VC的补充量为0时才有效。
@@ -3845,7 +3845,7 @@
     
     BOOL needLimitNutrients = Config_needLimitNutrients;//是否要根据需求限制计算的营养素集合
 //    BOOL needUseFoodLimitTableWhenCal = TRUE;
-    BOOL needUseLowLimitAsUnit = Config_needUseLowLimitAsUnit;// 食物的增量是使用下限值还是通用的1g的增量
+    BOOL needUseDefinedIncrementUnit = Config_needUseDefinedIncrementUnit;// 食物的增量是使用下限值还是通用的1g的增量
     BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic; //对于食物的限量是使用普通限制还是使用上限限制
     BOOL needUseFirstRecommendWhenSmallIncrementLogic = Config_needUseFirstRecommendWhenSmallIncrementLogic; //食物第一次的增量是否使用最初推荐量
     BOOL needFirstSpecialForShucaiShuiguo = Config_needFirstSpecialForShucaiShuiguo; //对于最开始选出来的蔬菜水果，在最开始使用最初推荐量。这被 needSpecialForFirstBatchFoods 所覆盖。
@@ -3862,9 +3862,9 @@
         if (nmFlag_needLimitNutrients != nil)
             needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
         
-        NSNumber *nmFlag_needUseLowLimitAsUnit = [options objectForKey:LZSettingKey_needUseLowLimitAsUnit];
-        if (nmFlag_needUseLowLimitAsUnit != nil)
-            needUseLowLimitAsUnit = [nmFlag_needUseLowLimitAsUnit boolValue];
+        NSNumber *nmFlag_needUseDefinedIncrementUnit = [options objectForKey:LZSettingKey_needUseDefinedIncrementUnit];
+        if (nmFlag_needUseDefinedIncrementUnit != nil)
+            needUseDefinedIncrementUnit = [nmFlag_needUseDefinedIncrementUnit boolValue];
 
         NSNumber *nmFlag_needUseNormalLimitWhenSmallIncrementLogic = [options objectForKey:LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic];
         if (nmFlag_needUseNormalLimitWhenSmallIncrementLogic != nil)
@@ -4391,18 +4391,24 @@
         NSNumber* nmNutrientContentOfFood = [foodToSupplyOneNutrient objectForKey:nutrientNameToCal];
         assert([nmNutrientContentOfFood doubleValue]>0.0);//确认选出的这个食物含这种营养素
         double dFoodIncreaseUnit = defFoodIncreaseUnit;
-        if (needUseLowLimitAsUnit){
-            NSNumber *nmFoodLowerLimit = foodToSupplyOneNutrient[COLUMN_NAME_Lower_Limit];
-            assert(nmFoodLowerLimit!=nil);
-            dFoodIncreaseUnit = [nmFoodLowerLimit doubleValue];
+        if (needUseDefinedIncrementUnit){
+            NSNumber *nmFoodIncrementUnit = foodToSupplyOneNutrient[COLUMN_NAME_increment_unit];
+            assert(nmFoodIncrementUnit!=nil);
+            dFoodIncreaseUnit = [nmFoodIncrementUnit doubleValue];
         }
-        if(needUseFirstRecommendWhenSmallIncrementLogic && (givenFoodAmountDict.count == 0) ){
-            NSNumber *nmFood_first_recommend = foodToSupplyOneNutrient[COLUMN_NAME_first_recommend];
-            assert(nmFood_first_recommend!=nil);
-            double foodAlreadyAmount = [LZUtility getDoubleFromDictionaryItem_withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];
-            if (foodAlreadyAmount == 0)
+        double foodAlreadyAmount = [LZUtility getDoubleFromDictionaryItem_withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];
+        if (foodAlreadyAmount == 0){
+            if(needUseFirstRecommendWhenSmallIncrementLogic && (givenFoodAmountDict.count == 0) ){
+                NSNumber *nmFood_first_recommend = foodToSupplyOneNutrient[COLUMN_NAME_first_recommend];
+                assert(nmFood_first_recommend!=nil);
                 dFoodIncreaseUnit = [nmFood_first_recommend doubleValue];
+            }else{
+                NSNumber *nmFood_Lower_Limit = foodToSupplyOneNutrient[COLUMN_NAME_Lower_Limit];
+                assert(nmFood_Lower_Limit!=nil);//这里还不能保证食物的量不低于lower limit，因为后面还有减量算法
+                dFoodIncreaseUnit = [nmFood_Lower_Limit doubleValue];
+            }
         }
+        
         //这个食物的各营养的量加到supply中
         [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];
     
@@ -4469,12 +4475,6 @@
     [retDict setObject:calculationLogs forKey:@"calculationLogs"];//2D array
     
     
-//    NSArray *otherInfos = [NSArray arrayWithObjects:@"randSeed",[NSNumber numberWithUnsignedInt:randSeed],
-//                           @"needLimitNutrients",[NSNumber numberWithBool:needLimitNutrients],
-//                           @"needUseLowLimitAsUnit",[NSNumber numberWithBool:needUseLowLimitAsUnit],
-//                           nil];
-//    [retDict setObject:otherInfos forKey:@"OtherInfo"];
-    
     if (givenFoodAmountDict != nil && givenFoodAmountDict.count>0){
         [retDict setObject:givenFoodAmountDict forKey:Key_TakenFoodAmount];//food NO as key
         [retDict setObject:takenFoodAttrDict forKey:Key_TakenFoodAttr];//food NO as key
@@ -4524,7 +4524,6 @@
     NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:Key_TakenFoodAttr];//food NO as key
     
 //    BOOL needLimitNutrients = TRUE;
-//    BOOL needUseLowLimitAsUnit = TRUE;
 //    BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic;
 //    BOOL needUseFirstRecommendWhenSmallIncrementLogic = Config_needUseFirstRecommendWhenSmallIncrementLogic;
     BOOL needFirstSpecialForShucaiShuiguo = Config_needFirstSpecialForShucaiShuiguo;
@@ -4536,10 +4535,6 @@
 //        NSNumber *nmFlag_needLimitNutrients = [options objectForKey:LZSettingKey_needLimitNutrients];
 //        if (nmFlag_needLimitNutrients != nil)
 //            needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
-//        
-//        NSNumber *nmFlag_needUseLowLimitAsUnit = [options objectForKey:LZSettingKey_needUseLowLimitAsUnit];
-//        if (nmFlag_needUseLowLimitAsUnit != nil)
-//            needUseLowLimitAsUnit = [nmFlag_needUseLowLimitAsUnit boolValue];
 //        
 //        NSNumber *nmFlag_needUseNormalLimitWhenSmallIncrementLogic = [options objectForKey:LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic];
 //        if (nmFlag_needUseNormalLimitWhenSmallIncrementLogic != nil)
@@ -4674,6 +4669,8 @@
                 }
                 NSDictionary *foodInfo = richFoodInfoAry[chooseIdx];
                 NSString *foodId = foodInfo[COLUMN_NAME_NDB_No];
+                NSNumber *nmFoodLowerLimit = foodInfo[COLUMN_NAME_Lower_Limit];
+                assert(nmFoodLowerLimit != nil);
                 NSNumber *nmFoodAmount = recommendFoodAmountDict[foodId];
                 if ([nmFoodAmount doubleValue] > Config_nearZero){//这种食物的使用量大于0，才有可能减它
                     double maxDeltaFoodAmount = 0;
@@ -4704,12 +4701,15 @@
                         if([nmFoodAmount doubleValue] - maxDeltaFoodAmount < Config_nearZero){// 可以认为 [nmFoodAmount doubleValue] == maxDeltaFoodAmount
                             maxDeltaFoodAmount = [nmFoodAmount doubleValue];
                         }else if([nmFoodAmount doubleValue] - maxDeltaFoodAmount < 1){
-                            maxDeltaFoodAmount = [nmFoodAmount doubleValue] - 1;//避免显示时四舍五入为0的情况。
+//                            maxDeltaFoodAmount = [nmFoodAmount doubleValue] - 1;//避免显示时四舍五入为0的情况。
+                            maxDeltaFoodAmount = [nmFoodAmount doubleValue] - [nmFoodLowerLimit doubleValue];
                             if (maxDeltaFoodAmount < 0){//此时说明 [nmFoodAmount doubleValue] < 1 ,但是这种情况应该不会发生(除去微小的误差情况)。因为最开始它>=1，之后减的话，要么彻底减掉，要么间距至少为1，这样保证减掉之后得到的值仍>=1
                                 maxDeltaFoodAmount = 0;
                             }
                         }else{//[nmFoodAmount doubleValue] - maxDeltaFoodAmount >= 1
-                            //do nothing about maxDeltaFoodAmount
+                            if ([nmFoodAmount doubleValue] - maxDeltaFoodAmount < [nmFoodLowerLimit doubleValue]){
+                                maxDeltaFoodAmount = [nmFoodAmount doubleValue] - [nmFoodLowerLimit doubleValue];
+                            }
                         }
                     }
                     if (maxDeltaFoodAmount < Config_nearZero){

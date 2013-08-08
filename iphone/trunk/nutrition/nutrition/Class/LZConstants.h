@@ -23,7 +23,8 @@
 #define Config_ifNeedCustomDefinedFoods TRUE
 
 #define Config_needLimitNutrients TRUE
-#define Config_needUseLowLimitAsUnit TRUE
+//#define Config_needUseLowLimitAsUnit TRUE
+#define Config_needUseDefinedIncrementUnit TRUE
 #define Config_needUseNormalLimitWhenSmallIncrementLogic TRUE
 #define Config_needUseFirstRecommendWhenSmallIncrementLogic TRUE //FALSE //它为TRUE时，会导致补得过量经常发生，从而删掉某个少量的推荐的食物后再推荐可能会报营养已满不用推荐，从而让用户觉得算法有问题。不过，即使设置为false，算法仍然没有能彻底避免这种情况。但是，现在由于算法加了推荐后再减少食物的功能，这个问题不存在了。
 #define Config_needFirstSpecialForShucaiShuiguo TRUE
@@ -72,7 +73,8 @@
 #define LZSettingKey_notAllowSameFood @"notAllowSameFood" //BOOL
 
 #define LZSettingKey_needConsiderNutrientLoss @"needConsiderNutrientLoss"
-#define LZSettingKey_needUseLowLimitAsUnit @"needUseLowLimitAsUnit"
+//#define LZSettingKey_needUseLowLimitAsUnit @"needUseLowLimitAsUnit"
+#define LZSettingKey_needUseDefinedIncrementUnit @"needUseDefinedIncrementUnit"
 #define LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic @"needUseNormalLimitWhenSmallIncrementLogic"
 #define LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic @"needUseFirstRecommendWhenSmallIncrementLogic"
 #define LZSettingKey_needFirstSpecialForShucaiShuiguo @"needFirstSpecialForShucaiShuiguo"

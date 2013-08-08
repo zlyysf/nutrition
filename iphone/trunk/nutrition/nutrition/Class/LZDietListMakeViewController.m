@@ -1038,7 +1038,7 @@
 
     BOOL needConsiderNutrientLoss = FALSE;
 //    BOOL needLimitNutrients = FALSE;//not passed from here because here have priority
-    BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseDefinedIncrementUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
     BOOL needUseFirstRecommendWhenSmallIncrementLogic = TRUE;//FALSE;
     BOOL needSpecialForFirstBatchFoods = FALSE; //TRUE;
@@ -1049,7 +1049,7 @@
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                     [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
 //                    [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
-                    [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                    [NSNumber numberWithBool:needUseDefinedIncrementUnit],LZSettingKey_needUseDefinedIncrementUnit,
                     [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
                     [NSNumber numberWithBool:needUseFirstRecommendWhenSmallIncrementLogic],LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic,
                     [NSNumber numberWithBool:needSpecialForFirstBatchFoods],LZSettingKey_needSpecialForFirstBatchFoods,

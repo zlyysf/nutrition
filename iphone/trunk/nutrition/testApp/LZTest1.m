@@ -135,7 +135,7 @@
     BOOL needUseFoodLimitTableWhenCal = TRUE;
     
     BOOL needConsiderNutrientLoss = FALSE;
-    BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseDefinedIncrementUnit = TRUE;
     assert(options != nil);
     
     NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
@@ -166,13 +166,13 @@
     if(nmFlag_needConsiderNutrientLoss != nil)
         needConsiderNutrientLoss = [nmFlag_needConsiderNutrientLoss boolValue];
     
-    NSNumber *nmFlag_needUseLowLimitAsUnit = [options objectForKey:@"needUseLowLimitAsUnit"];
-    if(nmFlag_needUseLowLimitAsUnit != nil)
-        needUseLowLimitAsUnit = [nmFlag_needUseLowLimitAsUnit boolValue];
+    NSNumber *nmFlag_needUseDefinedIncrementUnit = [options objectForKey:@"needUseDefinedIncrementUnit"];
+    if(nmFlag_needUseDefinedIncrementUnit != nil)
+        needUseDefinedIncrementUnit = [nmFlag_needUseDefinedIncrementUnit boolValue];
     
     [str appendFormat:@"_M%dr%drr%dLn%dLc%dFL%dNL%dLLU%d",
         notAllowSameFood,randomSelectFood,randomRangeSelectFood,needLimitNutrients,limitRecommendFoodCount, needUseFoodLimitTableWhenCal
-        ,needConsiderNutrientLoss,needUseLowLimitAsUnit];
+        ,needConsiderNutrientLoss,needUseDefinedIncrementUnit];
     
     NSArray *keys = takenFoodAmountDict.allKeys;
     for(int i=0; i<keys.count; i++){
@@ -1717,13 +1717,13 @@
 
     BOOL needConsiderNutrientLoss = FALSE;
     //    BOOL needLimitNutrients = FALSE;
-    BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseDefinedIncrementUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
     int randSeed = 0; //0; //0;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
                                     //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
-                                    [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                                    [NSNumber numberWithBool:needUseDefinedIncrementUnit],LZSettingKey_needUseDefinedIncrementUnit,
                                     [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
                                     [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                                     nil];
@@ -1775,7 +1775,7 @@
 
     BOOL needConsiderNutrientLoss = FALSE;
     BOOL needLimitNutrients = TRUE; //TRUE;  //FALSE;
-    BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseDefinedIncrementUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
     BOOL needUseFirstRecommendWhenSmallIncrementLogic = TRUE;//FALSE;
     BOOL needSpecialForFirstBatchFoods = FALSE; //TRUE;
@@ -1786,7 +1786,7 @@
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                         [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
                         [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
-                        [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                        [NSNumber numberWithBool:needUseDefinedIncrementUnit],LZSettingKey_needUseDefinedIncrementUnit,
                         [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
                         [NSNumber numberWithBool:needUseFirstRecommendWhenSmallIncrementLogic],LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic,
                         [NSNumber numberWithBool:needSpecialForFirstBatchFoods],LZSettingKey_needSpecialForFirstBatchFoods,
@@ -1831,7 +1831,7 @@
     
     BOOL needConsiderNutrientLoss = FALSE;
 BOOL needLimitNutrients = FALSE;
-    BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseDefinedIncrementUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
     BOOL needUseFirstRecommendWhenSmallIncrementLogic = TRUE;//FALSE;
     BOOL needSpecialForFirstBatchFoods = FALSE; //TRUE;
@@ -1842,7 +1842,7 @@ BOOL needLimitNutrients = FALSE;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
                              [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
-                                    [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                                    [NSNumber numberWithBool:needUseDefinedIncrementUnit],LZSettingKey_needUseDefinedIncrementUnit,
                                     [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
                                     [NSNumber numberWithBool:needUseFirstRecommendWhenSmallIncrementLogic],LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic,
                                     [NSNumber numberWithBool:needSpecialForFirstBatchFoods],LZSettingKey_needSpecialForFirstBatchFoods,
@@ -1893,13 +1893,13 @@ BOOL needLimitNutrients = FALSE;
 
     BOOL needConsiderNutrientLoss = FALSE;
     //    BOOL needLimitNutrients = FALSE;
-    BOOL needUseLowLimitAsUnit = TRUE;
+    BOOL needUseDefinedIncrementUnit = TRUE;
     BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic;
     int randSeed = 0;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                     [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
                                     //                             [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
-                                    [NSNumber numberWithBool:needUseLowLimitAsUnit],LZSettingKey_needUseLowLimitAsUnit,
+                                    [NSNumber numberWithBool:needUseDefinedIncrementUnit],LZSettingKey_needUseDefinedIncrementUnit,
                                     [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
                                     [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                                     nil];
