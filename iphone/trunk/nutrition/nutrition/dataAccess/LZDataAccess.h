@@ -21,6 +21,8 @@
 + (NSString *)dbFilePath;
 
 - (id)initDBConnection;
+-(void)openDB_withFilePath: (NSString *)dbFilePath;
+-(void)closeDB;
 
 //-(NSDictionary*)getStandardDRIForSex:(int )sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
 //-(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;

@@ -17,7 +17,7 @@
     static LZDataAccess *shared;
     // Will only be run once, the first time this is called
     dispatch_once(&pred, ^{
-        shared = [[LZDataAccess alloc] initDBConnection];
+        shared = [[LZDataAccess alloc] initDB];
     });
     return shared;
 }
@@ -28,45 +28,100 @@
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:cDbFile];
-    
-    //    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
-    
+//    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
+    NSLog(@"dbFilePath=%@",filePath);
+    return filePath;
+}
+
++ (NSString *)srcResourceDbFilePath {
+    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
     NSLog(@"dbFilePath=%@",filePath);
     return filePath;
 }
 
 
-- (id)initDBConnection{
+
+- (id)initDB{
     self = [super init];
     if (self) {
+
         NSString *dbFilePath = [self.class dbFilePath];
-        
+        NSString *srcResourceDbFilePath = [self.class srcResourceDbFilePath];
         NSFileManager * defFileManager = [NSFileManager defaultManager];
+        
+        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+        NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+        NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+        NSString *flagKey = [NSString stringWithFormat:@"%@%@-DB",appName,appVersion];
+
         BOOL fileExists,isDir;
         fileExists = [defFileManager fileExistsAtPath:dbFilePath isDirectory:&isDir];
+        NSLog(@"initDB, dbFilePath exist=%d",fileExists);
         if (!fileExists){
             NSError *err = nil;
-            NSString *preDbFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
-            [defFileManager copyItemAtPath:preDbFilePath toPath:dbFilePath error:&err];
+            [defFileManager copyItemAtPath:srcResourceDbFilePath toPath:dbFilePath error:&err];
             if (err != nil){
-                NSLog(@"initDbMain, fail to copy prepareDbFile to dbFilePath");
+                NSLog(@"initDB, fail to copy srcResourceDbFilePath to dbFilePath, %@",err);
                 return nil;
-            }else{
-                NSLog(@"initDbMain, init db data by to copy prepareDbFile to dbFilePath");
             }
+            [[NSUserDefaults standardUserDefaults]setBool:YES forKey:flagKey];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            [self openDB_withFilePath:dbFilePath];
         }else{
-            NSLog(@"INFO in initDBConnection, db file exist: %@",dbFilePath);
-        }
-        
-        dbfm = [FMDatabase databaseWithPath:dbFilePath];
-        if (![dbfm open]) {
-            //[dbfm release];
-            NSLog(@"initDBConnection, FMDatabase databaseWithPath failed, %@", dbFilePath);
+            //db file exist , need to check if it be old version when upgrade
+            //if exist older db, need remove it then copy new one            
+            
+            BOOL flagExists = [[NSUserDefaults standardUserDefaults]boolForKey:flagKey];
+            NSLog(@"initDB, flag %@=%d",flagKey,fileExists);
+            if (!flagExists) {
+                NSError *err = nil;
+                [defFileManager removeItemAtPath:dbFilePath error:&err];
+                if (err != nil){
+                    NSLog(@"initDB, fail to remove dbFilePath, %@",err);
+                    return nil;
+                }
+                [defFileManager copyItemAtPath:srcResourceDbFilePath toPath:dbFilePath error:&err];
+                if (err != nil){
+                    NSLog(@"initDB , fail to copy srcResourceDbFilePath to dbFilePath, %@",err);
+                    return nil;
+                }
+                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:flagKey];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+                [self openDB_withFilePath:dbFilePath];
+            }else{
+                [self openDB_withFilePath:dbFilePath];
+            }
         }
     }
     return self;
 }
 
+-(void)openDB_withFilePath: (NSString *)dbFilePath
+{
+    [self closeDB];
+    
+    NSFileManager * defFileManager = [NSFileManager defaultManager];
+    BOOL fileExists;
+    fileExists = [defFileManager fileExistsAtPath:dbFilePath];
+    if (!fileExists){
+        NSLog(@"openDB_withFilePath, file not Exists, %@", dbFilePath);
+        return;
+    }
+    
+    dbfm = [FMDatabase databaseWithPath:dbFilePath];
+    if (![dbfm open]) {
+        [dbfm close];
+        dbfm = nil;
+        NSLog(@"openDB_withFilePath, FMDatabase databaseWithPath failed, %@", dbFilePath);
+    }
+}
+-(void)closeDB
+{
+    if (dbfm != nil){
+        [dbfm close];
+        dbfm = nil;
+    }
+}
 
 
 
