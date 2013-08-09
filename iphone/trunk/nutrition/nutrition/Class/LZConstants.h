@@ -222,7 +222,9 @@
 #define ShareSDKAPPKey @"4d8c71c46cb"
 #define LocalNotifyTimeInterval (72*60*60) // 72 hours
 
-
+#define MobChannelIdTongbu @"TongbuTui"
+#define MobChannelId91Store @"91Store"
+#define MobChannelIdAppStore @"AppStore"
 
 #define KeyIsAlreadyReviewdeOurApp @"KeyIsAlreadyReviewdeOurApp" // YES means already reviewed
 #define KeyReviewAlertControllCount @"KeyReviewAlertControllCount" // >=10 popAlert

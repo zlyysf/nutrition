@@ -46,9 +46,9 @@
     [[UITabBar appearance]setTintColor:[UIColor lightGrayColor]];
     [LZUtility initializePreferNutrient];
     //友盟统计SDK启
-    [MobClick startWithAppkey:UMSDKAPPKey];
+    [MobClick startWithAppkey:UMSDKAPPKey reportPolicy:REALTIME channelId:MobChannelIdAppStore];
     //检查更新
-    [MobClick checkUpdate:@"检测到新版本" cancelButtonTitle:@"下次再说" otherButtonTitles:@"去AppStore"];
+    [MobClick checkUpdate:@"检测到新版本" cancelButtonTitle:@"下次再说" otherButtonTitles:@"去下载"];
     //initialize persons and days setting
     [ShareSDK registerApp:ShareSDKAPPKey];
     [ShareSDK connectSinaWeiboWithAppKey:SinaWeiboAppKey
