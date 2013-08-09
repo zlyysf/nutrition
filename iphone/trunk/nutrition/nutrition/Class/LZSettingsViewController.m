@@ -52,11 +52,11 @@
     [self.line4View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
     {
-        [self.contentScrollView setContentSize:CGSizeMake(320, 504)];
+        [self.contentScrollView setContentSize:CGSizeMake(320, 454)];
     }
     else
     {
-        [self.contentScrollView setContentSize:CGSizeMake(320, 456)];
+        [self.contentScrollView setContentSize:CGSizeMake(320, 406)];
     }
     self.baiduAdWall = [[BaiduMobAdWall alloc] init];
     self.baiduAdWall.delegate = self;
@@ -125,19 +125,19 @@
     bottomFrame.origin.y = 327;
     self.bottomSectionView.frame = bottomFrame;
 
-    if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
-    {
-         
-        CGRect mobFrame = self.admobView.frame;
-        mobFrame.origin.y = 454;
-        self.admobView.frame = mobFrame;
-    }
-    else
-    {
-        CGRect mobFrame = self.admobView.frame;
-        mobFrame.origin.y = 406;
-        self.admobView.frame = mobFrame;
-    }
+//    if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
+//    {
+//         
+//        CGRect mobFrame = self.admobView.frame;
+//        mobFrame.origin.y = 454;
+//        self.admobView.frame = mobFrame;
+//    }
+//    else
+//    {
+//        CGRect mobFrame = self.admobView.frame;
+//        mobFrame.origin.y = 406;
+//        self.admobView.frame = mobFrame;
+//    }
     NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
     NSNumber *userAge = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserAgeKey];
     NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
