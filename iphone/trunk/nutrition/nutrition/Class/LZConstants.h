@@ -9,7 +9,7 @@
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
 
-#define KeyIsEnvironmentDebug 1
+#define KeyIsEnvironmentDebug 0
 
 #define KeyDebugSettingsDict @"KeyDebugSettingsDict"
 
