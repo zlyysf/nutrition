@@ -11,6 +11,7 @@
 #import "LZDataAccess.h"
 #import "LZConstants.h"
 #define kSelectButtonSide 22.f
+#define kButtonAreaSide 40.f
 #define kTagAddNum 20
 #define kNameButtonAddNum 100
 #define kMaxFilterLine 6
@@ -72,6 +73,12 @@
         {
             [self.selectallButton setImage:[UIImage imageNamed:@"nutrient_button_off.png"] forState:UIControlStateNormal];
         }
+        CGPoint selectAllCenter = self.selectallButton.center;
+        CGRect allselectFrame = self.selectallButton.frame;
+        allselectFrame.size = CGSizeMake(kButtonAreaSide, kButtonAreaSide);
+        self.selectallButton.frame = allselectFrame;
+        self.selectallButton.center = selectAllCenter;
+        //[self.selectallButton setBackgroundColor:[UIColor redColor]];
         [backView addSubview:self.selectallButton];
         
         
@@ -88,10 +95,11 @@
         pointY+= kSelectButtonSide+20;
         
         self.listView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, pointY, 300, totalFloor*(kSelectButtonSide+20)-20)];
-        [self.listView setContentSize:CGSizeMake(300, floor*(kSelectButtonSide+20)-20)];
+        //[self.listView setBackgroundColor:[UIColor blueColor]];
+        [self.listView setContentSize:CGSizeMake(300, floor*(kSelectButtonSide+20)-20+((kButtonAreaSide-kSelectButtonSide)*2))];
         [backView addSubview:listView];
         
-        float newPointY = -(kSelectButtonSide+20);
+        float newPointY =(kButtonAreaSide-kSelectButtonSide) -(kSelectButtonSide+20);
         LZDataAccess *da = [LZDataAccess singleton];
         for (int i=0; i<[self.filterArray count]; i++)
         {
@@ -118,7 +126,13 @@
             }
             UIButton *nutrientButton = [[UIButton alloc]initWithFrame:CGRectMake(buttonX, newPointY, kSelectButtonSide, kSelectButtonSide)];
             nutrientButton.tag = i+kTagAddNum;
+            CGPoint nutrientCenter = nutrientButton.center;
+            CGRect nutrientFrame = nutrientButton.frame;
+            nutrientFrame.size = CGSizeMake(kButtonAreaSide, kButtonAreaSide);
+            nutrientButton.frame = allselectFrame;
+            nutrientButton.center = nutrientCenter;
             [nutrientButton addTarget:self action:@selector(nutrientButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            //[nutrientButton setBackgroundColor:[UIColor redColor]];
             
             if ([state boolValue])
             {
@@ -160,6 +174,12 @@
         [self.submitButton addTarget:self action:@selector(submitButtonTapped) forControlEvents:UIControlEventTouchUpInside];
         [self.submitButton setBackgroundImage:button30 forState:UIControlStateNormal];
         [backView addSubview:self.submitButton];
+        
+        CGPoint listCenter = self.listView.center;
+        CGRect listFrame = self.listView.frame;
+        listFrame.size.height += ((kButtonAreaSide-kSelectButtonSide)*2);
+        self.listView.frame = listFrame;
+        self.listView.center = listCenter;
     }
     return self;
 }
