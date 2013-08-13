@@ -2559,30 +2559,40 @@
         NSDictionary *foodAttrs = givenFoodAttrDict2Level[foodId];
         NSNumber *nmFoodAmount = givenFoodsAmountDict[foodId];
         
-        NSMutableArray *food1supplyNutrientArray = [NSMutableArray arrayWithCapacity:allShowNutrients.count];
-        for(int j=0; j<allShowNutrients.count; j++){
-            NSString *nutrientId = allShowNutrients[j];
-            NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
-            NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
-            double food1Supply1NutrientAmount = [nm_foodNutrientContent doubleValue]*[nmFoodAmount doubleValue]/100.0;
-            double nutrientTotalDRI = [nm_DRI1unit doubleValue];
-            double supplyRate = food1Supply1NutrientAmount / nutrientTotalDRI;
-            NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
-            NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
-            NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
-            
-            NSDictionary *food1Supply1NutrientInfo= [NSDictionary dictionaryWithObjectsAndKeys:
-                                                     nutrientId,COLUMN_NAME_NutrientID,
-                                                     [NSNumber numberWithDouble:food1Supply1NutrientAmount],Key_food1Supply1NutrientAmount,
-                                                     [NSNumber numberWithDouble:nutrientTotalDRI],Key_nutrientTotalDRI,
-                                                     [NSNumber numberWithDouble:supplyRate],Key_1foodSupply1NutrientRate,
-                                                     nutrientCnCaption,Key_Name,
-                                                     nutrientNutrientEnUnit,Key_Unit,
-                                                     nil];
-            [food1supplyNutrientArray addObject:food1Supply1NutrientInfo];
-        }//for j
+        NSMutableDictionary *justInParamsDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                 DRIsDict,Key_DRI,
+                                                 foodAttrs,@"FoodAttrs",
+                                                 nmFoodAmount,@"FoodAmount",
+                                                 allShowNutrients,@"allShowNutrients",
+                                                 nutrientInfoDict2Level,@"nutrientInfoDict2Level",
+                                                 nil];
+        NSMutableArray *food1supplyNutrientArray = [self calculateGiveFoodSupplyNutrientAndFormatForUI:justInParamsDict];
+        
+//        NSMutableArray *food1supplyNutrientArray = [NSMutableArray arrayWithCapacity:allShowNutrients.count];
+//        for(int j=0; j<allShowNutrients.count; j++){
+//            NSString *nutrientId = allShowNutrients[j];
+//            NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
+//            NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
+//            double food1Supply1NutrientAmount = [nm_foodNutrientContent doubleValue]*[nmFoodAmount doubleValue]/100.0;
+//            double nutrientTotalDRI = [nm_DRI1unit doubleValue];
+//            double supplyRate = food1Supply1NutrientAmount / nutrientTotalDRI;
+//            NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
+//            NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
+//            NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
+//            
+//            NSDictionary *food1Supply1NutrientInfo= [NSDictionary dictionaryWithObjectsAndKeys:
+//                                                     nutrientId,COLUMN_NAME_NutrientID,
+//                                                     [NSNumber numberWithDouble:food1Supply1NutrientAmount],Key_food1Supply1NutrientAmount,
+//                                                     [NSNumber numberWithDouble:nutrientTotalDRI],Key_nutrientTotalDRI,
+//                                                     [NSNumber numberWithDouble:supplyRate],Key_1foodSupply1NutrientRate,
+//                                                     nutrientCnCaption,Key_Name,
+//                                                     nutrientNutrientEnUnit,Key_Unit,
+//                                                     nil];
+//            [food1supplyNutrientArray addObject:food1Supply1NutrientInfo];
+//        }//for j
         givenFoodSupplyNutrientInfoAryDict[foodId] = food1supplyNutrientArray;
     }//for i
+    //已经决定了的食物的每个食物的标准量的营养素含量的情况
     NSMutableDictionary *givenFoodStandardNutrientInfoAryDict = [NSMutableDictionary dictionary];
     for(int i=0; i<givenFoodIds.count; i++){
         NSString *foodId = givenFoodIds[i];
@@ -2616,7 +2626,67 @@
     return formatResult;
 }
 
+/*
+ 参数有 Key_DRI , Key_userInfo , "FoodAttrs" , "FoodAmount", "allShowNutrients" , "nutrientInfoDict2Level".
+ 其中 "FoodAttrs" , "FoodAmount" 是必填项 . Key_DRI , Key_userInfo 两者必填其一。
+ 其他是可选参数。当可选参数没有传入时，代码中会取得生成并传出。
+ 返回值是食物补充各个营养素百分比的数组。
+ */
+-(NSMutableArray*)calculateGiveFoodSupplyNutrientAndFormatForUI:(NSMutableDictionary *)inOutParamsDict
+{
+    NSLog(@"calculateGiveFoodSupplyNutrientAndFormatForUI enter");
+    
+    NSDictionary *DRIsDict = [inOutParamsDict objectForKey:Key_DRI];//nutrient name as key, also column name
+    NSDictionary *userInfo = [inOutParamsDict objectForKey:Key_userInfo];
+    NSDictionary *foodAttrs = [inOutParamsDict objectForKey:@"FoodAttrs"];
+    NSNumber *nmFoodAmount = [inOutParamsDict objectForKey:@"FoodAmount"];
+    NSMutableArray *allShowNutrients = [inOutParamsDict objectForKey:@"allShowNutrients"];
+    NSDictionary * nutrientInfoDict2Level = [inOutParamsDict objectForKey:@"nutrientInfoDict2Level"];
 
+//    NSMutableDictionary* formatResult = [NSMutableDictionary dictionary];
+    LZDataAccess *da = [LZDataAccess singleton];
+    if (DRIsDict == nil){
+        assert(userInfo!=nil);
+        DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
+        [inOutParamsDict setValue:DRIsDict forKey:Key_DRI];
+    }
+    
+    if (allShowNutrients==nil){
+        NSArray *customNutrients = [self.class getCustomNutrients:nil];// 显示时将显示我们预定义的全部营养素，从而这里不用 getCalculationNutrientsForSmallIncrementLogic_withDRI ..
+        NSArray *onlyToShowNutrients =[self.class getOnlyToShowNutrients];
+        allShowNutrients = [LZUtility arrayAddArrayInSetWay_withArray1:customNutrients andArray2:onlyToShowNutrients];
+        [inOutParamsDict setValue:allShowNutrients forKey:@"allShowNutrients"];
+    }
+    if (nutrientInfoDict2Level == nil){
+        nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:allShowNutrients];
+        [inOutParamsDict setValue:nutrientInfoDict2Level forKey:@"nutrientInfoDict2Level"];
+    }
+    
+    NSMutableArray *food1supplyNutrientArray = [NSMutableArray arrayWithCapacity:allShowNutrients.count];
+    for(int j=0; j<allShowNutrients.count; j++){
+        NSString *nutrientId = allShowNutrients[j];
+        NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
+        NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
+        double food1Supply1NutrientAmount = [nm_foodNutrientContent doubleValue]*[nmFoodAmount doubleValue]/100.0;
+        double nutrientTotalDRI = [nm_DRI1unit doubleValue];
+        double supplyRate = food1Supply1NutrientAmount / nutrientTotalDRI;
+        NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
+        NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
+        NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
+        
+        NSDictionary *food1Supply1NutrientInfo= [NSDictionary dictionaryWithObjectsAndKeys:
+                                                 nutrientId,COLUMN_NAME_NutrientID,
+                                                 [NSNumber numberWithDouble:food1Supply1NutrientAmount],Key_food1Supply1NutrientAmount,
+                                                 [NSNumber numberWithDouble:nutrientTotalDRI],Key_nutrientTotalDRI,
+                                                 [NSNumber numberWithDouble:supplyRate],Key_1foodSupply1NutrientRate,
+                                                 nutrientCnCaption,Key_Name,
+                                                 nutrientNutrientEnUnit,Key_Unit,
+                                                 nil];
+        [food1supplyNutrientArray addObject:food1Supply1NutrientInfo];
+    }//for j
+
+    return food1supplyNutrientArray;
+}
 
 
 /*
