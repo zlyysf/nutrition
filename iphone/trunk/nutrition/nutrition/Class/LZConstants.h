@@ -224,6 +224,7 @@
 
 #define MobChannelIdTongbu @"TongbuTui"
 #define MobChannelId91Store @"91Store"
+#define MobChannelId25pp @"25pp"
 
 #define KeyIsAlreadyReviewdeOurApp @"KeyIsAlreadyReviewdeOurApp" // YES means already reviewed
 #define KeyReviewAlertControllCount @"KeyReviewAlertControllCount" // >=10 popAlert
