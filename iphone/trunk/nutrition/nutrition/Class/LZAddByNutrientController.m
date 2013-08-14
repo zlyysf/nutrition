@@ -377,6 +377,7 @@
     else
     {
         foodDetailController.isUnitDisplayAvailable = YES;
+        foodDetailController.unitName = singleUnitName;
         NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
         if ([LZUtility isUseUnitDisplay:weight unitWeight:singleUnitWeight])
         {

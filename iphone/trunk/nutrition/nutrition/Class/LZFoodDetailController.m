@@ -30,7 +30,7 @@
 @end
 
 @implementation LZFoodDetailController
-@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate;
+@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -177,6 +177,7 @@
     else
     {
         self.UnitButton.hidden = NO;
+        [self.UnitButton setTitle:unitName forState:UIControlStateNormal];
         //self.GUnitButton.hidden = NO;
     }
     if (!UseUnitDisplay)
@@ -193,6 +194,8 @@
         [self.GUnitButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [self.GUnitButton setBackgroundImage:[UIImage imageNamed:@"unit_button_normal.png"] forState:UIControlStateNormal];
     }
+    [self.UnitButton setBackgroundImage:[UIImage imageNamed:@"unit_button_clicked.png"] forState:UIControlStateHighlighted];
+    [self.GUnitButton setBackgroundImage:[UIImage imageNamed:@"unit_button_clicked.png"] forState:UIControlStateHighlighted];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -375,7 +378,29 @@
         NSNumber *singleUnitWeight = [self.foodAttr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
         float value = ((float)index/2)*[singleUnitWeight intValue];
         currentSelectValue = [NSNumber numberWithFloat:value];
-        self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f个",((float)index/2)];
+        if (index%2 == 0)
+        {
+            if ((value-(int)value)<Config_nearZero)
+            {
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@(%d克)",(index/2),unitName,(int)value];
+            }
+            else
+            {
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@(%.1f克)",(index/2),unitName,value];
+            }
+            
+        }
+        else
+        {
+            if ((value-(int)value)<Config_nearZero)
+            {
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f%@(%d克)",((float)index/2),unitName,(int)value];
+            }
+            else
+            {
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f%@(%.1f克)",((float)index/2),unitName,value];
+            }
+        }
     }
     else
     {

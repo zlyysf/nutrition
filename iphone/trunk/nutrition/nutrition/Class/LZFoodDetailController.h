@@ -29,6 +29,7 @@
 @property (strong,nonatomic)NSNumber *currentSelectValue;
 @property (strong,nonatomic)NSNumber *defaulSelectValue;
 @property (readwrite,nonatomic)BOOL isDefaultUnitDisplay;
+@property (strong,nonatomic)NSString *unitName;
 @property (strong,nonatomic)NSDictionary *foodAttr;
 @property (strong,nonatomic)NSMutableDictionary *inOutParam;
 @property (assign,nonatomic)id<LZFoodDetailViewControllerDelegate> delegate;
