@@ -2532,7 +2532,7 @@
     }
     NSMutableDictionary *localOutFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
     NSMutableDictionary *l1paramsDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:localOutFoodAttrDict,@"destFoodInfoDict", nil];
-    [self foodsSupplyNutrients:givenFoodAttrAry andAmounts:givenFoodsAmountDict andDestNutrientSupply:nutrientSupplyDict andOtherData:l1paramsDict];
+    [self foodsSupplyNutrients:givenFoodAttrAry andAmounts:givenFoodsAmountDict andDestNutrientSupply:nutrientSupplyDict andNutrients:allShowNutrients andOtherData:l1paramsDict];
     [formatResult setValue:nutrientSupplyDict forKey:Key_nutrientSupplyDict];
     NSMutableArray *nutrientSupplyRateInfoArray = [NSMutableArray array];
     for(int i=0; i<allShowNutrients.count; i++){
@@ -2626,24 +2626,30 @@
     return formatResult;
 }
 
+
 /*
- 参数有 Key_DRI , Key_userInfo , "FoodAttrs" , "FoodAmount", "allShowNutrients" , "nutrientInfoDict2Level".
- 其中 "FoodAttrs" , "FoodAmount" 是必填项 . Key_DRI , Key_userInfo 两者必填其一。
+
  其他是可选参数。当可选参数没有传入时，代码中会取得生成并传出。
  返回值是食物补充各个营养素百分比的数组。
  */
--(NSMutableArray*)calculateGiveFoodSupplyNutrientAndFormatForUI:(NSMutableDictionary *)inOutParamsDict
+-(NSMutableArray*)calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI:(NSMutableDictionary *)inOutParamsDict
 {
-    NSLog(@"calculateGiveFoodSupplyNutrientAndFormatForUI enter");
+    NSLog(@"calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI enter");
     
     NSDictionary *DRIsDict = [inOutParamsDict objectForKey:Key_DRI];//nutrient name as key, also column name
     NSDictionary *userInfo = [inOutParamsDict objectForKey:Key_userInfo];
-    NSDictionary *foodAttrs = [inOutParamsDict objectForKey:@"FoodAttrs"];
-    NSNumber *nmFoodAmount = [inOutParamsDict objectForKey:@"FoodAmount"];
+    
+    NSDictionary *dynamicFoodAttrs = [inOutParamsDict objectForKey:@"dynamicFoodAttrs"];
+    NSNumber *nm_dynamicFoodAmount = [inOutParamsDict objectForKey:@"dynamicFoodAmount"];
+    
+    NSDictionary *staticFoodAttrsDict2Level = [inOutParamsDict objectForKey:@"staticFoodAttrsDict2Level"];
+    NSDictionary *staticFoodAmountDict = [inOutParamsDict objectForKey:@"staticFoodAmountDict"];
+    NSDictionary *staticFoodSupplyNutrientDict = [inOutParamsDict objectForKey:@"staticFoodSupplyNutrientDict"];
+    
     NSMutableArray *allShowNutrients = [inOutParamsDict objectForKey:@"allShowNutrients"];
     NSDictionary * nutrientInfoDict2Level = [inOutParamsDict objectForKey:@"nutrientInfoDict2Level"];
-
-//    NSMutableDictionary* formatResult = [NSMutableDictionary dictionary];
+    
+    //    NSMutableDictionary* formatResult = [NSMutableDictionary dictionary];
     LZDataAccess *da = [LZDataAccess singleton];
     if (DRIsDict == nil){
         assert(userInfo!=nil);
@@ -2662,30 +2668,142 @@
         [inOutParamsDict setValue:nutrientInfoDict2Level forKey:@"nutrientInfoDict2Level"];
     }
     
-    NSMutableArray *food1supplyNutrientArray = [NSMutableArray arrayWithCapacity:allShowNutrients.count];
+    NSMutableDictionary *nutrientSupplyDict = nil;
+    if (staticFoodSupplyNutrientDict == nil){
+        nutrientSupplyDict = [LZUtility generateDictionaryWithFillItem:[NSNumber numberWithInt:0] andKeys:allShowNutrients];
+        if (staticFoodAmountDict.count > 0){
+            assert(staticFoodAttrsDict2Level.count>=staticFoodAmountDict.count);
+            //在没有缓存的情况下先计算 不变的那些食物提供的营养素的量，并在后面存入缓存
+            [self foodsSupplyNutrients_withAmounts:staticFoodAmountDict andFoodInfoDict:staticFoodAttrsDict2Level andDestNutrientSupply:nutrientSupplyDict andNutrients:allShowNutrients andOtherData:nil];
+        }
+        staticFoodSupplyNutrientDict = [NSDictionary dictionaryWithDictionary:nutrientSupplyDict];
+        inOutParamsDict[@"staticFoodSupplyNutrientDict"] = [NSDictionary dictionaryWithDictionary:nutrientSupplyDict];
+    }else{
+        //有已计算的值时直接利用以提高效率
+        nutrientSupplyDict = [NSMutableDictionary dictionaryWithDictionary:staticFoodSupplyNutrientDict];
+    }
+    
+    if (nm_dynamicFoodAmount != nil){
+        assert(dynamicFoodAttrs!=nil);
+        [self oneFoodSupplyNutrients:dynamicFoodAttrs andAmount:[nm_dynamicFoodAmount doubleValue] andDestNutrientSupply:nutrientSupplyDict andNutrients:allShowNutrients andOtherData:nil];
+    }
+    
+    NSMutableDictionary *allFoodAttrsDict2Level = nil;
+    if (staticFoodAttrsDict2Level != nil){
+        allFoodAttrsDict2Level = [NSMutableDictionary dictionaryWithDictionary:staticFoodAttrsDict2Level];
+    }else{
+        allFoodAttrsDict2Level = [NSMutableDictionary dictionary];
+    }
+    if (dynamicFoodAttrs!=nil){
+        NSString *foodId = dynamicFoodAttrs[COLUMN_NAME_NDB_No];
+        allFoodAttrsDict2Level[foodId] = dynamicFoodAttrs;
+    }
+    
+    NSMutableArray *supplyNutrientInfoArray = [NSMutableArray arrayWithCapacity:allShowNutrients.count];
     for(int j=0; j<allShowNutrients.count; j++){
         NSString *nutrientId = allShowNutrients[j];
-        NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
-        NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
-        double food1Supply1NutrientAmount = [nm_foodNutrientContent doubleValue]*[nmFoodAmount doubleValue]/100.0;
-        double nutrientTotalDRI = [nm_DRI1unit doubleValue];
-        double supplyRate = food1Supply1NutrientAmount / nutrientTotalDRI;
+    
+        NSNumber *nm_DRI = DRIsDict[nutrientId];
+        NSNumber *nm_supplyNutrientAmount = nutrientSupplyDict[nutrientId];
+        double supplyRate = [nm_supplyNutrientAmount doubleValue] / [nm_DRI doubleValue];
+        
         NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
         NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
         NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
         
-        NSDictionary *food1Supply1NutrientInfo= [NSDictionary dictionaryWithObjectsAndKeys:
+        NSDictionary *supplyNutrientInfo= [NSDictionary dictionaryWithObjectsAndKeys:
                                                  nutrientId,COLUMN_NAME_NutrientID,
-                                                 [NSNumber numberWithDouble:food1Supply1NutrientAmount],Key_food1Supply1NutrientAmount,
-                                                 [NSNumber numberWithDouble:nutrientTotalDRI],Key_nutrientTotalDRI,
-                                                 [NSNumber numberWithDouble:supplyRate],Key_1foodSupply1NutrientRate,
+                                                 nm_supplyNutrientAmount,Key_supplyNutrientAmount,
+                                                        nm_supplyNutrientAmount,Key_food1Supply1NutrientAmount,
+                                                 nm_DRI,Key_nutrientTotalDRI,
+                                                 [NSNumber numberWithDouble:supplyRate],Key_supplyNutrientRate,
+                                                        [NSNumber numberWithDouble:supplyRate],Key_1foodSupply1NutrientRate,
                                                  nutrientCnCaption,Key_Name,
                                                  nutrientNutrientEnUnit,Key_Unit,
                                                  nil];
-        [food1supplyNutrientArray addObject:food1Supply1NutrientInfo];
+        [supplyNutrientInfoArray addObject:supplyNutrientInfo];
     }//for j
+    
+    return supplyNutrientInfoArray;
+}
 
-    return food1supplyNutrientArray;
+
+
+/*
+ 参数有 Key_DRI , Key_userInfo , "FoodAttrs" , "FoodAmount", "allShowNutrients" , "nutrientInfoDict2Level".
+ 其中 "FoodAttrs" , "FoodAmount" 是必填项 . Key_DRI , Key_userInfo 两者必填其一。
+ 其他是可选参数。当可选参数没有传入时，代码中会取得生成并传出。
+ 返回值是食物补充各个营养素百分比的数组。
+ */
+-(NSMutableArray*)calculateGiveFoodSupplyNutrientAndFormatForUI:(NSMutableDictionary *)inOutParamsDict
+{
+    NSLog(@"calculateGiveFoodSupplyNutrientAndFormatForUI enter");
+    
+    NSDictionary *foodAttrs = [inOutParamsDict objectForKey:@"FoodAttrs"];
+    NSNumber *nmFoodAmount = [inOutParamsDict objectForKey:@"FoodAmount"];
+    assert(foodAttrs!=nil);
+    assert(nmFoodAmount!=nil);
+    inOutParamsDict[@"dynamicFoodAttrs"] = foodAttrs;
+    inOutParamsDict[@"dynamicFoodAmount"] = nmFoodAmount;
+    
+//    NSDictionary *dynamicFoodAttrs = [inOutParamsDict objectForKey:@"dynamicFoodAttrs"];
+//    NSNumber *nm_dynamicFoodAmount = [inOutParamsDict objectForKey:@"dynamicFoodAmount"];
+//    assert(dynamicFoodAttrs!=nil);
+//    assert(nm_dynamicFoodAmount!=nil);
+    
+    return [self calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI:inOutParamsDict];
+   
+    
+//    NSDictionary *DRIsDict = [inOutParamsDict objectForKey:Key_DRI];//nutrient name as key, also column name
+//    NSDictionary *userInfo = [inOutParamsDict objectForKey:Key_userInfo];
+//    NSDictionary *foodAttrs = [inOutParamsDict objectForKey:@"FoodAttrs"];
+//    NSNumber *nmFoodAmount = [inOutParamsDict objectForKey:@"FoodAmount"];
+//    NSMutableArray *allShowNutrients = [inOutParamsDict objectForKey:@"allShowNutrients"];
+//    NSDictionary * nutrientInfoDict2Level = [inOutParamsDict objectForKey:@"nutrientInfoDict2Level"];
+//
+//
+//    LZDataAccess *da = [LZDataAccess singleton];
+//    if (DRIsDict == nil){
+//        assert(userInfo!=nil);
+//        DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
+//        [inOutParamsDict setValue:DRIsDict forKey:Key_DRI];
+//    }
+//    
+//    if (allShowNutrients==nil){
+//        NSArray *customNutrients = [self.class getCustomNutrients:nil];// 显示时将显示我们预定义的全部营养素，从而这里不用 getCalculationNutrientsForSmallIncrementLogic_withDRI ..
+//        NSArray *onlyToShowNutrients =[self.class getOnlyToShowNutrients];
+//        allShowNutrients = [LZUtility arrayAddArrayInSetWay_withArray1:customNutrients andArray2:onlyToShowNutrients];
+//        [inOutParamsDict setValue:allShowNutrients forKey:@"allShowNutrients"];
+//    }
+//    if (nutrientInfoDict2Level == nil){
+//        nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:allShowNutrients];
+//        [inOutParamsDict setValue:nutrientInfoDict2Level forKey:@"nutrientInfoDict2Level"];
+//    }
+//    
+//    NSMutableArray *food1supplyNutrientArray = [NSMutableArray arrayWithCapacity:allShowNutrients.count];
+//    for(int j=0; j<allShowNutrients.count; j++){
+//        NSString *nutrientId = allShowNutrients[j];
+//        NSNumber *nm_foodNutrientContent = foodAttrs[nutrientId];
+//        NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
+//        double food1Supply1NutrientAmount = [nm_foodNutrientContent doubleValue]*[nmFoodAmount doubleValue]/100.0;
+//        double nutrientTotalDRI = [nm_DRI1unit doubleValue];
+//        double supplyRate = food1Supply1NutrientAmount / nutrientTotalDRI;
+//        NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
+//        NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
+//        NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
+//        
+//        NSDictionary *food1Supply1NutrientInfo= [NSDictionary dictionaryWithObjectsAndKeys:
+//                                                 nutrientId,COLUMN_NAME_NutrientID,
+//                                                 [NSNumber numberWithDouble:food1Supply1NutrientAmount],Key_food1Supply1NutrientAmount,
+//                                                 [NSNumber numberWithDouble:nutrientTotalDRI],Key_nutrientTotalDRI,
+//                                                 [NSNumber numberWithDouble:supplyRate],Key_1foodSupply1NutrientRate,
+//                                                 nutrientCnCaption,Key_Name,
+//                                                 nutrientNutrientEnUnit,Key_Unit,
+//                                                 nil];
+//        [food1supplyNutrientArray addObject:food1Supply1NutrientInfo];
+//    }//for j
+//
+//    return food1supplyNutrientArray;
 }
 
 
@@ -3754,12 +3872,13 @@
     return retData;
 }
 
--(void)oneFoodSupplyNutrients:(NSDictionary*)foodInfo andAmount:(double)foodAmount andDestNutrientSupply:(NSMutableDictionary*)destNutrientSupplyDict andOtherData:(NSDictionary*)otherParams
+-(void)oneFoodSupplyNutrients:(NSDictionary*)foodInfo andAmount:(double)foodAmount andDestNutrientSupply:(NSMutableDictionary*)destNutrientSupplyDict andNutrients:(NSArray*)nutrients andOtherData:(NSDictionary*)otherParams
 {
     NSString *foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
     assert(foodId!=nil);
     //这个食物的各营养的量加到supply中
-    NSArray *nutrientsToSupply = [destNutrientSupplyDict allKeys];
+    NSArray *nutrientsToSupply = nutrients;
+    if (nutrientsToSupply==nil) nutrientsToSupply = [destNutrientSupplyDict allKeys];
     for(int j=0; j<nutrientsToSupply.count; j++){
         NSString *nutrient = nutrientsToSupply[j];
         NSNumber *nmNutrientContentOfFood = [foodInfo objectForKey:nutrient];
@@ -3770,41 +3889,13 @@
         }
     }//for j
 }
--(void)foodsSupplyNutrients:(NSArray*)foodInfoAry andAmounts:(NSDictionary*)foodAmountDict andDestNutrientSupply:(NSMutableDictionary*)destNutrientSupplyDict andOtherData:(NSDictionary*)otherParams
+-(void)foodsSupplyNutrients:(NSArray*)foodInfoAry andAmounts:(NSDictionary*)foodAmountDict andDestNutrientSupply:(NSMutableDictionary*)destNutrientSupplyDict andNutrients:(NSArray*)nutrients andOtherData:(NSDictionary*)otherParams
 {
     NSDictionary *foodInfoDict = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:foodInfoAry];
-    [self foodsSupplyNutrients_withAmounts:foodAmountDict andFoodInfoDict:foodInfoDict andDestNutrientSupply:destNutrientSupplyDict andOtherData:otherParams];
-//    NSMutableDictionary *destFoodInfoDict = nil;
-//    if (otherParams != nil){
-//        destFoodInfoDict = [otherParams objectForKey:@"destFoodInfoDict"];
-//    }
-//    if (foodInfoAry != nil ){
-//        assert(foodInfoAry.count >= foodAmountDict.count);
-//        //已经吃了的各食物的各营养的量加到supply中
-//        for(int i=0; i<foodInfoAry.count; i++){
-//            NSDictionary *foodInfo = foodInfoAry[i];
-//            NSString *foodId = [foodInfo objectForKey:COLUMN_NAME_NDB_No];
-//            assert(foodId!=nil);
-//            NSNumber *nmFoodAmount = nil;
-//            if (foodAmountDict != nil)
-//                nmFoodAmount = [foodAmountDict objectForKey:foodId];
-//            double dFoodAmount = 0;
-//            if (nmFoodAmount != nil)
-//                dFoodAmount = [nmFoodAmount doubleValue];
-//            
-//            if (destFoodInfoDict!=nil){//食物信息顺便放到一个集中的dict，以便后面使用
-//                [destFoodInfoDict setObject:foodInfo forKey:foodId];
-//            }
-//            
-//            //这个食物的各营养的量加到supply中
-//            [self oneFoodSupplyNutrients:foodInfo andAmount:dFoodAmount andDestNutrientSupply:destNutrientSupplyDict andOtherData:nil];
-//        }//for i
-//    }else{
-//        assert(foodAmountDict == nil || foodAmountDict.count == 0);
-//    }
+    [self foodsSupplyNutrients_withAmounts:foodAmountDict andFoodInfoDict:foodInfoDict andDestNutrientSupply:destNutrientSupplyDict andNutrients:nutrients andOtherData:otherParams];
 }
 
--(void)foodsSupplyNutrients_withAmounts:(NSDictionary*)foodAmountDict andFoodInfoDict:(NSDictionary*)foodInfoDict andDestNutrientSupply:(NSMutableDictionary*)destNutrientSupplyDict andOtherData:(NSDictionary*)otherParams
+-(void)foodsSupplyNutrients_withAmounts:(NSDictionary*)foodAmountDict andFoodInfoDict:(NSDictionary*)foodInfoDict andDestNutrientSupply:(NSMutableDictionary*)destNutrientSupplyDict andNutrients:(NSArray*)nutrients andOtherData:(NSDictionary*)otherParams
 {
     NSMutableDictionary *destFoodInfoDict = nil;
     if (otherParams != nil){
@@ -3826,7 +3917,7 @@
             }
             
             //这个食物的各营养的量加到supply中
-            [self oneFoodSupplyNutrients:foodInfo andAmount:dFoodAmount andDestNutrientSupply:destNutrientSupplyDict andOtherData:nil];
+            [self oneFoodSupplyNutrients:foodInfo andAmount:dFoodAmount andDestNutrientSupply:destNutrientSupplyDict andNutrients:nutrients andOtherData:nil];
         }//for i
     }
 }
@@ -4060,16 +4151,17 @@
     NSMutableDictionary *recommendFoodAmountDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
 //    NSMutableDictionary *recommendFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
     NSMutableDictionary *foodSupplyAmountDict = [NSMutableDictionary dictionaryWithDictionary:givenFoodAmountDict];//包括takenFoodAmountDict 和 recommendFoodAmountDict。与nutrientSupplyDict对应。
-    NSMutableDictionary *nutrientSupplyDict = [NSMutableDictionary dictionaryWithDictionary:DRIsDict];
-    NSArray *nutrientNames1 = [nutrientSupplyDict allKeys];
-    for (int i=0; i<nutrientNames1.count; i++) {//初始化supply集合
-        [nutrientSupplyDict setObject:[NSNumber numberWithDouble:0.0] forKey:nutrientNames1[i]];
-    }
+    NSMutableDictionary *nutrientSupplyDict =[LZUtility generateDictionaryWithFillItem:[NSNumber numberWithDouble:0.0] andKeys:[DRIsDict allKeys]];
+//    NSMutableDictionary *nutrientSupplyDict = [NSMutableDictionary dictionaryWithDictionary:DRIsDict];
+//    NSArray *nutrientNames1 = [nutrientSupplyDict allKeys];
+//    for (int i=0; i<nutrientNames1.count; i++) {//初始化supply集合
+//        [nutrientSupplyDict setObject:[NSNumber numberWithDouble:0.0] forKey:nutrientNames1[i]];
+//    }
     
     NSMutableDictionary *takenFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
     if (takenFoodAttrAry != nil ){//已经吃了的各食物的各营养的量加到supply中
         NSMutableDictionary *paramsDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:takenFoodAttrDict,@"destFoodInfoDict", nil];
-        [self foodsSupplyNutrients:takenFoodAttrAry andAmounts:givenFoodAmountDict andDestNutrientSupply:nutrientSupplyDict andOtherData:paramsDict];
+        [self foodsSupplyNutrients:takenFoodAttrAry andAmounts:givenFoodAmountDict andDestNutrientSupply:nutrientSupplyDict andNutrients:[nutrientSupplyDict allKeys] andOtherData:paramsDict];
     }//if (takenFoodAttrAry != nil )
     
     NSDictionary *nutrientInitialSupplyDict = [NSDictionary dictionaryWithDictionary:nutrientSupplyDict];//记录already taken food提供的营养素的量
@@ -4111,7 +4203,7 @@
                 [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
                 [calculationLogs addObject:calculationLog];
             }//for
-            [self foodsSupplyNutrients_withAmounts:firstBatchFoodAmountDict andFoodInfoDict:preChooseFoodInfoDict andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
+            [self foodsSupplyNutrients_withAmounts:firstBatchFoodAmountDict andFoodInfoDict:preChooseFoodInfoDict andDestNutrientSupply:nutrientSupplyDict andNutrients:nil andOtherData:nil];//营养量累加
             [LZUtility addDoubleDictionaryToDictionary_withSrcAmountDictionary:firstBatchFoodAmountDict withDestDictionary:recommendFoodAmountDict];//推荐量累加
             [LZUtility addDoubleDictionaryToDictionary_withSrcAmountDictionary:firstBatchFoodAmountDict withDestDictionary:foodSupplyAmountDict];//供给量累加
         }//if (givenFoodAmountDict.count == 0 && originalNutrientNameAryToCal.count>=6)
@@ -4132,7 +4224,7 @@
                     assert(nmFood_first_recommend!=nil);
                     double dFoodIncreaseUnit = [nmFood_first_recommend doubleValue];
                     
-                    [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
+                    [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andNutrients:nil andOtherData:nil];//营养量累加
                     [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:recommendFoodAmountDict andKey:foodIdToSupply];//推荐量累加
                     [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];//供给量累加
                     
@@ -4160,7 +4252,7 @@
                     assert(nmFood_first_recommend!=nil);
                     double dFoodIncreaseUnit = [nmFood_first_recommend doubleValue];
                     
-                    [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
+                    [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andNutrients:nil andOtherData:nil];//营养量累加
                     [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:recommendFoodAmountDict andKey:foodIdToSupply];//推荐量累加
                     [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];//供给量累加
                     
@@ -4480,7 +4572,7 @@
         }
         
         //这个食物的各营养的量加到supply中
-        [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];
+        [self oneFoodSupplyNutrients:foodToSupplyOneNutrient andAmount:dFoodIncreaseUnit andDestNutrientSupply:nutrientSupplyDict andNutrients:nil andOtherData:nil];
     
         [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:recommendFoodAmountDict andKey:foodIdToSupply];//推荐量累加
         [LZUtility addDoubleToDictionaryItem:dFoodIncreaseUnit withDictionary:foodSupplyAmountDict andKey:foodIdToSupply];//供给量累加
@@ -4787,7 +4879,7 @@
                     }
                     if (maxDeltaFoodAmount > 0){//可以减少这种食物
                         double reduceFoodAmount = -1 * maxDeltaFoodAmount;//这里暂且一减到底
-                        [self oneFoodSupplyNutrients:foodInfo andAmount:reduceFoodAmount andDestNutrientSupply:nutrientSupplyDict andOtherData:nil];//营养量累加
+                        [self oneFoodSupplyNutrients:foodInfo andAmount:reduceFoodAmount andDestNutrientSupply:nutrientSupplyDict andNutrients:nil andOtherData:nil];//营养量累加
                         [LZUtility addDoubleToDictionaryItem:reduceFoodAmount withDictionary:recommendFoodAmountDict andKey:foodId];//推荐量累加
                         [LZUtility addDoubleToDictionaryItem:reduceFoodAmount withDictionary:foodSupplyAmountDict andKey:foodId];//供给量累加
                         

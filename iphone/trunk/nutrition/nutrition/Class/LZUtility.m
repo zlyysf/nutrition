@@ -81,6 +81,17 @@
     }
 }
 
++(NSMutableDictionary*)generateDictionaryWithFillItem:(NSObject*)fillItem andKeys:(NSArray*)keys
+{
+    assert(fillItem!=nil);
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithCapacity:keys.count];
+    for(int i=0; i<keys.count; i++){
+        id key = keys[i];
+        dict[key] = fillItem;
+    }
+    return dict;
+}
+
 +(NSMutableArray*)generateArrayWithFillItem:(NSObject*)fillItem andArrayLength:(int)length
 {
     NSMutableArray *ary = [NSMutableArray arrayWithCapacity:length];

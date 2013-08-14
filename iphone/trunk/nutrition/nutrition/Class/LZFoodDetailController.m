@@ -97,6 +97,8 @@
                                                  userInfo,Key_userInfo,
                                                  self.foodAttr,@"FoodAttrs",
                                                  currentSelectValue,@"FoodAmount",
+//                      self.foodAttr,@"dynamicFoodAttrs",
+//                      currentSelectValue,@"dynamicFoodAmount",
                                                  nil];
     }
     [inOutParam setObject:currentSelectValue forKey:@"FoodAmount"];
