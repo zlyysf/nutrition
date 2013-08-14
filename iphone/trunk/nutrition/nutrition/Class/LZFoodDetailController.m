@@ -13,12 +13,20 @@
 #import "LZUtility.h"
 #import "GADMasterViewController.h"
 #import "MobClick.h"
+#define LongLineHeight 20.f
+#define ShortLineHeight 10.f
+#define ValuePickerHeight 50.f
+#define GUnitWidth 8.f
+#define UnitWidth 40.f
+#define ValuePickerLabelFontSize 12.f
+#define SingleLineWitdh 1.f
+#define ValuePickerLabelWidth 36.f
 @interface LZFoodDetailController ()
 
 @end
 
 @implementation LZFoodDetailController
-@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,sectionTitle;
+@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,sectionTitle,UseUnitDisplay,sectionLabel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -55,6 +63,19 @@
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
     self.listView.tableFooterView = footerView;
+//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 32)];
+//    [sectionView setBackgroundColor:[UIColor clearColor]];
+//    self.sectionLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
+//    [sectionLabel setTextColor:[UIColor blackColor]];
+//    [sectionLabel setFont:[UIFont boldSystemFontOfSize:14]];
+//    [sectionLabel setBackgroundColor:[UIColor clearColor]];
+//    [sectionView addSubview:sectionLabel];
+    //sectionLabel.text = [NSString stringWithFormat:@"一天的营养比例",self.sectionTitle];
+    //self.listView.tableHeaderView = sectionView;
+    self.foodValuePicker.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"valuepicker_bg.png"]];
+    self.foodValuePicker.horizontalScrolling = YES;
+    self.foodValuePicker.debugEnabled = NO;
+    UseUnitDisplay = NO;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -62,7 +83,35 @@
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
-
+    [self setButtonState];
+}
+-(void)setButtonState
+{
+    if (!UseUnitDisplay)
+    {
+        [self.UnitButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.UnitButton setBackgroundImage:[UIImage imageNamed:@"unit_button_normal.png"] forState:UIControlStateNormal];
+        [self.GUnitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.GUnitButton setBackgroundImage:[UIImage imageNamed:@"unit_button_clicked.png"] forState:UIControlStateNormal];
+    }
+    else
+    {
+        [self.UnitButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        [self.UnitButton setBackgroundImage:[UIImage imageNamed:@"unit_button_clicked.png"] forState:UIControlStateNormal];
+        [self.GUnitButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [self.GUnitButton setBackgroundImage:[UIImage imageNamed:@"unit_button_normal.png"] forState:UIControlStateNormal];
+    }
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    if(UseUnitDisplay)
+    {
+        [self.foodValuePicker setSelectedIndex:1*2];
+    }
+    else
+    {
+        [self.foodValuePicker setSelectedIndex:100];
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -181,13 +230,13 @@
     else
         return 30;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    if( section == 0)
-        return 32;
-    else
-        return 47;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    if( section == 0)
+//        return 32;
+//    else
+//        return 47;
+//}
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     if( section == 0)
@@ -195,29 +244,29 @@
     else
         return 20;
 }
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    float height = (section ==0 ? 32 :47);
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
-    [sectionView setBackgroundColor:[UIColor clearColor]];
-    
-    UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
-    [sectionView addSubview:sectionBarView];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
-    UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
-    [sectionBarView setImage:sectionBarImage];
-    UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
-    [sectionTitleLabel setTextColor:[UIColor whiteColor]];
-    [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
-    [sectionView addSubview:sectionTitleLabel];
-    
-    if (section == 0)
-        sectionTitleLabel.text = [NSString stringWithFormat:@"%@的一天营养比例",self.sectionTitle];
-    else
-        sectionTitleLabel.text = [NSString stringWithFormat:@"%@的营养成分标准含量(100g)",self.foodName];
-    return sectionView;
-}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    float height = (section ==0 ? 32 :47);
+//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
+//    [sectionView setBackgroundColor:[UIColor clearColor]];
+//    
+////    UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
+////    [sectionView addSubview:sectionBarView];
+////    NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
+////    UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
+////    [sectionBarView setImage:sectionBarImage];
+//    UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
+//    [sectionTitleLabel setTextColor:[UIColor blackColor]];
+//    [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+//    [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
+//    [sectionView addSubview:sectionTitleLabel];
+//    
+//    if (section == 0)
+//        sectionTitleLabel.text = [NSString stringWithFormat:@"%@的一天营养比例",self.sectionTitle];
+//    else
+//        sectionTitleLabel.text = [NSString stringWithFormat:@"%@的营养成分标准含量(100g)",self.foodName];
+//    return sectionView;
+//}
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     float height = (section == 0 ?5:20);
@@ -227,8 +276,28 @@
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 2;
+    return 1;
 }// Default is 1 if not implemented
+- (IBAction)gUnitButtonTapped:(UIButton *)sender
+{
+    if (!UseUnitDisplay)
+    {
+        return;
+    }
+    UseUnitDisplay = NO;
+    [self setButtonState];
+    [self.foodValuePicker reloadData];
+}
+- (IBAction)unitButtonTapped:(UIButton *)sender
+{
+    if (UseUnitDisplay)
+    {
+        return;
+    }
+    UseUnitDisplay = YES;
+    [self setButtonState];
+    [self.foodValuePicker reloadData];
+}
 
 - (void)didReceiveMemoryWarning
 {
@@ -237,6 +306,113 @@
 }
 
 - (void)viewDidUnload {
+    [self setFoodValuePicker:nil];
+    [self setFoodAmountDisplayLabel:nil];
+    [self setGUnitButton:nil];
+    [self setUnitButton:nil];
     [super viewDidUnload];
 }
+#pragma mark- LZValueSelectorViewDelegate
+- (void)selector:(LZValueSelectorView *)valueSelector didSelectRowAtIndex:(NSInteger)index
+{
+    if ( UseUnitDisplay)
+    {
+        self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f个",((float)index/2) ];
+        //sectionLabel.text = [NSString stringWithFormat:@"%.1f个%@的一天营养比例",((float)index/2),self.title];
+    }
+    else
+    {
+        self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d克",index ];
+        //sectionLabel.text = [NSString stringWithFormat:@"%d克%@的一天营养比例",index,self.title];
+    }
+}
+
+- (NSInteger)numberOfRowsInSelector:(LZValueSelectorView *)valueSelector
+{
+    if (UseUnitDisplay)
+    {
+        return 201;
+    }
+    return 1001;
+}
+- (UIView *)selector:(LZValueSelectorView *)valueSelector viewForRowAtIndex:(NSInteger) index
+{
+    if (UseUnitDisplay)
+    {
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, UnitWidth, ValuePickerHeight)];
+        if (index %2 == 0)
+        {
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0-(ValuePickerLabelWidth-UnitWidth)/2, 6, ValuePickerLabelWidth, ValuePickerLabelFontSize+3)];
+            label.font = [UIFont systemFontOfSize:ValuePickerLabelFontSize];
+            label.text = [NSString stringWithFormat:@"%d",index/2];
+            label.textColor = [UIColor blackColor];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.backgroundColor = [UIColor clearColor];
+            [view addSubview:label];
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake((UnitWidth-SingleLineWitdh)/2, ValuePickerHeight-LongLineHeight-3, SingleLineWitdh, LongLineHeight)];
+            [line setBackgroundColor:[UIColor blackColor]];
+            [view addSubview:line];
+            
+            
+        }
+        else
+        {
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake((UnitWidth-SingleLineWitdh)/2, ValuePickerHeight-ShortLineHeight-3, SingleLineWitdh, ShortLineHeight)];
+            [line setBackgroundColor:[UIColor blackColor]];
+            [view addSubview:line];
+        }
+        return view;
+        
+    }
+    else
+    {
+        UIView *view = [[UIView alloc]initWithFrame:CGRectMake(0, 0, GUnitWidth, ValuePickerHeight)];
+        
+        if (index %10 == 0)
+        {
+            UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0-(ValuePickerLabelWidth-GUnitWidth)/2, 6, ValuePickerLabelWidth, ValuePickerLabelFontSize+3)];
+            label.font = [UIFont systemFontOfSize:ValuePickerLabelFontSize];
+            label.text = [NSString stringWithFormat:@"%d",index ];
+            label.textColor = [UIColor blackColor];
+            label.textAlignment = NSTextAlignmentCenter;
+            label.backgroundColor = [UIColor clearColor];
+            [view addSubview:label];
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake((GUnitWidth-SingleLineWitdh)/2,ValuePickerHeight-LongLineHeight-3, SingleLineWitdh, LongLineHeight)];
+            [line setBackgroundColor:[UIColor blackColor]];
+            [view addSubview:line];
+            
+            
+        }
+        else
+        {
+            UIView *line = [[UIView alloc]initWithFrame:CGRectMake((GUnitWidth-SingleLineWitdh)/2, ValuePickerHeight-ShortLineHeight-3, SingleLineWitdh, ShortLineHeight)];
+            [line setBackgroundColor:[UIColor blackColor]];
+            [view addSubview:line];
+        }
+        view.clipsToBounds = NO;
+        
+        return view;
+    }
+}
+- (CGRect)rectForSelectionInSelector:(LZValueSelectorView *)valueSelector
+{
+    if(UseUnitDisplay)
+    {
+        return CGRectMake((320-UnitWidth)/2, 0, UnitWidth, ValuePickerHeight);
+    }
+    return CGRectMake((320-GUnitWidth)/2, 0, GUnitWidth, ValuePickerHeight);
+}
+- (CGFloat)rowHeightInSelector:(LZValueSelectorView *)valueSelector
+{
+    return ValuePickerHeight;
+}
+- (CGFloat)rowWidthInSelector:(LZValueSelectorView *)valueSelector
+{
+    if(UseUnitDisplay)
+    {
+        return UnitWidth;
+    }
+    return GUnitWidth;
+}
+
 @end

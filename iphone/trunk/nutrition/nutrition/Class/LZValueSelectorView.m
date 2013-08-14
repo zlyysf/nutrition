@@ -44,13 +44,12 @@
 
 - (void)createContentTableView {
 
-    UIImageView *selectionImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selectorRect"]];
+    //UIImageView *selectionImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"selectorRect"]];
     _selectionRect = [self.dataSource rectForSelectionInSelector:self];
-    selectionImageView.frame = _selectionRect;
-    if (self.shouldBeTransparent) {
-        selectionImageView.alpha = 0.7;
-    }
-    
+    //selectionImageView.frame = _selectionRect;
+//    if (self.shouldBeTransparent) {
+//        selectionImageView.alpha = 0.7;
+//    }
     if (self.horizontalScrolling) {
         
         //In this case user might have created a view larger than taller
@@ -59,7 +58,7 @@
     else {
         _contentTableView = [[UITableView alloc] initWithFrame:self.bounds];
     }
-    
+
     if (self.debugEnabled) {
         _contentTableView.layer.borderColor = [UIColor blueColor].CGColor;
         _contentTableView.layer.borderWidth = 1.0;
@@ -80,6 +79,7 @@
         
         OffsetCreated = _contentTableView.frame.origin.x;
         _contentTableView.frame = self.bounds;
+        NSLog(@"x %f, y %f,witdh %f,height %f ",_contentTableView.frame.origin.x,_contentTableView.frame.origin.y,_contentTableView.frame.size.width,_contentTableView.frame.size.height);
     }
 
     _contentTableView.backgroundColor = [UIColor clearColor];
@@ -96,6 +96,7 @@
     
     if (self.horizontalScrolling) {
         _contentTableView.contentInset = UIEdgeInsetsMake( _selectionRect.origin.x ,  0,_contentTableView.frame.size.height - _selectionRect.origin.x - _selectionRect.size.width - 2*OffsetCreated, 0);
+        NSLog(@"top %f, left %f,bottom %f,right %f ",_contentTableView.contentInset.top,_contentTableView.contentInset.left,_contentTableView.contentInset.bottom,_contentTableView.contentInset.right);
     }
     else {
         _contentTableView.contentInset = UIEdgeInsetsMake( _selectionRect.origin.y, 0, _contentTableView.frame.size.height - _selectionRect.origin.y - _selectionRect.size.height  , 0);
@@ -104,7 +105,7 @@
     _contentTableView.showsHorizontalScrollIndicator = NO;
 
     [self addSubview:_contentTableView];
-    [self addSubview:selectionImageView];    
+    //[self addSubview:selectionImageView];
 }
 
 /*
@@ -122,7 +123,15 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
-
+-(float)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.horizontalScrolling) {
+        return [self.dataSource rowWidthInSelector:self];
+    }
+    else {
+        return [self.dataSource rowHeightInSelector:self];
+    }
+}
 
 // Customize the number of rows in the table view.
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -158,7 +167,7 @@
     }
     else {
         
-        UILabel *viewToAdd = (UILabel *)[self.dataSource selector:self viewForRowAtIndex:indexPath.row];
+        UIView *viewToAdd = (UIView *)[self.dataSource selector:self viewForRowAtIndex:indexPath.row];
         //This is a new cell so we just have to add the view        
         if (self.debugEnabled) {
             viewToAdd.layer.borderWidth = 1.0;
@@ -168,6 +177,7 @@
 
     }
     
+    cell.contentView.clipsToBounds = NO;
     if (self.debugEnabled) {
         cell.layer.borderColor = [UIColor greenColor].CGColor;
         cell.layer.borderWidth = 1.0;
@@ -198,7 +208,34 @@
         [self scrollToTheSelectedCell];
     }
 }
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    [self scrollToTheCell];
+}
+- (void)scrollToTheCell
+{
+    CGRect selectionRectConverted = [self convertRect:_selectionRect toView:_contentTableView];
+    NSArray *indexPathArray = [_contentTableView indexPathsForRowsInRect:selectionRectConverted];
+    
+    CGFloat intersectionHeight = 0.0;
+    NSIndexPath *selectedIndexPath = nil;
+    
+    for (NSIndexPath *index in indexPathArray) {
+        //looping through the closest cells to get the closest one
+        UITableViewCell *cell = [_contentTableView cellForRowAtIndexPath:index];
+        CGRect intersectedRect = CGRectIntersection(cell.frame, selectionRectConverted);
+        
+        if (intersectedRect.size.height>=intersectionHeight) {
+            selectedIndexPath = index;
+            intersectionHeight = intersectedRect.size.height;
+        }
+    }
+    if (selectedIndexPath!=nil) {
+        //As soon as we elected an indexpath we just have to scroll to it
+        [self.delegate selector:self didSelectRowAtIndex:selectedIndexPath.row];
+    }
 
+}
 - (void)scrollToTheSelectedCell {
     
     CGRect selectionRectConverted = [self convertRect:_selectionRect toView:_contentTableView];        
@@ -224,9 +261,34 @@
     }
 }
 
-
+-(void)setSelectedIndex:(NSInteger)index
+{
+    NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
+    [_contentTableView scrollToRowAtIndexPath:selectedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
+}
 
 - (void)reloadData {
+    _selectionRect = [self.dataSource rectForSelectionInSelector:self];
+    CGFloat OffsetCreated = (self.bounds.size.height-self.bounds.size.width)/2;
+//    if (self.horizontalScrolling) {
+//        CGAffineTransform rotateTable = CGAffineTransformMakeRotation(-M_PI_2);
+//        _contentTableView.transform = rotateTable;
+//        
+//        OffsetCreated = _contentTableView.frame.origin.x;
+//        _contentTableView.frame = self.bounds;
+//        NSLog(@"x %f, y %f,witdh %f,height %f ",_contentTableView.frame.origin.x,_contentTableView.frame.origin.y,_contentTableView.frame.size.width,_contentTableView.frame.size.height);
+//    }
+    if (self.horizontalScrolling) {
+        _contentTableView.contentInset = UIEdgeInsetsMake( _selectionRect.origin.x ,  0,_contentTableView.frame.size.height - _selectionRect.origin.x - _selectionRect.size.width - 2*OffsetCreated, 0);
+        NSLog(@"top %f, left %f,bottom %f,right %f ",_contentTableView.contentInset.top,_contentTableView.contentInset.left,_contentTableView.contentInset.bottom,_contentTableView.contentInset.right);
+    }
+    else {
+        _contentTableView.contentInset = UIEdgeInsetsMake( _selectionRect.origin.y, 0, _contentTableView.frame.size.height - _selectionRect.origin.y - _selectionRect.size.height  , 0);
+    }
+
+//   [_contentTableView removeFromSuperview];
+//    _contentTableView = nil;
+//    [self createContentTableView];
     [_contentTableView reloadData];
 }
 

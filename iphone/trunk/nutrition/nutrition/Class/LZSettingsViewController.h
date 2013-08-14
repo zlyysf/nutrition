@@ -13,6 +13,7 @@
 @property (strong, nonatomic) IBOutlet UIView *line3View;
 @property (strong, nonatomic) IBOutlet UIView *line4View;
 @property (strong, nonatomic) IBOutlet UIView *line1View;
+@property (strong, nonatomic) IBOutlet UIView *line5View;
 @property (strong, nonatomic) IBOutlet UIImageView *personsBackImageView;
 @property (strong, nonatomic) IBOutlet UIButton *editProfileButton;
 @property (strong, nonatomic) IBOutlet UIScrollView *contentScrollView;

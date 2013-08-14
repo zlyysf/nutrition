@@ -34,7 +34,7 @@
 
 @property (nonatomic,assign) BOOL debugEnabled;
 
-
+-(void)setSelectedIndex:(NSInteger)index;
 - (void)reloadData;
 
 @end
