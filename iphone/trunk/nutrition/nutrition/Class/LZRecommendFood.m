@@ -54,7 +54,7 @@
     if (needLimitNutrients){
         limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
                                     @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",
-                                    @"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+                                    @"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",@"Vit_B12_(µg)",
                                     @"Calcium_(mg)",@"Iron_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",
                                     @"Protein_(g)", //@"Energ_Kcal",
                                     nil];
