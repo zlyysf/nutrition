@@ -9,6 +9,7 @@
 #import "LZUtility.h"
 #import "LZConstants.h"
 #import "LZRecommendFood.h"
+#import <math.h>
 @implementation LZUtility
 
 +(NSNumber *)add2NSNumberByDouble_withNumber1:(NSNumber*)nm1 andNumber2:(NSNumber*)nm2
@@ -593,7 +594,16 @@
 //    }
 //    return iDStr;
 }
-
++(BOOL)isUseUnitDisplay:(NSNumber *)totalWeight unitWeight:(NSNumber *)singleWeight
+{
+    float result = fmodf([totalWeight floatValue]*2, [singleWeight floatValue]);
+    NSLog(@"result %f",result);
+    if (result == 0)
+    {
+        return YES;
+    }
+    return NO;
+}
 @end
 
 

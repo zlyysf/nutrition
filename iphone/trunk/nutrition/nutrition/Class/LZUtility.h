@@ -71,4 +71,6 @@
 + (BOOL)twoDateIsSameDay:(NSDate *)fist second:(NSDate *)second;
 
 +(NSString*)convertNumberToFoodIdStr:(NSNumber *)foodIdNum;
+
++(BOOL)isUseUnitDisplay:(NSNumber *)totalWeight unitWeight:(NSNumber *)singleWeight;
 @end

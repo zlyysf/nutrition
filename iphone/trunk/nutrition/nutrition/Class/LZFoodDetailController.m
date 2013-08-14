@@ -23,6 +23,9 @@
 #define SingleLineWitdh 1.f
 #define ValuePickerLabelWidth 36.f
 @interface LZFoodDetailController ()
+{
+    BOOL isFirstLoad;
+}
 
 @end
 
@@ -49,42 +52,33 @@
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.leftBarButtonItem = cancelItem;
     self.navigationItem.rightBarButtonItem = saveItem;
-    
-//    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
-//    
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    
-//    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-//    [button setTitle:@"  返回" forState:UIControlStateNormal];
-//    
-//    button.frame = CGRectMake(0, 0, 48, 30);
-//    [button.titleLabel setFont:[UIFont systemFontOfSize:13]];
-//    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-//    [button addTarget:self action:@selector(backButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    UIBarButtonItem *customBarItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-//    
-//    self.navItem.leftBarButtonItem= customBarItem;
+
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
     self.listView.tableFooterView = footerView;
-//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 32)];
-//    [sectionView setBackgroundColor:[UIColor clearColor]];
-//    self.sectionLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
-//    [sectionLabel setTextColor:[UIColor blackColor]];
-//    [sectionLabel setFont:[UIFont boldSystemFontOfSize:14]];
-//    [sectionLabel setBackgroundColor:[UIColor clearColor]];
-//    [sectionView addSubview:sectionLabel];
-    //sectionLabel.text = [NSString stringWithFormat:@"一天的营养比例",self.sectionTitle];
-    //self.listView.tableHeaderView = sectionView;
     self.foodValuePicker.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"valuepicker_bg.png"]];
     self.foodValuePicker.horizontalScrolling = YES;
     self.foodValuePicker.debugEnabled = NO;
-    UseUnitDisplay = NO;
-
+    self.listView.hidden = YES;
+    if(isUnitDisplayAvailable)
+    {
+        if (isDefaultUnitDisplay)
+        {
+            UseUnitDisplay = YES;
+        }
+        else
+        {
+            UseUnitDisplay = NO;
+        }
+    }
+    else
+    {
+        UseUnitDisplay = NO;
+    }
+    isFirstLoad = YES;
 }
--(void)calculateNutrientSupplyUI
+-(void)displayNutrientUI
 {
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     if(self.inOutParam == nil)
@@ -102,10 +96,12 @@
         inOutParam = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                                  userInfo,Key_userInfo,
                                                  self.foodAttr,@"FoodAttrs",
-                                                 defaulSelectValue,@"FoodAmount",
+                                                 currentSelectValue,@"FoodAmount",
                                                  nil];
     }
+    [inOutParam setObject:currentSelectValue forKey:@"FoodAmount"];
     self.nutrientSupplyArray = [rf calculateGiveFoodSupplyNutrientAndFormatForUI:self.inOutParam];
+    self.listView.hidden = NO;
     [self.listView reloadData];
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -115,7 +111,48 @@
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
     [self setButtonState];
-    [self calculateNutrientSupplyUI];
+
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (isFirstLoad)
+    {
+        [self firstDisplay];
+    }
+}
+- (void)firstDisplay
+{
+    if (isFirstLoad)
+    {
+        isFirstLoad = NO;
+        int index = 0;
+        int weight = [defaulSelectValue intValue];
+        if (isUnitDisplayAvailable)
+        {
+            if(isDefaultUnitDisplay)
+            {
+                if(weight<= 0)
+                {
+                    index = 2;
+                }
+                else
+                {
+                    NSNumber *singleUnitWeight = [self.foodAttr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+                    index = ([defaulSelectValue intValue]*2)/[singleUnitWeight intValue] ;
+                }
+            }
+            else
+            {
+                index = (weight<=0?100:weight);
+            }
+        }
+        else
+        {
+            index = (weight<=0?100:weight);
+            
+        }
+        [self.foodValuePicker setSelectedIndex:index];
+    }
 }
 -(void)cancelButtonTapped
 {
@@ -126,12 +163,22 @@
     // if self.delegate
     if(self.delegate && [self.delegate respondsToSelector:@selector(didChangeFoodId:toAmount:)])
     {
-        [self.delegate didChangeFoodId:[self.foodAttr objectForKey:@"NDB_No"] toAmount:[NSNumber numberWithInt:100]];
+        [self.delegate didChangeFoodId:[self.foodAttr objectForKey:@"NDB_No"] toAmount:currentSelectValue];
     }
     [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 -(void)setButtonState
 {
+    if (!isUnitDisplayAvailable)
+    {
+        self.UnitButton.hidden = YES;
+        //self.GUnitButton.hidden = YES;
+    }
+    else
+    {
+        self.UnitButton.hidden = NO;
+        //self.GUnitButton.hidden = NO;
+    }
     if (!UseUnitDisplay)
     {
         [self.UnitButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -147,25 +194,11 @@
         [self.GUnitButton setBackgroundImage:[UIImage imageNamed:@"unit_button_normal.png"] forState:UIControlStateNormal];
     }
 }
-- (void)viewDidAppear:(BOOL)animated
-{
-    if(UseUnitDisplay)
-    {
-        [self.foodValuePicker setSelectedIndex:1*2];
-    }
-    else
-    {
-        [self.foodValuePicker setSelectedIndex:100];
-    }
-}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [MobClick endLogPageView:@"食物详情页面"];
 }
-//- (void)backButtonTapped:(id)sender
-//{
-//    [self.navigationController popViewControllerAnimated:YES];
-//}
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     if (section == 0)
@@ -188,10 +221,6 @@
     }
 
 }
-
-// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
-
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
@@ -218,22 +247,8 @@
             radius = 2;
         }
         [cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
-        //[cell adjustLabelAccordingToProgress:0.5];
-//        if(KeyIsEnvironmentDebug)
-//        {
+
             cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%.2f/%.2f%@)",(int)([percent floatValue] *100),[food1Supply1NutrientAmount floatValue],[nutrientTotalDRI floatValue ],unit];
-//        }
-//        else
-//        {
-//            cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%.2f/%.2f%@)",(int)(progress *100),[food1Supply1NutrientAmount floatValue],[nutrientTotalDRI floatValue ],unit];
-//        }
-
-
-//        UIView *tempView = [[UIView alloc] init];
-//        [cell setBackgroundView:tempView];
-//        [cell setBackgroundColor:[UIColor clearColor]];
-
-        //[cell.nutritionProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:[UIColor greenColor] progress:0.5 withRadius:8];
         return cell;
     }
     else
@@ -275,13 +290,6 @@
     else
         return 30;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-//{
-//    if( section == 0)
-//        return 32;
-//    else
-//        return 47;
-//}
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
     if( section == 0)
@@ -289,29 +297,6 @@
     else
         return 20;
 }
-//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-//{
-//    float height = (section ==0 ? 32 :47);
-//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
-//    [sectionView setBackgroundColor:[UIColor clearColor]];
-//    
-////    UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
-////    [sectionView addSubview:sectionBarView];
-////    NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
-////    UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
-////    [sectionBarView setImage:sectionBarImage];
-//    UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
-//    [sectionTitleLabel setTextColor:[UIColor blackColor]];
-//    [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-//    [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
-//    [sectionView addSubview:sectionTitleLabel];
-//    
-//    if (section == 0)
-//        sectionTitleLabel.text = [NSString stringWithFormat:@"%@的一天营养比例",self.sectionTitle];
-//    else
-//        sectionTitleLabel.text = [NSString stringWithFormat:@"%@的营养成分标准含量(100g)",self.foodName];
-//    return sectionView;
-//}
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
     float height = (section == 0 ?5:20);
@@ -332,6 +317,16 @@
     UseUnitDisplay = NO;
     [self setButtonState];
     [self.foodValuePicker reloadData];
+    int index = 0;
+    if (isDefaultUnitDisplay)
+    {
+        index = 100;
+    }
+    else
+    {
+        index = [defaulSelectValue intValue];
+    }
+    [self.foodValuePicker setSelectedIndex:index];
 }
 - (IBAction)unitButtonTapped:(UIButton *)sender
 {
@@ -342,8 +337,23 @@
     UseUnitDisplay = YES;
     [self setButtonState];
     [self.foodValuePicker reloadData];
-}
+    int index = 0;
+    if (isDefaultUnitDisplay)
+    {
+        NSNumber *singleUnitWeight = [self.foodAttr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+        index = ([defaulSelectValue intValue]*2)/[singleUnitWeight intValue] ;
+        if (index <= 0)
+        {
+            index = 2;
+        }
+    }
+    else
+    {
+        index = 2;
+    }
 
+    [self.foodValuePicker setSelectedIndex:index];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -362,23 +372,26 @@
 {
     if ( UseUnitDisplay)
     {
-        self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f个",((float)index/2) ];
-        //sectionLabel.text = [NSString stringWithFormat:@"%.1f个%@的一天营养比例",((float)index/2),self.title];
+        NSNumber *singleUnitWeight = [self.foodAttr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+        float value = ((float)index/2)*[singleUnitWeight intValue];
+        currentSelectValue = [NSNumber numberWithFloat:value];
+        self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f个",((float)index/2)];
     }
     else
     {
+        currentSelectValue = [NSNumber numberWithFloat:index];
         self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d克",index ];
-        //sectionLabel.text = [NSString stringWithFormat:@"%d克%@的一天营养比例",index,self.title];
     }
+    [self displayNutrientUI];
 }
 
 - (NSInteger)numberOfRowsInSelector:(LZValueSelectorView *)valueSelector
 {
     if (UseUnitDisplay)
     {
-        return 201;
+        return [unitMaxValue intValue]+1;
     }
-    return 1001;
+    return [gUnitMaxValue intValue]+1;
 }
 - (UIView *)selector:(LZValueSelectorView *)valueSelector viewForRowAtIndex:(NSInteger) index
 {
