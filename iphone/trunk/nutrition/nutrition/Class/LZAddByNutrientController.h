@@ -8,11 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "LZNutrientFoodAddCell.h"
-@interface LZAddByNutrientController : UIViewController<UITableViewDataSource,UITableViewDelegate,LZFoodCellDelegate>
+@interface LZAddByNutrientController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic)NSArray *foodArray;
 //@property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
-@property (assign, nonatomic)UITextField *currentFoodInputTextField;
 @property (strong, nonatomic)NSString *nutrientTitle;
 @property (strong, nonatomic)NSMutableDictionary *tempIntakeDict;
 @property (readwrite,nonatomic)BOOL pushToNextView;

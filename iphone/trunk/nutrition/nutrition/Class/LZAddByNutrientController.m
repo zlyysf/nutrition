@@ -11,10 +11,10 @@
 #import <math.h>
 #import "GADMasterViewController.h"
 #import "MobClick.h"
-#import "LZFoodInfoViewController.h"
 #import "LZRecommendFood.h"
 #import "MBProgressHUD.h"
-@interface LZAddByNutrientController ()<MBProgressHUDDelegate>
+#import "LZFoodDetailController.h"
+@interface LZAddByNutrientController ()<MBProgressHUDDelegate,LZFoodDetailViewControllerDelegate>
 {
     MBProgressHUD *HUD;
     BOOL isFirstLoad;
@@ -22,7 +22,7 @@
 @end
 
 @implementation LZAddByNutrientController
-@synthesize foodArray,currentFoodInputTextField,nutrientTitle,tempIntakeDict,pushToNextView,nutrientDict;
+@synthesize foodArray,nutrientTitle,tempIntakeDict,pushToNextView,nutrientDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -131,11 +131,6 @@
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
-
-    if(self.currentFoodInputTextField != nil)
-    {
-        [self.currentFoodInputTextField resignFirstResponder];
-    }
     if (self.pushToNextView) {
         return;
     }
@@ -317,8 +312,6 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LZNutrientFoodAddCell* cell =(LZNutrientFoodAddCell*)[tableView dequeueReusableCellWithIdentifier:@"LZNutrientFoodAddCell"];
-    cell.delegate = self;
-    cell.cellIndexPath = indexPath;
     //一个记录名称的数组 一个记录对应摄入量的数组
     NSDictionary *aFood = [self.foodArray objectAtIndex:indexPath.row];
     //NSLog(@"picture path food list %@",aFood);
@@ -336,7 +329,7 @@
     UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
     [cell.foodPicView setImage:foodImage];
     
-    [cell.foodNameButton setTitle:[aFood objectForKey:@"CnCaption"] forState:UIControlStateNormal];
+    cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];
     NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
     NSNumber *foodAmount = [aFood objectForKey:Key_FoodAmount];
     NSNumber *intake= [self.tempIntakeDict objectForKey:NDB_No];
@@ -352,61 +345,79 @@
         [cell centeredFoodNameButton:NO];
     }
     cell.recommendAmountLabel.text = [NSString stringWithFormat:@"推荐量:%dg",amount];
-    UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
-    UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
-    [cell.textFiledBackImage setImage:textBackImage];
     int num = [intake intValue];
-    if(num == 0)
-    {
-       cell.intakeAmountTextField.text = @"";
-    }
-    else
-    {
-        cell.intakeAmountTextField.text = [NSString stringWithFormat:@"%d",num];
-    }
+    cell.foodAmountLabel.text = [NSString stringWithFormat:@"%dg",num];
     
     [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
     return cell;
 }
-#pragma mark- LZFoodCellDelegate
-- (void)foodButtonTappedForIndex:(NSIndexPath *)index
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.listView deselectRowAtIndexPath:indexPath animated:YES];
     self.pushToNextView = YES;
-    if(self.currentFoodInputTextField != nil)
-    {
-        [self.currentFoodInputTextField resignFirstResponder];
-    }
-    NSDictionary *aFood = [self.foodArray objectAtIndex:index.row];
-    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSArray *standardArray = [rf formatFoodStandardContentForFood:aFood];
-    
+    NSDictionary *aFood = [self.foodArray objectAtIndex:indexPath.row];
+    NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
+    NSString *foodName = [aFood objectForKey:@"CnCaption"];
+    NSNumber *weight = [self.tempIntakeDict objectForKey:NDB_No];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LZFoodInfoViewController *foodInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodInfoViewController"];
-    foodInfoViewController.nutrientStandardArray = standardArray;
-    foodInfoViewController.title = [aFood objectForKey:@"CnCaption"];
-    [self.navigationController pushViewController:foodInfoViewController animated:YES];
+    LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
+    
+    foodDetailController.currentSelectValue = weight;
+    foodDetailController.defaulSelectValue = weight;
+    foodDetailController.foodAttr = aFood;
+    foodDetailController.foodName = foodName;
+    foodDetailController.delegate = self;
+    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:foodDetailController];
+    [self presentModalViewController:nav animated:YES];
+    
+    
 }
-- (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index textField:(UITextField *)currentTextField
-{
-    self.currentFoodInputTextField = currentTextField;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 50 * USEC_PER_SEC);
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self.listView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
-    });
-}
-- (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber
-{
-    //[self.foodIntakeAmountArray replaceObjectAtIndex:index.row withObject:foodNumber];
-    self.currentFoodInputTextField = nil;
-    NSDictionary *afood = [self.foodArray objectAtIndex:index.row];
-    NSString *NDB_No = [afood objectForKey:@"NDB_No"];
-    [self.tempIntakeDict setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
-    //NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
-}
+
+//#pragma mark- LZFoodCellDelegate
+//- (void)foodButtonTappedForIndex:(NSIndexPath *)index
+//{
+//    self.pushToNextView = YES;
+//    if(self.currentFoodInputTextField != nil)
+//    {
+//        [self.currentFoodInputTextField resignFirstResponder];
+//    }
+//    NSDictionary *aFood = [self.foodArray objectAtIndex:index.row];
+//    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+//    NSArray *standardArray = [rf formatFoodStandardContentForFood:aFood];
+//    
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//    LZFoodInfoViewController *foodInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodInfoViewController"];
+//    foodInfoViewController.nutrientStandardArray = standardArray;
+//    foodInfoViewController.title = [aFood objectForKey:@"CnCaption"];
+//    [self.navigationController pushViewController:foodInfoViewController animated:YES];
+//}
+//- (void)textFieldDidBeginEditingForIndex:(NSIndexPath*)index textField:(UITextField *)currentTextField
+//{
+//    self.currentFoodInputTextField = currentTextField;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 50 * USEC_PER_SEC);
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        [self.listView scrollToRowAtIndexPath:index atScrollPosition:UITableViewScrollPositionMiddle animated:YES];
+//    });
+//}
+//- (void)textFieldDidReturnForIndex:(NSIndexPath*)index andText:(NSString*)foodNumber
+//{
+//    //[self.foodIntakeAmountArray replaceObjectAtIndex:index.row withObject:foodNumber];
+//    self.currentFoodInputTextField = nil;
+//    NSDictionary *afood = [self.foodArray objectAtIndex:index.row];
+//    NSString *NDB_No = [afood objectForKey:@"NDB_No"];
+//    [self.tempIntakeDict setObject:[NSNumber numberWithInt:[foodNumber intValue]] forKey:NDB_No];
+//    //NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
+//}
 #pragma mark MBProgressHUDDelegate methods
 
 - (void)hudWasHidden:(MBProgressHUD *)hud {
 	// Remove HUD from screen when the HUD was hidded
     HUD.hidden = YES;
+}
+#pragma mark- LZFoodDetailViewControllerDelegate
+-(void)didChangeFoodId:(NSString *)foodId toAmount:(NSNumber*)changedValue
+{
+    [self.tempIntakeDict setObject:[NSNumber numberWithInt:[changedValue intValue]] forKey:foodId];
+    [self.listView reloadData];
 }
 @end

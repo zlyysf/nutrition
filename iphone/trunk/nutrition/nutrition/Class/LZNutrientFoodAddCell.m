@@ -20,18 +20,18 @@
 }
 - (void)centeredFoodNameButton:(BOOL)centered
 {
-    CGRect buttonFrame = self.foodNameButton.frame;
+    CGRect buttonFrame = self.foodNameLabel.frame;
     
     if (centered)
     {
-        buttonFrame.origin.y = 13;
+        buttonFrame.origin.y = 15;
     }
     else
     {
-        buttonFrame.origin.y = 4;
+        buttonFrame.origin.y = 7;
     }
     
-    self.foodNameButton.frame = buttonFrame;
+    self.foodNameLabel.frame = buttonFrame;
 }
 /*
 // Only override drawRect: if you perform custom drawing.
@@ -41,5 +41,19 @@
     // Drawing code
 }
 */
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
+{
+    [super setHighlighted:highlighted animated:animated];
+    if (highlighted)
+    {
+        [self.recommendAmountLabel setTextColor:[UIColor whiteColor]];
+        
+    }
+    else
+    {
+        [self.recommendAmountLabel setTextColor:[UIColor darkGrayColor]];
+        
+    }
+}
 
 @end

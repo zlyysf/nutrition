@@ -18,7 +18,6 @@
 @property (strong,nonatomic)NSString *titleString;
 //@property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
 @property (strong, nonatomic) IBOutlet UIView *admobView;
-@property (assign, nonatomic)UITextField *currentFoodInputTextField;
 //@property (strong, nonatomic)IBOutlet LZValueSelectorView *selectorView;
 //@property (assign,nonatomic)int currentSelectedIndex;
 @end

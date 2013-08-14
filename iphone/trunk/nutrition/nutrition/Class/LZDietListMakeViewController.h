@@ -23,5 +23,4 @@ typedef enum listType
 @property (assign, nonatomic)DietListType listType;
 @property (assign,nonatomic)BOOL needRefresh;
 @property (strong,nonatomic)NSNumber *dietId;
-@property (assign, nonatomic)UITextField *currentFoodInputTextField;
 @end

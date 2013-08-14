@@ -7,10 +7,8 @@
 //
 
 #import "LZRecommendFoodCell.h"
-#import "LZConstants.h"
 @implementation LZRecommendFoodCell
 @synthesize cellFoodId;
-@synthesize delegate;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -19,48 +17,48 @@
     }
     return self;
 }
--(BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
-{
-    LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:@"完成" delegate:self];
-    textField.inputAccessoryView = keyboardToolbar;
-    
-    //[textField becomeFirstResponder];
-    return YES;
-}
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    if(delegate && [delegate respondsToSelector:@selector(textFieldDidBeginEditingForId:textField:)])
-    {
-        [delegate textFieldDidBeginEditingForId:self.cellFoodId textField:self.foodAmountTextField];
-    }
-    
-}
-
-- (void)textFieldDidEndEditing:(UITextField *)textField
-{
-    if(delegate && [delegate respondsToSelector:@selector(textFieldDidReturnForId:andText:)])
-    {
-        [delegate textFieldDidReturnForId:self.cellFoodId andText:self.foodAmountTextField.text];
-    }
-    //return YES;
-}
-
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
-{
-    //记录用量
-    
-    //    if(delegate && [delegate respondsToSelector:@selector(textFieldDidReturnForIndex:)])
-    //    {
-    //        [delegate textFieldDidReturnForIndex:self.cellIndexPath];
-    //    }
-    [textField resignFirstResponder];
-    return YES;
-    
-}// called when 'return' key pressed. return NO to
--(void)toolbarKeyboardDone
-{
-    [self.foodAmountTextField resignFirstResponder];
-}
+//-(BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
+//{
+//    LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:@"完成" delegate:self];
+//    textField.inputAccessoryView = keyboardToolbar;
+//    
+//    //[textField becomeFirstResponder];
+//    return YES;
+//}
+//- (void)textFieldDidBeginEditing:(UITextField *)textField
+//{
+//    if(delegate && [delegate respondsToSelector:@selector(textFieldDidBeginEditingForId:textField:)])
+//    {
+//        [delegate textFieldDidBeginEditingForId:self.cellFoodId textField:self.foodAmountTextField];
+//    }
+//    
+//}
+//
+//- (void)textFieldDidEndEditing:(UITextField *)textField
+//{
+//    if(delegate && [delegate respondsToSelector:@selector(textFieldDidReturnForId:andText:)])
+//    {
+//        [delegate textFieldDidReturnForId:self.cellFoodId andText:self.foodAmountTextField.text];
+//    }
+//    //return YES;
+//}
+//
+//- (BOOL)textFieldShouldReturn:(UITextField *)textField
+//{
+//    //记录用量
+//    
+//    //    if(delegate && [delegate respondsToSelector:@selector(textFieldDidReturnForIndex:)])
+//    //    {
+//    //        [delegate textFieldDidReturnForIndex:self.cellIndexPath];
+//    //    }
+//    [textField resignFirstResponder];
+//    return YES;
+//    
+//}// called when 'return' key pressed. return NO to
+//-(void)toolbarKeyboardDone
+//{
+//    [self.foodAmountTextField resignFirstResponder];
+//}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
@@ -74,23 +72,15 @@
     if (highlighted)
     {
         [self.foodNameLabel setTextColor:[UIColor whiteColor]];
-        [self.foodAmountTextField setTextColor:[UIColor whiteColor]];
+    
         [self.foodUnitLabel setTextColor:[UIColor whiteColor]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellSelectedBack.png"]]];
-        self.foodAmountTextField.userInteractionEnabled = NO;
-        [self.textBackImage setImage:nil];
     }
     else
     {
         [self.foodNameLabel setTextColor:[UIColor blackColor]];
-        [self.foodAmountTextField setTextColor:[UIColor blackColor]];
         [self.foodUnitLabel setTextColor:[UIColor blackColor]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
-        UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
-        UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
-        [self.textBackImage setImage:textBackImage];
-        self.foodAmountTextField.userInteractionEnabled = YES;
-
     }
 }
 @end

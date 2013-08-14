@@ -8,16 +8,28 @@
 
 #import <UIKit/UIKit.h>
 #import "LZValueSelectorView.h"
+#import "LZRecommendFood.h"
+@protocol LZFoodDetailViewControllerDelegate<NSObject>
+-(void)didChangeFoodId:(NSString *)foodId toAmount:(NSNumber*)changedValue;
+@end
 @interface LZFoodDetailController : UIViewController<UITableViewDelegate,UITableViewDataSource,IZValueSelectorViewDataSource,IZValueSelectorViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic)NSArray *nutrientSupplyArray;
 @property (strong,nonatomic)NSArray *nutrientStandardArray;
 @property (strong,nonatomic)NSString *foodName;
-@property (strong,nonatomic)NSString *sectionTitle;
 @property (strong, nonatomic) IBOutlet LZValueSelectorView *foodValuePicker;
 @property (strong, nonatomic) IBOutlet UILabel *foodAmountDisplayLabel;
 @property (strong, nonatomic) IBOutlet UIButton *GUnitButton;
 @property (strong, nonatomic) IBOutlet UIButton *UnitButton;
 @property (readwrite,nonatomic)BOOL UseUnitDisplay;
 @property (strong,nonatomic)IBOutlet UILabel *sectionLabel;
+@property (readwrite,nonatomic)BOOL isUnitDisplayAvailable;
+@property (strong,nonatomic)NSNumber *gUnitMaxValue;
+@property (strong,nonatomic)NSNumber *unitMaxValue;
+@property (strong,nonatomic)NSNumber *currentSelectValue;
+@property (strong,nonatomic)NSNumber *defaulSelectValue;
+@property (readwrite,nonatomic)BOOL isDefaultUnitDisplay;
+@property (strong,nonatomic)NSDictionary *foodAttr;
+@property (strong,nonatomic)NSMutableDictionary *inOutParam;
+@property (assign,nonatomic)id<LZFoodDetailViewControllerDelegate> delegate;
 @end

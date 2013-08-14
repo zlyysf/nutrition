@@ -13,6 +13,7 @@
 #import "LZUtility.h"
 #import "GADMasterViewController.h"
 #import "MobClick.h"
+
 #define LongLineHeight 20.f
 #define ShortLineHeight 10.f
 #define ValuePickerHeight 50.f
@@ -26,7 +27,7 @@
 @end
 
 @implementation LZFoodDetailController
-@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,sectionTitle,UseUnitDisplay,sectionLabel;
+@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -44,6 +45,11 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.title = foodName;
+    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
+    self.navigationItem.leftBarButtonItem = cancelItem;
+    self.navigationItem.rightBarButtonItem = saveItem;
+    
 //    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
 //    
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -76,6 +82,31 @@
     self.foodValuePicker.horizontalScrolling = YES;
     self.foodValuePicker.debugEnabled = NO;
     UseUnitDisplay = NO;
+
+}
+-(void)calculateNutrientSupplyUI
+{
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    if(self.inOutParam == nil)
+    {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+        NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+        NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+        NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+        NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  userSex,ParamKey_sex, userAge,ParamKey_age,
+                                  userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                                  userActivityLevel,ParamKey_activityLevel, nil];
+        inOutParam = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                 userInfo,Key_userInfo,
+                                                 self.foodAttr,@"FoodAttrs",
+                                                 defaulSelectValue,@"FoodAmount",
+                                                 nil];
+    }
+    self.nutrientSupplyArray = [rf calculateGiveFoodSupplyNutrientAndFormatForUI:self.inOutParam];
+    [self.listView reloadData];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -84,6 +115,20 @@
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
     [self setButtonState];
+    [self calculateNutrientSupplyUI];
+}
+-(void)cancelButtonTapped
+{
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+}
+-(void)saveButtonTapped
+{
+    // if self.delegate
+    if(self.delegate && [self.delegate respondsToSelector:@selector(didChangeFoodId:toAmount:)])
+    {
+        [self.delegate didChangeFoodId:[self.foodAttr objectForKey:@"NDB_No"] toAmount:[NSNumber numberWithInt:100]];
+    }
+    [self.navigationController dismissModalViewControllerAnimated:YES];
 }
 -(void)setButtonState
 {
