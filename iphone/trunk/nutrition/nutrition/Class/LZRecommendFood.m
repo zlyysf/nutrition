@@ -2724,6 +2724,7 @@
         [supplyNutrientInfoArray addObject:supplyNutrientInfo];
     }//for j
     
+    NSLog(@"calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI return:%@",supplyNutrientInfoArray);
     return supplyNutrientInfoArray;
 }
 

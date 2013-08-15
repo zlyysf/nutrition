@@ -16,11 +16,11 @@
 
 +(void)testMain
 {
-//    [LZTest1 test1];
+    [LZTest1 test1];
 //    [LZTest1 test2];
 //    [LZTest1 test3];
 //    [LZTest1 test4];
-    [LZTest1 testRecommendFoodBySmallIncrement];
+//    [LZTest1 testRecommendFoodBySmallIncrement];
 }
 
 +(void)test1
@@ -38,7 +38,8 @@
 //    [self.class testFormatResult2_taken];
 //    [self.class testFormatResult_foodStarndard];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI];
-    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend];
+//    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend];
+    [self.class test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_empty];
 }
 
@@ -1750,6 +1751,55 @@
                             nil];
     NSDictionary * formatResult = [rf calculateGiveFoodsSupplyNutrientAndFormatForUI:params];
 }
+
++(void)test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI
+{
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],ParamKey_sex, [NSNumber numberWithInt:age],ParamKey_age,
+                              [NSNumber numberWithFloat:weight],ParamKey_weight, [NSNumber numberWithFloat:height],ParamKey_height,
+                              [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
+    
+    
+    NSDictionary *staticFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                         [NSNumber numberWithDouble:200.0],@"20450",//rice
+                                         [NSNumber numberWithDouble:100.0],@"16108",//huangdou
+                                         nil];
+    //[NSNumber numberWithDouble:200.0],@"09003",//apple
+    NSString *dynamicFoodId = @"09003";
+    NSNumber *nm_dynamicFoodAmount = [NSNumber numberWithDouble:200.0];
+    
+    NSMutableArray *allFoodIds = [NSMutableArray arrayWithArray:[staticFoodAmountDict allKeys]];
+    [allFoodIds addObject:dynamicFoodId];
+    
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSArray *allFoodAttrAry = [da getFoodAttributesByIds:allFoodIds];
+    NSMutableDictionary *allFoodAttr2LevelDict = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:allFoodAttrAry];
+    NSDictionary *dynamicFoodAttrs = [allFoodAttr2LevelDict objectForKey:dynamicFoodId];
+
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                            userInfo,Key_userInfo,
+                            dynamicFoodAttrs,@"dynamicFoodAttrs",
+                            nm_dynamicFoodAmount,@"dynamicFoodAmount",
+                            allFoodAttr2LevelDict,@"staticFoodAttrsDict2Level",
+                            staticFoodAmountDict,@"staticFoodAmountDict",
+                            staticFoodAmountDict,@"staticFoodAmountDict",
+
+//                            nil,@"staticFoodSupplyNutrientDict",
+//                            nil,@"allShowNutrients",
+//                            nil,@"nutrientInfoDict2Level",
+                            nil];
+    [rf calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI:params];
+}
+
+
 
 +(void)testFormatResult_foodStarndard
 {
