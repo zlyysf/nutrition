@@ -53,12 +53,11 @@
     [headerView addSubview:tipsLabel];
     self.listView.tableHeaderView = headerView;
     self.title = nutrientTitle;
-//    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped:)];
-//    self.navigationItem.leftBarButtonItem = backButtonItem;
-    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
-                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
-                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
-    self.listView.tableFooterView = footerView;
+
+//    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+//                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+//                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+//    self.listView.tableFooterView = footerView;
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
     HUD.hidden = YES;
@@ -74,9 +73,9 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [MobClick beginLogPageView:@"按营养素添加食物页面"];
-    GADMasterViewController *shared = [GADMasterViewController singleton];
-    UIView *footerView = self.listView.tableFooterView;
-    [shared resetAdView:self andListView:footerView];
+    //GADMasterViewController *shared = [GADMasterViewController singleton];
+    //UIView *footerView = self.listView.tableFooterView;
+    //[shared resetAdView:self andListView:footerView];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
