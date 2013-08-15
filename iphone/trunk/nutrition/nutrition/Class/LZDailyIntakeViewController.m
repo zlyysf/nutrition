@@ -316,7 +316,7 @@
     LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
     //            NSString *sectionTitle = [NSString stringWithFormat:@"%dg%@",[weight intValue],foodName];
     NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
-    NSNumber *upper = [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
+    NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
     if ([weight intValue]>= [upper intValue])
     {
         upper = weight;
@@ -332,23 +332,25 @@
         foodDetailController.isUnitDisplayAvailable = YES;
         foodDetailController.unitName = singleUnitName;
         NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
-        if ([LZUtility isUseUnitDisplay:weight unitWeight:singleUnitWeight])
-        {
-            foodDetailController.isDefaultUnitDisplay = YES;
-        }
-        else
-        {
-            foodDetailController.isDefaultUnitDisplay = NO;
-        }
-        int maxCount = ([upper intValue]*2)/[singleUnitWeight intValue];
-        if (maxCount <20)
-        {
-            foodDetailController.unitMaxValue = [NSNumber numberWithInt:20];
-        }
-        else
-        {
-            foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
-        }
+//        if ([LZUtility isUseUnitDisplay:weight unitWeight:singleUnitWeight])
+//        {
+//            foodDetailController.isDefaultUnitDisplay = YES;
+//        }
+//        else
+//        {
+//            foodDetailController.isDefaultUnitDisplay = NO;
+//        }
+        foodDetailController.isDefaultUnitDisplay = NO;
+        int maxCount = (int)(ceilf(([upper floatValue]*2)/[singleUnitWeight floatValue]));
+        foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
+//        if (maxCount <20)
+//        {
+//            foodDetailController.unitMaxValue = [NSNumber numberWithInt:20];
+//        }
+//        else
+//        {
+//            foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
+//        }
     }
 
     foodDetailController.currentSelectValue = weight;
@@ -357,6 +359,7 @@
     foodDetailController.foodName = foodName;
     foodDetailController.delegate = self;
     foodDetailController.isCalForAll = NO;
+    foodDetailController.GUnitStartIndex = 100;
     //UINavigationController *initialController = (UINavigationController*)[UIApplication
     //sharedApplication].keyWindow.rootViewController;
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:foodDetailController];

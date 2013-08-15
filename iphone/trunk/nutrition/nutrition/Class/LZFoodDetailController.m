@@ -22,8 +22,7 @@
 #define ValuePickerLabelFontSize 12.f
 #define SingleLineWitdh 1.f
 #define ValuePickerLabelWidth 36.f
-#define GUnitStartIndex 0
-#define UnitStartIndex 1
+#define UnitStartIndex 0
 @interface LZFoodDetailController ()
 {
     BOOL isFirstLoad;
@@ -32,7 +31,7 @@
 @end
 
 @implementation LZFoodDetailController
-@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName,isCalForAll,staticFoodAmountDict;
+@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName,isCalForAll,staticFoodAmountDict,GUnitStartIndex;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -64,7 +63,6 @@
     self.foodValuePicker.debugEnabled = NO;
     self.foodValuePicker.allowDynamicSentValue = YES;
     self.foodValuePicker.allowTapToScroll = NO;
-    self.listView.hidden = YES;
     if(isUnitDisplayAvailable)
     {
         if (isDefaultUnitDisplay)

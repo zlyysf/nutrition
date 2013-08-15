@@ -35,4 +35,5 @@
 @property (assign,nonatomic)id<LZFoodDetailViewControllerDelegate> delegate;
 @property (readwrite,nonatomic)BOOL isCalForAll;
 @property (strong,nonatomic)NSMutableDictionary *staticFoodAmountDict;
+@property (assign,nonatomic)int GUnitStartIndex;
 @end

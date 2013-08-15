@@ -271,7 +271,7 @@
 {
     NSIndexPath *selectedIndexPath = [NSIndexPath indexPathForRow:index inSection:0];
     [_contentTableView scrollToRowAtIndexPath:selectedIndexPath atScrollPosition:UITableViewScrollPositionBottom animated:YES];
-    if (!self.allowDynamicSentValue)
+    if (index == 0)
     {
         [self.delegate selector:self didSelectRowAtIndex:selectedIndexPath.row];
     }
