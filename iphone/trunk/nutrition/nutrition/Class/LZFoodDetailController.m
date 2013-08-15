@@ -79,6 +79,7 @@
         UseUnitDisplay = NO;
     }
     isFirstLoad = YES;
+    self.listView.hidden = YES;
 }
 -(void)displayNutrientUI
 {
@@ -151,6 +152,13 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    if (isCalForAll) {
+        self.sectionLabel.text = @"所有食物的一天营养比例";
+    }
+    else{
+        self.sectionLabel.text = @"当前食物的一天营养比例";
+    }
+
     [MobClick beginLogPageView:@"食物详情页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
