@@ -14,7 +14,7 @@
 #define kButtonAreaSide 40.f
 #define kTagAddNum 20
 #define kNameButtonAddNum 100
-#define kMaxFilterLine 6
+#define kMaxFilterLine 7
 @implementation LZRecommendFilterView
 @synthesize backView,delegate,cancelButton,submitButton,filterArray,listView;
 - (id)initWithFrame:(CGRect)frame
