@@ -1790,7 +1790,7 @@
                             nm_dynamicFoodAmount,@"dynamicFoodAmount",
                             allFoodAttr2LevelDict,@"staticFoodAttrsDict2Level",
                             staticFoodAmountDict,@"staticFoodAmountDict",
-                            staticFoodAmountDict,@"staticFoodAmountDict",
+//                            staticFoodAmountDict,@"staticFoodAmountDict",
 
 //                            nil,@"staticFoodSupplyNutrientDict",
 //                            nil,@"allShowNutrients",

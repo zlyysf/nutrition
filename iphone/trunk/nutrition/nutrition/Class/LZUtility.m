@@ -609,7 +609,7 @@
 {
     float result = fmodf([totalWeight floatValue]*2, [singleWeight floatValue]);
     NSLog(@"result %f",result);
-    if (result == 0)
+    if (result < Config_nearZero)
     {
         return YES;
     }

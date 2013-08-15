@@ -31,7 +31,8 @@
 @property (nonatomic,assign) IBOutlet id <IZValueSelectorViewDataSource> dataSource;
 @property (nonatomic,assign) BOOL shouldBeTransparent;
 @property (nonatomic,assign) BOOL horizontalScrolling;
-
+@property (nonatomic,assign) BOOL allowTapToScroll;
+@property (nonatomic,assign) BOOL allowDynamicSentValue;
 @property (nonatomic,assign) BOOL debugEnabled;
 
 -(void)setSelectedIndex:(NSInteger)index;

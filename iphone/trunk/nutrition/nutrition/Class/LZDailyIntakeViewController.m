@@ -356,7 +356,7 @@
     foodDetailController.foodAttr = foodAtr;
     foodDetailController.foodName = foodName;
     foodDetailController.delegate = self;
-
+    foodDetailController.isCalForAll = NO;
     //UINavigationController *initialController = (UINavigationController*)[UIApplication
     //sharedApplication].keyWindow.rootViewController;
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:foodDetailController];

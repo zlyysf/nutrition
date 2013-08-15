@@ -752,8 +752,8 @@
         }
         [cell.backView.layer setMasksToBounds:YES];
         [cell.backView.layer setCornerRadius:3.f];
-        [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,200,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
-        [cell adjustLabelAccordingToProgress:progress forLabelWidth:200];
+        [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,196,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
+        [cell adjustLabelAccordingToProgress:progress forLabelWidth:196];
         //[cell.backView setBackgroundColor:[UIColor clearColor]];
 //        if (KeyIsEnvironmentDebug)
 //        {
@@ -893,12 +893,21 @@
                     foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
                 }
             }
-            
+            NSMutableDictionary *takenFoodAmountDict = [[NSMutableDictionary alloc]init];
+            for (NSString *foodId in self.takenFoodIdsArray)
+            {
+                NSDictionary *aaFood = [takenFoodDict objectForKey:foodId];
+                NSNumber *aWeight = [aaFood objectForKey:@"Amount"];
+                [takenFoodAmountDict setObject:aWeight forKey:foodId];
+            }
+            [takenFoodAmountDict removeObjectForKey:ndb_No];
             foodDetailController.currentSelectValue = weight;
             foodDetailController.defaulSelectValue = weight;
             foodDetailController.foodAttr = foodAtr;
             foodDetailController.foodName = foodName;
             foodDetailController.delegate = self;
+            foodDetailController.isCalForAll = YES;
+            foodDetailController.staticFoodAmountDict = takenFoodAmountDict;
             //UINavigationController *initialController = (UINavigationController*)[UIApplication
                                                                                   //sharedApplication].keyWindow.rootViewController;
             UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:foodDetailController];

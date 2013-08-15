@@ -191,9 +191,12 @@
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (tableView == _contentTableView) {
-        [_contentTableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionBottom animated:YES];
-        [self.delegate selector:self didSelectRowAtIndex:indexPath.row];
+    if (self.allowTapToScroll)
+    {
+        if (tableView == _contentTableView) {
+            [_contentTableView scrollToNearestSelectedRowAtScrollPosition:UITableViewScrollPositionBottom animated:YES];
+            [self.delegate selector:self didSelectRowAtIndex:indexPath.row];
+        }
     }
 }
 
@@ -210,7 +213,10 @@
 }
 -(void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    [self scrollToTheCell];
+    if (self.allowDynamicSentValue)
+    {
+        [self scrollToTheCell];
+    }
 }
 - (void)scrollToTheCell
 {

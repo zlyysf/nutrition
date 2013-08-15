@@ -30,7 +30,7 @@
 @end
 
 @implementation LZFoodDetailController
-@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName;
+@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName,isCalForAll,staticFoodAmountDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -60,6 +60,8 @@
     self.foodValuePicker.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"valuepicker_bg.png"]];
     self.foodValuePicker.horizontalScrolling = YES;
     self.foodValuePicker.debugEnabled = NO;
+    self.foodValuePicker.allowDynamicSentValue = YES;
+    self.foodValuePicker.allowTapToScroll = NO;
     self.listView.hidden = YES;
     if(isUnitDisplayAvailable)
     {
@@ -81,28 +83,83 @@
 -(void)displayNutrientUI
 {
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    if(self.inOutParam == nil)
+    if (isCalForAll)
     {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
-        NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
-        NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
-        NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
-        NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  userSex,ParamKey_sex, userAge,ParamKey_age,
-                                  userWeight,ParamKey_weight, userHeight,ParamKey_height,
-                                  userActivityLevel,ParamKey_activityLevel, nil];
-        inOutParam = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                                 userInfo,Key_userInfo,
-                                                 self.foodAttr,@"FoodAttrs",
-                                                 currentSelectValue,@"FoodAmount",
-//                      self.foodAttr,@"dynamicFoodAttrs",
-//                      currentSelectValue,@"dynamicFoodAmount",
-                                                 nil];
+        if(self.inOutParam == nil)
+        {
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+            NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+            NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+            NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+            NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      userSex,ParamKey_sex, userAge,ParamKey_age,
+                                      userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                                      userActivityLevel,ParamKey_activityLevel, nil];
+            //NSDictionary *staticFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                                  //[NSNumber numberWithDouble:200.0],@"20450",//rice
+                                                  //[NSNumber numberWithDouble:100.0],@"16108",//huangdou
+                                                  //nil];
+            //[NSNumber numberWithDouble:200.0],@"09003",//apple
+            NSString *dynamicFoodId = [self.foodAttr objectForKey:@"NDB_No"];
+            //NSNumber *nm_dynamicFoodAmount = [NSNumber numberWithDouble:200.0];
+            
+            NSMutableArray *allFoodIds = [NSMutableArray arrayWithArray:[staticFoodAmountDict allKeys]];
+            [allFoodIds addObject:dynamicFoodId];
+            
+            LZDataAccess *da = [LZDataAccess singleton];
+            NSArray *allFoodAttrAry = [da getFoodAttributesByIds:allFoodIds];
+            NSMutableDictionary *allFoodAttr2LevelDict = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:allFoodAttrAry];
+            NSDictionary *dynamicFoodAttrs = [allFoodAttr2LevelDict objectForKey:dynamicFoodId];
+            NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                           userInfo,Key_userInfo,
+                                           dynamicFoodAttrs,@"dynamicFoodAttrs",
+                                           currentSelectValue,@"dynamicFoodAmount",
+                                           allFoodAttr2LevelDict,@"staticFoodAttrsDict2Level",
+                                           staticFoodAmountDict,@"staticFoodAmountDict",
+                                           //                            staticFoodAmountDict,@"staticFoodAmountDict",
+                                           
+                                           //                            nil,@"staticFoodSupplyNutrientDict",
+                                           //                            nil,@"allShowNutrients",
+                                           //                            nil,@"nutrientInfoDict2Level",
+                                           nil];
+           self.nutrientSupplyArray = [rf calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI:params];
+        }
+        else
+        {
+            [inOutParam setObject:currentSelectValue forKey:@"dynamicFoodAmount"];
+        }
+        
     }
-    [inOutParam setObject:currentSelectValue forKey:@"FoodAmount"];
-    self.nutrientSupplyArray = [rf calculateGiveFoodSupplyNutrientAndFormatForUI:self.inOutParam];
+    else
+    {
+        if(self.inOutParam == nil)
+        {
+            NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+            NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+            NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+            NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+            NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+            NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      userSex,ParamKey_sex, userAge,ParamKey_age,
+                                      userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                                      userActivityLevel,ParamKey_activityLevel, nil];
+            inOutParam = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                                     userInfo,Key_userInfo,
+                                                     self.foodAttr,@"FoodAttrs",
+                                                     currentSelectValue,@"FoodAmount",
+    //                      self.foodAttr,@"dynamicFoodAttrs",
+    //                      currentSelectValue,@"dynamicFoodAmount",
+                                                     nil];
+        }
+        else
+        {
+            [inOutParam setObject:currentSelectValue forKey:@"FoodAmount"];
+        }
+        self.nutrientSupplyArray = [rf calculateGiveFoodSupplyNutrientAndFormatForUI:self.inOutParam];
+    }
     self.listView.hidden = NO;
     [self.listView reloadData];
 }

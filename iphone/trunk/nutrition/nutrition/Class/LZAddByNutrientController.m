@@ -403,6 +403,7 @@
     foodDetailController.foodAttr = foodAtr;
     foodDetailController.foodName = foodName;
     foodDetailController.delegate = self;
+    foodDetailController.isCalForAll = NO;
     UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:foodDetailController];
     [self presentModalViewController:nav animated:YES];
     
