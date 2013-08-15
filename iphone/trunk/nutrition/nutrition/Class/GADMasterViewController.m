@@ -166,13 +166,13 @@
 {
     //在广告即将展示时，产生一个动画，把广告条加载到视图中
     sharedAdView.hidden = NO;
-//    CGRect f = sharedAdView.frame;
-//    f.origin.x = -320;
-//    sharedAdView.frame = f;
-//    [UIView beginAnimations:nil context:nil];
-//    f.origin.x = 0;
-//    sharedAdView.frame = f;
-//    [UIView commitAnimations];
+    CGRect f = sharedAdView.frame;
+    f.origin.x = -320;
+    sharedAdView.frame = f;
+    [UIView beginAnimations:nil context:nil];
+    f.origin.x = 0;
+    sharedAdView.frame = f;
+    [UIView commitAnimations];
     NSLog(@"delegate: will display ad");
     
 }
