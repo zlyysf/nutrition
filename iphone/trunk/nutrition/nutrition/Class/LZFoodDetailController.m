@@ -22,6 +22,8 @@
 #define ValuePickerLabelFontSize 12.f
 #define SingleLineWitdh 1.f
 #define ValuePickerLabelWidth 36.f
+#define GUnitStartIndex 0
+#define UnitStartIndex 1
 @interface LZFoodDetailController ()
 {
     BOOL isFirstLoad;
@@ -97,13 +99,7 @@
                                       userSex,ParamKey_sex, userAge,ParamKey_age,
                                       userWeight,ParamKey_weight, userHeight,ParamKey_height,
                                       userActivityLevel,ParamKey_activityLevel, nil];
-            //NSDictionary *staticFoodAmountDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                                  //[NSNumber numberWithDouble:200.0],@"20450",//rice
-                                                  //[NSNumber numberWithDouble:100.0],@"16108",//huangdou
-                                                  //nil];
-            //[NSNumber numberWithDouble:200.0],@"09003",//apple
             NSString *dynamicFoodId = [self.foodAttr objectForKey:@"NDB_No"];
-            //NSNumber *nm_dynamicFoodAmount = [NSNumber numberWithDouble:200.0];
             
             NSMutableArray *allFoodIds = [NSMutableArray arrayWithArray:[staticFoodAmountDict allKeys]];
             [allFoodIds addObject:dynamicFoodId];
@@ -112,25 +108,19 @@
             NSArray *allFoodAttrAry = [da getFoodAttributesByIds:allFoodIds];
             NSMutableDictionary *allFoodAttr2LevelDict = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:allFoodAttrAry];
             NSDictionary *dynamicFoodAttrs = [allFoodAttr2LevelDict objectForKey:dynamicFoodId];
-            NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+            inOutParam = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                            userInfo,Key_userInfo,
                                            dynamicFoodAttrs,@"dynamicFoodAttrs",
                                            currentSelectValue,@"dynamicFoodAmount",
                                            allFoodAttr2LevelDict,@"staticFoodAttrsDict2Level",
                                            staticFoodAmountDict,@"staticFoodAmountDict",
-                                           //                            staticFoodAmountDict,@"staticFoodAmountDict",
-                                           
-                                           //                            nil,@"staticFoodSupplyNutrientDict",
-                                           //                            nil,@"allShowNutrients",
-                                           //                            nil,@"nutrientInfoDict2Level",
                                            nil];
-           self.nutrientSupplyArray = [rf calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI:params];
         }
         else
         {
             [inOutParam setObject:currentSelectValue forKey:@"dynamicFoodAmount"];
         }
-        
+        self.nutrientSupplyArray = [rf calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI:inOutParam];
     }
     else
     {
@@ -150,8 +140,6 @@
                                                      userInfo,Key_userInfo,
                                                      self.foodAttr,@"FoodAttrs",
                                                      currentSelectValue,@"FoodAmount",
-    //                      self.foodAttr,@"dynamicFoodAttrs",
-    //                      currentSelectValue,@"dynamicFoodAmount",
                                                      nil];
         }
         else
@@ -192,7 +180,7 @@
             {
                 if(weight<= 0)
                 {
-                    index = 2;
+                    index = UnitStartIndex;
                 }
                 else
                 {
@@ -202,13 +190,12 @@
             }
             else
             {
-                index = (weight<=0?100:weight);
+                index = (weight<=0?GUnitStartIndex:weight);
             }
         }
         else
         {
-            index = (weight<=0?100:weight);
-            
+            index = (weight<=0?GUnitStartIndex:weight);
         }
         [self.foodValuePicker setSelectedIndex:index];
     }
@@ -382,7 +369,7 @@
     int index = 0;
     if (isDefaultUnitDisplay)
     {
-        index = 100;
+        index = GUnitStartIndex;
     }
     else
     {
@@ -406,12 +393,12 @@
         index = ([defaulSelectValue intValue]*2)/[singleUnitWeight intValue] ;
         if (index <= 0)
         {
-            index = 2;
+            index = UnitStartIndex;
         }
     }
     else
     {
-        index = 2;
+        index = UnitStartIndex;
     }
 
     [self.foodValuePicker setSelectedIndex:index];
