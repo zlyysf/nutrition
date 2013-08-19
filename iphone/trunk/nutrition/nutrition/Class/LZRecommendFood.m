@@ -4486,7 +4486,7 @@
                             NSMutableArray * foodIdxAry_MinOfMaxAddCauseExceedRateForFood = [NSMutableArray array];
                             for(int i=0; i<foodIdsNotReachUpperLimit.count; i++){
                                 NSString *foodId = foodIdsNotReachUpperLimit[i];
-                                NSDictionary *foodInfoToSupplyOneNutrient = [preChooseFoodInfoDict objectForKey:foodId];
+//                                NSDictionary *foodInfoToSupplyOneNutrient = [preChooseFoodInfoDict objectForKey:foodId];
                                 //                        NSString *foodId = [foodInfoToSupplyOneNutrient objectForKey:COLUMN_NAME_NDB_No];
                                 //                        assert(foodId!=nil);
                                 NSMutableDictionary *foodCauseNutrientsExceedRateDict = [foodsCauseNutrientsExceedRateDict objectForKey:foodId];
@@ -4663,28 +4663,28 @@
     NSDictionary *DRIsDict = [recmdDict objectForKey:Key_DRI];//nutrient name as key, also column name
     NSDictionary *DRIULsDict = [recmdDict objectForKey:Key_DRIUL];
     NSArray *originalNutrientNameAryToCal = [recmdDict objectForKey:Key_originalNutrientNameAryToCal];
-    NSSet *originalNutrientNameSetToCal = [NSSet setWithArray:originalNutrientNameAryToCal];
+//    NSSet *originalNutrientNameSetToCal = [NSSet setWithArray:originalNutrientNameAryToCal];
     
     NSMutableDictionary *nutrientSupplyDict = [recmdDict objectForKey:Key_nutrientSupplyDict];//nutrient name as key, also column name
     //    NSDictionary *nutrientInitialSupplyDict = [recmdDict objectForKey:@"nutrientInitialSupplyDict"];
     NSMutableDictionary *foodSupplyAmountDict = [recmdDict objectForKey:@"foodSupplyAmountDict"];
     NSMutableDictionary *recommendFoodAmountDict = [recmdDict objectForKey:Key_recommendFoodAmountDict];//food NO as key
     //    NSDictionary *recommendFoodAttrDict = [recmdDict objectForKey:@"FoodAttr"];//food NO as key
-    NSDictionary *preChooseFoodInfoDict = [recmdDict objectForKey:Key_preChooseFoodInfoDict];
+//    NSDictionary *preChooseFoodInfoDict = [recmdDict objectForKey:Key_preChooseFoodInfoDict];
     NSDictionary *preChooseRichFoodInfoAryDict = [recmdDict objectForKey:Key_preChooseRichFoodInfoAryDict];
-    NSArray *getFoodsLogs = [recmdDict objectForKey:@"getFoodsLogs"];
+//    NSArray *getFoodsLogs = [recmdDict objectForKey:@"getFoodsLogs"];
     
     //    NSArray *userInfos = [recmdDict objectForKey:@"UserInfo"];
-    NSDictionary *userInfo = [recmdDict objectForKey:@"userInfoDict"];
+//    NSDictionary *userInfo = [recmdDict objectForKey:@"userInfoDict"];
     NSDictionary *options = [recmdDict objectForKey:Key_optionsDict];
     //    NSDictionary *params = [recmdDict objectForKey:@"paramsDict"];
-    NSArray *otherInfos = [recmdDict objectForKey:@"OtherInfo"];
+//    NSArray *otherInfos = [recmdDict objectForKey:@"OtherInfo"];
     
     NSMutableArray *foodSupplyNutrientSeqs = [recmdDict objectForKey:@"foodSupplyNutrientSeqs"];//2D array
     NSMutableArray *calculationLogs = [recmdDict objectForKey:@"calculationLogs"];//2D array
     
-    NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:Key_TakenFoodAmount];//food NO as key
-    NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:Key_TakenFoodAttr];//food NO as key
+//    NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:Key_TakenFoodAmount];//food NO as key
+//    NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:Key_TakenFoodAttr];//food NO as key
     
 //    BOOL needLimitNutrients = TRUE;
 //    BOOL needUseNormalLimitWhenSmallIncrementLogic = Config_needUseNormalLimitWhenSmallIncrementLogic;
@@ -4949,7 +4949,7 @@
     NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:Key_recommendFoodAmountDict];//food NO as key
 
     NSDictionary *preChooseFoodInfoDict = [recmdDict objectForKey:Key_preChooseFoodInfoDict];
-    NSDictionary *preChooseRichFoodInfoAryDict = [recmdDict objectForKey:Key_preChooseRichFoodInfoAryDict];
+//    NSDictionary *preChooseRichFoodInfoAryDict = [recmdDict objectForKey:Key_preChooseRichFoodInfoAryDict];
    
     
     NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:Key_TakenFoodAmount];//food NO as key
@@ -5231,11 +5231,11 @@
     //    NSDictionary *nutrientSupplyDictOld = [recmdDict objectForKey:@"nutrientSupplyDictOld"];
     //    NSDictionary *recommendFoodAmountDictOld = [recmdDict objectForKey:@"recommendFoodAmountDictOld"];
     
-    NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:Key_nutrientSupplyDict];//nutrient name as key, also column name
-    NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:Key_recommendFoodAmountDict];//food NO as key
+//    NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:Key_nutrientSupplyDict];//nutrient name as key, also column name
+//    NSDictionary *recommendFoodAmountDict = [recmdDict objectForKey:Key_recommendFoodAmountDict];//food NO as key
     
     NSDictionary *preChooseFoodInfoDict = [recmdDict objectForKey:Key_preChooseFoodInfoDict];
-    NSDictionary *preChooseRichFoodInfoAryDict = [recmdDict objectForKey:Key_preChooseRichFoodInfoAryDict];
+//    NSDictionary *preChooseRichFoodInfoAryDict = [recmdDict objectForKey:Key_preChooseRichFoodInfoAryDict];
     
     
     NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:Key_TakenFoodAmount];//food NO as key
@@ -5472,7 +5472,7 @@
         rowRateToDriUlCustomNutrients[3] = foodId;
         rowRateToDriUlCustomNutrients[4] = nmFoodAmount;
         
-        NSDictionary *foodAttrs = [preChooseFoodInfoDict objectForKey:foodId];
+//        NSDictionary *foodAttrs = [preChooseFoodInfoDict objectForKey:foodId];
     
         for(int j=0; j<originalNutrientNameAryToCal.count;j++){
             NSString *nutrientName = originalNutrientNameAryToCal[j];
@@ -5519,7 +5519,7 @@
     NSDictionary *DRIsDict = [recmdDict objectForKey:Key_DRI];//nutrient name as key, also column name
     NSDictionary *DRIULsDict = [recmdDict objectForKey:Key_DRIUL];
     NSArray *originalNutrientNameAryToCal = [recmdDict objectForKey:Key_originalNutrientNameAryToCal];
-    NSSet *originalNutrientNameSetToCal = [NSSet setWithArray:originalNutrientNameAryToCal];
+//    NSSet *originalNutrientNameSetToCal = [NSSet setWithArray:originalNutrientNameAryToCal];
     
     NSDictionary *nutrientSupplyDictOld = [recmdDict objectForKey:@"nutrientSupplyDictOld"];
     NSDictionary *recommendFoodAmountDictOld = [recmdDict objectForKey:@"recommendFoodAmountDictOld"];
@@ -5539,7 +5539,7 @@
     NSArray *otherInfos = [recmdDict objectForKey:@"OtherInfo"];
     
     NSArray *foodSupplyNutrientSeqs = [recmdDict objectForKey:@"foodSupplyNutrientSeqs"];//2D array
-    NSArray *calculationLogs = [recmdDict objectForKey:@"calculationLogs"];//2D array
+//    NSArray *calculationLogs = [recmdDict objectForKey:@"calculationLogs"];//2D array
     
     NSDictionary *takenFoodAmountDict = [recmdDict objectForKey:Key_TakenFoodAmount];//food NO as key
     NSDictionary *takenFoodAttrDict = [recmdDict objectForKey:Key_TakenFoodAttr];//food NO as key

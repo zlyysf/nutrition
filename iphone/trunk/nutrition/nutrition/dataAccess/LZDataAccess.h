@@ -20,7 +20,7 @@
 
 + (NSString *)dbFilePath;
 
-- (id)initDBConnection;
+//- (id)initDBConnection;
 -(void)openDB_withFilePath: (NSString *)dbFilePath;
 -(void)closeDB;
 
