@@ -614,9 +614,11 @@
             [fsdRow addObject:@""];
         }
 
-        double dMaxFoodAdequateAmount = 0;
+//        double dMaxFoodAdequateAmount = 0;
+        NSNumber *nmMaxFoodAdequateAmount = nil;
         NSString *nutrientToMaxFoodAdequateAmount = nil;
-        double dMinFoodAdequateAmount = 0;
+//        double dMinFoodAdequateAmount = 0;
+        NSNumber *nmMinFoodAdequateAmount = nil;
         NSString *nutrientToMinFoodAdequateAmount = nil;
         for(int j=0; j<allNutrientAry.count; j++){
             NSString *columnNameNutrient = allNutrientAry[j];
@@ -640,9 +642,10 @@
                     }else{//@"original"
                         //do nothing
                     }
+                    NSNumber *nmFoodSupplyAmount = [NSNumber numberWithDouble:dFoodSupplyAmount];
                     if (needAmountToLevel){
-                        if (dFoodSupplyAmount > 0){
-                            dFoodSupplyAmount = round((dFoodSupplyAmount + 100) / 100.0);
+                        if ([nmFoodSupplyAmount doubleValue] > 0){
+                            nmFoodSupplyAmount = [NSNumber numberWithDouble: round(([nmFoodSupplyAmount doubleValue] + 100) / 100.0) ];
                         }else{
                             //when foodSupplyAmount be 0, not right to convert to level value
                         }
@@ -650,42 +653,44 @@
                         //do nothing
                     }
                     if (needRoundAmount){
-                        dFoodSupplyAmount = round(dFoodSupplyAmount);
+//                        dFoodSupplyAmount = round(dFoodSupplyAmount);
+                        nmFoodSupplyAmount = [LZUtility getDecimalFromDouble:[nmFoodSupplyAmount doubleValue] withScale:2];
+                        
                     }
                     
                     if (!needAmountToLevel){
-                        if (dMaxFoodAdequateAmount == 0){
-                            if (dFoodSupplyAmount > 0 && dFoodSupplyAmount <= Config_foodUpperLimit){
-                                dMaxFoodAdequateAmount = dFoodSupplyAmount;
+                        if (nmMaxFoodAdequateAmount == nil){
+                            if ([nmFoodSupplyAmount doubleValue] > 0 && [nmFoodSupplyAmount doubleValue] <= Config_foodUpperLimit){
+                                nmMaxFoodAdequateAmount = nmFoodSupplyAmount;
                                 nutrientToMaxFoodAdequateAmount = columnNameNutrient;
                                 
-                                dMinFoodAdequateAmount = dFoodSupplyAmount;
+                                nmMinFoodAdequateAmount = nmFoodSupplyAmount;
                                 nutrientToMinFoodAdequateAmount = columnNameNutrient;
                             }
                         }else{//dMaxFoodAdequateAmount > 0
-                            if (dFoodSupplyAmount > 0 && dFoodSupplyAmount <= Config_foodUpperLimit){
-                                if (dMaxFoodAdequateAmount < dFoodSupplyAmount){
-                                    dMaxFoodAdequateAmount = dFoodSupplyAmount;
+                            if ([nmFoodSupplyAmount doubleValue] > 0 && [nmFoodSupplyAmount doubleValue] <= Config_foodUpperLimit){
+                                if ([nmMaxFoodAdequateAmount doubleValue] < [nmFoodSupplyAmount doubleValue]){
+                                    nmMaxFoodAdequateAmount = nmFoodSupplyAmount;
                                     nutrientToMaxFoodAdequateAmount = columnNameNutrient;
                                 }
-                                if (dMinFoodAdequateAmount > dFoodSupplyAmount){
-                                    dMinFoodAdequateAmount = dFoodSupplyAmount;
+                                if ([nmMinFoodAdequateAmount doubleValue] > [nmFoodSupplyAmount doubleValue]){
+                                    nmMinFoodAdequateAmount = nmFoodSupplyAmount;
                                     nutrientToMinFoodAdequateAmount = columnNameNutrient;
                                 }
                             }
                         }
                     }
                     
-                    [fsdRow addObject:[NSNumber numberWithDouble:dFoodSupplyAmount]];
+                    [fsdRow addObject:nmFoodSupplyAmount];
                 }
             }//NOT if (nutrientDRI == nil)
         }//for j
         if (!needAmountToLevel){
             if (nutrientToMaxFoodAdequateAmount != nil){
-                assert(dMaxFoodAdequateAmount>0);
-                fsdRow[1] = [NSNumber numberWithDouble:dMinFoodAdequateAmount];
+                assert([nmMaxFoodAdequateAmount doubleValue]>0);
+                fsdRow[1] = nmMinFoodAdequateAmount;
                 fsdRow[2] = nutrientToMinFoodAdequateAmount;
-                fsdRow[3] = [NSNumber numberWithDouble:dMaxFoodAdequateAmount];
+                fsdRow[3] = nmMaxFoodAdequateAmount;
                 fsdRow[4] = nutrientToMaxFoodAdequateAmount;
             }
         }

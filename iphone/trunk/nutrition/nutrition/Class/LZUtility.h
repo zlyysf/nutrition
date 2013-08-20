@@ -13,6 +13,8 @@
 
 @interface LZUtility : NSObject
 
++(NSDecimalNumber*)getDecimalFromDouble:(double)dval withScale:(NSInteger)scale;
+
 +(NSNumber *)add2NSNumberByDouble_withNumber1:(NSNumber*)nm1 andNumber2:(NSNumber*)nm2;
 +(NSNumber *)addNumberWithDouble:(double)d1 andNumber2:(NSNumber*)nm2;
 

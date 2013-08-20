@@ -12,6 +12,14 @@
 #import <math.h>
 @implementation LZUtility
 
++(NSDecimalNumber*)getDecimalFromDouble:(double)dval withScale:(NSInteger)scale
+{
+    NSString *s1 = [NSString stringWithFormat:@"%%.%df",scale];
+    NSString *s2 = [NSString stringWithFormat:s1,dval ];
+    NSDecimalNumber *nd = [NSDecimalNumber decimalNumberWithString:s2];
+    return nd;
+}
+
 +(NSNumber *)add2NSNumberByDouble_withNumber1:(NSNumber*)nm1 andNumber2:(NSNumber*)nm2
 {
     double d1 = 0;

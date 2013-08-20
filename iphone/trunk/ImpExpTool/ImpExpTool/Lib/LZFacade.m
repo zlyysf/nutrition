@@ -110,7 +110,10 @@
     [db myInitWithDbFilePath:dbFilePath1 andIfNeedClear:FALSE];
     [db convertFood_Supply_DRI_AmountWithExtraInfoToCsv:@"Food_Supply_DRI_Amount_Extra.csv"];
     [db convertCnFoodNutritionWithExtraInfoToCsv:@"FoodNutritionCustomByJoin.csv"];
-    [db convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"RichFoodsOfEveryNutrients.csv"];
+    
+//    [db convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"RichFoodsOfEveryNutrients.csv"];
+    [db convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:@"CustomRichFood.csv"];
+    
     [db convertFood_Supply_DRIUL_AmountWithExtraInfoToCsv:@"Food_Supply_DRIUL_Amount_Extra.csv"];
     
     LZReadExcel *workRe = [[LZReadExcel alloc]init];
