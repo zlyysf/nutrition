@@ -72,9 +72,9 @@ CREATE TABLE CustomRichFood ('NutrientID' TEXT,'NDB_No' TEXT);
 
 
 
-
-
-
+CREATE TABLE DiseaseNutrient (Disease TEXT, NutrientID TEXT);
+CREATE TABLE DiseaseGroup(DiseaseGroup TEXT, dsGroupType TEXT, dsGroupWizardOrder REAL);
+CREATE TABLE DiseaseInGroup(DiseaseGroup TEXT, Disease TEXT);
 
 
 

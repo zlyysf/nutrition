@@ -151,7 +151,16 @@
 #define COLUMN_NAME_NutrientID_max @"NutrientID_max"
 #define COLUMN_NAME_NutrientID_min @"NutrientID_min"
 
+#define TABLE_NAME_DiseaseNutrient @"DiseaseNutrient"
+#define TABLE_NAME_DiseaseGroup @"DiseaseGroup"
+#define TABLE_NAME_DiseaseInGroup @"DiseaseInGroup"
 #define COLUMN_NAME_Disease @"Disease"
+#define COLUMN_NAME_DiseaseGroup @"DiseaseGroup"
+#define COLUMN_NAME_dsGroupType @"dsGroupType"
+#define COLUMN_NAME_dsGroupWizardOrder @"dsGroupWizardOrder"
+
+#define DiseaseGroupType_wizard @"wizard"
+#define DiseaseGroupType_illness @"illness"
 
 #define Key_Amount @"Amount"
 #define Key_Name @"Name"
