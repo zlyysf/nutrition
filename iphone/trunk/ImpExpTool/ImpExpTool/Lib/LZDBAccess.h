@@ -7,6 +7,9 @@
 #import <Foundation/Foundation.h>
 #import "FMDatabase.h"
 
+#import "LZDataAccess.h"
+#import "LZDataAccessUtil.h"
+
 
 
 @interface LZDBAccess : NSObject
@@ -15,18 +18,16 @@
 +(LZDBAccess *)singletonCustomDB ;
 
 - (FMDatabase *)db;
+-(LZDataAccess*)da;
 
 
-- (void)doSome;
+//- (void)doSome;
 
 -(void)myInitWithDbFilePath: (NSString *)dbFilePath andIfNeedClear:(BOOL) needClear;
 
 - (NSDictionary *)getAllDataOfTable:(NSString *)tableName;
 
--(void)createTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames withPrimaryKey:(NSString*)primaryKey andIfNeedDropTable:(BOOL)needDrop;
--(void)createTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames withRows2D:(NSArray*)rows2D withPrimaryKey:(NSString*)primaryKey andIfNeedDropTable:(BOOL)needDrop;
--(NSString *)generateInsertSqlForTable:(NSString*)tableName andColumnNames:(NSArray*)columnNames;
--(void)insertToTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames andRows2D:(NSArray*)rows2D andIfNeedClearTable:(BOOL)needClear;
+
 
 -(NSMutableDictionary *)queryUSDADataByIds:(NSArray *)idAry;
 

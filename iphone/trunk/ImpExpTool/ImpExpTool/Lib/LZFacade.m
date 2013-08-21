@@ -118,7 +118,7 @@
     
     LZReadExcel *workRe = [[LZReadExcel alloc]init];
     [workRe myInitDBConnectionWithFilePath:dbFilePath1 andIfNeedClear:FALSE];
-    LZDBAccess *db2 = [workRe getDBconnection];
+//    LZDBAccess *db2 = [workRe getDBconnection];
     
     [workRe generateCsv_ToMerge_FoodCustomnAndDRIULAmount_withCsvFileName:@"ToMerge_FoodCustomAndDRIULAmount.csv"];
 

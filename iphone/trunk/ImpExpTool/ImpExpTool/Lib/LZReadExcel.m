@@ -664,8 +664,8 @@
     LZDBAccess *db = dbCon;
     NSString *tableName = TABLE_NAME_FoodCustom;
     NSString *primaryKey = COLUMN_NAME_NDB_No;
-    [db createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:true];
-    [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
+    [db.da createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:true];
+    [db.da insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
 }
 
 -(BOOL)checkExcelForFoodPicPath
@@ -964,8 +964,8 @@
     
     assert(dbCon!=nil);
     LZDBAccess *db = dbCon;
-    [db createTable_withTableName:tableName withColumnNames:columns withRows2D:rows2D withPrimaryKey:COLUMN_NAME_NutrientID andIfNeedDropTable:true];
-    [db insertToTable_withTableName:tableName withColumnNames:columns andRows2D:rows2D andIfNeedClearTable:true];
+    [db.da createTable_withTableName:tableName withColumnNames:columns withRows2D:rows2D withPrimaryKey:COLUMN_NAME_NutrientID andIfNeedDropTable:true];
+    [db.da insertToTable_withTableName:tableName withColumnNames:columns andRows2D:rows2D andIfNeedClearTable:true];
 }
 
 
@@ -1087,8 +1087,8 @@
     
     assert(dbCon!=nil);
     LZDBAccess *db = dbCon;
-    [db createTable_withTableName:tableName withColumnNames:columns withRows2D:rows2D withPrimaryKey:nil andIfNeedDropTable:true];
-    [db insertToTable_withTableName:tableName withColumnNames:columns andRows2D:rows2D andIfNeedClearTable:true];
+    [db.da createTable_withTableName:tableName withColumnNames:columns withRows2D:rows2D withPrimaryKey:nil andIfNeedDropTable:true];
+    [db.da insertToTable_withTableName:tableName withColumnNames:columns andRows2D:rows2D andIfNeedClearTable:true];
 }
 
 
@@ -1221,16 +1221,16 @@
     LZDBAccess *db = dbCon;
     NSString *tableName;
     tableName = TABLE_NAME_DiseaseGroup;
-    [db createTable_withTableName:tableName withColumnNames:columnNames_DiseaseGroup withRows2D:diseaseGroupAry withPrimaryKey:nil andIfNeedDropTable:true];
-    [db insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseGroup andRows2D:diseaseGroupAry andIfNeedClearTable:true];
+    [db.da createTable_withTableName:tableName withColumnNames:columnNames_DiseaseGroup withRows2D:diseaseGroupAry withPrimaryKey:nil andIfNeedDropTable:true];
+    [db.da insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseGroup andRows2D:diseaseGroupAry andIfNeedClearTable:true];
     
     tableName = TABLE_NAME_DiseaseInGroup;
-    [db createTable_withTableName:tableName withColumnNames:columnNames_DiseaseInGroup withRows2D:diseaseInGroupAry withPrimaryKey:nil andIfNeedDropTable:true];
-    [db insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseInGroup andRows2D:diseaseInGroupAry andIfNeedClearTable:true];
+    [db.da createTable_withTableName:tableName withColumnNames:columnNames_DiseaseInGroup withRows2D:diseaseInGroupAry withPrimaryKey:nil andIfNeedDropTable:true];
+    [db.da insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseInGroup andRows2D:diseaseInGroupAry andIfNeedClearTable:true];
 
     tableName = TABLE_NAME_DiseaseNutrient;
-    [db createTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient withRows2D:diseaseNutrientAry withPrimaryKey:nil andIfNeedDropTable:true];
-    [db insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient andRows2D:diseaseNutrientAry andIfNeedClearTable:true];
+    [db.da createTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient withRows2D:diseaseNutrientAry withPrimaryKey:nil andIfNeedDropTable:true];
+    [db.da insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient andRows2D:diseaseNutrientAry andIfNeedClearTable:true];
 
 }
 

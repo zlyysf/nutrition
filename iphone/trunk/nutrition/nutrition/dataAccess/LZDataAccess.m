@@ -1100,7 +1100,7 @@
 //    
 //    NSLog(@"getFoodIdsByFilters_withIncludeFoodClass sqlStr=%@",sqlStr);
 //    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
-//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    NSArray * dataAry = [LZDataAccess FMResultSetToDictionaryArray:rs];
     
     NSMutableArray *foodIdAry = [NSMutableArray arrayWithCapacity:dataAry.count];
     for(int i=0; i<dataAry.count; i++){
@@ -1271,7 +1271,7 @@
 //
 //    NSLog(@"getFoodsByFilters_withIncludeFoodClass sqlStr=%@",sqlStr);
 //    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
-//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    NSArray * dataAry = [LZDataAccess FMResultSetToDictionaryArray:rs];
 //    NSLog(@"getFoodsByFilters_withIncludeFoodClass ret:\n%@",dataAry);
 //    return dataAry;
 }
@@ -1347,7 +1347,7 @@
 //    ;
 //
 //    FMResultSet *rs = [dbfm executeQuery:query];
-//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    NSArray * dataAry = [LZDataAccess FMResultSetToDictionaryArray:rs];
 //    assert(dataAry.count > 0);
 ////    NSLog(@"getAllFood ret:\n%@",dataAry);
 //    return dataAry;

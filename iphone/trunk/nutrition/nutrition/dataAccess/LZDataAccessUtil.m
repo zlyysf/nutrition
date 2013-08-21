@@ -41,6 +41,214 @@
 }
 
 
+
+
+
+
+
+
+
+
+
+-(void)dropTable:(NSString*)tableName
+{
+    FMDatabase *_db = dbfm;
+    NSMutableString *sqlDrop = [NSMutableString stringWithCapacity:100];
+    [sqlDrop appendString:@"DROP TABLE IF EXISTS "];
+    [sqlDrop appendString:tableName];
+    [_db executeUpdate:sqlDrop];
+}
+-(void)deleteFromTable:(NSString*)tableName
+{
+    FMDatabase *_db = dbfm;
+    NSMutableString *sqlDelete = [NSMutableString stringWithCapacity:100];
+    [sqlDelete appendString:@"DELETE FROM "];
+    [sqlDelete appendString:tableName];
+    [_db executeUpdate:sqlDelete];
+}
+
+- (BOOL)deleteTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue
+{
+    NSString *query = [NSString stringWithFormat: @"DELETE FROM %@ WHERE %@=:fieldValue",tableName,fieldName];
+    NSDictionary *dictQueryParam = [NSDictionary dictionaryWithObjectsAndKeys:fieldValue, @"fieldValue", nil];
+    BOOL dbopState = [dbfm executeUpdate:query error:nil withParameterDictionary:dictQueryParam];
+    return dbopState;
+}
+
+
+-(void)createTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames withPrimaryKey:(NSString*)primaryKey andIfNeedDropTable:(BOOL)needDrop
+{
+    FMDatabase *_db = dbfm;
+    assert(columnNames.count > 1);
+    if (needDrop){
+        [self dropTable:tableName];
+    }
+    NSMutableDictionary *columnDict = [NSMutableDictionary dictionaryWithObjects:columnNames forKeys:columnNames];
+    assert([columnDict objectForKey:primaryKey]!=nil);
+    NSMutableArray *otherColumnNames = [NSMutableArray arrayWithArray:columnNames];//不能用dictionary的keys，是因为顺序乱了
+    for(int i=0; i<otherColumnNames.count; i++){
+        NSString *colName = otherColumnNames[i];
+        if ([colName isEqualToString:primaryKey]){
+            [otherColumnNames removeObjectAtIndex:i];
+            break;
+        }
+    }
+    
+    NSMutableString *sqlCreate = [NSMutableString stringWithCapacity:1000*100];
+    NSString *s1;
+    [sqlCreate appendString:@"CREATE TABLE "];
+    [sqlCreate appendString:tableName];
+    [sqlCreate appendString:@" ("];
+    s1 = [NSString stringWithFormat:@"'%@' TEXT PRIMARY KEY",primaryKey];
+    [sqlCreate appendString:s1];
+    for(int i=0; i<otherColumnNames.count; i++){
+        s1 = [NSString stringWithFormat:@",'%@' REAL",otherColumnNames[i]];//对于sqlite来说，实际为text类型的列设计为real类型，也没有关系，从而省去一些判断的工作
+        [sqlCreate appendString:s1];
+    }
+    [sqlCreate appendString:@")"];
+    NSLog(@"createTable_withTableName sqlCreate=%@",sqlCreate);
+    [_db executeUpdate:sqlCreate];
+}
+
+-(void)createTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames withRows2D:(NSArray*)rows2D withPrimaryKey:(NSString*)primaryKey andIfNeedDropTable:(BOOL)needDrop
+{
+    FMDatabase *_db = dbfm;
+    assert(columnNames.count > 1);
+    assert(rows2D.count > 0);
+    if (needDrop){
+        [self dropTable:tableName];
+    }
+    NSMutableDictionary *columnDict = [NSMutableDictionary dictionaryWithObjects:columnNames forKeys:columnNames];
+    if (primaryKey != nil ){
+        assert([columnDict objectForKey:primaryKey]!=nil);
+    }
+    NSArray *row = rows2D[0];
+    assert(row.count==columnNames.count);
+    
+    NSMutableString *sqlCreate = [NSMutableString stringWithCapacity:1000*100];
+    [sqlCreate appendString:@"CREATE TABLE "];
+    [sqlCreate appendString:tableName];
+    [sqlCreate appendString:@" ("];
+    
+    for(int i=0; i<columnNames.count; i++){
+        NSString *columnName = columnNames[i];
+        NSObject *cell = row[i];
+        NSMutableString *s1 = [NSMutableString stringWithCapacity:100];
+        if (i>0){
+            [s1 appendString:@","];
+        }
+        [s1 appendFormat:@"'%@'",columnName ];
+        if ([cell isKindOfClass:[NSNumber class]] && ![columnName isEqualToString:primaryKey]){
+            [s1 appendString:@" REAL"];
+        }else{
+            [s1 appendString:@" TEXT"];
+        }
+        if ([columnName isEqualToString:primaryKey]){
+            [s1 appendString:@" PRIMARY KEY"];
+        }
+        [sqlCreate appendString:s1];
+    }
+    [sqlCreate appendString:@")"];
+    NSLog(@"createTable_withTableName sqlCreate=%@",sqlCreate);
+    [_db executeUpdate:sqlCreate];
+}
+
+/*
+ 这里生成的insert sql语句中使用的是位置，而不是列名相关的key值，因为列名可能含有特殊字符。
+ */
+-(NSString *)generateInsertSqlForTable:(NSString*)tableName andColumnNames:(NSArray*)columnNames
+{
+    assert(columnNames.count > 0);
+    
+    //  INSERT INTO tblGroup (id, name, description, pkgid, seqInPkg) VALUES (101, 'tblGroup 1', 'p1g1', 1, 1);
+    
+    NSMutableArray *columnNames2 = [NSMutableArray arrayWithArray:columnNames];
+    NSMutableArray *valuePlaceholders = [NSMutableArray arrayWithCapacity:columnNames.count];
+    for(int i=0; i<columnNames2.count; i++){
+        NSString *colName = [NSString stringWithFormat:@"'%@'",columnNames[i] ];//避免列名中有特殊字符
+        
+        //[columnNames2 replaceObjectAtIndex:i withObject:colName];
+        columnNames2[i] = colName;
+        valuePlaceholders[i] = @"?";
+    }
+    NSString *columnsStr = [columnNames2 componentsJoinedByString:@","];
+    NSString *valuePlaceholdersStr = [valuePlaceholders componentsJoinedByString:@","];
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
+    [sqlStr appendString:@"INSERT INTO "];
+    [sqlStr appendString:tableName];
+    [sqlStr appendString:@"("];
+    [sqlStr appendString:columnsStr];
+    [sqlStr appendString:@") VALUES ("];
+    [sqlStr appendString:valuePlaceholdersStr];
+    [sqlStr appendString:@");"];
+    NSLog(@"generateInsertSqlForTable sqlStr=%@",sqlStr);
+    return sqlStr;
+}
+
+-(void)insertToTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames andRows2D:(NSArray*)rows2D andIfNeedClearTable:(BOOL)needClear
+{
+    FMDatabase *_db = dbfm;
+    if (needClear){
+        [self deleteFromTable:tableName];
+    }
+    if (rows2D.count == 0)
+        return;
+    assert(columnNames.count > 0);
+    NSString * insertSql = [self generateInsertSqlForTable:tableName andColumnNames:columnNames];
+    
+    for(int i=0; i<rows2D.count; i++){
+        NSArray *row = rows2D[i];
+        assert(columnNames.count == row.count);
+        
+        [_db executeUpdate:insertSql error:nil withArgumentsInArray:row];
+    }
+}
+
+
+
+
+
+
+
+
+-(NSDictionary*)queryDataAndMetaDataBySelectSql:(NSString*)sqlSelect
+{
+    FMDatabase *_db = dbfm;
+    NSMutableArray *rowAry = [NSMutableArray arrayWithCapacity:1000];
+    NSMutableArray *columnNames = nil;
+    FMResultSet *rs = [_db executeQuery:sqlSelect];
+    while ([rs next]) {
+        if (columnNames == nil){
+            //取固定顺序的所有列名
+            columnNames = rs.columnNameArray;
+        }
+        NSArray *row = rs.resultArray;
+        [rowAry addObject:row];
+    }
+    NSLog(@"queryDataAndMetaDataBySelectSql get columnNames=\n%@,\nrows=\n%@",columnNames,rowAry);
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:3];
+    if (rowAry.count > 0){
+        [retData setObject:columnNames forKey:@"columnNames"];
+        [retData setObject:rowAry forKey:@"rows2D"];
+    }
+    return retData;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 - (NSArray *)selectAllForTable:(NSString *)tableName andOrderBy:(NSString *)partOrderBy
 {
     NSMutableString *query = [NSMutableString stringWithFormat: @"SELECT * FROM %@",tableName];
@@ -118,13 +326,7 @@
     return dataAry;
 }
 
-- (BOOL)deleteTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue
-{
-    NSString *query = [NSString stringWithFormat: @"DELETE FROM %@ WHERE %@=:fieldValue",tableName,fieldName];
-    NSDictionary *dictQueryParam = [NSDictionary dictionaryWithObjectsAndKeys:fieldValue, @"fieldValue", nil];
-    BOOL dbopState = [dbfm executeUpdate:query error:nil withParameterDictionary:dictQueryParam];
-    return dbopState;
-}
+
 
 
 
@@ -470,6 +672,33 @@
     
     return dataAry;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

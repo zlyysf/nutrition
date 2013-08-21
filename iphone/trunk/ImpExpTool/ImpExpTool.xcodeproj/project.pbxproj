@@ -47,6 +47,7 @@
 		0882414D174B615D00E71E6E /* NutrientInfo.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882414C174B615D00E71E6E /* NutrientInfo.xls */; };
 		0882419A17530AC500E71E6E /* Food_common.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882419917530AC500E71E6E /* Food_common.xls */; };
 		088821C617B132FB0054FABD /* benefits_nutrition_mapping.xls in Resources */ = {isa = PBXBuildFile; fileRef = 088821C517B132FB0054FABD /* benefits_nutrition_mapping.xls */; };
+		088B768A17C4C44200206959 /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768917C4C44200206959 /* LZDataAccessUtil.m */; };
 		08CDEAD117A652DD00AFA47E /* foodDealed in Resources */ = {isa = PBXBuildFile; fileRef = 08CDEAD017A652DD00AFA47E /* foodDealed */; };
 		08CDEAD417A6865E00AFA47E /* CustomRichFood.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */; };
 /* End PBXBuildFile section */
@@ -126,6 +127,8 @@
 		0882414C174B615D00E71E6E /* NutrientInfo.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = NutrientInfo.xls; path = ../../../data/NutrientInfo.xls; sourceTree = "<group>"; };
 		0882419917530AC500E71E6E /* Food_common.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Food_common.xls; path = ../../../data/Food_common.xls; sourceTree = "<group>"; };
 		088821C517B132FB0054FABD /* benefits_nutrition_mapping.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = benefits_nutrition_mapping.xls; path = ../../../data/benefits_nutrition_mapping.xls; sourceTree = "<group>"; };
+		088B768817C4C44200206959 /* LZDataAccessUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZDataAccessUtil.h; sourceTree = "<group>"; };
+		088B768917C4C44200206959 /* LZDataAccessUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZDataAccessUtil.m; sourceTree = "<group>"; };
 		08CDEAD017A652DD00AFA47E /* foodDealed */ = {isa = PBXFileReference; lastKnownFileType = folder; name = foodDealed; path = ../../../ui/pictures/foodDealed; sourceTree = "<group>"; };
 		08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomRichFood.xls; path = ../../../data/CustomRichFood.xls; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -269,6 +272,8 @@
 		088240CF1740A66100E71E6E /* dataAccess */ = {
 			isa = PBXGroup;
 			children = (
+				088B768817C4C44200206959 /* LZDataAccessUtil.h */,
+				088B768917C4C44200206959 /* LZDataAccessUtil.m */,
 				088240D01740A66100E71E6E /* LZDataAccess.h */,
 				088240D11740A66100E71E6E /* LZDataAccess.m */,
 			);
@@ -418,6 +423,7 @@
 				088240D21740A66100E71E6E /* LZDataAccess.m in Sources */,
 				088241251741E3CD00E71E6E /* LZFacade.m in Sources */,
 				0853BDD717957DD300B05122 /* LZRecommendFood.m in Sources */,
+				088B768A17C4C44200206959 /* LZDataAccessUtil.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
