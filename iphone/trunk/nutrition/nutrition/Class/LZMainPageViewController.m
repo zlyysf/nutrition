@@ -8,6 +8,8 @@
 
 #import "LZMainPageViewController.h"
 #import "LZAddFoodCell.h"
+#import "LZUserDietListViewController.h"
+#import "LZSettingsViewController.h"
 @interface LZMainPageViewController ()
 
 @end
@@ -97,6 +99,18 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.listView deselectRowAtIndexPath:indexPath animated:YES];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    if (indexPath.row == 2)
+    {
+        LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
+        [self.navigationController pushViewController:userDietListViewController animated:YES];
+    }
+    else if(indexPath.row == 5)
+    {
+        LZSettingsViewController *settingsViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZSettingsViewController"];
+        [self.navigationController pushViewController:settingsViewController animated:YES];
+    }
+    
 //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
 //    LZDailyIntakeViewController *dailyIntakeViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
 //    dailyIntakeViewController.foodArray = [self.foodNameArray objectAtIndex:indexPath.row];

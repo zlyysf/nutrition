@@ -12,7 +12,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zNi-SH-Nyd">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zNi-SH-Nyd">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1612,6 +1612,10 @@
         <class className="LZDietListMakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDietListMakeViewController.h"/>
             <relationships>
+                <relationship kind="action" name="addFoodAction:"/>
+                <relationship kind="action" name="addFoodByNutrient:" candidateClass="UIButton"/>
+                <relationship kind="action" name="recommendAction:"/>
+                <relationship kind="action" name="shareButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1678,6 +1682,7 @@
         <class className="LZFoodNutritionCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodNutritionCell.h"/>
             <relationships>
+                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="addFoodButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="nutritionNameButton" candidateClass="UIButton"/>
@@ -1700,6 +1705,7 @@
         <class className="LZNutritionSupplyCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionSupplyCell.h"/>
             <relationships>
+                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="nameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nutrientSupplyLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
@@ -1750,6 +1756,9 @@
         <class className="LZShareViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZShareViewController.h"/>
             <relationships>
+                <relationship kind="action" name="cancelButtonTapped:"/>
+                <relationship kind="action" name="clearButtonTapped:"/>
+                <relationship kind="action" name="publishButtonTapped:"/>
                 <relationship kind="outlet" name="contentBackgroundImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="contentTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="previewImageView" candidateClass="UIImageView"/>

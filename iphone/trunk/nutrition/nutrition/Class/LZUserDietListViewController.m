@@ -42,9 +42,9 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(addListAction)];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(settingsAction)];
+//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(settingsAction)];
     
-    self.navigationItem.leftBarButtonItem = leftItem;
+    //self.navigationItem.leftBarButtonItem = leftItem;
     self.navigationItem.rightBarButtonItem = rightItem;
     
     self.title = @"膳食清单";

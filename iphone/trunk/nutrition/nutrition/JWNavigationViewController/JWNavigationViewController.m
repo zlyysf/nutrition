@@ -54,12 +54,12 @@
     [self.view addSubview:_screenshotBView];
     [self hideMaskViews:YES];
 
-    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveView:)];
-    panGesture.maximumNumberOfTouches = 1;
-    panGesture.minimumNumberOfTouches = 1;
-    panGesture.cancelsTouchesInView = YES;
-    [self.view addGestureRecognizer:panGesture];
-    [panGesture release];
+//    UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(moveView:)];
+//    panGesture.maximumNumberOfTouches = 1;
+//    panGesture.minimumNumberOfTouches = 1;
+//    panGesture.cancelsTouchesInView = YES;
+//    [self.view addGestureRecognizer:panGesture];
+//    [panGesture release];
 }
 
 - (void)dealloc {
