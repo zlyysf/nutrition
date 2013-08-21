@@ -50,6 +50,7 @@
 		0882403E173A7E7400E71E6E /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882403D173A7E7400E71E6E /* readme.txt */; };
 		088241441744DE8000E71E6E /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
 		0882419F175621DE00E71E6E /* foodDealed in Resources */ = {isa = PBXBuildFile; fileRef = 0882419E175621DE00E71E6E /* foodDealed */; };
+		5F0081EB17C47E6F000938C2 /* JWNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0081EA17C47E6F000938C2 /* JWNavigationViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		5F0122A8174C731900AC0156 /* cell_bottom@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122A5174C731900AC0156 /* cell_bottom@2x.png */; };
 		5F0122A9174C731900AC0156 /* cell_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122A6174C731900AC0156 /* cell_middle@2x.png */; };
 		5F0122AA174C731900AC0156 /* cell_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0122A7174C731900AC0156 /* cell_top@2x.png */; };
@@ -64,6 +65,7 @@
 		5F03D350174B924B008EFB60 /* background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F03D34E174B924B008EFB60 /* background@2x.png */; };
 		5F03D351174B924B008EFB60 /* defaulFoodPic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F03D34F174B924B008EFB60 /* defaulFoodPic@2x.png */; };
 		5F0971811793ABD3000030AA /* LZUserDietListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0971801793ABD3000030AA /* LZUserDietListViewController.m */; };
+		5F145D8317C4987E00D6B615 /* LZMainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F145D8217C4987E00D6B615 /* LZMainPageViewController.m */; };
 		5F20148A17BB2F7B0009B735 /* LZValueSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F50961A1754777300461964 /* LZValueSelectorView.m */; };
 		5F20148C17BB35A50009B735 /* valuepicker_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20148B17BB35A50009B735 /* valuepicker_bg@2x.png */; };
 		5F20148E17BB40140009B735 /* valuepicker_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20148D17BB40140009B735 /* valuepicker_cover@2x.png */; };
@@ -258,6 +260,8 @@
 		088241421744DE8000E71E6E /* LZTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZTest1.h; sourceTree = "<group>"; };
 		088241431744DE8000E71E6E /* LZTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZTest1.m; sourceTree = "<group>"; };
 		0882419E175621DE00E71E6E /* foodDealed */ = {isa = PBXFileReference; lastKnownFileType = folder; name = foodDealed; path = ../../../ui/pictures/foodDealed; sourceTree = "<group>"; };
+		5F0081E917C47E6F000938C2 /* JWNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JWNavigationViewController.h; sourceTree = "<group>"; };
+		5F0081EA17C47E6F000938C2 /* JWNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JWNavigationViewController.m; sourceTree = "<group>"; };
 		5F0122A5174C731900AC0156 /* cell_bottom@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_bottom@2x.png"; path = "nutrition/Resource/cell_bottom@2x.png"; sourceTree = "<group>"; };
 		5F0122A6174C731900AC0156 /* cell_middle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_middle@2x.png"; path = "nutrition/Resource/cell_middle@2x.png"; sourceTree = "<group>"; };
 		5F0122A7174C731900AC0156 /* cell_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cell_top@2x.png"; path = "nutrition/Resource/cell_top@2x.png"; sourceTree = "<group>"; };
@@ -279,6 +283,8 @@
 		5F03D34F174B924B008EFB60 /* defaulFoodPic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "defaulFoodPic@2x.png"; path = "nutrition/Resource/defaulFoodPic@2x.png"; sourceTree = "<group>"; };
 		5F09717F1793ABD3000030AA /* LZUserDietListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUserDietListViewController.h; path = Class/LZUserDietListViewController.h; sourceTree = "<group>"; };
 		5F0971801793ABD3000030AA /* LZUserDietListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUserDietListViewController.m; path = Class/LZUserDietListViewController.m; sourceTree = "<group>"; };
+		5F145D8117C4987E00D6B615 /* LZMainPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZMainPageViewController.h; path = Class/LZMainPageViewController.h; sourceTree = "<group>"; };
+		5F145D8217C4987E00D6B615 /* LZMainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZMainPageViewController.m; path = Class/LZMainPageViewController.m; sourceTree = "<group>"; };
 		5F20148B17BB35A50009B735 /* valuepicker_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "valuepicker_bg@2x.png"; path = "nutrition/Resource/valuepicker_bg@2x.png"; sourceTree = "<group>"; };
 		5F20148D17BB40140009B735 /* valuepicker_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "valuepicker_cover@2x.png"; path = "nutrition/Resource/valuepicker_cover@2x.png"; sourceTree = "<group>"; };
 		5F20148F17BB600F0009B735 /* unit_button_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unit_button_clicked@2x.png"; path = "nutrition/Resource/unit_button_clicked@2x.png"; sourceTree = "<group>"; };
@@ -646,9 +652,24 @@
 			name = ResExternal;
 			sourceTree = "<group>";
 		};
+		5F0081E817C47E6F000938C2 /* JWNavigationViewController */ = {
+			isa = PBXGroup;
+			children = (
+				5F0081E917C47E6F000938C2 /* JWNavigationViewController.h */,
+				5F0081EA17C47E6F000938C2 /* JWNavigationViewController.m */,
+			);
+			name = JWNavigationViewController;
+			path = nutrition/JWNavigationViewController;
+			sourceTree = SOURCE_ROOT;
+		};
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				5F0081E817C47E6F000938C2 /* JWNavigationViewController */,
+				085C8D4917336707001A1ABB /* Util */,
+				085C8D4517336701001A1ABB /* dataAccess */,
+				085C8D33173366F2001A1ABB /* fmdbLib */,
+				5F3338AE172A407E0096E7AE /* Nutrition */,
 				5F90D81E17AF8E43000AEC06 /* BaiduWallSDK */,
 				5F90D7D017AF8873000AEC06 /* BaiduSDK */,
 				5FF631C917702C690068CBFE /* AdMob */,
@@ -658,11 +679,7 @@
 				0882419D175621BC00E71E6E /* ResExternal */,
 				0882403D173A7E7400E71E6E /* readme.txt */,
 				085C8D5B17336A29001A1ABB /* testApp */,
-				085C8D4917336707001A1ABB /* Util */,
-				085C8D4517336701001A1ABB /* dataAccess */,
-				085C8D33173366F2001A1ABB /* fmdbLib */,
 				5F3338D4172A5BD60096E7AE /* Resource */,
-				5F3338AE172A407E0096E7AE /* nutrition */,
 				5F3338AF172A407E0096E7AE /* Supporting Files */,
 				5F3338A7172A407E0096E7AE /* Frameworks */,
 				5F3338A6172A407E0096E7AE /* Products */,
@@ -704,7 +721,7 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		5F3338AE172A407E0096E7AE /* nutrition */ = {
+		5F3338AE172A407E0096E7AE /* Nutrition */ = {
 			isa = PBXGroup;
 			children = (
 				5FCC5BE817AA302500796B24 /* TestControllers */,
@@ -715,6 +732,7 @@
 				5F3338B8172A407E0096E7AE /* LZAppDelegate.m */,
 				5F3338C0172A407E0096E7AE /* MainStoryboard.storyboard */,
 			);
+			name = Nutrition;
 			path = nutrition;
 			sourceTree = "<group>";
 		};
@@ -889,6 +907,8 @@
 		5F8DEE9617951DC200C6E9F5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				5F145D8117C4987E00D6B615 /* LZMainPageViewController.h */,
+				5F145D8217C4987E00D6B615 /* LZMainPageViewController.m */,
 				5F09717F1793ABD3000030AA /* LZUserDietListViewController.h */,
 				5F0971801793ABD3000030AA /* LZUserDietListViewController.m */,
 				5F94A86317531CC100664B57 /* LZDietListMakeViewController.h */,
@@ -1415,6 +1435,8 @@
 				5F90D81217AF8873000AEC06 /* zip.c in Sources */,
 				5F90D81317AF8873000AEC06 /* ZipArchive.mm in Sources */,
 				5F20148A17BB2F7B0009B735 /* LZValueSelectorView.m in Sources */,
+				5F0081EB17C47E6F000938C2 /* JWNavigationViewController.m in Sources */,
+				5F145D8317C4987E00D6B615 /* LZMainPageViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

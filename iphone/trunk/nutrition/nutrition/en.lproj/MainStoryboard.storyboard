@@ -1,30 +1,86 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="gc2-uH-P5u">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="2.0" toolsVersion="3084" systemVersion="11G63" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="oag-kc-cUc">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="2083"/>
     </dependencies>
     <scenes>
-        <!--Navigation Controller-->
-        <scene sceneID="sLN-Et-b46">
+        <!--Main Page View Controller-->
+        <scene sceneID="LBe-Mb-yrK">
             <objects>
-                <navigationController storyboardIdentifier="LZMainNavigationController" definesPresentationContext="YES" id="gc2-uH-P5u" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Yu2-Xh-iwM">
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
+                <viewController id="IKT-ag-OhV" customClass="LZMainPageViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5Fz-Sv-L9a">
+                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="zNi-SH-Nyd">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="504"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZAddFoodCell" rowHeight="60" id="ePY-pC-Z2O" customClass="LZAddFoodCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="tVy-xR-wmE">
+                                                    <rect key="frame" x="10" y="5" width="300" height="53"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="lWK-HU-pZE">
+                                                            <rect key="frame" x="15" y="12" width="30" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </imageView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="ENV-xF-UOh">
+                                                            <rect key="frame" x="60" y="13" width="212" height="28"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="lwH-AS-x3c">
+                                                            <rect key="frame" x="280" y="19" width="10" height="15"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="arrowImage" destination="lwH-AS-x3c" id="w2P-ZN-ghd"/>
+                                            <outlet property="backView" destination="tVy-xR-wmE" id="yB7-Ul-Q0t"/>
+                                            <outlet property="foodTypeImage" destination="lWK-HU-pZE" id="odG-r7-ZMW"/>
+                                            <outlet property="foodTypeNameLabel" destination="ENV-xF-UOh" id="2Py-0Q-o4C"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="IKT-ag-OhV" id="vP7-dI-CYn"/>
+                                    <outlet property="delegate" destination="IKT-ag-OhV" id="YUq-a1-vCH"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="zBa-Hg-lON"/>
                     <connections>
-                        <segue destination="wkw-Su-9zz" kind="relationship" relationship="rootViewController" id="RTv-Bz-x2e"/>
+                        <outlet property="listView" destination="zNi-SH-Nyd" id="cci-NO-8h5"/>
                     </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Qbz-qu-J3Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dSM-Qy-27W" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-828" y="-37"/>
+            <point key="canvasLocation" x="-307" y="-45"/>
         </scene>
         <!--User Diet List View Controller-->
         <scene sceneID="2l8-oq-ApA">
             <objects>
-                <viewController id="wkw-Su-9zz" customClass="LZUserDietListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LZUserDietListViewController" id="wkw-Su-9zz" customClass="LZUserDietListViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="rRN-jB-doZ">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="diet_empty_icon.png" id="Xd4-yC-iq4">
@@ -46,7 +102,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="57" sectionHeaderHeight="22" sectionFooterHeight="22" id="wII-FU-65d">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="454"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="498"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -104,7 +160,7 @@
                                 </connections>
                             </tableView>
                             <view contentMode="scaleToFill" id="ttR-z5-QDY">
-                                <rect key="frame" x="0.0" y="454" width="320" height="50"/>
+                                <rect key="frame" x="0.0" y="498" width="320" height="50"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
@@ -122,7 +178,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oIA-dQ-3sT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-364" y="-38"/>
+            <point key="canvasLocation" x="162" y="-38"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="Bn6-Zl-hBc">
@@ -825,7 +881,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9h1-MI-fDy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12" y="-23"/>
+            <point key="canvasLocation" x="538" y="-23"/>
         </scene>
         <!--Daily Intake View Controller-->
         <scene sceneID="Nuj-1G-iBB">
@@ -1161,7 +1217,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fLk-5h-MXN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="385" y="-18"/>
+            <point key="canvasLocation" x="911" y="-18"/>
         </scene>
         <!--Add Food View Controller-->
         <scene sceneID="Yl5-9l-zRh">
@@ -1470,6 +1526,24 @@
             </objects>
             <point key="canvasLocation" x="46" y="759"/>
         </scene>
+        <!--Navigation View Controller-->
+        <scene sceneID="GD4-ss-OS4">
+            <objects>
+                <navigationController id="oag-kc-cUc" customClass="JWNavigationViewController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="AOf-OV-L3Y">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="IKT-ag-OhV" kind="relationship" relationship="rootViewController" id="Zxd-wH-J8n"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZrZ-Cw-nEZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-833" y="-45"/>
+        </scene>
     </scenes>
     <resources>
         <image name="add_by_nutrient_button.png" width="16" height="16"/>
@@ -1501,6 +1575,9 @@
         <image name="weibo_icon.png" width="16" height="16"/>
     </resources>
     <classes>
+        <class className="JWNavigationViewController" superclassName="UINavigationController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JWNavigationViewController.h"/>
+        </class>
         <class className="LZAddByNutrientController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZAddByNutrientController.h"/>
             <relationships>
@@ -1535,10 +1612,6 @@
         <class className="LZDietListMakeViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDietListMakeViewController.h"/>
             <relationships>
-                <relationship kind="action" name="addFoodAction:"/>
-                <relationship kind="action" name="addFoodByNutrient:" candidateClass="UIButton"/>
-                <relationship kind="action" name="recommendAction:"/>
-                <relationship kind="action" name="shareButtonTapped:"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
@@ -1587,8 +1660,6 @@
         <class className="LZFoodDetailController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodDetailController.h"/>
             <relationships>
-                <relationship kind="action" name="gUnitButtonTapped:" candidateClass="UIButton"/>
-                <relationship kind="action" name="unitButtonTapped:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="GUnitButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="UnitButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="foodAmountDisplayLabel" candidateClass="UILabel"/>
@@ -1612,6 +1683,12 @@
                 <relationship kind="outlet" name="nutritionNameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
                 <relationship kind="outlet" name="supplyPercentlabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LZMainPageViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZMainPageViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
         <class className="LZNutrientFoodAddCell" superclassName="LZFoodCell">
