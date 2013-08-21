@@ -24,6 +24,8 @@
 +(void)addDoubleDictionaryToDictionary_withSrcAmountDictionary:(NSDictionary*)srcAmountDict withDestDictionary:(NSMutableDictionary*)destAmountDict;
 +(double)getDoubleFromDictionaryItem_withDictionary:(NSMutableDictionary*)data andKey:(NSString *)datakey;
 
++(NSMutableArray *)addUnitItemToArrayDictionary_withUnitItem:(NSObject*)unitItem withArrayDictionary:(NSMutableDictionary*)arrayDict andKey:(NSString *)keyForArray;
+
 +(NSMutableArray*)generateArrayWithFillItem:(NSObject*)fillItem andArrayLength:(int)length;
 +(NSMutableDictionary*)generateDictionaryWithFillItem:(NSObject*)fillItem andKeys:(NSArray*)keys;
 
@@ -76,4 +78,23 @@
 +(NSString*)convertNumberToFoodIdStr:(NSNumber *)foodIdNum;
 
 +(BOOL)isUseUnitDisplay:(NSNumber *)totalWeight unitWeight:(NSNumber *)singleWeight;
+
++(NSMutableString*)getObjectDescription : (NSObject*)obj andIndent:(NSUInteger)level;
+
+
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

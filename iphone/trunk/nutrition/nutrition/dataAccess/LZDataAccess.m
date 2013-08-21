@@ -747,20 +747,67 @@
 
 - (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue
 {
-    return [self selectTableByEqualFilter_withTableName:tableName andField:fieldName andValue:fieldValue andColumns:nil];
+    return [self selectTableByEqualFilter_withTableName:tableName andField:fieldName andValue:fieldValue andColumns:nil andOrderByPart:nil];
 }
 
-- (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue andColumns:(NSArray*)columns
+- (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue andColumns:(NSArray*)columns andOrderByPart:(NSString*)orderByPart
 {
     NSString *columnsPart = @"*";
     if (columns.count>0){
         columnsPart = [columns componentsJoinedByString:@","];
     }
-    NSString *query = [NSString stringWithFormat: @"SELECT %@ FROM %@ WHERE %@=:fieldValue",columnsPart,tableName,fieldName];
+    NSMutableString *query = [NSMutableString stringWithFormat: @"SELECT %@ FROM %@ WHERE %@=:fieldValue",columnsPart,tableName,fieldName];
+    if (orderByPart.length>0)
+        [query appendFormat:@" ORDER BY %@",orderByPart];
     NSDictionary *dictQueryParam = [NSDictionary dictionaryWithObjectsAndKeys:fieldValue, @"fieldValue", nil];
+    NSLog(@"selectTableByEqualFilter_withTableName query=%@",query);
     FMResultSet *rs = [dbfm executeQuery:query withParameterDictionary:dictQueryParam];
     NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
     return ary;
+}
+
+- (NSArray *)selectTableByInFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValues:(NSArray*)fieldValues andColumns:(NSArray*)columns andOrderByPart:(NSString*)orderByPart
+{
+    if (fieldValues.count==0)
+        return nil;
+    
+//    NSString *columnsPart = @"*";
+//    if (columns.count>0){
+//        columnsPart = [columns componentsJoinedByString:@","];
+//    }
+//
+//    NSArray *placeholderAry = [LZUtility generateArrayWithFillItem:@"?" andArrayLength:fieldValues.count];
+//    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//    
+//    NSMutableString *query = [NSMutableString stringWithFormat: @"SELECT %@ FROM %@ WHERE %@ in (%@)",columnsPart,tableName,fieldName,placeholdersStr];
+//    if (orderByPart.length>0)
+//        [query appendFormat:@" ORDER BY %@",orderByPart];
+//    NSLog(@"selectTableByInFilter_withTableName query=%@",query);
+//
+//    FMResultSet *rs = [dbfm executeQuery:query withArgumentsInArray:fieldValues];
+//    NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
+//    return ary;
+    
+    NSString *columnsPart = @"*";
+    if (columns.count>0){
+        columnsPart = [columns componentsJoinedByString:@","];
+    }
+    NSMutableString *sqlStr = [NSMutableString stringWithFormat: @"SELECT %@ FROM %@ \n",columnsPart,tableName];
+
+    NSMutableString *afterWherePart = [NSMutableString string ];
+    if (orderByPart.length>0)
+        [afterWherePart appendFormat:@"\n ORDER BY %@",orderByPart ];
+
+
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+    NSMutableArray *expr = [NSMutableArray arrayWithObjects: fieldName, @"IN", fieldValues, nil];
+    [exprIncludeANDdata addObject:expr];
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+                             exprIncludeANDdata,@"includeAND",
+                             nil];
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:true],@"varBeParamWay", nil];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:afterWherePart andOptions:localOptions];
+    return dataAry;
 }
 
 - (BOOL)deleteTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue
@@ -1772,7 +1819,7 @@
  */
 -(NSMutableDictionary*)getNutrientInfoAs2LevelDictionary_withNutrientIds:(NSArray*)nutrientIds
 {
-    NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds begin");
+    NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds enter, nutrientIds=%@",[nutrientIds debugDescription]);
     
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
     [sqlStr appendString:@"SELECT * FROM NutritionInfo"];
@@ -1975,7 +2022,7 @@
 -(NSArray*)getCollocationFoodData_withCollocationId:(NSNumber*)nmCollocationId
 {
     return [self selectTableByEqualFilter_withTableName:TABLE_NAME_CollocationFood andField:COLUMN_NAME_CollocationId andValue:nmCollocationId
-                                             andColumns:[NSArray arrayWithObjects:COLUMN_NAME_FoodId,COLUMN_NAME_FoodAmount, nil]];
+                                             andColumns:[NSArray arrayWithObjects:COLUMN_NAME_FoodId,COLUMN_NAME_FoodAmount, nil] andOrderByPart:nil];
 }
 /*
  单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
@@ -2147,6 +2194,64 @@
 }
 
 
+-(NSArray*)getDiseaseGroupInfo_byType:(NSString*)groupType
+{
+//    NSArray *dgDictAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseGroup andField:COLUMN_NAME_dsGroupType andValue:groupType andColumns:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseGroup, nil] andOrderByPart:COLUMN_NAME_dsGroupWizardOrder];
+    NSArray *dgDictAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseGroup andField:COLUMN_NAME_dsGroupType andValue:groupType andColumns:nil andOrderByPart:COLUMN_NAME_dsGroupWizardOrder];
+//    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:dgDictAry];
+//    return groupAry;
+    NSLog(@"getDiseaseGroup_byType ret:%@", [LZUtility getObjectDescription:dgDictAry andIndent:0] );// show chinese as unicode as '\U1234'
+//    NSLog(@"getDiseaseGroup_byType ret:%@",[dgDictAry debugDescription]);// show chinese as unicode as '\U1234'
+//    NSLog(@"getDiseaseGroup_byType ret:%s",[[dgDictAry debugDescription] UTF8String]);// show chinese as unicode as '\U1234'
+//    NSLog(@"getDiseaseGroup_byType ret:%s",[[dgDictAry description] UTF8String]);// show chinese as unicode as '\U1234'
+//    NSLog(@"getDiseaseGroup_byType ret:%s",[[dgDictAry description] UTF8String]);// show chinese as unicode as '\U1234'
+    
+    [dgDictAry descriptionWithLocale:nil indent:1];
+    return dgDictAry;
+}
+
+-(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName
+{
+    NSLog(@"getDiseaseNamesOfGroup enter, groupName=%@",groupName);
+    NSArray *diseaseInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease, nil] andOrderByPart:nil];
+    NSArray *diseaseNameAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_Disease andDictionaryArray:diseaseInfoAry];
+    
+//    NSLog(@"getDiseaseNamesOfGroup return=%@",[diseaseNameAry descriptionWithLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"]]); // show chinese as unicode as '\U1234'
+    NSLog(@"getDiseaseNamesOfGroup return=%@",[diseaseNameAry debugDescription]);//can show chinese, not unicode as '\U1234'
+
+    
+    return diseaseNameAry;
+}
+
+-(NSDictionary*)getDiseaseNutrients_ByDiseaseNames:(NSArray*)diseaseNames
+{
+    NSArray *diseaseNutrientRows = [self selectTableByInFilter_withTableName:TABLE_NAME_DiseaseNutrient andField:COLUMN_NAME_Disease andValues:diseaseNames andColumns:nil andOrderByPart:nil];
+    NSLog(@"in getDiseaseNutrients_ByDiseaseNames, diseaseNutrientRows=%@",[LZUtility getObjectDescription:diseaseNutrientRows andIndent:0]);
+    
+    NSMutableDictionary * diseaseNutrientsDict = [NSMutableDictionary dictionaryWithCapacity:diseaseNames.count];
+    for(int i=0; i<diseaseNutrientRows.count; i++){
+        NSDictionary *diseaseNutrientRow = diseaseNutrientRows[i];
+        NSString *diseaseName = diseaseNutrientRow[COLUMN_NAME_Disease];
+        NSString *nutrientId = diseaseNutrientRow[COLUMN_NAME_NutrientID];
+        [LZUtility addUnitItemToArrayDictionary_withUnitItem:nutrientId withArrayDictionary:diseaseNutrientsDict andKey:diseaseName];
+    }
+    NSLog(@"in getDiseaseNutrients_ByDiseaseNames, diseaseNutrientsDict=%@",[LZUtility getObjectDescription:diseaseNutrientsDict andIndent:0]);
+    return diseaseNutrientsDict;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -2154,6 +2259,40 @@
 
 
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

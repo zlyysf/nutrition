@@ -192,6 +192,8 @@
     [workRe convertExcelToSqlite_NutritionInfo];
     [workRe convertExcelToSqlite_CustomRichFood];
     
+    [workRe convertExcelToSqlite_NutrientDisease];
+    
     [db generateTableAndData_Food_Supply_DRI_Common_withIfNeedClearTable:true];
     [db generateTableAndData_Food_Supply_DRI_Amount_withIfNeedClearTable:true];
     [db generateTableAndData_Food_Supply_DRIUL_Amount_withIfNeedClearTable:true];

@@ -89,6 +89,20 @@
     }
 }
 
++(NSMutableArray *)addUnitItemToArrayDictionary_withUnitItem:(NSObject*)unitItem withArrayDictionary:(NSMutableDictionary*)arrayDict andKey:(NSString *)keyForArray;
+{
+    assert(unitItem!=nil);
+    assert(arrayDict!=nil);
+    assert(keyForArray!=nil);
+    NSMutableArray *itemAsArray = arrayDict[keyForArray];
+    if (itemAsArray == nil){
+        itemAsArray = [NSMutableArray array];
+        [arrayDict setObject:itemAsArray forKey:keyForArray];
+    }
+    [itemAsArray addObject:unitItem];
+    return itemAsArray;
+}
+
 +(NSMutableDictionary*)generateDictionaryWithFillItem:(NSObject*)fillItem andKeys:(NSArray*)keys
 {
     assert(fillItem!=nil);
@@ -623,14 +637,48 @@
     }
     return NO;
 }
+
+
+
++(NSMutableString*)getObjectDescription : (NSObject*)obj andIndent:(NSUInteger)level
+{
+    NSMutableString *str = [NSMutableString string];
+    NSString * strIndent = @"";
+    if (level>0){
+        NSArray *indentAry = [LZUtility generateArrayWithFillItem:@"\t" andArrayLength:level];
+        strIndent = [indentAry componentsJoinedByString:@""];
+    }
+    if ([obj isKindOfClass:NSString.class]){
+        [str appendFormat:@"\n%@%@",strIndent,obj];
+    }else if([obj isKindOfClass:NSArray.class]){
+        [str appendFormat:@"\n%@(",strIndent];
+        NSArray *ary = (NSArray *)obj;
+        for(int i=0; i<ary.count; i++){
+            NSString *s = [self getObjectDescription:ary[i] andIndent:level+1];
+            [str appendFormat:@"%@ ,",s];
+        }
+        [str appendFormat:@"\n%@)",strIndent];
+    }else if([obj isKindOfClass:NSDictionary.class]){
+        [str appendFormat:@"\n%@{",strIndent];
+        NSDictionary *dict = (NSDictionary *)obj;
+        for (NSString *key in dict) {
+            NSObject *val = dict[key];
+            [str appendFormat:@"\n\t%@%@=",strIndent,key];
+            NSString *s = [self getObjectDescription:val andIndent:level+2];
+            [str appendFormat:@"%@ ;",s];
+        }
+        [str appendFormat:@"\n%@}",strIndent];
+        
+    }else{
+        [str appendFormat:@"\n%@%@",strIndent,[obj debugDescription]];
+    }
+    
+    return str;
+}
+
+
+
 @end
-
-
-
-
-
-
-
 
 
 

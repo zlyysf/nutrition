@@ -82,7 +82,9 @@
 -(BOOL)updateFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId andNewCollocationName:(NSString*)collocationName andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray;
 -(BOOL)deleteFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId;
 
-
+-(NSArray*)getDiseaseGroupInfo_byType:(NSString*)groupType;
+-(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName;
+-(NSDictionary*)getDiseaseNutrients_ByDiseaseNames:(NSArray*)diseaseNames;
 
 
 @end
