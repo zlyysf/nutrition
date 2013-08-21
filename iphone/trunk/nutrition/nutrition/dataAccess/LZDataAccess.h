@@ -10,6 +10,7 @@
 #import "FMDatabase.h"
 #import "LZDataAccess.h"
 
+
 #define cDbFile    @"CustomDB.dat"
 
 
@@ -18,11 +19,14 @@
 }
 +(LZDataAccess *)singleton;
 
-+ (NSString *)dbFilePath;
+//+ (NSString *)dbFilePath;
 
 //- (id)initDBConnection;
+- (id)init_withDBcon:(FMDatabase *)innerDBCon;
 -(void)openDB_withFilePath: (NSString *)dbFilePath;
 -(void)closeDB;
+
+
 
 //-(NSDictionary*)getStandardDRIForSex:(int )sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
 //-(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int )activityLevel;
@@ -33,7 +37,7 @@
 
 -(NSString *)replaceForSqlText:(NSString *)origin;
 +(NSDictionary *)findRowByKey:(NSArray *)rows andKeyName:(NSString *)keyname andKeyValue:(NSString *)keyvalue;
-+(NSArray *)FMResultSetToDictionaryArray:(FMResultSet *)rs;
+//+(NSArray *)FMResultSetToDictionaryArray:(FMResultSet *)rs;
 //- (NSArray *)selectAllForTable:(NSString *)tableName;
 - (NSArray *)selectAllForTable:(NSString *)tableName andOrderBy:(NSString *)partOrderBy;
 - (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue;

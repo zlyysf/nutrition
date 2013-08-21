@@ -9,6 +9,7 @@
 #import "LZDataAccess.h"
 #import "LZConstants.h"
 #import "LZUtility.h"
+#import "LZDataAccessUtil.h"
 
 @implementation LZDataAccess
 
@@ -95,6 +96,17 @@
     }
     return self;
 }
+
+- (id)init_withDBcon:(FMDatabase *)innerDBCon
+{
+    assert(innerDBCon!=nil);
+    self = [super init];
+    if (self) {
+        dbfm = innerDBCon;
+    }
+    return self;
+}
+
 
 -(void)openDB_withFilePath: (NSString *)dbFilePath
 {
@@ -706,15 +718,7 @@
 
 
 
-+(NSArray *)FMResultSetToDictionaryArray:(FMResultSet *)rs
-{
-    NSMutableArray *ary = [NSMutableArray arrayWithCapacity:10];
-    while ([rs next]) {
-        NSDictionary *rowDict = rs.resultDictionary;
-        [ary addObject:rowDict];
-    }
-    return ary;
-}
+
 
 +(NSDictionary *)findRowByKey:(NSArray *)rows andKeyName:(NSString *)keyname andKeyValue:(NSString *)keyvalue
 {
@@ -762,7 +766,8 @@
     NSDictionary *dictQueryParam = [NSDictionary dictionaryWithObjectsAndKeys:fieldValue, @"fieldValue", nil];
     NSLog(@"selectTableByEqualFilter_withTableName query=%@",query);
     FMResultSet *rs = [dbfm executeQuery:query withParameterDictionary:dictQueryParam];
-    NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
+//    NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
+    NSArray *ary = [LZDataAccess FMResultSetToDictionaryArray:rs];
     return ary;
 }
 
