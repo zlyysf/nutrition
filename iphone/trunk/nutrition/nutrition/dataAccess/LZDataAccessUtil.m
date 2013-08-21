@@ -7,6 +7,7 @@
 //
 
 #import "LZDataAccessUtil.h"
+#import "LZUtility.h"
 
 @implementation LZDataAccess(Util)
 
@@ -20,6 +21,22 @@
     return ary;
 }
 
+
+
++(NSDictionary *)FMResultSetToDictionaryRowsAndCols:(FMResultSet *)rs
+{
+    NSArray *columnNames = nil;
+    NSMutableArray *ary = [NSMutableArray arrayWithCapacity:10];
+    while ([rs next]) {
+        if (columnNames == nil){
+            columnNames = rs.columnNameArray;
+        }
+        NSDictionary *rowDict = rs.resultDictionary;
+        [ary addObject:rowDict];
+    }
+    NSDictionary *retDict = [NSDictionary dictionaryWithObjectsAndKeys:columnNames,@"cols", ary,@"rows", nil];
+    return retDict;
+}
 
 
 
@@ -241,7 +258,14 @@
 
 
 
-
+- (NSDictionary *)getAllDataOfTable:(NSString *)tableName
+{
+    FMDatabase *_db = dbfm;
+    NSString *query = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
+    FMResultSet *rs = [_db executeQuery:query];
+    NSDictionary *retDict = [[self class] FMResultSetToDictionaryRowsAndCols:rs];
+    return retDict;
+}
 
 
 
@@ -679,7 +703,14 @@
 
 
 
-
+-(NSString *)convertSelectSqlToCsv_withSelectSql:(NSString*)sqlSelect andCsvFileName:(NSString*)csvFileName
+{
+    NSDictionary* data = [self queryDataAndMetaDataBySelectSql:sqlSelect];
+    NSArray *columnNames = [data objectForKey:@"columnNames"];
+    NSArray *rows2D = [data objectForKey:@"rows2D"];
+    
+    return [LZUtility convert2DArrayToCsv:csvFileName withColumnNames:columnNames andRows2D:rows2D];
+}
 
 
 

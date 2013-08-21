@@ -455,7 +455,7 @@
     NSArray *rows2DFoodIdName = [self readFoodIds_FromFoodCustom_WithOriginalRowPos_ForManualMergeOtherColumn];
     assert(dbCon!=nil);
     LZDBAccess *db = dbCon;
-    NSDictionary * dataFoodSupplyDRIul = [db getAllDataOfTable:TABLE_NAME_Food_Supply_DRIUL_Amount];
+    NSDictionary * dataFoodSupplyDRIul = [db.da getAllDataOfTable:TABLE_NAME_Food_Supply_DRIUL_Amount];
     NSArray *rowsFoodSupplyDRIul = dataFoodSupplyDRIul[@"rows"];
     NSDictionary *dict2levelFoodSupplyDRIul = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:rowsFoodSupplyDRIul];
     

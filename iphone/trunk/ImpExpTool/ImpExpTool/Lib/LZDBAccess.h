@@ -25,7 +25,7 @@
 
 -(void)myInitWithDbFilePath: (NSString *)dbFilePath andIfNeedClear:(BOOL) needClear;
 
-- (NSDictionary *)getAllDataOfTable:(NSString *)tableName;
+
 
 
 
@@ -45,7 +45,7 @@
 
 
 
-//- (NSDictionary *)getDRIbyGender:(NSString*)gender andAge:(int)age;
+
 //-(void)initTable_Food_Supply_DRIWithGender :(NSString *)gender andAge:(int)age;
 
 
@@ -56,7 +56,7 @@
 
 -(void)generateTableAndData_Food_Supply_DRIUL_Amount_withIfNeedClearTable:(BOOL)needClear;
 
--(NSString *)convertSelectSqlToCsv_withSelectSql:(NSString*)sqlSelect andCsvFileName:(NSString*)csvFileName;
+
 -(NSString*)convertFood_Supply_DRI_AmountWithExtraInfoToCsv:(NSString*)csvFileName;
 -(NSString*)convertCnFoodNutritionWithExtraInfoToCsv:(NSString*)csvFileName;
 -(NSString *)convertRichFoodsOfEveryNutrientsToCsv_withCsvFileName:(NSString*)csvFileName;
@@ -69,11 +69,6 @@
 
 
 -(void)getDifferenceFromFoodCustomAndFoodCustomT2;
-
-
-
--(NSNumber *)insertFoodCollocationData_withCollocationName:(NSString*)collationName andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray;
-
 
 
 

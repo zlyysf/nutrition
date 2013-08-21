@@ -12,6 +12,7 @@
 @interface LZDataAccess(Util)
 
 +(NSArray *)FMResultSetToDictionaryArray:(FMResultSet *)rs;
++(NSDictionary *)FMResultSetToDictionaryRowsAndCols:(FMResultSet *)rs;
 
 +(NSDictionary *)findRowByKey:(NSArray *)rows andKeyName:(NSString *)keyname andKeyValue:(NSString *)keyvalue;
 -(NSString *)replaceForSqlText:(NSString *)origin;
@@ -28,6 +29,8 @@
 
 -(NSDictionary*)queryDataAndMetaDataBySelectSql:(NSString*)sqlSelect;
 
+- (NSDictionary *)getAllDataOfTable:(NSString *)tableName;
+
 
 - (NSArray *)selectAllForTable:(NSString *)tableName andOrderBy:(NSString *)partOrderBy;
 - (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue;
@@ -38,6 +41,9 @@
 
 +(NSDictionary*)getConditionsPart_withFilters:(NSDictionary*)filters andOptions:(NSDictionary*)options;
 -(NSArray *)getRowsByQuery:(NSString*)strQuery andFilters:(NSDictionary*)filters andWhereExistInQuery:(BOOL)ifWhereExistInQuery andAfterWherePart:(NSString*)afterWherePart andOptions:options;
+
+
+-(NSString *)convertSelectSqlToCsv_withSelectSql:(NSString*)sqlSelect andCsvFileName:(NSString*)csvFileName;
 
 
 

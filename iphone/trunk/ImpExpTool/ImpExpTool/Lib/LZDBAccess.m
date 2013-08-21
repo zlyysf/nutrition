@@ -50,42 +50,8 @@
 
 }
 
-- (BOOL)executeUpdate:(NSString*)sql, ... {
-    
-    va_list args;
-    va_start(args, sql);
-    
-    BOOL result = [_db executeUpdate:sql error:nil withArgumentsInArray:nil orDictionary:nil orVAList:args];
-    
-    va_end(args);
-    return result;
-}
-
-//+(LZDBAccess *)singleton {
-//    static dispatch_once_t pred;
-//    static LZDBAccess *shared;
-//    // Will only be run once, the first time this is called
-//    dispatch_once(&pred, ^{
-//        shared = [[LZDBAccess alloc] init];
-//    });
-//    return shared;
-//}
 
 
-
-//- (id)init
-//{
-//    self = [self initWithPath:@"data.dat" andIfNeedClear:false];
-//    return self;
-//}
-//
-//- (id)initWithPath: (NSString *)dbFilePath andIfNeedClear:(BOOL) needClear
-//{
-//    if (self = [super init]){
-//        [self myInitWithDbFilePath:dbFilePath andIfNeedClear:needClear];
-//    }
-//    return self;
-//}
 
 /*
  dbFilePath 可以是绝对路径，也可以是一个文件名，此时目录是NSDocumentDirectory所指的那个。
@@ -275,108 +241,24 @@
     return retData;
 }
 
-/*
- 这里主要是加了自定义列，中文描述列。这里把自定义列加到了最后
- */
-//-(NSArray *)getColumnsForCustomUSDAtable_V1 : (NSArray*)columnNamesForUSDA{
-//    assert(columnNamesForUSDA.count > 1);
-//    NSString *columnNameForCnCaption = @"CnCaption";
-//    NSMutableArray *columnNamesCustom = [NSMutableArray arrayWithArray:columnNamesForUSDA];
-//    [columnNamesCustom addObject:columnNameForCnCaption];
-//    return columnNamesCustom;
-//}
-//
-//-(void)createCustomUSDAtable_V1 : (NSArray*)columnNamesForUSDA{
-//    NSLog(@"createCustomUSDAtable_V1 begin");
-//
-//    assert(columnNamesForUSDA.count > 1);
-//    NSArray *columnNamesCustom = [self getColumnsForCustomUSDAtable_V1:columnNamesForUSDA];
-//    
-//    NSMutableString *sqlStr = [self generateSqlForCreateCustomUSDAtable:columnNamesCustom];
-//    [_db executeUpdate:sqlStr];
-//}
+
 
 -(void)getDifferenceFromFoodCustomAndFoodCustomT2
 {
     NSString *sqlQuery = @"select * from FoodCustomT2 where not NDB_No in (select NDB_No from FoodCustom)";
-    NSString* csvfilePath = [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:@"diffFoodCustomT2.csv"];
+    NSString* csvfilePath = [_da convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:@"diffFoodCustomT2.csv"];
     NSLog(@"getDifferenceFromFoodCustomAndFoodCustomT2 diffFilePath = %@",csvfilePath);
 }
 
 //-------------------------------------------------
 
-//-(NSArray *) getAllFood
-//{
-//    NSString *query = @""
-//    "SELECT * FROM FoodNutritionCustom"
-//    " ORDER BY CnType, NDB_No"
-//    ;
-//    
-//    FMResultSet *rs = [_db executeQuery:query];
-//    NSArray * dataAry = [LZDataAccess FMResultSetToDictionaryArray:rs];
-//    assert(dataAry.count > 0);
-//    //NSLog(@"getAllFood ret:\n%@",dataAry);
-//    return dataAry;
-//}
-
-- (NSDictionary *)getDRIbyGender:(NSString*)gender andAge:(int)age {
-    NSString *tableName = @"DRIMale";
-    if ([@"female" isEqualToString:gender]){
-        tableName = @"DRIFemale";
-    }
-    
-    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    [sqlStr appendString:@"SELECT * FROM "];
-    [sqlStr appendString:tableName];
-    [sqlStr appendString:@" WHERE Start <= ? "];
-    [sqlStr appendString:@" ORDER BY Start desc"];
-    
-    NSArray * argAry = [NSArray arrayWithObjects:[NSNumber numberWithInt:age], nil];
-    NSDictionary *rowDict = nil;
-    FMResultSet *rs = [_db executeQuery:sqlStr withArgumentsInArray:argAry];
-    if ([rs next]) {
-        rowDict = rs.resultDictionary;
-    }
-    NSLog(@"getDRIbyGender get:\n%@",rowDict);
-    NSMutableDictionary *retDict = [NSMutableDictionary dictionaryWithDictionary:rowDict];
-    [retDict removeObjectForKey:@"Start"];
-    [retDict removeObjectForKey:@"End"];
-    NSLog(@"getDRIbyGender ret:\n%@",retDict);
-    return retDict;
-}
 
 
-//+(NSArray *)FMResultSetToDictionaryArray:(FMResultSet *)rs
-//{
-//    NSMutableArray *ary = [NSMutableArray arrayWithCapacity:10];
-//    while ([rs next]) {
-//        NSDictionary *rowDict = rs.resultDictionary;
-//        [ary addObject:rowDict];
-//    }
-//    return ary;
-//}
-+(NSDictionary *)FMResultSetToDictionaryRowsAndCols:(FMResultSet *)rs
-{
-    NSArray *columnNames = nil;
-    NSMutableArray *ary = [NSMutableArray arrayWithCapacity:10];
-    while ([rs next]) {
-        if (columnNames == nil){
-            columnNames = rs.columnNameArray;
-        }
-        NSDictionary *rowDict = rs.resultDictionary;
-        [ary addObject:rowDict];
-    }
-    NSDictionary *retDict = [NSDictionary dictionaryWithObjectsAndKeys:columnNames,@"cols", ary,@"rows", nil];
-    return retDict;
-}
 
-- (NSDictionary *)getAllDataOfTable:(NSString *)tableName
-{
-    NSString *query = [NSString stringWithFormat: @"SELECT * FROM %@",tableName];
-    FMResultSet *rs = [_db executeQuery:query];
-    NSDictionary *retDict = [[self class] FMResultSetToDictionaryRowsAndCols:rs];
-    return retDict;
-}
+
+
+
+
 
 -(NSArray *) getAllNutrientColumns
 {
@@ -455,7 +337,7 @@
     }
     [allColumns addObjectsFromArray:allNutrientAry];
     
-    NSDictionary *foodNutritionData = [self getAllDataOfTable:VIEW_NAME_FoodNutritionCustom];
+    NSDictionary *foodNutritionData = [_da getAllDataOfTable:VIEW_NAME_FoodNutritionCustom];
     NSArray *foodNutritionDataCols = [foodNutritionData objectForKey:@"cols"];
     NSArray *foodNutritionDataRows = [foodNutritionData objectForKey:@"rows"];
     assert(foodNutritionDataRows.count>100);//>0
@@ -588,7 +470,7 @@
     [allColumns addObjectsFromArray:allNutrientAry];
     
 
-    NSDictionary *foodNutritionData = [self getAllDataOfTable:VIEW_NAME_FoodNutritionCustom];
+    NSDictionary *foodNutritionData = [_da getAllDataOfTable:VIEW_NAME_FoodNutritionCustom];
     NSArray *foodNutritionDataCols = [foodNutritionData objectForKey:@"cols"];
     NSArray *foodNutritionDataRows = [foodNutritionData objectForKey:@"rows"];
     assert(foodNutritionDataRows.count>100);
@@ -770,14 +652,7 @@
 }
 
 
--(NSString *)convertSelectSqlToCsv_withSelectSql:(NSString*)sqlSelect andCsvFileName:(NSString*)csvFileName
-{
-    NSDictionary* data = [_da queryDataAndMetaDataBySelectSql:sqlSelect];
-    NSArray *columnNames = [data objectForKey:@"columnNames"];
-    NSArray *rows2D = [data objectForKey:@"rows2D"];
-    
-    return [LZUtility convert2DArrayToCsv:csvFileName withColumnNames:columnNames andRows2D:rows2D];
-}
+
 
 /*
  把Food_Supply_DRI_Amount中的内容，以及食物的中文描述导出成一个csv文件。
@@ -792,7 +667,7 @@
     "    join FoodNutrition fn on a.NDB_No=fn.NDB_No"
     "  order by a.NDB_No"
     ;
-    return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
+    return [_da convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
 }
 
 -(NSString*)convertFood_Supply_DRIUL_AmountWithExtraInfoToCsv:(NSString*)csvFileName
@@ -803,7 +678,7 @@
     "    join FoodNutrition fn on a.NDB_No=fn.NDB_No"
     "  order by a.NDB_No"
     ;
-    return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
+    return [_da convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
 }
 
 /*
@@ -823,7 +698,7 @@
     "select c.*,f.* from FoodCustom c join FoodNutrition f on c.NDB_No=f.NDB_No"
     "  order by NDB_No"
     ;
-    return [self convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
+    return [_da convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
 }
 
 
