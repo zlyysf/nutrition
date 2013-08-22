@@ -286,20 +286,23 @@
 
 - (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue
 {
-    return [self selectTableByEqualFilter_withTableName:tableName andField:fieldName andValue:fieldValue andColumns:nil andOrderByPart:nil];
+    return [self selectTableByEqualFilter_withTableName:tableName andField:fieldName andValue:fieldValue andColumns:nil andOrderByPart:nil andNeedDistinct:false];
 }
 
-- (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue andColumns:(NSArray*)columns andOrderByPart:(NSString*)orderByPart
+- (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue andColumns:(NSArray*)columns andOrderByPart:(NSString*)orderByPart andNeedDistinct:(BOOL)needDistinct
 {
     NSString *columnsPart = @"*";
     if (columns.count>0){
         columnsPart = [columns componentsJoinedByString:@","];
     }
-    NSMutableString *query = [NSMutableString stringWithFormat: @"SELECT %@ FROM %@ WHERE %@=:fieldValue",columnsPart,tableName,fieldName];
+    NSString *distinctPart = @"";
+    if ( needDistinct )
+        distinctPart = @"DISTINCT";
+    NSMutableString *query = [NSMutableString stringWithFormat: @"SELECT %@ %@ FROM %@ WHERE %@=:fieldValue",distinctPart,columnsPart,tableName,fieldName];
     if (orderByPart.length>0)
         [query appendFormat:@" ORDER BY %@",orderByPart];
     NSDictionary *dictQueryParam = [NSDictionary dictionaryWithObjectsAndKeys:fieldValue, @"fieldValue", nil];
-    NSLog(@"selectTableByEqualFilter_withTableName query=%@",query);
+    NSLog(@"selectTableByEqualFilter_withTableName query=%@, dictQueryParam=%@",query,[LZUtility getObjectDescription:dictQueryParam andIndent:0]);
     FMResultSet *rs = [dbfm executeQuery:query withParameterDictionary:dictQueryParam];
     //    NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
     NSArray *ary = [LZDataAccess FMResultSetToDictionaryArray:rs];

@@ -82,6 +82,7 @@
 
 -(NSArray*)getDiseaseGroupInfo_byType:(NSString*)groupType;
 -(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName;
+-(NSDictionary*)getDiseasesOrganizedByDepartment_OfGroup:(NSString*)groupName;
 -(NSDictionary*)getDiseaseNutrients_ByDiseaseNames:(NSArray*)diseaseNames;
 
 

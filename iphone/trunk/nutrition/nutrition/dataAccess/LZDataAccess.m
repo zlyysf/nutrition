@@ -1577,7 +1577,7 @@
 -(NSArray*)getCollocationFoodData_withCollocationId:(NSNumber*)nmCollocationId
 {
     return [self selectTableByEqualFilter_withTableName:TABLE_NAME_CollocationFood andField:COLUMN_NAME_CollocationId andValue:nmCollocationId
-                                             andColumns:[NSArray arrayWithObjects:COLUMN_NAME_FoodId,COLUMN_NAME_FoodAmount, nil] andOrderByPart:nil];
+                                             andColumns:[NSArray arrayWithObjects:COLUMN_NAME_FoodId,COLUMN_NAME_FoodAmount, nil] andOrderByPart:nil andNeedDistinct:false];
 }
 /*
  单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
@@ -1752,10 +1752,10 @@
 -(NSArray*)getDiseaseGroupInfo_byType:(NSString*)groupType
 {
 //    NSArray *dgDictAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseGroup andField:COLUMN_NAME_dsGroupType andValue:groupType andColumns:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseGroup, nil] andOrderByPart:COLUMN_NAME_dsGroupWizardOrder];
-    NSArray *dgDictAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseGroup andField:COLUMN_NAME_dsGroupType andValue:groupType andColumns:nil andOrderByPart:COLUMN_NAME_dsGroupWizardOrder];
+    NSArray *dgDictAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseGroup andField:COLUMN_NAME_dsGroupType andValue:groupType andColumns:nil andOrderByPart:COLUMN_NAME_dsGroupWizardOrder andNeedDistinct:false];
 //    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:dgDictAry];
 //    return groupAry;
-    NSLog(@"getDiseaseGroup_byType ret:%@", [LZUtility getObjectDescription:dgDictAry andIndent:0] );// show chinese as unicode as '\U1234'
+    NSLog(@"getDiseaseGroup_byType ret:%@", [LZUtility getObjectDescription:dgDictAry andIndent:0] );
 //    NSLog(@"getDiseaseGroup_byType ret:%@",[dgDictAry debugDescription]);// show chinese as unicode as '\U1234'
 //    NSLog(@"getDiseaseGroup_byType ret:%s",[[dgDictAry debugDescription] UTF8String]);// show chinese as unicode as '\U1234'
 //    NSLog(@"getDiseaseGroup_byType ret:%s",[[dgDictAry description] UTF8String]);// show chinese as unicode as '\U1234'
@@ -1768,14 +1768,45 @@
 -(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName
 {
     NSLog(@"getDiseaseNamesOfGroup enter, groupName=%@",groupName);
-    NSArray *diseaseInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease, nil] andOrderByPart:nil];
+    NSArray *diseaseInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease, nil] andOrderByPart:nil andNeedDistinct:false];
     NSArray *diseaseNameAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_Disease andDictionaryArray:diseaseInfoAry];
     
 //    NSLog(@"getDiseaseNamesOfGroup return=%@",[diseaseNameAry descriptionWithLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"]]); // show chinese as unicode as '\U1234'
     NSLog(@"getDiseaseNamesOfGroup return=%@",[diseaseNameAry debugDescription]);//can show chinese, not unicode as '\U1234'
 
-    
     return diseaseNameAry;
+}
+/*
+ Departments -- array, DepartmentDiseasesDict -- array dict
+ */
+-(NSDictionary*)getDiseasesOrganizedByDepartment_OfGroup:(NSString*)groupName
+{
+    NSLog(@"getDiseasesOrganizedByDepartment_OfGroup enter, groupName=%@",groupName);
+    
+    NSArray *departmentInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseDepartment, nil] andOrderByPart:nil andNeedDistinct:true];
+    NSLog(@"getDiseasesOrganizedByDepartment_OfGroup departmentInfoAry=%@", [LZUtility getObjectDescription:departmentInfoAry andIndent:0] );
+    NSArray *departmentNames = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseDepartment andDictionaryArray:departmentInfoAry];
+    
+    NSArray *diseaseRowAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease,COLUMN_NAME_DiseaseDepartment, nil] andOrderByPart:nil andNeedDistinct:false];
+    NSMutableDictionary *departmentDiseasesDict = [NSMutableDictionary dictionaryWithCapacity:departmentNames.count];
+    for(int i=0; i<diseaseRowAry.count; i++){
+        NSDictionary *diseaseRow = diseaseRowAry[i];
+        NSString *diseaseName = diseaseRow[COLUMN_NAME_Disease];
+        NSString *diseaseDepartment = diseaseRow[COLUMN_NAME_DiseaseDepartment];
+        [LZUtility addUnitItemToArrayDictionary_withUnitItem:diseaseName withArrayDictionary:departmentDiseasesDict andKey:diseaseDepartment];
+    }
+    
+//    for(int i=0; i<departmentNames.count; i++){
+//        NSString *dptName = departmentNames[i];
+//        assert(departmentDiseasesDict[dptName]!=nil);
+//    }
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                    departmentNames,@"departmentNames",
+                                    departmentDiseasesDict,@"departmentDiseasesDict",
+                                    nil];
+    NSLog(@"getDiseasesOrganizedByDepartment_OfGroup ret:%@", [LZUtility getObjectDescription:retData andIndent:0] );
+    return retData;
 }
 
 -(NSDictionary*)getDiseaseNutrients_ByDiseaseNames:(NSArray*)diseaseNames

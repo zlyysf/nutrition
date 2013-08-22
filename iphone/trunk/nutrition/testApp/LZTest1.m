@@ -16,11 +16,11 @@
 
 +(void)testMain
 {
-//    [LZTest1 test1];
+    [LZTest1 test1];
 //    [LZTest1 test2];
 //    [LZTest1 test3];
 //    [LZTest1 test4];
-    [LZTest1 testRecommendFoodBySmallIncrement];
+//    [LZTest1 testRecommendFoodBySmallIncrement];
 }
 
 +(void)test1
@@ -33,7 +33,9 @@
 //    [self.class test_getFoodCollocationData];
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
-    [self.class test_DiseaseNutrient];
+//    [self.class test_DiseaseNutrient1];
+    [self.class test_DiseaseNutrient2];
+
     
 //    [self.class testFormatResult1];
 //    [self.class testFormatResult2_taken];
@@ -2065,7 +2067,7 @@ BOOL needLimitNutrients = FALSE;
 }
 
 
-+(void)test_DiseaseNutrient
++(void)test_DiseaseNutrient1
 {
     LZDataAccess *da = [LZDataAccess singleton];
     NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_wizard];
@@ -2082,12 +2084,23 @@ BOOL needLimitNutrients = FALSE;
     NSArray *orderedNutrientsInSet = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
     NSLog(@"orderedNutrientsInSet=%@",[orderedNutrientsInSet debugDescription]);
     
-    NSDictionary * nutrientInfo2LevelDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
-    NSLog(@"one nutrientInfo=%@",nutrientInfo2LevelDict[orderedNutrientsInSet[0]]);
+//    NSDictionary * nutrientInfo2LevelDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
+//    NSLog(@"one nutrientInfo=%@",nutrientInfo2LevelDict[orderedNutrientsInSet[0]]);
     
 //    diseaseNames = [da getDiseaseNamesOfGroup:groupAry[1]];
     
 }
+
++(void)test_DiseaseNutrient2
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_illness];
+    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+    NSString *illnessGroup = groupAry[0];
+    [da getDiseasesOrganizedByDepartment_OfGroup:illnessGroup];    
+       
+}
+
 
 
 @end
