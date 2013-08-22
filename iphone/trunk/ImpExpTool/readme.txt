@@ -74,7 +74,9 @@ CREATE TABLE CustomRichFood ('NutrientID' TEXT,'NDB_No' TEXT);
 
 CREATE TABLE DiseaseNutrient (Disease TEXT, NutrientID TEXT);
 CREATE TABLE DiseaseGroup(DiseaseGroup TEXT, dsGroupType TEXT, dsGroupWizardOrder REAL);
-CREATE TABLE DiseaseInGroup(DiseaseGroup TEXT, Disease TEXT);
+    目前在使用上把Disease分了两类，一类是在向导页中出现，一类是在病因大列表中出现，这里用 dsGroupType 来区别。向导页有几页，每一页对应一个group。
+CREATE TABLE DiseaseInGroup(DiseaseGroup TEXT, Disease TEXT, DiseaseDepartment TEXT);
+    这里 Disease 与 Group 的关系目前是一个Disease只在一个Group中出现，从而可以认为Disease唯一，Group只是Disease的一个属性。
 
 
 

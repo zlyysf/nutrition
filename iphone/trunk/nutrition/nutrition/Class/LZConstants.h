@@ -158,6 +158,7 @@
 #define COLUMN_NAME_DiseaseGroup @"DiseaseGroup"
 #define COLUMN_NAME_dsGroupType @"dsGroupType"
 #define COLUMN_NAME_dsGroupWizardOrder @"dsGroupWizardOrder"
+#define COLUMN_NAME_DiseaseDepartment @"DiseaseDepartment"
 
 #define DiseaseGroupType_wizard @"wizard"
 #define DiseaseGroupType_illness @"illness"

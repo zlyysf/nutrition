@@ -53,6 +53,7 @@
 -(NSString*)generateCsv_ToMerge_FoodCustomnAndDRIULAmount_withCsvFileName:(NSString*)csvFileName;
 
 -(void)convertExcelToSqlite_NutrientDisease;
+-(NSDictionary *)readNutrientDiseaseSheet_withDepartment:(int)sheetIndex;
 
 
 @end
