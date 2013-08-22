@@ -538,11 +538,10 @@
 -(NSDictionary*)getStandardDRIs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int)activityLevel considerLoss:(BOOL)needConsiderLoss
 {
     NSDictionary *part1 = [self getStandardDRIForSex:sex age:age weight:weight height:height activityLevel:activityLevel];
-    LZDataAccess *da = [LZDataAccess singleton];
     NSString *gender = @"male";
     if (sex !=0)
         gender = @"female";
-    NSDictionary *part2 = [da getDRIbyGender:gender andAge:age];
+    NSDictionary *part2 = [self getDRIbyGender:gender andAge:age];
     NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithDictionary:part1];
     [ret addEntriesFromDictionary:part2];
     
@@ -556,11 +555,10 @@
 -(NSDictionary*)getStandardDRIULs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int)activityLevel considerLoss:(BOOL)needConsiderLoss
 {
     NSDictionary *part1 = [self getStandardDRIULForSex:sex age:age weight:weight height:height activityLevel:activityLevel];
-    LZDataAccess *da = [LZDataAccess singleton];
     NSString *gender = @"male";
     if (sex !=0)
         gender = @"female";
-    NSDictionary *part2 = [da getDRIULbyGender:gender andAge:age];
+    NSDictionary *part2 = [self getDRIULbyGender:gender andAge:age];
     NSMutableDictionary *ret = [NSMutableDictionary dictionaryWithDictionary:part1];
     [ret addEntriesFromDictionary:part2];
     
