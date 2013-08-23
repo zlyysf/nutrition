@@ -50,8 +50,16 @@
 {
     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:KeyIsAlreadyReviewdeOurApp];
     [[NSUserDefaults standardUserDefaults]synchronize];
-    NSURL *ourAppUrl = [ [ NSURL alloc ] initWithString: @"https://itunes.apple.com/app/id658111966" ];
-    [[UIApplication sharedApplication] openURL:ourAppUrl];
+    NSString *str = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa";
+    str = [NSString stringWithFormat:@"%@/wa/viewContentsUserReviews?", str];
+    str = [NSString stringWithFormat:@"%@type=Purple+Software&id=", str];
+    
+    // Here is the app id from itunesconnect
+    str = [NSString stringWithFormat:@"%@658111966", str];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+    //NSURL *ourAppUrl = [ [ NSURL alloc ] initWithString: @"https://itunes.apple.com/app/id658111966" ];
+    //[[UIApplication sharedApplication] openURL:ourAppUrl];
 }
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
