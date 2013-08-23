@@ -94,6 +94,15 @@
 		5F3338C2172A407E0096E7AE /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3338C0172A407E0096E7AE /* MainStoryboard.storyboard */; };
 		5F3338D0172A59E20096E7AE /* LZDailyIntakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */; };
 		5F3605D21753623A0058EC98 /* button_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3605D11753623A0058EC98 /* button_back@2x.png */; };
+		5F3676C217C72B31004355C1 /* LZDiagnoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3676C117C72B31004355C1 /* LZDiagnoseViewController.m */; };
+		5F3676C617C73E7E004355C1 /* SMPageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3676C517C73E7E004355C1 /* SMPageControl.m */; };
+		5F3676C917C73FBB004355C1 /* currentPageDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3676C717C73FBB004355C1 /* currentPageDot@2x.png */; };
+		5F3676CA17C73FBB004355C1 /* pageDot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3676C817C73FBB004355C1 /* pageDot@2x.png */; };
+		5F3676CF17C74AAE004355C1 /* next_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3676CB17C74AAE004355C1 /* next_clicked@2x.png */; };
+		5F3676D017C74AAE004355C1 /* next_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3676CC17C74AAE004355C1 /* next_normal@2x.png */; };
+		5F3676D117C74AAE004355C1 /* previous_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3676CD17C74AAE004355C1 /* previous_clicked@2x.png */; };
+		5F3676D217C74AAE004355C1 /* previous_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3676CE17C74AAE004355C1 /* previous_normal@2x.png */; };
+		5F3676D417C74C58004355C1 /* table_list_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3676D317C74C58004355C1 /* table_list_bg@2x.png */; };
 		5F627437175C6A19006E46CA /* LZRecommendEmptyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F627436175C6A19006E46CA /* LZRecommendEmptyCell.m */; };
 		5F62743A175C93F3006E46CA /* LZFoodNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */; };
 		5F62743D175CAB63006E46CA /* LZAddByNutrientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743C175CAB63006E46CA /* LZAddByNutrientController.m */; };
@@ -322,6 +331,17 @@
 		5F3338CE172A59E20096E7AE /* LZDailyIntakeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDailyIntakeViewController.h; path = Class/LZDailyIntakeViewController.h; sourceTree = "<group>"; };
 		5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDailyIntakeViewController.m; path = Class/LZDailyIntakeViewController.m; sourceTree = "<group>"; };
 		5F3605D11753623A0058EC98 /* button_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_back@2x.png"; path = "nutrition/Resource/button_back@2x.png"; sourceTree = "<group>"; };
+		5F3676C017C72B31004355C1 /* LZDiagnoseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDiagnoseViewController.h; path = Class/LZDiagnoseViewController.h; sourceTree = "<group>"; };
+		5F3676C117C72B31004355C1 /* LZDiagnoseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDiagnoseViewController.m; path = Class/LZDiagnoseViewController.m; sourceTree = "<group>"; };
+		5F3676C417C73E7E004355C1 /* SMPageControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SMPageControl.h; sourceTree = "<group>"; };
+		5F3676C517C73E7E004355C1 /* SMPageControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SMPageControl.m; sourceTree = "<group>"; };
+		5F3676C717C73FBB004355C1 /* currentPageDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "currentPageDot@2x.png"; path = "nutrition/Resource/currentPageDot@2x.png"; sourceTree = "<group>"; };
+		5F3676C817C73FBB004355C1 /* pageDot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pageDot@2x.png"; path = "nutrition/Resource/pageDot@2x.png"; sourceTree = "<group>"; };
+		5F3676CB17C74AAE004355C1 /* next_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "next_clicked@2x.png"; path = "nutrition/Resource/next_clicked@2x.png"; sourceTree = "<group>"; };
+		5F3676CC17C74AAE004355C1 /* next_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "next_normal@2x.png"; path = "nutrition/Resource/next_normal@2x.png"; sourceTree = "<group>"; };
+		5F3676CD17C74AAE004355C1 /* previous_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "previous_clicked@2x.png"; path = "nutrition/Resource/previous_clicked@2x.png"; sourceTree = "<group>"; };
+		5F3676CE17C74AAE004355C1 /* previous_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "previous_normal@2x.png"; path = "nutrition/Resource/previous_normal@2x.png"; sourceTree = "<group>"; };
+		5F3676D317C74C58004355C1 /* table_list_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "table_list_bg@2x.png"; path = "nutrition/Resource/table_list_bg@2x.png"; sourceTree = "<group>"; };
 		5F5096191754777300461964 /* LZValueSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZValueSelectorView.h; path = Class/LZValueSelectorView.h; sourceTree = "<group>"; };
 		5F50961A1754777300461964 /* LZValueSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZValueSelectorView.m; path = Class/LZValueSelectorView.m; sourceTree = "<group>"; };
 		5F627435175C6A18006E46CA /* LZRecommendEmptyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendEmptyCell.h; path = Class/LZRecommendEmptyCell.h; sourceTree = "<group>"; };
@@ -672,6 +692,7 @@
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				5F3676C317C73E7E004355C1 /* SMPageControl */,
 				5F0081E817C47E6F000938C2 /* JWNavigationViewController */,
 				085C8D4917336707001A1ABB /* Util */,
 				085C8D4517336701001A1ABB /* dataAccess */,
@@ -764,6 +785,11 @@
 				5FF6320E1772D8AA0068CBFE /* foodTypeIcon */,
 				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
 				5FF632061771C6530068CBFE /* close_button@2x.png */,
+				5F3676CB17C74AAE004355C1 /* next_clicked@2x.png */,
+				5F3676D317C74C58004355C1 /* table_list_bg@2x.png */,
+				5F3676CC17C74AAE004355C1 /* next_normal@2x.png */,
+				5F3676CD17C74AAE004355C1 /* previous_clicked@2x.png */,
+				5F3676CE17C74AAE004355C1 /* previous_normal@2x.png */,
 				5F6A3F5A17964D7F0029B8C9 /* addfood_icon@2x.png */,
 				5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */,
 				5F6A3F5B17964D7F0029B8C9 /* recommend_icon@2x.png */,
@@ -772,6 +798,8 @@
 				5F7E5AAC1796AF5E007CA18A /* timestamp_icon@2x.png */,
 				5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */,
 				5FDD1CAB179D19140046F752 /* change_name_button@2x.png */,
+				5F3676C717C73FBB004355C1 /* currentPageDot@2x.png */,
+				5F3676C817C73FBB004355C1 /* pageDot@2x.png */,
 				5FDD1CAC179D19150046F752 /* change_name_clicked@2x.png */,
 				5FE2104F1784058100F45253 /* edit_profile_button@2x.png */,
 				5F7E5AA217965B47007CA18A /* recommend_sign@2x.png */,
@@ -823,6 +851,16 @@
 				085C8D4D17336744001A1ABB /* CustomDB.dat */,
 			);
 			name = Resource;
+			sourceTree = "<group>";
+		};
+		5F3676C317C73E7E004355C1 /* SMPageControl */ = {
+			isa = PBXGroup;
+			children = (
+				5F3676C417C73E7E004355C1 /* SMPageControl.h */,
+				5F3676C517C73E7E004355C1 /* SMPageControl.m */,
+			);
+			name = SMPageControl;
+			path = nutrition/SMPageControl;
 			sourceTree = "<group>";
 		};
 		5F746BFE1769A81500E68D0E /* YouMengSDK */ = {
@@ -938,6 +976,8 @@
 				5F25849B178280ED00D99C16 /* LZFoodInfoViewController.m */,
 				5F25849D17829DD900D99C16 /* LZEditProfileViewController.h */,
 				5F25849E17829DD900D99C16 /* LZEditProfileViewController.m */,
+				5F3676C017C72B31004355C1 /* LZDiagnoseViewController.h */,
+				5F3676C117C72B31004355C1 /* LZDiagnoseViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1346,6 +1386,13 @@
 				5F20148E17BB40140009B735 /* valuepicker_cover@2x.png in Resources */,
 				5F20149117BB60100009B735 /* unit_button_clicked@2x.png in Resources */,
 				5F20149217BB60100009B735 /* unit_button_normal@2x.png in Resources */,
+				5F3676C917C73FBB004355C1 /* currentPageDot@2x.png in Resources */,
+				5F3676CA17C73FBB004355C1 /* pageDot@2x.png in Resources */,
+				5F3676CF17C74AAE004355C1 /* next_clicked@2x.png in Resources */,
+				5F3676D017C74AAE004355C1 /* next_normal@2x.png in Resources */,
+				5F3676D117C74AAE004355C1 /* previous_clicked@2x.png in Resources */,
+				5F3676D217C74AAE004355C1 /* previous_normal@2x.png in Resources */,
+				5F3676D417C74C58004355C1 /* table_list_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1447,6 +1494,8 @@
 				5F0081EB17C47E6F000938C2 /* JWNavigationViewController.m in Sources */,
 				5F145D8317C4987E00D6B615 /* LZMainPageViewController.m in Sources */,
 				088B768417C4B8F200206959 /* LZDataAccessUtil.m in Sources */,
+				5F3676C217C72B31004355C1 /* LZDiagnoseViewController.m in Sources */,
+				5F3676C617C73E7E004355C1 /* SMPageControl.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

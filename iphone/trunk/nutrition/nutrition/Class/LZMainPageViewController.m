@@ -10,6 +10,7 @@
 #import "LZAddFoodCell.h"
 #import "LZUserDietListViewController.h"
 #import "LZSettingsViewController.h"
+#import "LZDiagnoseViewController.h"
 @interface LZMainPageViewController ()
 
 @end
@@ -37,7 +38,7 @@
                       [NSDictionary dictionaryWithObjectsAndKeys:@"快速查找食物",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"营养元素",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"膳食清单",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"今日营养诊断",@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"营养诊断",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"预防疾病",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"设置",@"menuName", nil],nil];
 }
@@ -109,6 +110,11 @@
     {
         LZSettingsViewController *settingsViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZSettingsViewController"];
         [self.navigationController pushViewController:settingsViewController animated:YES];
+    }
+    else if(indexPath.row == 3)
+    {
+        LZDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiagnoseViewController"];
+        [self.navigationController pushViewController:diagnoseViewController animated:YES];
     }
     
 //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
