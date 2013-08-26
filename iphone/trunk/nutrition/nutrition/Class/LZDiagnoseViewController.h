@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "SMPageControl.h"
-@interface LZDiagnoseViewController : UIViewController<UIScrollViewDelegate,UITableViewDelegate>
+@interface LZDiagnoseViewController : UIViewController<UIScrollViewDelegate,UITableViewDelegate,UITableViewDataSource>
 
 @property (strong, nonatomic) IBOutlet UIScrollView *outScrollView;
 @property (strong, nonatomic) IBOutlet UITableView *listView1;
@@ -21,4 +21,10 @@
 @property (strong, nonatomic) IBOutlet UIImageView *list2BG;
 @property (strong, nonatomic) IBOutlet UIImageView *list3BG;
 @property (strong, nonatomic) IBOutlet UIImageView *list4BG;
+@property (strong,nonatomic)NSArray *list1DataSourceArray;
+@property (strong,nonatomic)NSArray *list2DataSourceArray;
+@property (strong,nonatomic)NSArray *list3DataSourceArray;
+@property (strong,nonatomic)NSMutableArray *list1CheckStateArray;
+@property (strong,nonatomic)NSMutableArray *list2CheckStateArray;
+@property (strong,nonatomic)NSMutableArray *list3CheckStateArray;
 @end

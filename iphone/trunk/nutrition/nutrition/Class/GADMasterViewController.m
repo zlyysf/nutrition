@@ -164,6 +164,13 @@
 
 -(void) willDisplayAd:(BaiduMobAdView*) adview
 {
+    for (UIView *vc in [UIApplication sharedApplication].keyWindow.subviews)
+    {
+        if ([vc isKindOfClass:[UIWebView class]])
+        {
+            [vc removeFromSuperview];
+        }
+    }
     //在广告即将展示时，产生一个动画，把广告条加载到视图中
     sharedAdView.hidden = NO;
 //    CGRect f = sharedAdView.frame;
