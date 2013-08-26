@@ -11,6 +11,8 @@
 #import "LZUserDietListViewController.h"
 #import "LZSettingsViewController.h"
 #import "LZDiagnoseViewController.h"
+#import "LZUtility.h"
+#import "LZEditProfileViewController.h"
 @interface LZMainPageViewController ()
 
 @end
@@ -42,7 +44,20 @@
                       [NSDictionary dictionaryWithObjectsAndKeys:@"预防疾病",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"设置",@"menuName", nil],nil];
 }
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (![LZUtility isUserProfileComplete])
+    {
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
+        editProfileViewController.firstEnterEditView = YES;
+        //addByNutrientController.foodArray = recommendFoodArray;
+        //addByNutrientController.nutrientTitle = nutrientName;
+        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
+        [self presentModalViewController:navController animated:YES];
+    }
 
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

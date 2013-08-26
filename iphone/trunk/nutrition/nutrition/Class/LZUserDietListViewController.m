@@ -9,7 +9,7 @@
 #import "LZUserDietListViewController.h"
 #import "GADMasterViewController.h"
 #import "MobClick.h"
-#import "LZEditProfileViewController.h"
+//#import "LZEditProfileViewController.h"
 #import "LZSettingsViewController.h"
 #import "LZUtility.h"
 #import "LZDietListMakeViewController.h"
@@ -61,16 +61,16 @@
 }
 - (void)viewDidAppear:(BOOL)animated
 {
-    if (![LZUtility isUserProfileComplete])
-    {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-        LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
-        editProfileViewController.firstEnterEditView = YES;
-        //addByNutrientController.foodArray = recommendFoodArray;
-        //addByNutrientController.nutrientTitle = nutrientName;
-        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
-        [self presentModalViewController:navController animated:YES];
-    }
+//    if (![LZUtility isUserProfileComplete])
+//    {
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//        LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
+//        editProfileViewController.firstEnterEditView = YES;
+//        //addByNutrientController.foodArray = recommendFoodArray;
+//        //addByNutrientController.nutrientTitle = nutrientName;
+//        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
+//        [self presentModalViewController:navController animated:YES];
+//    }
 
 }
 - (void)viewWillDisappear:(BOOL)animated

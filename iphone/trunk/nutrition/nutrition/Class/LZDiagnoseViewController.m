@@ -12,14 +12,17 @@
 #import "LZConstants.h"
 #import "LZUtility.h"
 #import "LZDiagnosisCell.h"
+#import "LZRecommendFood.h"
+#import "LZNutrientionManager.h"
 #define MaxPageNumber 4
-
+#define NutritionDisplayStartY 117.f
+#define MaxNutritionCount 13
 @interface LZDiagnoseViewController ()
 
 @end
 
 @implementation LZDiagnoseViewController
-@synthesize list1DataSourceArray,list2DataSourceArray,list3DataSourceArray,list1CheckStateArray,list2CheckStateArray,list3CheckStateArray;
+@synthesize list1DataSourceArray,list2DataSourceArray,list3DataSourceArray,list1CheckStateArray,list2CheckStateArray,list3CheckStateArray,orderedNutrientsInSet;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -76,9 +79,14 @@
     [self.list2BG setImage:list_bg];
     [self.list3BG setImage:list_bg];
     [self.list4BG setImage:list_bg];
+    UIImage *button_back_img = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+    [self.recommendFoodButton setBackgroundImage:button_back_img forState:UIControlStateNormal];
     LZDataAccess *da = [LZDataAccess singleton];
     NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_wizard];
     NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+    self.question1Label.text = @"您属于以下哪几种人群？";
+    self.question2Label.text = @"您最近有以下哪些症状？";
+    self.question3Label.text = @"您还对以下哪些项目感兴趣？";
     self.list1DataSourceArray = [da getDiseaseNamesOfGroup:groupAry[0]];
     self.list2DataSourceArray = [da getDiseaseNamesOfGroup:groupAry[1]];
     self.list3DataSourceArray = [da getDiseaseNamesOfGroup:groupAry[2]];
@@ -118,7 +126,7 @@
 - (void)recheckButtonTapped
 {
     [self setAllCheckState];
-
+    [self clearResultView];
     self.previousButton.hidden = YES;
     self.nextButton.hidden = NO;
     self.smPageControl.currentPage = 0;
@@ -129,6 +137,110 @@
     [self.listView1 reloadData];
     [self.listView2 reloadData];
     [self.listView3 reloadData];
+}
+-(void)clearResultView
+{
+    for (UIView *sv in self.resultView.subviews)
+    {
+        if ([sv isKindOfClass:[UIButton class]])
+        {
+            if (sv.tag >=101 && sv.tag <= 100+MaxNutritionCount)
+            {
+                [sv removeFromSuperview];
+            }
+        }
+    }
+    self.resultLabel.text =@"";
+    orderedNutrientsInSet = nil;
+}
+-(void)displayResult
+{
+    [self clearResultView];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSMutableArray *userSelectedDiseaseNames = [[NSMutableArray alloc]init];
+    for (int i=0;i< [self.list1CheckStateArray count];i++)
+    {
+        NSNumber *checkState = [self.list1CheckStateArray objectAtIndex:i];
+        if ([checkState boolValue])
+        {
+            NSString *diseaseName = [self.list1DataSourceArray objectAtIndex:i];
+            [userSelectedDiseaseNames addObject:diseaseName];
+        }
+    }
+    for (int i=0;i< [self.list2CheckStateArray count];i++)
+    {
+        NSNumber *checkState = [self.list2CheckStateArray objectAtIndex:i];
+        if ([checkState boolValue])
+        {
+            NSString *diseaseName = [self.list2DataSourceArray objectAtIndex:i];
+            [userSelectedDiseaseNames addObject:diseaseName];
+        }
+    }
+
+    for (int i=0;i< [self.list3CheckStateArray count];i++)
+    {
+        NSNumber *checkState = [self.list3CheckStateArray objectAtIndex:i];
+        if ([checkState boolValue])
+        {
+            NSString *diseaseName = [self.list3DataSourceArray objectAtIndex:i];
+            [userSelectedDiseaseNames addObject:diseaseName];
+        }
+    }
+    if([userSelectedDiseaseNames count] == 0)
+    {
+        [self.recommendFoodButton setEnabled:NO];
+        self.resultLabel.text =@"";
+        return;
+    }
+    [self.recommendFoodButton setEnabled:YES];
+    self.resultLabel.text = [userSelectedDiseaseNames componentsJoinedByString:@"、"];
+    NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrients_ByDiseaseNames:userSelectedDiseaseNames];
+    
+    NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
+    for ( NSString* key in nutrientsByDiseaseDict) {
+        NSArray *nutrients = nutrientsByDiseaseDict[key];
+        [nutrientSet addObjectsFromArray:nutrients];
+    }
+    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
+    self.orderedNutrientsInSet = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
+    NSLog(@"orderedNutrientsInSet=%@",[orderedNutrientsInSet debugDescription]);
+    float startY = NutritionDisplayStartY;
+    int floor = 1;
+    int countPerRow = 4;
+    float startX;
+    for (int i = 0; i< [orderedNutrientsInSet count];i++)
+    {
+        if (i>=floor *countPerRow)
+        {
+            floor+=1;
+        }
+        startX = 10+(i-(floor-1)*countPerRow)*73;
+        UIButton *nutrientButton = [[UIButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*40, 63, 30)];
+        [self.resultView addSubview:nutrientButton];
+        nutrientButton.tag = 101+i;
+        [nutrientButton addTarget:self action:@selector(nutrientButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        NSString *key = [orderedNutrientsInSet objectAtIndex:i];
+        NSDictionary *dict = [da getNutrientInfo:key];
+        NSString *name = [dict objectForKey:@"NutrientCnCaption"];
+        [nutrientButton setTitle:name forState:UIControlStateNormal];
+        [nutrientButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:key];
+        [nutrientButton setBackgroundColor:fillColor];
+        [nutrientButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
+        [nutrientButton.layer setCornerRadius:5];
+        [nutrientButton.layer setMasksToBounds:YES];
+    }
+    
+
+}
+- (IBAction)recommendFoodButtonTapped:(id)sender {
+    NSLog(@"recommend food");
+}
+-(void)nutrientButtonTapped:(UIButton *)nutrientButton
+{
+    int tag = nutrientButton.tag-101;
+    NSString *key = [orderedNutrientsInSet objectAtIndex:tag];
+    [[LZNutrientionManager SharedInstance]showNutrientInfo:key];
 }
 -(void)cancelButtonTapped
 {
@@ -146,6 +258,12 @@
     [self setList2BG:nil];
     [self setList3BG:nil];
     [self setList4BG:nil];
+    [self setResultLabel:nil];
+    [self setResultView:nil];
+    [self setRecommendFoodButton:nil];
+    [self setQuestion1Label:nil];
+    [self setQuestion2Label:nil];
+    [self setQuestion3Label:nil];
     [super viewDidUnload];
 }
 /*    
@@ -192,33 +310,33 @@
     return sectionView;
 }
 
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 40;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 40)];
-    [sectionView setBackgroundColor:[UIColor clearColor]];
-    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 280, 40)];
-    [titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
-    [titleLabel setTextColor:[UIColor blackColor]];
-    [titleLabel setBackgroundColor:[UIColor colorWithRed:244/255.f green:242/255.f blue:236/255.f alpha:1.0f]];
-    if (tableView == self.listView1)
-    {
-        titleLabel.text = @"您属于以下哪几种人群?";
-    }
-    else if (tableView == self.listView2)
-    {
-        titleLabel.text = @"您属于以下哪几种人群?";
-    }
-    else
-    {
-       titleLabel.text = @"您属于以下哪几种人群?"; 
-    }
-    [sectionView addSubview:titleLabel];
-    return sectionView;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 40;
+//}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 300, 40)];
+//    [sectionView setBackgroundColor:[UIColor clearColor]];
+//    UILabel *titleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 280, 40)];
+//    [titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+//    [titleLabel setTextColor:[UIColor blackColor]];
+//    [titleLabel setBackgroundColor:[UIColor colorWithRed:244/255.f green:242/255.f blue:236/255.f alpha:1.0f]];
+//    if (tableView == self.listView1)
+//    {
+//        titleLabel.text = @"您属于以下哪几种人群?";
+//    }
+//    else if (tableView == self.listView2)
+//    {
+//        titleLabel.text = @"您属于以下哪几种人群?";
+//    }
+//    else
+//    {
+//       titleLabel.text = @"您属于以下哪几种人群?"; 
+//    }
+//    [sectionView addSubview:titleLabel];
+//    return sectionView;
+//}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     LZDiagnosisCell * cell =(LZDiagnosisCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDiagnosisCell"];
@@ -278,7 +396,17 @@
     if (scrollView == self.outScrollView)
     {
         CGFloat pageWidth = CGRectGetWidth(self.outScrollView.frame);
+        NSUInteger prePage = self.smPageControl.currentPage;
+
         NSUInteger page = floor((self.outScrollView.contentOffset.x - pageWidth / 2) / pageWidth) + 1;
+        if (prePage == page)
+        {
+            return;
+        }
+        if (prePage == MaxPageNumber-1)
+        {
+            [self clearResultView];
+        }
         self.smPageControl.currentPage = page;
         if (page == 0)
         {
@@ -289,6 +417,7 @@
         {
             self.previousButton.hidden = NO;
             self.nextButton.hidden = YES;
+            [self displayResult];
         }
         else
         {
@@ -310,6 +439,9 @@
         if (page == 0)
         {
             return;
+        }
+        if (page == MaxPageNumber-1) {
+            [self clearResultView];
         }
         page -=1;
         self.smPageControl.currentPage = page;
@@ -339,6 +471,7 @@
     {
         self.previousButton.hidden = NO;
         self.nextButton.hidden = YES;
+        [self displayResult];
     }
     else
     {

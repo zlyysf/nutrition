@@ -83,7 +83,6 @@
 		5F2584AE1782F9AB00D99C16 /* edit_right_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A91782F9AA00D99C16 /* edit_right_normal@2x.png */; };
 		5F2584B01782FA2100D99C16 /* edit_left_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */; };
 		5F2CDE7F17CB1D9700189C8E /* LZDiagnosisCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2CDE7E17CB1D9700189C8E /* LZDiagnosisCell.m */; };
-		5F2CDE8217CB2CF600189C8E /* check_mark_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2CDE8017CB2CF600189C8E /* check_mark_off@2x.png */; };
 		5F2CDE8317CB2CF600189C8E /* check_mark_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2CDE8117CB2CF600189C8E /* check_mark_on@2x.png */; };
 		5F3338A9172A407E0096E7AE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338A8172A407E0096E7AE /* UIKit.framework */; };
 		5F3338AB172A407E0096E7AE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AA172A407E0096E7AE /* Foundation.framework */; };
@@ -147,7 +146,6 @@
 		5F7E5AA617965C6E007CA18A /* LZEditFoodAmountButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E5AA517965C6E007CA18A /* LZEditFoodAmountButton.m */; };
 		5F7E5AA917967A95007CA18A /* LZDiteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E5AA817967A95007CA18A /* LZDiteCell.m */; };
 		5F7E5AAB17969463007CA18A /* diet_empty_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */; };
-		5F7E5AAD1796AF5E007CA18A /* timestamp_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E5AAC1796AF5E007CA18A /* timestamp_icon@2x.png */; };
 		5F8DEE9517951DB000C6E9F5 /* LZRecommendFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */; };
 		5F90D80117AF8873000AEC06 /* baidumobadsdk.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5F90D7D217AF8873000AEC06 /* baidumobadsdk.bundle */; };
 		5F90D80217AF8873000AEC06 /* libBaiduMobAdSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D7D417AF8873000AEC06 /* libBaiduMobAdSdk.a */; };
@@ -319,7 +317,6 @@
 		5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_left_normal@2x.png"; path = "nutrition/Resource/edit_left_normal@2x.png"; sourceTree = "<group>"; };
 		5F2CDE7D17CB1D9700189C8E /* LZDiagnosisCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDiagnosisCell.h; path = Class/LZDiagnosisCell.h; sourceTree = "<group>"; };
 		5F2CDE7E17CB1D9700189C8E /* LZDiagnosisCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDiagnosisCell.m; path = Class/LZDiagnosisCell.m; sourceTree = "<group>"; };
-		5F2CDE8017CB2CF600189C8E /* check_mark_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check_mark_off@2x.png"; path = "nutrition/Resource/check_mark_off@2x.png"; sourceTree = "<group>"; };
 		5F2CDE8117CB2CF600189C8E /* check_mark_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check_mark_on@2x.png"; path = "nutrition/Resource/check_mark_on@2x.png"; sourceTree = "<group>"; };
 		5F3338A5172A407E0096E7AE /* 营养膳食指南.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "营养膳食指南.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		5F3338A8172A407E0096E7AE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -404,7 +401,6 @@
 		5F7E5AA717967A95007CA18A /* LZDiteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDiteCell.h; path = Class/LZDiteCell.h; sourceTree = "<group>"; };
 		5F7E5AA817967A95007CA18A /* LZDiteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDiteCell.m; path = Class/LZDiteCell.m; sourceTree = "<group>"; };
 		5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "diet_empty_icon@2x.png"; path = "nutrition/Resource/diet_empty_icon@2x.png"; sourceTree = "<group>"; };
-		5F7E5AAC1796AF5E007CA18A /* timestamp_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "timestamp_icon@2x.png"; path = "nutrition/Resource/timestamp_icon@2x.png"; sourceTree = "<group>"; };
 		5F8DEE9317951DB000C6E9F5 /* LZRecommendFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFilterView.h; path = Class/LZRecommendFilterView.h; sourceTree = "<group>"; };
 		5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFilterView.m; path = Class/LZRecommendFilterView.m; sourceTree = "<group>"; };
 		5F90D7D117AF8873000AEC06 /* BaiduMobAdDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobAdDelegateProtocol.h; sourceTree = "<group>"; };
@@ -792,7 +788,6 @@
 				5FF6320E1772D8AA0068CBFE /* foodTypeIcon */,
 				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
 				5FF632061771C6530068CBFE /* close_button@2x.png */,
-				5F2CDE8017CB2CF600189C8E /* check_mark_off@2x.png */,
 				5F2CDE8117CB2CF600189C8E /* check_mark_on@2x.png */,
 				5F3676CB17C74AAE004355C1 /* next_clicked@2x.png */,
 				5F3676D317C74C58004355C1 /* table_list_bg@2x.png */,
@@ -804,7 +799,6 @@
 				5F6A3F5B17964D7F0029B8C9 /* recommend_icon@2x.png */,
 				5F6A3F5C17964D7F0029B8C9 /* share_icon@2x.png */,
 				5FEC69341795372C00E80BE6 /* nutrient_button_off@2x.png */,
-				5F7E5AAC1796AF5E007CA18A /* timestamp_icon@2x.png */,
 				5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */,
 				5FDD1CAB179D19140046F752 /* change_name_button@2x.png */,
 				5F3676C717C73FBB004355C1 /* currentPageDot@2x.png */,
@@ -1382,7 +1376,6 @@
 				5F6A3F67179655650029B8C9 /* sepline@2x.png in Resources */,
 				5F7E5AA317965B47007CA18A /* recommend_sign@2x.png in Resources */,
 				5F7E5AAB17969463007CA18A /* diet_empty_icon@2x.png in Resources */,
-				5F7E5AAD1796AF5E007CA18A /* timestamp_icon@2x.png in Resources */,
 				5FB735E31799511E005FA05C /* 调味品@2x.png in Resources */,
 				5FB735E41799511E005FA05C /* 零食@2x.png in Resources */,
 				5FDD1CA8179CED200046F752 /* add_by_nutrient_button@2x.png in Resources */,
@@ -1404,7 +1397,6 @@
 				5F3676D117C74AAE004355C1 /* previous_clicked@2x.png in Resources */,
 				5F3676D217C74AAE004355C1 /* previous_normal@2x.png in Resources */,
 				5F3676D417C74C58004355C1 /* table_list_bg@2x.png in Resources */,
-				5F2CDE8217CB2CF600189C8E /* check_mark_off@2x.png in Resources */,
 				5F2CDE8317CB2CF600189C8E /* check_mark_on@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

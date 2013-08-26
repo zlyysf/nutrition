@@ -25,6 +25,13 @@
 @property (strong,nonatomic)NSArray *list2DataSourceArray;
 @property (strong,nonatomic)NSArray *list3DataSourceArray;
 @property (strong,nonatomic)NSMutableArray *list1CheckStateArray;
+@property (strong, nonatomic) IBOutlet UILabel *resultLabel;
 @property (strong,nonatomic)NSMutableArray *list2CheckStateArray;
+@property (strong, nonatomic) IBOutlet UIView *resultView;
+@property (strong, nonatomic) IBOutlet UIButton *recommendFoodButton;
 @property (strong,nonatomic)NSMutableArray *list3CheckStateArray;
+@property (strong, nonatomic) IBOutlet UILabel *question1Label;
+@property (strong, nonatomic) IBOutlet UILabel *question2Label;
+@property (strong, nonatomic) IBOutlet UILabel *question3Label;
+@property (strong,nonatomic)NSArray *orderedNutrientsInSet;
 @end
