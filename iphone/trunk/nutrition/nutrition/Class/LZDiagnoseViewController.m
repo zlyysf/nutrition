@@ -138,6 +138,10 @@
     [self.listView1 reloadData];
     [self.listView2 reloadData];
     [self.listView3 reloadData];
+    [self.listView1 setContentOffset:CGPointMake(0, 0) animated:NO];
+    [self.listView2 setContentOffset:CGPointMake(0, 0) animated:NO];
+    [self.listView3 setContentOffset:CGPointMake(0, 0) animated:NO];
+    
 }
 -(void)clearResultView
 {
