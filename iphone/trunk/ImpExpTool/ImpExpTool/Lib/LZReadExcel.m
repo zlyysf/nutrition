@@ -1362,6 +1362,7 @@
     
     //    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, nil];
     int startColumnPos = 1, startRowPos = 2;
+    int startNutrientColumnPos = startColumnPos+3;
     DHcell *cell;
     cell = [reader cellInWorkSheetIndex:0 row:startColumnPos col:startRowPos];
     assert(cell.type==cellBlank);
@@ -1406,7 +1407,7 @@
         idxRow++;
     } while (existDiseaseRow);
     
-    idxCol = startColumnPos +2;
+    idxCol = startNutrientColumnPos;
     int rowPos_nutrientDesc = startRowPos;
     BOOL existNutrientDesc = false;
     do {
@@ -1448,7 +1449,7 @@
             NSString *nutrientDesc = nutrientDescs[iCol];
             NSString *nutrientId = nutrientDescToIdDict[nutrientDesc];
             
-            int idxCol = startColumnPos+2+iCol;
+            int idxCol = startNutrientColumnPos+iCol;
             //            NSLog(@"[%d,%d]",idxRow,idxCol);
             DHcell *cellFlag = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:idxCol];
             if (cellFlag.type!=cellBlank && cellFlag.val!=nil && [cellFlag.val intValue]==1){
@@ -1479,6 +1480,7 @@
     
     //    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, nil];
     int startColumnPos = 1, startRowPos = 2;
+    int startNutrientDiseaseFlagColumnPos = startColumnPos+4;
     DHcell *cell;
     cell = [reader cellInWorkSheetIndex:0 row:startColumnPos col:startRowPos];
     assert(cell.type==cellBlank);
@@ -1524,7 +1526,7 @@
         idxRow++;
     } while (existDiseaseRow);
     
-    idxCol = startColumnPos +3;
+    idxCol = startNutrientDiseaseFlagColumnPos;
     int rowPos_nutrientDesc = startRowPos;
     BOOL existNutrientDesc = false;
     do {
@@ -1553,21 +1555,25 @@
         int idxRow = startRowPos+1+iRow;
         NSString *diseaseName = diseaseNames[iRow];
         DHcell *cellDiseaseDisabled = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:startColumnPos];
-        DHcell *cellDiseaseDepartment = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:startColumnPos+2];
+        DHcell *cellDiseaseDepartment = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:startColumnPos+3];
         if (cellDiseaseDisabled.type!=cellBlank && cellDiseaseDisabled.val!=nil && [cellDiseaseDisabled.val intValue]==1){
             continue;
         }
-        assert(cellDiseaseDepartment.str!=nil);
+        //assert(cellDiseaseDepartment.str!=nil);
+        NSString *sDiseaseDepartment = @"";
+        if (cellDiseaseDepartment.str!=nil){
+            sDiseaseDepartment = cellDiseaseDepartment.str;
+        }
         NSMutableArray * validDiseaseAry = [NSMutableArray arrayWithCapacity:2];
         [validDiseaseAry addObject:diseaseName];
-        [validDiseaseAry addObject:cellDiseaseDepartment.str];
+        [validDiseaseAry addObject:sDiseaseDepartment];
         [validDiseaseAry2D addObject:validDiseaseAry];
         
         for(int iCol=0 ; iCol<nutrientDescs.count ; iCol++){
             NSString *nutrientDesc = nutrientDescs[iCol];
             NSString *nutrientId = nutrientDescToIdDict[nutrientDesc];
             
-            int idxCol = startColumnPos+3+iCol;
+            int idxCol = startNutrientDiseaseFlagColumnPos+iCol;
             //            NSLog(@"[%d,%d]",idxRow,idxCol);
             DHcell *cellFlag = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:idxCol];
             if (cellFlag.type!=cellBlank && cellFlag.val!=nil && [cellFlag.val intValue]==1){
