@@ -539,10 +539,10 @@
 
 +(void)initializePreferNutrient
 {
-    NSArray *preferArray = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
+    //NSArray *preferArray = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
     NSArray *nutrientArray = [LZRecommendFood getCustomNutrients:nil];
-    if (preferArray == nil || ([preferArray count]!= [nutrientArray count]))
-    {
+    //if (preferArray == nil || ([preferArray count]!= [nutrientArray count]))
+    //{
         NSMutableArray *newPreferArray = [NSMutableArray array];
         for (NSString *nutrinetId in nutrientArray)
         {
@@ -550,7 +550,8 @@
             [newPreferArray addObject:state];
         }
         [[NSUserDefaults standardUserDefaults]setObject:newPreferArray forKey:KeyUserRecommendPreferNutrientArray];
-    }
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    //}
 }
 
 +(NSArray *)convertPreferNutrientArrayToParamArray:(NSArray *)preferArray

@@ -23,4 +23,6 @@ typedef enum listType
 @property (assign, nonatomic)DietListType listType;
 @property (assign,nonatomic)BOOL needRefresh;
 @property (strong,nonatomic)NSNumber *dietId;
+@property (nonatomic,assign)BOOL backWithNoAnimation;
+@property (nonatomic,assign)BOOL useRecommendNutrient;
 @end

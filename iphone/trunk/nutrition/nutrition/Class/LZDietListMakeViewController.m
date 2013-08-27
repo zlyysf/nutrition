@@ -38,7 +38,7 @@
 @end
 
 @implementation LZDietListMakeViewController
-@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,recommendFoodDictForDisplay,dietId,allFoodUnitDict;
+@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,recommendFoodDictForDisplay,dietId,allFoodUnitDict,backWithNoAnimation,useRecommendNutrient;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -105,10 +105,7 @@
     {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
         [[NSUserDefaults standardUserDefaults]synchronize];
-        [self.navigationController  popViewControllerAnimated:YES];
-
-//        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-//        [foodEmptyAlert show];
+        [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
     }
     else
     {
@@ -146,7 +143,7 @@
             {
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
                 [[NSUserDefaults standardUserDefaults]synchronize];
-                [self.navigationController  popViewControllerAnimated:YES];
+                [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
             }
             else
             {
@@ -215,6 +212,20 @@
     {
         [self refreshFoodNureitentProcessForAll:YES];
         needRefresh = NO;
+    }
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (useRecommendNutrient)
+    {
+        useRecommendNutrient = NO;
+        HUD.hidden = NO;
+        [HUD show:YES];
+        //self.listView.hidden = YES;
+        
+        HUD.labelText = @"智能推荐中...";
+        
+        [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
     }
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -1655,7 +1666,7 @@
         {
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
             [[NSUserDefaults standardUserDefaults]synchronize];
-            [self.navigationController  popViewControllerAnimated:YES];
+            [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
         }
         else
         {
@@ -1683,7 +1694,7 @@
             {
                 [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
                 [[NSUserDefaults standardUserDefaults]synchronize];
-                [self.navigationController  popViewControllerAnimated:YES];
+                [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
             }
             else
             {

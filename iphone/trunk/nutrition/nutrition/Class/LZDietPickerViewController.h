@@ -12,4 +12,5 @@
 <UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong, nonatomic) NSMutableArray *dietArray;
+@property (strong,nonatomic)NSArray *recommendNutritionArray;
 @end

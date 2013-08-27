@@ -11,5 +11,4 @@
 #import <QuartzCore/QuartzCore.h>
 
 @interface JWNavigationViewController : UINavigationController
-
 @end

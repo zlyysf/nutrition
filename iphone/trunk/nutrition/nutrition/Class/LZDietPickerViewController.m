@@ -12,12 +12,13 @@
 #import "LZDietListMakeViewController.h"
 #import "LZUserDietListViewController.h"
 #import "LZConstants.h"
+#import "LZMainPageViewController.h"
 @interface LZDietPickerViewController ()
 
 @end
 
 @implementation LZDietPickerViewController
-@synthesize dietArray;
+@synthesize dietArray,recommendNutritionArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,7 +35,23 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.dietArray = [[NSMutableArray alloc]init];
+    self.title = @"挑选清单";
+    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setTitle:@"  返回" forState:UIControlStateNormal];
+    button.frame = CGRectMake(0, 0, 48, 30);
+    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [button addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = backItem;
+
 	// Do any additional setup after loading the view.
+}
+-(void)backButtonTapped
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 - (void)viewWillAppear:(BOOL)animated
 {
@@ -135,15 +152,37 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LZUserDietListViewController *uerDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
-    
+    LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
+    userDietListViewController.backWithNoAnimation = YES;
+    LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
+    NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
+    NSSet *selectNutrient = [NSSet setWithArray:self.recommendNutritionArray];
+    NSMutableArray *newPreferArray = [[NSMutableArray alloc]init];
+    for (NSDictionary *aNutrient in preferNutrient)
+    {
+        NSString *nId = [[aNutrient allKeys]objectAtIndex:0];
+        if ([selectNutrient containsObject:nId])
+        {
+            NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],nId, nil];
+            [newPreferArray addObject:newDict];
+        }
+        else
+        {
+            NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO],nId, nil];
+            [newPreferArray addObject:newDict];
+        }
+    }
+    [[NSUserDefaults standardUserDefaults]setObject:newPreferArray forKey:KeyUserRecommendPreferNutrientArray];
+    [[NSUserDefaults standardUserDefaults]synchronize];
     if (indexPath.section == 0)
     {
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
         [[NSUserDefaults standardUserDefaults]synchronize];
         LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
         foodListViewController.listType = dietListTypeNew;
-        NSArray *vcs = [NSArray arrayWithObjects:uerDietListViewController,foodListViewController, nil];
+        foodListViewController.useRecommendNutrient = YES;
+        foodListViewController.backWithNoAnimation = YES;
+        NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
         [self.navigationController setViewControllers:vcs animated:YES];
     }
     else
@@ -170,8 +209,10 @@
         LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
         foodListViewController.listType = dietListTypeOld;
         foodListViewController.title = dietTitle;
+        foodListViewController.useRecommendNutrient = YES;
         foodListViewController.dietId = dietId;
-        NSArray *vcs = [NSArray arrayWithObjects:uerDietListViewController,foodListViewController, nil];
+        foodListViewController.backWithNoAnimation = YES;
+        NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
         [self.navigationController setViewControllers:vcs animated:YES];
     }
 }

@@ -237,6 +237,7 @@
 - (IBAction)recommendFoodButtonTapped:(id)sender {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZDietPickerViewController * dietPickerViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietPickerViewController"];
+    dietPickerViewController.recommendNutritionArray = orderedNutrientsInSet;
     [self.navigationController pushViewController:dietPickerViewController animated:YES];
 }
 -(void)nutrientButtonTapped:(UIButton *)nutrientButton

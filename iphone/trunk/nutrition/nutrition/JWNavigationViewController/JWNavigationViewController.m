@@ -178,20 +178,27 @@
     }];
 }
 
-- (UIViewController *)popViewControllerAnimated:(BOOL)animated {    
-    [self showMaskViewsWithImageA:[_screenshotImages lastObject]
-                           imageB:[self getParentShot]];
-    [self maskViewConfigWithScale:kTransformScale left:0 alpha:kOverlayViewAlpha];
-    
-    // push view animate
-    [UIView animateWithDuration:kPushAnimationDuration animations:^{
-        [self maskViewConfigWithScale:1 left:self.view.frame.size.width alpha:0];
-    } completion:^(BOOL finished) {
-        [self hideMaskViews:YES];
+- (UIViewController *)popViewControllerAnimated:(BOOL)animated {
+    if (!animated)
+    {
         [_screenshotImages removeLastObject];
-        [super popViewControllerAnimated:NO];
-    }];
-    
+        [super popViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self showMaskViewsWithImageA:[_screenshotImages lastObject]
+                               imageB:[self getParentShot]];
+        [self maskViewConfigWithScale:kTransformScale left:0 alpha:kOverlayViewAlpha];
+        
+        // push view animate
+        [UIView animateWithDuration:kPushAnimationDuration animations:^{
+            [self maskViewConfigWithScale:1 left:self.view.frame.size.width alpha:0];
+        } completion:^(BOOL finished) {
+            [self hideMaskViews:YES];
+            [_screenshotImages removeLastObject];
+            [super popViewControllerAnimated:NO];
+        }];
+    }
     return [self.viewControllers lastObject];
 }
 

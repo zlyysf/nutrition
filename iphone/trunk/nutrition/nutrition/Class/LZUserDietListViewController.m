@@ -23,7 +23,7 @@
 @end
 
 @implementation LZUserDietListViewController
-@synthesize dietArray,currentEditDietId;
+@synthesize dietArray,currentEditDietId,backWithNoAnimation;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -42,15 +42,27 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(addListAction)];
-//    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"设置" style:UIBarButtonItemStyleBordered target:self action:@selector(settingsAction)];
-    
-    //self.navigationItem.leftBarButtonItem = leftItem;
     self.navigationItem.rightBarButtonItem = rightItem;
     
+    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setTitle:@"  返回" forState:UIControlStateNormal];
+    button.frame = CGRectMake(0, 0, 48, 30);
+    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [button addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = backItem;
+
     self.title = @"膳食清单";
     self.dietArray = [[NSMutableArray alloc]init];
     currentEditDietId = nil;
 
+}
+-(void)backButtonTapped
+{
+    [self.navigationController popViewControllerAnimated:!backWithNoAnimation];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -290,6 +302,7 @@
     [[NSUserDefaults  standardUserDefaults]synchronize];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
+    [LZUtility initializePreferNutrient];
     foodListViewController.listType = dietListTypeOld;
     foodListViewController.title = dietTitle;
     foodListViewController.dietId = dietId;
