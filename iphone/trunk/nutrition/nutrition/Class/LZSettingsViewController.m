@@ -57,7 +57,7 @@
     }
     else
     {
-        [self.contentScrollView setContentSize:CGSizeMake(320, 406)];
+        [self.contentScrollView setContentSize:CGSizeMake(320, 399)];
     }
     self.baiduAdWall = [[BaiduMobAdWall alloc] init];
     self.baiduAdWall.delegate = self;
@@ -115,15 +115,15 @@
     [shared resetAdView:self andListView:self.admobView];
 
     CGRect topFrame = self.topSectionView.frame;
-    topFrame.origin.y = 17;
+    topFrame.origin.y = 10;
     self.topSectionView.frame = topFrame;
     
     CGRect midFrame = self.midSectionView.frame;
-    midFrame.origin.y = 187;
+    midFrame.origin.y = 180;
     self.midSectionView.frame = midFrame;
     
     CGRect bottomFrame = self.bottomSectionView.frame;
-    bottomFrame.origin.y = 327;
+    bottomFrame.origin.y = 320;
     self.bottomSectionView.frame = bottomFrame;
 
 //    if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
