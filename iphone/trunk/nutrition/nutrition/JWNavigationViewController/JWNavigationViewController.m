@@ -147,7 +147,16 @@
     _screenshotBView.frame = frame;
     _overlayView.alpha = alpha;
 }
-
+-(void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated
+{
+    [_screenshotImages removeAllObjects];
+    [super setViewControllers:viewControllers animated:animated];
+}
+-(void)setViewControllers:(NSArray *)viewControllers
+{
+    [_screenshotImages removeAllObjects];
+    [super setViewControllers:viewControllers];
+}
 - (void)pushViewController:(UIViewController *)viewController
                   animated:(BOOL)animated {
     if (!_screenshotImages || self.viewControllers.count == 0) {

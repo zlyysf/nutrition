@@ -8,9 +8,8 @@
 
 #import <UIKit/UIKit.h>
 #import "LZChangeDietNameButton.h"
-@interface LZDiteCell : UITableViewCell
+@interface LZDietCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIView *backView;
-@property (strong, nonatomic) IBOutlet UILabel *timeStampLabel;
 @property (strong, nonatomic) IBOutlet UILabel *dietNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *arrowImageView;
 @property (strong, nonatomic) IBOutlet LZChangeDietNameButton *changeNameButton;

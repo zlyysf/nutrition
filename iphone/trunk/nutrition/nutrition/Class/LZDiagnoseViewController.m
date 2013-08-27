@@ -14,6 +14,7 @@
 #import "LZDiagnosisCell.h"
 #import "LZRecommendFood.h"
 #import "LZNutrientionManager.h"
+#import "LZDietPickerViewController.h"
 #define MaxPageNumber 4
 #define NutritionDisplayStartY 117.f
 #define MaxNutritionCount 13
@@ -234,7 +235,9 @@
 
 }
 - (IBAction)recommendFoodButtonTapped:(id)sender {
-    NSLog(@"recommend food");
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZDietPickerViewController * dietPickerViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietPickerViewController"];
+    [self.navigationController pushViewController:dietPickerViewController animated:YES];
 }
 -(void)nutrientButtonTapped:(UIButton *)nutrientButton
 {

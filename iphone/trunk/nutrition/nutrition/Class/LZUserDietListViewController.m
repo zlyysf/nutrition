@@ -14,7 +14,7 @@
 #import "LZUtility.h"
 #import "LZDietListMakeViewController.h"
 #import "LZConstants.h"
-#import "LZDiteCell.h"
+#import "LZDietCell.h"
 #import "LZDataAccess.h"
 #import "LZChangeDietNameButton.h"
 #define KChangeDietAlertTag 99
@@ -181,12 +181,11 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LZDiteCell * cell =(LZDiteCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDiteCell"];
+    LZDietCell * cell =(LZDietCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDietCell"];
     NSDictionary *aDiet = [self.dietArray objectAtIndex:indexPath.row];
     NSString *dietName = [aDiet objectForKey:@"CollocationName"];
     [cell adjustLabelAccordingToDietName:dietName];
-    NSNumber *timeStamp = [aDiet objectForKey:@"CollocationCreateTime"];
-    cell.timeStampLabel.text = [LZUtility stampFromInterval:timeStamp];
+
     cell.dietInfo = aDiet;
 
     cell.changeNameButton.dietInfo = aDiet;
@@ -226,7 +225,7 @@
 
 }
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    LZDiteCell * cell = (LZDiteCell*)[tableView cellForRowAtIndexPath:indexPath];
+    LZDietCell * cell = (LZDietCell*)[tableView cellForRowAtIndexPath:indexPath];
     NSDictionary *aDiet = cell.dietInfo;
     NSNumber *dietId = [aDiet objectForKey:@"CollocationId"];
     LZDataAccess *da = [LZDataAccess singleton];
