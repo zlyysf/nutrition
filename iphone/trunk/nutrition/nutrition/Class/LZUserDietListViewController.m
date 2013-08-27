@@ -124,6 +124,7 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
+    [LZUtility initializePreferNutrient];
     foodListViewController.listType = dietListTypeNew;
     [self.navigationController pushViewController:foodListViewController animated:YES];
 }

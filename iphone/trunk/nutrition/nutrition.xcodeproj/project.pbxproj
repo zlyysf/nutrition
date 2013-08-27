@@ -148,6 +148,14 @@
 		5F7E5AAB17969463007CA18A /* diet_empty_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */; };
 		5F86C85817CC4DF7001DDC34 /* LZDietPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F86C85717CC4DF7001DDC34 /* LZDietPickerViewController.m */; };
 		5F86C85B17CC51A0001DDC34 /* LZDietPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F86C85A17CC51A0001DDC34 /* LZDietPickerCell.m */; };
+		5F86C85E17CC99B0001DDC34 /* LZDiseasePreventViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F86C85D17CC99AF001DDC34 /* LZDiseasePreventViewController.m */; };
+		5F86C86117CC9B88001DDC34 /* LZDiseaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F86C86017CC9B88001DDC34 /* LZDiseaseCell.m */; };
+		5F86C86817CCACE5001DDC34 /* menu_item_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F86C86217CCACE5001DDC34 /* menu_item_0@2x.png */; };
+		5F86C86917CCACE5001DDC34 /* menu_item_1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F86C86317CCACE5001DDC34 /* menu_item_1@2x.png */; };
+		5F86C86A17CCACE5001DDC34 /* menu_item_2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F86C86417CCACE5001DDC34 /* menu_item_2@2x.png */; };
+		5F86C86B17CCACE5001DDC34 /* menu_item_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F86C86517CCACE5001DDC34 /* menu_item_3@2x.png */; };
+		5F86C86C17CCACE5001DDC34 /* menu_item_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F86C86617CCACE5001DDC34 /* menu_item_4@2x.png */; };
+		5F86C86D17CCACE5001DDC34 /* menu_item_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F86C86717CCACE5001DDC34 /* menu_item_5@2x.png */; };
 		5F8DEE9517951DB000C6E9F5 /* LZRecommendFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */; };
 		5F90D80117AF8873000AEC06 /* baidumobadsdk.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5F90D7D217AF8873000AEC06 /* baidumobadsdk.bundle */; };
 		5F90D80217AF8873000AEC06 /* libBaiduMobAdSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D7D417AF8873000AEC06 /* libBaiduMobAdSdk.a */; };
@@ -407,6 +415,16 @@
 		5F86C85717CC4DF7001DDC34 /* LZDietPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDietPickerViewController.m; path = Class/LZDietPickerViewController.m; sourceTree = "<group>"; };
 		5F86C85917CC51A0001DDC34 /* LZDietPickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDietPickerCell.h; path = Class/LZDietPickerCell.h; sourceTree = "<group>"; };
 		5F86C85A17CC51A0001DDC34 /* LZDietPickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDietPickerCell.m; path = Class/LZDietPickerCell.m; sourceTree = "<group>"; };
+		5F86C85C17CC99AF001DDC34 /* LZDiseasePreventViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDiseasePreventViewController.h; path = Class/LZDiseasePreventViewController.h; sourceTree = "<group>"; };
+		5F86C85D17CC99AF001DDC34 /* LZDiseasePreventViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDiseasePreventViewController.m; path = Class/LZDiseasePreventViewController.m; sourceTree = "<group>"; };
+		5F86C85F17CC9B88001DDC34 /* LZDiseaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDiseaseCell.h; path = Class/LZDiseaseCell.h; sourceTree = "<group>"; };
+		5F86C86017CC9B88001DDC34 /* LZDiseaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDiseaseCell.m; path = Class/LZDiseaseCell.m; sourceTree = "<group>"; };
+		5F86C86217CCACE5001DDC34 /* menu_item_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_0@2x.png"; path = "nutrition/Resource/menu_item_0@2x.png"; sourceTree = "<group>"; };
+		5F86C86317CCACE5001DDC34 /* menu_item_1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_1@2x.png"; path = "nutrition/Resource/menu_item_1@2x.png"; sourceTree = "<group>"; };
+		5F86C86417CCACE5001DDC34 /* menu_item_2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_2@2x.png"; path = "nutrition/Resource/menu_item_2@2x.png"; sourceTree = "<group>"; };
+		5F86C86517CCACE5001DDC34 /* menu_item_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_3@2x.png"; path = "nutrition/Resource/menu_item_3@2x.png"; sourceTree = "<group>"; };
+		5F86C86617CCACE5001DDC34 /* menu_item_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_4@2x.png"; path = "nutrition/Resource/menu_item_4@2x.png"; sourceTree = "<group>"; };
+		5F86C86717CCACE5001DDC34 /* menu_item_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_5@2x.png"; path = "nutrition/Resource/menu_item_5@2x.png"; sourceTree = "<group>"; };
 		5F8DEE9317951DB000C6E9F5 /* LZRecommendFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFilterView.h; path = Class/LZRecommendFilterView.h; sourceTree = "<group>"; };
 		5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFilterView.m; path = Class/LZRecommendFilterView.m; sourceTree = "<group>"; };
 		5F90D7D117AF8873000AEC06 /* BaiduMobAdDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobAdDelegateProtocol.h; sourceTree = "<group>"; };
@@ -820,6 +838,12 @@
 				5F20148B17BB35A50009B735 /* valuepicker_bg@2x.png */,
 				5FF631EB17715F0A0068CBFE /* button_bottom_normal@2x.png */,
 				5FF631EC17715F0B0068CBFE /* button_top_normal@2x.png */,
+				5F86C86217CCACE5001DDC34 /* menu_item_0@2x.png */,
+				5F86C86317CCACE5001DDC34 /* menu_item_1@2x.png */,
+				5F86C86417CCACE5001DDC34 /* menu_item_2@2x.png */,
+				5F86C86517CCACE5001DDC34 /* menu_item_3@2x.png */,
+				5F86C86617CCACE5001DDC34 /* menu_item_4@2x.png */,
+				5F86C86717CCACE5001DDC34 /* menu_item_5@2x.png */,
 				5FF631EE17715F0C0068CBFE /* weibo_icon@2x.png */,
 				5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */,
 				5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png */,
@@ -989,6 +1013,8 @@
 				5F3676C117C72B31004355C1 /* LZDiagnoseViewController.m */,
 				5F86C85617CC4DF7001DDC34 /* LZDietPickerViewController.h */,
 				5F86C85717CC4DF7001DDC34 /* LZDietPickerViewController.m */,
+				5F86C85C17CC99AF001DDC34 /* LZDiseasePreventViewController.h */,
+				5F86C85D17CC99AF001DDC34 /* LZDiseasePreventViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1020,6 +1046,8 @@
 				5F2CDE7E17CB1D9700189C8E /* LZDiagnosisCell.m */,
 				5F86C85917CC51A0001DDC34 /* LZDietPickerCell.h */,
 				5F86C85A17CC51A0001DDC34 /* LZDietPickerCell.m */,
+				5F86C85F17CC9B88001DDC34 /* LZDiseaseCell.h */,
+				5F86C86017CC9B88001DDC34 /* LZDiseaseCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1408,6 +1436,12 @@
 				5F3676D217C74AAE004355C1 /* previous_normal@2x.png in Resources */,
 				5F3676D417C74C58004355C1 /* table_list_bg@2x.png in Resources */,
 				5F2CDE8317CB2CF600189C8E /* check_mark_on@2x.png in Resources */,
+				5F86C86817CCACE5001DDC34 /* menu_item_0@2x.png in Resources */,
+				5F86C86917CCACE5001DDC34 /* menu_item_1@2x.png in Resources */,
+				5F86C86A17CCACE5001DDC34 /* menu_item_2@2x.png in Resources */,
+				5F86C86B17CCACE5001DDC34 /* menu_item_3@2x.png in Resources */,
+				5F86C86C17CCACE5001DDC34 /* menu_item_4@2x.png in Resources */,
+				5F86C86D17CCACE5001DDC34 /* menu_item_5@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1514,6 +1548,8 @@
 				5F2CDE7F17CB1D9700189C8E /* LZDiagnosisCell.m in Sources */,
 				5F86C85817CC4DF7001DDC34 /* LZDietPickerViewController.m in Sources */,
 				5F86C85B17CC51A0001DDC34 /* LZDietPickerCell.m in Sources */,
+				5F86C85E17CC99B0001DDC34 /* LZDiseasePreventViewController.m in Sources */,
+				5F86C86117CC9B88001DDC34 /* LZDiseaseCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

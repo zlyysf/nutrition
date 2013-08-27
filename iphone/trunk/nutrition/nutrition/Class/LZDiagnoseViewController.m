@@ -303,16 +303,16 @@
 {
     return 34;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 5;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
-    [sectionView setBackgroundColor:[UIColor clearColor]];
-    return sectionView;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return 5;
+//}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
+//    [sectionView setBackgroundColor:[UIColor clearColor]];
+//    return sectionView;
+//}
 
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 //{
@@ -348,18 +348,21 @@
     BOOL isStateOn = NO;
     if (tableView == self.listView1)
     {
+        cell.sepratorLineView.hidden = (indexPath.row == [self.list1DataSourceArray count]-1);
         diseaseName = [self.list1DataSourceArray objectAtIndex:indexPath.row];
         NSNumber *checkState = [self.list1CheckStateArray objectAtIndex:indexPath.row];
         isStateOn = [checkState boolValue];
     }
     else if (tableView == self.listView2)
     {
+        cell.sepratorLineView.hidden = (indexPath.row == [self.list2DataSourceArray count]-1);
         diseaseName = [self.list2DataSourceArray objectAtIndex:indexPath.row];
         NSNumber *checkState = [self.list2CheckStateArray objectAtIndex:indexPath.row];
         isStateOn = [checkState boolValue];
     }
     else
     {
+        cell.sepratorLineView.hidden = (indexPath.row == [self.list3DataSourceArray count]-1);
         diseaseName = [self.list3DataSourceArray objectAtIndex:indexPath.row];
         NSNumber *checkState = [self.list3CheckStateArray objectAtIndex:indexPath.row];
         isStateOn = [checkState boolValue];

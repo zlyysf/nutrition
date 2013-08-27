@@ -13,6 +13,7 @@
 #import "LZDiagnoseViewController.h"
 #import "LZUtility.h"
 #import "LZEditProfileViewController.h"
+#import "LZDiseasePreventViewController.h"
 @interface LZMainPageViewController ()
 
 @end
@@ -81,6 +82,7 @@
     NSString *itemName = [menuItem objectForKey:@"menuName"];
     cell.foodTypeNameLabel.text = itemName;
     cell.arrowImage.hidden = YES;
+    [cell.foodTypeImage setImage:[UIImage imageNamed:[NSString stringWithFormat:@"menu_item_%d.png",indexPath.row]]];
     //cell.foodTypeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",typeName]];
     return cell;
 }
@@ -121,17 +123,22 @@
         LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
         [self.navigationController pushViewController:userDietListViewController animated:YES];
     }
+        else if(indexPath.row == 3)
+    {
+        LZDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiagnoseViewController"];
+        [self.navigationController pushViewController:diagnoseViewController animated:YES];
+    }
+    else if(indexPath.row == 4)
+    {
+        LZDiseasePreventViewController *diseasePreventViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiseasePreventViewController"];
+        [self.navigationController pushViewController:diseasePreventViewController animated:YES];
+    }
     else if(indexPath.row == 5)
     {
         LZSettingsViewController *settingsViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZSettingsViewController"];
         [self.navigationController pushViewController:settingsViewController animated:YES];
     }
-    else if(indexPath.row == 3)
-    {
-        LZDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiagnoseViewController"];
-        [self.navigationController pushViewController:diagnoseViewController animated:YES];
-    }
-    
+
 //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
 //    LZDailyIntakeViewController *dailyIntakeViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
 //    dailyIntakeViewController.foodArray = [self.foodNameArray objectAtIndex:indexPath.row];
