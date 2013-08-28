@@ -2126,8 +2126,6 @@
         <class className="LZDiagnoseViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDiagnoseViewController.h"/>
             <relationships>
-                <relationship kind="action" name="changePage:" candidateClass="UIButton"/>
-                <relationship kind="action" name="recommendFoodButtonTapped:"/>
                 <relationship kind="outlet" name="emptyImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="emptyLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="list1BG" candidateClass="UIImageView"/>

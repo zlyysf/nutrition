@@ -169,7 +169,7 @@
     [userDefaults synchronize];
     
     [HUD hide:YES];
-    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
+
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
     userDietListViewController.backWithNoAnimation = YES;
@@ -181,7 +181,7 @@
     foodListViewController.title = @"推荐的食物";
     NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
     [self.navigationController setViewControllers:vcs animated:YES];
-    
+    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
 }
 
 -(void)viewWillAppear:(BOOL)animated
