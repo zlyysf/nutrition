@@ -81,8 +81,8 @@
 
     self.navigationItem.leftBarButtonItem = cancelItem;
     
-//    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
-//    self.navigationItem.rightBarButtonItem = saveItem;
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
+    self.navigationItem.rightBarButtonItem = saveItem;
     needRefresh = NO;
     takenFoodIdsArray = [[NSMutableArray alloc]init];
     takenFoodDict = [[NSMutableDictionary alloc]init];
@@ -101,11 +101,23 @@
 }
 - (void)cancelButtonTapped
 {
+
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
+
+}
+- (void)saveButtonTapped
+{
+
     if([self.takenFoodIdsArray count] == 0)
     {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
+        if([self.takenFoodIdsArray count] == 0)
+        {
+            UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            [foodEmptyAlert show];
+            return;
+        }
     }
     else
     {
@@ -152,52 +164,8 @@
             }
         }
     }
+    //[self.navigationController  popViewControllerAnimated:YES];
 }
-//- (void)saveButtonTapped
-//{
-//
-//
-//    if([self.takenFoodIdsArray count] == 0)
-//    {
-//        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-//        [foodEmptyAlert show];
-//        return;
-//    }
-//    if (self.listType == dietListTypeNew)
-//    {
-//        //新建一个表单，用insert
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物搭配" message:@"给你的食物搭配加个名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-//        alert.tag = KSaveDietTitleAlertTag;
-//        [alert show];
-//
-//    }
-//    else
-//    {
-//        //编辑已有的表单，用update
-//        LZDataAccess *da = [LZDataAccess singleton];
-//        NSMutableArray * foodAndAmountArray = [NSMutableArray array];
-//        for (NSString *foodId in self.takenFoodIdsArray)
-//        {
-//            NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
-//            NSNumber *weight = [aFood objectForKey:@"Amount"];
-//            [foodAndAmountArray addObject:[NSArray arrayWithObjects:foodId, weight,nil]];
-//        }
-//        if([da updateFoodCollocationData_withCollocationId:dietId andNewCollocationName:nil andFoodAmount2LevelArray:foodAndAmountArray])
-//        {
-//            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
-//            [[NSUserDefaults standardUserDefaults]synchronize];
-//            [self.navigationController  popViewControllerAnimated:YES];
-//        }
-//        else
-//        {
-//            UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
-//            [saveFailedAlert show];
-//        }
-//    }
-//
-//    //[self.navigationController  popViewControllerAnimated:YES];
-//}
 -(void)viewWillAppear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -1664,9 +1632,9 @@
     {
         if (buttonIndex == alertView.cancelButtonIndex)
         {
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-            [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
+//            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+//            [[NSUserDefaults standardUserDefaults]synchronize];
+//            [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
         }
         else
         {

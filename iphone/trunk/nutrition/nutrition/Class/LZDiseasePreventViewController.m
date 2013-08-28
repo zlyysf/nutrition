@@ -11,6 +11,8 @@
 #import "LZUtility.h"
 #import "LZConstants.h"
 #import "LZDiseaseCell.h"
+#import "LZRecommendFood.h"
+#import "LZDiseaseResultViewController.h"
 @interface LZDiseasePreventViewController ()
 
 @end
@@ -123,15 +125,34 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     if (!isSecondClass)
     {
         NSString* diseaseName = [self.diseaseNameLevel1Array objectAtIndex:indexPath.row];
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        
         LZDiseasePreventViewController *diseasePreventViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiseasePreventViewController"];
         diseasePreventViewController.diseaseNameLevel2Array = [self.diseaseNameDict objectForKey:diseaseName];
         diseasePreventViewController.title = diseaseName;
         diseasePreventViewController.isSecondClass = YES;
         [self.navigationController pushViewController:diseasePreventViewController animated:YES];
+    }
+    else
+    {
+        NSString* diseaseName = [self.diseaseNameLevel2Array objectAtIndex:indexPath.row];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSArray *diseaseNames = [NSArray arrayWithObject:diseaseName];
+        NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrients_ByDiseaseNames:diseaseNames];
+        NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
+        for ( NSString* key in nutrientsByDiseaseDict) {
+            NSArray *nutrients = nutrientsByDiseaseDict[key];
+            [nutrientSet addObjectsFromArray:nutrients];
+        }
+        NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
+        NSArray *orderedNutrientsInSet = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
+        LZDiseaseResultViewController *diseaseResultViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiseaseResultViewController"];
+        diseaseResultViewController.relatedNutritionArray = orderedNutrientsInSet;
+        diseaseResultViewController.title = diseaseName;
+        [self.navigationController pushViewController:diseaseResultViewController animated:YES];
     }
 }
 

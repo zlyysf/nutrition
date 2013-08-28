@@ -184,6 +184,7 @@
 		5F90D82317AF8E43000AEC06 /* baidumobadwallsdk.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5F90D82117AF8E43000AEC06 /* baidumobadwallsdk.bundle */; };
 		5F90D82417AF8E43000AEC06 /* libBaiduMobAdWallSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D82217AF8E43000AEC06 /* libBaiduMobAdWallSdk.a */; };
 		5F90D82617AF8E69000AEC06 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D82517AF8E69000AEC06 /* Security.framework */; };
+		5F933F0A17CD986700B188E0 /* LZDiseaseResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F933F0917CD986700B188E0 /* LZDiseaseResultViewController.m */; };
 		5F94A86517531CC100664B57 /* LZDietListMakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */; };
 		5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86717531ED700664B57 /* LZSettingsViewController.m */; };
 		5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
@@ -477,6 +478,8 @@
 		5F90D82117AF8E43000AEC06 /* baidumobadwallsdk.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = baidumobadwallsdk.bundle; sourceTree = "<group>"; };
 		5F90D82217AF8E43000AEC06 /* libBaiduMobAdWallSdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobAdWallSdk.a; sourceTree = "<group>"; };
 		5F90D82517AF8E69000AEC06 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		5F933F0817CD986700B188E0 /* LZDiseaseResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDiseaseResultViewController.h; path = Class/LZDiseaseResultViewController.h; sourceTree = "<group>"; };
+		5F933F0917CD986700B188E0 /* LZDiseaseResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDiseaseResultViewController.m; path = Class/LZDiseaseResultViewController.m; sourceTree = "<group>"; };
 		5F94A86317531CC100664B57 /* LZDietListMakeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDietListMakeViewController.h; path = Class/LZDietListMakeViewController.h; sourceTree = "<group>"; };
 		5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDietListMakeViewController.m; path = Class/LZDietListMakeViewController.m; sourceTree = "<group>"; };
 		5F94A86617531ED700664B57 /* LZSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSettingsViewController.h; path = Class/LZSettingsViewController.h; sourceTree = "<group>"; };
@@ -1015,6 +1018,8 @@
 				5F86C85717CC4DF7001DDC34 /* LZDietPickerViewController.m */,
 				5F86C85C17CC99AF001DDC34 /* LZDiseasePreventViewController.h */,
 				5F86C85D17CC99AF001DDC34 /* LZDiseasePreventViewController.m */,
+				5F933F0817CD986700B188E0 /* LZDiseaseResultViewController.h */,
+				5F933F0917CD986700B188E0 /* LZDiseaseResultViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1550,6 +1555,7 @@
 				5F86C85B17CC51A0001DDC34 /* LZDietPickerCell.m in Sources */,
 				5F86C85E17CC99B0001DDC34 /* LZDiseasePreventViewController.m in Sources */,
 				5F86C86117CC9B88001DDC34 /* LZDiseaseCell.m in Sources */,
+				5F933F0A17CD986700B188E0 /* LZDiseaseResultViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

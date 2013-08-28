@@ -38,11 +38,11 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.menuArray = [[NSArray alloc]initWithObjects:
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"快速查找食物",@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"食物查询",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"营养元素",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"膳食清单",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"营养诊断",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"预防疾病",@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"疾病预防",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"设置",@"menuName", nil],nil];
 }
 -(void)viewDidAppear:(BOOL)animated
