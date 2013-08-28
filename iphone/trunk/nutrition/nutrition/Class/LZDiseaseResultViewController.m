@@ -16,7 +16,12 @@
 #import "LZUtility.h"
 #import "LZRecommendFood.h"
 #import "LZNutrientionManager.h"
-@interface LZDiseaseResultViewController ()
+#import "MBProgressHUD.h"
+#import "LZReviewAppManager.h"
+@interface LZDiseaseResultViewController ()<MBProgressHUDDelegate>
+{
+    MBProgressHUD *HUD;
+}
 
 @end
 
@@ -35,6 +40,10 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+    [self.view addSubview:HUD];
+    HUD.hidden = YES;
+    HUD.delegate = self;
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
@@ -75,14 +84,16 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)recommendFoodButtonTapped:(id)sender {
-    //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    //    LZDietPickerViewController * dietPickerViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietPickerViewController"];
-    //    dietPickerViewController.recommendNutritionArray = orderedNutrientsInSet;
-    //    [self.navigationController pushViewController:dietPickerViewController animated:YES];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
-    userDietListViewController.backWithNoAnimation = YES;
-    LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
+    HUD.hidden = NO;
+    [HUD show:YES];
+    //self.listView.hidden = YES;
+    
+    HUD.labelText = @"智能推荐中...";
+    
+    [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
+}
+- (void)recommendOnePlan
+{
     NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
     NSSet *selectNutrient = [NSSet setWithArray:self.relatedNutritionArray];
     NSMutableArray *newPreferArray = [[NSMutableArray alloc]init];
@@ -100,9 +111,69 @@
             [newPreferArray addObject:newDict];
         }
     }
-    [[NSUserDefaults standardUserDefaults]setObject:newPreferArray forKey:KeyUserRecommendPreferNutrientArray];
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
-    [[NSUserDefaults standardUserDefaults]synchronize];
+    
+    
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    
+    
+    NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+    NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+    NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+    NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+    NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              userSex,ParamKey_sex, userAge,ParamKey_age,
+                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                              userActivityLevel,ParamKey_activityLevel, nil];
+    
+    
+    BOOL needConsiderNutrientLoss = FALSE;
+    BOOL needUseDefinedIncrementUnit = TRUE;
+    BOOL needUseNormalLimitWhenSmallIncrementLogic = TRUE;
+    BOOL needUseFirstRecommendWhenSmallIncrementLogic = TRUE;//FALSE;
+    BOOL needSpecialForFirstBatchFoods = FALSE; //TRUE;
+    BOOL needFirstSpecialForShucaiShuiguo = TRUE;
+    BOOL alreadyChoosedFoodHavePriority = TRUE;
+    BOOL needPriorityFoodToSpecialNutrient = TRUE;
+    int randSeed = 0; //0;
+    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss,
+                                    //                    [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
+                                    [NSNumber numberWithBool:needUseDefinedIncrementUnit],LZSettingKey_needUseDefinedIncrementUnit,
+                                    [NSNumber numberWithBool:needUseNormalLimitWhenSmallIncrementLogic],LZSettingKey_needUseNormalLimitWhenSmallIncrementLogic,
+                                    [NSNumber numberWithBool:needUseFirstRecommendWhenSmallIncrementLogic],LZSettingKey_needUseFirstRecommendWhenSmallIncrementLogic,
+                                    [NSNumber numberWithBool:needSpecialForFirstBatchFoods],LZSettingKey_needSpecialForFirstBatchFoods,
+                                    [NSNumber numberWithBool:needFirstSpecialForShucaiShuiguo],LZSettingKey_needFirstSpecialForShucaiShuiguo,
+                                    [NSNumber numberWithBool:alreadyChoosedFoodHavePriority],LZSettingKey_alreadyChoosedFoodHavePriority,
+                                    [NSNumber numberWithBool:needPriorityFoodToSpecialNutrient],LZSettingKey_needPriorityFoodToSpecialNutrient,
+                                    [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
+                                    nil];
+    if (KeyIsEnvironmentDebug){
+        NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
+        if (flagsDict.count > 0){
+            //            options = [NSMutableDictionary dictionaryWithDictionary:flagsDict];
+            [options setValuesForKeysWithDictionary:flagsDict];
+            assert([options objectForKey:LZSettingKey_randSeed]!=nil);
+        }
+    }
+    
+    NSArray *paramArray = [LZUtility convertPreferNutrientArrayToParamArray:newPreferArray];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:paramArray,Key_givenNutrients,nil];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFoodBySmallIncrementWithPreIntake:nil andUserInfo:userInfo andOptions:options andParams:params];
+    NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
+    
+    [userDefaults setObject:newPreferArray forKey:KeyUserRecommendPreferNutrientArray];
+    [userDefaults setObject:recommendFoodAmountDict forKey:LZUserDailyIntakeKey];
+    [userDefaults synchronize];
+    
+    [HUD hide:YES];
+    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
+    userDietListViewController.backWithNoAnimation = YES;
+    LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
     LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
     foodListViewController.listType = dietListTypeNew;
     foodListViewController.useRecommendNutrient = YES;
@@ -110,7 +181,9 @@
     foodListViewController.title = @"推荐的食物";
     NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
     [self.navigationController setViewControllers:vcs animated:YES];
+    
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     displayAreaHeight = self.resultView.frame.size.height-139;
@@ -185,5 +258,10 @@
     [self setResultView:nil];
     [super viewDidUnload];
 }
+#pragma mark MBProgressHUDDelegate methods
 
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+    HUD.hidden = YES;
+}
 @end

@@ -188,17 +188,17 @@
 }
 - (void)viewDidAppear:(BOOL)animated
 {
-    if (useRecommendNutrient)
-    {
-        useRecommendNutrient = NO;
-        HUD.hidden = NO;
-        [HUD show:YES];
-        //self.listView.hidden = YES;
-        
-        HUD.labelText = @"智能推荐中...";
-        
-        [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
-    }
+//    if (useRecommendNutrient)
+//    {
+//        useRecommendNutrient = NO;
+//        HUD.hidden = NO;
+//        [HUD show:YES];
+//        //self.listView.hidden = YES;
+//        
+//        HUD.labelText = @"智能推荐中...";
+//        
+//        [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
+//    }
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
