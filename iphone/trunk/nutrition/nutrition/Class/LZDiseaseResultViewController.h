@@ -15,4 +15,6 @@
 @property (strong, nonatomic) IBOutlet UIImageView *backImageView;
 @property (strong, nonatomic) IBOutlet UIView *resultView;
 @property (strong,nonatomic)NSArray *relatedNutritionArray;
+@property (assign,nonatomic)float displayAreaHeight;
+@property (assign,nonatomic)int maxNutrientCount;
 @end

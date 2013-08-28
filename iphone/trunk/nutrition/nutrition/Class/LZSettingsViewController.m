@@ -61,7 +61,7 @@
     [self.line3View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.line4View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.line5View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
-    if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
+    if ([LZUtility isIphoneDeviceVersionFive])//iphone 5
     {
         [self.contentScrollView setContentSize:CGSizeMake(320, 454)];
     }

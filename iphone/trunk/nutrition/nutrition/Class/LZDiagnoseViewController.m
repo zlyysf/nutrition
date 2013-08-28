@@ -14,16 +14,17 @@
 #import "LZDiagnosisCell.h"
 #import "LZRecommendFood.h"
 #import "LZNutrientionManager.h"
-#import "LZDietPickerViewController.h"
+#import "LZUserDietListViewController.h"
+#import "LZDietListMakeViewController.h"
+#import "LZMainPageViewController.h"
 #define MaxPageNumber 4
-#define NutritionDisplayStartY 117.f
-#define MaxNutritionCount 13
+
 @interface LZDiagnoseViewController ()
 
 @end
 
 @implementation LZDiagnoseViewController
-@synthesize list1DataSourceArray,list2DataSourceArray,list3DataSourceArray,list1CheckStateArray,list2CheckStateArray,list3CheckStateArray,orderedNutrientsInSet;
+@synthesize list1DataSourceArray,list2DataSourceArray,list3DataSourceArray,list1CheckStateArray,list2CheckStateArray,list3CheckStateArray,orderedNutrientsInSet,displayAreaHeight,maxNutrientCount;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -67,6 +68,8 @@
     [self.listView2.layer setMasksToBounds:YES];
     [self.listView3.layer setCornerRadius:5];
     [self.listView3.layer setMasksToBounds:YES];
+    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
+    maxNutrientCount = [customNutrients count];
     self.smPageControl.numberOfPages = MaxPageNumber;
     self.smPageControl.currentPage = 0;
     [self.smPageControl setPageIndicatorImage:[UIImage imageNamed:@"pageDot.png"]];
@@ -85,13 +88,14 @@
     LZDataAccess *da = [LZDataAccess singleton];
     NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_wizard];
     NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
-    self.question1Label.text = @"您属于以下哪几种人群？";
-    self.question2Label.text = @"您最近有以下哪些症状？";
-    self.question3Label.text = @"您还对以下哪些项目感兴趣？";
+    self.question1Label.text = @"1.您属于以下哪几种人群？(可跳过)";
+    self.question2Label.text = @"2.您最近有以下哪些症状？(可跳过)";
+    self.question3Label.text = @"3.您还对以下哪些保健项目感兴趣？(可跳过)";
     self.list1DataSourceArray = [da getDiseaseNamesOfGroup:groupAry[0]];
     self.list2DataSourceArray = [da getDiseaseNamesOfGroup:groupAry[1]];
     self.list3DataSourceArray = [da getDiseaseNamesOfGroup:groupAry[2]];
     [self setAllCheckState];
+    [self clearResultView];
 	// Do any additional setup after loading the view.
 }
 - (void)setAllCheckState
@@ -115,6 +119,9 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [self.outScrollView setContentSize:CGSizeMake(self.outScrollView.frame.size.width*4, self.outScrollView.frame.size.height)];
+    self.emptyImageView.center = CGPointMake(self.resultView.center.x, self.resultView.center.y-25);
+    self.emptyLabel.center = CGPointMake(self.resultView.center.x, self.resultView.center.y+25);
+    displayAreaHeight = self.resultView.frame.size.height-139;
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -149,19 +156,21 @@
     {
         if ([sv isKindOfClass:[UIButton class]])
         {
-            if (sv.tag >=101 && sv.tag <= 100+MaxNutritionCount)
+            if (sv.tag >=101 && sv.tag <= 100+maxNutrientCount)
             {
                 [sv removeFromSuperview];
             }
         }
     }
-    self.resultLabel.text =@"";
+    self.emptyImageView.hidden = NO;
+    self.resultView.hidden = YES;
+    self.emptyLabel.hidden = YES;
     orderedNutrientsInSet = nil;
 }
 -(void)displayResult
 {
     [self clearResultView];
-    LZDataAccess *da = [LZDataAccess singleton];
+    
     NSMutableArray *userSelectedDiseaseNames = [[NSMutableArray alloc]init];
     for (int i=0;i< [self.list1CheckStateArray count];i++)
     {
@@ -193,12 +202,11 @@
     }
     if([userSelectedDiseaseNames count] == 0)
     {
-        [self.recommendFoodButton setEnabled:NO];
-        self.resultLabel.text =@"";
+        self.emptyLabel.hidden = NO;
         return;
     }
-    [self.recommendFoodButton setEnabled:YES];
-    self.resultLabel.text = [userSelectedDiseaseNames componentsJoinedByString:@"、"];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSString *text = [userSelectedDiseaseNames componentsJoinedByString:@"、"];
     NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrients_ByDiseaseNames:userSelectedDiseaseNames];
     
     NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
@@ -208,8 +216,18 @@
     }
     NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
     self.orderedNutrientsInSet = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
-    NSLog(@"orderedNutrientsInSet=%@",[orderedNutrientsInSet debugDescription]);
-    float startY = NutritionDisplayStartY;
+    int totalFloor = [orderedNutrientsInSet count]/4+ (([orderedNutrientsInSet count]%4 == 0)?0:1);
+    float resultLabelDisplayMaxArea = displayAreaHeight-totalFloor*40-28;
+    CGSize labelSize = [text sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    
+    float labelHeight = (labelSize.height > resultLabelDisplayMaxArea ? resultLabelDisplayMaxArea:labelSize.height);
+    self.resultLabel.frame = CGRectMake(10, 38, 280, labelHeight);
+    self.resultLabel.text = text;
+    CGRect nutrientFrame = self.nutrientTipLabel.frame;
+    nutrientFrame.origin.y   = 38+labelHeight+10;
+    self.nutrientTipLabel.frame = nutrientFrame;
+    
+    float startY = 38+labelHeight+10+18+10;
     int floor = 1;
     int countPerRow = 4;
     float startX;
@@ -235,14 +253,49 @@
         [nutrientButton.layer setCornerRadius:5];
         [nutrientButton.layer setMasksToBounds:YES];
     }
+    self.emptyImageView.hidden = YES;
+    self.resultView.hidden = NO;
     
 
 }
 - (IBAction)recommendFoodButtonTapped:(id)sender {
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//    LZDietPickerViewController * dietPickerViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietPickerViewController"];
+//    dietPickerViewController.recommendNutritionArray = orderedNutrientsInSet;
+//    [self.navigationController pushViewController:dietPickerViewController animated:YES];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LZDietPickerViewController * dietPickerViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietPickerViewController"];
-    dietPickerViewController.recommendNutritionArray = orderedNutrientsInSet;
-    [self.navigationController pushViewController:dietPickerViewController animated:YES];
+    LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
+    userDietListViewController.backWithNoAnimation = YES;
+    LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
+    NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
+    NSSet *selectNutrient = [NSSet setWithArray:self.orderedNutrientsInSet];
+    NSMutableArray *newPreferArray = [[NSMutableArray alloc]init];
+    for (NSDictionary *aNutrient in preferNutrient)
+    {
+        NSString *nId = [[aNutrient allKeys]objectAtIndex:0];
+        if ([selectNutrient containsObject:nId])
+        {
+            NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],nId, nil];
+            [newPreferArray addObject:newDict];
+        }
+        else
+        {
+            NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO],nId, nil];
+            [newPreferArray addObject:newDict];
+        }
+    }
+    [[NSUserDefaults standardUserDefaults]setObject:newPreferArray forKey:KeyUserRecommendPreferNutrientArray];
+    [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
+    foodListViewController.listType = dietListTypeNew;
+    foodListViewController.useRecommendNutrient = YES;
+    foodListViewController.backWithNoAnimation = YES;
+    foodListViewController.title = @"推荐的食物";
+    NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
+    [self.navigationController setViewControllers:vcs animated:YES];
+
+
 }
 -(void)nutrientButtonTapped:(UIButton *)nutrientButton
 {
@@ -272,6 +325,9 @@
     [self setQuestion1Label:nil];
     [self setQuestion2Label:nil];
     [self setQuestion3Label:nil];
+    [self setEmptyImageView:nil];
+    [self setEmptyLabel:nil];
+    [self setNutrientTipLabel:nil];
     [super viewDidUnload];
 }
 /*    

@@ -33,5 +33,10 @@
 @property (strong, nonatomic) IBOutlet UILabel *question1Label;
 @property (strong, nonatomic) IBOutlet UILabel *question2Label;
 @property (strong, nonatomic) IBOutlet UILabel *question3Label;
+@property (strong, nonatomic) IBOutlet UIImageView *emptyImageView;
+@property (strong, nonatomic) IBOutlet UILabel *emptyLabel;
 @property (strong,nonatomic)NSArray *orderedNutrientsInSet;
+@property (strong, nonatomic) IBOutlet UILabel *nutrientTipLabel;
+@property (assign,nonatomic)float displayAreaHeight;
+@property (assign,nonatomic)int maxNutrientCount;
 @end

@@ -93,6 +93,7 @@
     }
     LZDiseaseCell * cell =(LZDiseaseCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDiseaseCell"];
     cell.diseaseNameLabel.text = diseaseName;
+    cell.arrowImage.hidden = isSecondClass;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath

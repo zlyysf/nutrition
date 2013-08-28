@@ -676,7 +676,13 @@
     
     return str;
 }
-
++(BOOL)isIphoneDeviceVersionFive
+{
+    if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone5
+        return YES;
+    else
+        return NO;
+}
 
 
 @end

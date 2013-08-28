@@ -51,11 +51,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    if (self.listType == dietListTypeNew)
+    if (useRecommendNutrient)
+    {
+        self.title = @"推荐的食物";
+    }
+    else if (self.listType == dietListTypeNew)
     {
         self.title = @"营养搭配";
     }
-    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.view addSubview:HUD];
     HUD.hidden = YES;
     HUD.delegate = self;

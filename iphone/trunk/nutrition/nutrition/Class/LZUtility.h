@@ -81,7 +81,7 @@
 
 +(NSMutableString*)getObjectDescription : (NSObject*)obj andIndent:(NSUInteger)level;
 
-
++(BOOL)isIphoneDeviceVersionFive;
 @end
 
 
