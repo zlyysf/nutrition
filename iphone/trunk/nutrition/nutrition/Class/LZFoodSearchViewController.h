@@ -10,6 +10,8 @@
 
 @interface LZFoodSearchViewController : UIViewController<UISearchDisplayDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchResultVC;
+@property (strong, nonatomic)NSMutableArray *foodTypeArray;
+@property (strong, nonatomic)NSArray *allFood;
+@property (strong , nonatomic)NSMutableArray *foodNameArray;
 @end

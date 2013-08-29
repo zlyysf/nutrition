@@ -7,13 +7,17 @@
 //
 
 #import "LZFoodSearchViewController.h"
-
+#import "LZDataAccess.h"
+#import "LZFoodTypeButton.h"
+#import "LZDailyIntakeViewController.h"
 @interface LZFoodSearchViewController ()
-
+{
+    BOOL isfirstLoad;
+}
 @end
 
 @implementation LZFoodSearchViewController
-
+@synthesize allFood,foodNameArray,foodTypeArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -26,6 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    isfirstLoad = YES;
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
@@ -47,16 +52,89 @@
     self.navigationItem.leftBarButtonItem = cancelItem;
     UISearchBar *searchBar = self.searchResultVC.searchBar;
     UIView *barBack = [searchBar.subviews objectAtIndex:0];
-    
-//    NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
-//    UIImage * navImage = [UIImage imageWithContentsOfFile:path];
-//    UIImage *gradientImage44 = [navImage
-//                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
     UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchbar_bg.png"]];
     [barBack addSubview:bgImage];
+    
+    allFood = [[LZDataAccess singleton]getAllFood];
+    NSMutableSet *foodTypeSet = [NSMutableSet set];
+    self.foodTypeArray = [[NSMutableArray alloc]init];
+    self.foodNameArray = [[NSMutableArray alloc]init];
+    for (int i = 0; i< [allFood count]; i++)
+    {
+        NSDictionary *afood = [allFood objectAtIndex:i];
+        NSString *foodType = [afood objectForKey:@"CnType"];
+        if (![foodTypeSet containsObject:foodType])
+        {
+            NSMutableArray *foodName = [[NSMutableArray alloc]init];
+            [foodName addObject:afood];
+            [self.foodNameArray addObject:foodName];
+            [self.foodTypeArray addObject:foodType];
+            [foodTypeSet addObject:foodType];
+        }
+        else
+        {
+            int index = [self.foodTypeArray indexOfObject:foodType];
+            [[self.foodNameArray objectAtIndex:index]addObject:afood];
+        }
+    }
 
 	// Do any additional setup after loading the view.
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    if (isfirstLoad)
+    {
+        isfirstLoad = NO;
+        [self setButtons];
+    }
+}
+-(void)setButtons
+{
+    float startY = 54;
+    int floor = 1;
+    int perRowCount = 3;
+    float startX1 = 10;
+    float startX2 = 113;
+    float startX3 = 216;
+    float startX;
+    for (int i=0; i< [self.foodTypeArray count]; i++)
+    {
+        if (i%perRowCount ==0)
+        {
+            startX = startX1;
+        }
+        else if(i%perRowCount ==1)
+        {
+            startX = startX2;
+        }
+        else
+        {
+            startX = startX3;
+        }
+        if (i>=floor *perRowCount)
+        {
+            floor+=1;
+        }
+        NSString *typeName = [self.foodTypeArray objectAtIndex:i];
+        LZFoodTypeButton *button = [[LZFoodTypeButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*62, 94, 52)];
+        [self.view addSubview:button];
+        button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
+        button.tag = i+100;
+        [button addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        button.titleLabel.textAlignment = UITextAlignmentLeft;
+        //[button.titleLabel setBackgroundColor:[UIColor blackColor]];
+        [button.titleLabel setFont:[UIFont systemFontOfSize:18]];
+        [button setTitle:typeName forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"type_button_normal.png"] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:@"type_button_clicked.png"] forState:UIControlStateHighlighted];
+        float titleLength = button.titleLabel.frame.size.width;
+        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 34, 0, 94-34-titleLength)];
+        
+        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+    }
+}
+
 -(void)cancelButtonTapped
 {
     [self.navigationController popViewControllerAnimated:YES];
@@ -72,9 +150,17 @@
     return YES;
 
 }
-
+-(void)typeButtonTapped:(UIButton *)sender
+{
+    int tag = sender.tag -100;
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZDailyIntakeViewController *dailyIntakeViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
+    dailyIntakeViewController.foodArray = [self.foodNameArray objectAtIndex:tag];
+    //dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
+    dailyIntakeViewController.titleString = [self.foodTypeArray objectAtIndex:tag];
+    [self.navigationController pushViewController:dailyIntakeViewController animated:YES];
+}
 - (void)viewDidUnload {
-    [self setListView:nil];
     [self setSearchResultVC:nil];
     [super viewDidUnload];
 }

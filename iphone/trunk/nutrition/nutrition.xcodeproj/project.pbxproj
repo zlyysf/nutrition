@@ -78,6 +78,23 @@
 		5F22A68E17CF11930043D760 /* LZSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68D17CF11930043D760 /* LZSearchBar.m */; };
 		5F22A69017CF34170043D760 /* search_glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A68F17CF34170043D760 /* search_glass@2x.png */; };
 		5F22A69217CF37940043D760 /* searchbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A69117CF37940043D760 /* searchbar_bg@2x.png */; };
+		5F22A6C817CF4C6E0043D760 /* LZFoodTypeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A6C717CF4C6D0043D760 /* LZFoodTypeButton.m */; };
+		5F22A6D817CF58240043D760 /* 主食_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6CA17CF58240043D760 /* 主食_small@2x.png */; };
+		5F22A6D917CF58240043D760 /* 五谷_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6CB17CF58240043D760 /* 五谷_small@2x.png */; };
+		5F22A6DA17CF58240043D760 /* 奶制品_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6CC17CF58240043D760 /* 奶制品_small@2x.png */; };
+		5F22A6DB17CF58240043D760 /* 干果_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6CD17CF58240043D760 /* 干果_small@2x.png */; };
+		5F22A6DC17CF58240043D760 /* 水产_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6CE17CF58240043D760 /* 水产_small@2x.png */; };
+		5F22A6DD17CF58240043D760 /* 水果_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6CF17CF58240043D760 /* 水果_small@2x.png */; };
+		5F22A6DE17CF58240043D760 /* 肉类_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6D017CF58240043D760 /* 肉类_small@2x.png */; };
+		5F22A6DF17CF58240043D760 /* 菌藻类_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6D117CF58240043D760 /* 菌藻类_small@2x.png */; };
+		5F22A6E017CF58240043D760 /* 蔬菜_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6D217CF58240043D760 /* 蔬菜_small@2x.png */; };
+		5F22A6E117CF58240043D760 /* 蛋类_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6D317CF58240043D760 /* 蛋类_small@2x.png */; };
+		5F22A6E217CF58240043D760 /* 调味品_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6D417CF58240043D760 /* 调味品_small@2x.png */; };
+		5F22A6E317CF58240043D760 /* 豆制品_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6D517CF58240043D760 /* 豆制品_small@2x.png */; };
+		5F22A6E417CF58240043D760 /* 零食_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6D617CF58240043D760 /* 零食_small@2x.png */; };
+		5F22A6E517CF58240043D760 /* 饮料_small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6D717CF58240043D760 /* 饮料_small@2x.png */; };
+		5F22A6E717CF5D2E0043D760 /* type_button_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6E617CF5D2E0043D760 /* type_button_normal@2x.png */; };
+		5F22A6E917CF61ED0043D760 /* type_button_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A6E817CF61ED0043D760 /* type_button_clicked@2x.png */; };
 		5F25849F17829DDA00D99C16 /* LZEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F25849E17829DD900D99C16 /* LZEditProfileViewController.m */; };
 		5F2584A41782BD0D00D99C16 /* button_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A31782BD0C00D99C16 /* button_middle@2x.png */; };
 		5F2584AA1782F9AB00D99C16 /* edit_left_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A51782F9A600D99C16 /* edit_left_clicked@2x.png */; };
@@ -326,6 +343,24 @@
 		5F22A68D17CF11930043D760 /* LZSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZSearchBar.m; path = Class/LZSearchBar.m; sourceTree = "<group>"; };
 		5F22A68F17CF34170043D760 /* search_glass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "search_glass@2x.png"; path = "nutrition/Resource/search_glass@2x.png"; sourceTree = "<group>"; };
 		5F22A69117CF37940043D760 /* searchbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "searchbar_bg@2x.png"; path = "nutrition/Resource/searchbar_bg@2x.png"; sourceTree = "<group>"; };
+		5F22A6C617CF4C6D0043D760 /* LZFoodTypeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodTypeButton.h; path = Class/LZFoodTypeButton.h; sourceTree = "<group>"; };
+		5F22A6C717CF4C6D0043D760 /* LZFoodTypeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodTypeButton.m; path = Class/LZFoodTypeButton.m; sourceTree = "<group>"; };
+		5F22A6CA17CF58240043D760 /* 主食_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "主食_small@2x.png"; path = "nutrition/Resource/主食_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6CB17CF58240043D760 /* 五谷_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "五谷_small@2x.png"; path = "nutrition/Resource/五谷_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6CC17CF58240043D760 /* 奶制品_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "奶制品_small@2x.png"; path = "nutrition/Resource/奶制品_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6CD17CF58240043D760 /* 干果_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "干果_small@2x.png"; path = "nutrition/Resource/干果_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6CE17CF58240043D760 /* 水产_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "水产_small@2x.png"; path = "nutrition/Resource/水产_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6CF17CF58240043D760 /* 水果_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "水果_small@2x.png"; path = "nutrition/Resource/水果_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6D017CF58240043D760 /* 肉类_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "肉类_small@2x.png"; path = "nutrition/Resource/肉类_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6D117CF58240043D760 /* 菌藻类_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "菌藻类_small@2x.png"; path = "nutrition/Resource/菌藻类_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6D217CF58240043D760 /* 蔬菜_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "蔬菜_small@2x.png"; path = "nutrition/Resource/蔬菜_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6D317CF58240043D760 /* 蛋类_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "蛋类_small@2x.png"; path = "nutrition/Resource/蛋类_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6D417CF58240043D760 /* 调味品_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "调味品_small@2x.png"; path = "nutrition/Resource/调味品_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6D517CF58240043D760 /* 豆制品_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "豆制品_small@2x.png"; path = "nutrition/Resource/豆制品_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6D617CF58240043D760 /* 零食_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "零食_small@2x.png"; path = "nutrition/Resource/零食_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6D717CF58240043D760 /* 饮料_small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "饮料_small@2x.png"; path = "nutrition/Resource/饮料_small@2x.png"; sourceTree = "<group>"; };
+		5F22A6E617CF5D2E0043D760 /* type_button_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "type_button_normal@2x.png"; path = "nutrition/Resource/type_button_normal@2x.png"; sourceTree = "<group>"; };
+		5F22A6E817CF61ED0043D760 /* type_button_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "type_button_clicked@2x.png"; path = "nutrition/Resource/type_button_clicked@2x.png"; sourceTree = "<group>"; };
 		5F25849A178280ED00D99C16 /* LZFoodInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodInfoViewController.h; path = Class/LZFoodInfoViewController.h; sourceTree = "<group>"; };
 		5F25849B178280ED00D99C16 /* LZFoodInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodInfoViewController.m; path = Class/LZFoodInfoViewController.m; sourceTree = "<group>"; };
 		5F25849D17829DD900D99C16 /* LZEditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZEditProfileViewController.h; path = Class/LZEditProfileViewController.h; sourceTree = "<group>"; };
@@ -731,6 +766,27 @@
 			path = nutrition/JWNavigationViewController;
 			sourceTree = SOURCE_ROOT;
 		};
+		5F22A6C917CF580D0043D760 /* foodTypeIcon_small */ = {
+			isa = PBXGroup;
+			children = (
+				5F22A6CA17CF58240043D760 /* 主食_small@2x.png */,
+				5F22A6CB17CF58240043D760 /* 五谷_small@2x.png */,
+				5F22A6CC17CF58240043D760 /* 奶制品_small@2x.png */,
+				5F22A6CD17CF58240043D760 /* 干果_small@2x.png */,
+				5F22A6CE17CF58240043D760 /* 水产_small@2x.png */,
+				5F22A6CF17CF58240043D760 /* 水果_small@2x.png */,
+				5F22A6D017CF58240043D760 /* 肉类_small@2x.png */,
+				5F22A6D117CF58240043D760 /* 菌藻类_small@2x.png */,
+				5F22A6D217CF58240043D760 /* 蔬菜_small@2x.png */,
+				5F22A6D317CF58240043D760 /* 蛋类_small@2x.png */,
+				5F22A6D417CF58240043D760 /* 调味品_small@2x.png */,
+				5F22A6D517CF58240043D760 /* 豆制品_small@2x.png */,
+				5F22A6D617CF58240043D760 /* 零食_small@2x.png */,
+				5F22A6D717CF58240043D760 /* 饮料_small@2x.png */,
+			);
+			name = foodTypeIcon_small;
+			sourceTree = "<group>";
+		};
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
@@ -824,6 +880,7 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5F22A6C917CF580D0043D760 /* foodTypeIcon_small */,
 				5FF6320E1772D8AA0068CBFE /* foodTypeIcon */,
 				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
 				5FF632061771C6530068CBFE /* close_button@2x.png */,
@@ -831,6 +888,8 @@
 				5F3676CB17C74AAE004355C1 /* next_clicked@2x.png */,
 				5F3676D317C74C58004355C1 /* table_list_bg@2x.png */,
 				5F3676CC17C74AAE004355C1 /* next_normal@2x.png */,
+				5F22A6E617CF5D2E0043D760 /* type_button_normal@2x.png */,
+				5F22A6E817CF61ED0043D760 /* type_button_clicked@2x.png */,
 				5F3676CD17C74AAE004355C1 /* previous_clicked@2x.png */,
 				5F3676CE17C74AAE004355C1 /* previous_normal@2x.png */,
 				5F6A3F5A17964D7F0029B8C9 /* addfood_icon@2x.png */,
@@ -1093,6 +1152,8 @@
 				5FDD1CB0179D3EC90046F752 /* LZChangeDietNameButton.m */,
 				5F22A68C17CF11930043D760 /* LZSearchBar.h */,
 				5F22A68D17CF11930043D760 /* LZSearchBar.m */,
+				5F22A6C617CF4C6D0043D760 /* LZFoodTypeButton.h */,
+				5F22A6C717CF4C6D0043D760 /* LZFoodTypeButton.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1469,6 +1530,22 @@
 				5F933F0C17CDD52100B188E0 /* check_result_empty@2x.png in Resources */,
 				5F22A69017CF34170043D760 /* search_glass@2x.png in Resources */,
 				5F22A69217CF37940043D760 /* searchbar_bg@2x.png in Resources */,
+				5F22A6D817CF58240043D760 /* 主食_small@2x.png in Resources */,
+				5F22A6D917CF58240043D760 /* 五谷_small@2x.png in Resources */,
+				5F22A6DA17CF58240043D760 /* 奶制品_small@2x.png in Resources */,
+				5F22A6DB17CF58240043D760 /* 干果_small@2x.png in Resources */,
+				5F22A6DC17CF58240043D760 /* 水产_small@2x.png in Resources */,
+				5F22A6DD17CF58240043D760 /* 水果_small@2x.png in Resources */,
+				5F22A6DE17CF58240043D760 /* 肉类_small@2x.png in Resources */,
+				5F22A6DF17CF58240043D760 /* 菌藻类_small@2x.png in Resources */,
+				5F22A6E017CF58240043D760 /* 蔬菜_small@2x.png in Resources */,
+				5F22A6E117CF58240043D760 /* 蛋类_small@2x.png in Resources */,
+				5F22A6E217CF58240043D760 /* 调味品_small@2x.png in Resources */,
+				5F22A6E317CF58240043D760 /* 豆制品_small@2x.png in Resources */,
+				5F22A6E417CF58240043D760 /* 零食_small@2x.png in Resources */,
+				5F22A6E517CF58240043D760 /* 饮料_small@2x.png in Resources */,
+				5F22A6E717CF5D2E0043D760 /* type_button_normal@2x.png in Resources */,
+				5F22A6E917CF61ED0043D760 /* type_button_clicked@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1580,6 +1657,7 @@
 				5F933F0A17CD986700B188E0 /* LZDiseaseResultViewController.m in Sources */,
 				5F22A68B17CEFC400043D760 /* LZFoodSearchViewController.m in Sources */,
 				5F22A68E17CF11930043D760 /* LZSearchBar.m in Sources */,
+				5F22A6C817CF4C6E0043D760 /* LZFoodTypeButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
