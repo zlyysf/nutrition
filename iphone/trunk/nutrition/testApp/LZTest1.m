@@ -34,7 +34,7 @@
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
 //    [self.class test_DiseaseNutrient1];
-    [self.class test_DiseaseNutrient2];
+//    [self.class test_DiseaseNutrient2];
 
     
 //    [self.class testFormatResult1];
@@ -44,6 +44,7 @@
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend];
 //    [self.class test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_empty];
+    [self.class test_formatDRIForUI];
 }
 
 
@@ -1809,6 +1810,27 @@
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSMutableDictionary *retFmtDict = [rf formatFoodsStandardContentForUI];
 
+}
+
++(void)test_formatDRIForUI
+{
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],ParamKey_sex, [NSNumber numberWithInt:age],ParamKey_age,
+                              [NSNumber numberWithFloat:weight],ParamKey_weight, [NSNumber numberWithFloat:height],ParamKey_height,
+                              [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   DRIsDict,Key_DRI,
+                                   nil];
+    [rf formatDRIForUI:params];
 }
 
 

@@ -49,7 +49,7 @@
 -(NSMutableString*) generateHtml_RecommendFoodBySmallIncrement:(NSDictionary*)recmdDict;
 
 -(NSMutableArray*)formatFoodStandardContentForFood:(NSDictionary *)foodInfo;
-
+-(NSMutableDictionary*)formatDRIForUI:(NSMutableDictionary *)data;
 
 
 -(NSMutableDictionary*)calculateGiveFoodsSupplyNutrientAndFormatForUI:(NSDictionary *)paramsDict;

@@ -2442,6 +2442,48 @@
     return formatResult;
 }
 
+
+
+-(NSMutableDictionary*)formatDRIForUI:(NSMutableDictionary *)data
+{
+    NSLog(@"formatDRIForUI enter");
+    
+    NSDictionary *DRIsDict = [data objectForKey:Key_DRI];//nutrient name as key, also column name
+    NSDictionary *options = [data objectForKey:@"optionsDict"];
+       
+    NSArray *customNutrients = [self.class getCustomNutrients:options];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary * nutrientInfoDict2Level = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
+    
+    NSMutableDictionary* formatResult = [NSMutableDictionary dictionary];
+
+    //推荐后总的供给的营养比例
+    NSMutableArray *nutrientsInfoOfDRI = [NSMutableArray array];
+    for(int i=0; i<customNutrients.count; i++){
+        NSString *nutrientId = customNutrients[i];
+        NSNumber *nmNutrientValueOfDRI = DRIsDict[nutrientId];
+      
+        NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
+        NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
+        NSString *nutrientNutrientEnUnit = nutrientInfoDict[COLUMN_NAME_NutrientEnUnit];
+        
+        NSDictionary *nutrientInfoOfDRI= [NSDictionary dictionaryWithObjectsAndKeys:
+                                                    nutrientId,COLUMN_NAME_NutrientID,
+                                                    nmNutrientValueOfDRI,Key_Amount,
+                                                    nutrientCnCaption,COLUMN_NAME_NutrientCnCaption,
+                                                    nutrientNutrientEnUnit,COLUMN_NAME_NutrientEnUnit,
+                                                    nil];
+        [nutrientsInfoOfDRI addObject:nutrientInfoOfDRI];
+    }
+    [formatResult setValue:nutrientsInfoOfDRI forKey:@"nutrientsInfoOfDRI"];
+        
+    NSLog(@"formatDRIForUI exit, result=%@",formatResult);
+    return formatResult;
+}
+
+
+
+
 /*
  如果不传DRI，可以传userInfo。givenFoodsAmount1和givenFoodsAmount2都可选，不过如果都不传，则返回nil。
  输出： Key_orderedGivenFoodIds1, Key_orderedGivenFoodIds2, Key_orderedGivenFoodIds,
