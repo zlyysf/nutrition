@@ -76,6 +76,8 @@
 		5F20149217BB60100009B735 /* unit_button_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20149017BB600F0009B735 /* unit_button_normal@2x.png */; };
 		5F22A68B17CEFC400043D760 /* LZFoodSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */; };
 		5F22A68E17CF11930043D760 /* LZSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68D17CF11930043D760 /* LZSearchBar.m */; };
+		5F22A69017CF34170043D760 /* search_glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A68F17CF34170043D760 /* search_glass@2x.png */; };
+		5F22A69217CF37940043D760 /* searchbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A69117CF37940043D760 /* searchbar_bg@2x.png */; };
 		5F25849F17829DDA00D99C16 /* LZEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F25849E17829DD900D99C16 /* LZEditProfileViewController.m */; };
 		5F2584A41782BD0D00D99C16 /* button_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A31782BD0C00D99C16 /* button_middle@2x.png */; };
 		5F2584AA1782F9AB00D99C16 /* edit_left_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A51782F9A600D99C16 /* edit_left_clicked@2x.png */; };
@@ -322,6 +324,8 @@
 		5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodSearchViewController.m; path = Class/LZFoodSearchViewController.m; sourceTree = "<group>"; };
 		5F22A68C17CF11930043D760 /* LZSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSearchBar.h; path = Class/LZSearchBar.h; sourceTree = "<group>"; };
 		5F22A68D17CF11930043D760 /* LZSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZSearchBar.m; path = Class/LZSearchBar.m; sourceTree = "<group>"; };
+		5F22A68F17CF34170043D760 /* search_glass@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "search_glass@2x.png"; path = "nutrition/Resource/search_glass@2x.png"; sourceTree = "<group>"; };
+		5F22A69117CF37940043D760 /* searchbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "searchbar_bg@2x.png"; path = "nutrition/Resource/searchbar_bg@2x.png"; sourceTree = "<group>"; };
 		5F25849A178280ED00D99C16 /* LZFoodInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodInfoViewController.h; path = Class/LZFoodInfoViewController.h; sourceTree = "<group>"; };
 		5F25849B178280ED00D99C16 /* LZFoodInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodInfoViewController.m; path = Class/LZFoodInfoViewController.m; sourceTree = "<group>"; };
 		5F25849D17829DD900D99C16 /* LZEditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZEditProfileViewController.h; path = Class/LZEditProfileViewController.h; sourceTree = "<group>"; };
@@ -851,7 +855,9 @@
 				5FF631EB17715F0A0068CBFE /* button_bottom_normal@2x.png */,
 				5FF631EC17715F0B0068CBFE /* button_top_normal@2x.png */,
 				5F86C86217CCACE5001DDC34 /* menu_item_0@2x.png */,
+				5F22A68F17CF34170043D760 /* search_glass@2x.png */,
 				5F86C86317CCACE5001DDC34 /* menu_item_1@2x.png */,
+				5F22A69117CF37940043D760 /* searchbar_bg@2x.png */,
 				5F86C86417CCACE5001DDC34 /* menu_item_2@2x.png */,
 				5F86C86517CCACE5001DDC34 /* menu_item_3@2x.png */,
 				5F86C86617CCACE5001DDC34 /* menu_item_4@2x.png */,
@@ -1461,6 +1467,8 @@
 				5F86C86C17CCACE5001DDC34 /* menu_item_4@2x.png in Resources */,
 				5F86C86D17CCACE5001DDC34 /* menu_item_5@2x.png in Resources */,
 				5F933F0C17CDD52100B188E0 /* check_result_empty@2x.png in Resources */,
+				5F22A69017CF34170043D760 /* search_glass@2x.png in Resources */,
+				5F22A69217CF37940043D760 /* searchbar_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

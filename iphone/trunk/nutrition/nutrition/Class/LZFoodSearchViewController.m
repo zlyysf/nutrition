@@ -26,6 +26,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.title = @"食物查询";
     UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
     
@@ -45,12 +48,12 @@
     UISearchBar *searchBar = self.searchResultVC.searchBar;
     UIView *barBack = [searchBar.subviews objectAtIndex:0];
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
-    UIImage * navImage = [UIImage imageWithContentsOfFile:path];
-    UIImage *gradientImage44 = [navImage
-                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-    UIImageView *bgImage = [[UIImageView alloc] initWithImage:gradientImage44];
-    [barBack addSubview: bgImage];
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
+//    UIImage * navImage = [UIImage imageWithContentsOfFile:path];
+//    UIImage *gradientImage44 = [navImage
+//                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+    UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchbar_bg.png"]];
+    [barBack addSubview:bgImage];
 
 	// Do any additional setup after loading the view.
 }
