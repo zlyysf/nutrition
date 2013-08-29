@@ -14,6 +14,7 @@
 #import "LZUtility.h"
 #import "LZEditProfileViewController.h"
 #import "LZDiseasePreventViewController.h"
+#import "LZFoodSearchViewController.h"
 @interface LZMainPageViewController ()
 
 @end
@@ -118,12 +119,21 @@
 {
     [self.listView deselectRowAtIndexPath:indexPath animated:YES];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    if (indexPath.row == 2)
+    if (indexPath.row == 0)
+    {
+        LZFoodSearchViewController *foodSearchViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodSearchViewController"];
+        [self.navigationController pushViewController:foodSearchViewController animated:YES];
+    }
+    else if (indexPath.row == 1)
+    {
+        
+    }
+    else if (indexPath.row == 2)
     {
         LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
         [self.navigationController pushViewController:userDietListViewController animated:YES];
     }
-        else if(indexPath.row == 3)
+    else if(indexPath.row == 3)
     {
         LZDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiagnoseViewController"];
         [self.navigationController pushViewController:diagnoseViewController animated:YES];

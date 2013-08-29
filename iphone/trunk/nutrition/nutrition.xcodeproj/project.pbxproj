@@ -74,6 +74,8 @@
 		5F20148E17BB40140009B735 /* valuepicker_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20148D17BB40140009B735 /* valuepicker_cover@2x.png */; };
 		5F20149117BB60100009B735 /* unit_button_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20148F17BB600F0009B735 /* unit_button_clicked@2x.png */; };
 		5F20149217BB60100009B735 /* unit_button_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20149017BB600F0009B735 /* unit_button_normal@2x.png */; };
+		5F22A68B17CEFC400043D760 /* LZFoodSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */; };
+		5F22A68E17CF11930043D760 /* LZSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68D17CF11930043D760 /* LZSearchBar.m */; };
 		5F25849F17829DDA00D99C16 /* LZEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F25849E17829DD900D99C16 /* LZEditProfileViewController.m */; };
 		5F2584A41782BD0D00D99C16 /* button_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A31782BD0C00D99C16 /* button_middle@2x.png */; };
 		5F2584AA1782F9AB00D99C16 /* edit_left_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A51782F9A600D99C16 /* edit_left_clicked@2x.png */; };
@@ -316,6 +318,10 @@
 		5F20148D17BB40140009B735 /* valuepicker_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "valuepicker_cover@2x.png"; path = "nutrition/Resource/valuepicker_cover@2x.png"; sourceTree = "<group>"; };
 		5F20148F17BB600F0009B735 /* unit_button_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unit_button_clicked@2x.png"; path = "nutrition/Resource/unit_button_clicked@2x.png"; sourceTree = "<group>"; };
 		5F20149017BB600F0009B735 /* unit_button_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unit_button_normal@2x.png"; path = "nutrition/Resource/unit_button_normal@2x.png"; sourceTree = "<group>"; };
+		5F22A68917CEFC400043D760 /* LZFoodSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodSearchViewController.h; path = Class/LZFoodSearchViewController.h; sourceTree = "<group>"; };
+		5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodSearchViewController.m; path = Class/LZFoodSearchViewController.m; sourceTree = "<group>"; };
+		5F22A68C17CF11930043D760 /* LZSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSearchBar.h; path = Class/LZSearchBar.h; sourceTree = "<group>"; };
+		5F22A68D17CF11930043D760 /* LZSearchBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZSearchBar.m; path = Class/LZSearchBar.m; sourceTree = "<group>"; };
 		5F25849A178280ED00D99C16 /* LZFoodInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodInfoViewController.h; path = Class/LZFoodInfoViewController.h; sourceTree = "<group>"; };
 		5F25849B178280ED00D99C16 /* LZFoodInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodInfoViewController.m; path = Class/LZFoodInfoViewController.m; sourceTree = "<group>"; };
 		5F25849D17829DD900D99C16 /* LZEditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZEditProfileViewController.h; path = Class/LZEditProfileViewController.h; sourceTree = "<group>"; };
@@ -1023,6 +1029,8 @@
 				5F86C85D17CC99AF001DDC34 /* LZDiseasePreventViewController.m */,
 				5F933F0817CD986700B188E0 /* LZDiseaseResultViewController.h */,
 				5F933F0917CD986700B188E0 /* LZDiseaseResultViewController.m */,
+				5F22A68917CEFC400043D760 /* LZFoodSearchViewController.h */,
+				5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1077,6 +1085,8 @@
 				5F7E5AA517965C6E007CA18A /* LZEditFoodAmountButton.m */,
 				5FDD1CAF179D3EC80046F752 /* LZChangeDietNameButton.h */,
 				5FDD1CB0179D3EC90046F752 /* LZChangeDietNameButton.m */,
+				5F22A68C17CF11930043D760 /* LZSearchBar.h */,
+				5F22A68D17CF11930043D760 /* LZSearchBar.m */,
 			);
 			name = CustomViews;
 			sourceTree = "<group>";
@@ -1560,6 +1570,8 @@
 				5F86C85E17CC99B0001DDC34 /* LZDiseasePreventViewController.m in Sources */,
 				5F86C86117CC9B88001DDC34 /* LZDiseaseCell.m in Sources */,
 				5F933F0A17CD986700B188E0 /* LZDiseaseResultViewController.m in Sources */,
+				5F22A68B17CEFC400043D760 /* LZFoodSearchViewController.m in Sources */,
+				5F22A68E17CF11930043D760 /* LZSearchBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
