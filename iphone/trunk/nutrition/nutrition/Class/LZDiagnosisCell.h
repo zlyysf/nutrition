@@ -11,6 +11,7 @@
 @interface LZDiagnosisCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *diseaseNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *checkImageView;
+@property (strong, nonatomic) IBOutlet UIView *backView;
 
 @property (strong, nonatomic) IBOutlet UIView *sepratorLineView;
 @end

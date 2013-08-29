@@ -186,7 +186,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    displayAreaHeight = self.resultView.frame.size.height-139;
+    displayAreaHeight = self.resultView.frame.size.height-327;
     [self displayResult];
 }
 -(void)clearResultView
@@ -206,18 +206,18 @@
 -(void)displayResult
 {
     [self clearResultView];
-    int totalFloor = [relatedNutritionArray count]/4+ (([relatedNutritionArray count]%4 == 0)?0:1);
-    float resultLabelDisplayMaxArea = displayAreaHeight-totalFloor*40-28;
+    //int totalFloor = [relatedNutritionArray count]/4+ (([relatedNutritionArray count]%4 == 0)?0:1);
+    //float resultLabelDisplayMaxArea = displayAreaHeight-totalFloor*40-28;
     CGSize labelSize = [@"暂无" sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:UILineBreakModeWordWrap];
     LZDataAccess *da = [LZDataAccess singleton];
-    float labelHeight = (labelSize.height > resultLabelDisplayMaxArea ? resultLabelDisplayMaxArea:labelSize.height);
+    float labelHeight = (labelSize.height > displayAreaHeight ? displayAreaHeight:labelSize.height);
     self.diseaseInfoLabel.frame = CGRectMake(10, 38, 280, labelHeight);
     self.diseaseInfoLabel.text = @"暂无";
-    CGRect nutrientFrame = self.nutrientLabel.frame;
-    nutrientFrame.origin.y   = 38+labelHeight+10;
-    self.nutrientLabel.frame = nutrientFrame;
+//    CGRect nutrientFrame = self.nutrientLabel.frame;
+//    nutrientFrame.origin.y   = 38+labelHeight+10;
+//    self.nutrientLabel.frame = nutrientFrame;
     
-    float startY = 38+labelHeight+10+18+10;
+    float startY = self.nutrientLabel.frame.origin.y+10+18;//38+labelHeight+10+18+10;
     int floor = 1;
     int countPerRow = 4;
     float startX;

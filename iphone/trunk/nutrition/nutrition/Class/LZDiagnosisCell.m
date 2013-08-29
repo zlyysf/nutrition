@@ -30,6 +30,14 @@
     //244,242,236
     [super setHighlighted:highlighted animated:animated];
     [self.sepratorLineView setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+    if (highlighted)
+    {
+        [self.backView setBackgroundColor:[UIColor colorWithRed:198/255.f green:185/255.f blue:173/255.f alpha:1.0f]];
+    }
+    else
+    {
+        [self.backView setBackgroundColor:[UIColor clearColor]];
+    }
 }
 
 @end

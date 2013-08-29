@@ -130,7 +130,7 @@
     [self.outScrollView setContentSize:CGSizeMake(self.outScrollView.frame.size.width*4, self.outScrollView.frame.size.height)];
     self.emptyImageView.center = CGPointMake(self.resultView.center.x, self.resultView.center.y-25);
     self.emptyLabel.center = CGPointMake(self.resultView.center.x, self.resultView.center.y+25);
-    displayAreaHeight = self.resultView.frame.size.height-139;
+    displayAreaHeight = self.resultView.frame.size.height-327;
 }
 - (void)recommendOnePlan
 {
@@ -314,18 +314,18 @@
     }
     NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
     self.orderedNutrientsInSet = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
-    int totalFloor = [orderedNutrientsInSet count]/4+ (([orderedNutrientsInSet count]%4 == 0)?0:1);
-    float resultLabelDisplayMaxArea = displayAreaHeight-totalFloor*40-28;
+    //int totalFloor = [orderedNutrientsInSet count]/4+ (([orderedNutrientsInSet count]%4 == 0)?0:1);
+    //float resultLabelDisplayMaxArea = displayAreaHeight-totalFloor*40-28;
     CGSize labelSize = [text sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:UILineBreakModeWordWrap];
     
-    float labelHeight = (labelSize.height > resultLabelDisplayMaxArea ? resultLabelDisplayMaxArea:labelSize.height);
+    float labelHeight = (labelSize.height > displayAreaHeight ? displayAreaHeight:labelSize.height);
     self.resultLabel.frame = CGRectMake(10, 38, 280, labelHeight);
     self.resultLabel.text = text;
-    CGRect nutrientFrame = self.nutrientTipLabel.frame;
-    nutrientFrame.origin.y   = 38+labelHeight+10;
-    self.nutrientTipLabel.frame = nutrientFrame;
+    //CGRect nutrientFrame = self.nutrientTipLabel.frame;
+    //nutrientFrame.origin.y   = 38+labelHeight+10;
+    //self.nutrientTipLabel.frame = nutrientFrame;
     
-    float startY = 38+labelHeight+10+18+10;
+    float startY = self.nutrientTipLabel.frame.origin.y+10+18;//38+labelHeight+10+18+10;
     int floor = 1;
     int countPerRow = 4;
     float startX;
