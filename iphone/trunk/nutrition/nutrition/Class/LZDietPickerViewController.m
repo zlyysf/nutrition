@@ -179,6 +179,8 @@
 //    [[NSUserDefaults standardUserDefaults]synchronize];
     if (indexPath.section == 0)
     {
+        [[NSUserDefaults standardUserDefaults]removeObjectForKey:LZUserDailyIntakeKey];
+        [[NSUserDefaults standardUserDefaults]synchronize];
         NSString *addFoodId = [[foodDict allKeys]objectAtIndex:0];
         NSNumber *addFoodAmount = [foodDict objectForKey:addFoodId];
         [LZUtility addFood:addFoodId withFoodAmount:addFoodAmount];

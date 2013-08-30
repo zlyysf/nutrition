@@ -7,12 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-
 @interface LZFoodSearchViewController : UIViewController<UISearchDisplayDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchResultVC;
 @property (strong, nonatomic)NSMutableArray *foodTypeArray;
 @property (strong, nonatomic)NSArray *allFood;
+@property (strong,nonatomic)NSMutableArray *allFoodNamesArray;
 @property (strong , nonatomic)NSMutableArray *foodNameArray;
 @property (assign,nonatomic)BOOL isFromOut;
+@property (strong,nonatomic)NSMutableArray *searchResultArray;
 @end

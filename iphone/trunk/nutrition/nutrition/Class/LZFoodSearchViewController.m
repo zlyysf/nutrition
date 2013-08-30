@@ -10,14 +10,17 @@
 #import "LZDataAccess.h"
 #import "LZFoodTypeButton.h"
 #import "LZDailyIntakeViewController.h"
-@interface LZFoodSearchViewController ()
+#import "LZFoodDetailController.h"
+#import "LZConstants.h"
+#import "JWNavigationViewController.h"
+@interface LZFoodSearchViewController ()<LZFoodDetailViewControllerDelegate>
 {
     BOOL isfirstLoad;
 }
 @end
 
 @implementation LZFoodSearchViewController
-@synthesize allFood,foodNameArray,foodTypeArray,isFromOut;
+@synthesize allFood,foodNameArray,foodTypeArray,isFromOut,allFoodNamesArray,searchResultArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,7 +37,14 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    self.title = @"食物查询";
+    if (isFromOut)
+    {
+        self.title = @"食物查询";
+    }
+    else
+    {
+        self.title = @"食物分类";
+    }
     UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
     
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -59,10 +69,13 @@
     NSMutableSet *foodTypeSet = [NSMutableSet set];
     self.foodTypeArray = [[NSMutableArray alloc]init];
     self.foodNameArray = [[NSMutableArray alloc]init];
+    self.allFoodNamesArray = [[NSMutableArray alloc]init];
+    self.searchResultArray = [[NSMutableArray alloc]init];
     for (int i = 0; i< [allFood count]; i++)
     {
         NSDictionary *afood = [allFood objectAtIndex:i];
         NSString *foodType = [afood objectForKey:@"CnType"];
+        [allFoodNamesArray addObject:[afood objectForKey:@"CnCaption"]];
         if (![foodTypeSet containsObject:foodType])
         {
             NSMutableArray *foodName = [[NSMutableArray alloc]init];
@@ -77,7 +90,7 @@
             [[self.foodNameArray objectAtIndex:index]addObject:afood];
         }
     }
-
+    NSLog(@"%@",allFoodNamesArray);
 	// Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -161,6 +174,136 @@
     dailyIntakeViewController.isFromOut = isFromOut;
     [self.navigationController pushViewController:dailyIntakeViewController animated:YES];
 }
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+	/*
+	 If the requesting table view is the search display controller's table view, return the count of
+     the filtered list, otherwise return the count of the main list.
+	 */
+        return [self.searchResultArray count];
+}
+
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+	static NSString *kCellID = @"cellID";
+	
+	UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:kCellID];
+	if (cell == nil)
+	{
+		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellID];
+		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+	}
+	
+	/*
+	 If the requesting table view is the search display controller's table view, configure the cell using the filtered content, otherwise use the main list.
+	 */
+	
+	cell.textLabel.text = [self.searchResultArray objectAtIndex:indexPath.row];
+	return cell;
+}
+
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.searchResultVC setActive:NO];
+    [self.searchResultVC.searchBar resignFirstResponder];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    NSString *resultName = [self.searchResultArray objectAtIndex:indexPath.row];
+    
+    int index = [self.allFoodNamesArray indexOfObject:resultName];
+    NSDictionary *foodAtr = [self.allFood  objectAtIndex:index];
+    NSString *foodName = [foodAtr objectForKey:@"CnCaption"];
+    NSNumber *weight = [NSNumber numberWithInt:100];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
+    //            NSString *sectionTitle = [NSString stringWithFormat:@"%dg%@",[weight intValue],foodName];
+    NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
+    NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
+    //    if ([weight intValue]>= [upper intValue])
+    //    {
+    //        upper = weight;
+    //    }
+    foodDetailController.gUnitMaxValue = upper;
+    
+    if ([singleUnitName length]==0)
+    {
+        foodDetailController.isUnitDisplayAvailable = NO;
+    }
+    else
+    {
+        foodDetailController.isUnitDisplayAvailable = YES;
+        foodDetailController.unitName = singleUnitName;
+        NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+        foodDetailController.isDefaultUnitDisplay = NO;
+        int maxCount = (int)(ceilf(([upper floatValue]*2)/[singleUnitWeight floatValue]));
+        foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
+    }
+    foodDetailController.isPushToDietPicker = isFromOut;
+    foodDetailController.currentSelectValue = weight;
+    foodDetailController.defaulSelectValue = weight;
+    foodDetailController.foodAttr = foodAtr;
+    foodDetailController.foodName = foodName;
+    if(!isFromOut)
+    {
+       foodDetailController.delegate = self; 
+    }
+    foodDetailController.isCalForAll = NO;
+    foodDetailController.GUnitStartIndex = 100;
+    JWNavigationViewController *nav = [[JWNavigationViewController alloc]initWithRootViewController:foodDetailController];
+    [self presentModalViewController:nav animated:YES];
+}
+#pragma mark -
+#pragma mark UISearchDisplayController Delegate Methods
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
+        [self.searchResultArray removeAllObjects];
+        // Return YES to cause the search result table view to be reloaded.
+        NSLog(@"%@",searchString);
+       for (int i=0; i<[self.allFoodNamesArray count]; i++)
+            {
+                    //NSDictionary *aFood = [allFood objectAtIndex:i];
+                //NSString *cnName = [aFood objectForKey:@"CnCaption"];
+                NSString *cnName = [self.allFoodNamesArray objectAtIndex:i];
+                NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@",searchString];
+                if ([pre evaluateWithObject:cnName])
+                    {
+                        [self.searchResultArray addObject:cnName];
+                    }
+            
+            }
+    
+       //NSArray *arrayPre=[allFood filteredArrayUsingPredicate: pre];
+        //NSLog(@"result %@",arrayPre);
+        return YES;
+}
+
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption{
+        // Return YES to cause the search result table view to be reloaded.
+        return YES;
+    }
+
+//- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller{
+//    	/*
+//         +     Bob: Because the searchResultsTableView will be released and allocated automatically, so each time we start to begin search, we set its delegate here.
+//         +     */
+//    	[foodSearchDisplayController.searchResultsTableView setDelegate:self];
+//    
+//    }
+
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
+    	
+        [self.searchResultVC.searchBar resignFirstResponder];
+    }
+
+
+#pragma mark- LZFoodDetailViewControllerDelegate
+-(void)didChangeFoodId:(NSString *)foodId toAmount:(NSNumber*)changedValue
+{
+    [LZUtility addFood:foodId withFoodAmount:changedValue];
+}
+
 - (void)viewDidUnload {
     [self setSearchResultVC:nil];
     [super viewDidUnload];

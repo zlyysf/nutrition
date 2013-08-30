@@ -26,6 +26,7 @@
 #import "LZShareViewController.h"
 #import "LZRecommendFilterView.h"
 #import "LZAppDelegate.h"
+#import "LZFoodSearchViewController.h"
 #define KChangeFoodAmountAlertTag 101
 #define KSaveDietTitleAlertTag 102
 #define KInstallWechatAlertTag 103
@@ -1253,9 +1254,15 @@
     needRefresh = YES;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     
-    LZAddFoodViewController *addFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddFoodViewController"];
+    
+//    LZAddFoodViewController *addFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddFoodViewController"];
     //UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:addFoodViewController];
-    [self.navigationController pushViewController:addFoodViewController animated:YES];
+//    [self.navigationController pushViewController:addFoodViewController animated:YES];
+    
+    
+    LZFoodSearchViewController *foodSearchViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodSearchViewController"];
+    foodSearchViewController.isFromOut = NO;
+    [self.navigationController pushViewController:foodSearchViewController animated:YES];
 }
 
 - (IBAction)addFoodAction:(id)sender {

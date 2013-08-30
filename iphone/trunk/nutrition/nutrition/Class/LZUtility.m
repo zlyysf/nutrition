@@ -715,7 +715,7 @@
         hud.labelText = @"添加成功！";
         hud.animationType = MBProgressHUDAnimationZoomIn;
         [hud show:NO];
-        [hud hide:YES afterDelay:0.5];
+        [hud hide:YES afterDelay:1.0f];
         //NSLog(@"%@",[UIApplication sharedApplication].keyWindow.subviews);
     }
 
