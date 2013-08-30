@@ -82,6 +82,8 @@
 +(NSMutableString*)getObjectDescription : (NSObject*)obj andIndent:(NSUInteger)level;
 
 +(BOOL)isIphoneDeviceVersionFive;
+
++(void)addFood:(NSString *)foodId withFoodAmount:(NSNumber *)foodAmount;
 @end
 
 

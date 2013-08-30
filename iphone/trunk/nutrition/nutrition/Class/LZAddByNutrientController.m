@@ -22,7 +22,7 @@
 @end
 
 @implementation LZAddByNutrientController
-@synthesize foodArray,nutrientTitle,tempIntakeDict,pushToNextView,nutrientDict;
+@synthesize foodArray,nutrientTitle,nutrientDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -48,7 +48,7 @@
     [tipsLabel setFont:[UIFont systemFontOfSize:15]];
     [tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
     tipsLabel.text = tipsStr;
-    tempIntakeDict = [[NSMutableDictionary alloc]init];
+    //tempIntakeDict = [[NSMutableDictionary alloc]init];
     [tipsLabel setBackgroundColor:[UIColor clearColor]];
     [headerView addSubview:tipsLabel];
     self.listView.tableHeaderView = headerView;
@@ -68,7 +68,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    self.pushToNextView = NO;
+    //self.pushToNextView = NO;
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
@@ -130,36 +130,10 @@
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
-    if (self.pushToNextView) {
-        return;
-    }
-    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
-    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
-    if(dailyIntake != nil)
-    {
-        [intakeDict addEntriesFromDictionary:dailyIntake];
-    }
+//    if (self.pushToNextView) {
+//        return;
+//    }
     
-    BOOL needSaveData = NO;
-    for (NSString * NDB_No in [self.tempIntakeDict allKeys])
-    {
-        NSNumber *num = [self.tempIntakeDict objectForKey:NDB_No];
-        if ([num intValue]>0)
-        {
-            needSaveData = YES;
-            NSNumber *takenAmountNum = [intakeDict objectForKey:NDB_No];
-            if (takenAmountNum)
-                [intakeDict setObject:[NSNumber numberWithInt:[num intValue]+[takenAmountNum intValue]] forKey:NDB_No];
-            else
-                [intakeDict setObject:num forKey:NDB_No];
-        }
-    }
-    if (needSaveData) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
-        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
-        [[NSUserDefaults  standardUserDefaults]synchronize];
-    }
-
     [MobClick endLogPageView:@"按营养素添加食物页面"];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
@@ -329,9 +303,9 @@
     [cell.foodPicView setImage:foodImage];
     
     cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];
-    NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
+    //NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
     NSNumber *foodAmount = [aFood objectForKey:Key_FoodAmount];
-    NSNumber *intake= [self.tempIntakeDict objectForKey:NDB_No];
+    //NSNumber *intake= [self.tempIntakeDict objectForKey:NDB_No];
     int amount =(int)(ceilf([foodAmount floatValue]));
     if(amount <= 0)
     {
@@ -344,8 +318,8 @@
         [cell centeredFoodNameButton:NO];
     }
     cell.recommendAmountLabel.text = [NSString stringWithFormat:@"推荐量:%dg",amount];
-    int num = [intake intValue];
-    cell.foodAmountLabel.text = [NSString stringWithFormat:@"%dg",num];
+    //int num = [intake intValue];
+    //cell.foodAmountLabel.text = [NSString stringWithFormat:@"%dg",num];
     
     [cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
     return cell;
@@ -353,25 +327,29 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [self.listView deselectRowAtIndexPath:indexPath animated:YES];
-    self.pushToNextView = YES;
+    //self.pushToNextView = YES;
     NSDictionary *foodAtr = [self.foodArray objectAtIndex:indexPath.row];
-    NSString *NDB_No = [foodAtr objectForKey:@"NDB_No"];
+    //NSString *NDB_No = [foodAtr objectForKey:@"NDB_No"];
     NSString *foodName = [foodAtr objectForKey:@"CnCaption"];
-    NSNumber *weight = [self.tempIntakeDict objectForKey:NDB_No];
+    NSNumber *weight ;//= [self.tempIntakeDict objectForKey:NDB_No];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
     
     NSDictionary *aFood = [self.foodArray objectAtIndex:indexPath.row];
     NSNumber *foodAmount = [aFood objectForKey:Key_FoodAmount];
     int amount =(int)(ceilf([foodAmount floatValue]));
-    int weightAmount = (int)(ceilf([weight floatValue]));
-    if (weightAmount <=0 )
+    //int weightAmount = (int)(ceilf([weight floatValue]));
+   // if (weightAmount <=0 )
+    //{
+    if (amount>0)
     {
-        if (amount>0)
-        {
-            weight = [NSNumber numberWithInt:amount];
-        }
+        weight = [NSNumber numberWithInt:amount];
     }
+    else
+    {
+        weight = [NSNumber numberWithInt:0];
+    }
+    //}
 
     
     NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
@@ -470,7 +448,8 @@
 #pragma mark- LZFoodDetailViewControllerDelegate
 -(void)didChangeFoodId:(NSString *)foodId toAmount:(NSNumber*)changedValue
 {
-    [self.tempIntakeDict setObject:[NSNumber numberWithInt:[changedValue intValue]] forKey:foodId];
+    //[self.tempIntakeDict setObject:[NSNumber numberWithInt:[changedValue intValue]] forKey:foodId];
+    [LZUtility addFood:foodId withFoodAmount:changedValue];
     [self.listView reloadData];
 }
 @end

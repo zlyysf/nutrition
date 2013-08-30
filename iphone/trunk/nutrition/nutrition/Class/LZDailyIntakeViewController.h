@@ -12,7 +12,7 @@
 @interface LZDailyIntakeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>//IZValueSelectorViewDataSource,IZValueSelectorViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong , nonatomic)NSMutableArray *foodArray;
-@property (strong, nonatomic)NSMutableDictionary *foodIntakeDictionary;
+//@property (strong, nonatomic)NSMutableDictionary *foodIntakeDictionary;
 //@property (strong, nonatomic)NSMutableArray *foodTypeArray;
 //@property (strong, nonatomic)NSArray *allFood;
 @property (strong,nonatomic)NSString *titleString;

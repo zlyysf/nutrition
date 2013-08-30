@@ -10,6 +10,7 @@
 #import "LZConstants.h"
 #import "LZRecommendFood.h"
 #import <math.h>
+#import "MBProgressHUD.h"
 @implementation LZUtility
 
 +(NSDecimalNumber*)getDecimalFromDouble:(double)dval withScale:(NSInteger)scale
@@ -684,7 +685,41 @@
         return NO;
 }
 
++(void)addFood:(NSString *)foodId withFoodAmount:(NSNumber *)foodAmount
+{
+    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
+    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+    if(dailyIntake != nil)
+    {
+        [intakeDict addEntriesFromDictionary:dailyIntake];
+    }
+    
+    BOOL needSaveData = NO;
+    if ([foodAmount intValue]>0)
+    {
+        needSaveData = YES;
+        NSNumber *takenAmountNum = [intakeDict objectForKey:foodId];
+        if (takenAmountNum)
+            [intakeDict setObject:[NSNumber numberWithInt:[foodAmount intValue]+[takenAmountNum intValue]] forKey:foodId];
+        else
+            [intakeDict setObject:foodAmount forKey:foodId];
+    }
+    if (needSaveData) {
+        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
+        [[NSUserDefaults  standardUserDefaults]synchronize];
+        MBProgressHUD * hud = [[MBProgressHUD alloc]initWithWindow:[UIApplication sharedApplication].keyWindow];//HUDForView:;
+        [[UIApplication sharedApplication].keyWindow addSubview:hud];
+        hud.mode = MBProgressHUDModeText;
+        hud.removeFromSuperViewOnHide = YES;
+        hud.labelText = @"添加成功！";
+        hud.animationType = MBProgressHUDAnimationZoomIn;
+        [hud show:NO];
+        [hud hide:YES afterDelay:0.5];
+        //NSLog(@"%@",[UIApplication sharedApplication].keyWindow.subviews);
+    }
 
+}
 @end
 
 

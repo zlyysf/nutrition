@@ -18,7 +18,7 @@
 @end
 
 @implementation LZAddFoodViewController
-@synthesize foodTypeArray,foodIntakeDictionary,allFood,foodNameArray;
+@synthesize foodTypeArray,allFood,foodNameArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,33 +41,33 @@
     self.foodNameArray = [[NSMutableArray alloc]init];
 //    UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"返回" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped:)];
 //    self.navigationItem.leftBarButtonItem = backButtonItem;
-    NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+    //NSDictionary *dailyIntake = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
     self.listView.tableFooterView = footerView;
-    self.foodIntakeDictionary = [[NSMutableDictionary alloc]init];
+    //self.foodIntakeDictionary = [[NSMutableDictionary alloc]init];
     for (int i = 0; i< [allFood count]; i++)
     {
         NSDictionary *afood = [allFood objectAtIndex:i];
         NSString *foodType = [afood objectForKey:@"CnType"];
-        NSString *NDB_No = [afood objectForKey:@"NDB_No"];
-        if (dailyIntake != nil)
-        {
-            NSNumber *intakeNumber = [dailyIntake objectForKey:NDB_No];
-            if (intakeNumber)
-            {
-                [self.foodIntakeDictionary setObject:intakeNumber forKey:NDB_No];
-            }
-            else
-            {
-                [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:0] forKey:NDB_No];
-            }
-        }
-        else
-        {
-            [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:0] forKey:NDB_No];
-        }
+//        NSString *NDB_No = [afood objectForKey:@"NDB_No"];
+//        if (dailyIntake != nil)
+//        {
+//            NSNumber *intakeNumber = [dailyIntake objectForKey:NDB_No];
+//            if (intakeNumber)
+//            {
+//                [self.foodIntakeDictionary setObject:intakeNumber forKey:NDB_No];
+//            }
+//            else
+//            {
+//                [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:0] forKey:NDB_No];
+//            }
+//        }
+//        else
+//        {
+//            [self.foodIntakeDictionary setObject:[NSNumber numberWithInt:0] forKey:NDB_No];
+//        }
         if (![foodTypeSet containsObject:foodType])
         {
             NSMutableArray *foodName = [[NSMutableArray alloc]init];
@@ -142,7 +142,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZDailyIntakeViewController *dailyIntakeViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
     dailyIntakeViewController.foodArray = [self.foodNameArray objectAtIndex:indexPath.row];
-    dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
+    //dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
     dailyIntakeViewController.titleString = [self.foodTypeArray objectAtIndex:indexPath.row];
     [self.navigationController pushViewController:dailyIntakeViewController animated:YES];
 }

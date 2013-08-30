@@ -13,7 +13,5 @@
 @property (strong,nonatomic)NSArray *foodArray;
 //@property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
 @property (strong, nonatomic)NSString *nutrientTitle;
-@property (strong, nonatomic)NSMutableDictionary *tempIntakeDict;
-@property (readwrite,nonatomic)BOOL pushToNextView;
 @property (strong,nonatomic)NSDictionary *nutrientDict;
 @end

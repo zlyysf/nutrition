@@ -18,7 +18,7 @@
 @end
 
 @implementation LZDailyIntakeViewController
-@synthesize foodIntakeDictionary,foodArray,titleString;
+@synthesize foodArray,titleString;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -264,20 +264,20 @@
         }
         UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
         [cell.foodPicView setImage:foodImage];
-
+        cell.foodAmountLabel.hidden = YES;
         cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];
-        NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
-        NSNumber *intake = [self.foodIntakeDictionary objectForKey:NDB_No];
+        //NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
+        //NSNumber *intake = [self.foodIntakeDictionary objectForKey:NDB_No];
 //        UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
 //        UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
-        int num = [intake intValue];
+        //int num = [intake intValue];
 //        if(num == 0)
 //        {
 //            cell.foodAmountLabel.text = @"0g";
 //        }
 //        else
 //        {
-            cell.foodAmountLabel.text = [NSString stringWithFormat:@"%dg",num];
+            //cell.foodAmountLabel.text = [NSString stringWithFormat:@"%dg",num];
 //        }
 //        NSString *singleUnitName = [aFood objectForKey:COLUMN_NAME_SingleItemUnitName];
 //        if ([singleUnitName length]==0)
@@ -306,21 +306,21 @@
     //NSString *foodId  = [takenFoodIdsArray objectAtIndex:indexPath.row];
     [self.listView deselectRowAtIndexPath:indexPath animated:YES];
     NSDictionary *foodAtr = [self.foodArray  objectAtIndex:indexPath.row];//[takenFoodIdsArray objectAtIndex:indexPath.row];
-    NSString *NDB_No = [foodAtr objectForKey:@"NDB_No"];
+    //NSString *NDB_No = [foodAtr objectForKey:@"NDB_No"];
     //NSDictionary * foodAttr = [allFoodUnitDict objectForKey:ndb_No];
     //NSArray *nutrientSupplyArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
     //NSArray *nutrientStandardArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
     NSString *foodName = [foodAtr objectForKey:@"CnCaption"];
-    NSNumber *weight = [self.foodIntakeDictionary objectForKey:NDB_No];
+    NSNumber *weight = [NSNumber numberWithInt:100];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
     //            NSString *sectionTitle = [NSString stringWithFormat:@"%dg%@",[weight intValue],foodName];
     NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
     NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
-    if ([weight intValue]>= [upper intValue])
-    {
-        upper = weight;
-    }
+//    if ([weight intValue]>= [upper intValue])
+//    {
+//        upper = weight;
+//    }
     foodDetailController.gUnitMaxValue = upper;
     
     if ([singleUnitName length]==0)
@@ -528,30 +528,31 @@
 #pragma mark- LZFoodDetailViewControllerDelegate
 -(void)didChangeFoodId:(NSString *)foodId toAmount:(NSNumber*)changedValue
 {
-    if ([changedValue intValue]>=0)
-    {
-        [self.foodIntakeDictionary setObject:changedValue forKey:foodId];
-        //NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
-    }
-    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
-    BOOL needSaveData = NO;
-    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
-    {
-        NSNumber *num = [self.foodIntakeDictionary objectForKey:NDB_No];
-        if ([num intValue]>=0)
-        {
-            needSaveData = YES;
-            if  ([num intValue]>0)
-            {
-                [intakeDict setObject:num forKey:NDB_No];
-            }
-        }
-    }
-    if (needSaveData) {
-        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
-        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
-        [[NSUserDefaults  standardUserDefaults]synchronize];
-    }
+//    if ([changedValue intValue]>=0)
+//    {
+//        [self.foodIntakeDictionary setObject:changedValue forKey:foodId];
+//        //NSLog(@"cell section %d , row %d food amount %@",index.section,index.row,foodNumber);
+//    }
+//    NSMutableDictionary *intakeDict = [[NSMutableDictionary alloc]init];
+//    BOOL needSaveData = NO;
+//    for (NSString * NDB_No in [self.foodIntakeDictionary allKeys])
+//    {
+//        NSNumber *num = [self.foodIntakeDictionary objectForKey:NDB_No];
+//        if ([num intValue]>=0)
+//        {
+//            needSaveData = YES;
+//            if  ([num intValue]>0)
+//            {
+//                [intakeDict setObject:num forKey:NDB_No];
+//            }
+//        }
+//    }
+//    if (needSaveData) {
+//        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_TakenFoodChangedKey object:nil userInfo:nil];
+//        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
+//        [[NSUserDefaults  standardUserDefaults]synchronize];
+//    }
+    [LZUtility addFood:foodId withFoodAmount:changedValue];
     [self.listView reloadData];
 }
 

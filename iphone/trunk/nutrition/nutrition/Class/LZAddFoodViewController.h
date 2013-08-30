@@ -10,7 +10,7 @@
 
 @interface LZAddFoodViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
-@property (strong, nonatomic)NSMutableDictionary *foodIntakeDictionary;
+//@property (strong, nonatomic)NSMutableDictionary *foodIntakeDictionary;
 @property (strong, nonatomic)NSMutableArray *foodTypeArray;
 @property (strong, nonatomic)NSArray *allFood;
 @property (strong , nonatomic)NSMutableArray *foodNameArray;
