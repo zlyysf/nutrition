@@ -43,17 +43,19 @@
 
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"新建" style:UIBarButtonItemStyleBordered target:self action:@selector(addListAction)];
     self.navigationItem.rightBarButtonItem = rightItem;
-    
-    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"  返回" forState:UIControlStateNormal];
-    button.frame = CGRectMake(0, 0, 48, 30);
-    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
-    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-    [button addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = backItem;
+    if(backWithNoAnimation)
+    {
+        UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setTitle:@"  返回" forState:UIControlStateNormal];
+        button.frame = CGRectMake(0, 0, 48, 30);
+        [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+        [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+        [button addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+        UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+        self.navigationItem.leftBarButtonItem = backItem;
+    }
 
     self.title = @"膳食清单";
     self.dietArray = [[NSMutableArray alloc]init];

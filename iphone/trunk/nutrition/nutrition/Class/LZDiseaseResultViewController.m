@@ -47,21 +47,21 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"  返回" forState:UIControlStateNormal];
-    
-    button.frame = CGRectMake(0, 0, 48, 30);
-    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
-    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-    [button addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    self.navigationItem.leftBarButtonItem = cancelItem;
+//    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+//    
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+//    [button setTitle:@"  返回" forState:UIControlStateNormal];
+//    
+//    button.frame = CGRectMake(0, 0, 48, 30);
+//    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+//    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+//    [button addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    
+//    self.navigationItem.leftBarButtonItem = cancelItem;
     NSString *list_bg_path = [[NSBundle mainBundle] pathForResource:@"table_list_bg@2x" ofType:@"png"];
     UIImage * list_bg_image = [UIImage imageWithContentsOfFile:list_bg_path];
     UIImage *list_bg = [list_bg_image resizableImageWithCapInsets:UIEdgeInsetsMake(20,10,20,10)];

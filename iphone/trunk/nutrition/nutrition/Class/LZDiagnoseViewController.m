@@ -50,21 +50,21 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
-    
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"  返回" forState:UIControlStateNormal];
-    
-    button.frame = CGRectMake(0, 0, 48, 30);
-    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
-    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-    [button addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    
-    self.navigationItem.leftBarButtonItem = cancelItem;
+//    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+//    
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    
+//    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+//    [button setTitle:@"  返回" forState:UIControlStateNormal];
+//    
+//    button.frame = CGRectMake(0, 0, 48, 30);
+//    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+//    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+//    [button addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    
+//    self.navigationItem.leftBarButtonItem = cancelItem;
     UIBarButtonItem *recheckItem = [[UIBarButtonItem alloc]initWithTitle:@"重新测试" style:UIBarButtonItemStyleBordered target:self action:@selector(recheckButtonTapped)];
     self.navigationItem.rightBarButtonItem = recheckItem;
     list1CheckStateArray = [[NSMutableArray alloc]init];

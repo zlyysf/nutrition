@@ -35,16 +35,16 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"  返回" forState:UIControlStateNormal];
-    button.frame = CGRectMake(0, 0, 48, 30);
-    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
-    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-    [button addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-    self.navigationItem.leftBarButtonItem = backItem;
+//    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+//    [button setTitle:@"  返回" forState:UIControlStateNormal];
+//    button.frame = CGRectMake(0, 0, 48, 30);
+//    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+//    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+//    [button addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+//    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+//    self.navigationItem.leftBarButtonItem = backItem;
     if (!isSecondClass)
     {
         self.title = @"预防疾病";
