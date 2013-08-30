@@ -21,19 +21,21 @@
 @property (strong, nonatomic) IBOutlet UILabel *foodAmountDisplayLabel;
 @property (strong, nonatomic) IBOutlet UIButton *GUnitButton;
 @property (strong, nonatomic) IBOutlet UIButton *UnitButton;
-@property (readwrite,nonatomic)BOOL UseUnitDisplay;
+@property (assign,nonatomic)BOOL UseUnitDisplay;
 @property (strong,nonatomic)IBOutlet UILabel *sectionLabel;
-@property (readwrite,nonatomic)BOOL isUnitDisplayAvailable;
+@property (assign,nonatomic)BOOL isUnitDisplayAvailable;
 @property (strong,nonatomic)NSNumber *gUnitMaxValue;
 @property (strong,nonatomic)NSNumber *unitMaxValue;
 @property (strong,nonatomic)NSNumber *currentSelectValue;
 @property (strong,nonatomic)NSNumber *defaulSelectValue;
-@property (readwrite,nonatomic)BOOL isDefaultUnitDisplay;
+@property (assign,nonatomic)BOOL isDefaultUnitDisplay;
 @property (strong,nonatomic)NSString *unitName;
 @property (strong,nonatomic)NSDictionary *foodAttr;
 @property (strong,nonatomic)NSMutableDictionary *inOutParam;
 @property (assign,nonatomic)id<LZFoodDetailViewControllerDelegate> delegate;
-@property (readwrite,nonatomic)BOOL isCalForAll;
+@property (assign,nonatomic)BOOL isCalForAll;
 @property (strong,nonatomic)NSMutableDictionary *staticFoodAmountDict;
 @property (assign,nonatomic)int GUnitStartIndex;
+@property (assign,nonatomic)BOOL isForEdit;
+@property (assign,nonatomic)BOOL isPushToDietPicker;
 @end

@@ -13,7 +13,7 @@
 #import "LZUtility.h"
 #import "GADMasterViewController.h"
 #import "MobClick.h"
-
+#import "LZDietPickerViewController.h"
 #define LongLineHeight 20.f
 #define ShortLineHeight 10.f
 #define ValuePickerHeight 50.f
@@ -31,7 +31,7 @@
 @end
 
 @implementation LZFoodDetailController
-@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName,isCalForAll,staticFoodAmountDict,GUnitStartIndex;
+@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName,isCalForAll,staticFoodAmountDict,GUnitStartIndex,isForEdit,isPushToDietPicker;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -50,7 +50,15 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.title = foodName;
     UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
-    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
+    NSString *rightTitle;
+    if (isForEdit) {
+        rightTitle = @"保存"; 
+    }
+    else
+    {
+       rightTitle = @"添加";
+    }
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.leftBarButtonItem = cancelItem;
     self.navigationItem.rightBarButtonItem = saveItem;
 
@@ -213,11 +221,20 @@
 -(void)saveButtonTapped
 {
     // if self.delegate
-    if(self.delegate && [self.delegate respondsToSelector:@selector(didChangeFoodId:toAmount:)])
+    if (isPushToDietPicker)
     {
-        [self.delegate didChangeFoodId:[self.foodAttr objectForKey:@"NDB_No"] toAmount:currentSelectValue];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        LZDietPickerViewController *dietPickerViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietPickerViewController"];
+        [self.navigationController pushViewController:dietPickerViewController animated:YES];
     }
-    [self.navigationController dismissModalViewControllerAnimated:YES];
+    else
+    {
+        if(self.delegate && [self.delegate respondsToSelector:@selector(didChangeFoodId:toAmount:)])
+        {
+            [self.delegate didChangeFoodId:[self.foodAttr objectForKey:@"NDB_No"] toAmount:currentSelectValue];
+        }
+        [self.navigationController dismissModalViewControllerAnimated:YES];
+    }
 }
 -(void)setButtonState
 {

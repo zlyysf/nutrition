@@ -35,7 +35,7 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.dietArray = [[NSMutableArray alloc]init];
-    self.title = @"挑选清单";
+    self.title = @"添加食物";
     UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -92,7 +92,7 @@
     LZDietPickerCell * cell =(LZDietPickerCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDietPickerCell"];
     if (indexPath.section == 0)
     {
-        [cell adjustLabelAccordingToDietName:@"新建列表"];
+        [cell adjustLabelAccordingToDietName:@"添加到新清单"];
     }
     else
     {
@@ -140,7 +140,7 @@
     [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
     [sectionView addSubview:sectionTitleLabel];
-    sectionTitleLabel.text =  @"推荐到已有的膳食清单";
+    sectionTitleLabel.text =  @"添加到已有的膳食清单";
     
     return sectionView;
 
@@ -151,6 +151,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [self.navigationController dismissModalViewControllerAnimated:YES];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
     userDietListViewController.backWithNoAnimation = YES;
@@ -183,7 +184,8 @@
         foodListViewController.useRecommendNutrient = YES;
         foodListViewController.backWithNoAnimation = YES;
         NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
-        [self.navigationController setViewControllers:vcs animated:YES];
+        UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+        [mainNav setViewControllers:vcs animated:YES];
     }
     else
     {
@@ -213,7 +215,8 @@
         foodListViewController.dietId = dietId;
         foodListViewController.backWithNoAnimation = YES;
         NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
-        [self.navigationController setViewControllers:vcs animated:YES];
+        UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+        [mainNav setViewControllers:vcs animated:YES];
     }
 }
 

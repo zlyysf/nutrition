@@ -13,12 +13,13 @@
 #import "MobClick.h"
 #import "LZRecommendFood.h"
 #import "LZFoodDetailController.h"
+#import "JWNavigationViewController.h"
 @interface LZDailyIntakeViewController ()<LZFoodDetailViewControllerDelegate>
 
 @end
 
 @implementation LZDailyIntakeViewController
-@synthesize foodArray,titleString;
+@synthesize foodArray,titleString,isFromOut;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -352,7 +353,7 @@
 //            foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
 //        }
     }
-
+    foodDetailController.isPushToDietPicker = isFromOut;
     foodDetailController.currentSelectValue = weight;
     foodDetailController.defaulSelectValue = weight;
     foodDetailController.foodAttr = foodAtr;
@@ -362,7 +363,7 @@
     foodDetailController.GUnitStartIndex = 100;
     //UINavigationController *initialController = (UINavigationController*)[UIApplication
     //sharedApplication].keyWindow.rootViewController;
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:foodDetailController];
+    JWNavigationViewController *nav = [[JWNavigationViewController alloc]initWithRootViewController:foodDetailController];
     [self presentModalViewController:nav animated:YES];
 
     

@@ -890,6 +890,7 @@
             foodDetailController.foodAttr = foodAtr;
             foodDetailController.foodName = foodName;
             foodDetailController.delegate = self;
+            foodDetailController.isForEdit = YES;
             foodDetailController.isCalForAll = YES;
             foodDetailController.staticFoodAmountDict = takenFoodAmountDict;
             foodDetailController.GUnitStartIndex = 100;

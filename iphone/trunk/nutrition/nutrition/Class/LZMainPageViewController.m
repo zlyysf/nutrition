@@ -122,6 +122,7 @@
     if (indexPath.row == 0)
     {
         LZFoodSearchViewController *foodSearchViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodSearchViewController"];
+        foodSearchViewController.isFromOut = YES;
         [self.navigationController pushViewController:foodSearchViewController animated:YES];
     }
     else if (indexPath.row == 1)

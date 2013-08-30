@@ -18,6 +18,7 @@
 @property (strong,nonatomic)NSString *titleString;
 //@property (strong, nonatomic) IBOutlet UINavigationItem *navItem;
 @property (strong, nonatomic) IBOutlet UIView *admobView;
+@property (assign,nonatomic)BOOL isFromOut;
 //@property (strong, nonatomic)IBOutlet LZValueSelectorView *selectorView;
 //@property (assign,nonatomic)int currentSelectedIndex;
 @end

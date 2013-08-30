@@ -14,4 +14,5 @@
 @property (strong, nonatomic)NSMutableArray *foodTypeArray;
 @property (strong, nonatomic)NSArray *allFood;
 @property (strong , nonatomic)NSMutableArray *foodNameArray;
+@property (assign,nonatomic)BOOL isFromOut;
 @end

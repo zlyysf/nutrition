@@ -17,7 +17,7 @@
 @end
 
 @implementation LZFoodSearchViewController
-@synthesize allFood,foodNameArray,foodTypeArray;
+@synthesize allFood,foodNameArray,foodTypeArray,isFromOut;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -158,6 +158,7 @@
     dailyIntakeViewController.foodArray = [self.foodNameArray objectAtIndex:tag];
     //dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
     dailyIntakeViewController.titleString = [self.foodTypeArray objectAtIndex:tag];
+    dailyIntakeViewController.isFromOut = isFromOut;
     [self.navigationController pushViewController:dailyIntakeViewController animated:YES];
 }
 - (void)viewDidUnload {
