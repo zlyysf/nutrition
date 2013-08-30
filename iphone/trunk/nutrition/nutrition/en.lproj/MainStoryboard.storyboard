@@ -1459,6 +1459,60 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZNutritionListCell" rowHeight="60" id="I2X-dL-e5S" customClass="LZNutritionListCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="7R5-3k-cmD">
+                                                    <rect key="frame" x="10" y="5" width="300" height="53"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="7gZ-Xf-IrN">
+                                                            <rect key="frame" x="15" y="12" width="30" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="qCY-Me-7cp">
+                                                            <rect key="frame" x="280" y="19" width="10" height="15"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="lU4-eA-7jR">
+                                                            <rect key="frame" x="60" y="8" width="120" height="38"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                            <state key="normal">
+                                                                <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                            <state key="highlighted">
+                                                                <color key="titleColor" red="0.082227265090000001" green="0.13028895830000001" blue="0.36393893490000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="nutritionButtonTapped:" destination="I2X-dL-e5S" eventType="touchUpInside" id="QC3-Pz-vfU"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="arrowImage" destination="qCY-Me-7cp" id="Huz-Tc-8pe"/>
+                                            <outlet property="backView" destination="7R5-3k-cmD" id="6bh-BL-goX"/>
+                                            <outlet property="iconImage" destination="7gZ-Xf-IrN" id="SDI-Kj-IyE"/>
+                                            <outlet property="nutritionNameButton" destination="lU4-eA-7jR" id="0rL-Ps-WfY"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="RpV-Wc-Pty" id="Mim-iy-a3T"/>
+                                    <outlet property="delegate" destination="RpV-Wc-Pty" id="IXE-8O-hbY"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -1891,6 +1945,104 @@
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZDiagnosisCell" rowHeight="34" id="oMa-Kh-p4m" customClass="LZDiagnosisCell">
+                                                <rect key="frame" x="0.0" y="22" width="300" height="34"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" id="RDq-WI-IbX">
+                                                            <rect key="frame" x="9" y="5" width="282" height="24"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                        </view>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="nP4-d6-4A9">
+                                                            <rect key="frame" x="10" y="8" width="218" height="18"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" id="4Vu-XA-iu3">
+                                                            <rect key="frame" x="10" y="33" width="280" height="1"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                        </view>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="check_mark_on.png" id="JXH-mO-wxk">
+                                                            <rect key="frame" x="273" y="10" width="17" height="14"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <connections>
+                                                    <outlet property="backView" destination="RDq-WI-IbX" id="shC-ol-rCd"/>
+                                                    <outlet property="checkImageView" destination="JXH-mO-wxk" id="SAj-B8-Zat"/>
+                                                    <outlet property="diseaseNameLabel" destination="nP4-d6-4A9" id="T88-3A-R9S"/>
+                                                    <outlet property="sepratorLineView" destination="4Vu-XA-iu3" id="hSq-4P-RUd"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="uKF-S4-PrQ" id="7mo-6e-LpG"/>
+                                            <outlet property="delegate" destination="uKF-S4-PrQ" id="Ik5-Zg-jnx"/>
+                                        </connections>
+                                    </tableView>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="sxA-KX-das">
+                                        <rect key="frame" x="330" y="45" width="300" height="458"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <prototypes>
+                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZDiagnosisCell" rowHeight="34" id="sl0-y2-GEo" customClass="LZDiagnosisCell">
+                                                <rect key="frame" x="10" y="236" width="300" height="34"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="33"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" id="uXL-7Y-f2y">
+                                                            <rect key="frame" x="9" y="5" width="282" height="24"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                        </view>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="jdk-Zy-dbP">
+                                                            <rect key="frame" x="10" y="8" width="218" height="18"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        </label>
+                                                        <view contentMode="scaleToFill" id="NCq-gP-Ial">
+                                                            <rect key="frame" x="10" y="33" width="280" height="1"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                        </view>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="check_mark_on.png" id="SXS-Zp-Gwi">
+                                                            <rect key="frame" x="273" y="10" width="17" height="14"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <connections>
+                                                    <outlet property="backView" destination="uXL-7Y-f2y" id="CZS-Gb-JbY"/>
+                                                    <outlet property="checkImageView" destination="SXS-Zp-Gwi" id="t5h-fn-PWl"/>
+                                                    <outlet property="diseaseNameLabel" destination="jdk-Zy-dbP" id="33B-Kw-C9j"/>
+                                                    <outlet property="sepratorLineView" destination="NCq-gP-Ial" id="yJp-Nd-z9a"/>
+                                                </connections>
+                                            </tableViewCell>
+                                        </prototypes>
+                                        <connections>
+                                            <outlet property="dataSource" destination="uKF-S4-PrQ" id="3gU-G1-dh9"/>
+                                            <outlet property="delegate" destination="uKF-S4-PrQ" id="ayM-uT-NEa"/>
+                                        </connections>
+                                    </tableView>
+                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mB8-a3-pKN">
+                                        <rect key="frame" x="650" y="63" width="300" height="440"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <prototypes>
                                             <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZDiagnosisCell" rowHeight="34" id="HdA-sh-4ML" customClass="LZDiagnosisCell">
                                                 <rect key="frame" x="0.0" y="22" width="300" height="34"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1899,7 +2051,7 @@
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <view contentMode="scaleToFill" id="ZYI-wi-lxj">
-                                                            <rect key="frame" x="10" y="5" width="280" height="24"/>
+                                                            <rect key="frame" x="9" y="5" width="282" height="24"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </view>
@@ -1927,92 +2079,6 @@
                                                     <outlet property="checkImageView" destination="hVW-2O-YKt" id="mC3-5d-04b"/>
                                                     <outlet property="diseaseNameLabel" destination="zdb-lB-qww" id="7jC-KD-FTG"/>
                                                     <outlet property="sepratorLineView" destination="m4c-5r-AV9" id="FRd-wS-LK0"/>
-                                                </connections>
-                                            </tableViewCell>
-                                        </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="uKF-S4-PrQ" id="7mo-6e-LpG"/>
-                                            <outlet property="delegate" destination="uKF-S4-PrQ" id="Ik5-Zg-jnx"/>
-                                        </connections>
-                                    </tableView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="sxA-KX-das">
-                                        <rect key="frame" x="330" y="45" width="300" height="458"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZDiagnosisCell" rowHeight="34" id="UiO-J2-DiB" customClass="LZDiagnosisCell">
-                                                <rect key="frame" x="0.0" y="22" width="300" height="34"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="33"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vva-XW-yvI">
-                                                            <rect key="frame" x="10" y="8" width="218" height="18"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
-                                                        <view contentMode="scaleToFill" id="eRi-st-Rlw">
-                                                            <rect key="frame" x="10" y="33" width="280" height="1"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                                        </view>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="check_mark_on.png" id="X4S-1P-HRG">
-                                                            <rect key="frame" x="273" y="10" width="17" height="14"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <connections>
-                                                    <outlet property="checkImageView" destination="X4S-1P-HRG" id="VQM-an-LlE"/>
-                                                    <outlet property="diseaseNameLabel" destination="vva-XW-yvI" id="HKZ-Tn-ODq"/>
-                                                    <outlet property="sepratorLineView" destination="eRi-st-Rlw" id="aJE-LD-7OI"/>
-                                                </connections>
-                                            </tableViewCell>
-                                        </prototypes>
-                                        <connections>
-                                            <outlet property="dataSource" destination="uKF-S4-PrQ" id="3gU-G1-dh9"/>
-                                            <outlet property="delegate" destination="uKF-S4-PrQ" id="ayM-uT-NEa"/>
-                                        </connections>
-                                    </tableView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="mB8-a3-pKN">
-                                        <rect key="frame" x="650" y="63" width="300" height="440"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <prototypes>
-                                            <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZDiagnosisCell" rowHeight="34" id="C3r-dN-sKB" customClass="LZDiagnosisCell">
-                                                <rect key="frame" x="0.0" y="22" width="300" height="34"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                    <rect key="frame" x="0.0" y="0.0" width="300" height="33"/>
-                                                    <autoresizingMask key="autoresizingMask"/>
-                                                    <subviews>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="N0o-mM-0oy">
-                                                            <rect key="frame" x="10" y="8" width="218" height="18"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                            <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                        </label>
-                                                        <view contentMode="scaleToFill" id="jfP-Rr-uFS">
-                                                            <rect key="frame" x="10" y="33" width="280" height="1"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                                        </view>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="check_mark_on.png" id="ecH-kE-uiT">
-                                                            <rect key="frame" x="273" y="10" width="17" height="14"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                    </subviews>
-                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                                </view>
-                                                <connections>
-                                                    <outlet property="checkImageView" destination="ecH-kE-uiT" id="p5w-lo-MWL"/>
-                                                    <outlet property="diseaseNameLabel" destination="N0o-mM-0oy" id="y73-Te-oEe"/>
-                                                    <outlet property="sepratorLineView" destination="jfP-Rr-uFS" id="oy4-7j-app"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -2343,6 +2409,15 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutrientFoodAddCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="recommendAmountLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LZNutritionListCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionListCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="arrowImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="backView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="iconImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="nutritionNameButton" candidateClass="UIButton"/>
             </relationships>
         </class>
         <class className="LZNutritionListViewController" superclassName="UIViewController">

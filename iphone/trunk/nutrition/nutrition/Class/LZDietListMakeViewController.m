@@ -179,7 +179,7 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(nutrientShowNotification:) name:Notification_ShowNutrientInfoKey object:nil];
+    //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(nutrientShowNotification:) name:Notification_ShowNutrientInfoKey object:nil];
     [MobClick beginLogPageView:@"营养搭配页面"];
     self.listView.tableFooterView.hidden = NO;
     GADMasterViewController *shared = [GADMasterViewController singleton];
@@ -209,7 +209,7 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_ShowNutrientInfoKey object:nil];
+    //[[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_ShowNutrientInfoKey object:nil];
     [MobClick endLogPageView:@"营养搭配页面"];
 }
 
@@ -224,9 +224,9 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (void)nutrientShowNotification:(NSNotification *)notification
-{
-}
+//- (void)nutrientShowNotification:(NSNotification *)notification
+//{
+//}
 - (void)settingsChanged:(NSNotification *)notification
 {
     needRefresh = YES;

@@ -54,7 +54,7 @@
     }
 }
 - (IBAction)nameButtonTapped:(id)sender {
-    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_ShowNutrientInfoKey object:nil];
+    //[[NSNotificationCenter defaultCenter]postNotificationName:Notification_ShowNutrientInfoKey object:nil];
     [[LZNutrientionManager SharedInstance]showNutrientInfo:self.nutrientId];
 }
 

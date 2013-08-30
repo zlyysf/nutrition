@@ -496,6 +496,8 @@
         NSNumber *checkState = [self.list3CheckStateArray objectAtIndex:indexPath.row];
         isStateOn = [checkState boolValue];
     }
+    [cell.backView.layer setMasksToBounds:YES];
+    [cell.backView.layer setCornerRadius:3.f];
     cell.diseaseNameLabel.text = diseaseName;
     cell.checkImageView.hidden = !isStateOn;
     return cell;
@@ -523,7 +525,7 @@
         [self.list3CheckStateArray replaceObjectAtIndex:indexPath.row withObject:oppositeState];
     }
     NSArray *reloadIndex = [NSArray arrayWithObject:indexPath];
-    [tableView reloadRowsAtIndexPaths:reloadIndex withRowAnimation:UITableViewRowAnimationAutomatic];
+    [tableView reloadRowsAtIndexPaths:reloadIndex withRowAnimation:UITableViewRowAnimationNone];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView

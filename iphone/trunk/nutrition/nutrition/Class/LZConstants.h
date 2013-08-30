@@ -228,7 +228,7 @@
 #define Notification_TakenFoodChangedKey @"KeyTakenFoodChangedNotification"
 #define Notification_SettingsChangedKey @"KeySettingsChangedNotification"
 #define Notification_TakenFoodDeletedKey @"KeyTakenFoodDeletedNotification"
-#define Notification_ShowNutrientInfoKey @"KeyShowNutrientInfoNotification"
+//#define Notification_ShowNutrientInfoKey @"KeyShowNutrientInfoNotification"
 
 #define UMSDKAPPKey @"51b96cc356240b6ee80a05dc"
 #define ShareSDKAPPKey @"4d8c71c46cb"

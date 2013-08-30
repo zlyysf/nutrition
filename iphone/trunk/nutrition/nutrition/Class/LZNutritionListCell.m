@@ -1,15 +1,15 @@
 //
-//  LZDiagnosisCell.m
+//  LZNutritionListCell.m
 //  nutrition
 //
-//  Created by liu miao on 8/26/13.
+//  Created by liu miao on 8/30/13.
 //  Copyright (c) 2013 lingzhi mobile. All rights reserved.
 //
 
-#import "LZDiagnosisCell.h"
-
-@implementation LZDiagnosisCell
-
+#import "LZNutritionListCell.h"
+#import "LZNutrientionManager.h"
+@implementation LZNutritionListCell
+@synthesize nutritionId;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -17,6 +17,9 @@
         // Initialization code
     }
     return self;
+}
+- (IBAction)nutritionButtonTapped:(id)sender {
+    [[LZNutrientionManager SharedInstance]showNutrientInfo:self.nutritionId];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -27,20 +30,19 @@
 }
 - (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated
 {
-    //244,242,236
     [super setHighlighted:highlighted animated:animated];
-    [self.sepratorLineView setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     if (highlighted)
     {
-        //[self.backView setBackgroundColor:[UIColor colorWithRed:198/255.f green:185/255.f blue:173/255.f alpha:1.0f]];
-        [self.diseaseNameLabel setTextColor:[UIColor whiteColor]];
-        
+        [self.arrowImage setImage:[UIImage imageNamed:@"big_arrow_clicked.png"]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellSelectedBack.png"]]];
+        [self.nutritionNameButton setUserInteractionEnabled:NO];
     }
     else
     {
-        [self.diseaseNameLabel setTextColor:[UIColor blackColor]];
-        [self.backView setBackgroundColor:[UIColor clearColor]];
+        [self.arrowImage setImage:[UIImage imageNamed:@"big_arrow.png"]];
+        [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
+        [self.nutritionNameButton setUserInteractionEnabled:YES];
+        
     }
 }
 
