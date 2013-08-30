@@ -13,6 +13,7 @@
 #import "LZFoodDetailController.h"
 #import "LZConstants.h"
 #import "JWNavigationViewController.h"
+#import "MobClick.h"
 @interface LZFoodSearchViewController ()<LZFoodDetailViewControllerDelegate>
 {
     BOOL isfirstLoad;
@@ -95,11 +96,16 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"食物查询页面"];
     if (isfirstLoad)
     {
         isfirstLoad = NO;
         [self setButtons];
     }
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"食物查询页面"];
 }
 -(void)setButtons
 {

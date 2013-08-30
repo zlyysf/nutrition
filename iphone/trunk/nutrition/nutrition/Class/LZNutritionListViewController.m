@@ -9,6 +9,9 @@
 #import "LZNutritionListViewController.h"
 #import "LZNutritionListCell.h"
 #import "LZRecommendFood.h"
+#import "LZRichNutritionViewController.h"
+#import "LZConstants.h"
+#import "MobClick.h"
 @interface LZNutritionListViewController ()
 
 @end
@@ -35,6 +38,14 @@
     NSLog(@"%@",nutritionArray);
     
 	// Do any additional setup after loading the view.
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [MobClick beginLogPageView:@"营养元素页面"];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"营养元素页面"];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -80,7 +91,22 @@
 {
     return 1;
 }
-
+-(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    NSString *nutritionId = [self.nutritionArray objectAtIndex:indexPath.row];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *dict = [da getNutrientInfo:nutritionId];
+    //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
+    NSString *nutritionName = [dict objectForKey:@"NutrientCnCaption"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZRichNutritionViewController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZRichNutritionViewController"];
+    addByNutrientController.nutrientDict = dict;
+    addByNutrientController.nutrientTitle = nutritionName;
+    [self.navigationController pushViewController:addByNutrientController animated:YES];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -16,6 +16,7 @@
 #import "LZDiseasePreventViewController.h"
 #import "LZFoodSearchViewController.h"
 #import "LZNutritionListViewController.h"
+#import "MobClick.h"
 @interface LZMainPageViewController ()
 
 @end
@@ -46,6 +47,14 @@
                       [NSDictionary dictionaryWithObjectsAndKeys:@"营养诊断",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"疾病预防",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"设置",@"menuName", nil],nil];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [MobClick beginLogPageView:@"主页面"];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"主页面"];
 }
 -(void)viewDidAppear:(BOOL)animated
 {

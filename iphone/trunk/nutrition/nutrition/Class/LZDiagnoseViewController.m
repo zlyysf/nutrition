@@ -19,6 +19,7 @@
 #import "LZMainPageViewController.h"
 #import "MBProgressHUD.h"
 #import "LZReviewAppManager.h"
+#import "MobClick.h"
 #define MaxPageNumber 4
 
 @interface LZDiagnoseViewController ()<MBProgressHUDDelegate>
@@ -127,10 +128,15 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"营养诊断页面"];
     [self.outScrollView setContentSize:CGSizeMake(self.outScrollView.frame.size.width*4, self.outScrollView.frame.size.height)];
     self.emptyImageView.center = CGPointMake(self.resultView.center.x, self.resultView.center.y-25);
     self.emptyLabel.center = CGPointMake(self.resultView.center.x, self.resultView.center.y+25);
     displayAreaHeight = self.resultView.frame.size.height-327;
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"营养诊断页面"];
 }
 - (void)recommendOnePlan
 {

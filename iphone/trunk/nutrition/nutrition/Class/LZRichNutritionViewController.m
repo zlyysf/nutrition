@@ -1,12 +1,12 @@
 //
-//  LZAddByNutrientController.m
+//  LZRichNutritionViewController.m
 //  nutrition
 //
-//  Created by liu miao on 6/3/13.
+//  Created by liu miao on 8/30/13.
 //  Copyright (c) 2013 lingzhi mobile. All rights reserved.
 //
 
-#import "LZAddByNutrientController.h"
+#import "LZRichNutritionViewController.h"
 #import "LZConstants.h"
 #import <math.h>
 #import "GADMasterViewController.h"
@@ -15,14 +15,15 @@
 #import "MBProgressHUD.h"
 #import "LZFoodDetailController.h"
 #import "LZNutrientFoodAddCell.h"
-@interface LZAddByNutrientController ()<MBProgressHUDDelegate,LZFoodDetailViewControllerDelegate>
+@interface LZRichNutritionViewController ()<MBProgressHUDDelegate,LZFoodDetailViewControllerDelegate>
 {
     MBProgressHUD *HUD;
     BOOL isFirstLoad;
 }
+
 @end
 
-@implementation LZAddByNutrientController
+@implementation LZRichNutritionViewController
 @synthesize foodArray,nutrientTitle,nutrientDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -41,7 +42,7 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     
-    NSString *tipsStr = [NSString stringWithFormat:@"下列是富含%@的食物，您可以根据我们提供的推荐量来挑选适合自己的食物,没有推荐量时表示已经补满。", nutrientTitle];
+    NSString *tipsStr = [NSString stringWithFormat:@"下列是富含%@的食物，您可以根据我们提供的推荐量来挑选适合自己的食物。", nutrientTitle];
     CGSize tipSize = [tipsStr sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
     UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, tipSize.height+15)];
     UILabel *tipsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, tipSize.height)];
@@ -54,11 +55,11 @@
     [headerView addSubview:tipsLabel];
     self.listView.tableHeaderView = headerView;
     self.title = nutrientTitle;
-
-//    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
-//                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
-//                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
-//    self.listView.tableFooterView = footerView;
+    
+    //    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+    //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+    //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+    //    self.listView.tableFooterView = footerView;
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
     HUD.hidden = YES;
@@ -73,7 +74,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [MobClick beginLogPageView:@"按营养素添加食物页面"];
+    [MobClick beginLogPageView:@"营养素富含食物页面"];
     //GADMasterViewController *shared = [GADMasterViewController singleton];
     //UIView *footerView = self.listView.tableFooterView;
     //[shared resetAdView:self andListView:footerView];
@@ -131,11 +132,11 @@
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
-//    if (self.pushToNextView) {
-//        return;
-//    }
+    //    if (self.pushToNextView) {
+    //        return;
+    //    }
     
-    [MobClick endLogPageView:@"按营养素添加食物页面"];
+    [MobClick endLogPageView:@"营养素富含食物页面"];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
@@ -163,7 +164,7 @@
 //    {
 //        [intakeDict addEntriesFromDictionary:dailyIntake];
 //    }
-//    
+//
 //    BOOL needSaveData = NO;
 //    for (NSString * NDB_No in [self.tempIntakeDict allKeys])
 //    {
@@ -183,7 +184,7 @@
 //        [[NSUserDefaults standardUserDefaults]setObject:intakeDict forKey:LZUserDailyIntakeKey];
 //        [[NSUserDefaults  standardUserDefaults]synchronize];
 //    }
-//    
+//
 //    [self dismissModalViewControllerAnimated:YES];
 //}
 //- (IBAction)saveButtonTapped:(id)sender {
@@ -340,7 +341,7 @@
     NSNumber *foodAmount = [aFood objectForKey:Key_FoodAmount];
     int amount =(int)(ceilf([foodAmount floatValue]));
     //int weightAmount = (int)(ceilf([weight floatValue]));
-   // if (weightAmount <=0 )
+    // if (weightAmount <=0 )
     //{
     if (amount>0)
     {
@@ -351,7 +352,7 @@
         weight = [NSNumber numberWithInt:0];
     }
     //}
-
+    
     
     NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
     NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
@@ -370,28 +371,28 @@
         foodDetailController.isUnitDisplayAvailable = YES;
         foodDetailController.unitName = singleUnitName;
         NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
-//        if ([LZUtility isUseUnitDisplay:weight unitWeight:singleUnitWeight])
-//        {
-//            foodDetailController.isDefaultUnitDisplay = YES;
-//        }
-//        else
-//        {
-//            foodDetailController.isDefaultUnitDisplay = NO;
-//        }
+        //        if ([LZUtility isUseUnitDisplay:weight unitWeight:singleUnitWeight])
+        //        {
+        //            foodDetailController.isDefaultUnitDisplay = YES;
+        //        }
+        //        else
+        //        {
+        //            foodDetailController.isDefaultUnitDisplay = NO;
+        //        }
         
         foodDetailController.isDefaultUnitDisplay = NO;
         int maxCount = (int)(ceilf(([upper floatValue]*2)/[singleUnitWeight floatValue]));
-//        if (maxCount <20)
-//        {
-//            foodDetailController.unitMaxValue = [NSNumber numberWithInt:20];
-//        }
-//        else
-//        {
-//            foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
-//        }
+        //        if (maxCount <20)
+        //        {
+        //            foodDetailController.unitMaxValue = [NSNumber numberWithInt:20];
+        //        }
+        //        else
+        //        {
+        //            foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
+        //        }
         foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
     }
-   
+    foodDetailController.isPushToDietPicker = YES;
     foodDetailController.currentSelectValue = weight;
     foodDetailController.defaulSelectValue = weight;
     foodDetailController.foodAttr = foodAtr;
@@ -416,7 +417,7 @@
 //    NSDictionary *aFood = [self.foodArray objectAtIndex:index.row];
 //    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
 //    NSArray *standardArray = [rf formatFoodStandardContentForFood:aFood];
-//    
+//
 //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
 //    LZFoodInfoViewController *foodInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodInfoViewController"];
 //    foodInfoViewController.nutrientStandardArray = standardArray;
@@ -453,4 +454,5 @@
     [LZUtility addFood:foodId withFoodAmount:changedValue];
     [self.listView reloadData];
 }
+
 @end

@@ -14,6 +14,7 @@
 #import "LZConstants.h"
 #import "LZMainPageViewController.h"
 #import "LZUtility.h"
+#import "MobClick.h"
 @interface LZDietPickerViewController ()
 
 @end
@@ -56,7 +57,12 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"挑选清单页面"];
     [self displayLocalDietList];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"挑选清单页面"];
 }
 - (void)displayLocalDietList
 {
@@ -152,6 +158,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     [self.navigationController dismissModalViewControllerAnimated:YES];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];

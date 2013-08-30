@@ -13,6 +13,7 @@
 #import "LZDiseaseCell.h"
 #import "LZRecommendFood.h"
 #import "LZDiseaseResultViewController.h"
+#import "MobClick.h"
 @interface LZDiseasePreventViewController ()
 
 @end
@@ -57,6 +58,14 @@
         self.diseaseNameDict = [groupDict objectForKey:@"departmentDiseasesDict"];
     }
     
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [MobClick beginLogPageView:@"疾病预防页面"];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"疾病预防页面"];
 }
 -(void)backButtonTapped
 {
@@ -126,6 +135,7 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     if (!isSecondClass)
     {

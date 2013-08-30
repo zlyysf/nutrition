@@ -118,14 +118,14 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [MobClick beginLogPageView:@"按种类添加页面"];
+    [MobClick beginLogPageView:@"食物种类详细页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
 
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"按种类添加页面"];
+    [MobClick endLogPageView:@"食物种类详细页面"];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }

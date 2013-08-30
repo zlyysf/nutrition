@@ -18,6 +18,7 @@
 #import "LZNutrientionManager.h"
 #import "MBProgressHUD.h"
 #import "LZReviewAppManager.h"
+#import "MobClick.h"
 @interface LZDiseaseResultViewController ()<MBProgressHUDDelegate>
 {
     MBProgressHUD *HUD;
@@ -186,8 +187,13 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"疾病预防结果页面"];
     displayAreaHeight = self.resultView.frame.size.height-327;
     [self displayResult];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"疾病预防结果页面"];
 }
 -(void)clearResultView
 {

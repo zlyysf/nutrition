@@ -68,7 +68,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"精选膳食清单页面"];
+    [MobClick beginLogPageView:@"膳食清单页面"];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.mobView];
     [self displayLocalDietList];
@@ -89,7 +89,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"精选膳食清单页面"];
+    [MobClick endLogPageView:@"膳食清单页面"];
 }
 - (void)didReceiveMemoryWarning
 {
@@ -285,6 +285,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary *aDiet = [self.dietArray objectAtIndex:indexPath.row];
     NSNumber *dietId = [aDiet objectForKey:@"CollocationId"];
