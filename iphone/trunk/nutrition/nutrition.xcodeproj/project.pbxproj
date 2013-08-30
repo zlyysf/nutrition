@@ -177,6 +177,7 @@
 		5F86C86B17CCACE5001DDC34 /* menu_item_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F86C86517CCACE5001DDC34 /* menu_item_3@2x.png */; };
 		5F86C86C17CCACE5001DDC34 /* menu_item_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F86C86617CCACE5001DDC34 /* menu_item_4@2x.png */; };
 		5F86C86D17CCACE5001DDC34 /* menu_item_5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F86C86717CCACE5001DDC34 /* menu_item_5@2x.png */; };
+		5F87498517D09D050061E36D /* LZNutritionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F87498417D09D040061E36D /* LZNutritionListViewController.m */; };
 		5F8DEE9517951DB000C6E9F5 /* LZRecommendFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */; };
 		5F90D80117AF8873000AEC06 /* baidumobadsdk.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5F90D7D217AF8873000AEC06 /* baidumobadsdk.bundle */; };
 		5F90D80217AF8873000AEC06 /* libBaiduMobAdSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D7D417AF8873000AEC06 /* libBaiduMobAdSdk.a */; };
@@ -472,6 +473,8 @@
 		5F86C86517CCACE5001DDC34 /* menu_item_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_3@2x.png"; path = "nutrition/Resource/menu_item_3@2x.png"; sourceTree = "<group>"; };
 		5F86C86617CCACE5001DDC34 /* menu_item_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_4@2x.png"; path = "nutrition/Resource/menu_item_4@2x.png"; sourceTree = "<group>"; };
 		5F86C86717CCACE5001DDC34 /* menu_item_5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_5@2x.png"; path = "nutrition/Resource/menu_item_5@2x.png"; sourceTree = "<group>"; };
+		5F87498317D09D030061E36D /* LZNutritionListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZNutritionListViewController.h; path = Class/LZNutritionListViewController.h; sourceTree = "<group>"; };
+		5F87498417D09D040061E36D /* LZNutritionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZNutritionListViewController.m; path = Class/LZNutritionListViewController.m; sourceTree = "<group>"; };
 		5F8DEE9317951DB000C6E9F5 /* LZRecommendFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFilterView.h; path = Class/LZRecommendFilterView.h; sourceTree = "<group>"; };
 		5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFilterView.m; path = Class/LZRecommendFilterView.m; sourceTree = "<group>"; };
 		5F90D7D117AF8873000AEC06 /* BaiduMobAdDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobAdDelegateProtocol.h; sourceTree = "<group>"; };
@@ -1096,6 +1099,8 @@
 				5F933F0917CD986700B188E0 /* LZDiseaseResultViewController.m */,
 				5F22A68917CEFC400043D760 /* LZFoodSearchViewController.h */,
 				5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */,
+				5F87498317D09D030061E36D /* LZNutritionListViewController.h */,
+				5F87498417D09D040061E36D /* LZNutritionListViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1658,6 +1663,7 @@
 				5F22A68B17CEFC400043D760 /* LZFoodSearchViewController.m in Sources */,
 				5F22A68E17CF11930043D760 /* LZSearchBar.m in Sources */,
 				5F22A6C817CF4C6E0043D760 /* LZFoodTypeButton.m in Sources */,
+				5F87498517D09D050061E36D /* LZNutritionListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

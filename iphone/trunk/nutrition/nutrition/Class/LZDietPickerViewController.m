@@ -37,8 +37,8 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.dietArray = [[NSMutableArray alloc]init];
     self.title = @"添加食物";
-    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
-    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+//    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
 //    [button setTitle:@"  返回" forState:UIControlStateNormal];
 //    button.frame = CGRectMake(0, 0, 48, 30);

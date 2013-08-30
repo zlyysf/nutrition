@@ -15,6 +15,7 @@
 #import "LZEditProfileViewController.h"
 #import "LZDiseasePreventViewController.h"
 #import "LZFoodSearchViewController.h"
+#import "LZNutritionListViewController.h"
 @interface LZMainPageViewController ()
 
 @end
@@ -127,7 +128,8 @@
     }
     else if (indexPath.row == 1)
     {
-        
+        LZNutritionListViewController *nutritionListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZNutritionListViewController"];
+        [self.navigationController pushViewController:nutritionListViewController animated:YES];
     }
     else if (indexPath.row == 2)
     {

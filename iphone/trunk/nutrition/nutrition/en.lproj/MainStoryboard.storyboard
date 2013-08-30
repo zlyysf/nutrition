@@ -1447,6 +1447,30 @@
             </objects>
             <point key="canvasLocation" x="1372" y="-30"/>
         </scene>
+        <!--Nutrition List View Controller-->
+        <scene sceneID="9Hs-ib-uZx">
+            <objects>
+                <viewController storyboardIdentifier="LZNutritionListViewController" id="RpV-Wc-Pty" customClass="LZNutritionListViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vdk-Fy-ef6">
+                        <rect key="frame" x="0.0" y="20" width="320" height="548"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="jfT-qp-bi3">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="548"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="listView" destination="jfT-qp-bi3" id="VtK-1a-rgx"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XgY-P7-rUQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1733" y="-32"/>
+        </scene>
         <!--Add Food View Controller-->
         <scene sceneID="Yl5-9l-zRh">
             <objects>
@@ -2321,10 +2345,15 @@
                 <relationship kind="outlet" name="recommendAmountLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
+        <class className="LZNutritionListViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionListViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
         <class className="LZNutritionSupplyCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionSupplyCell.h"/>
             <relationships>
-                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="nameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nutrientSupplyLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
@@ -2378,9 +2407,6 @@
         <class className="LZShareViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZShareViewController.h"/>
             <relationships>
-                <relationship kind="action" name="cancelButtonTapped:"/>
-                <relationship kind="action" name="clearButtonTapped:"/>
-                <relationship kind="action" name="publishButtonTapped:"/>
                 <relationship kind="outlet" name="contentBackgroundImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="contentTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="previewImageView" candidateClass="UIImageView"/>
