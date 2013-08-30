@@ -693,14 +693,15 @@
                 else
                 {
                     NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
-                    int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
-                    if (unitCount <= 0)
+                    int maxCount = (int)(ceilf(([weight floatValue]*2)/[singleUnitWeight floatValue]));
+                    //int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
+                    if (maxCount <= 0)
                     {
                         foodTotalUnit = @"";
                     }
                     else
                     {
-                        foodTotalUnit = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
+                        foodTotalUnit = [NSString stringWithFormat:@"(%.1f%@)",maxCount*0.5f,singleUnitName];
                     }
                 }
                 NSString *foodName = [aFood objectForKey:@"Name"];
@@ -1026,14 +1027,15 @@
         else
         {
             NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
-            int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
-            if (unitCount <= 0)
+            int maxCount = (int)(ceilf(([weight floatValue]*2)/[singleUnitWeight floatValue]));
+            //int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
+            if (maxCount <= 0)
             {
                 foodTotalUnit = @"";
             }
             else
             {
-                foodTotalUnit = [NSString stringWithFormat:@"(%d%@)",unitCount,singleUnitName];
+                foodTotalUnit = [NSString stringWithFormat:@"(%.1f%@)",maxCount*0.5f,singleUnitName];
             }
         }
         NSString *foodName = [aFood objectForKey:@"Name"];

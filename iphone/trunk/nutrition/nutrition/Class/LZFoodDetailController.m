@@ -58,7 +58,7 @@
     {
        rightTitle = @"添加";
     }
-    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:rightTitle style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.leftBarButtonItem = cancelItem;
     self.navigationItem.rightBarButtonItem = saveItem;
 
