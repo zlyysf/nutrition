@@ -225,6 +225,8 @@
     {
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
         LZDietPickerViewController *dietPickerViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietPickerViewController"];
+        NSDictionary *foodDict = [[NSDictionary alloc]initWithObjectsAndKeys:currentSelectValue,[self.foodAttr objectForKey:@"NDB_No"], nil];
+        dietPickerViewController.foodDict = foodDict;
         [self.navigationController pushViewController:dietPickerViewController animated:YES];
     }
     else

@@ -41,7 +41,7 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"添加" style:UIBarButtonItemStyleBordered target:self action:@selector(addListAction)];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"新建" style:UIBarButtonItemStyleBordered target:self action:@selector(addListAction)];
     self.navigationItem.rightBarButtonItem = rightItem;
     
     UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];

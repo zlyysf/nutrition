@@ -13,12 +13,13 @@
 #import "LZUserDietListViewController.h"
 #import "LZConstants.h"
 #import "LZMainPageViewController.h"
+#import "LZUtility.h"
 @interface LZDietPickerViewController ()
 
 @end
 
 @implementation LZDietPickerViewController
-@synthesize dietArray,recommendNutritionArray;
+@synthesize dietArray,foodDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -156,32 +157,33 @@
     LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
     userDietListViewController.backWithNoAnimation = YES;
     LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
-    NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
-    NSSet *selectNutrient = [NSSet setWithArray:self.recommendNutritionArray];
-    NSMutableArray *newPreferArray = [[NSMutableArray alloc]init];
-    for (NSDictionary *aNutrient in preferNutrient)
-    {
-        NSString *nId = [[aNutrient allKeys]objectAtIndex:0];
-        if ([selectNutrient containsObject:nId])
-        {
-            NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],nId, nil];
-            [newPreferArray addObject:newDict];
-        }
-        else
-        {
-            NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO],nId, nil];
-            [newPreferArray addObject:newDict];
-        }
-    }
-    [[NSUserDefaults standardUserDefaults]setObject:newPreferArray forKey:KeyUserRecommendPreferNutrientArray];
-    [[NSUserDefaults standardUserDefaults]synchronize];
+    [LZUtility initializePreferNutrient];
+//    NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
+//    NSSet *selectNutrient = [NSSet setWithArray:self.recommendNutritionArray];
+//    NSMutableArray *newPreferArray = [[NSMutableArray alloc]init];
+//    for (NSDictionary *aNutrient in preferNutrient)
+//    {
+//        NSString *nId = [[aNutrient allKeys]objectAtIndex:0];
+//        if ([selectNutrient containsObject:nId])
+//        {
+//            NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],nId, nil];
+//            [newPreferArray addObject:newDict];
+//        }
+//        else
+//        {
+//            NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO],nId, nil];
+//            [newPreferArray addObject:newDict];
+//        }
+//    }
+//    [[NSUserDefaults standardUserDefaults]setObject:newPreferArray forKey:KeyUserRecommendPreferNutrientArray];
+//    [[NSUserDefaults standardUserDefaults]synchronize];
     if (indexPath.section == 0)
     {
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
+        NSString *addFoodId = [[foodDict allKeys]objectAtIndex:0];
+        NSNumber *addFoodAmount = [foodDict objectForKey:addFoodId];
+        [LZUtility addFood:addFoodId withFoodAmount:addFoodAmount];
         LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
         foodListViewController.listType = dietListTypeNew;
-        foodListViewController.useRecommendNutrient = YES;
         foodListViewController.backWithNoAnimation = YES;
         NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
         UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
@@ -207,11 +209,13 @@
         NSDictionary *temp = [[NSDictionary alloc]initWithDictionary:dietContentDict];
         [[NSUserDefaults standardUserDefaults]setObject:temp forKey:LZUserDailyIntakeKey];
         [[NSUserDefaults  standardUserDefaults]synchronize];
+        NSString *addFoodId = [[foodDict allKeys]objectAtIndex:0];
+        NSNumber *addFoodAmount = [foodDict objectForKey:addFoodId];
+        [LZUtility addFood:addFoodId withFoodAmount:addFoodAmount];
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
         LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
         foodListViewController.listType = dietListTypeOld;
         foodListViewController.title = dietTitle;
-        foodListViewController.useRecommendNutrient = YES;
         foodListViewController.dietId = dietId;
         foodListViewController.backWithNoAnimation = YES;
         NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
