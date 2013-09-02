@@ -15,6 +15,7 @@
 #import "MBProgressHUD.h"
 #import "LZFoodDetailController.h"
 #import "LZNutrientFoodAddCell.h"
+#import "JWNavigationViewController.h"
 @interface LZAddByNutrientController ()<MBProgressHUDDelegate,LZFoodDetailViewControllerDelegate>
 {
     MBProgressHUD *HUD;
@@ -399,7 +400,7 @@
     foodDetailController.delegate = self;
     foodDetailController.isCalForAll = NO;
     foodDetailController.GUnitStartIndex = 0;
-    UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:foodDetailController];
+    JWNavigationViewController *nav = [[JWNavigationViewController alloc]initWithRootViewController:foodDetailController];
     [self presentModalViewController:nav animated:YES];
     
     

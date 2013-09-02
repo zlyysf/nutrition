@@ -15,6 +15,7 @@
 #import "LZMainPageViewController.h"
 #import "LZUtility.h"
 #import "MobClick.h"
+#import "LZAddToNewDietCell.h"
 @interface LZDietPickerViewController ()
 
 @end
@@ -96,18 +97,21 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    LZDietPickerCell * cell =(LZDietPickerCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDietPickerCell"];
+   
     if (indexPath.section == 0)
     {
-        [cell adjustLabelAccordingToDietName:@"添加到新清单"];
+        LZAddToNewDietCell *cell = (LZAddToNewDietCell*)[tableView dequeueReusableCellWithIdentifier:@"LZAddToNewDietCell"];
+        return cell;
     }
     else
     {
+        LZDietPickerCell * cell =(LZDietPickerCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDietPickerCell"];
         NSDictionary *aDiet = [self.dietArray objectAtIndex:indexPath.row];
         NSString *dietName = [aDiet objectForKey:@"CollocationName"];
         [cell adjustLabelAccordingToDietName:dietName];
+        return cell;
     }
-    return cell;
+    
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -126,13 +130,13 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if(section == 0)
-        return 5;
+        return 10;
     return 32;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
+        UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 10)];
         [sectionView setBackgroundColor:[UIColor clearColor]];
         return sectionView;
     }
@@ -159,47 +163,32 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.section == 0)
+    {
+        return;
+    }
     [self.navigationController dismissModalViewControllerAnimated:YES];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
     userDietListViewController.backWithNoAnimation = YES;
     LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
     [LZUtility initializePreferNutrient];
-//    NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
-//    NSSet *selectNutrient = [NSSet setWithArray:self.recommendNutritionArray];
-//    NSMutableArray *newPreferArray = [[NSMutableArray alloc]init];
-//    for (NSDictionary *aNutrient in preferNutrient)
+//    if (indexPath.section == 0)
 //    {
-//        NSString *nId = [[aNutrient allKeys]objectAtIndex:0];
-//        if ([selectNutrient containsObject:nId])
-//        {
-//            NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:YES],nId, nil];
-//            [newPreferArray addObject:newDict];
-//        }
-//        else
-//        {
-//            NSDictionary *newDict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:NO],nId, nil];
-//            [newPreferArray addObject:newDict];
-//        }
+//        [[NSUserDefaults standardUserDefaults]removeObjectForKey:LZUserDailyIntakeKey];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+//        NSString *addFoodId = [[foodDict allKeys]objectAtIndex:0];
+//        NSNumber *addFoodAmount = [foodDict objectForKey:addFoodId];
+//        [LZUtility addFood:addFoodId withFoodAmount:addFoodAmount];
+//        LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
+//        foodListViewController.listType = dietListTypeNew;
+//        foodListViewController.backWithNoAnimation = YES;
+//        NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
+//        UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+//        [mainNav setViewControllers:vcs animated:YES];
 //    }
-//    [[NSUserDefaults standardUserDefaults]setObject:newPreferArray forKey:KeyUserRecommendPreferNutrientArray];
-//    [[NSUserDefaults standardUserDefaults]synchronize];
-    if (indexPath.section == 0)
-    {
-        [[NSUserDefaults standardUserDefaults]removeObjectForKey:LZUserDailyIntakeKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        NSString *addFoodId = [[foodDict allKeys]objectAtIndex:0];
-        NSNumber *addFoodAmount = [foodDict objectForKey:addFoodId];
-        [LZUtility addFood:addFoodId withFoodAmount:addFoodAmount];
-        LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
-        foodListViewController.listType = dietListTypeNew;
-        foodListViewController.backWithNoAnimation = YES;
-        NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
-        UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
-        [mainNav setViewControllers:vcs animated:YES];
-    }
-    else
-    {
+//    else
+//    {
         LZDataAccess *da = [LZDataAccess singleton];
         NSDictionary *aDiet = [self.dietArray objectAtIndex:indexPath.row];
         NSNumber *dietId = [aDiet objectForKey:@"CollocationId"];
@@ -221,7 +210,6 @@
         NSString *addFoodId = [[foodDict allKeys]objectAtIndex:0];
         NSNumber *addFoodAmount = [foodDict objectForKey:addFoodId];
         [LZUtility addFood:addFoodId withFoodAmount:addFoodAmount];
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
         LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
         foodListViewController.listType = dietListTypeOld;
         foodListViewController.title = dietTitle;
@@ -230,7 +218,27 @@
         NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
         UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
         [mainNav setViewControllers:vcs animated:YES];
-    }
+    //}
+}
+- (IBAction)addToNewDiet:(id)sender {
+    [self.navigationController dismissModalViewControllerAnimated:YES];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
+    userDietListViewController.backWithNoAnimation = YES;
+    LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
+    [LZUtility initializePreferNutrient];
+    [[NSUserDefaults standardUserDefaults]removeObjectForKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    NSString *addFoodId = [[foodDict allKeys]objectAtIndex:0];
+    NSNumber *addFoodAmount = [foodDict objectForKey:addFoodId];
+    [LZUtility addFood:addFoodId withFoodAmount:addFoodAmount];
+    LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];
+    foodListViewController.listType = dietListTypeNew;
+    foodListViewController.backWithNoAnimation = YES;
+    NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController,foodListViewController, nil];
+    UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+    [mainNav setViewControllers:vcs animated:YES];
+
 }
 
 @end

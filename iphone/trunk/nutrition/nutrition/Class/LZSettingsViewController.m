@@ -300,17 +300,17 @@
 //    [[NSUserDefaults standardUserDefaults]synchronize];
 
 //}
-- (IBAction)editUserProfile:(id)sender {
-    [self performSelector:@selector(editProfileAction) withObject:nil afterDelay:0.f];
-}
-- (void)editProfileAction
-{
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
-    editProfileViewController.firstEnterEditView = NO;
-    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
-    [self presentModalViewController:navController animated:YES];
-}
+//- (IBAction)editUserProfile:(id)sender {
+//    [self performSelector:@selector(editProfileAction) withObject:nil afterDelay:0.f];
+//}
+//- (void)editProfileAction
+//{
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//    LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
+//    editProfileViewController.firstEnterEditView = NO;
+//    UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
+//    [self presentModalViewController:navController animated:YES];
+//}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];

@@ -1063,6 +1063,35 @@
                                             <outlet property="dietNameLabel" destination="mv6-QQ-lKe" id="uEI-7V-yUp"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZAddToNewDietCell" rowHeight="60" id="tch-qW-qUU" customClass="LZAddToNewDietCell">
+                                        <rect key="frame" x="0.0" y="82" width="320" height="60"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="59"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="kFp-F5-6qp">
+                                                    <rect key="frame" x="10" y="8" width="300" height="44"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                                    <state key="normal" title="添加到新清单">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="highlighted">
+                                                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="addToNewDiet:" destination="wCB-UH-18c" eventType="touchUpInside" id="W7v-N9-c7b"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="addButton" destination="kFp-F5-6qp" id="8Ug-Q3-1qs"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                                 <connections>
                                     <outlet property="dataSource" destination="wCB-UH-18c" id="O7s-tb-prc"/>
@@ -2137,6 +2166,12 @@
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
+        <class className="LZAddToNewDietCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZAddToNewDietCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="addButton" candidateClass="UIButton"/>
+            </relationships>
+        </class>
         <class className="LZChangeDietNameButton" superclassName="UIButton">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZChangeDietNameButton.h"/>
         </class>
@@ -2310,7 +2345,6 @@
             <relationships>
                 <relationship kind="outlet" name="arrowImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="backView" candidateClass="UIView"/>
-                <relationship kind="outlet" name="nutritionNameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nutritionNameLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
