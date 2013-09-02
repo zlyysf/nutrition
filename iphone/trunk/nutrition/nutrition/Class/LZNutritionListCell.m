@@ -7,9 +7,8 @@
 //
 
 #import "LZNutritionListCell.h"
-#import "LZNutrientionManager.h"
+
 @implementation LZNutritionListCell
-@synthesize nutritionId;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -17,9 +16,6 @@
         // Initialization code
     }
     return self;
-}
-- (IBAction)nutritionButtonTapped:(id)sender {
-    [[LZNutrientionManager SharedInstance]showNutrientInfo:self.nutritionId];
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
@@ -35,13 +31,13 @@
     {
         [self.arrowImage setImage:[UIImage imageNamed:@"big_arrow_clicked.png"]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellSelectedBack.png"]]];
-        [self.nutritionNameButton setUserInteractionEnabled:NO];
+        [self.nutritionNameLabel setTextColor:[UIColor whiteColor]];
     }
     else
     {
         [self.arrowImage setImage:[UIImage imageNamed:@"big_arrow.png"]];
         [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
-        [self.nutritionNameButton setUserInteractionEnabled:YES];
+        [self.nutritionNameLabel setTextColor:[UIColor blackColor]];
         
     }
 }

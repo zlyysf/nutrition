@@ -15,6 +15,7 @@
 #import "MBProgressHUD.h"
 #import "LZFoodDetailController.h"
 #import "LZNutrientFoodAddCell.h"
+#import "LZNutrientionManager.h"
 @interface LZRichNutritionViewController ()<MBProgressHUDDelegate,LZFoodDetailViewControllerDelegate>
 {
     MBProgressHUD *HUD;
@@ -50,12 +51,13 @@
     [tipsLabel setFont:[UIFont systemFontOfSize:15]];
     [tipsLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8f]];
     tipsLabel.text = tipsStr;
-    //tempIntakeDict = [[NSMutableDictionary alloc]init];
     [tipsLabel setBackgroundColor:[UIColor clearColor]];
     [headerView addSubview:tipsLabel];
     self.listView.tableHeaderView = headerView;
     self.title = nutrientTitle;
-    
+    UIBarButtonItem *infoItem = [[UIBarButtonItem alloc]initWithTitle:@"营养素信息" style:UIBarButtonItemStyleBordered target:self action:@selector(showNutritionInfo)];
+    self.navigationItem.rightBarButtonItem = infoItem;
+
     //    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
     //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
     //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
@@ -67,6 +69,10 @@
     isFirstLoad = YES;
     self.foodArray = [[NSArray alloc]init];
     self.listView.hidden = YES;
+}
+-(void)showNutritionInfo
+{
+   [[LZNutrientionManager SharedInstance]showNutrientInfo:[self.nutrientDict objectForKey:@"NutrientID"]];
 }
 - (void)viewWillAppear:(BOOL)animated
 {

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LZKeyboardToolBar.h"
-@interface LZEditProfileViewController : UIViewController<UITextFieldDelegate,LZKeyboardToolBarDelegate>
+@interface LZEditProfileViewController : UIViewController<UITextFieldDelegate,LZKeyboardToolBarDelegate,UITableViewDelegate,UITableViewDataSource>
 @property (strong,nonatomic) UITextField *currentTextField;
 @property (strong, nonatomic) IBOutlet UIView *line4View;
 @property (strong, nonatomic) IBOutlet UIView *line3View;
@@ -30,5 +30,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *levelDescriptionLabel;
 @property (nonatomic,readwrite)BOOL firstEnterEditView;
 @property (nonatomic, readwrite) int currentSexSelection;
+@property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (nonatomic, readwrite) int currentActivityLevelSelection;
+@property (strong,nonatomic)NSMutableArray *nutrientStandardArray;
+@property (assign,nonatomic)int maxNutrientCount;
 @end

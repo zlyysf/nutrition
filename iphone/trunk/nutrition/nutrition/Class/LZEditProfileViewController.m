@@ -10,12 +10,14 @@
 #import "LZConstants.h"
 #import "MobClick.h"
 #import "LZUtility.h"
+#import "LZRecommendFood.h"
+#import "LZStandardContentCell.h"
 @interface LZEditProfileViewController ()
 
 @end
 
 @implementation LZEditProfileViewController
-@synthesize currentTextField,firstEnterEditView;
+@synthesize currentTextField,firstEnterEditView,nutrientStandardArray,maxNutrientCount;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -32,12 +34,14 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.mainScrollView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    self.nutrientStandardArray = [[NSMutableArray alloc]init];
     self.title = @"个人信息";
     
     UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;
-    
-    [self.mainScrollView setContentSize:CGSizeMake(320, 400)];
+    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
+    maxNutrientCount = [customNutrients count];
+    [self.mainScrollView setContentSize:CGSizeMake(320, 378+10+37+30*maxNutrientCount)];
     UIImage *textImage = [UIImage imageNamed:@"setting_cell_back.png"];
     UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
     [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
@@ -64,7 +68,7 @@
     [self.level3Button addTarget:self action:@selector(levelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.femaleButton addTarget:self action:@selector(sexButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.maleButton addTarget:self action:@selector(sexButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-    
+
     self.ageTextField.tag= 200;
     self.heightTextField.tag = 201;
     self.weightTextField.tag = 202;
@@ -283,6 +287,33 @@
         [self.maleButton setBackgroundImage:left_clicked forState:UIControlStateHighlighted];
     }
 }
+-(void)displayDRI
+{
+    NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
+    NSNumber *userAge = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserAgeKey];
+    NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
+    NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
+    NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              userSex,ParamKey_sex, userAge,ParamKey_age,
+                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                              userActivityLevel,ParamKey_activityLevel, nil];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   DRIsDict,Key_DRI,
+                                   nil];
+    NSMutableDictionary *driDict =  [rf formatDRIForUI:params];
+    NSArray *driArray = [driDict objectForKey:@"nutrientsInfoOfDRI"];
+    [self.nutrientStandardArray removeAllObjects];
+    [self.nutrientStandardArray  addObjectsFromArray:driArray];
+    [self.listView reloadData];
+    
+    NSLog(@"%@",self.nutrientStandardArray);
+
+}
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
 {
     LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:@"完成" delegate:self];
@@ -353,6 +384,13 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [MobClick beginLogPageView:@"编辑个人资料页面"];
     
+}
+- (void)viewDidAppear:(BOOL)animated
+{
+    if (!firstEnterEditView)
+    {
+        [self displayDRI];
+    }
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -479,6 +517,7 @@
     [self setLine2View:nil];
     [self setLine3View:nil];
     [self setLine4View:nil];
+    [self setListView:nil];
     [super viewDidUnload];
 }
 - (void)keyboardWillShow:(NSNotification *)notification {
@@ -523,5 +562,92 @@
     [UIView commitAnimations];
     
 }
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    
+    if (nutrientStandardArray != nil && [nutrientStandardArray count]!=0)
+    {
+        return [nutrientStandardArray count];
+    }
+    else
+        return 0;
+    
+}
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    LZStandardContentCell *cell = (LZStandardContentCell *)[tableView dequeueReusableCellWithIdentifier:@"LZStandardContentCell"];
+    NSDictionary *nutrientStandard = [nutrientStandardArray objectAtIndex:indexPath.row];
+    NSString *nutrientName = [nutrientStandard objectForKey:@"NutrientCnCaption"];
+    NSNumber *foodNutrientContent = [nutrientStandard objectForKey:@"Amount"];
+    NSString *unit = [nutrientStandard objectForKey:@"NutrientEnUnit"];
+    if (indexPath.row == 0)
+    {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_top@2x" ofType:@"png"];
+        UIImage * cellTopImage = [UIImage imageWithContentsOfFile:path];
+        
+        [cell.cellBackgroundImageView setImage:cellTopImage];
+    }
+    else if (indexPath.row == [nutrientStandardArray count]-1)
+    {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_bottom@2x" ofType:@"png"];
+        UIImage * cellBottomImage = [UIImage imageWithContentsOfFile:path];
+        [cell.cellBackgroundImageView setImage:cellBottomImage];
+    }
+    else
+    {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_middle@2x" ofType:@"png"];
+        UIImage * cellMiddleImage = [UIImage imageWithContentsOfFile:path];
+        [cell.cellBackgroundImageView setImage:cellMiddleImage];
+    }
+    cell.nutritionNameLabel.text = nutrientName;
+    cell.nutritionSupplyLabel.text = [NSString stringWithFormat:@"%.2f%@",[foodNutrientContent floatValue],unit];
+    
+    return cell;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 30;
+}
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    
+    return 37;
+}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    
+//    return 20;
+//}
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 37)];
+    [sectionView setBackgroundColor:[UIColor clearColor]];
+    
+    UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
+    [sectionView addSubview:sectionBarView];
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
+    UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
+    [sectionBarView setImage:sectionBarImage];
+    UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
+    [sectionTitleLabel setTextColor:[UIColor whiteColor]];
+    [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+    [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
+    [sectionView addSubview:sectionTitleLabel];
+    
+    sectionTitleLabel.text = [NSString stringWithFormat:@"个人每日营养摄入推荐量"];
+    return sectionView;
+}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 20)];
+//    [sectionView setBackgroundColor:[UIColor clearColor]];
+//    return sectionView;
+//}
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}// Default is 1 if not implemented
 
 @end

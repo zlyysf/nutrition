@@ -12,6 +12,7 @@
 #import "LZRichNutritionViewController.h"
 #import "LZConstants.h"
 #import "MobClick.h"
+
 @interface LZNutritionListViewController ()
 
 @end
@@ -39,6 +40,7 @@
     
 	// Do any additional setup after loading the view.
 }
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"营养元素页面"];
@@ -58,9 +60,7 @@
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary *dict = [da getNutrientInfo:nutritionId];
     NSString *nutritionName = [dict objectForKey:@"NutrientCnCaption"];
-    [cell.nutritionNameButton setTitle:nutritionName forState:UIControlStateNormal];
-    cell.nutritionId = nutritionId;
-    
+    cell.nutritionNameLabel.text = nutritionName;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
