@@ -1063,8 +1063,8 @@
     CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     scale.duration = duration;
     scale.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.5f],
-                    [NSNumber numberWithFloat:1.2f],
-                    [NSNumber numberWithFloat:.85f],
+                    [NSNumber numberWithFloat:1.05f],
+                    [NSNumber numberWithFloat:0.95f],
                     [NSNumber numberWithFloat:1.f],
                     nil];
     CAAnimationGroup *group = [CAAnimationGroup animation];

@@ -32,16 +32,7 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.mainScrollView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    if (!firstEnterEditView)
-    {
-//        UIBarButtonItem *cancelButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
-//        self.navigationItem.leftBarButtonItem = cancelButtonItem;
-        self.title = @"编辑个人资料";
-    }
-    else
-    {
-        self.title = @"填写个人资料";
-    }
+    self.title = @"个人信息";
     
     UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"完成" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;
