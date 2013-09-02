@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LZProgressView.h"
-@interface LZNutritionCell : UITableViewCell
+@interface LZCheckNutritionCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet LZProgressView *nutritionProgressView;
 @property (strong, nonatomic) IBOutlet UILabel *supplyPercentlabel;

@@ -7,13 +7,12 @@
 //
 
 #import "LZMainPageViewController.h"
-#import "LZAddFoodCell.h"
+#import "LZMainMenuItemCell.h"
 #import "LZUserDietListViewController.h"
 #import "LZSettingsViewController.h"
-//#import "LZDiagnoseViewController.h"
+#import "LZHealthCheckViewController.h"
 #import "LZUtility.h"
 #import "LZEditProfileViewController.h"
-//#import "LZDiseasePreventViewController.h"
 #import "LZFoodSearchViewController.h"
 #import "LZNutritionListViewController.h"
 #import "LZHealthCheckViewController.h"
@@ -88,7 +87,7 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    LZAddFoodCell * cell =(LZAddFoodCell*)[tableView dequeueReusableCellWithIdentifier:@"LZAddFoodCell"];
+    LZMainMenuItemCell * cell =(LZMainMenuItemCell*)[tableView dequeueReusableCellWithIdentifier:@"LZMainMenuItemCell"];
     //NSString *typeName = [self.foodTypeArray objectAtIndex:indexPath.row];
     NSDictionary *menuItem = [self.menuArray objectAtIndex:indexPath.row];
     NSString *itemName = [menuItem objectForKey:@"menuName"];

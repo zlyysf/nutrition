@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 lingzhi mobile. All rights reserved.
 //
 
-#import "LZAddFoodCell.h"
+#import "LZMainMenuItemCell.h"
 
-@implementation LZAddFoodCell
+@implementation LZMainMenuItemCell
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

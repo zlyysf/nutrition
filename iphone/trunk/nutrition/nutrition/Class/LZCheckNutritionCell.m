@@ -6,9 +6,9 @@
 //  Copyright (c) 2013 lingzhi mobile. All rights reserved.
 //
 
-#import "LZNutritionCell.h"
+#import "LZCheckNutritionCell.h"
 #import "LZNutrientionManager.h"
-@implementation LZNutritionCell
+@implementation LZCheckNutritionCell
 @synthesize nutrientId;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {

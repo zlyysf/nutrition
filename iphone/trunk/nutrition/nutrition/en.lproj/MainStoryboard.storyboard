@@ -17,7 +17,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZAddFoodCell" rowHeight="60" id="ePY-pC-Z2O" customClass="LZMainMenuItemCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZMainMenuItemCell" rowHeight="60" id="ePY-pC-Z2O" customClass="LZMainMenuItemCell">
                                         <rect key="frame" x="0.0" y="22" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -1181,6 +1181,84 @@
             </objects>
             <point key="canvasLocation" x="1003" y="-23"/>
         </scene>
+        <!--Health Check View Controller-->
+        <scene sceneID="1gw-yQ-AFQ">
+            <objects>
+                <viewController storyboardIdentifier="LZHealthCheckViewController" id="684-4r-iaq" customClass="LZHealthCheckViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="M2D-cD-geQ">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="lvS-98-BAr">
+                                <rect key="frame" x="0.0" y="50" width="320" height="410"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZDiseaseCell" id="Wrw-gF-Tb9" customClass="LZDiseaseCell">
+                                        <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="Ne0-RF-UDz">
+                                                    <rect key="frame" x="10" y="43" width="300" height="1"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" id="YRE-3c-jhl">
+                                                    <rect key="frame" x="10" y="5" width="300" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="nutrient_button_on.png" id="heo-wQ-jwh">
+                                                            <rect key="frame" x="269" y="6" width="22" height="18"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lh8-pd-efD">
+                                                    <rect key="frame" x="26" y="11" width="200" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <connections>
+                                            <outlet property="backView" destination="YRE-3c-jhl" id="gNV-RS-UJw"/>
+                                            <outlet property="nameLabel" destination="lh8-pd-efD" id="zwK-Gp-4Jd"/>
+                                            <outlet property="sepratorLine" destination="Ne0-RF-UDz" id="qGv-dD-ICW"/>
+                                            <outlet property="stateImageView" destination="heo-wQ-jwh" id="YAS-AY-7V6"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="684-4r-iaq" id="mV6-jb-uiK"/>
+                                    <outlet property="delegate" destination="684-4r-iaq" id="awm-uV-bBO"/>
+                                </connections>
+                            </tableView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="LyZ-jt-1WJ">
+                                <rect key="frame" x="20" y="20" width="262" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="listView" destination="lvS-98-BAr" id="ziO-wj-LCe"/>
+                        <outlet property="questionLabel" destination="LyZ-jt-1WJ" id="b40-ng-JVa"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="E4u-m1-LZU" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1376" y="-23"/>
+        </scene>
         <!--Nutrition List View Controller-->
         <scene sceneID="9Hs-ib-uZx">
             <objects>
@@ -1565,6 +1643,7 @@
         <image name="change_name_clicked.png" width="16" height="16"/>
         <image name="diet_empty_icon.png" width="16" height="16"/>
         <image name="feedback_icon.png" width="16" height="16"/>
+        <image name="nutrient_button_on.png" width="16" height="16"/>
         <image name="recommend_icon.png" width="16" height="16"/>
         <image name="recommend_icon_clicked.png" width="16" height="16"/>
         <image name="recommend_sign.png" width="16" height="16"/>
@@ -1628,6 +1707,15 @@
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
             </relationships>
         </class>
+        <class className="LZDiseaseCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZDiseaseCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="backView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="nameLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="sepratorLine" candidateClass="UIView"/>
+                <relationship kind="outlet" name="stateImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
         <class className="LZEditProfileViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZEditProfileViewController.h"/>
             <relationships>
@@ -1686,6 +1774,22 @@
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodSearchViewController.h"/>
             <relationships>
                 <relationship kind="outlet" name="searchResultVC" candidateClass="UISearchDisplayController"/>
+            </relationships>
+        </class>
+        <class className="LZHealthCheckViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZHealthCheckViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
+                <relationship kind="outlet" name="questionLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="LZMainMenuItemCell" superclassName="UITableViewCell">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZMainMenuItemCell.h"/>
+            <relationships>
+                <relationship kind="outlet" name="arrowImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="backView" candidateClass="UIView"/>
+                <relationship kind="outlet" name="foodTypeImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="foodTypeNameLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="LZMainPageViewController" superclassName="UIViewController">
@@ -1769,9 +1873,6 @@
         <class className="LZShareViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZShareViewController.h"/>
             <relationships>
-                <relationship kind="action" name="cancelButtonTapped:"/>
-                <relationship kind="action" name="clearButtonTapped:"/>
-                <relationship kind="action" name="publishButtonTapped:"/>
                 <relationship kind="outlet" name="contentBackgroundImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="contentTextView" candidateClass="UITextView"/>
                 <relationship kind="outlet" name="previewImageView" candidateClass="UIImageView"/>

@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZAddFoodCell : UITableViewCell
+@interface LZMainMenuItemCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UIImageView *foodTypeImage;
 @property (strong, nonatomic) IBOutlet UILabel *foodTypeNameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *arrowImage;
