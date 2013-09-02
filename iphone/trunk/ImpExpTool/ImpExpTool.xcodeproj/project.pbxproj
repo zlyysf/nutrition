@@ -50,6 +50,8 @@
 		088B768A17C4C44200206959 /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768917C4C44200206959 /* LZDataAccessUtil.m */; };
 		08CDEAD117A652DD00AFA47E /* foodDealed in Resources */ = {isa = PBXBuildFile; fileRef = 08CDEAD017A652DD00AFA47E /* foodDealed */; };
 		08CDEAD417A6865E00AFA47E /* CustomRichFood.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */; };
+		08ED42CF17D48BAD00917C78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ED42CD17D48BAD00917C78 /* MBProgressHUD.m */; };
+		08ED42D017D48BAD00917C78 /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 08ED42CE17D48BAD00917C78 /* README.mdown */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -131,6 +133,9 @@
 		088B768917C4C44200206959 /* LZDataAccessUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZDataAccessUtil.m; sourceTree = "<group>"; };
 		08CDEAD017A652DD00AFA47E /* foodDealed */ = {isa = PBXFileReference; lastKnownFileType = folder; name = foodDealed; path = ../../../ui/pictures/foodDealed; sourceTree = "<group>"; };
 		08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomRichFood.xls; path = ../../../data/CustomRichFood.xls; sourceTree = "<group>"; };
+		08ED42CC17D48BAD00917C78 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		08ED42CD17D48BAD00917C78 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		08ED42CE17D48BAD00917C78 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +261,7 @@
 		088240CB1740A1CA00E71E6E /* externalRef */ = {
 			isa = PBXGroup;
 			children = (
+				08ED42CB17D48BAD00917C78 /* MBProgressHUD */,
 				08CDEAD017A652DD00AFA47E /* foodDealed */,
 				0853BDD517957DD300B05122 /* LZRecommendFood.h */,
 				0853BDD617957DD300B05122 /* LZRecommendFood.m */,
@@ -306,6 +312,17 @@
 				0882411B1740E08300E71E6E /* USDAFullDataInSqlite.dat */,
 			);
 			name = Res;
+			sourceTree = "<group>";
+		};
+		08ED42CB17D48BAD00917C78 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				08ED42CC17D48BAD00917C78 /* MBProgressHUD.h */,
+				08ED42CD17D48BAD00917C78 /* MBProgressHUD.m */,
+				08ED42CE17D48BAD00917C78 /* README.mdown */,
+			);
+			name = MBProgressHUD;
+			path = ../nutrition/nutrition/MBProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -398,6 +415,7 @@
 				08CDEAD117A652DD00AFA47E /* foodDealed in Resources */,
 				08CDEAD417A6865E00AFA47E /* CustomRichFood.xls in Resources */,
 				088821C617B132FB0054FABD /* benefits_nutrition_mapping.xls in Resources */,
+				08ED42D017D48BAD00917C78 /* README.mdown in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,6 +442,7 @@
 				088241251741E3CD00E71E6E /* LZFacade.m in Sources */,
 				0853BDD717957DD300B05122 /* LZRecommendFood.m in Sources */,
 				088B768A17C4C44200206959 /* LZDataAccessUtil.m in Sources */,
+				08ED42CF17D48BAD00917C78 /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -34,7 +34,7 @@
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
 //    [self.class test_DiseaseNutrient1];
-//    [self.class test_DiseaseNutrient2];
+    [self.class test_DiseaseNutrient2];
 
     
 //    [self.class testFormatResult1];
@@ -44,7 +44,7 @@
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend];
 //    [self.class test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI];
 //    [self.class test_calculateGiveFoodsSupplyNutrientAndFormatForUI_empty];
-    [self.class test_formatDRIForUI];
+//    [self.class test_formatDRIForUI];
 }
 
 
@@ -2116,11 +2116,22 @@ BOOL needLimitNutrients = FALSE;
 +(void)test_DiseaseNutrient2
 {
     LZDataAccess *da = [LZDataAccess singleton];
-    NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_illness];
-    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
-    NSString *illnessGroup = groupAry[0];
-    [da getDiseasesOrganizedByDepartment_OfGroup:illnessGroup];    
-       
+    NSArray *diseaseGroupInfoArray;
+    NSArray *groupAry;
+    NSString *illnessGroup;
+//    diseaseGroupInfoArray= [da getDiseaseGroupInfo_byType:DiseaseGroupType_illness];
+//    groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+//    illnessGroup = groupAry[0];
+//    [da getDiseasesOrganizedByDepartment_OfGroup:illnessGroup];
+    
+    diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_discomfort];
+    groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+    illnessGroup = groupAry[0];
+    [da getDiseasesOrganizedByDepartment_OfGroup:illnessGroup];
+    
+    
+
+    
 }
 
 

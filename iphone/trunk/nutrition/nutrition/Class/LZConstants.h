@@ -161,6 +161,9 @@
 #define COLUMN_NAME_DiseaseDepartment @"DiseaseDepartment"
 
 #define DiseaseGroupType_wizard @"wizard"
+#define DiseaseGroupType_specialPeople @"specialPeople"
+#define DiseaseGroupType_discomfort @"discomfort"
+#define DiseaseGroupType_healthCare @"healthCare"
 #define DiseaseGroupType_illness @"illness"
 
 #define Key_Amount @"Amount"
