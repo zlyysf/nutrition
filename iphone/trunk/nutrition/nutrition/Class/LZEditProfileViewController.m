@@ -34,8 +34,8 @@
     [self.mainScrollView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     if (!firstEnterEditView)
     {
-        UIBarButtonItem *cancelButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
-        self.navigationItem.leftBarButtonItem = cancelButtonItem;
+//        UIBarButtonItem *cancelButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
+//        self.navigationItem.leftBarButtonItem = cancelButtonItem;
         self.title = @"编辑个人资料";
     }
     else

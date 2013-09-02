@@ -41,11 +41,11 @@
     UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     self.menuArray = [[NSArray alloc]initWithObjects:
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"健康诊断",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"食物查询",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"营养元素",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"膳食清单",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"营养诊断",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"疾病预防",@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"个人信息",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"设置",@"menuName", nil],nil];
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -129,31 +129,37 @@
 {
     [self.listView deselectRowAtIndexPath:indexPath animated:YES];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    if (indexPath.row == 0)
+    if(indexPath.row == 0)
+    {
+        LZDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiagnoseViewController"];
+        [self.navigationController pushViewController:diagnoseViewController animated:YES];
+    }
+    else if (indexPath.row == 1)
     {
         LZFoodSearchViewController *foodSearchViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodSearchViewController"];
         foodSearchViewController.isFromOut = YES;
         [self.navigationController pushViewController:foodSearchViewController animated:YES];
     }
-    else if (indexPath.row == 1)
+    else if (indexPath.row == 2)
     {
         LZNutritionListViewController *nutritionListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZNutritionListViewController"];
         [self.navigationController pushViewController:nutritionListViewController animated:YES];
     }
-    else if (indexPath.row == 2)
+    else if (indexPath.row == 3)
     {
         LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
         [self.navigationController pushViewController:userDietListViewController animated:YES];
     }
-    else if(indexPath.row == 3)
-    {
-        LZDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiagnoseViewController"];
-        [self.navigationController pushViewController:diagnoseViewController animated:YES];
-    }
+
     else if(indexPath.row == 4)
     {
-        LZDiseasePreventViewController *diseasePreventViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiseasePreventViewController"];
-        [self.navigationController pushViewController:diseasePreventViewController animated:YES];
+        LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
+        //editProfileViewController.firstEnterEditView = YES;
+        //addByNutrientController.foodArray = recommendFoodArray;
+        //addByNutrientController.nutrientTitle = nutrientName;
+        [self.navigationController pushViewController:editProfileViewController animated:YES];
+//        LZDiseasePreventViewController *diseasePreventViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiseasePreventViewController"];
+//        [self.navigationController pushViewController:diseasePreventViewController animated:YES];
     }
     else if(indexPath.row == 5)
     {

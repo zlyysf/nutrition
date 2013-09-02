@@ -23,7 +23,6 @@
 
 @implementation LZSettingsViewController
 @synthesize currentTextField;
-@synthesize topSectionView;
 @synthesize baiduAdWall;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -55,11 +54,11 @@
     UIImage *textImage = [UIImage imageNamed:@"setting_cell_back.png"];
     UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
     [self.personsBackImageView setImage:textBackImage];
-    [self.editProfileButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-    [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+//    [self.editProfileButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+//    [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.line2View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
-    [self.line3View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
-    [self.line4View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+//    [self.line3View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+//    [self.line4View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.line5View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     if ([LZUtility isIphoneDeviceVersionFive])//iphone 5
     {
@@ -127,18 +126,18 @@
     self.weiboAuthSwitch.on = [ShareSDK hasAuthorizedWithType:ShareTypeSinaWeibo];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
-
-    CGRect topFrame = self.topSectionView.frame;
-    topFrame.origin.y = 10;
-    self.topSectionView.frame = topFrame;
-    
-    CGRect midFrame = self.midSectionView.frame;
-    midFrame.origin.y = 180;
-    self.midSectionView.frame = midFrame;
-    
-    CGRect bottomFrame = self.bottomSectionView.frame;
-    bottomFrame.origin.y = 320;
-    self.bottomSectionView.frame = bottomFrame;
+//
+//    CGRect topFrame = self.topSectionView.frame;
+//    topFrame.origin.y = 10;
+//    self.topSectionView.frame = topFrame;
+//    
+//    CGRect midFrame = self.midSectionView.frame;
+//    midFrame.origin.y = 180;
+//    self.midSectionView.frame = midFrame;
+//    
+//    CGRect bottomFrame = self.bottomSectionView.frame;
+//    bottomFrame.origin.y = 320;
+//    self.bottomSectionView.frame = bottomFrame;
 
 //    if ([[UIScreen mainScreen] bounds].size.height == 568)//iphone 5
 //    {
@@ -153,17 +152,17 @@
 //        mobFrame.origin.y = 406;
 //        self.admobView.frame = mobFrame;
 //    }
-    NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
-    NSNumber *userAge = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserAgeKey];
-    NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
-    NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
-    NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
-    self.userSexLabel.text = ([userSex intValue] == 0 ? [NSString stringWithFormat:@"%@",@"男"]:[NSString stringWithFormat:@"%@",@"女"]);
-    self.userAgeLabel.text = [NSString stringWithFormat:@"%d岁",[userAge intValue]];
-    self.userHeightLabel.text = [NSString stringWithFormat:@"%dcm",[userHeight intValue]];
-    self.userWeightLabel.text = [NSString stringWithFormat:@"%dkg",[userWeight intValue]];
-    NSString *levelDes = [[[LZUtility getActivityLevelInfo]objectForKey:@"levelArray"]objectAtIndex:[userActivityLevel intValue]];
-    self.userActivityLabel.text =levelDes;
+//    NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
+//    NSNumber *userAge = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserAgeKey];
+//    NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
+//    NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
+//    NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
+//    self.userSexLabel.text = ([userSex intValue] == 0 ? [NSString stringWithFormat:@"%@",@"男"]:[NSString stringWithFormat:@"%@",@"女"]);
+//    self.userAgeLabel.text = [NSString stringWithFormat:@"%d岁",[userAge intValue]];
+//    self.userHeightLabel.text = [NSString stringWithFormat:@"%dcm",[userHeight intValue]];
+//    self.userWeightLabel.text = [NSString stringWithFormat:@"%dkg",[userWeight intValue]];
+//    NSString *levelDes = [[[LZUtility getActivityLevelInfo]objectForKey:@"levelArray"]objectAtIndex:[userActivityLevel intValue]];
+//    self.userActivityLabel.text =levelDes;
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -346,20 +345,9 @@
     [self setContentScrollView:nil];
     [self setWeiboAuthSwitch:nil];
     [self setAdmobView:nil];
-    [self setTopSectionView:nil];
     [self setMidSectionView:nil];
     [self setBottomSectionView:nil];
     [self setLine2View:nil];
-    [self setUserSexLabel:nil];
-    [self setUserHeightLabel:nil];
-    [self setUserWeightLabel:nil];
-    [self setUserActivityLabel:nil];
-    [self setUserSexLabel:nil];
-    [self setLine1View:nil];
-    [self setLine3View:nil];
-    [self setLine4View:nil];
-    [self setUserAgeLabel:nil];
-    [self setEditProfileButton:nil];
     [self setLine5View:nil];
     [super viewDidUnload];
 }
