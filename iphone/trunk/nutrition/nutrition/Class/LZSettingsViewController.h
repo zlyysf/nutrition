@@ -28,5 +28,8 @@
 //@property (strong, nonatomic) IBOutlet UILabel *userWeightLabel;
 //@property (strong, nonatomic) IBOutlet UILabel *userActivityLabel;
 //@property (strong, nonatomic) IBOutlet UILabel *userAgeLabel;
+@property (strong, nonatomic) IBOutlet UIButton *reviewAppButton;
+@property (strong, nonatomic) IBOutlet UIButton *recommendAppButton;
+@property (strong, nonatomic) IBOutlet UIButton *feedBackButton;
 @property (nonatomic, strong) BaiduMobAdWall *baiduAdWall;
 @end

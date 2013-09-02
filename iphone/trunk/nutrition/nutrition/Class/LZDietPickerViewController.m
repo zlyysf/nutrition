@@ -220,7 +220,8 @@
         [mainNav setViewControllers:vcs animated:YES];
     //}
 }
-- (IBAction)addToNewDiet:(id)sender {
+-(void)addToNewAction
+{
     [self.navigationController dismissModalViewControllerAnimated:YES];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
@@ -239,6 +240,10 @@
     UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
     [mainNav setViewControllers:vcs animated:YES];
 
+}
+- (IBAction)addToNewDiet:(id)sender {
+    
+    [self performSelector:@selector(addToNewAction) withObject:nil afterDelay:0.f];
 }
 
 @end

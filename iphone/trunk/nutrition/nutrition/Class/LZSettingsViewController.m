@@ -51,6 +51,24 @@
 //    [button addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
 //    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:button];
 //    self.navigationItem.leftBarButtonItem = backItem;
+    self.reviewAppButton.titleLabel.textAlignment = UITextAlignmentLeft;
+    [self.reviewAppButton.titleLabel setFont:[UIFont systemFontOfSize:18]];
+    [self.reviewAppButton setTitle:@"给我们评分" forState:UIControlStateNormal];
+    float title1Length = self.reviewAppButton.titleLabel.frame.size.width;
+    [self.reviewAppButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 46, 0, 300-46-title1Length)];
+    
+    self.recommendAppButton.titleLabel.textAlignment = UITextAlignmentLeft;
+    [self.recommendAppButton.titleLabel setFont:[UIFont systemFontOfSize:18]];
+    [self.recommendAppButton setTitle:@"推荐应用" forState:UIControlStateNormal];
+    float title2Length = self.recommendAppButton.titleLabel.frame.size.width;
+    [self.recommendAppButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 46, 0, 300-46-title2Length)];
+    
+    self.feedBackButton.titleLabel.textAlignment = UITextAlignmentLeft;
+    [self.feedBackButton.titleLabel setFont:[UIFont systemFontOfSize:18]];
+    [self.feedBackButton setTitle:@"意见反馈" forState:UIControlStateNormal];
+    float titleLength = self.feedBackButton.titleLabel.frame.size.width;
+    [self.feedBackButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 46, 0, 300-46-titleLength)];
+
     UIImage *textImage = [UIImage imageNamed:@"setting_cell_back.png"];
     UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
     [self.personsBackImageView setImage:textBackImage];
@@ -349,6 +367,9 @@
     [self setBottomSectionView:nil];
     [self setLine2View:nil];
     [self setLine5View:nil];
+    [self setReviewAppButton:nil];
+    [self setRecommendAppButton:nil];
+    [self setFeedBackButton:nil];
     [super viewDidUnload];
 }
 #pragma mark BaiduMobAdWallDelegate

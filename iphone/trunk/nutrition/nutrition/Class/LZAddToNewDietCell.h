@@ -9,6 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface LZAddToNewDietCell : UITableViewCell
-@property (strong, nonatomic) IBOutlet UIButton *addButton;
 
 @end
