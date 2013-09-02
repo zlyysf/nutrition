@@ -10,12 +10,13 @@
 #import "LZAddFoodCell.h"
 #import "LZUserDietListViewController.h"
 #import "LZSettingsViewController.h"
-#import "LZDiagnoseViewController.h"
+//#import "LZDiagnoseViewController.h"
 #import "LZUtility.h"
 #import "LZEditProfileViewController.h"
-#import "LZDiseasePreventViewController.h"
+//#import "LZDiseasePreventViewController.h"
 #import "LZFoodSearchViewController.h"
 #import "LZNutritionListViewController.h"
+#import "LZHealthCheckViewController.h"
 #import "MobClick.h"
 @interface LZMainPageViewController ()
 
@@ -131,8 +132,8 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     if(indexPath.row == 0)
     {
-        LZDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiagnoseViewController"];
-        [self.navigationController pushViewController:diagnoseViewController animated:YES];
+        LZHealthCheckViewController *healthCheckViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZHealthCheckViewController"];
+        [self.navigationController pushViewController:healthCheckViewController animated:YES];
     }
     else if (indexPath.row == 1)
     {
