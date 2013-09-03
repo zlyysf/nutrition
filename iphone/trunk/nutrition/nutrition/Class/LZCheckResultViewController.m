@@ -349,7 +349,7 @@
         [saveDietButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         [saveDietButton setFrame:CGRectMake(165, 37, 145, 30)];
         [saveDietButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [saveDietButton setTitle:@"保存" forState:UIControlStateNormal];
+        [saveDietButton setTitle:@"保  存" forState:UIControlStateNormal];
         [saveDietButton addTarget:self action:@selector(saveToDiet) forControlEvents:UIControlEventTouchUpInside];
         [saveDietButton setBackgroundImage:button30 forState:UIControlStateNormal];
         [sectionView addSubview:recommendButton];

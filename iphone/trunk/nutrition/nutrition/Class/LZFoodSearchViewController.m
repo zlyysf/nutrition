@@ -46,21 +46,6 @@
     {
         self.title = @"食物分类";
     }
-//    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
-//    
-//    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
-//    
-//    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-//    [button setTitle:@"  返回" forState:UIControlStateNormal];
-//    
-//    button.frame = CGRectMake(0, 0, 48, 30);
-//    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
-//    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-//    [button addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
-//    
-//    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:button];
-//    
-//    self.navigationItem.leftBarButtonItem = cancelItem;
     UISearchBar *searchBar = self.searchResultVC.searchBar;
     UIView *barBack = [searchBar.subviews objectAtIndex:0];
     UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchbar_bg.png"]];
@@ -92,7 +77,6 @@
         }
     }
     NSLog(@"%@",allFoodNamesArray);
-	// Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -201,12 +185,21 @@
 		cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:kCellID];
 		cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
 	}
-	
-	/*
-	 If the requesting table view is the search display controller's table view, configure the cell using the filtered content, otherwise use the main list.
-	 */
-	
-	cell.textLabel.text = [self.searchResultArray objectAtIndex:indexPath.row];
+	NSDictionary *resultDict = [self.searchResultArray objectAtIndex:indexPath.row];
+    NSString *picturePath;
+    NSString *picPath = [resultDict objectForKey:@"PicPath"];
+    if (picPath == nil || [picPath isEqualToString:@""])
+    {
+        picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
+    }
+    else
+    {
+        NSString * picFolderPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"foodDealed"];
+        picturePath = [picFolderPath stringByAppendingPathComponent:picPath];
+    }
+    UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
+    [cell.imageView setImage:foodImage];
+	cell.textLabel.text = [resultDict objectForKey:@"CnCaption"];
 	return cell;
 }
 
@@ -263,45 +256,36 @@
 #pragma mark -
 #pragma mark UISearchDisplayController Delegate Methods
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString{
-        [self.searchResultArray removeAllObjects];
-        // Return YES to cause the search result table view to be reloaded.
-        NSLog(@"%@",searchString);
-       for (int i=0; i<[self.allFoodNamesArray count]; i++)
-            {
-                    //NSDictionary *aFood = [allFood objectAtIndex:i];
-                //NSString *cnName = [aFood objectForKey:@"CnCaption"];
-                NSString *cnName = [self.allFoodNamesArray objectAtIndex:i];
-                NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@",searchString];
-                if ([pre evaluateWithObject:cnName])
-                    {
-                        [self.searchResultArray addObject:cnName];
-                    }
-            
-            }
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
+{
+    [self.searchResultArray removeAllObjects];
+    NSLog(@"%@",searchString);
+    for (int i=0; i<[self.allFoodNamesArray count]; i++)
+    {
+        NSString *cnName = [self.allFoodNamesArray objectAtIndex:i];
+        NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@",searchString];
+        if ([pre evaluateWithObject:cnName])
+        {
+            NSDictionary *afood = [allFood objectAtIndex:i];
+            NSString *picPath = [afood objectForKey:@"PicPath"];
+            NSDictionary *resultDict = [NSDictionary dictionaryWithObjectsAndKeys:cnName ,@"CnCaption",picPath,@"PicPath", nil];
+            [self.searchResultArray addObject:resultDict];
+        }
     
-       //NSArray *arrayPre=[allFood filteredArrayUsingPredicate: pre];
-        //NSLog(@"result %@",arrayPre);
-        return YES;
+    }
+    return YES;
 }
 
-- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption{
-        // Return YES to cause the search result table view to be reloaded.
-        return YES;
-    }
+- (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchScope:(NSInteger)searchOption
+{
+    return YES;
+}
 
-//- (void)searchDisplayControllerDidBeginSearch:(UISearchDisplayController *)controller{
-//    	/*
-//         +     Bob: Because the searchResultsTableView will be released and allocated automatically, so each time we start to begin search, we set its delegate here.
-//         +     */
-//    	[foodSearchDisplayController.searchResultsTableView setDelegate:self];
-//    
-//    }
-
-- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller{
+- (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
+{
     	
-        [self.searchResultVC.searchBar resignFirstResponder];
-    }
+    [self.searchResultVC.searchBar resignFirstResponder];
+}
 
 
 #pragma mark- LZFoodDetailViewControllerDelegate
