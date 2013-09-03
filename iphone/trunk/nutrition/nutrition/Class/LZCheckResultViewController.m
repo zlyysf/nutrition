@@ -336,7 +336,8 @@
         sectionTitleLabel.text =  @"您可以考虑的食物";
         UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
         UIButton *recommendButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [recommendButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        [recommendButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+        [recommendButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         [recommendButton setFrame:CGRectMake(10, 37, 145, 30)];
         [recommendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [recommendButton setTitle:@"换一组" forState:UIControlStateNormal];
@@ -344,10 +345,11 @@
         [recommendButton setBackgroundImage:button30 forState:UIControlStateNormal];
         
         UIButton *saveDietButton = [UIButton buttonWithType:UIButtonTypeCustom];
-        [saveDietButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
+        [saveDietButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+        [saveDietButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         [saveDietButton setFrame:CGRectMake(165, 37, 145, 30)];
         [saveDietButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [saveDietButton setTitle:@"保存到膳食清单" forState:UIControlStateNormal];
+        [saveDietButton setTitle:@"保存" forState:UIControlStateNormal];
         [saveDietButton addTarget:self action:@selector(saveToDiet) forControlEvents:UIControlEventTouchUpInside];
         [saveDietButton setBackgroundImage:button30 forState:UIControlStateNormal];
         [sectionView addSubview:recommendButton];

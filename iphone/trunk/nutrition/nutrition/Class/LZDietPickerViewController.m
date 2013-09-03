@@ -15,7 +15,7 @@
 #import "LZMainPageViewController.h"
 #import "LZUtility.h"
 #import "MobClick.h"
-#import "LZAddToNewDietCell.h"
+#import "LZEmptyClassCell.h"
 @interface LZDietPickerViewController ()
 
 @end
@@ -100,8 +100,26 @@
    
     if (indexPath.section == 0)
     {
-        LZAddToNewDietCell *cell = (LZAddToNewDietCell*)[tableView dequeueReusableCellWithIdentifier:@"LZAddToNewDietCell"];
-        return cell;
+        LZEmptyClassCell *cell = (LZEmptyClassCell*)[tableView dequeueReusableCellWithIdentifier:@"LZAddToNewDietCell"];
+        if (cell.hasLoaded)
+        {
+            return cell;
+        }
+        else
+        {
+            UIImage *button30 = [[UIImage imageNamed:@"button_back"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+            UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
+            [cell.contentView addSubview:addButton];
+            [addButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+            [addButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+            [addButton setFrame:CGRectMake(60, 10, 200, 30)];
+            [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+            [addButton setTitle:@"添加到新清单" forState:UIControlStateNormal];
+            [addButton addTarget:self action:@selector(addToNewDiet) forControlEvents:UIControlEventTouchUpInside];
+            [addButton setBackgroundImage:button30 forState:UIControlStateNormal];
+            cell.hasLoaded = YES;
+            return cell;
+        }
     }
     else
     {
@@ -115,6 +133,9 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    if (indexPath.section == 0) {
+        return 50;
+    }
     return 60;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
@@ -130,13 +151,13 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
     if(section == 0)
-        return 10;
+        return 5;
     return 32;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     if (section == 0) {
-        UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 10)];
+        UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
         [sectionView setBackgroundColor:[UIColor clearColor]];
         return sectionView;
     }
@@ -242,8 +263,8 @@
     [mainNav setViewControllers:vcs animated:YES];
 
 }
-- (IBAction)addToNewDiet:(id)sender {
-    
+- (void)addToNewDiet
+{
     [self performSelector:@selector(addToNewAction) withObject:nil afterDelay:0.f];
 }
 

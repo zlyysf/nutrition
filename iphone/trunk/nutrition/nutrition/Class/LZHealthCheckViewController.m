@@ -64,8 +64,9 @@
     UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 70)];
     UIButton *checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [footerView addSubview:checkButton];
-    [checkButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    [checkButton setFrame:CGRectMake(10, 10, 300, 30)];
+    [checkButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+    [checkButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [checkButton setFrame:CGRectMake(60, 10, 200, 30)];
     [checkButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [checkButton setTitle:@"诊    断" forState:UIControlStateNormal];
     [checkButton addTarget:self action:@selector(checkItemTapped) forControlEvents:UIControlEventTouchUpInside];
