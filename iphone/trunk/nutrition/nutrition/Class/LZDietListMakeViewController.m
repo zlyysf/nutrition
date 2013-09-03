@@ -140,7 +140,7 @@
             NSString* time = [formatter stringFromDate:now];
             NSString *text = [NSString stringWithFormat:@"%@的饮食计划",time];
             //7月29号的饮食计划
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物清单" message:@"给你的食物清单加个名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物清单" message:@"给你的食物清单加个名称吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
             alert.alertViewStyle = UIAlertViewStylePlainTextInput;
             alert.tag = KSaveDietTitleAlertTag;
             UITextField *tf = [alert textFieldAtIndex:0];

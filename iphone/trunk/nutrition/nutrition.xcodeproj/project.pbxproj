@@ -212,6 +212,7 @@
 		5FA3D1FD17B0F410004F9D39 /* button_middle_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FA3D1FC17B0F40F004F9D39 /* button_middle_clicked@2x.png */; };
 		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
 		5FCC5BEB17AA30A600796B24 /* LZDebugSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC5BEA17AA30A600796B24 /* LZDebugSettingsViewController.m */; };
+		5FD76DE717D5AB6200746418 /* LZCheckResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD76DE617D5AB6200746418 /* LZCheckResultViewController.m */; };
 		5FDD1CA8179CED200046F752 /* add_by_nutrient_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CA7179CED200046F752 /* add_by_nutrient_button@2x.png */; };
 		5FDD1CAA179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png */; };
 		5FDD1CAD179D19150046F752 /* change_name_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CAB179D19140046F752 /* change_name_button@2x.png */; };
@@ -513,6 +514,8 @@
 		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
 		5FCC5BE917AA30A600796B24 /* LZDebugSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDebugSettingsViewController.h; path = Class/LZDebugSettingsViewController.h; sourceTree = "<group>"; };
 		5FCC5BEA17AA30A600796B24 /* LZDebugSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDebugSettingsViewController.m; path = Class/LZDebugSettingsViewController.m; sourceTree = "<group>"; };
+		5FD76DE517D5AB6200746418 /* LZCheckResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZCheckResultViewController.h; path = Class/LZCheckResultViewController.h; sourceTree = "<group>"; };
+		5FD76DE617D5AB6200746418 /* LZCheckResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZCheckResultViewController.m; path = Class/LZCheckResultViewController.m; sourceTree = "<group>"; };
 		5FDD1CA7179CED200046F752 /* add_by_nutrient_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_by_nutrient_button@2x.png"; path = "nutrition/Resource/add_by_nutrient_button@2x.png"; sourceTree = "<group>"; };
 		5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_by_nutrient_clicked@2x.png"; path = "nutrition/Resource/add_by_nutrient_clicked@2x.png"; sourceTree = "<group>"; };
 		5FDD1CAB179D19140046F752 /* change_name_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_name_button@2x.png"; path = "nutrition/Resource/change_name_button@2x.png"; sourceTree = "<group>"; };
@@ -1027,6 +1030,8 @@
 				5F87498A17D0C2EB0061E36D /* LZRichNutritionViewController.m */,
 				5F65274817D49DA50089CBB5 /* LZHealthCheckViewController.h */,
 				5F65274917D49DA50089CBB5 /* LZHealthCheckViewController.m */,
+				5FD76DE517D5AB6200746418 /* LZCheckResultViewController.h */,
+				5FD76DE617D5AB6200746418 /* LZCheckResultViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1549,6 +1554,7 @@
 				5F65274A17D49DA50089CBB5 /* LZHealthCheckViewController.m in Sources */,
 				5F65274B17D4A17B0089CBB5 /* LZMainMenuItemCell.m in Sources */,
 				5F4FD72317D4B75900DBA25A /* LZDiseaseCell.m in Sources */,
+				5FD76DE717D5AB6200746418 /* LZCheckResultViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

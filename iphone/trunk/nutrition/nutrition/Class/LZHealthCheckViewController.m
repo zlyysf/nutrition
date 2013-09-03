@@ -12,6 +12,8 @@
 #import "LZDiseaseCell.h"
 #import "LZConstants.h"
 #import <QuartzCore/QuartzCore.h>
+#import "LZRecommendFood.h"
+#import "LZCheckResultViewController.h"
 @interface LZHealthCheckViewController ()
 
 @end
@@ -63,9 +65,9 @@
     UIButton *checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [footerView addSubview:checkButton];
     [checkButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
-    [checkButton setFrame:CGRectMake(10, 20, 300, 30)];
+    [checkButton setFrame:CGRectMake(10, 10, 300, 30)];
     [checkButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [checkButton setTitle:@"诊断" forState:UIControlStateNormal];
+    [checkButton setTitle:@"诊    断" forState:UIControlStateNormal];
     [checkButton addTarget:self action:@selector(checkItemTapped) forControlEvents:UIControlEventTouchUpInside];
     [checkButton setBackgroundImage:button30 forState:UIControlStateNormal];
     self.listView.tableFooterView = footerView;
@@ -90,6 +92,44 @@
 }
 -(void)checkItemTapped
 {
+    NSMutableArray *userSelectedDiseaseNames = [[NSMutableArray alloc]init];
+    for(NSString *departName in departmentNamesArray)
+    {
+        NSMutableArray *stateArray = [self.diseasesStateDict objectForKey:departName];
+        for(int i = 0;i< [stateArray count];i++)
+        {
+            NSArray *state = [stateArray objectAtIndex:i];
+            NSString *diseaseName = [state objectAtIndex:0];
+            NSNumber *checkState = [state objectAtIndex:1];
+            if ([checkState boolValue])
+            {
+                [userSelectedDiseaseNames addObject:diseaseName];
+            }
+        }
+    }
+    if ([userSelectedDiseaseNames count] == 0)
+    {
+        UIAlertView *selectEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还没有选择任何不适症状，请至少选择一项以便进行诊断。" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        [selectEmptyAlert show];
+        return;
+    }
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSString *text = [userSelectedDiseaseNames componentsJoinedByString:@"、"];
+    NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrients_ByDiseaseNames:userSelectedDiseaseNames];
+    
+    NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
+    for ( NSString* key in nutrientsByDiseaseDict) {
+        NSArray *nutrients = nutrientsByDiseaseDict[key];
+        [nutrientSet addObjectsFromArray:nutrients];
+        }
+    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
+    NSArray *newPreferArray = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZCheckResultViewController *checkResultViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZCheckResultViewController"];
+    checkResultViewController.userSelectedNames = text;
+    checkResultViewController.userPreferArray = newPreferArray;
+    [self.navigationController pushViewController:checkResultViewController animated:YES];
     
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -125,23 +165,13 @@
 {
     return 50;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    return 15;
-//}
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-//{
-//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
-//    [sectionView setBackgroundColor:[UIColor clearColor]];
-//    return sectionView;
-//}
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 32;
+    return 27;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 32)];
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
     UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
     [sectionView addSubview:sectionBarView];
     NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];

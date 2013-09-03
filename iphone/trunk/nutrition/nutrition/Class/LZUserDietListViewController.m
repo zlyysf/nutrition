@@ -144,7 +144,7 @@
     NSNumber *dietId = [dietInfo objectForKey:@"CollocationId"];
     currentEditDietId = dietId;
     NSString *dietName = [dietInfo objectForKey:@"CollocationName"];
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改名称" message:@"填一个你更喜欢的名称吧" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改名称" message:@"填一个你更喜欢的名称吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = KChangeDietAlertTag;
     UITextField *tf = [alert textFieldAtIndex:0];
