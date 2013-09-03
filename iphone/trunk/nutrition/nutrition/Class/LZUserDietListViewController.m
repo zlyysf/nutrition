@@ -122,7 +122,8 @@
 }
 - (void)addListAction
 {
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+    NSDictionary *emptyIntake = [[NSDictionary alloc]init];
+    [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZDietListMakeViewController * foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDietListMakeViewController"];

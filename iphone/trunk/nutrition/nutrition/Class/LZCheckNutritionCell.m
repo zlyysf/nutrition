@@ -7,9 +7,7 @@
 //
 
 #import "LZCheckNutritionCell.h"
-#import "LZNutrientionManager.h"
 @implementation LZCheckNutritionCell
-@synthesize nutrientId;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

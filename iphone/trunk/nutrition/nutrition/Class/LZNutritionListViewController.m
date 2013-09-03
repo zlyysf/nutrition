@@ -94,7 +94,8 @@
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [[NSUserDefaults standardUserDefaults]removeObjectForKey:LZUserDailyIntakeKey];
+    NSDictionary *emptyIntake = [[NSDictionary alloc]init];
+    [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
     NSString *nutritionId = [self.nutritionArray objectAtIndex:indexPath.row];
     LZDataAccess *da = [LZDataAccess singleton];

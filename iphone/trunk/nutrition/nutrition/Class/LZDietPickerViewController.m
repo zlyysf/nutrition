@@ -228,7 +228,8 @@
     userDietListViewController.backWithNoAnimation = YES;
     LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
     [LZUtility initializePreferNutrient];
-    [[NSUserDefaults standardUserDefaults]removeObjectForKey:LZUserDailyIntakeKey];
+    NSDictionary *emptyIntake = [[NSDictionary alloc]init];
+    [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
     NSString *addFoodId = [[foodDict allKeys]objectAtIndex:0];
     NSNumber *addFoodAmount = [foodDict objectForKey:addFoodId];

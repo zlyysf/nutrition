@@ -110,8 +110,8 @@
 }
 - (void)cancelButtonTapped
 {
-
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+    NSDictionary *emptyIntake = [[NSDictionary alloc]init];
+    [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
     [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
 
@@ -162,7 +162,8 @@
             }
             if([da updateFoodCollocationData_withCollocationId:dietId andNewCollocationName:nil andFoodAmount2LevelArray:foodAndAmountArray])
             {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+                NSDictionary *emptyIntake = [[NSDictionary alloc]init];
+                [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
                 [[NSUserDefaults standardUserDefaults]synchronize];
                 [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
             }
@@ -1691,7 +1692,8 @@
             NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
             if(nmCollocationId)
             {
-                [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+                NSDictionary *emptyIntake = [[NSDictionary alloc]init];
+                [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
                 [[NSUserDefaults standardUserDefaults]synchronize];
                 [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
             }
