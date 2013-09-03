@@ -1,15 +1,15 @@
 //
-//  LZRecommendEmptyCell.m
+//  LZEmptyClassCell.m
 //  nutrition
 //
-//  Created by liu miao on 6/3/13.
+//  Created by liu miao on 9/3/13.
 //  Copyright (c) 2013 lingzhi mobile. All rights reserved.
 //
 
-#import "LZRecommendEmptyCell.h"
+#import "LZEmptyClassCell.h"
 
-@implementation LZRecommendEmptyCell
-
+@implementation LZEmptyClassCell
+@synthesize hasLoaded;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];

@@ -14,7 +14,7 @@
 #import "LZConstants.h"
 #import "LZFoodDetailController.h"
 #import "LZUtility.h"
-#import "LZRecommendEmptyCell.h"
+#import "LZEmptyClassCell.h"
 #import "LZAddByNutrientController.h"
 #import "GADMasterViewController.h"
 #import "MobClick.h"
@@ -651,10 +651,23 @@
     {
             if(takenFoodIdsArray ==nil || [takenFoodIdsArray count]==0)
             {
-                LZRecommendEmptyCell * cell = (LZRecommendEmptyCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
-                [cell.contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
-                cell.contentLabel.text = @"我们app的作用是帮您找到适合您一天的各营养需要量的食物搭配，您可以通过我们的推荐功能快速得到，也可以加入自己的选择以找到最适合您的方案。";
-                return cell;
+                LZEmptyClassCell * cell = (LZEmptyClassCell*)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendEmptyCell"];
+                if (cell.hasLoaded)
+                {
+                    return cell;
+                }
+                else
+                {
+                    UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 4, 300, 68)];
+                    [contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
+                    [contentLabel setBackgroundColor:[UIColor clearColor]];
+                    [cell.contentView addSubview:contentLabel];
+                    contentLabel.numberOfLines = 0;
+                    [contentLabel setFont:[UIFont systemFontOfSize:14]];
+                    contentLabel.text = @"我们app的作用是帮您找到适合您一天的各营养需要量的食物搭配，您可以通过我们的推荐功能快速得到，也可以加入自己的选择以找到最适合您的方案。";
+                    cell.hasLoaded = YES;
+                    return cell;
+                }
             }
             else
             {

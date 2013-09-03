@@ -30,8 +30,5 @@
 
     // Configure the view for the selected state
 }
-- (IBAction)nameButtonTapped:(id)sender {
-    [[LZNutrientionManager SharedInstance]showNutrientInfo:self.nutrientId];
-}
 
 @end
