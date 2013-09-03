@@ -246,15 +246,17 @@
         [cell adjustLabelAccordingToProgress:progress forLabelWidth:216];
         cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(floorf([percent floatValue] *100))];
         NSSet *selectNutrient = [NSSet setWithArray:self.userPreferArray];
-        [cell.nameLabel setTextColor:fillColor];
+
         cell.nameLabel.text =[nutrient objectForKey:@"Name"];
         if ([selectNutrient containsObject:nutrientId])
         {
-            [cell.nameLabel setFont:[UIFont boldSystemFontOfSize:15]];
+            [cell.nameLabel setFont:[UIFont boldSystemFontOfSize:16]];
+            [cell.nameLabel setTextColor:[UIColor blackColor]];
         }
         else
         {
-            [cell.nameLabel setFont:[UIFont systemFontOfSize:12]];
+            [cell.nameLabel setFont:[UIFont systemFontOfSize:14]];
+            [cell.nameLabel setTextColor:[UIColor blackColor]];
         }
         //cell.addFoodButton.tag = indexPath.row;
         return cell;
@@ -484,7 +486,7 @@
     [HUD hide:YES];
     self.listView.hidden = NO;
     [self refreshFoodNureitentProcessForAll:NO];
-    [self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
+//    [self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
     [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
     
 }
