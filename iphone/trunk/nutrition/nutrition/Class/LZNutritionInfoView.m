@@ -35,6 +35,7 @@
         
         UIButton *closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [closeButton setBackgroundImage:[UIImage imageNamed:@"close_button.png"] forState:UIControlStateNormal];
+        [closeButton setBackgroundImage:[UIImage imageNamed:@"close_button_highlight.png"] forState:UIControlStateHighlighted];
         [closeButton addTarget:self action:@selector(closeButtonTyped:) forControlEvents:UIControlEventTouchUpInside];
         [closeButton setFrame:CGRectMake(0, 0, 30, 30)];
         //closeButton.center = CGPointMake(descriptionView.frame.origin.x + descriptionView.frame.size.width-10, descriptionView.frame.origin.y+10);
