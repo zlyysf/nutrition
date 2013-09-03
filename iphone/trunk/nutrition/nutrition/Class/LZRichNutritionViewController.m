@@ -56,7 +56,7 @@
     [headerView addSubview:tipsLabel];
     self.listView.tableHeaderView = headerView;
     self.title = nutrientTitle;
-    UIBarButtonItem *infoItem = [[UIBarButtonItem alloc]initWithTitle:@"营养素信息" style:UIBarButtonItemStyleBordered target:self action:@selector(showNutritionInfo)];
+    UIBarButtonItem *infoItem = [[UIBarButtonItem alloc]initWithTitle:@"简介" style:UIBarButtonItemStyleBordered target:self action:@selector(showNutritionInfo)];
     self.navigationItem.rightBarButtonItem = infoItem;
 
     //    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,

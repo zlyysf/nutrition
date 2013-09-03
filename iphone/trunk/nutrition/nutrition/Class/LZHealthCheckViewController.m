@@ -56,8 +56,37 @@
         [self.diseasesStateDict setObject:stateArray forKey:departName];
     }
     self.questionLabel.text = @"您最近有以下哪些症状?（可多选）";
-    UIBarButtonItem *checkItem = [[UIBarButtonItem alloc]initWithTitle:@"诊断" style:UIBarButtonItemStyleBordered target:self action:@selector(checkItemTapped)];
-    self.navigationItem.rightBarButtonItem = checkItem;
+    UIBarButtonItem *recheckItem = [[UIBarButtonItem alloc]initWithTitle:@"清空" style:UIBarButtonItemStyleBordered target:self action:@selector(recheckItemTapped)];
+    self.navigationItem.rightBarButtonItem = recheckItem;
+    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 70)];
+    UIButton *checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [footerView addSubview:checkButton];
+    [checkButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
+    [checkButton setFrame:CGRectMake(10, 20, 300, 30)];
+    [checkButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [checkButton setTitle:@"诊断" forState:UIControlStateNormal];
+    [checkButton addTarget:self action:@selector(checkItemTapped) forControlEvents:UIControlEventTouchUpInside];
+    [checkButton setBackgroundImage:button30 forState:UIControlStateNormal];
+    self.listView.tableFooterView = footerView;
+}
+-(void)recheckItemTapped
+{
+    for(NSString *departName in departmentNamesArray)
+    {
+        NSMutableArray *stateArray = [self.diseasesStateDict objectForKey:departName];
+        for(int i = 0;i< [stateArray count];i++)
+        {
+            NSArray *state = [stateArray objectAtIndex:i];
+            NSString *diseaseName = [state objectAtIndex:0];
+            NSNumber *newState = [NSNumber numberWithBool:NO];
+            NSArray *newArray = [NSArray arrayWithObjects:diseaseName,newState, nil];
+            [stateArray replaceObjectAtIndex:i withObject:newArray];
+        }
+    }
+    [self.listView reloadData];
+    [self.listView setContentOffset:CGPointMake(0, 0) animated:YES];
+
 }
 -(void)checkItemTapped
 {
@@ -94,7 +123,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 44;
+    return 50;
 }
 //- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 //{
