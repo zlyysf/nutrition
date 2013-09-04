@@ -253,6 +253,16 @@
         default:
             break;
     }
+    NSDictionary *dataToSave = [self checkValueValidWithAlertPop:NO];
+    if (dataToSave)
+    {
+        [self displayDRI:dataToSave];
+    }
+    else
+    {
+        [self displayEmptyState];
+    }
+
 }
 - (void)sexButtonTapped:(UIButton *)tappedButton
 {
@@ -286,32 +296,66 @@
         [self.maleButton setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
         [self.maleButton setBackgroundImage:left_clicked forState:UIControlStateHighlighted];
     }
+    NSDictionary *dataToSave = [self checkValueValidWithAlertPop:NO];
+    if (dataToSave)
+    {
+        [self displayDRI:dataToSave];
+    }
+    else
+    {
+        [self displayEmptyState];
+    }
 }
--(void)displayDRI
+-(void)displayDRI:(NSDictionary *)info
 {
-    NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
-    NSNumber *userAge = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserAgeKey];
-    NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
-    NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
-    NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              userSex,ParamKey_sex, userAge,ParamKey_age,
-                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
-                              userActivityLevel,ParamKey_activityLevel, nil];
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
+    if(info)
+    {
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  [info objectForKey:LZUserSexKey],ParamKey_sex, [info objectForKey:LZUserAgeKey],ParamKey_age,
+                                  [info objectForKey:LZUserWeightKey],ParamKey_weight, [info objectForKey:LZUserHeightKey],ParamKey_height,
+                                  [info objectForKey:LZUserActivityLevelKey],ParamKey_activityLevel, nil];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
+        
+        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       DRIsDict,Key_DRI,
+                                       nil];
+        NSMutableDictionary *driDict =  [rf formatDRIForUI:params];
+        NSArray *driArray = [driDict objectForKey:@"nutrientsInfoOfDRI"];
+        [self.nutrientStandardArray removeAllObjects];
+        [self.nutrientStandardArray  addObjectsFromArray:driArray];
+        [self.listView reloadData];
+
+    }
+    else
+    {
+        NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
+        NSNumber *userAge = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserAgeKey];
+        NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
+        NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
+        NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  userSex,ParamKey_sex, userAge,ParamKey_age,
+                                  userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                                  userActivityLevel,ParamKey_activityLevel, nil];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
+        
+        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       DRIsDict,Key_DRI,
+                                       nil];
+        NSMutableDictionary *driDict =  [rf formatDRIForUI:params];
+        NSArray *driArray = [driDict objectForKey:@"nutrientsInfoOfDRI"];
+        [self.nutrientStandardArray removeAllObjects];
+        [self.nutrientStandardArray  addObjectsFromArray:driArray];
+        [self.listView reloadData];
+    }
+
+
     
-    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                   DRIsDict,Key_DRI,
-                                   nil];
-    NSMutableDictionary *driDict =  [rf formatDRIForUI:params];
-    NSArray *driArray = [driDict objectForKey:@"nutrientsInfoOfDRI"];
-    [self.nutrientStandardArray removeAllObjects];
-    [self.nutrientStandardArray  addObjectsFromArray:driArray];
-    [self.listView reloadData];
-    
-    NSLog(@"%@",self.nutrientStandardArray);
+//    NSLog(@"%@",self.nutrientStandardArray);
 
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
@@ -353,14 +397,28 @@
     {
         return NO;
     }
-    return YES;
+    else
+    {
+        return YES;
+    }
     //    }
     //    else {
     //        return NO;
     //    }
     
 }
+- (void)textFieldValueChanged:(NSNotification *)notification {
+    NSDictionary *dataToSave = [self checkValueValidWithAlertPop:NO];
+    if (dataToSave)
+    {
+        [self displayDRI:dataToSave];
+    }
+    else
+    {
+        [self displayEmptyState];
+    }
 
+}
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     //记录用量
@@ -382,6 +440,7 @@
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
     [MobClick beginLogPageView:@"编辑个人资料页面"];
     
 }
@@ -389,13 +448,22 @@
 {
     if (!firstEnterEditView)
     {
-        [self displayDRI];
+        [self displayDRI:nil];
     }
+    else
+    {
+        [self displayEmptyState];
+    }
+}
+-(void)displayEmptyState
+{
+    
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
     [MobClick endLogPageView:@"编辑个人资料页面"];
 }
 - (void)didReceiveMemoryWarning
@@ -417,7 +485,7 @@
     {
         [self.currentTextField resignFirstResponder];
     }
-    NSDictionary *dataToSave = [self checkValueValid];
+    NSDictionary *dataToSave = [self checkValueValidWithAlertPop:YES];
     if(dataToSave)
     {
         [[NSUserDefaults standardUserDefaults]setObject:[dataToSave objectForKey:LZUserAgeKey] forKey:LZUserAgeKey];
@@ -430,7 +498,7 @@
         [self dismissModalViewControllerAnimated:YES];
     }
 }
--(NSDictionary *)checkValueValid
+-(NSDictionary *)checkValueValidWithAlertPop:(BOOL)shouldPopAlert
 {
     //NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
     //NSNumber *userAge = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserAgeKey];
@@ -443,7 +511,10 @@
     }
     else
     {
-        [self alertWithTitle:@"温馨提示" msg:@"性别选择错误，请重新选择"];
+        if (shouldPopAlert)
+        {
+            [self alertWithTitle:@"温馨提示" msg:@"性别选择错误，请重新选择"];
+        }
         return nil;
     }
     if (self.currentActivityLevelSelection >= 0 && self.currentActivityLevelSelection <= 3)
@@ -452,7 +523,10 @@
     }
     else
     {
-        [self alertWithTitle:@"温馨提示" msg:@"活动强度选择错误，请重新选择"];
+        if (shouldPopAlert)
+        {
+            [self alertWithTitle:@"温馨提示" msg:@"活动强度选择错误，请重新选择"];
+        }
         return nil;
     }
     int userAge = [self.ageTextField.text intValue];
@@ -462,7 +536,10 @@
     }
     else
     {
-        [self alertWithTitle:@"温馨提示" msg:@"年龄填写错误，请重新填写"];
+        if (shouldPopAlert)
+        {
+            [self alertWithTitle:@"温馨提示" msg:@"年龄填写错误，请重新填写"];
+        }
         return nil;
     }
     int userHeight = [self.heightTextField.text intValue];
@@ -472,7 +549,10 @@
     }
     else
     {
-        [self alertWithTitle:@"温馨提示" msg:@"身高填写错误，请重新填写"];
+        if (shouldPopAlert)
+        {
+            [self alertWithTitle:@"温馨提示" msg:@"身高填写错误，请重新填写"];
+        }
         return nil;
     }
 
@@ -483,10 +563,12 @@
     }
     else
     {
-        [self alertWithTitle:@"温馨提示" msg:@"体重填写错误，请重新填写"];
+        if (shouldPopAlert)
+        {
+            [self alertWithTitle:@"温馨提示" msg:@"体重填写错误，请重新填写"];
+        }
         return nil;
     }
-
     return dataToSave;
 }
 - (void) alertWithTitle: (NSString *)_title_ msg: (NSString *)msg
@@ -615,11 +697,6 @@
     
     return 37;
 }
-//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-//{
-//    
-//    return 20;
-//}
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
     UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 37)];
@@ -639,12 +716,6 @@
     sectionTitleLabel.text = [NSString stringWithFormat:@"个人每日营养摄入推荐量"];
     return sectionView;
 }
-//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-//{
-//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 20)];
-//    [sectionView setBackgroundColor:[UIColor clearColor]];
-//    return sectionView;
-//}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
