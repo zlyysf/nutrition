@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface LZFoodTypeButton : UIButton
-@property (strong,nonatomic) UIImageView *typeIcon;
+@property (strong,nonatomic) UIView *alphaView;
+@property (strong,nonatomic) UILabel *typeLabel;
 @end

@@ -93,48 +93,43 @@
 }
 -(void)setButtons
 {
-    float startY = 54;
+    int totalFloor = [foodTypeArray count]/3+ (([foodTypeArray count]%3 == 0)?0:1);
+    float scrollHeight = totalFloor *94 + 20+ (totalFloor-1)*8;
+    [self.listView setContentSize:CGSizeMake(320, scrollHeight)];
+    float startY = 10;
     int floor = 1;
     int perRowCount = 3;
-    float startX1 = 10;
-    float startX2 = 113;
-    float startX3 = 216;
+//    float startX1 = 10;
+//    float startX2 = 113;
+//    float startX3 = 216;
     float startX;
     for (int i=0; i< [self.foodTypeArray count]; i++)
     {
-        if (i%perRowCount ==0)
-        {
-            startX = startX1;
-        }
-        else if(i%perRowCount ==1)
-        {
-            startX = startX2;
-        }
-        else
-        {
-            startX = startX3;
-        }
+
         if (i>=floor *perRowCount)
         {
             floor+=1;
         }
+        startX = 10+(i-(floor-1)*perRowCount)*102;
         NSString *typeName = [self.foodTypeArray objectAtIndex:i];
-        LZFoodTypeButton *button = [[LZFoodTypeButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*62, 94, 52)];
-        [self.view addSubview:button];
-        button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
+        LZFoodTypeButton *button = [[LZFoodTypeButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94)];
+        [self.listView addSubview:button];
+        //button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
+        [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png",typeName]] forState:UIControlStateNormal];
         button.tag = i+100;
         [button addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-        button.titleLabel.textAlignment = UITextAlignmentLeft;
-        //[button.titleLabel setBackgroundColor:[UIColor blackColor]];
-        [button.titleLabel setFont:[UIFont systemFontOfSize:18]];
-        [button setTitle:typeName forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"type_button_normal.png"] forState:UIControlStateNormal];
-        [button setBackgroundImage:[UIImage imageNamed:@"type_button_clicked.png"] forState:UIControlStateHighlighted];
-        float titleLength = button.titleLabel.frame.size.width;
-        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 34, 0, 94-34-titleLength)];
-        
-        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
+        [button.typeLabel setText:typeName];
+//        button.titleLabel.textAlignment = UITextAlignmentLeft;
+//        //[button.titleLabel setBackgroundColor:[UIColor blackColor]];
+//        [button.titleLabel setFont:[UIFont systemFontOfSize:18]];
+        //[button setTitle:typeName forState:UIControlStateNormal];
+//        [button setBackgroundImage:[UIImage imageNamed:@"type_button_normal.png"] forState:UIControlStateNormal];
+//        [button setBackgroundImage:[UIImage imageNamed:@"type_button_clicked.png"] forState:UIControlStateHighlighted];
+//        float titleLength = button.titleLabel.frame.size.width;
+//        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 34, 0, 94-34-titleLength)];
+//        
+//        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+//        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     }
 }
 
@@ -209,7 +204,8 @@
     [self.searchResultVC setActive:NO];
     [self.searchResultVC.searchBar resignFirstResponder];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    NSString *resultName = [self.searchResultArray objectAtIndex:indexPath.row];
+    NSDictionary *resultDict = [self.searchResultArray objectAtIndex:indexPath.row];
+    NSString *resultName = [resultDict objectForKey:@"CnCaption"];
     
     int index = [self.allFoodNamesArray indexOfObject:resultName];
     NSDictionary *foodAtr = [self.allFood  objectAtIndex:index];
@@ -296,6 +292,7 @@
 
 - (void)viewDidUnload {
     [self setSearchResultVC:nil];
+    [self setListView:nil];
     [super viewDidUnload];
 }
 @end

@@ -9,15 +9,21 @@
 #import "LZFoodTypeButton.h"
 
 @implementation LZFoodTypeButton
-@synthesize typeIcon;
+@synthesize alphaView,typeLabel;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.typeIcon = [[UIImageView alloc]initWithFrame:CGRectMake(5, 13, 26, 26)];
-        [self addSubview:self.typeIcon];
-        
+        self.alphaView = [[UIView alloc]initWithFrame:CGRectMake(1, frame.size.height-28-1, frame.size.width-2, 28)];
+        [self.alphaView setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5f]];
+        [self addSubview:alphaView];
+        self.typeLabel = [[UILabel alloc]initWithFrame:CGRectMake(1, frame.size.height-28-1, frame.size.width-2, 28)];
+        [self.typeLabel setTextColor:[UIColor whiteColor]];
+        [self.typeLabel setFont:[UIFont boldSystemFontOfSize:18]];
+        [self.typeLabel setTextAlignment:NSTextAlignmentCenter];
+        [self.typeLabel setBackgroundColor:[UIColor clearColor]];
+        [self addSubview:typeLabel];
     }
     return self;
 }

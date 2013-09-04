@@ -8,8 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZNutritionListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface LZNutritionListViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic)NSArray *nutritionArray;
+@property (strong, nonatomic) IBOutlet UIScrollView *listView;
 @end

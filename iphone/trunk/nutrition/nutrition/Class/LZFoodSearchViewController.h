@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 @interface LZFoodSearchViewController : UIViewController<UISearchDisplayDelegate,UISearchBarDelegate,UITableViewDataSource,UITableViewDelegate>
+@property (strong, nonatomic) IBOutlet UIScrollView *listView;
 
 @property (strong, nonatomic) IBOutlet UISearchDisplayController *searchResultVC;
 @property (strong, nonatomic)NSMutableArray *foodTypeArray;
