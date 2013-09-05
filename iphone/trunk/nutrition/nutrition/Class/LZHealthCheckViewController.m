@@ -136,7 +136,7 @@
         return;
     }
     LZDataAccess *da = [LZDataAccess singleton];
-    NSString *text = [userSelectedDiseaseNames componentsJoinedByString:@"、"];
+    NSString *text = [userSelectedDiseaseNames componentsJoinedByString:@"；"];
     NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrients_ByDiseaseNames:userSelectedDiseaseNames];
     
     NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
