@@ -60,19 +60,19 @@
 //                               appSecret:@"38a4f8204cc784f81f9f0daaf31e02e3"
 //                             redirectUri:@"http://www.sharesdk.cn"];
     [ShareSDK connectWeChatWithAppId:WeChatAppId wechatCls:[WXApi class]];
-    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-    if (planPerson == nil)
-    {
-        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-    }
-    if (planDays == nil)
-    {
-        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-
-    }
+//    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
+//    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
+//    if (planPerson == nil)
+//    {
+//        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+//    }
+//    if (planDays == nil)
+//    {
+//        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+//
+//    }
     //[7/2/13 2:31:44 PM] 芯如: 66c13e 102 193 62
     //[7/2/13 2:31:53 PM] 芯如: 0f941a 15 148 26
     //[7/2/13 2:32:08 PM] 芯如: 3aaa2c 58 170 44
