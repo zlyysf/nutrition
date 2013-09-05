@@ -11,13 +11,13 @@
 #import "LZRichNutritionViewController.h"
 #import "LZConstants.h"
 #import "MobClick.h"
-
+#import "GADMasterViewController.h"
 @interface LZNutritionListViewController ()
 @property (assign,nonatomic)BOOL isFirstLoad;
 @end
 
 @implementation LZNutritionListViewController
-@synthesize nutritionArray,isFirstLoad;
+@synthesize nutritionArray,isFirstLoad,admobView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -36,19 +36,24 @@
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     nutritionArray = [LZRecommendFood getCustomNutrients:nil];
     isFirstLoad = YES;
-    
+    int totalFloor = [nutritionArray count]/3+ (([nutritionArray count]%3 == 0)?0:1);
+    float scrollHeight = totalFloor *94 + 20+ (totalFloor-1)*8+50;
+    self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, scrollHeight-50, 320, 50)];
+    [self.listView addSubview:self.admobView];
+    [self.listView setContentSize:CGSizeMake(320, scrollHeight)];
 	// Do any additional setup after loading the view.
 }
 
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"营养元素页面"];
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    [shared resetAdView:self andListView:self.admobView];
     if (isFirstLoad)
     {
         isFirstLoad = NO;
         [self setButtons];
     }
-
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -56,9 +61,6 @@
 }
 -(void)setButtons
 {
-    int totalFloor = [nutritionArray count]/3+ (([nutritionArray count]%3 == 0)?0:1);
-    float scrollHeight = totalFloor *94 + 20+ (totalFloor-1)*8;
-    [self.listView setContentSize:CGSizeMake(320, scrollHeight)];
     float startY = 10;
     int floor = 1;
     int perRowCount = 3;

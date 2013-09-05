@@ -23,7 +23,7 @@
 @end
 
 @implementation LZMainPageViewController
-@synthesize menuArray;
+@synthesize menuArray,admobView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -48,10 +48,27 @@
                       [NSDictionary dictionaryWithObjectsAndKeys:@"膳食清单",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"个人信息",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"设置",@"menuName", nil],nil];
+    self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    [self.admobView setBackgroundColor:[UIColor clearColor]];
+    [self.view addSubview:self.admobView];
+//    if ([LZUtility isIphoneDeviceVersionFive])
+//    {
+
+//    }
+//    else
+//    {
+//        self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+//        [self.admobView setBackgroundColor:[UIColor clearColor]];
+//        self.listView.tableFooterView = self.admobView;
+//    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"主页面"];
+    CGRect mobFrame = CGRectMake(0, self.view.frame.size.height-50, 320, 50);
+    self.admobView.frame = mobFrame;
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    [shared resetAdView:self andListView:self.admobView];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {

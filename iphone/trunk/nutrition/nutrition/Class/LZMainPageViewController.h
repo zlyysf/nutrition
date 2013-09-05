@@ -12,4 +12,5 @@
 
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic) NSArray *menuArray;
+@property (strong,nonatomic)UIView *admobView;
 @end

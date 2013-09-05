@@ -16,6 +16,7 @@
 #import "LZUtility.h"
 #import "MobClick.h"
 #import "LZEmptyClassCell.h"
+#import "GADMasterViewController.h"
 @interface LZDietPickerViewController ()
 
 @end
@@ -59,6 +60,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"挑选清单页面"];
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    [shared resetAdView:self andListView:self.admobView];
     [self displayLocalDietList];
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -83,6 +86,7 @@
 
 - (void)viewDidUnload {
     [self setListView:nil];
+    [self setAdmobView:nil];
     [super viewDidUnload];
 }
 #pragma mark- TableView Delegate

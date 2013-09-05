@@ -18,6 +18,7 @@
 #import "LZRecommendFoodCell.h"
 #import "LZCheckNutritionCell.h"
 #import "MobClick.h"
+#import "GADMasterViewController.h"
 @interface LZCheckResultViewController ()<MBProgressHUDDelegate,UIAlertViewDelegate>
 {
     MBProgressHUD *HUD;
@@ -60,11 +61,20 @@
     recommendFoodDictForDisplay = [[NSMutableDictionary alloc]init];
     allFoodUnitDict = [[NSMutableDictionary alloc]init];
     isFirstLoad = YES;
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+    self.listView.tableFooterView = footerView;
+
 	// Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"诊断页面"];
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    UIView *footerView = self.listView.tableFooterView;
+    [shared resetAdView:self andListView:footerView];
+
 }
 - (void)viewWillDisappear:(BOOL)animated
 {

@@ -17,4 +17,5 @@
 @property (strong , nonatomic)NSMutableArray *foodNameArray;
 @property (assign,nonatomic)BOOL isFromOut;
 @property (strong,nonatomic)NSMutableArray *searchResultArray;
+@property (strong,nonatomic)UIView *admobView;
 @end

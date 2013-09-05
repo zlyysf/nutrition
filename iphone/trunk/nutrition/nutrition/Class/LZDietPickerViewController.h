@@ -14,4 +14,5 @@
 @property (strong, nonatomic) NSMutableArray *dietArray;
 @property (strong,nonatomic)NSDictionary *foodDict;
 //@property (strong,nonatomic)NSArray *recommendNutritionArray;
+@property (strong, nonatomic) IBOutlet UIView *admobView;
 @end

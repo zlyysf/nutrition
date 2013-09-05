@@ -14,6 +14,7 @@
 #import "LZConstants.h"
 #import "JWNavigationViewController.h"
 #import "MobClick.h"
+#import "GADMasterViewController.h"
 @interface LZFoodSearchViewController ()<LZFoodDetailViewControllerDelegate>
 {
     BOOL isfirstLoad;
@@ -21,7 +22,7 @@
 @end
 
 @implementation LZFoodSearchViewController
-@synthesize allFood,foodNameArray,foodTypeArray,isFromOut,allFoodNamesArray,searchResultArray;
+@synthesize allFood,foodNameArray,foodTypeArray,isFromOut,allFoodNamesArray,searchResultArray,admobView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -76,11 +77,17 @@
             [[self.foodNameArray objectAtIndex:index]addObject:afood];
         }
     }
-//    NSLog(@"%@",allFoodNamesArray);
+    int totalFloor = [foodTypeArray count]/3+ (([foodTypeArray count]%3 == 0)?0:1);
+    float scrollHeight = totalFloor *94 + 20+ (totalFloor-1)*8+50;
+    self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, scrollHeight-50, 320, 50)];
+    [self.listView addSubview:self.admobView];
+    [self.listView setContentSize:CGSizeMake(320, scrollHeight)];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"食物查询页面"];
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    [shared resetAdView:self andListView:self.admobView];
     if (isfirstLoad)
     {
         isfirstLoad = NO;
@@ -93,15 +100,9 @@
 }
 -(void)setButtons
 {
-    int totalFloor = [foodTypeArray count]/3+ (([foodTypeArray count]%3 == 0)?0:1);
-    float scrollHeight = totalFloor *94 + 20+ (totalFloor-1)*8;
-    [self.listView setContentSize:CGSizeMake(320, scrollHeight)];
     float startY = 10;
     int floor = 1;
     int perRowCount = 3;
-//    float startX1 = 10;
-//    float startX2 = 113;
-//    float startX3 = 216;
     float startX;
     for (int i=0; i< [self.foodTypeArray count]; i++)
     {
@@ -119,17 +120,6 @@
         button.tag = i+100;
         [button addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [button.typeLabel setText:typeName];
-//        button.titleLabel.textAlignment = UITextAlignmentLeft;
-//        //[button.titleLabel setBackgroundColor:[UIColor blackColor]];
-//        [button.titleLabel setFont:[UIFont systemFontOfSize:18]];
-        //[button setTitle:typeName forState:UIControlStateNormal];
-//        [button setBackgroundImage:[UIImage imageNamed:@"type_button_normal.png"] forState:UIControlStateNormal];
-//        [button setBackgroundImage:[UIImage imageNamed:@"type_button_clicked.png"] forState:UIControlStateHighlighted];
-//        float titleLength = button.titleLabel.frame.size.width;
-//        [button setTitleEdgeInsets:UIEdgeInsetsMake(0, 34, 0, 94-34-titleLength)];
-//        
-//        [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-//        [button setTitleColor:[UIColor whiteColor] forState:UIControlStateHighlighted];
     }
 }
 

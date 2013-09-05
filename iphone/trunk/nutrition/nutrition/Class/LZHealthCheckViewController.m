@@ -15,6 +15,7 @@
 #import "LZRecommendFood.h"
 #import "LZCheckResultViewController.h"
 #import "MobClick.h"
+#import "GADMasterViewController.h"
 @interface LZHealthCheckViewController ()
 
 @end
@@ -62,7 +63,7 @@
     UIBarButtonItem *recheckItem = [[UIBarButtonItem alloc]initWithTitle:@"清空" style:UIBarButtonItemStyleBordered target:self action:@selector(recheckItemTapped)];
     self.navigationItem.rightBarButtonItem = recheckItem;
     UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
-    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 70)];
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 110)];
     UIButton *checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [footerView addSubview:checkButton];
     [checkButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
@@ -72,11 +73,22 @@
     [checkButton setTitle:@"诊    断" forState:UIControlStateNormal];
     [checkButton addTarget:self action:@selector(checkItemTapped) forControlEvents:UIControlEventTouchUpInside];
     [checkButton setBackgroundImage:button30 forState:UIControlStateNormal];
+    
+    UIView *admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, 320, 50)];
+    [footerView addSubview:admobView];
+    [admobView setBackgroundColor:[UIColor clearColor]];
+    admobView.tag =51;
     self.listView.tableFooterView = footerView;
+    
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:@"健康诊断页面"];
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    UIView *footerView = self.listView.tableFooterView;
+    UIView *admobView = [footerView viewWithTag:51];
+    [shared resetAdView:self andListView:admobView];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
