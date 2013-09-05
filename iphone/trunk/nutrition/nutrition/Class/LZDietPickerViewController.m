@@ -214,7 +214,7 @@
         NSDictionary *aDiet = [self.dietArray objectAtIndex:indexPath.row];
         NSNumber *dietId = [aDiet objectForKey:@"CollocationId"];
         NSArray *array = [da getCollocationFoodData_withCollocationId:dietId];
-        NSLog(@"%@",array);
+//        NSLog(@"%@",array);
         NSMutableDictionary *dietContentDict = [[NSMutableDictionary alloc]init];
         for (NSDictionary *aFood in array)
         {

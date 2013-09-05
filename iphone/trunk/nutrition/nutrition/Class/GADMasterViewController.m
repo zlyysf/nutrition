@@ -180,13 +180,13 @@
 //    f.origin.x = 0;
 //    sharedAdView.frame = f;
 //    [UIView commitAnimations];
-    NSLog(@"delegate: will display ad");
+//    NSLog(@"delegate: will display ad");
     
 }
 
 -(void) failedDisplayAd:(BaiduMobFailReason) reason;
 {
-    NSLog(@"delegate: failedDisplayAd %d", reason);
+//    NSLog(@"delegate: failedDisplayAd %d", reason);
 //    NSTimeInterval delaySec = 30.0;
 //    [self performSelector:@selector(adBannerLoadRequest) withObject:nil afterDelay:delaySec];
 }

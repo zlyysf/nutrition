@@ -14,6 +14,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "LZRecommendFood.h"
 #import "LZCheckResultViewController.h"
+#import "MobClick.h"
 @interface LZHealthCheckViewController ()
 
 @end
@@ -43,7 +44,7 @@
     NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
     NSString *illnessGroup = groupAry[0];
     NSDictionary *info = [da getDiseasesOrganizedByDepartment_OfGroup:illnessGroup];
-    NSLog(@"%@",info);
+//    NSLog(@"%@",info);
     self.departmentNamesArray = [info objectForKey:@"departmentNames"];
     NSDictionary * departmentDiseasesDict = [info objectForKey:@"departmentDiseasesDict"];
     for(NSString *departName in departmentNamesArray)
@@ -72,6 +73,14 @@
     [checkButton addTarget:self action:@selector(checkItemTapped) forControlEvents:UIControlEventTouchUpInside];
     [checkButton setBackgroundImage:button30 forState:UIControlStateNormal];
     self.listView.tableFooterView = footerView;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [MobClick beginLogPageView:@"健康诊断页面"];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"健康诊断页面"];
 }
 -(void)recheckItemTapped
 {

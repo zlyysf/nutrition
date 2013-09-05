@@ -79,7 +79,7 @@
         
         OffsetCreated = _contentTableView.frame.origin.x;
         _contentTableView.frame = self.bounds;
-        NSLog(@"x %f, y %f,witdh %f,height %f ",_contentTableView.frame.origin.x,_contentTableView.frame.origin.y,_contentTableView.frame.size.width,_contentTableView.frame.size.height);
+//        NSLog(@"x %f, y %f,witdh %f,height %f ",_contentTableView.frame.origin.x,_contentTableView.frame.origin.y,_contentTableView.frame.size.width,_contentTableView.frame.size.height);
     }
 
     _contentTableView.backgroundColor = [UIColor clearColor];
@@ -96,7 +96,7 @@
     
     if (self.horizontalScrolling) {
         _contentTableView.contentInset = UIEdgeInsetsMake( _selectionRect.origin.x ,  0,_contentTableView.frame.size.height - _selectionRect.origin.x - _selectionRect.size.width - 2*OffsetCreated, 0);
-        NSLog(@"top %f, left %f,bottom %f,right %f ",_contentTableView.contentInset.top,_contentTableView.contentInset.left,_contentTableView.contentInset.bottom,_contentTableView.contentInset.right);
+//        NSLog(@"top %f, left %f,bottom %f,right %f ",_contentTableView.contentInset.top,_contentTableView.contentInset.left,_contentTableView.contentInset.bottom,_contentTableView.contentInset.right);
     }
     else {
         _contentTableView.contentInset = UIEdgeInsetsMake( _selectionRect.origin.y, 0, _contentTableView.frame.size.height - _selectionRect.origin.y - _selectionRect.size.height  , 0);
@@ -290,7 +290,7 @@
 //    }
     if (self.horizontalScrolling) {
         _contentTableView.contentInset = UIEdgeInsetsMake( _selectionRect.origin.x ,  0,_contentTableView.frame.size.height - _selectionRect.origin.x - _selectionRect.size.width - 2*OffsetCreated, 0);
-        NSLog(@"top %f, left %f,bottom %f,right %f ",_contentTableView.contentInset.top,_contentTableView.contentInset.left,_contentTableView.contentInset.bottom,_contentTableView.contentInset.right);
+//        NSLog(@"top %f, left %f,bottom %f,right %f ",_contentTableView.contentInset.top,_contentTableView.contentInset.left,_contentTableView.contentInset.bottom,_contentTableView.contentInset.right);
     }
     else {
         _contentTableView.contentInset = UIEdgeInsetsMake( _selectionRect.origin.y, 0, _contentTableView.frame.size.height - _selectionRect.origin.y - _selectionRect.size.height  , 0);

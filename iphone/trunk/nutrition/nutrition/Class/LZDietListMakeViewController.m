@@ -263,8 +263,8 @@
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSMutableDictionary *retFmtDict = [rf calculateGiveFoodsSupplyNutrientAndFormatForUI:params];
-    NSLog(@" allkeys  %@",[retFmtDict allKeys]);
-    NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI %@",retFmtDict);
+//    NSLog(@" allkeys  %@",[retFmtDict allKeys]);
+//    NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI %@",retFmtDict);
 
     NSArray *takenArray1 = [retFmtDict objectForKey:Key_orderedGivenFoodIds1];
     NSArray *takenArray2 = [retFmtDict objectForKey:Key_orderedGivenFoodIds2];
@@ -445,7 +445,7 @@
     
     if (sender.state == UIGestureRecognizerStateEnded)
     {
-        NSLog(@"%d",sender.direction);
+//        NSLog(@"%d",sender.direction);
         LZRecommendFoodCell *cell = (LZRecommendFoodCell*)sender.view;
         NSString *foodId = cell.cellFoodId;
         NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
@@ -1532,7 +1532,7 @@
                                 result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
                                     if (state == SSPublishContentStateSuccess)
                                     {
-                                        NSLog(@"success");
+//                                        NSLog(@"success");
                                     }
                                     else if (state == SSPublishContentStateFail)
                                     {

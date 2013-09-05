@@ -76,7 +76,7 @@
             [[self.foodNameArray objectAtIndex:index]addObject:afood];
         }
     }
-    NSLog(@"%@",allFoodNamesArray);
+//    NSLog(@"%@",allFoodNamesArray);
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -255,7 +255,7 @@
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     [self.searchResultArray removeAllObjects];
-    NSLog(@"%@",searchString);
+//    NSLog(@"%@",searchString);
     for (int i=0; i<[self.allFoodNamesArray count]; i++)
     {
         NSString *cnName = [self.allFoodNamesArray objectAtIndex:i];

@@ -17,6 +17,7 @@
 #import "LZReviewAppManager.h"
 #import "LZRecommendFoodCell.h"
 #import "LZCheckNutritionCell.h"
+#import "MobClick.h"
 @interface LZCheckResultViewController ()<MBProgressHUDDelegate,UIAlertViewDelegate>
 {
     MBProgressHUD *HUD;
@@ -63,6 +64,11 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    [MobClick beginLogPageView:@"诊断页面"];
+}
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [MobClick endLogPageView:@"诊断页面"];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -519,8 +525,8 @@
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     NSMutableDictionary *retFmtDict = [rf calculateGiveFoodsSupplyNutrientAndFormatForUI:params];
-    NSLog(@" allkeys  %@",[retFmtDict allKeys]);
-    NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI %@",retFmtDict);
+//    NSLog(@" allkeys  %@",[retFmtDict allKeys]);
+//    NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI %@",retFmtDict);
     
     NSArray *takenArray1 = [retFmtDict objectForKey:Key_orderedGivenFoodIds1];
     NSArray *takenArray2 = [retFmtDict objectForKey:Key_orderedGivenFoodIds2];
