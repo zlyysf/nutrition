@@ -231,7 +231,15 @@
             }
             else
             {
-                foodTotalUnit = [NSString stringWithFormat:@"(%.1f%@)",maxCount*0.5f,singleUnitName];
+                if (maxCount %2 == 0)
+                {
+                    foodTotalUnit = [NSString stringWithFormat:@"(%d%@)",(int)(maxCount*0.5f),singleUnitName];
+                }
+                else
+                {
+                    foodTotalUnit = [NSString stringWithFormat:@"(%.1f%@)",maxCount*0.5f,singleUnitName];
+                }
+
             }
         }
         NSString *foodName = [aFood objectForKey:@"Name"];
