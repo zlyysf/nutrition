@@ -149,6 +149,8 @@
 		5F7E5AA617965C6E007CA18A /* LZEditFoodAmountButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E5AA517965C6E007CA18A /* LZEditFoodAmountButton.m */; };
 		5F7E5AA917967A95007CA18A /* LZDietCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E5AA817967A95007CA18A /* LZDietCell.m */; };
 		5F7E5AAB17969463007CA18A /* diet_empty_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */; };
+		5F84D1B117D8343800DF83A0 /* basic_info_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F84D1AF17D8343800DF83A0 /* basic_info_icon@2x.png */; };
+		5F84D1B217D8343800DF83A0 /* dri_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F84D1B017D8343800DF83A0 /* dri_icon@2x.png */; };
 		5F86C85817CC4DF7001DDC34 /* LZDietPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F86C85717CC4DF7001DDC34 /* LZDietPickerViewController.m */; };
 		5F86C85B17CC51A0001DDC34 /* LZDietPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F86C85A17CC51A0001DDC34 /* LZDietPickerCell.m */; };
 		5F86C86817CCACE5001DDC34 /* menu_item_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F86C86217CCACE5001DDC34 /* menu_item_0@2x.png */; };
@@ -426,6 +428,8 @@
 		5F7E5AA717967A95007CA18A /* LZDietCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDietCell.h; path = Class/LZDietCell.h; sourceTree = "<group>"; };
 		5F7E5AA817967A95007CA18A /* LZDietCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDietCell.m; path = Class/LZDietCell.m; sourceTree = "<group>"; };
 		5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "diet_empty_icon@2x.png"; path = "nutrition/Resource/diet_empty_icon@2x.png"; sourceTree = "<group>"; };
+		5F84D1AF17D8343800DF83A0 /* basic_info_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "basic_info_icon@2x.png"; path = "nutrition/Resource/basic_info_icon@2x.png"; sourceTree = "<group>"; };
+		5F84D1B017D8343800DF83A0 /* dri_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dri_icon@2x.png"; path = "nutrition/Resource/dri_icon@2x.png"; sourceTree = "<group>"; };
 		5F86C85617CC4DF7001DDC34 /* LZDietPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDietPickerViewController.h; path = Class/LZDietPickerViewController.h; sourceTree = "<group>"; };
 		5F86C85717CC4DF7001DDC34 /* LZDietPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDietPickerViewController.m; path = Class/LZDietPickerViewController.m; sourceTree = "<group>"; };
 		5F86C85917CC51A0001DDC34 /* LZDietPickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDietPickerCell.h; path = Class/LZDietPickerCell.h; sourceTree = "<group>"; };
@@ -862,6 +866,8 @@
 				5F22A6C917CF580D0043D760 /* foodTypeButtonIcons */,
 				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
 				5F074F3B17D48EDB00C17191 /* add_to_new_diet_button@2x.png */,
+				5F84D1AF17D8343800DF83A0 /* basic_info_icon@2x.png */,
+				5F84D1B017D8343800DF83A0 /* dri_icon@2x.png */,
 				5FF632061771C6530068CBFE /* close_button@2x.png */,
 				5FD76DE817D5B3EE00746418 /* close_button_highlight@2x.png */,
 				5F2CDE8117CB2CF600189C8E /* check_mark_on@2x.png */,
@@ -1496,6 +1502,8 @@
 				5F943F2017D7364D00AFBF47 /* Vit_D_(µg)_button@2x.png in Resources */,
 				5F943F2117D7364D00AFBF47 /* Vit_E_(mg)_button@2x.png in Resources */,
 				5F943F2217D7364D00AFBF47 /* Zinc_(mg)_button@2x.png in Resources */,
+				5F84D1B117D8343800DF83A0 /* basic_info_icon@2x.png in Resources */,
+				5F84D1B217D8343800DF83A0 /* dri_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

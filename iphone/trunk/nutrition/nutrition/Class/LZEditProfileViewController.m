@@ -12,12 +12,13 @@
 #import "LZUtility.h"
 #import "LZRecommendFood.h"
 #import "LZStandardContentCell.h"
+#import "GADMasterViewController.h"
 @interface LZEditProfileViewController ()
 
 @end
 
 @implementation LZEditProfileViewController
-@synthesize currentTextField,firstEnterEditView,nutrientStandardArray,maxNutrientCount;
+@synthesize currentTextField,firstEnterEditView,nutrientStandardArray,maxNutrientCount,admobView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,7 +42,9 @@
     self.navigationItem.rightBarButtonItem = saveButtonItem;
     NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
     maxNutrientCount = [customNutrients count];
-    [self.mainScrollView setContentSize:CGSizeMake(320, 378+10+37+30*maxNutrientCount)];
+    [self.mainScrollView setContentSize:CGSizeMake(320, 391+30*maxNutrientCount+60)];
+    self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 391+30*maxNutrientCount+60-50, 320, 50)];
+    [self.mainScrollView addSubview:self.admobView];
     UIImage *textImage = [UIImage imageNamed:@"setting_cell_back.png"];
     UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
     [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
@@ -352,7 +355,8 @@
         [self.nutrientStandardArray  addObjectsFromArray:driArray];
         [self.listView reloadData];
     }
-
+    self.emptyDRILabel.hidden = YES;
+    self.listView.hidden = NO;
 
     
 //    NSLog(@"%@",self.nutrientStandardArray);
@@ -442,6 +446,8 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
     [MobClick beginLogPageView:@"编辑个人资料页面"];
+    GADMasterViewController *shared = [GADMasterViewController singleton];
+    [shared resetAdView:self andListView:self.admobView];
     
 }
 - (void)viewDidAppear:(BOOL)animated
@@ -457,6 +463,8 @@
 }
 -(void)displayEmptyState
 {
+    self.listView.hidden = YES;
+    self.emptyDRILabel.hidden = NO;
     
 }
 -(void)viewWillDisappear:(BOOL)animated
@@ -495,7 +503,14 @@
         [[NSUserDefaults standardUserDefaults]setObject:[dataToSave objectForKey:LZUserActivityLevelKey] forKey:LZUserActivityLevelKey];
         [[NSUserDefaults standardUserDefaults]synchronize];
        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_SettingsChangedKey object:nil userInfo:nil];
-        [self dismissModalViewControllerAnimated:YES];
+        if (!firstEnterEditView)
+        {
+            [self.navigationController popViewControllerAnimated:YES];
+        }
+        else
+        {
+            [self dismissModalViewControllerAnimated:YES];
+        }
     }
 }
 -(NSDictionary *)checkValueValidWithAlertPop:(BOOL)shouldPopAlert
@@ -600,6 +615,7 @@
     [self setLine3View:nil];
     [self setLine4View:nil];
     [self setListView:nil];
+    [self setEmptyDRILabel:nil];
     [super viewDidUnload];
 }
 - (void)keyboardWillShow:(NSNotification *)notification {
@@ -692,30 +708,30 @@
 {
     return 30;
 }
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    
-    return 37;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 37)];
-    [sectionView setBackgroundColor:[UIColor clearColor]];
-    
-    UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
-    [sectionView addSubview:sectionBarView];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
-    UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
-    [sectionBarView setImage:sectionBarImage];
-    UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
-    [sectionTitleLabel setTextColor:[UIColor whiteColor]];
-    [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
-    [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
-    [sectionView addSubview:sectionTitleLabel];
-    
-    sectionTitleLabel.text = [NSString stringWithFormat:@"个人每日营养摄入推荐量"];
-    return sectionView;
-}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    
+//    return 37;
+//}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 37)];
+//    [sectionView setBackgroundColor:[UIColor clearColor]];
+//    
+//    UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
+//    [sectionView addSubview:sectionBarView];
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
+//    UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
+//    [sectionBarView setImage:sectionBarImage];
+//    UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
+//    [sectionTitleLabel setTextColor:[UIColor whiteColor]];
+//    [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
+//    [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
+//    [sectionView addSubview:sectionTitleLabel];
+//    
+//    sectionTitleLabel.text = [NSString stringWithFormat:@"个人每日营养摄入推荐量"];
+//    return sectionView;
+//}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;

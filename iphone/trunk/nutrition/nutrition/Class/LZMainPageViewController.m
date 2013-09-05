@@ -17,6 +17,7 @@
 #import "LZNutritionListViewController.h"
 #import "LZHealthCheckViewController.h"
 #import "MobClick.h"
+#import "GADMasterViewController.h"
 @interface LZMainPageViewController ()
 
 @end

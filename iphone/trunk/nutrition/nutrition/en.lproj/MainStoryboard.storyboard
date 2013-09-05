@@ -1399,34 +1399,27 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="请在此认真填写您的信息，以方便我们向您推荐专属于您的每日健康营养食谱！谢谢！" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="y7A-qY-2Gg">
-                                        <rect key="frame" x="11" y="10" width="299" height="43"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="LyI-os-UxH">
-                                        <rect key="frame" x="11" y="111" width="299" height="40"/>
+                                        <rect key="frame" x="11" y="92" width="299" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="dm8-ft-vji">
-                                        <rect key="frame" x="11" y="161" width="299" height="40"/>
+                                        <rect key="frame" x="11" y="142" width="299" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="v12-yS-c4c">
-                                        <rect key="frame" x="11" y="211" width="299" height="40"/>
+                                        <rect key="frame" x="11" y="192" width="299" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="平日活动强度" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i4N-JS-3t8">
-                                        <rect key="frame" x="21" y="261" width="132" height="22"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="活动强度" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i4N-JS-3t8">
+                                        <rect key="frame" x="15" y="242" width="132" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="rxa-Qj-DWb">
-                                        <rect key="frame" x="15" y="336" width="290" height="32"/>
+                                        <rect key="frame" x="15" y="317" width="290" height="32"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="13"/>
@@ -1434,7 +1427,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="agL-0k-5rr">
-                                        <rect key="frame" x="11" y="61" width="149" height="40"/>
+                                        <rect key="frame" x="11" y="42" width="149" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <state key="normal" title="男">
@@ -1446,7 +1439,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="gTn-hk-3sK">
-                                        <rect key="frame" x="160" y="61" width="149" height="40"/>
+                                        <rect key="frame" x="160" y="42" width="149" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <state key="normal" title="女">
@@ -1458,7 +1451,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="uCC-5t-7PD">
-                                        <rect key="frame" x="11" y="287" width="74" height="40"/>
+                                        <rect key="frame" x="11" y="268" width="74" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <state key="normal">
@@ -1470,7 +1463,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Qmg-iC-EpM">
-                                        <rect key="frame" x="86" y="287" width="74" height="40"/>
+                                        <rect key="frame" x="86" y="268" width="74" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <state key="normal">
@@ -1482,7 +1475,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0Nd-Ik-DQC">
-                                        <rect key="frame" x="161" y="287" width="74" height="40"/>
+                                        <rect key="frame" x="161" y="268" width="74" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <state key="normal">
@@ -1494,7 +1487,7 @@
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="Z1c-m2-xXg">
-                                        <rect key="frame" x="236" y="287" width="74" height="40"/>
+                                        <rect key="frame" x="236" y="268" width="74" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                         <state key="normal">
@@ -1506,54 +1499,54 @@
                                         </state>
                                     </button>
                                     <view contentMode="scaleToFill" id="pd9-Gy-D4w">
-                                        <rect key="frame" x="160" y="61" width="1" height="40"/>
+                                        <rect key="frame" x="160" y="42" width="1" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="年龄" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="zue-3m-ggY">
-                                        <rect key="frame" x="20" y="120" width="46" height="22"/>
+                                        <rect key="frame" x="20" y="101" width="46" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="身高" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NOu-85-oqf">
-                                        <rect key="frame" x="20" y="170" width="46" height="22"/>
+                                        <rect key="frame" x="20" y="151" width="46" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="体重" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="uKa-Ef-H6S">
-                                        <rect key="frame" x="20" y="220" width="46" height="22"/>
+                                        <rect key="frame" x="20" y="201" width="46" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="岁" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="gqx-wN-sbR">
-                                        <rect key="frame" x="274" y="120" width="23" height="22"/>
+                                        <rect key="frame" x="274" y="101" width="23" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="cm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Jf9-TE-Zet">
-                                        <rect key="frame" x="274" y="170" width="26" height="22"/>
+                                        <rect key="frame" x="274" y="151" width="26" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="kg" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="mZL-Mt-4PE">
-                                        <rect key="frame" x="274" y="220" width="23" height="22"/>
+                                        <rect key="frame" x="274" y="201" width="23" height="22"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="right" minimumFontSize="17" id="m9j-I4-Ppz">
-                                        <rect key="frame" x="74" y="116" width="195" height="30"/>
+                                        <rect key="frame" x="74" y="97" width="195" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
@@ -1562,7 +1555,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="right" minimumFontSize="17" id="eId-CO-RwT">
-                                        <rect key="frame" x="74" y="167" width="195" height="30"/>
+                                        <rect key="frame" x="74" y="148" width="195" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
@@ -1571,7 +1564,7 @@
                                         </connections>
                                     </textField>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0" textAlignment="right" minimumFontSize="17" id="qp0-Zj-q49">
-                                        <rect key="frame" x="74" y="216" width="195" height="30"/>
+                                        <rect key="frame" x="74" y="197" width="195" height="30"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done"/>
@@ -1580,22 +1573,22 @@
                                         </connections>
                                     </textField>
                                     <view contentMode="scaleToFill" id="PYn-A9-Tji">
-                                        <rect key="frame" x="85" y="287" width="1" height="40"/>
+                                        <rect key="frame" x="85" y="268" width="1" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" id="hzn-At-lUi">
-                                        <rect key="frame" x="160" y="287" width="1" height="40"/>
+                                        <rect key="frame" x="160" y="268" width="1" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <view contentMode="scaleToFill" id="cWo-c5-Y3H">
-                                        <rect key="frame" x="235" y="287" width="1" height="40"/>
+                                        <rect key="frame" x="235" y="268" width="1" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="s1F-hO-zRh">
-                                        <rect key="frame" x="10" y="380" width="300" height="480"/>
+                                        <rect key="frame" x="10" y="391" width="300" height="480"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
@@ -1639,6 +1632,34 @@
                                             <outlet property="delegate" destination="TIt-mW-etQ" id="R1k-Pd-Ffp"/>
                                         </connections>
                                     </tableView>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="basic_info_icon.png" id="dnl-EQ-cfZ">
+                                        <rect key="frame" x="11" y="12" width="18" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="基本信息" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="PQk-UA-Ewx">
+                                        <rect key="frame" x="39" y="10" width="193" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dri_icon.png" id="xcD-Jr-oiu">
+                                        <rect key="frame" x="11" y="361" width="18" height="18"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="个人每日营养摄入推荐量" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hVl-rf-gxC">
+                                        <rect key="frame" x="39" y="359" width="261" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
+                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="很抱歉，由于您的基本信息不完全，目前无法显示营养摄入推荐量。" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U7f-L7-GYO">
+                                        <rect key="frame" x="10" y="391" width="300" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </scrollView>
                         </subviews>
@@ -1647,6 +1668,7 @@
                     <connections>
                         <outlet property="ageBackImageView" destination="LyI-os-UxH" id="vUp-as-iYA"/>
                         <outlet property="ageTextField" destination="m9j-I4-Ppz" id="nD0-N3-oEJ"/>
+                        <outlet property="emptyDRILabel" destination="U7f-L7-GYO" id="xqg-La-foG"/>
                         <outlet property="femaleButton" destination="gTn-hk-3sK" id="4FD-8u-jeA"/>
                         <outlet property="heightBackImageView" destination="dm8-ft-vji" id="g1j-IU-oVI"/>
                         <outlet property="heightTextField" destination="eId-CO-RwT" id="YVd-Jm-yYP"/>
@@ -1694,6 +1716,7 @@
         <image name="add_by_nutrient_clicked.png" width="16" height="16"/>
         <image name="addfood_icon.png" width="16" height="16"/>
         <image name="addfood_icon_clicked.png" width="16" height="16"/>
+        <image name="basic_info_icon.png" width="16" height="16"/>
         <image name="big_arrow.png" width="16" height="16"/>
         <image name="button_bottom_clicked.png" width="16" height="16"/>
         <image name="button_bottom_normal.png" width="16" height="16"/>
@@ -1704,6 +1727,7 @@
         <image name="change_name_button.png" width="16" height="16"/>
         <image name="change_name_clicked.png" width="16" height="16"/>
         <image name="diet_empty_icon.png" width="16" height="16"/>
+        <image name="dri_icon.png" width="16" height="16"/>
         <image name="feedback_icon.png" width="16" height="16"/>
         <image name="nutrient_button_on.png" width="16" height="16"/>
         <image name="recommend_icon.png" width="16" height="16"/>
@@ -1794,6 +1818,7 @@
             <relationships>
                 <relationship kind="outlet" name="ageBackImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="ageTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="emptyDRILabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="femaleButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="heightBackImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="heightTextField" candidateClass="UITextField"/>

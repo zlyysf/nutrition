@@ -28,9 +28,11 @@
 @property (strong, nonatomic) IBOutlet UIButton *level2Button;
 @property (strong, nonatomic) IBOutlet UIButton *level3Button;
 @property (strong, nonatomic) IBOutlet UILabel *levelDescriptionLabel;
+@property (strong,nonatomic)UIView *admobView;
 @property (nonatomic,readwrite)BOOL firstEnterEditView;
 @property (nonatomic, readwrite) int currentSexSelection;
 @property (strong, nonatomic) IBOutlet UITableView *listView;
+@property (strong, nonatomic) IBOutlet UILabel *emptyDRILabel;
 @property (nonatomic, readwrite) int currentActivityLevelSelection;
 @property (strong,nonatomic)NSMutableArray *nutrientStandardArray;
 @property (assign,nonatomic)int maxNutrientCount;
