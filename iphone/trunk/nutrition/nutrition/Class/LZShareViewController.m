@@ -9,6 +9,7 @@
 #import "LZShareViewController.h"
 #import <ShareSDK/ShareSDK.h>
 #import "MobClick.h"
+#import "LZConstants.h"
 @interface LZShareViewController ()
 
 @end
@@ -49,7 +50,7 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"微博分享页面"];
+    [MobClick beginLogPageView:UmengPathWeiBoFenXiang];
     [self.contentTextView becomeFirstResponder];
     if (self.shareImageData)
     {
@@ -63,7 +64,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"微博分享页面"];
+    [MobClick endLogPageView:UmengPathWeiBoFenXiang];
 }
 - (void)textChanged:(NSNotification *)notification
 {

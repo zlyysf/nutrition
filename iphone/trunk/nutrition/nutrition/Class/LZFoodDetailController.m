@@ -167,7 +167,7 @@
         self.sectionLabel.text = @"当前食物的一天营养比例";
     }
 
-    [MobClick beginLogPageView:@"食物详情页面"];
+    [MobClick beginLogPageView:UmengPathShiWuXiangQing];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
@@ -271,7 +271,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"食物详情页面"];
+    [MobClick endLogPageView:UmengPathShiWuXiangQing];
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {

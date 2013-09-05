@@ -59,14 +59,14 @@
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"挑选清单页面"];
+    [MobClick beginLogPageView:UmengPathQingDanTiaoXuan];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
     [self displayLocalDietList];
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"挑选清单页面"];
+    [MobClick endLogPageView:UmengPathQingDanTiaoXuan];
 }
 - (void)displayLocalDietList
 {

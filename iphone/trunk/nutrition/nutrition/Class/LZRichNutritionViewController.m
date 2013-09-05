@@ -81,7 +81,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [MobClick beginLogPageView:@"营养素富含食物页面"];
+    [MobClick beginLogPageView:UmengPathYingYangFuHan];
     //GADMasterViewController *shared = [GADMasterViewController singleton];
     //UIView *footerView = self.listView.tableFooterView;
     //[shared resetAdView:self andListView:footerView];
@@ -143,7 +143,7 @@
     //        return;
     //    }
     
-    [MobClick endLogPageView:@"营养素富含食物页面"];
+    [MobClick endLogPageView:UmengPathYingYangFuHan];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }

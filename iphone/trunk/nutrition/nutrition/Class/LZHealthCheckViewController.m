@@ -84,7 +84,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"健康诊断页面"];
+    [MobClick beginLogPageView:UmengPathJianKangZhenDuan];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     UIView *admobView = [footerView viewWithTag:51];
@@ -92,7 +92,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"健康诊断页面"];
+    [MobClick endLogPageView:UmengPathJianKangZhenDuan];
 }
 -(void)recheckItemTapped
 {

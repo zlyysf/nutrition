@@ -33,8 +33,10 @@
 }
 -(id)init {
     if (self = [super init]) {
-        sharedAdView = [[BaiduMobAdView alloc] init];
-        sharedAdView.frame = CGRectMake(0.0,0.0,320,50);
+        sharedAdView = [[BaiduMobAdView alloc] initWithFrame:CGRectMake(0.0,0.0,320,50)];
+        sharedAdView.AdType = BaiduMobAdViewTypeBanner;
+        
+        sharedAdView.delegate = self;
 //        adBanner_ = [[GADBannerView alloc]
 //                     initWithFrame:CGRectMake(0.0,0.0,
 //                                              CGSizeFromGADAdSize(kGADAdSizeBanner).width,
@@ -67,9 +69,7 @@
         [superView addSubview:sharedAdView];
 
     } else {
-        sharedAdView.AdType = BaiduMobAdViewTypeBanner;
-    
-        sharedAdView.delegate = self;
+
         [superView addSubview:sharedAdView];
         [self adBannerLoadRequest];
         isLoaded_ = YES;
@@ -186,6 +186,13 @@
 
 -(void) failedDisplayAd:(BaiduMobFailReason) reason;
 {
+    for (UIView *vc in [UIApplication sharedApplication].keyWindow.subviews)
+    {
+        if ([vc isKindOfClass:[UIWebView class]])
+        {
+            [vc removeFromSuperview];
+        }
+    }
 //    NSLog(@"delegate: failedDisplayAd %d", reason);
 //    NSTimeInterval delaySec = 30.0;
 //    [self performSelector:@selector(adBannerLoadRequest) withObject:nil afterDelay:delaySec];

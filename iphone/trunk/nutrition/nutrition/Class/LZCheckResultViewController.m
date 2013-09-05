@@ -70,7 +70,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"诊断页面"];
+    [MobClick beginLogPageView:UmengPathZhenDuanJieGuo];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
@@ -78,7 +78,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"诊断页面"];
+    [MobClick endLogPageView:UmengPathZhenDuanJieGuo];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -434,6 +434,7 @@
 }
 - (void)recommendOnePlan
 {
+    [MobClick event:UmengEventHuanYiZu];
     NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
     NSSet *selectNutrient = [NSSet setWithArray:self.userPreferArray];
     NSMutableArray *newPreferArray = [[NSMutableArray alloc]init];

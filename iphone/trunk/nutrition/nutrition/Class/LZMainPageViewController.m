@@ -18,6 +18,7 @@
 #import "LZHealthCheckViewController.h"
 #import "MobClick.h"
 #import "GADMasterViewController.h"
+#import "LZConstants.h"
 @interface LZMainPageViewController ()
 
 @end
@@ -64,7 +65,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"主页面"];
+    [MobClick beginLogPageView:UmengPathZhuYeMian];
     CGRect mobFrame = CGRectMake(0, self.view.frame.size.height-50, 320, 50);
     self.admobView.frame = mobFrame;
     GADMasterViewController *shared = [GADMasterViewController singleton];
@@ -72,7 +73,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"主页面"];
+    [MobClick endLogPageView:UmengPathZhuYeMian];
 }
 -(void)viewDidAppear:(BOOL)animated
 {

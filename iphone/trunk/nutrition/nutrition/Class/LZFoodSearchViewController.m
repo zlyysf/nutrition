@@ -85,7 +85,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"食物查询页面"];
+    [MobClick beginLogPageView:UmengPathShiWuChaXun];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
     if (isfirstLoad)
@@ -96,7 +96,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"食物查询页面"];
+    [MobClick endLogPageView:UmengPathShiWuChaXun];
 }
 -(void)setButtons
 {

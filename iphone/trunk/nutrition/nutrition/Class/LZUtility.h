@@ -84,6 +84,8 @@
 +(BOOL)isIphoneDeviceVersionFive;
 
 +(void)addFood:(NSString *)foodId withFoodAmount:(NSNumber *)foodAmount;
+
++(void)setReviewFlagForNewVersion;
 @end
 
 

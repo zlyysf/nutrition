@@ -140,7 +140,7 @@
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"设置页面"];
+    [MobClick beginLogPageView:UmengPathSheZhi];
     self.weiboAuthSwitch.on = [ShareSDK hasAuthorizedWithType:ShareTypeSinaWeibo];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
@@ -184,7 +184,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"设置页面"];
+    [MobClick endLogPageView:UmengPathSheZhi];
 }
 - (IBAction)recommendAppAction:(id)sender
 {

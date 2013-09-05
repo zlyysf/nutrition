@@ -68,7 +68,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"膳食清单页面"];
+    [MobClick beginLogPageView:UmengPathShanShiQingDan];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.mobView];
     [self displayLocalDietList];
@@ -89,7 +89,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"膳食清单页面"];
+    [MobClick endLogPageView:UmengPathShanShiQingDan];
 }
 - (void)didReceiveMemoryWarning
 {

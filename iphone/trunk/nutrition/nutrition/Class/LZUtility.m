@@ -720,6 +720,25 @@
     }
 
 }
++(void)setReviewFlagForNewVersion
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *flagKey = [NSString stringWithFormat:@"%@%@-RF",appName,appVersion];
+    BOOL flagExists = [[NSUserDefaults standardUserDefaults]boolForKey:flagKey];
+    if (flagExists)
+    {
+        return;
+    }
+    else
+    {
+        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:KeyIsAlreadyReviewdeOurApp];
+        [[NSUserDefaults standardUserDefaults]setBool:YES forKey:flagKey];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+
+}
 @end
 
 

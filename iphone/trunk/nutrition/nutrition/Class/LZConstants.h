@@ -259,6 +259,25 @@
 //百度广告APP SID 和计费名
 #define BaiduAdsAppSID @"f06ac562"
 #define BaiduAdsAppSpec @"f06ac562"
+
+#define UmengPathZhuYeMian @"主页面"
+#define UmengPathShanShiQingDan @"膳食清单页面"
+#define UmengPathYingYangDaPei @"营养搭配页面"
+#define UmengPathShiWuXiangQing @"食物详情页面"
+#define UmengPathShiWuZhongLeiErJi @"食物种类二级页面"
+#define UmengPathSheZhi @"设置页面"
+#define UmengPathYingYangSuTianJia @"按营养素添加食物页面"
+#define UmengPathWeiBoFenXiang @"微博分享页面"
+#define UmengPathGeRenXinXi @"个人信息页面"
+#define UmengPathQingDanTiaoXuan @"清单挑选页面"
+#define UmengPathShiWuChaXun @"食物查询页面"
+#define UmengPathYingYangYuanSu @"营养元素页面"
+#define UmengPathYingYangFuHan @"营养素富含食物页面"
+#define UmengPathJianKangZhenDuan @"健康诊断页面"
+#define UmengPathZhenDuanJieGuo @"诊断结果页面"
+
+#define UmengEventTuiJian @"Recommend"
+#define UmengEventHuanYiZu @"ChangeFood"
 #endif
 
 

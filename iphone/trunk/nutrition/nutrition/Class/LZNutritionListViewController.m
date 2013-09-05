@@ -46,7 +46,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
-    [MobClick beginLogPageView:@"营养元素页面"];
+    [MobClick beginLogPageView:UmengPathYingYangYuanSu];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
     if (isFirstLoad)
@@ -57,7 +57,7 @@
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [MobClick endLogPageView:@"营养元素页面"];
+    [MobClick endLogPageView:UmengPathYingYangYuanSu];
 }
 -(void)setButtons
 {

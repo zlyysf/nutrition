@@ -181,7 +181,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(nutrientShowNotification:) name:Notification_ShowNutrientInfoKey object:nil];
-    [MobClick beginLogPageView:@"营养搭配页面"];
+    [MobClick beginLogPageView:UmengPathYingYangDaPei];
     self.listView.tableFooterView.hidden = NO;
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
@@ -211,7 +211,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
     //[[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_ShowNutrientInfoKey object:nil];
-    [MobClick endLogPageView:@"营养搭配页面"];
+    [MobClick endLogPageView:UmengPathYingYangDaPei];
 }
 
 - (void)viewDidUnload {
@@ -1213,6 +1213,7 @@
 }
 - (void)filterViewSubmitted:(LZRecommendFilterView *)filterView
 {
+    [MobClick event:UmengEventTuiJian];
     [filterView.layer removeAllAnimations];
     float duration = 0.3;
     CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];

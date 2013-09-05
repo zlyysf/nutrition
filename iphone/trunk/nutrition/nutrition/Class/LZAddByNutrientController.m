@@ -74,7 +74,7 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
-    [MobClick beginLogPageView:@"按营养素添加食物页面"];
+    [MobClick beginLogPageView:UmengPathYingYangSuTianJia];
     //GADMasterViewController *shared = [GADMasterViewController singleton];
     //UIView *footerView = self.listView.tableFooterView;
     //[shared resetAdView:self andListView:footerView];
@@ -136,7 +136,7 @@
 //        return;
 //    }
     
-    [MobClick endLogPageView:@"按营养素添加食物页面"];
+    [MobClick endLogPageView:UmengPathYingYangSuTianJia];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
 }
