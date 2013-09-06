@@ -19,6 +19,8 @@
 #import "LZCheckNutritionCell.h"
 #import "MobClick.h"
 #import "GADMasterViewController.h"
+#import "LZUserDietListViewController.h"
+#import "LZMainPageViewController.h"
 @interface LZCheckResultViewController ()<MBProgressHUDDelegate,UIAlertViewDelegate>
 {
     MBProgressHUD *HUD;
@@ -635,7 +637,9 @@
             NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
             if(nmCollocationId)
             {
-                UIAlertView *didSaveAlert = [[UIAlertView alloc]initWithTitle:@"保存成功" message:@"您可以进入膳食清单页面查看你的保存结果" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *didSaveAlert = [[UIAlertView alloc]initWithTitle:@"保存成功" message:@"您可以进入膳食清单页面查看你的保存结果" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:@"去看看",nil];
+                didSaveAlert.tag = 103;
+                didSaveAlert.delegate = self;
                 [didSaveAlert show];
             }
             else
@@ -644,6 +648,31 @@
                 [saveFailedAlert show];
             }
         }
+    }
+
+}
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if(alertView.tag == 103)
+    {
+        if (buttonIndex == alertView.cancelButtonIndex)
+        {
+            //            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+            //            [[NSUserDefaults standardUserDefaults]synchronize];
+            //            [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
+        }
+        else
+        {
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+            LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
+            LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
+            userDietListViewController.backWithNoAnimation = YES;
+            NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,userDietListViewController, nil];
+            UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+            [mainNav setViewControllers:vcs animated:YES];
+        }
+
     }
 }
 #pragma mark MBProgressHUDDelegate methods

@@ -452,6 +452,7 @@
 {
     //[self.tempIntakeDict setObject:[NSNumber numberWithInt:[changedValue intValue]] forKey:foodId];
     [LZUtility addFood:foodId withFoodAmount:changedValue];
-    [self.listView reloadData];
+    [self.navigationController popViewControllerAnimated:YES];
+    //[self.listView reloadData];
 }
 @end

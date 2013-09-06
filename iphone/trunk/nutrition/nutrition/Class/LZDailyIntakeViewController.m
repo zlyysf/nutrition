@@ -554,7 +554,7 @@
 //        [[NSUserDefaults  standardUserDefaults]synchronize];
 //    }
     [LZUtility addFood:foodId withFoodAmount:changedValue];
-    [self.listView reloadData];
+    //[self.listView reloadData];
 }
 
 @end
