@@ -635,7 +635,7 @@
             NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
             if(nmCollocationId)
             {
-                UIAlertView *didSaveAlert = [[UIAlertView alloc]initWithTitle:@"保存成功" message:@"您可以进入膳食清单页面查看你保存的该组推荐" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *didSaveAlert = [[UIAlertView alloc]initWithTitle:@"保存成功" message:@"您可以进入膳食清单页面查看你的保存结果" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
                 [didSaveAlert show];
             }
             else
