@@ -353,7 +353,7 @@
     }
     else if (section == 1)
     {
-        sectionTitleLabel.text = @"您需要补充的营养元素";
+        sectionTitleLabel.text = @"您缺少的营养元素";
     }
     else if (section == 2)
     {
