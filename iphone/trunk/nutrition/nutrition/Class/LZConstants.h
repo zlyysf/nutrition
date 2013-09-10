@@ -183,11 +183,13 @@
 #define Key_takenFoodInfoDictArray @"takenFoodInfoDictArray"
 #define Key_recommendFoodInfoDictArray @"recommendFoodInfoDictArray"
 #define Key_recommendFoodAmountDict @"recommendFoodAmountDict"
+#define Key_recommendFoodAttrDict @"recommendFoodAttrDict"
 
 #define Key_TakenFoodAmount @"TakenFoodAmount"
 #define Key_TakenFoodAttr @"TakenFoodAttr"
 
 #define Key_optionsDict @"optionsDict"
+#define Key_paramsDict @"paramsDict"
 #define Key_outRows @"outRows"
 
 #define Key_preChooseFoodInfoDict @"preChooseFoodInfoDict"
