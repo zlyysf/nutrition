@@ -4499,6 +4499,34 @@
 //        if (nmFlag_needConsiderNutrientLoss != nil)
 //            needConsiderNutrientLoss = [nmFlag_needConsiderNutrientLoss boolValue];
 //    }
+    NSArray *givenNutrients = nil;
+    if (params!=nil){
+        givenNutrients = [params objectForKey:Key_givenNutrients];
+    }
+    if (givenNutrients.count>0 && givenNutrients.count<=3){
+        //这是一个特例处理，当给定的营养素集合包含条目的数量<=3时，让推荐的食物尽可能少，这里通过现有的渐进增量算法不好解决，于是使用以前的尽量一次补满的算法 及搭配特定参数来处理
+        BOOL notAllowSameFood = TRUE;
+        BOOL randomSelectFood = true;
+        int randomRangeSelectFood = 0;
+//        BOOL needLimitNutrients = FALSE;
+        int limitRecommendFoodCount = 0;
+        BOOL needUseFoodLimitTableWhenCal = TRUE;
+        BOOL needUseLessAsPossibleFood = TRUE;
+        NSString *upperLimitTypeForSupplyAsPossible = COLUMN_NAME_Upper_Limit;
+        if (options == nil) options = [NSMutableDictionary dictionary];
+        [options addEntriesFromDictionary:[NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                          [NSNumber numberWithBool:notAllowSameFood],LZSettingKey_notAllowSameFood,
+                                          [NSNumber numberWithBool:randomSelectFood],LZSettingKey_randomSelectFood,
+                                          [NSNumber numberWithInt:randomRangeSelectFood],LZSettingKey_randomRangeSelectFood,
+//                                          [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
+                                          [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+                                          [NSNumber numberWithBool:needUseFoodLimitTableWhenCal],LZSettingKey_needUseFoodLimitTableWhenCal,
+                                          upperLimitTypeForSupplyAsPossible,LZSettingKey_upperLimitTypeForSupplyAsPossible,
+                                          [NSNumber numberWithBool:needUseLessAsPossibleFood],LZSettingKey_needUseLessAsPossibleFood,
+                                           nil]];
+        NSMutableDictionary *retDict = [self recommendFood4SupplyAsPossibleWithPreIntake:givenFoodAmountDict andUserInfo:userInfo andParams:params andOptions:options];
+        return retDict;
+    }
 
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:options];
