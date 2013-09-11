@@ -86,7 +86,8 @@
 //    [self.class caseMiltipleUser1_pretakenVegetable3_pd1];
 //    [self.class caseMiltipleUser1_pretakenSemiMeat1_pd1];
 //    [self.class caseMiltipleUser1_pretakenSemiMeat1_pd5];
-    [self.class caseMiltipleUser1_preTaken_0_givenNutrients];
+//    [self.class caseMiltipleUser1_preTaken_0_givenNutrients1];
+    [self.class caseMiltipleUser1_preTaken_0_givenNutrients2];
 //    [self.class caseMulAbstractUser1_pretakenNearFull_pd1];
 //    [self.class caseAbstractUserWithRandToReproduce1];
 }
@@ -1347,7 +1348,7 @@
 }
 
 
-+(void)caseMiltipleUser1_preTaken_0_givenNutrients
++(void)caseMiltipleUser1_preTaken_0_givenNutrients1
 {
     NSDictionary *takenFoodAmountDict = nil;
     int sex = 0;//Male
@@ -1365,13 +1366,17 @@
     BOOL needLimitNutrients = FALSE;
     int limitRecommendFoodCount = 0;
     BOOL needUseFoodLimitTableWhenCal = TRUE;
+    BOOL needUseLessAsPossibleFood = TRUE;
+    NSString *upperLimitTypeForSupplyAsPossible = COLUMN_NAME_normal_value; //COLUMN_NAME_Upper_Limit;
     NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                    [NSNumber numberWithBool:notAllowSameFood],@"notAllowSameFood",
-                                    [NSNumber numberWithBool:randomSelectFood],@"randomSelectFood",
-                                    [NSNumber numberWithInt:randomRangeSelectFood],@"randomRangeSelectFood",
-                                    [NSNumber numberWithBool:needLimitNutrients],@"needLimitNutrients",
+                                    [NSNumber numberWithBool:notAllowSameFood],LZSettingKey_notAllowSameFood,
+                                    [NSNumber numberWithBool:randomSelectFood],LZSettingKey_randomSelectFood,
+                                    [NSNumber numberWithInt:randomRangeSelectFood],LZSettingKey_randomRangeSelectFood,
+                                    [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
                                     [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
-                                    [NSNumber numberWithBool:needUseFoodLimitTableWhenCal],@"needUseFoodLimitTableWhenCal",
+                                    [NSNumber numberWithBool:needUseFoodLimitTableWhenCal],LZSettingKey_needUseFoodLimitTableWhenCal,
+                                    upperLimitTypeForSupplyAsPossible,LZSettingKey_upperLimitTypeForSupplyAsPossible,
+                                    [NSNumber numberWithBool:needUseLessAsPossibleFood],LZSettingKey_needUseLessAsPossibleFood,
                                     nil];
 
     
@@ -1385,10 +1390,11 @@
     NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
     NSLog(@"htmlFilePath=%@",htmlFilePath);
     
+    // @"Vit_E_(mg)" 与 COLUMN_NAME_normal_value 的组合导致结果太少，只有一组合适的. @"Vit_E_(mg)" 与 COLUMN_NAME_Upper_Limit 的组合也只有8种，凑合。
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    //                                   [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",nil],Key_givenNutrients,
                                    //                                   [NSArray arrayWithObjects: @"Vit_A_RAE",nil],Key_givenNutrients,
-                                   [NSArray arrayWithObjects: @"Vit_E_(mg)",nil],Key_givenNutrients,
+                                   [NSArray arrayWithObjects: @"Vit_B6_(mg)",nil],Key_givenNutrients,
                                    nil];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
@@ -1399,6 +1405,62 @@
     
 }
 
++(void)caseMiltipleUser1_preTaken_0_givenNutrients2
+{
+    NSDictionary *takenFoodAmountDict = nil;
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],ParamKey_sex, [NSNumber numberWithInt:age],ParamKey_age,
+                              [NSNumber numberWithFloat:weight],ParamKey_weight, [NSNumber numberWithFloat:height],ParamKey_height,
+                              [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
+    BOOL notAllowSameFood = TRUE;
+    BOOL randomSelectFood = true;
+    int randomRangeSelectFood = 0;
+    BOOL needLimitNutrients = FALSE;
+    int limitRecommendFoodCount = 0;
+    BOOL needUseFoodLimitTableWhenCal = TRUE;
+    BOOL needUseLessAsPossibleFood = TRUE;
+    NSString *upperLimitTypeForSupplyAsPossible = COLUMN_NAME_Upper_Limit;// COLUMN_NAME_normal_value; //COLUMN_NAME_Upper_Limit;
+    NSMutableDictionary *options = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                    [NSNumber numberWithBool:notAllowSameFood],LZSettingKey_notAllowSameFood,
+                                    [NSNumber numberWithBool:randomSelectFood],LZSettingKey_randomSelectFood,
+                                    [NSNumber numberWithInt:randomRangeSelectFood],LZSettingKey_randomRangeSelectFood,
+                                    [NSNumber numberWithBool:needLimitNutrients],LZSettingKey_needLimitNutrients,
+                                    [NSNumber numberWithInt:limitRecommendFoodCount],@"limitRecommendFoodCount",
+                                    [NSNumber numberWithBool:needUseFoodLimitTableWhenCal],LZSettingKey_needUseFoodLimitTableWhenCal,
+                                    upperLimitTypeForSupplyAsPossible,LZSettingKey_upperLimitTypeForSupplyAsPossible,
+                                    [NSNumber numberWithBool:needUseLessAsPossibleFood],LZSettingKey_needUseLessAsPossibleFood,
+                                    nil];
+    
+    
+    NSString *paramsDigestStr = [self.class getParamsDigestStr_withUserInfo:userInfo andOptions:options andTakenFoodAmountDict:takenFoodAmountDict];
+    NSString *csvFileName = [NSString stringWithFormat:@"recBySI_%@.csv",paramsDigestStr ];
+    NSString *htmlFileName = [NSString stringWithFormat:@"recBySI_%@.html",paramsDigestStr ];
+    NSLog(@"csvFileName=%@\nhtmlFileName=%@",csvFileName,htmlFileName);
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *htmlFilePath = [documentsDirectory stringByAppendingPathComponent:htmlFileName];
+    NSLog(@"htmlFilePath=%@",htmlFilePath);
+    
+    // @"Vit_E_(mg)" 与 COLUMN_NAME_normal_value 的组合导致结果太少，只有一组合适的. @"Vit_E_(mg)" 与 COLUMN_NAME_Upper_Limit 的组合也只有8种，凑合。
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   //                                   [NSArray arrayWithObjects: @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_B6_(mg)",nil],Key_givenNutrients,
+                                   //                                   [NSArray arrayWithObjects: @"Vit_A_RAE",nil],Key_givenNutrients,
+                                   [NSArray arrayWithObjects:@"Vit_E_(mg)", @"Vit_B6_(mg)",nil],Key_givenNutrients,
+                                   nil];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *retDict = [rf recommendFood4SupplyAsPossibleWithPreIntake:nil andUserInfo:userInfo andParams:params andOptions:options ];
+    NSString *strHtml = [rf generateHtml_RecommendFood4SupplyAsPossible:retDict];
+    strHtml = [LZUtility getFullHtml_withPart:strHtml];
+    [strHtml writeToFile:htmlFilePath atomically:true encoding:NSUTF8StringEncoding error:nil];
+    
+}
 
 
 //

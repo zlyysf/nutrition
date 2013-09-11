@@ -20,9 +20,14 @@
 #define Config_nearZero 0.0000001
 #define Config_defaultFoodIncreaseUnit 1
 
-#define Config_ifNeedCustomDefinedFoods TRUE
 
+#define Config_notAllowSameFood TRUE
+#define Config_ifNeedCustomDefinedFoods TRUE
+#define Config_randomSelectFood TRUE
+#define Config_needUseFoodLimitTableWhenCal TRUE
 #define Config_needLimitNutrients TRUE
+#define Config_needUseLessAsPossibleFood FALSE
+#define Config_upperLimitTypeForSupplyAsPossible @"normal_value" //COLUMN_NAME_normal_value //  @"Upper_Limit(g)" // COLUMN_NAME_Upper_Limit
 //#define Config_needUseLowLimitAsUnit TRUE
 #define Config_needUseDefinedIncrementUnit TRUE
 #define Config_needUseNormalLimitWhenSmallIncrementLogic TRUE
@@ -31,6 +36,7 @@
 #define Config_needSpecialForFirstBatchFoods TRUE
 #define Config_alreadyChoosedFoodHavePriority TRUE //主要用于减少食物种类
 #define Config_needPriorityFoodToSpecialNutrient FALSE //有了 alreadyChoosedFoodHavePriority 为true，感觉needPriorityFoodToSpecialNutrient的特色没必要了
+
 
 #define FoodClassify_gulei @"gulei"
 #define FoodClassify_gandoulei @"gandoulei"
@@ -71,6 +77,9 @@
 #define LZSettingKey_needLimitNutrients @"needLimitNutrients" //BOOL
 #define LZSettingKey_limitRecommendFoodCount @"limitRecommendFoodCount" //int
 #define LZSettingKey_notAllowSameFood @"notAllowSameFood" //BOOL
+#define LZSettingKey_needUseFoodLimitTableWhenCal @"needUseFoodLimitTableWhenCal"
+#define LZSettingKey_needUseLessAsPossibleFood @"needUseLessAsPossibleFood"
+#define LZSettingKey_upperLimitTypeForSupplyAsPossible @"upperLimitTypeForSupplyAsPossible"
 
 #define LZSettingKey_needConsiderNutrientLoss @"needConsiderNutrientLoss"
 //#define LZSettingKey_needUseLowLimitAsUnit @"needUseLowLimitAsUnit"

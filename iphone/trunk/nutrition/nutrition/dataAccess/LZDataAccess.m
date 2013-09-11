@@ -775,7 +775,40 @@
     return retDict;
 }
 
+/*
+ upperLimitType的值使用列名
+ */
+-(NSArray *)getRichFoodForNutrientAmount_withNutrient:(NSString *)nutrientAsColumnName andNutrientSupplyAmount:(double)nutrientSupplyAmount andTopN:(int)topN andIfNeedCustomDefinedFoods:(BOOL)ifNeedCustomDefinedFoods andUpperLimitType:(NSString*)upperLimitType
+{
+    NSLog(@"getRichNutritionFood enter");
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+    //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
+    [sqlStr appendString:@"SELECT F.*,CnCaption,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight, "];
+    [sqlStr appendFormat:@"\n D.[%@] AS RichLevel ",nutrientAsColumnName];
+    [sqlStr appendString:@"\n  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
+    if (ifNeedCustomDefinedFoods){
+        [sqlStr appendFormat:@"\n    JOIN CustomRichFood CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='%@' \n",nutrientAsColumnName];
+    }
+    NSString *upperLimitColumn = COLUMN_NAME_normal_value;
+    if ([COLUMN_NAME_Upper_Limit isEqualToString:upperLimitType]){
+        upperLimitColumn = COLUMN_NAME_Upper_Limit;
+    }
+    [sqlStr appendFormat:@"\n  WHERE F.[%@]*FC.[%@]/100.0 >= %f",nutrientAsColumnName,upperLimitColumn,nutrientSupplyAmount];
+    
+    NSMutableString *afterWherePart = [NSMutableString string ];
+//    [afterWherePart appendString:@"\n ORDER BY "];
+//    [afterWherePart appendString:@"D.["];
+//    [afterWherePart appendString:nutrientAsColumnName];
+//    [afterWherePart appendString:@"] ASC"];
+    if (topN){
+        [afterWherePart appendString:@"\n LIMIT "];
+        [afterWherePart appendString:[[NSNumber numberWithInt:topN] stringValue]];
+    }
 
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:nil andWhereExistInQuery:true andAfterWherePart:afterWherePart andOptions:localOptions];
+    return dataAry;
+}
 
 
 /*

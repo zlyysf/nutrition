@@ -90,6 +90,36 @@
     }
 }
 
++(NSNumber *)addIntToDictionaryItem:(int)valAdd withDictionary:(NSMutableDictionary*)data andKey:(NSString *)datakey
+{
+    assert(data!=nil);
+    assert(datakey!=nil);
+    id dataVal = [data objectForKey:datakey];
+    int sum = 0 ;
+    if (dataVal != nil && dataVal != [NSNull null]){
+        NSNumber *nmDataVal = dataVal;
+        sum = [nmDataVal intValue]+valAdd;
+    }else{
+        sum = valAdd;
+    }
+    NSNumber *nmSum = [NSNumber numberWithInt:sum];
+    [data setObject:nmSum forKey:datakey];
+    return nmSum;
+}
++(int)getIntFromDictionaryItem_withDictionary:(NSMutableDictionary*)data andKey:(NSString *)datakey
+{
+    assert(data!=nil);
+    assert(datakey!=nil);
+    id dataVal = [data objectForKey:datakey];
+    if (dataVal==nil || dataVal == [NSNull null])
+        return 0;
+    else{
+        NSNumber *nmDataVal = dataVal;
+        return [nmDataVal intValue];
+    }
+}
+
+
 +(NSMutableArray *)addUnitItemToArrayDictionary_withUnitItem:(NSObject*)unitItem withArrayDictionary:(NSMutableDictionary*)arrayDict andKey:(NSString *)keyForArray;
 {
     assert(unitItem!=nil);

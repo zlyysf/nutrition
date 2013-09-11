@@ -1801,20 +1801,21 @@
  */
 -(NSMutableDictionary *) recommendFood4SupplyAsPossibleWithPreIntake:(NSDictionary*)takenFoodAmountDict andDRIs:(NSDictionary*)DRIsDict andParams:(NSDictionary*)params andOptions:(NSMutableDictionary*)options
 {
-    BOOL notAllowSameFood = TRUE;//这是一个策略标志位，偏好食物的多样化的标志位，即当选取食物补充营养时，优先选取以前没有用过的食物。
-    BOOL randomSelectFood = TRUE;
+    BOOL notAllowSameFood = Config_notAllowSameFood;//这是一个策略标志位，偏好食物的多样化的标志位，即当选取食物补充营养时，优先选取以前没有用过的食物。
+    BOOL randomSelectFood = Config_randomSelectFood;
     int randomRangeSelectFood = 0;//配合randomSelectFood，用于限制随机范围，0表示不限制, >0表示优先选择其范围内的东西
-    BOOL needLimitNutrients = TRUE;//是否要根据需求限制计算的营养素集合
-    BOOL needUseFoodLimitTableWhenCal = TRUE;
-    BOOL useLessFood = TRUE; //TODO...............
+    BOOL needLimitNutrients = Config_needLimitNutrients;//是否要根据需求限制计算的营养素集合
+    BOOL needUseFoodLimitTableWhenCal = Config_needUseFoodLimitTableWhenCal;
+    NSString *upperLimitTypeForSupplyAsPossible = Config_upperLimitTypeForSupplyAsPossible;
+    BOOL needUseLessAsPossibleFood = Config_needUseLessAsPossibleFood; 
     uint randSeed = arc4random();
     
     if(options != nil){
-        NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
+        NSNumber *nmFlag_notAllowSameFood = [options objectForKey:LZSettingKey_notAllowSameFood];
         if (nmFlag_notAllowSameFood != nil)
             notAllowSameFood = [nmFlag_notAllowSameFood boolValue];
         
-        NSNumber *nmFlag_randomSelectFood = [options objectForKey:@"randomSelectFood"];
+        NSNumber *nmFlag_randomSelectFood = [options objectForKey:LZSettingKey_randomSelectFood];
         if (nmFlag_randomSelectFood != nil)
             randomSelectFood = [nmFlag_randomSelectFood boolValue];
         
@@ -1822,13 +1823,21 @@
         if (nm_randomRangeSelectFood != nil)
             randomRangeSelectFood = [nm_randomRangeSelectFood intValue];
         
-        NSNumber *nmFlag_needLimitNutrients = [options objectForKey:@"needLimitNutrients"];
+        NSNumber *nmFlag_needLimitNutrients = [options objectForKey:LZSettingKey_needLimitNutrients];
         if (nmFlag_needLimitNutrients != nil)
             needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
         
-        NSNumber *nmFlag_needUseFoodLimitTableWhenCal = [options objectForKey:@"needUseFoodLimitTableWhenCal"];
+        NSNumber *nmFlag_needUseFoodLimitTableWhenCal = [options objectForKey:LZSettingKey_needUseFoodLimitTableWhenCal];
         if (nmFlag_needUseFoodLimitTableWhenCal != nil)
             needUseFoodLimitTableWhenCal = [nmFlag_needUseFoodLimitTableWhenCal boolValue];
+        
+        NSString *strflag_upperLimitTypeForSupplyAsPossible = [options objectForKey:LZSettingKey_upperLimitTypeForSupplyAsPossible];
+        if (strflag_upperLimitTypeForSupplyAsPossible != nil)
+            upperLimitTypeForSupplyAsPossible = strflag_upperLimitTypeForSupplyAsPossible;
+        
+        NSNumber *nmFlag_needUseLessAsPossibleFood = [options objectForKey:LZSettingKey_needUseLessAsPossibleFood];
+        if (nmFlag_needUseLessAsPossibleFood != nil)
+            needUseLessAsPossibleFood = [nmFlag_needUseLessAsPossibleFood boolValue];
         
         NSNumber *nm_randSeed = [options objectForKey:LZSettingKey_randSeed];
         if (nm_randSeed != nil && [nm_randSeed unsignedIntValue] > 0)
@@ -1889,6 +1898,8 @@
     NSDictionary *nutrientInitialSupplyDict = [NSDictionary dictionaryWithDictionary:nutrientSupplyDict];//记录already taken food提供的营养素的量
     
     NSMutableArray* foodSupplyNutrientSeqs = [NSMutableArray arrayWithCapacity:100];
+    
+    NSMutableDictionary *nutrientSupplyCountDict = [NSMutableDictionary dictionary];//用以支持needUseLessAsPossibleFood
     //对每个还需补足的营养素进行计算
     while (TRUE) {
         NSString *nutrientNameToCal = nil;
@@ -1995,7 +2006,17 @@
         double toAddForNutrient = [nmTotalNeed1Unit doubleValue]-[nmSupplied doubleValue];
         assert(toAddForNutrient>Config_nearZero);
         
-        NSArray * foodsToSupplyOneNutrient = [da getRichNutritionFood:nutrientNameToCal andTopN:topN andIfNeedCustomDefinedFoods:true];//找一些对于这种营养素含量最高的食物
+        NSArray * foodsToSupplyOneNutrient = nil;
+        if (needUseFoodLimitTableWhenCal && needUseLessAsPossibleFood){
+//            int nutrientSupplyCount = [LZUtility getIntFromDictionaryItem_withDictionary:nutrientSupplyCountDict andKey:nutrientNameToCal];
+//            if (nutrientSupplyCount >= 1){
+//                foodsToSupplyOneNutrient =[da getRichFoodForNutrientAmount_withNutrient:nutrientNameToCal andNutrientSupplyAmount:toAddForNutrient andTopN:topN andIfNeedCustomDefinedFoods:true andUpperLimitType:upperLimitTypeForSupplyAsPossible];
+//            }
+            foodsToSupplyOneNutrient =[da getRichFoodForNutrientAmount_withNutrient:nutrientNameToCal andNutrientSupplyAmount:toAddForNutrient andTopN:topN andIfNeedCustomDefinedFoods:true andUpperLimitType:upperLimitTypeForSupplyAsPossible];
+        }
+        if (foodsToSupplyOneNutrient == nil){
+            foodsToSupplyOneNutrient = [da getRichNutritionFood:nutrientNameToCal andTopN:topN andIfNeedCustomDefinedFoods:true];//找一些对于这种营养素含量最高的食物
+        }
         NSMutableArray *normalFoodsToSupplyOneNutrient = [NSMutableArray arrayWithArray:foodsToSupplyOneNutrient];
         NSMutableArray *alreadyUsedFoodsWhenOtherNutrients = [NSMutableArray array];
         //先根据食物是否用过和多样性标识把补当前营养素的食物分为两类
@@ -2047,7 +2068,10 @@
                 double dFoodUpperLimit = defFoodUpperLimit;
                 if (needUseFoodLimitTableWhenCal){//如果使用限制表中的数据
                     NSNumber *nmFoodUpperLimit = food[COLUMN_NAME_Upper_Limit];
-                    if (nmFoodUpperLimit != nil && (NSNull*)nmFoodUpperLimit != [NSNull null]){//用if而不是assert是容错考虑
+                    if ([upperLimitTypeForSupplyAsPossible isEqualToString:COLUMN_NAME_normal_value]){
+                        nmFoodUpperLimit = food[COLUMN_NAME_normal_value];
+                    }
+                    if (nmFoodUpperLimit != nil && (NSNull*)nmFoodUpperLimit != [NSNull null] && [nmFoodUpperLimit doubleValue]>0){//用if而不是assert是容错考虑
                         dFoodUpperLimit = [nmFoodUpperLimit doubleValue];
                     }
                 }
@@ -2093,15 +2117,20 @@
         assert([nmNutrientContentOfFood doubleValue]>0.0);//确认选出的这个食物含这种营养素
         
         double toAddForFood = toAddForNutrient / [nmNutrientContentOfFood doubleValue] * 100.0;//单位是g
-        double dFoodNormalValue = defFoodNormalValue;
+        
+        
+        double dFoodUpVal = defFoodNormalValue;
         if (needUseFoodLimitTableWhenCal){//如果使用限制表中的数据
-            NSNumber *nmFoodNormalValue = food[COLUMN_NAME_normal_value];
-            if(nmFoodNormalValue != nil && (NSNull*)nmFoodNormalValue != [NSNull null]){//用if而不是assert是容错考虑
-                dFoodNormalValue = [nmFoodNormalValue doubleValue];
+            NSNumber *nmFoodUpVal = food[COLUMN_NAME_normal_value];
+            if ([upperLimitTypeForSupplyAsPossible isEqualToString:COLUMN_NAME_Upper_Limit]){
+                nmFoodUpVal = food[COLUMN_NAME_Upper_Limit];
+            }
+            if(nmFoodUpVal != nil && (NSNull*)nmFoodUpVal != [NSNull null] && [nmFoodUpVal doubleValue] > 0){//用if而不是assert是容错考虑
+                dFoodUpVal = [nmFoodUpVal doubleValue];
             }
         }
-        if (toAddForFood - dFoodNormalValue > Config_nearZero){//要补的食物的量对于普通建议量有点多，目前暂且不用上限值，这时这次只取到普通建议量，再找其他食物来补充。
-            toAddForFood = dFoodNormalValue;
+        if (toAddForFood - dFoodUpVal > Config_nearZero){//要补的食物的量对于普通建议量有点多，目前暂且不用上限值，这时这次只取到普通建议量，再找其他食物来补充。
+            toAddForFood = dFoodUpVal;
         }
         
         double dFoodLowerLimit = defFoodLowerLimit;
@@ -2122,6 +2151,8 @@
         [LZUtility addDoubleToDictionaryItem:toAddForFood withDictionary:recommendFoodAmountDict andKey:foodNO];//推荐量累加
         [recommendFoodAttrDict setObject:food forKey:foodNO];
         [LZUtility addDoubleToDictionaryItem:toAddForFood withDictionary:foodSupplyAmountDict andKey:foodNO];//供给量累加
+        [LZUtility addIntToDictionaryItem:1 withDictionary:nutrientSupplyCountDict andKey:nutrientNameToCal];
+        
         
         NSMutableArray *foodSupplyNutrientSeq = [NSMutableArray arrayWithCapacity:5];
         [foodSupplyNutrientSeq addObject:nutrientNameToCal];
