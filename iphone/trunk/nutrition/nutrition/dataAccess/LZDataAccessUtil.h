@@ -17,7 +17,7 @@
 +(NSDictionary *)findRowByKey:(NSArray *)rows andKeyName:(NSString *)keyname andKeyValue:(NSString *)keyvalue;
 -(NSString *)replaceForSqlText:(NSString *)origin;
 
-
+-(void)executeSql:(NSString*)strSql;
 -(void)dropTable:(NSString*)tableName;
 -(void)deleteFromTable:(NSString*)tableName;
 - (BOOL)deleteTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue;

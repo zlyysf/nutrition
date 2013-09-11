@@ -73,17 +73,17 @@ CREATE TABLE CustomRichFood ('NutrientID' TEXT,'NDB_No' TEXT);
 
 
 CREATE TABLE DiseaseNutrient (Disease TEXT, NutrientID TEXT);
-CREATE TABLE DiseaseGroup(DiseaseGroup TEXT, dsGroupType TEXT, dsGroupWizardOrder REAL);
-    目前在使用上把Disease分了两类，一类是在向导页中出现，一类是在病因大列表中出现，这里用 dsGroupType 来区别。向导页有几页，每一页对应一个group。
-CREATE TABLE DiseaseInGroup(DiseaseGroup TEXT, Disease TEXT, DiseaseDepartment TEXT);
+  CREATE UNIQUE INDEX uniqueIndexDiseaseNutrient ON DiseaseNutrient(Disease, NutrientID);
+CREATE TABLE DiseaseGroup(DiseaseGroup TEXT, dsGroupType TEXT); 
+    由于向导页已经取消，dsGroupWizardOrder列用不着了，会被删掉
+CREATE TABLE DiseaseInGroup(DiseaseGroup TEXT, Disease TEXT, DiseaseDepartment TEXT, DiseaseType TEXT, DiseaseTimeType TEXT);
     这里 Disease 与 Group 的关系目前是一个Disease只在一个Group中出现，从而可以认为Disease唯一，Group只是Disease的一个属性。
 
+注意 不同group中可能有相同的disease
 
 
-
-
-
-
+CREATE TABLE UserInfo(AvgHealthValue REAL, HealthCalCount INTEGER, AllUserAvgHealthValue REAL)
+CREATE TABLE UserDiseaseRecord(LogTimeAsId INTEGER, Day INTEGER, TimeType INTEGER, Diseases TEXT, LackNutrientIDs TEXT, LightLackNutrientIDs TEXT, HeavyLackNutrientIDs TEXT, CurHealthValue REAL);
 
 
 

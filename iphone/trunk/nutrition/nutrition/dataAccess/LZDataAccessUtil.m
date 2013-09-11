@@ -63,7 +63,11 @@
 
 
 
-
+-(void)executeSql:(NSString*)strSql
+{
+    FMDatabase *_db = dbfm;
+    [_db executeUpdate:strSql];
+}
 
 
 

@@ -1095,112 +1095,35 @@
 
 
 
-/*
- 目前只是一个临时版本，因为 benefits_nutrition_mapping.xls 的格式尚未定下来
- */
-//-(NSDictionary *)readNutrientDisease
-//{
-//    NSString *fileName = @"benefits_nutrition_mapping.xls";
-//    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
-//    NSLog(@"in readNutrientDisease, xlsPath=%@",xlsPath);
-//    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
-//	assert(reader);
-//    
-//    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, nil];
-//    int startColumnPos = 2, startRowPos = 2;
-//    DHcell *cell;
-//    cell = [reader cellInWorkSheetIndex:0 row:startColumnPos col:startRowPos];
-//    assert(cell.type==cellBlank);
-//
-//    cell = [reader cellInWorkSheetIndex:0 row:startColumnPos+1 col:startRowPos];
-//    assert(cell.type!=cellBlank);
-//    cell = [reader cellInWorkSheetIndex:0 row:startColumnPos col:startRowPos+1];
-//    assert(cell.type!=cellBlank);
-//
-//    
-//    NSMutableArray *diseaseNames = [NSMutableArray arrayWithCapacity:100];
-//    NSMutableArray *nutrientDescs = [NSMutableArray arrayWithCapacity:40];
-//    
-//    
-//    int idxRow,idxCol;
-//    
-//    idxRow=startRowPos+1;
-//    int columnPos_diseaseName = startColumnPos;
-//    BOOL existDiseaseRow = false;
-//    do {
-//        cell = [reader cellInWorkSheetIndex:0 row:idxRow col:columnPos_diseaseName];
-//        existDiseaseRow = (cell.type!=cellBlank && cell.str.length>0);
-//        if (existDiseaseRow){
-//            NSString *diseaseName = cell.str;
-//            NSLog(@"diseaseName: %@ [%d]",diseaseName,idxRow);
-//            [diseaseNames addObject:diseaseName];
-//        }
-//        idxRow++;
-//    } while (existDiseaseRow);
-//    
-//    idxCol = startColumnPos +1;
-//    int rowPos_nutrientDesc = startRowPos;
-//    BOOL existNutrientDesc = false;
-//    do {
-//        cell = [reader cellInWorkSheetIndex:0 row:rowPos_nutrientDesc col:idxCol];
-//        existNutrientDesc = (cell.type!=cellBlank && cell.str.length>0);
-//        if (existNutrientDesc){
-//            NSString *nutrientDesc = cell.str;
-//            NSLog(@"nutrientDesc: %@ [%d]",nutrientDesc,idxCol);
-//            [nutrientDescs addObject:nutrientDesc];
-//        }
-//        idxCol++;
-//    } while (existNutrientDesc);
-//    
-//    NSMutableArray * diseaseNutrientAry = [NSMutableArray arrayWithCapacity:2000];
-//    for(int iCol=0 ; iCol<nutrientDescs.count ; iCol++){
-//        NSString *nutrientDesc = nutrientDescs[iCol];
-//        for(int iRow=0 ; iRow<diseaseNames.count ; iRow++){
-//            NSString *diseaseName = diseaseNames[iRow];
-//            
-//            int idxRow = startRowPos+1+iRow;
-//            int idxCol = startColumnPos+1+iCol;
-////            NSLog(@"[%d,%d]",idxRow,idxCol);
-//            DHcell *cellFlag = [reader cellInWorkSheetIndex:0 row:idxRow col:idxCol];
-//            if (cellFlag.type!=cellBlank && cellFlag.val!=nil && [cellFlag.val intValue]==1){
-//                NSArray *diseaseNutrient = [NSArray arrayWithObjects: diseaseName, nutrientDesc, nil];
-//                NSLog(@"diseaseNutrient: %@ %@ [%d,%d]",diseaseName,nutrientDesc,idxRow,idxCol);
-//                [diseaseNutrientAry addObject:diseaseNutrient];
-//            }
-//        }//for j
-//    }//for i
-//
-////    NSLog(@"in readNutrientDisease, columnNames=%@, rows2D=\n%@",columnNames,diseaseNutrientAry);
-//    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
-//    [retData setObject:columnNames forKey:@"columnNames"];
-//    [retData setObject:diseaseNutrientAry forKey:@"rows2D"];
-//    return retData;
-//}
-
 -(void)convertExcelToSqlite_NutrientDisease
 {
-    NSDictionary * dataInSheet0 = [self readNutrientDiseaseSheet:0];
-    NSDictionary * dataInSheet1 = [self readNutrientDiseaseSheet_withDepartment:1];
-    NSDictionary * dataInSheet2 = [self readNutrientDiseaseSheet:2];
-    NSDictionary * dataInSheet3 = [self readNutrientDiseaseSheet_withDepartment:3];
+    NSDictionary * dataInSheet0 = [self readNutrientDiseaseSheet_with0TypeSome:0];
+    NSDictionary * dataInSheet1 = [self readNutrientDiseaseSheet_with1TypeSome:1 andTypeSomeValue:@"Class"];
+    NSDictionary * dataInSheet2 = [self readNutrientDiseaseSheet_with0TypeSome:2];
+    NSDictionary * dataInSheet3 = [self readNutrientDiseaseSheet_with1TypeSome:3 andTypeSomeValue:@"Department"];
+    //NO dataInSheet4
+    NSDictionary * dataInSheet5 = [self readNutrientDiseaseSheet_with2Type_TimeAndClass:5];
     
     NSMutableArray *columnNames_DiseaseNutrient = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, nil];
-    NSMutableArray *columnNames_DiseaseGroup = [NSMutableArray arrayWithObjects: COLUMN_NAME_DiseaseGroup, COLUMN_NAME_dsGroupType, COLUMN_NAME_dsGroupWizardOrder, nil];
-    NSMutableArray *columnNames_DiseaseInGroup = [NSMutableArray arrayWithObjects: COLUMN_NAME_DiseaseGroup, COLUMN_NAME_Disease, COLUMN_NAME_DiseaseDepartment, nil];
+    NSMutableArray *columnNames_DiseaseGroup = [NSMutableArray arrayWithObjects: COLUMN_NAME_DiseaseGroup, COLUMN_NAME_dsGroupType, nil];
+    NSMutableArray *columnNames_DiseaseInGroup = [NSMutableArray arrayWithObjects: COLUMN_NAME_DiseaseGroup, COLUMN_NAME_Disease, COLUMN_NAME_DiseaseDepartment, COLUMN_NAME_DiseaseType, COLUMN_NAME_DiseaseTimeType,  nil];
     
     NSMutableArray * diseaseNutrientAry = [NSMutableArray arrayWithCapacity:2000];
     NSMutableArray * diseaseGroupAry = [NSMutableArray arrayWithCapacity:10];
     NSMutableArray * diseaseInGroupAry = [NSMutableArray arrayWithCapacity:200];
 
+    //这里的数据有重复的，暂且使用 UNIQUE INDEX 来解决，有重复数据插入会导致当条语句报错但看来不会影响下面的语句
     [diseaseNutrientAry addObjectsFromArray:dataInSheet0[@"diseaseNutrientAry"]];
     [diseaseNutrientAry addObjectsFromArray:dataInSheet1[@"diseaseNutrientAry"]];
     [diseaseNutrientAry addObjectsFromArray:dataInSheet2[@"diseaseNutrientAry"]];
     [diseaseNutrientAry addObjectsFromArray:dataInSheet3[@"diseaseNutrientAry"]];
+    [diseaseNutrientAry addObjectsFromArray:dataInSheet5[@"diseaseNutrientAry"]];
     
-    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet0[@"DiseaseGroup"],DiseaseGroupType_specialPeople,[NSNumber numberWithInt:0], nil]];
-    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet1[@"DiseaseGroup"],DiseaseGroupType_discomfort,[NSNumber numberWithInt:1], nil]];
-    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet2[@"DiseaseGroup"],DiseaseGroupType_healthCare,[NSNumber numberWithInt:2], nil]];
-    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet3[@"DiseaseGroup"],DiseaseGroupType_illness,[NSNumber numberWithInt:0], nil]];
+    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet0[@"DiseaseGroup"],DiseaseGroupType_specialPeople, nil]];
+    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet1[@"DiseaseGroup"],DiseaseGroupType_discomfort, nil]];
+    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet2[@"DiseaseGroup"],DiseaseGroupType_healthCare, nil]];
+    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet3[@"DiseaseGroup"],DiseaseGroupType_illness, nil]];
+    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet5[@"DiseaseGroup"],DiseaseGroupType_DailyDiseaseDiagnose, nil]];
     
     NSMutableArray* (^generateGroupDiseaseRelationsBlockVar)(NSString *sDiseaseGroup,NSArray *validDiseaseAry2D) ;
     generateGroupDiseaseRelationsBlockVar = ^(NSString *sDiseaseGroup,NSArray *validDiseaseAry2D){
@@ -1217,6 +1140,7 @@
     [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet1[@"DiseaseGroup"],dataInSheet1[@"validDiseaseAry2D"])];
     [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet2[@"DiseaseGroup"],dataInSheet2[@"validDiseaseAry2D"])];
     [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet3[@"DiseaseGroup"],dataInSheet3[@"validDiseaseAry2D"])];
+    [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet5[@"DiseaseGroup"],dataInSheet5[@"validDiseaseAry2D"])];
     
     
     
@@ -1233,12 +1157,33 @@
 
     tableName = TABLE_NAME_DiseaseNutrient;
     [db.da createTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient withRows2D:diseaseNutrientAry withPrimaryKey:nil andIfNeedDropTable:true];
+    [db.da executeSql:@"CREATE UNIQUE INDEX uniqueIndexDiseaseNutrient ON DiseaseNutrient(Disease, NutrientID);"];
     [db.da insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient andRows2D:diseaseNutrientAry andIfNeedClearTable:true];
 
 }
 
+-(NSDictionary*)getNutrientDescInDiseaseToNutrientIdDict
+{
+    NSDictionary *nutrientDescToIdDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          @"Vit_A_RAE",@"维生素A",
+                                          @"Vit_C_(mg)",@"维生素C",
+                                          @"Vit_D_(µg)",@"维生素D",
+                                          @"Vit_E_(mg)",@"维生素E",
+                                          @"Riboflavin_(mg)",@"B2, 核黄素, Riboflavin",
+                                          @"Vit_B6_(mg)",@"B6, 吡哆素, Pyridoxine",
+                                          @"Folate_Tot_(µg)",@"B9, 叶酸",
+                                          @"Vit_B12_(µg)",@"B12, 钴胺素, cobalamin",
+                                          @"Calcium_(mg)",@"钙",
+                                          @"Iron_(mg)",@"铁",
+                                          @"Zinc_(mg)",@"锌",
+                                          @"Magnesium_(mg)",@"镁",
+                                          @"Fiber_TD_(g)",@"纤维素",
+                                          @"Protein_(g)",@"蛋白质",
+                                          nil];
+    return nutrientDescToIdDict;
+}
 
--(NSDictionary *)readNutrientDiseaseSheet:(int)sheetIndex
+-(NSDictionary *)readNutrientDiseaseSheet_with0TypeSome:(int)sheetIndex
 {
     NSString *fileName = @"benefits_nutrition_mapping.xls";
     NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
@@ -1257,22 +1202,7 @@
     cell = [reader cellInWorkSheetIndex:0 row:startColumnPos+1 col:startRowPos+1];
     assert(cell.type!=cellBlank);
     
-    NSDictionary *nutrientDescToIdDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          @"Vit_A_RAE",@"维生素A",
-                                          @"Vit_C_(mg)",@"维生素C",
-                                          @"Vit_D_(µg)",@"维生素D",
-                                          @"Vit_E_(mg)",@"维生素E",
-                                          @"Riboflavin_(mg)",@"B2, 核黄素, Riboflavin",
-                                          @"Vit_B6_(mg)",@"B6, 吡哆素, Pyridoxine",
-                                          @"Folate_Tot_(µg)",@"B9, 叶酸",
-                                          @"Vit_B12_(µg)",@"B12, 钴胺素, cobalamin",
-                                          @"Calcium_(mg)",@"钙",
-                                          @"Iron_(mg)",@"铁",
-                                          @"Zinc_(mg)",@"锌",
-                                          @"Fiber_TD_(g)",@"纤维素",
-                                          @"Protein_(g)",@"蛋白质",
-                                          nil];
-    
+    NSDictionary *nutrientDescToIdDict = [self getNutrientDescInDiseaseToNutrientIdDict];
     
     NSMutableArray *diseaseNames = [NSMutableArray arrayWithCapacity:100];
     NSMutableArray *nutrientDescs = [NSMutableArray arrayWithCapacity:40];
@@ -1329,6 +1259,8 @@
         NSMutableArray * validDiseaseAry = [NSMutableArray arrayWithCapacity:2];
         [validDiseaseAry addObject:diseaseName];
         [validDiseaseAry addObject:@""];
+        [validDiseaseAry addObject:@""];
+        [validDiseaseAry addObject:@""];
         [validDiseaseAry2D addObject:validDiseaseAry];
         
         for(int iCol=0 ; iCol<nutrientDescs.count ; iCol++){
@@ -1355,8 +1287,10 @@
 
 
 
-
--(NSDictionary *)readNutrientDiseaseSheet_withDepartment:(int)sheetIndex
+/*
+ typeSomeValue can be : Department, Class
+ */
+-(NSDictionary *)readNutrientDiseaseSheet_with1TypeSome:(int)sheetIndex andTypeSomeValue:(NSString*)typeSomeValue
 {
     NSString *fileName = @"benefits_nutrition_mapping.xls";
     NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
@@ -1375,22 +1309,7 @@
     cell = [reader cellInWorkSheetIndex:0 row:startColumnPos+1 col:startRowPos+1];
     assert(cell.type!=cellBlank);
     
-    NSDictionary *nutrientDescToIdDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                          @"Vit_A_RAE",@"维生素A",
-                                          @"Vit_C_(mg)",@"维生素C",
-                                          @"Vit_D_(µg)",@"维生素D",
-                                          @"Vit_E_(mg)",@"维生素E",
-                                          @"Riboflavin_(mg)",@"B2, 核黄素, Riboflavin",
-                                          @"Vit_B6_(mg)",@"B6, 吡哆素, Pyridoxine",
-                                          @"Folate_Tot_(µg)",@"B9, 叶酸",
-                                          @"Vit_B12_(µg)",@"B12, 钴胺素, cobalamin",
-                                          @"Calcium_(mg)",@"钙",
-                                          @"Iron_(mg)",@"铁",
-                                          @"Zinc_(mg)",@"锌",
-                                          @"Fiber_TD_(g)",@"纤维素",
-                                          @"Protein_(g)",@"蛋白质",
-                                          nil];
-    
+    NSDictionary *nutrientDescToIdDict = [self getNutrientDescInDiseaseToNutrientIdDict];
     
     NSMutableArray *diseaseNames = [NSMutableArray arrayWithCapacity:100];
     NSMutableArray *nutrientDescs = [NSMutableArray arrayWithCapacity:40];
@@ -1441,18 +1360,27 @@
         int idxRow = startRowPos+1+iRow;
         NSString *diseaseName = diseaseNames[iRow];
         DHcell *cellDiseaseDisabled = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:startColumnPos];
-        DHcell *cellDiseaseDepartment = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:startColumnPos+3];
+        DHcell *cellDiseaseTypeSome = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:startColumnPos+3];
         if (cellDiseaseDisabled.type!=cellBlank && cellDiseaseDisabled.val!=nil && [cellDiseaseDisabled.val intValue]==1){
             continue;
         }
-        //assert(cellDiseaseDepartment.str!=nil);
-        NSString *sDiseaseDepartment = @"";
-        if (cellDiseaseDepartment.str!=nil){
-            sDiseaseDepartment = cellDiseaseDepartment.str;
+        //assert(cellDiseaseTypeSome!=nil);
+        NSString *sDiseaseTypeSome = @"";
+        if (cellDiseaseTypeSome.str!=nil){
+            sDiseaseTypeSome = cellDiseaseTypeSome.str;
         }
         NSMutableArray * validDiseaseAry = [NSMutableArray arrayWithCapacity:2];
         [validDiseaseAry addObject:diseaseName];
-        [validDiseaseAry addObject:sDiseaseDepartment];
+        if ([typeSomeValue isEqualToString:@"Department"]){
+            [validDiseaseAry addObject:sDiseaseTypeSome];
+            [validDiseaseAry addObject:@""];
+            [validDiseaseAry addObject:@""];
+        }else{
+            [validDiseaseAry addObject:@""];
+            [validDiseaseAry addObject:sDiseaseTypeSome];
+            [validDiseaseAry addObject:@""];
+        }
+        
         [validDiseaseAry2D addObject:validDiseaseAry];
         
         for(int iCol=0 ; iCol<nutrientDescs.count ; iCol++){
@@ -1476,6 +1404,121 @@
     [retData setObject:validDiseaseAry2D forKey:@"validDiseaseAry2D"];
     return retData;
 }
+
+-(NSDictionary *)readNutrientDiseaseSheet_with2Type_TimeAndClass:(int)sheetIndex
+{
+    NSString *fileName = @"benefits_nutrition_mapping.xls";
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
+    NSLog(@"in readNutrientDiseaseSheet_with2Type_TimeAndClass, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+    //    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, nil];
+    int startColumnPos = 1, startRowPos = 2;
+    int startNutrientDiseaseFlagColumnPos = startColumnPos+5;
+    DHcell *cell;
+    cell = [reader cellInWorkSheetIndex:0 row:startColumnPos col:startRowPos];
+    assert(cell.type==cellBlank);
+    cell = [reader cellInWorkSheetIndex:0 row:startColumnPos+1 col:startRowPos];
+    assert(cell.type!=cellBlank);
+    cell = [reader cellInWorkSheetIndex:0 row:startColumnPos+1 col:startRowPos+1];
+    assert(cell.type!=cellBlank);
+    
+    NSDictionary *nutrientDescToIdDict = [self getNutrientDescInDiseaseToNutrientIdDict];
+    
+    NSMutableArray *diseaseNames = [NSMutableArray arrayWithCapacity:100];
+    NSMutableArray *nutrientDescs = [NSMutableArray arrayWithCapacity:40];
+    
+    
+    int idxRow,idxCol;
+    
+    idxRow=startRowPos+1;
+    int columnPos_diseaseName = startColumnPos+1;
+    BOOL existDiseaseRow = false;
+    do {
+        cell = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:columnPos_diseaseName];
+        existDiseaseRow = (cell.type!=cellBlank && cell.str.length>0);
+        if (existDiseaseRow){
+            NSString *diseaseName = cell.str;
+            NSLog(@"diseaseName: %@ [%d]",diseaseName,idxRow);
+            [diseaseNames addObject:diseaseName];
+        }
+        idxRow++;
+    } while (existDiseaseRow);
+    
+    idxCol = startNutrientDiseaseFlagColumnPos;
+    int rowPos_nutrientDesc = startRowPos;
+    BOOL existNutrientDesc = false;
+    do {
+        cell = [reader cellInWorkSheetIndex:sheetIndex row:rowPos_nutrientDesc col:idxCol];
+        existNutrientDesc = (cell.type!=cellBlank && cell.str.length>0);
+        if (existNutrientDesc){
+            NSString *nutrientDesc = cell.str;
+            NSLog(@"nutrientDesc: %@ [%d]",nutrientDesc,idxCol);
+            [nutrientDescs addObject:nutrientDesc];
+        }
+        idxCol++;
+    } while (existNutrientDesc);
+    [nutrientDescs removeLastObject];
+    for(int i=0; i<nutrientDescs.count; i++){
+        assert(nutrientDescToIdDict[nutrientDescs[i]]!=nil);
+    }
+    
+//    DHcell *cellDiseaseGroup = [reader cellInWorkSheetIndex:sheetIndex row:startRowPos col:startColumnPos+1];
+//    NSString *sDiseaseGroup = [cellDiseaseGroup str];
+    NSString *sDiseaseGroup = DiseaseGroupType_DailyDiseaseDiagnose;
+    assert(sDiseaseGroup.length>0);
+    NSLog(@"sDiseaseGroup: %@",sDiseaseGroup);
+    
+    NSMutableArray * diseaseNutrientAry = [NSMutableArray arrayWithCapacity:2000];
+    NSMutableArray * validDiseaseAry2D = [NSMutableArray arrayWithCapacity:diseaseNames.count];
+    for(int iRow=0 ; iRow<diseaseNames.count ; iRow++){
+        int idxRow = startRowPos+1+iRow;
+        NSString *diseaseName = diseaseNames[iRow];
+        DHcell *cellDiseaseDisabled = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:startColumnPos];
+        DHcell *cellDiseaseTimeType = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:startColumnPos+3];
+        DHcell *cellDiseaseClass = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:startColumnPos+4];
+        if (cellDiseaseDisabled.type!=cellBlank && cellDiseaseDisabled.val!=nil && [cellDiseaseDisabled.val intValue]==1){
+            continue;
+        }
+        NSString *sDiseaseTimeType = @"";
+        if (cellDiseaseTimeType.str!=nil){
+            sDiseaseTimeType = cellDiseaseTimeType.str;
+        }
+        NSString *sDiseaseClass = @"";
+        if (cellDiseaseClass.str!=nil){
+            sDiseaseClass = cellDiseaseClass.str;
+        }
+        NSMutableArray * validDiseaseAry = [NSMutableArray arrayWithCapacity:2];
+        [validDiseaseAry addObject:diseaseName];
+        [validDiseaseAry addObject:@""];
+        [validDiseaseAry addObject:sDiseaseClass];
+        [validDiseaseAry addObject:sDiseaseTimeType];
+        
+        [validDiseaseAry2D addObject:validDiseaseAry];
+        
+        for(int iCol=0 ; iCol<nutrientDescs.count ; iCol++){
+            NSString *nutrientDesc = nutrientDescs[iCol];
+            NSString *nutrientId = nutrientDescToIdDict[nutrientDesc];
+            
+            int idxCol = startNutrientDiseaseFlagColumnPos+iCol;
+            //            NSLog(@"[%d,%d]",idxRow,idxCol);
+            DHcell *cellFlag = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:idxCol];
+            if (cellFlag.type!=cellBlank && cellFlag.val!=nil && [cellFlag.val intValue]==1){
+                NSArray *diseaseNutrient = [NSArray arrayWithObjects: diseaseName, nutrientId, nil];
+                NSLog(@"diseaseNutrient: %@ %@ %@ [%d,%d]",diseaseName,nutrientId,nutrientDesc,idxRow,idxCol);
+                [diseaseNutrientAry addObject:diseaseNutrient];
+            }
+        }//for iCol
+    }//for iRow
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+    [retData setObject:diseaseNutrientAry forKey:@"diseaseNutrientAry"];
+    [retData setObject:sDiseaseGroup forKey:@"DiseaseGroup"];
+    [retData setObject:validDiseaseAry2D forKey:@"validDiseaseAry2D"];
+    return retData;
+}
+
 
 
 
