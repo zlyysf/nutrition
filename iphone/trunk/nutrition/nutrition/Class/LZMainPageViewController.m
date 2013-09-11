@@ -7,7 +7,6 @@
 //
 
 #import "LZMainPageViewController.h"
-#import "LZMainMenuItemCell.h"
 #import "LZUserDietListViewController.h"
 #import "LZSettingsViewController.h"
 #import "LZHealthCheckViewController.h"
@@ -19,7 +18,11 @@
 #import "MobClick.h"
 #import "GADMasterViewController.h"
 #import "LZConstants.h"
+#import "LZMainMenuButton.h"
 @interface LZMainPageViewController ()
+{
+    BOOL isFirstLoad;
+}
 
 @end
 
@@ -49,27 +52,28 @@
                       [NSDictionary dictionaryWithObjectsAndKeys:@"膳食清单",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"个人信息",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"设置",@"menuName", nil],nil];
-    self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
-    [self.admobView setBackgroundColor:[UIColor clearColor]];
-    [self.view addSubview:self.admobView];
-//    if ([LZUtility isIphoneDeviceVersionFive])
-//    {
 
-//    }
-//    else
-//    {
-//        self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
-//        [self.admobView setBackgroundColor:[UIColor clearColor]];
-//        self.listView.tableFooterView = self.admobView;
-//    }
+    [self.view addSubview:self.admobView];
+    int totalFloor = [self.menuArray count]/2+ (([self.menuArray count]%2 == 0)?0:1);
+    float scrollHeight = totalFloor *145 + 20+ (totalFloor-1)*10+50;
+    self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, scrollHeight-50, 320, 50)];
+    [self.listView addSubview:self.admobView];
+    [self.admobView setBackgroundColor:[UIColor clearColor]];
+    [self.listView setContentSize:CGSizeMake(320, scrollHeight)];
+    isFirstLoad = YES;
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:UmengPathZhuYeMian];
-    CGRect mobFrame = CGRectMake(0, self.view.frame.size.height-50, 320, 50);
-    self.admobView.frame = mobFrame;
+//    CGRect mobFrame = CGRectMake(0, self.view.frame.size.height-50, 320, 50);
+//    self.admobView.frame = mobFrame;
     GADMasterViewController *shared = [GADMasterViewController singleton];
     [shared resetAdView:self andListView:self.admobView];
+    if (isFirstLoad)
+    {
+        isFirstLoad = NO;
+        [self setButtons];
+    }
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -99,99 +103,117 @@
     [self setListView:nil];
     [super viewDidUnload];
 }
-#pragma mark- TableViewDataSource
--(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+-(void)setButtons
 {
-    return [self.menuArray count];
+    float startY = 10;
+    int floor = 1;
+    int perRowCount = 2;
+    float startX;
+    for (int i=0; i< [self.menuArray count]; i++)
+    {
+        
+        if (i>=floor *perRowCount)
+        {
+            floor+=1;
+        }
+        startX = 10+(i-(floor-1)*perRowCount)*155;
+        NSDictionary *menuItem = [self.menuArray objectAtIndex:i];
+        NSString *itemName = [menuItem objectForKey:@"menuName"];
+
+        LZMainMenuButton *button = [[LZMainMenuButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*155, 145, 145)];
+        
+        [self.listView addSubview:button];
+        //button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
+        [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"menu_item_%d.png",i]] forState:UIControlStateNormal];
+        button.tag = i+100;
+        [button addTarget:self action:@selector(menuButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [button.itemTitleLabel setText:itemName];
+    }
+
+
 }
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//#pragma mark- TableViewDataSource
+//-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+//{
+//    return [self.menuArray count];
+//}
+//- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    LZMainMenuItemCell * cell =(LZMainMenuItemCell*)[tableView dequeueReusableCellWithIdentifier:@"LZMainMenuItemCell"];
+//    //NSString *typeName = [self.foodTypeArray objectAtIndex:indexPath.row];
+//    NSDictionary *menuItem = [self.menuArray objectAtIndex:indexPath.row];
+//    NSString *itemName = [menuItem objectForKey:@"menuName"];
+//    cell.foodTypeNameLabel.text = itemName;
+//    cell.arrowImage.hidden = YES;
+//    [cell.foodTypeImage setImage:[UIImage imageNamed:[NSString stringWithFormat:@"menu_item_%d.png",indexPath.row]]];
+//    //cell.foodTypeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",typeName]];
+//    return cell;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    return 60;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+//{
+//    return 15;
+//}
+//- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+//{
+//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
+//    [sectionView setBackgroundColor:[UIColor clearColor]];
+//    return sectionView;
+//}
+//- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+//{
+//    return 5;
+//}
+//- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+//{
+//    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
+//    [sectionView setBackgroundColor:[UIColor clearColor]];
+//    return sectionView;
+//}
+//- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+//{
+//    return 1;
+//}
+-(void)menuButtonTapped:(UIButton *)sender
 {
-    LZMainMenuItemCell * cell =(LZMainMenuItemCell*)[tableView dequeueReusableCellWithIdentifier:@"LZMainMenuItemCell"];
-    //NSString *typeName = [self.foodTypeArray objectAtIndex:indexPath.row];
-    NSDictionary *menuItem = [self.menuArray objectAtIndex:indexPath.row];
-    NSString *itemName = [menuItem objectForKey:@"menuName"];
-    cell.foodTypeNameLabel.text = itemName;
-    cell.arrowImage.hidden = YES;
-    [cell.foodTypeImage setImage:[UIImage imageNamed:[NSString stringWithFormat:@"menu_item_%d.png",indexPath.row]]];
-    //cell.foodTypeImage.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",typeName]];
-    return cell;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 60;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
-{
-    return 15;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
-{
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
-    [sectionView setBackgroundColor:[UIColor clearColor]];
-    return sectionView;
-}
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
-{
-    return 5;
-}
-- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
-{
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
-    [sectionView setBackgroundColor:[UIColor clearColor]];
-    return sectionView;
-}
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    return 1;
-}
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    [self.listView deselectRowAtIndexPath:indexPath animated:YES];
+    int tag = sender.tag -100;
+
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    if(indexPath.row == 0)
+    if(tag == 0)
     {
         LZHealthCheckViewController *healthCheckViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZHealthCheckViewController"];
         [self.navigationController pushViewController:healthCheckViewController animated:YES];
     }
-    else if (indexPath.row == 1)
+    else if (tag == 1)
     {
         LZFoodSearchViewController *foodSearchViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodSearchViewController"];
         foodSearchViewController.isFromOut = YES;
         [self.navigationController pushViewController:foodSearchViewController animated:YES];
     }
-    else if (indexPath.row == 2)
+    else if (tag == 2)
     {
         LZNutritionListViewController *nutritionListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZNutritionListViewController"];
         [self.navigationController pushViewController:nutritionListViewController animated:YES];
     }
-    else if (indexPath.row == 3)
+    else if (tag == 3)
     {
         LZUserDietListViewController *userDietListViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZUserDietListViewController"];
         [self.navigationController pushViewController:userDietListViewController animated:YES];
     }
 
-    else if(indexPath.row == 4)
+    else if(tag == 4)
     {
         LZEditProfileViewController *editProfileViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZEditProfileViewController"];
-        //editProfileViewController.firstEnterEditView = YES;
-        //addByNutrientController.foodArray = recommendFoodArray;
-        //addByNutrientController.nutrientTitle = nutrientName;
         [self.navigationController pushViewController:editProfileViewController animated:YES];
-//        LZDiseasePreventViewController *diseasePreventViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDiseasePreventViewController"];
-//        [self.navigationController pushViewController:diseasePreventViewController animated:YES];
     }
-    else if(indexPath.row == 5)
+    else if(tag == 5)
     {
         LZSettingsViewController *settingsViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZSettingsViewController"];
         [self.navigationController pushViewController:settingsViewController animated:YES];
     }
-
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-//    LZDailyIntakeViewController *dailyIntakeViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
-//    dailyIntakeViewController.foodArray = [self.foodNameArray objectAtIndex:indexPath.row];
-//    dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
-//    dailyIntakeViewController.titleString = [self.foodTypeArray objectAtIndex:indexPath.row];
-//    [self.navigationController pushViewController:dailyIntakeViewController animated:YES];
 }
 
 @end

@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZMainPageViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface LZMainPageViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic) NSArray *menuArray;
+@property (strong, nonatomic) IBOutlet UIScrollView *listView;
 @property (strong,nonatomic)UIView *admobView;
 @end
