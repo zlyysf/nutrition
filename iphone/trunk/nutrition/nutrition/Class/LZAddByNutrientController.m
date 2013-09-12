@@ -38,11 +38,14 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
-    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    if (ViewControllerUseBackImage) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+        UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    }
     
-    NSString *tipsStr = [NSString stringWithFormat:@"下列是富含%@的食物，您可以根据我们提供的推荐量来挑选适合自己的食物,没有推荐量时表示已经补满。", nutrientTitle];
+    
+    NSString *tipsStr = [NSString stringWithFormat:@"下列是富含%@的食物，您可以根据我们提供的推荐量来挑选适合自己的食物，补足一天的需求，没有推荐量时表示已经补满。", nutrientTitle];
     CGSize tipSize = [tipsStr sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
     UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, tipSize.height+15)];
     UILabel *tipsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, tipSize.height)];
@@ -319,7 +322,7 @@
         cell.recommendAmountLabel.hidden = NO;
         [cell centeredFoodNameButton:NO];
     }
-    cell.recommendAmountLabel.text = [NSString stringWithFormat:@"推荐量:%dg",amount];
+    cell.recommendAmountLabel.text = [NSString stringWithFormat:@"%dg",amount];
     //int num = [intake intValue];
     //cell.foodAmountLabel.text = [NSString stringWithFormat:@"%dg",num];
     

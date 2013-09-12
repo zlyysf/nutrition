@@ -36,9 +36,12 @@
 {
     [super viewDidLoad];
     isfirstLoad = YES;
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
-    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    if (ViewControllerUseBackImage) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+        UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+
+    }
     if (isFromOut)
     {
         self.title = @"食物查询";

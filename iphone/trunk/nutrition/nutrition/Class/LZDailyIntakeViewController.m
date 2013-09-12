@@ -32,9 +32,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
-    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    if (ViewControllerUseBackImage) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+        UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    }
+
     self.title = titleString;
 //    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
 //    

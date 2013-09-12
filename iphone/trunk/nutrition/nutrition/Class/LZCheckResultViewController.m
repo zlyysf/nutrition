@@ -44,9 +44,12 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
-    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    if (ViewControllerUseBackImage) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+        UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    }
+  
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.view addSubview:HUD];
     HUD.hidden = YES;
@@ -380,9 +383,12 @@
         [saveDietButton setBackgroundImage:button30 forState:UIControlStateNormal];
         [sectionView addSubview:recommendButton];
         [sectionView addSubview:saveDietButton];
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
-        UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
-        [sectionView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+        if (ViewControllerUseBackImage) {
+            NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+            UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+            [sectionView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+
+        }
     }
     else
     {

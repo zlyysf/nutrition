@@ -31,9 +31,12 @@
 {
     [super viewDidLoad];
     self.title = @"营养元素";
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
-    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    if (ViewControllerUseBackImage) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+        UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    }
+    
     nutritionArray = [LZRecommendFood getCustomNutrients:nil];
     isFirstLoad = YES;
     int totalFloor = [nutritionArray count]/3+ (([nutritionArray count]%3 == 0)?0:1);

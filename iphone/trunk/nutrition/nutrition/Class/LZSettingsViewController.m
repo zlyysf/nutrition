@@ -37,10 +37,12 @@
 {
     [super viewDidLoad];
     self.title = @"设置";
+    if (ViewControllerUseBackImage) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+        UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    }
     
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
-    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 //    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];

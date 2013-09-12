@@ -66,11 +66,14 @@
     HUD.delegate = self;
     //self.currentEditFoodId = nil;
 	// Do any additional setup after loading the view.
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
-    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    [self.listView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
-    if (backWithNoAnimation)
+    if (ViewControllerUseBackImage) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+        UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+        [self.listView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+
+    }
+       if (backWithNoAnimation)
     {
         UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
         

@@ -42,9 +42,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     self.title = @"营养膳食指南";
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
-    UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
-    [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    if (ViewControllerUseBackImage) {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
+        UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
+        [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+
+    }
     self.menuArray = [[NSArray alloc]initWithObjects:
                       [NSDictionary dictionaryWithObjectsAndKeys:@"健康诊断",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"食物查询",@"menuName", nil],

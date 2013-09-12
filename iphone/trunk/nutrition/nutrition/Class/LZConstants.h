@@ -20,6 +20,7 @@
 #define Config_nearZero 0.0000001
 #define Config_defaultFoodIncreaseUnit 1
 
+#define ViewControllerUseBackImage 0
 
 #define Config_notAllowSameFood TRUE
 #define Config_ifNeedCustomDefinedFoods TRUE
