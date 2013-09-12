@@ -83,8 +83,10 @@
 -(BOOL)deleteFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId;
 
 -(NSArray*)getDiseaseGroupInfo_byType:(NSString*)groupType;
--(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName;
--(NSDictionary*)getDiseasesOrganizedByDepartment_OfGroup:(NSString*)groupName;
+//-(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName;
+-(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType;
+//-(NSDictionary*)getDiseasesOrganizedByDepartment_OfGroup:(NSString*)groupName;
+-(NSDictionary*)getDiseasesOrganizedByColumn:(NSString*)organizedByColumn andFilters_Group:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType;
 -(NSDictionary*)getDiseaseNutrients_ByDiseaseNames:(NSArray*)diseaseNames;
 
 

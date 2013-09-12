@@ -47,7 +47,7 @@
     NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_discomfort];
     NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
     NSString *illnessGroup = groupAry[0];
-    NSDictionary *info = [da getDiseasesOrganizedByDepartment_OfGroup:illnessGroup];
+    NSDictionary *info = [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
 //    NSLog(@"%@",info);
     self.departmentNamesArray = [info objectForKey:@"departmentNames"];
     NSDictionary * departmentDiseasesDict = [info objectForKey:@"departmentDiseasesDict"];

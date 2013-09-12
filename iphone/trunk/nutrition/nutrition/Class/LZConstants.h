@@ -167,7 +167,7 @@
 #define COLUMN_NAME_Disease @"Disease"
 #define COLUMN_NAME_DiseaseGroup @"DiseaseGroup"
 #define COLUMN_NAME_dsGroupType @"dsGroupType"
-#define COLUMN_NAME_dsGroupWizardOrder @"dsGroupWizardOrder" //TODO delete
+//#define COLUMN_NAME_dsGroupWizardOrder @"dsGroupWizardOrder" //TODO delete
 #define COLUMN_NAME_DiseaseDepartment @"DiseaseDepartment"
 #define COLUMN_NAME_DiseaseType @"DiseaseType"
 #define COLUMN_NAME_DiseaseTimeType @"DiseaseTimeType"

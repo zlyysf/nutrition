@@ -16,10 +16,10 @@
 
 +(void)testMain
 {
-//    [LZTest1 test1];
+    [LZTest1 test1];
 //    [LZTest1 test2];
 //    [LZTest1 test3];
-    [LZTest1 test4];
+//    [LZTest1 test4];
 //    [LZTest1 testRecommendFoodBySmallIncrement];
 }
 
@@ -2247,7 +2247,7 @@ BOOL needLimitNutrients = FALSE;
     LZDataAccess *da = [LZDataAccess singleton];
     NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_wizard];
     NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
-    NSArray *diseaseNames = [da getDiseaseNamesOfGroup:groupAry[0]];
+    NSArray *diseaseNames = [da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:nil];
     NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrients_ByDiseaseNames:diseaseNames];
     
     NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
@@ -2272,17 +2272,24 @@ BOOL needLimitNutrients = FALSE;
     NSArray *diseaseGroupInfoArray;
     NSArray *groupAry;
     NSString *illnessGroup;
+    
+    //预防与调理
 //    diseaseGroupInfoArray= [da getDiseaseGroupInfo_byType:DiseaseGroupType_illness];
 //    groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
 //    illnessGroup = groupAry[0];
-//    [da getDiseasesOrganizedByDepartment_OfGroup:illnessGroup];
+//    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseDepartment andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
     
-    diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_discomfort];
+    //不适症状
+//    diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_discomfort];
+//    groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+//    illnessGroup = groupAry[0];
+//    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
+    
+    //分时间段诊断
+    diseaseGroupInfoArray= [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
     groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
     illnessGroup = groupAry[0];
-    [da getDiseasesOrganizedByDepartment_OfGroup:illnessGroup];
-    
-    
+    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:@"下午"];
 
     
 }

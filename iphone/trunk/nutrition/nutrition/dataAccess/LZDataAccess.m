@@ -1027,112 +1027,7 @@
     NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
     NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:nil andOptions:localOptions];
     
-    
-//    NSMutableString *sqlStrWherePart = [NSMutableString stringWithCapacity:1000*1];
-//    bool firstConditionAdded = false;
-//    if (includeFoodClassAry.count > 0 || includeEqualFoodClassAry>0){
-//        NSMutableString *strLocalConditions = [NSMutableString stringWithCapacity:1000*1];
-//        bool firstInnerConditionAdd = false;
-//        for(int i=0; i<includeFoodClassAry.count; i++){
-//            NSString *includeFoodClass = includeFoodClassAry[i];
-//            assert(includeFoodClass.length>0);
-//            if (firstInnerConditionAdd){
-//                [strLocalConditions appendString:@" OR "];
-//            }else{
-//                firstInnerConditionAdd = true;
-//            }
-//            [strLocalConditions appendString:COLUMN_NAME_classify];
-//            [strLocalConditions appendString:@" LIKE '"];
-//            [strLocalConditions appendString:includeFoodClass];
-//            [strLocalConditions appendString:@"%' "];
-//        }//for
-//        
-//        for(int i=0; i<includeEqualFoodClassAry.count; i++){
-//            NSString *includeEqualFoodClass = includeEqualFoodClassAry[i];
-//            assert(includeEqualFoodClass.length>0);
-//            if (firstInnerConditionAdd){
-//                [strLocalConditions appendString:@" OR "];
-//            }else{
-//                firstInnerConditionAdd = true;
-//            }
-//            [strLocalConditions appendString:COLUMN_NAME_classify];
-//            [strLocalConditions appendString:@" ='"];
-//            [strLocalConditions appendString:includeEqualFoodClass];
-//            [strLocalConditions appendString:@"' "];
-//        }//for
-//        
-//        [sqlStrWherePart appendString:@"\n "];
-//        if (firstConditionAdded){
-//            [sqlStrWherePart appendString:@" AND "];
-//        }else{
-//            firstConditionAdded = true;
-//        }
-//        [sqlStrWherePart appendString:@"("];
-//        [sqlStrWherePart appendString:strLocalConditions];
-//        [sqlStrWherePart appendString:@")"];
-//    }
-//    
-//    for(int i=0; i<excludeFoodClassAry.count; i++){
-//        NSString *excludeFoodClass = excludeFoodClassAry[i];
-//        if(excludeFoodClass.length > 0){
-//            [sqlStrWherePart appendString:@"\n "];
-//            if (firstConditionAdded){
-//                [sqlStrWherePart appendString:@" AND "];
-//            }else{
-//                firstConditionAdded = true;
-//            }
-//            [sqlStrWherePart appendString:@" NOT "];
-//            [sqlStrWherePart appendString:COLUMN_NAME_classify];
-//            [sqlStrWherePart appendString:@" LIKE '"];
-//            [sqlStrWherePart appendString:excludeFoodClass];
-//            [sqlStrWherePart appendString:@"%' "];
-//        }
-//    }//for
-//
-//    NSMutableArray *allFoodIds = [NSMutableArray array];
-//    if(includeFoodIds.count > 0){
-//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
-//        for(int i=0; i<includeFoodIds.count; i++){
-//            [placeholderAry addObject:@"?"];
-//        }
-//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-//        [sqlStrWherePart appendString:@"\n "];
-//        if (firstConditionAdded){
-//            [sqlStrWherePart appendString:@" AND "];
-//        }else{
-//            firstConditionAdded = true;
-//        }
-//        [sqlStrWherePart appendString:@" F.NDB_No in ("];
-//        [sqlStrWherePart appendString:placeholdersStr];
-//        [sqlStrWherePart appendString:@") "];
-//        [allFoodIds addObjectsFromArray:includeFoodIds];
-//    }
-//    if(excludeFoodIds.count > 0){
-//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:excludeFoodIds.count];
-//        for(int i=0; i<excludeFoodIds.count; i++){
-//            [placeholderAry addObject:@"?"];
-//        }
-//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-//        [sqlStrWherePart appendString:@"\n "];
-//        if (firstConditionAdded){
-//            [sqlStrWherePart appendString:@" AND "];
-//        }else{
-//            firstConditionAdded = true;
-//        }
-//        [sqlStrWherePart appendString:@" NOT F.NDB_No in ("];
-//        [sqlStrWherePart appendString:placeholdersStr];
-//        [sqlStrWherePart appendString:@") "];
-//        [allFoodIds addObjectsFromArray:excludeFoodIds];
-//    }
-//    if (sqlStrWherePart.length > 0){
-//        [sqlStr appendString:@" WHERE "];
-//        [sqlStr appendString:sqlStrWherePart];
-//    }
-//    
-//    NSLog(@"getFoodIdsByFilters_withIncludeFoodClass sqlStr=%@",sqlStr);
-//    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
-//    NSArray * dataAry = [LZDataAccess FMResultSetToDictionaryArray:rs];
-    
+        
     NSMutableArray *foodIdAry = [NSMutableArray arrayWithCapacity:dataAry.count];
     for(int i=0; i<dataAry.count; i++){
         NSDictionary *foodInfo = dataAry[i];
@@ -1217,94 +1112,6 @@
     NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
     NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:nil andOptions:localOptions];
     return dataAry;
-    
-//    
-//    NSMutableString *sqlStrWherePart = [NSMutableString stringWithCapacity:1000*1];
-//    bool firstConditionAdded = false;
-//    if(includeFoodClass.length > 0){
-//        [sqlStrWherePart appendString:@"\n "];
-//        if (firstConditionAdded){
-//            [sqlStrWherePart appendString:@" AND "];
-//        }else{
-//            firstConditionAdded = true;
-//        }
-//        [sqlStrWherePart appendString:COLUMN_NAME_classify];
-//        [sqlStrWherePart appendString:@" LIKE '"];
-//        [sqlStrWherePart appendString:includeFoodClass];
-//        [sqlStrWherePart appendString:@"%' "];
-//    }
-//    if(excludeFoodClass.length > 0){
-//        [sqlStrWherePart appendString:@"\n "];
-//        if (firstConditionAdded){
-//            [sqlStrWherePart appendString:@" AND "];
-//        }else{
-//            firstConditionAdded = true;
-//        }
-//        [sqlStrWherePart appendString:@" NOT "];
-//        [sqlStrWherePart appendString:COLUMN_NAME_classify];
-//        [sqlStrWherePart appendString:@" LIKE '"];
-//        [sqlStrWherePart appendString:excludeFoodClass];
-//        [sqlStrWherePart appendString:@"%' "];
-//    }
-//    
-//    if(equalClass.length > 0){
-//        [sqlStrWherePart appendString:@"\n "];
-//        if (firstConditionAdded){
-//            [sqlStrWherePart appendString:@" AND "];
-//        }else{
-//            firstConditionAdded = true;
-//        }
-//        [sqlStrWherePart appendString:COLUMN_NAME_classify];
-//        [sqlStrWherePart appendString:@" ='"];
-//        [sqlStrWherePart appendString:equalClass];
-//        [sqlStrWherePart appendString:@"' "];
-//    }
-//    
-//    NSMutableArray *allFoodIds = [NSMutableArray array];
-//    if(includeFoodIds.count > 0){
-//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:includeFoodIds.count];
-//        for(int i=0; i<includeFoodIds.count; i++){
-//            [placeholderAry addObject:@"?"];
-//        }
-//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-//        [sqlStrWherePart appendString:@"\n "];
-//        if (firstConditionAdded){
-//            [sqlStrWherePart appendString:@" AND "];
-//        }else{
-//            firstConditionAdded = true;
-//        }
-//        [sqlStrWherePart appendString:@" F.NDB_No in ("];
-//        [sqlStrWherePart appendString:placeholdersStr];
-//        [sqlStrWherePart appendString:@") "];
-//        [allFoodIds addObjectsFromArray:includeFoodIds];
-//    }
-//    if(excludeFoodIds.count > 0){
-//        NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:excludeFoodIds.count];
-//        for(int i=0; i<excludeFoodIds.count; i++){
-//            [placeholderAry addObject:@"?"];
-//        }
-//        NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-//        [sqlStrWherePart appendString:@"\n "];
-//        if (firstConditionAdded){
-//            [sqlStrWherePart appendString:@" AND "];
-//        }else{
-//            firstConditionAdded = true;
-//        }
-//        [sqlStrWherePart appendString:@" NOT F.NDB_No in ("];
-//        [sqlStrWherePart appendString:placeholdersStr];
-//        [sqlStrWherePart appendString:@") "];
-//        [allFoodIds addObjectsFromArray:excludeFoodIds];
-//    }
-//    if (sqlStrWherePart.length > 0){
-//        [sqlStr appendString:@" WHERE "];
-//        [sqlStr appendString:sqlStrWherePart];
-//    }
-//
-//    NSLog(@"getFoodsByFilters_withIncludeFoodClass sqlStr=%@",sqlStr);
-//    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:allFoodIds];
-//    NSArray * dataAry = [LZDataAccess FMResultSetToDictionaryArray:rs];
-//    NSLog(@"getFoodsByFilters_withIncludeFoodClass ret:\n%@",dataAry);
-//    return dataAry;
 }
 -(NSDictionary *) getOneFoodByFilters_withIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andEqualClass:(NSString*)equalClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds
 {
@@ -1784,8 +1591,7 @@
 
 -(NSArray*)getDiseaseGroupInfo_byType:(NSString*)groupType
 {
-//    NSArray *dgDictAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseGroup andField:COLUMN_NAME_dsGroupType andValue:groupType andColumns:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseGroup, nil] andOrderByPart:COLUMN_NAME_dsGroupWizardOrder];
-    NSArray *dgDictAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseGroup andField:COLUMN_NAME_dsGroupType andValue:groupType andColumns:nil andOrderByPart:COLUMN_NAME_dsGroupWizardOrder andNeedDistinct:false];
+    NSArray *dgDictAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseGroup andField:COLUMN_NAME_dsGroupType andValue:groupType andColumns:nil andOrderByPart:nil andNeedDistinct:false];
 //    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:dgDictAry];
 //    return groupAry;
     NSLog(@"getDiseaseGroup_byType ret:%@", [LZUtility getObjectDescription:dgDictAry andIndent:0] );
@@ -1793,15 +1599,21 @@
 //    NSLog(@"getDiseaseGroup_byType ret:%s",[[dgDictAry debugDescription] UTF8String]);// show chinese as unicode as '\U1234'
 //    NSLog(@"getDiseaseGroup_byType ret:%s",[[dgDictAry description] UTF8String]);// show chinese as unicode as '\U1234'
 //    NSLog(@"getDiseaseGroup_byType ret:%s",[[dgDictAry description] UTF8String]);// show chinese as unicode as '\U1234'
-    
-    [dgDictAry descriptionWithLocale:nil indent:1];
     return dgDictAry;
 }
 
--(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName
+-(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType
 {
-    NSLog(@"getDiseaseNamesOfGroup enter, groupName=%@",groupName);
-    NSArray *diseaseInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease, nil] andOrderByPart:nil andNeedDistinct:false];
+    NSLog(@"getDiseaseNamesOfGroup enter, groupName=%@, department=%@, diseaseType=%@, timeType=%@",groupName,department,diseaseType,timeType);
+//    NSArray *diseaseInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease, nil] andOrderByPart:nil andNeedDistinct:false];
+    
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    if (groupName != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseGroup,groupName, nil]];
+    if (department != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseDepartment,department, nil]];
+    if (diseaseType != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseType,diseaseType, nil]];
+    if (timeType != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseTimeType,timeType, nil]];
+
+    NSArray *diseaseInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease, nil] andOrderByPart:nil andNeedDistinct:false];
     NSArray *diseaseNameAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_Disease andDictionaryArray:diseaseInfoAry];
     
 //    NSLog(@"getDiseaseNamesOfGroup return=%@",[diseaseNameAry descriptionWithLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"]]); // show chinese as unicode as '\U1234'
@@ -1812,20 +1624,29 @@
 /*
  Departments -- array, DepartmentDiseasesDict -- array dict
  */
--(NSDictionary*)getDiseasesOrganizedByDepartment_OfGroup:(NSString*)groupName
+//-(NSDictionary*)getDiseasesOrganizedByDepartment_OfGroup:(NSString*)groupName
+-(NSDictionary*)getDiseasesOrganizedByColumn:(NSString*)organizedByColumn andFilters_Group:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType
 {
-    NSLog(@"getDiseasesOrganizedByDepartment_OfGroup enter, groupName=%@",groupName);
+    NSLog(@"getDiseasesOrganizedByColumn enter, organizedByColumn=%@, groupName=%@, department=%@, diseaseType=%@, timeType=%@",organizedByColumn,groupName,department,diseaseType,timeType);
     
-    NSArray *departmentInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseDepartment, nil] andOrderByPart:nil andNeedDistinct:true];
-    NSLog(@"getDiseasesOrganizedByDepartment_OfGroup departmentInfoAry=%@", [LZUtility getObjectDescription:departmentInfoAry andIndent:0] );
-    NSArray *departmentNames = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseDepartment andDictionaryArray:departmentInfoAry];
+//    NSArray *departmentInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseDepartment, nil] andOrderByPart:nil andNeedDistinct:true];
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    if (groupName != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseGroup,groupName, nil]];
+    if (department != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseDepartment,department, nil]];
+    if (diseaseType != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseType,diseaseType, nil]];
+    if (timeType != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseTimeType,timeType, nil]];
     
-    NSArray *diseaseRowAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease,COLUMN_NAME_DiseaseDepartment, nil] andOrderByPart:nil andNeedDistinct:false];
+    NSArray *departmentInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:organizedByColumn, nil] andOrderByPart:nil andNeedDistinct:true];
+    NSLog(@"getDiseasesOrganizedByColumn departmentInfoAry=%@", [LZUtility getObjectDescription:departmentInfoAry andIndent:0] );
+    NSArray *departmentNames = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:organizedByColumn andDictionaryArray:departmentInfoAry];
+    
+//    NSArray *diseaseRowAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andField:COLUMN_NAME_DiseaseGroup andValue:groupName andColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease,COLUMN_NAME_DiseaseDepartment, nil] andOrderByPart:nil andNeedDistinct:false];
+    NSArray *diseaseRowAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease,organizedByColumn, nil] andOrderByPart:nil andNeedDistinct:false];
     NSMutableDictionary *departmentDiseasesDict = [NSMutableDictionary dictionaryWithCapacity:departmentNames.count];
     for(int i=0; i<diseaseRowAry.count; i++){
         NSDictionary *diseaseRow = diseaseRowAry[i];
         NSString *diseaseName = diseaseRow[COLUMN_NAME_Disease];
-        NSString *diseaseDepartment = diseaseRow[COLUMN_NAME_DiseaseDepartment];
+        NSString *diseaseDepartment = diseaseRow[organizedByColumn];
         [LZUtility addUnitItemToArrayDictionary_withUnitItem:diseaseName withArrayDictionary:departmentDiseasesDict andKey:diseaseDepartment];
     }
     
@@ -1838,7 +1659,7 @@
                                     departmentNames,@"departmentNames",
                                     departmentDiseasesDict,@"departmentDiseasesDict",
                                     nil];
-    NSLog(@"getDiseasesOrganizedByDepartment_OfGroup ret:%@", [LZUtility getObjectDescription:retData andIndent:0] );
+    NSLog(@"getDiseasesOrganizedByColumn ret:%@", [LZUtility getObjectDescription:retData andIndent:0] );
     return retData;
 }
 

@@ -293,6 +293,9 @@
     return [self selectTableByEqualFilter_withTableName:tableName andField:fieldName andValue:fieldValue andColumns:nil andOrderByPart:nil andNeedDistinct:false];
 }
 
+/*
+ 这里 orderByPart 不带 ORDER BY
+ */
 - (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValue:(NSObject*)fieldValue andColumns:(NSArray*)columns andOrderByPart:(NSString*)orderByPart andNeedDistinct:(BOOL)needDistinct
 {
     NSString *columnsPart = @"*";
@@ -311,6 +314,49 @@
     //    NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
     NSArray *ary = [LZDataAccess FMResultSetToDictionaryArray:rs];
     return ary;
+}
+/*
+ 这里 orderByPart 不带 ORDER BY
+ */
+- (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andFieldValuePairs:(NSArray *)fieldValuePairs andSelectColumns:(NSArray*)selectColumns andOrderByPart:(NSString*)orderByPart andNeedDistinct:(BOOL)needDistinct
+{
+    NSLog(@"selectTableByEqualFilter_withTableName enter");
+    NSString *columnsPart = @"*";
+    if (selectColumns.count>0){
+        columnsPart = [selectColumns componentsJoinedByString:@","];
+    }
+    NSString *distinctPart = @"";
+    if ( needDistinct )
+        distinctPart = @"DISTINCT";
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithFormat: @"SELECT %@ %@ FROM %@ ",distinctPart,columnsPart,tableName];
+    
+    NSMutableString *afterWherePart = [NSMutableString stringWithFormat:@""];
+    if (orderByPart.length>0)
+        [afterWherePart appendFormat:@" ORDER BY %@",orderByPart];
+
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+    for(int i=0; i<fieldValuePairs.count; i++){
+        NSArray* fieldValuePair = fieldValuePairs[i];
+        assert(fieldValuePair.count==2);
+        NSString *strColumn = fieldValuePair[0];
+        NSString *strOp = @"=";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:[NSArray arrayWithObjects:fieldValuePair[1], nil] ];
+        [exprIncludeANDdata addObject:expr];
+    }
+
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+                             //exprIncludeORdata,@"includeOR",
+                             exprIncludeANDdata,@"includeAND",
+                             //exprExcludedata,@"exclude",
+                             nil];
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:afterWherePart andOptions:localOptions];
+    return dataAry;
+
 }
 
 - (NSArray *)selectTableByInFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValues:(NSArray*)fieldValues andColumns:(NSArray*)columns andOrderByPart:(NSString*)orderByPart
