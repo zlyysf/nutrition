@@ -158,7 +158,7 @@
 -(BOOL) enableLocation
 {
     //启用location会有一次alert提示
-    return NO;
+    return YES;
 }
 
 
