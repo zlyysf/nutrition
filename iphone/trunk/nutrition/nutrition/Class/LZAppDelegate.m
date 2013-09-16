@@ -20,6 +20,7 @@
 {
     // Override point for customization after application launch.
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    [LZUtility currentTimeZone];
     //custom navigationbar and barbuttonitem
     if(KeyIsEnvironmentDebug)
     {

@@ -647,7 +647,15 @@
     [comp1 year]  == [comp2 year];
     
 }
-
++(void)currentTimeZone
+{
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    NSDate *now = [NSDate date];
+    unsigned unitFlags = NSHourCalendarUnit|NSMinuteCalendarUnit;
+    NSDateComponents * currentComp = [calendar components:unitFlags fromDate:now];
+    if ([currentComp hour]) {
+    }
+}
 +(NSString*)convertNumberToFoodIdStr:(NSNumber *)foodIdNum
 {
     NSString *s = [NSString stringWithFormat:@"%05d",[foodIdNum intValue]];
