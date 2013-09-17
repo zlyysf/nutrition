@@ -514,7 +514,7 @@
                                 [UIColor colorWithRed:230/255.f green:71/255.f blue:132/255.f alpha:1.0f],@"Calcium_(mg)",
                                 [UIColor colorWithRed:200/255.f green:56/255.f blue:242/255.f alpha:1.0f],@"Copper_(mg)",
                                 [UIColor colorWithRed:66/255.f green:108/255.f blue:169/255.f alpha:1.0f],@"Iron_(mg)",
-                                [UIColor colorWithRed:70/255.f green:220/255.f blue:3/255.f alpha:1.0f],@"Magnesium_(mg)",
+                                [UIColor colorWithRed:208/255.f green:100/255.f blue:206/255.f alpha:1.0f],@"Magnesium_(mg)",
                                 [UIColor colorWithRed:107/255.f green:22/255.f blue:132/255.f alpha:1.0f],@"Manganese_(mg)",
                                 [UIColor colorWithRed:142/255.f green:72/255.f blue:32/255.f alpha:1.0f],@"Phosphorus_(mg)",
                                 [UIColor colorWithRed:136/255.f green:136/255.f blue:136/255.f alpha:1.0f],@"Selenium_(µg)",
