@@ -647,13 +647,24 @@
     [comp1 year]  == [comp2 year];
     
 }
-+(void)currentTimeZone
++(NSString *)getCurrentTimeIdentifier
 {
     NSCalendar *calendar = [NSCalendar currentCalendar];
     NSDate *now = [NSDate date];
     unsigned unitFlags = NSHourCalendarUnit|NSMinuteCalendarUnit;
     NSDateComponents * currentComp = [calendar components:unitFlags fromDate:now];
-    if ([currentComp hour]) {
+    int hour = [currentComp hour];//([currentComp hour]+ ([currentComp minute]>0?1:0))%24;
+    if (hour >=4 && hour < 12)
+    {
+        return @"早上";//@"上午";
+    }
+    else if (hour >=12 && hour < 20)
+    {
+        return @"下午";
+    }
+    else
+    {
+       return @"晚上";//@"睡前";
     }
 }
 +(NSString*)convertNumberToFoodIdStr:(NSNumber *)foodIdNum

@@ -89,7 +89,8 @@
 +(void)addFood:(NSString *)foodId withFoodAmount:(NSNumber *)foodAmount;
 
 +(void)setReviewFlagForNewVersion;
-+(void)currentTimeZone;
+
++(NSString *)getCurrentTimeIdentifier;
 @end
 
 
