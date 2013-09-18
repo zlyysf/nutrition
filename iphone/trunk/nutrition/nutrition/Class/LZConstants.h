@@ -171,6 +171,12 @@
 #define COLUMN_NAME_DiseaseDepartment @"DiseaseDepartment"
 #define COLUMN_NAME_DiseaseType @"DiseaseType"
 #define COLUMN_NAME_DiseaseTimeType @"DiseaseTimeType"
+#define COLUMN_NAME_LackLevelMark @"LackLevelMark"
+
+#define TABLE_NAME_UserCheckDiseaseRecord @"UserCheckDiseaseRecord"
+#define COLUMN_NAME_Day @"Day"
+#define COLUMN_NAME_TimeType @"TimeType"
+
 
 #define DiseaseGroupType_wizard @"wizard"
 #define DiseaseGroupType_specialPeople @"specialPeople"

@@ -72,8 +72,9 @@ CREATE TABLE CustomRichFood ('NutrientID' TEXT,'NDB_No' TEXT);
 
 
 
-CREATE TABLE DiseaseNutrient (Disease TEXT, NutrientID TEXT);
-  CREATE UNIQUE INDEX uniqueIndexDiseaseNutrient ON DiseaseNutrient(Disease, NutrientID);
+CREATE TABLE DiseaseNutrient (Disease TEXT, NutrientID TEXT, DiseaseGroup TEXT, LackLevelMark INTEGER);
+  CREATE UNIQUE INDEX uniqueIndexDiseaseNutrient ON DiseaseNutrient(Disease, NutrientID, DiseaseGroup);
+  由于疾病与营养的对应关系上还有一些其他属性，如缺乏程度分值，并且这个属性只在特定的group上出现，考虑到在特定group中疾病营养对有重复的情况，这里干脆加一个DiseaseGroup列。
 CREATE TABLE DiseaseGroup(DiseaseGroup TEXT, dsGroupType TEXT); 
     由于向导页已经取消，dsGroupWizardOrder列用不着了，会被删掉
 CREATE TABLE DiseaseInGroup(DiseaseGroup TEXT, Disease TEXT, DiseaseDepartment TEXT, DiseaseType TEXT, DiseaseTimeType TEXT);
@@ -82,8 +83,8 @@ CREATE TABLE DiseaseInGroup(DiseaseGroup TEXT, Disease TEXT, DiseaseDepartment T
 注意 不同group中可能有相同的disease
 
 
-CREATE TABLE UserInfo(AvgHealthValue REAL, HealthCalCount INTEGER, AllUserAvgHealthValue REAL)
-CREATE TABLE UserDiseaseRecord(LogTimeAsId INTEGER, Day INTEGER, TimeType INTEGER, Diseases TEXT, LackNutrientIDs TEXT, LightLackNutrientIDs TEXT, HeavyLackNutrientIDs TEXT, CurHealthValue REAL);
+//CREATE TABLE UserInfo(AvgHealthValue REAL, HealthCalCount INTEGER, AllUserAvgHealthValue REAL);
+CREATE TABLE UserCheckDiseaseRecord(Day INTEGER, TimeType INTEGER, UpdateTime INTEGER, Diseases TEXT, LackNutrientIDs TEXT, HealthMark INTEGER);
 
 
 

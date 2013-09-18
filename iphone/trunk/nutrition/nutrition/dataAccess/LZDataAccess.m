@@ -1663,33 +1663,119 @@
     return retData;
 }
 
--(NSDictionary*)getDiseaseNutrients_ByDiseaseNames:(NSArray*)diseaseNames
+//-(NSDictionary*)getDiseaseNutrients_ByDiseaseNames:(NSArray*)diseaseNames
+//{
+//    NSArray *diseaseNutrientRows = [self selectTableByInFilter_withTableName:TABLE_NAME_DiseaseNutrient andField:COLUMN_NAME_Disease andValues:diseaseNames andColumns:nil andOrderByPart:nil];
+//    NSLog(@"in getDiseaseNutrients_ByDiseaseNames, diseaseNutrientRows=%@",[LZUtility getObjectDescription:diseaseNutrientRows andIndent:0]);
+//    
+//    NSMutableDictionary * diseaseNutrientsDict = [NSMutableDictionary dictionaryWithCapacity:diseaseNames.count];
+//    for(int i=0; i<diseaseNutrientRows.count; i++){
+//        NSDictionary *diseaseNutrientRow = diseaseNutrientRows[i];
+//        NSString *diseaseName = diseaseNutrientRow[COLUMN_NAME_Disease];
+//        NSString *nutrientId = diseaseNutrientRow[COLUMN_NAME_NutrientID];
+//        [LZUtility addUnitItemToArrayDictionary_withUnitItem:nutrientId withArrayDictionary:diseaseNutrientsDict andKey:diseaseName];
+//    }
+//    NSLog(@"in getDiseaseNutrients_ByDiseaseNames, diseaseNutrientsDict=%@",[LZUtility getObjectDescription:diseaseNutrientsDict andIndent:0]);
+//    return diseaseNutrientsDict;
+//}
+
+-(NSDictionary*)getDiseaseNutrientRows_ByDiseaseNames:(NSArray*)diseaseNames andDiseaseGroup:(NSString*)groupName
 {
-    NSArray *diseaseNutrientRows = [self selectTableByInFilter_withTableName:TABLE_NAME_DiseaseNutrient andField:COLUMN_NAME_Disease andValues:diseaseNames andColumns:nil andOrderByPart:nil];
-    NSLog(@"in getDiseaseNutrients_ByDiseaseNames, diseaseNutrientRows=%@",[LZUtility getObjectDescription:diseaseNutrientRows andIndent:0]);
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    if (groupName != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseGroup,groupName, nil]];
+    if (diseaseNames != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_Disease,diseaseNames, nil]];
     
-    NSMutableDictionary * diseaseNutrientsDict = [NSMutableDictionary dictionaryWithCapacity:diseaseNames.count];
+    NSArray *diseaseNutrientRows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseNutrient andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease,COLUMN_NAME_NutrientID,COLUMN_NAME_LackLevelMark, nil] andOrderByPart:nil andNeedDistinct:true];
+    NSLog(@"getDiseaseNutrientRows_ByDiseaseNames diseaseNutrientRows=%@", [LZUtility getObjectDescription:diseaseNutrientRows andIndent:0] );
+    
+    NSMutableDictionary * diseaseNutrientInfosByDiseaseDict = [NSMutableDictionary dictionaryWithCapacity:diseaseNames.count];
     for(int i=0; i<diseaseNutrientRows.count; i++){
         NSDictionary *diseaseNutrientRow = diseaseNutrientRows[i];
         NSString *diseaseName = diseaseNutrientRow[COLUMN_NAME_Disease];
-        NSString *nutrientId = diseaseNutrientRow[COLUMN_NAME_NutrientID];
-        [LZUtility addUnitItemToArrayDictionary_withUnitItem:nutrientId withArrayDictionary:diseaseNutrientsDict andKey:diseaseName];
+        [LZUtility addUnitItemToArrayDictionary_withUnitItem:diseaseNutrientRow withArrayDictionary:diseaseNutrientInfosByDiseaseDict andKey:diseaseName];
     }
-    NSLog(@"in getDiseaseNutrients_ByDiseaseNames, diseaseNutrientsDict=%@",[LZUtility getObjectDescription:diseaseNutrientsDict andIndent:0]);
-    return diseaseNutrientsDict;
+    NSLog(@"in getDiseaseNutrientRows_ByDiseaseNames, diseaseNutrientInfosByDiseaseDict=%@",[LZUtility getObjectDescription:diseaseNutrientInfosByDiseaseDict andIndent:0]);
+    return diseaseNutrientInfosByDiseaseDict;
 }
 
 
+/*
+ day 是 8位整数,如  20120908
+ TimeType 等于 0时，表示没有TimeType的过滤条件
+ */
+-(NSArray*)getUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType
+{
+    NSLog(@"getUserCheckDiseaseRecord_withDay enter");
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_Day,[NSNumber numberWithInt:day], nil]];
+    if (TimeType > 0) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_TimeType,[NSNumber numberWithInt:TimeType], nil]];
+    
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_UserCheckDiseaseRecord andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:nil andNeedDistinct:false];
+    NSLog(@"getUserCheckDiseaseRecord_withDay rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    return rows;
+}
+-(BOOL)saveUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType UpdateTime:(NSDate*)UpdateTime andDiseases:(NSArray*)Diseases andLackNutrientIDs:(NSArray*)LackNutrientIDs andHealthMark:(int)HealthMark
+{
+    NSLog(@"saveUserCheckDiseaseRecord_withDay enter");
+    NSArray *rows = [self getUserCheckDiseaseRecord_withDay:day andTimeType:TimeType];
+    if (rows.count ==0){
+        return [self insertUserCheckDiseaseRecord_withDay:day andTimeType:TimeType UpdateTime:UpdateTime andDiseases:Diseases andLackNutrientIDs:LackNutrientIDs andHealthMark:HealthMark];
+    }else{
+        return [self updateUserCheckDiseaseRecord_withDay:day andTimeType:TimeType UpdateTime:UpdateTime andDiseases:Diseases andLackNutrientIDs:LackNutrientIDs andHealthMark:HealthMark];
+    }
+}
+/*
+ day 是 8位整数,如  20120908
+ TimeType 的可取值：1 代表上午，2 代表下午，3 代表晚上
+ */
+-(BOOL)insertUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType UpdateTime:(NSDate*)UpdateTime andDiseases:(NSArray*)Diseases andLackNutrientIDs:(NSArray*)LackNutrientIDs andHealthMark:(int)HealthMark
+{
+    NSLog(@"insertUserCheckDiseaseRecord_withDay enter");
+//    NSDateFormatter *dtFmt_yyyyMMdd_CurrentTimeZone = [[NSDateFormatter alloc]init];
+//    [dtFmt_yyyyMMdd_CurrentTimeZone setDateFormat:@"yyyyMMdd"];
+//    NSDateFormatter *dtFmt_HHmmss_CurrentTimeZone = [[NSDateFormatter alloc]init];
+//    [dtFmt_HHmmss_CurrentTimeZone setDateFormat:@"HHmmss"];
+    
+    NSTimeInterval dUpdateTime = [UpdateTime timeIntervalSince1970];
+    long long llUpdateTime = (long long)round(dUpdateTime*1000);
+    NSString *sDiseases = @"";
+    if (Diseases!=nil && Diseases.count > 0){
+        sDiseases = [Diseases componentsJoinedByString:@","];
+    }
+    NSString *sLackNutrientIDs = @"";
+    if (LackNutrientIDs!=nil && LackNutrientIDs.count > 0){
+        sLackNutrientIDs = [LackNutrientIDs componentsJoinedByString:@","];
+    }
 
+    NSString *insertSql = [NSString stringWithFormat:
+                           @"INSERT INTO UserCheckDiseaseRecord (Day, TimeType, UpdateTime, Diseases, LackNutrientIDs, HealthMark) VALUES (?,?,?,?,?,?);"
+                           ];
+    NSArray *paramAry = [NSArray arrayWithObjects:[NSNumber numberWithInt:day], [NSNumber numberWithInt:TimeType], [NSNumber numberWithLongLong:llUpdateTime], sDiseases, sLackNutrientIDs, [NSNumber numberWithInt:HealthMark], nil];
+    BOOL dbopState = [dbfm executeUpdate:insertSql error:nil withArgumentsInArray:paramAry];
+    return dbopState;
+}
+-(BOOL)updateUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType UpdateTime:(NSDate*)UpdateTime andDiseases:(NSArray*)Diseases andLackNutrientIDs:(NSArray*)LackNutrientIDs andHealthMark:(int)HealthMark
+{
+    NSLog(@"updateUserCheckDiseaseRecord_withDay enter");
 
-
-
-
-
-
-
-
-
+    NSTimeInterval dUpdateTime = [UpdateTime timeIntervalSince1970];
+    long long llUpdateTime = (long long)round(dUpdateTime*1000);
+    NSString *sDiseases = @"";
+    if (Diseases!=nil && Diseases.count > 0){
+        sDiseases = [Diseases componentsJoinedByString:@","];
+    }
+    NSString *sLackNutrientIDs = @"";
+    if (LackNutrientIDs!=nil && LackNutrientIDs.count > 0){
+        sLackNutrientIDs = [LackNutrientIDs componentsJoinedByString:@","];
+    }
+    
+    NSString *updateSql = [NSString stringWithFormat:
+                           @"UPDATE UserCheckDiseaseRecord SET UpdateTime=?, Diseases=?, LackNutrientIDs=?, HealthMark=? WHERE Day=? AND TimeType=? ;"
+                           ];
+    NSArray *paramAry = [NSArray arrayWithObjects:[NSNumber numberWithLongLong:llUpdateTime], sDiseases, sLackNutrientIDs, [NSNumber numberWithInt:HealthMark], [NSNumber numberWithInt:day], [NSNumber numberWithInt:TimeType], nil];
+    BOOL dbopState = [dbfm executeUpdate:updateSql error:nil withArgumentsInArray:paramAry];
+    return dbopState;
+}
 
 
 

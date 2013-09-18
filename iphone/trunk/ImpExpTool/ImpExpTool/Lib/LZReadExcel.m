@@ -1104,20 +1104,39 @@
     //NO dataInSheet4
     NSDictionary * dataInSheet5 = [self readNutrientDiseaseSheet_with2Type_TimeAndClass:5];
     
-    NSMutableArray *columnNames_DiseaseNutrient = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, nil];
+    NSMutableArray *columnNames_DiseaseNutrient1 = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, COLUMN_NAME_DiseaseGroup, COLUMN_NAME_LackLevelMark, nil];
+//    NSMutableArray *columnNames_DiseaseNutrient2 = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, COLUMN_NAME_DiseaseGroup,nil];
     NSMutableArray *columnNames_DiseaseGroup = [NSMutableArray arrayWithObjects: COLUMN_NAME_DiseaseGroup, COLUMN_NAME_dsGroupType, nil];
     NSMutableArray *columnNames_DiseaseInGroup = [NSMutableArray arrayWithObjects: COLUMN_NAME_DiseaseGroup, COLUMN_NAME_Disease, COLUMN_NAME_DiseaseDepartment, COLUMN_NAME_DiseaseType, COLUMN_NAME_DiseaseTimeType,  nil];
     
-    NSMutableArray * diseaseNutrientAry = [NSMutableArray arrayWithCapacity:2000];
+//    NSMutableArray * diseaseNutrientAry = [NSMutableArray arrayWithCapacity:2000];
+    NSMutableArray * diseaseNutrientRows = [NSMutableArray arrayWithCapacity:5000];
     NSMutableArray * diseaseGroupAry = [NSMutableArray arrayWithCapacity:10];
     NSMutableArray * diseaseInGroupAry = [NSMutableArray arrayWithCapacity:200];
 
-    //这里的数据有重复的，暂且使用 UNIQUE INDEX 来解决，有重复数据插入会导致当条语句报错但看来不会影响下面的语句
-    [diseaseNutrientAry addObjectsFromArray:dataInSheet0[@"diseaseNutrientAry"]];
-    [diseaseNutrientAry addObjectsFromArray:dataInSheet1[@"diseaseNutrientAry"]];
-    [diseaseNutrientAry addObjectsFromArray:dataInSheet2[@"diseaseNutrientAry"]];
-    [diseaseNutrientAry addObjectsFromArray:dataInSheet3[@"diseaseNutrientAry"]];
-    [diseaseNutrientAry addObjectsFromArray:dataInSheet5[@"diseaseNutrientAry"]];
+    //这里的数据有重复的，暂且使用 UNIQUE INDEX 来解决，有重复数据插入会导致当条语句报错但看来不会影响下面的语句......................
+//    [diseaseNutrientAry addObjectsFromArray:dataInSheet0[@"diseaseNutrientAry"]];
+//    [diseaseNutrientAry addObjectsFromArray:dataInSheet1[@"diseaseNutrientAry"]];
+//    [diseaseNutrientAry addObjectsFromArray:dataInSheet2[@"diseaseNutrientAry"]];
+//    [diseaseNutrientAry addObjectsFromArray:dataInSheet3[@"diseaseNutrientAry"]];
+//    [diseaseNutrientAry addObjectsFromArray:dataInSheet5[@"diseaseNutrientAry"]];
+    NSMutableArray* (^generateDiseaseNutrientRelationsBlockVar)(NSString *sDiseaseGroup,NSArray *diseaseNutrientPairAry,int markVal) ;
+    generateDiseaseNutrientRelationsBlockVar = ^(NSString *sDiseaseGroup,NSArray *diseaseNutrientPairAry,int markVal){
+        NSMutableArray * diseaseNutrientRows = [NSMutableArray arrayWithCapacity:diseaseNutrientPairAry.count];
+        for(int i=0; i<diseaseNutrientPairAry.count; i++){
+            NSMutableArray *diseaseNutrientRow = [NSMutableArray arrayWithCapacity:3];
+            [diseaseNutrientRow addObjectsFromArray:diseaseNutrientPairAry[i]];
+            [diseaseNutrientRow addObject:sDiseaseGroup];
+            [diseaseNutrientRow addObject:[NSNumber numberWithInt:markVal]];
+            [diseaseNutrientRows addObject:diseaseNutrientRow];
+        }
+        return diseaseNutrientRows;
+    };
+    [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet0[@"DiseaseGroup"],dataInSheet0[@"diseaseNutrientAry"],0)];
+    [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet1[@"DiseaseGroup"],dataInSheet1[@"diseaseNutrientAry"],0)];
+    [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet2[@"DiseaseGroup"],dataInSheet2[@"diseaseNutrientAry"],0)];
+    [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet3[@"DiseaseGroup"],dataInSheet3[@"diseaseNutrientAry"],0)];
+    [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet5[@"DiseaseGroup"],dataInSheet5[@"diseaseNutrientAry"],3)];
     
     [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet0[@"DiseaseGroup"],DiseaseGroupType_specialPeople, nil]];
     [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet1[@"DiseaseGroup"],DiseaseGroupType_discomfort, nil]];
@@ -1142,8 +1161,6 @@
     [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet3[@"DiseaseGroup"],dataInSheet3[@"validDiseaseAry2D"])];
     [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet5[@"DiseaseGroup"],dataInSheet5[@"validDiseaseAry2D"])];
     
-    
-    
     assert(dbCon!=nil);
     LZDBAccess *db = dbCon;
     NSString *tableName;
@@ -1156,9 +1173,13 @@
     [db.da insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseInGroup andRows2D:diseaseInGroupAry andIfNeedClearTable:true];
 
     tableName = TABLE_NAME_DiseaseNutrient;
-    [db.da createTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient withRows2D:diseaseNutrientAry withPrimaryKey:nil andIfNeedDropTable:true];
-    [db.da executeSql:@"CREATE UNIQUE INDEX uniqueIndexDiseaseNutrient ON DiseaseNutrient(Disease, NutrientID);"];
-    [db.da insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient andRows2D:diseaseNutrientAry andIfNeedClearTable:true];
+//    [db.da createTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient1 withRows2D:diseaseNutrientRows withPrimaryKey:nil andIfNeedDropTable:true];
+    [db.da executeSql:@"CREATE TABLE DiseaseNutrient (Disease TEXT, NutrientID TEXT, DiseaseGroup TEXT, LackLevelMark INTEGER);"];
+//    [db.da executeSql:@"CREATE UNIQUE INDEX uniqueIndexDiseaseNutrient ON DiseaseNutrient(Disease, NutrientID, DiseaseGroup);"];
+//    [db.da insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient2 andRows2D:diseaseNutrientAry andIfNeedClearTable:true];
+    [db.da insertToTable_withTableName:tableName withColumnNames:columnNames_DiseaseNutrient1 andRows2D:diseaseNutrientRows andIfNeedClearTable:true];
+    
+    [db.da executeSql:@"CREATE TABLE UserCheckDiseaseRecord(Day INTEGER, TimeType INTEGER, UpdateTime INTEGER, Diseases TEXT, LackNutrientIDs TEXT, HealthMark INTEGER);"];
 
 }
 

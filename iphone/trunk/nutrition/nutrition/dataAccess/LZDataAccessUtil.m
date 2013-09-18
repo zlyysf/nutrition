@@ -341,10 +341,18 @@
         assert(fieldValuePair.count==2);
         NSString *strColumn = fieldValuePair[0];
         NSString *strOp = @"=";
+        if ([fieldValuePair[1] isKindOfClass:NSArray.class]){
+            strOp = @"IN";
+        }
+        
         NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
         [expr addObject:strColumn];
         [expr addObject:strOp];
-        [expr addObject:[NSArray arrayWithObjects:fieldValuePair[1], nil] ];
+        if ([fieldValuePair[1] isKindOfClass:NSArray.class]){
+            [expr addObject:fieldValuePair[1] ];
+        }else{
+            [expr addObject:[NSArray arrayWithObjects:fieldValuePair[1], nil] ];
+        }
         [exprIncludeANDdata addObject:expr];
     }
 
@@ -465,7 +473,7 @@
                              strCondition,@"strCondition",
                              sqlParams,@"sqlParams",
                              nil];
-    NSLog(@"getUnitCondition_withColumn %@ %@ %@ %d ret:\n %@",columnName,operator,valObj,notFlag,retDict);
+//    NSLog(@"getUnitCondition_withColumn %@ %@ %@ %d ret:\n %@",columnName,operator,valObj,notFlag,retDict);
     return retDict;
 }
 /*
@@ -526,7 +534,7 @@
                              strCondition,@"strCondition",
                              sqlParams,@"sqlParams",
                              nil];
-    NSLog(@"getUnitCondition_withColumn %@ %@ %@ %d ret:\n %@",columnName,operator,values,notFlag,retDict);
+//    NSLog(@"getUnitCondition_withColumn %@ %@ %@ %d ret:\n %@",columnName,operator,values,notFlag,retDict);
     return retDict;
 }
 
@@ -535,7 +543,7 @@
  */
 +(NSDictionary*)getMediumUnitCondition_withExpressionItems:(NSArray*)expressionItems andJoinBoolOp:(NSString*)joinBoolOp andOptions:(NSDictionary*)options
 {
-    NSLog(@"getMediumUnitCondition_withExpressionItems enter, %@ . %@ . %@",expressionItems,joinBoolOp,options);
+//    NSLog(@"getMediumUnitCondition_withExpressionItems enter, %@ . %@ . %@",expressionItems,joinBoolOp,options);
     NSNumber *nmVarBeParamWay = [options objectForKey:@"varBeParamWay"];
     BOOL varBeParamWay = FALSE;
     if (nmVarBeParamWay!=nil)
@@ -581,7 +589,7 @@
                              strCondition,@"strCondition",
                              sqlParams,@"sqlParams",
                              nil];
-    NSLog(@"getMediumUnitCondition_withExpressionItems %@ %@ ret:\n %@",expressionItems,joinBoolOp,retDict);
+//    NSLog(@"getMediumUnitCondition_withExpressionItems %@ %@ ret:\n %@",expressionItems,joinBoolOp,retDict);
     return retDict;
 }
 
@@ -619,7 +627,7 @@
                              strCondition,@"strCondition",
                              sqlParams,@"sqlParams",
                              nil];
-    NSLog(@"getBigUnitCondition_withExpressionItems %@ %@ ret:\n %@",expressionItemsArray,joinBoolOp,retDict);
+//    NSLog(@"getBigUnitCondition_withExpressionItems %@ %@ ret:\n %@",expressionItemsArray,joinBoolOp,retDict);
     return retDict;
 }
 

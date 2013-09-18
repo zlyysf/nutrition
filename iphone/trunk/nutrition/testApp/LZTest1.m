@@ -34,7 +34,8 @@
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
 //    [self.class test_DiseaseNutrient1];
-    [self.class test_DiseaseNutrient2];
+//    [self.class test_DiseaseNutrient2];
+    [self.class test_saveUserCheckDiseaseRecord_withDay];
 
     
 //    [self.class testFormatResult1];
@@ -2248,16 +2249,16 @@ BOOL needLimitNutrients = FALSE;
     NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_wizard];
     NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
     NSArray *diseaseNames = [da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:nil];
-    NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrients_ByDiseaseNames:diseaseNames];
-    
-    NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
-    for ( NSString* key in nutrientsByDiseaseDict) {
-        NSArray *nutrients = nutrientsByDiseaseDict[key];
-        [nutrientSet addObjectsFromArray:nutrients];
-    }
-    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
-    NSArray *orderedNutrientsInSet = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
-    NSLog(@"orderedNutrientsInSet=%@",[orderedNutrientsInSet debugDescription]);
+//    NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrients_ByDiseaseNames:diseaseNames];
+//    
+//    NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
+//    for ( NSString* key in nutrientsByDiseaseDict) {
+//        NSArray *nutrients = nutrientsByDiseaseDict[key];
+//        [nutrientSet addObjectsFromArray:nutrients];
+//    }
+//    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
+//    NSArray *orderedNutrientsInSet = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
+//    NSLog(@"orderedNutrientsInSet=%@",[orderedNutrientsInSet debugDescription]);
     
 //    NSDictionary * nutrientInfo2LevelDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
 //    NSLog(@"one nutrientInfo=%@",nutrientInfo2LevelDict[orderedNutrientsInSet[0]]);
@@ -2289,12 +2290,42 @@ BOOL needLimitNutrients = FALSE;
     diseaseGroupInfoArray= [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
     groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
     illnessGroup = groupAry[0];
-    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:@"下午"];
+//    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:@"下午"];
+    [da getDiseaseNamesOfGroup:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:@"下午"];
 
-    
+    NSArray *diseaseNames = [NSArray arrayWithObjects:@"鼻塞，感冒",@"脑门热，发烧", nil];
+    NSDictionary * nutrientInfosByDiseaseDict = [da getDiseaseNutrientRows_ByDiseaseNames:diseaseNames andDiseaseGroup:illnessGroup];
+
 }
 
-
++(void)test_saveUserCheckDiseaseRecord_withDay
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    int day = 20120304;
+    int timeType = 1;
+    NSDate * updateTime = [NSDate date];
+    NSArray *diseaseNames = [NSArray arrayWithObjects:@"鼻塞，感冒",@"脑门热，发烧", nil];
+    NSArray *LackNutrientIDs = [NSArray arrayWithObjects:NutrientId_VC,NutrientId_Magnesium, nil];
+    int healthMark = 78;
+    [da saveUserCheckDiseaseRecord_withDay:day andTimeType:timeType UpdateTime:updateTime andDiseases:diseaseNames andLackNutrientIDs:LackNutrientIDs andHealthMark:healthMark];
+    healthMark = 79;
+    [da saveUserCheckDiseaseRecord_withDay:day andTimeType:timeType UpdateTime:updateTime andDiseases:diseaseNames andLackNutrientIDs:LackNutrientIDs andHealthMark:healthMark];
+    
+    timeType = 2;
+    healthMark = 81;
+    [da saveUserCheckDiseaseRecord_withDay:day andTimeType:timeType UpdateTime:updateTime andDiseases:diseaseNames andLackNutrientIDs:LackNutrientIDs andHealthMark:healthMark];
+    
+    day = 20120305;
+    timeType = 3;
+    healthMark = 81;
+    [da saveUserCheckDiseaseRecord_withDay:day andTimeType:timeType UpdateTime:updateTime andDiseases:diseaseNames andLackNutrientIDs:LackNutrientIDs andHealthMark:healthMark];
+    
+    day = 20120304;
+    [da getUserCheckDiseaseRecord_withDay:day andTimeType:0];
+    day = 20120305;
+    [da getUserCheckDiseaseRecord_withDay:day andTimeType:0];
+    
+}
 
 @end
 
