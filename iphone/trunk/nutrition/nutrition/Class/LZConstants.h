@@ -22,6 +22,7 @@
 
 #define ViewControllerUseBackImage 0
 
+
 #define Config_notAllowSameFood TRUE
 #define Config_ifNeedCustomDefinedFoods TRUE
 #define Config_randomSelectFood TRUE
@@ -264,7 +265,11 @@
 
 #define KeyIsAlreadyReviewdeOurApp @"KeyIsAlreadyReviewdeOurApp" // YES means already reviewed
 #define KeyReviewAlertControllCount @"KeyReviewAlertControllCount" // >=10 popAlert
+#define KeyHealthCheckReminderState @"KeyHealthCheckReminderState"
 
+#define KeyCheckReminderShangWu @"KeyCheckReminderShangWu"
+#define KeyCheckReminderXiaWu @"KeyCheckReminderXiaWu"
+#define KeyCheckReminderShuiQian @"KeyCheckReminderShuiQian"
 
 #define MY_BANNER_UNIT_ID @"a151bfe57a8e242"//admob key
 

@@ -20,6 +20,7 @@
 {
     // Override point for customization after application launch.
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
+    [LZUtility initializeCheckReminder];
     //custom navigationbar and barbuttonitem
     if(KeyIsEnvironmentDebug)
     {
@@ -61,6 +62,13 @@
                                appSecret:SinaWeiboAppSecret
                              redirectUri:@"http://www.lingzhimobile.com/"];
     [ShareSDK connectWeChatWithAppId:WeChatAppId wechatCls:[WXApi class]];
+    NSNumber *checkReminderState = [[NSUserDefaults standardUserDefaults]objectForKey:KeyHealthCheckReminderState];
+    if (checkReminderState == nil)
+    {
+        NSNumber *stateOn = [NSNumber numberWithBool:YES];
+        [[NSUserDefaults standardUserDefaults]setObject:stateOn forKey:KeyHealthCheckReminderState];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
 //    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
 //    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
 //    if (planPerson == nil)

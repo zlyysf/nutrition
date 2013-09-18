@@ -91,6 +91,8 @@
 +(void)setReviewFlagForNewVersion;
 
 +(NSString *)getCurrentTimeIdentifier;
+
++(void)initializeCheckReminder;
 @end
 
 

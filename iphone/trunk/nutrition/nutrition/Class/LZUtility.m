@@ -656,7 +656,7 @@
     int hour = [currentComp hour];//([currentComp hour]+ ([currentComp minute]>0?1:0))%24;
     if (hour >=4 && hour < 12)
     {
-        return @"早上";//@"上午";
+        return @"上午";
     }
     else if (hour >=12 && hour < 20)
     {
@@ -664,7 +664,7 @@
     }
     else
     {
-       return @"晚上";//@"睡前";
+       return @"睡前";
     }
 }
 +(NSString*)convertNumberToFoodIdStr:(NSNumber *)foodIdNum
@@ -787,6 +787,29 @@
         [[NSUserDefaults standardUserDefaults]synchronize];
     }
 
+}
++(void)initializeCheckReminder
+{
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    unsigned unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit | NSDayCalendarUnit;
+    NSDateComponents *todayComp = [calendar components:unitFlags fromDate:date];
+    [todayComp setHour:9];
+    NSDate *shangwuDate = [calendar dateFromComponents:todayComp];
+    NSTimeZone *zone = [NSTimeZone systemTimeZone];
+    NSInteger interval = [zone secondsFromGMTForDate: date];
+    NSDate *shangwuDate1 = [shangwuDate  dateByAddingTimeInterval: interval];
+    [todayComp setHour:16];
+    NSDate *xiawuDate = [calendar dateFromComponents:todayComp];
+    NSDate *xiawuDate1 = [xiawuDate  dateByAddingTimeInterval: interval];
+    [todayComp setHour:22];
+    NSDate *shuiqianDate = [calendar dateFromComponents:todayComp];
+    NSDate *shuiqianDate1 = [shuiqianDate dateByAddingTimeInterval: interval];
+    [[NSUserDefaults standardUserDefaults]setObject:shangwuDate1 forKey:KeyCheckReminderShangWu];
+    [[NSUserDefaults standardUserDefaults]setObject:xiawuDate1 forKey:KeyCheckReminderXiaWu];
+    [[NSUserDefaults standardUserDefaults]setObject:shuiqianDate1 forKey:KeyCheckReminderShuiQian];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    
 }
 @end
 

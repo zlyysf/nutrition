@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZTimeSettingsViewController : UIViewController
+@interface LZTimeSettingsViewController : UIViewController<UITextFieldDelegate>
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePicker;
+@property (strong, nonatomic) IBOutlet UITextField *shangwuTextField;
+@property (strong, nonatomic) IBOutlet UISwitch *reminderStateSwitch;
+@property (strong, nonatomic) IBOutlet UITextField *xiawuTextField;
+@property (strong, nonatomic) IBOutlet UITextField *shuiqianTextField;
 
 @end
