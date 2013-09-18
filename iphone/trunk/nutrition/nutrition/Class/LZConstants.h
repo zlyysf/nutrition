@@ -299,6 +299,15 @@
 
 #define UmengEventTuiJian @"Recommend"
 #define UmengEventHuanYiZu @"ChangeFood"
+
+
+#define SeperatorForNames @",,"
+
+
+
+
+
+
 #endif
 
 

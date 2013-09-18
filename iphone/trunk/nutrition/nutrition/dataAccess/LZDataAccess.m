@@ -1740,11 +1740,11 @@
     long long llUpdateTime = (long long)round(dUpdateTime*1000);
     NSString *sDiseases = @"";
     if (Diseases!=nil && Diseases.count > 0){
-        sDiseases = [Diseases componentsJoinedByString:@","];
+        sDiseases = [Diseases componentsJoinedByString:SeperatorForNames];
     }
     NSString *sLackNutrientIDs = @"";
     if (LackNutrientIDs!=nil && LackNutrientIDs.count > 0){
-        sLackNutrientIDs = [LackNutrientIDs componentsJoinedByString:@","];
+        sLackNutrientIDs = [LackNutrientIDs componentsJoinedByString:SeperatorForNames];
     }
 
     NSString *insertSql = [NSString stringWithFormat:
