@@ -95,9 +95,16 @@
     [local setFireDate:[currentDate dateByAddingTimeInterval:LocalNotifyTimeInterval]];
     [local setTimeZone:[NSTimeZone defaultTimeZone]];
     [local setSoundName:UILocalNotificationDefaultSoundName];
-    //NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"一分钟后触发" forKey:@"notifyType"];
-    //[local setUserInfo:infoDict];
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"一分钟后触发" forKey:@"notifyType"];
+    [local setUserInfo:infoDict];
     [[UIApplication sharedApplication] scheduleLocalNotification:local];
+    NSArray *scheduledArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    NSLog(@"%@",[scheduledArray debugDescription]);
+    UILocalNotification *local1 = [scheduledArray objectAtIndex:0];
+    [local1 setRepeatInterval:NSDayCalendarUnit];
+    NSArray *newScheduled = [NSArray arrayWithObject:local1];
+    [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
+    NSLog(@"%@",[[[UIApplication sharedApplication] scheduledLocalNotifications] debugDescription]);
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }

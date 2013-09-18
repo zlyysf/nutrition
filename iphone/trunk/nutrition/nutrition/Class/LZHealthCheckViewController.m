@@ -16,6 +16,7 @@
 #import "LZCheckResultViewController.h"
 #import "MobClick.h"
 #import "GADMasterViewController.h"
+#import "LZTimeSettingsViewController.h"
 @interface LZHealthCheckViewController ()
 @property (nonatomic,strong)NSString *sectionTitle;
 @end
@@ -95,6 +96,11 @@
 }
 -(void)timeSettingItemTapped
 {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZTimeSettingsViewController* timeSettingsViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZTimeSettingsViewController"];
+
+    [self.navigationController pushViewController:timeSettingsViewController animated:YES];
+
 //    for(NSString *departName in diseaseNamesArray)
 //    {
 //        NSMutableArray *stateArray = [self.diseasesStateDict objectForKey:departName];
