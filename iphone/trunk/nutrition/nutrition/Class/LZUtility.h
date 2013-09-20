@@ -93,6 +93,8 @@
 +(NSString *)getCurrentTimeIdentifier;
 
 +(void)initializeCheckReminder;
+
++(NSString *)getDateFormatOutput:(NSDate*)date;
 @end
 
 

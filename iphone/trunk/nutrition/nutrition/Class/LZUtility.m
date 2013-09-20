@@ -790,26 +790,37 @@
 }
 +(void)initializeCheckReminder
 {
-    NSDate *date = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    unsigned unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit | NSDayCalendarUnit;
-    NSDateComponents *todayComp = [calendar components:unitFlags fromDate:date];
-    [todayComp setHour:9];
-    NSDate *shangwuDate = [calendar dateFromComponents:todayComp];
-    NSTimeZone *zone = [NSTimeZone systemTimeZone];
-    NSInteger interval = [zone secondsFromGMTForDate: date];
-    NSDate *shangwuDate1 = [shangwuDate  dateByAddingTimeInterval: interval];
-    [todayComp setHour:16];
-    NSDate *xiawuDate = [calendar dateFromComponents:todayComp];
-    NSDate *xiawuDate1 = [xiawuDate  dateByAddingTimeInterval: interval];
-    [todayComp setHour:22];
-    NSDate *shuiqianDate = [calendar dateFromComponents:todayComp];
-    NSDate *shuiqianDate1 = [shuiqianDate dateByAddingTimeInterval: interval];
-    [[NSUserDefaults standardUserDefaults]setObject:shangwuDate1 forKey:KeyCheckReminderShangWu];
-    [[NSUserDefaults standardUserDefaults]setObject:xiawuDate1 forKey:KeyCheckReminderXiaWu];
-    [[NSUserDefaults standardUserDefaults]setObject:shuiqianDate1 forKey:KeyCheckReminderShuiQian];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-    
+    if (([[NSUserDefaults standardUserDefaults]objectForKey:KeyCheckReminderShangWu] == nil) || ([[NSUserDefaults standardUserDefaults]objectForKey:KeyCheckReminderXiaWu] == nil)||([[NSUserDefaults standardUserDefaults]objectForKey:KeyCheckReminderShuiQian] == nil))
+    {
+        NSDate *date = [NSDate date];
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        unsigned unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit | NSDayCalendarUnit;
+        NSDateComponents *todayComp = [calendar components:unitFlags fromDate:date];
+        [todayComp setHour:9];
+        NSDate *shangwuDate = [calendar dateFromComponents:todayComp];
+        NSTimeZone *zone = [NSTimeZone systemTimeZone];
+        NSInteger interval = [zone secondsFromGMTForDate: date];
+        NSDate *shangwuDate1 = [shangwuDate  dateByAddingTimeInterval: interval];
+        [todayComp setHour:16];
+        NSDate *xiawuDate = [calendar dateFromComponents:todayComp];
+        NSDate *xiawuDate1 = [xiawuDate  dateByAddingTimeInterval: interval];
+        [todayComp setHour:22];
+        NSDate *shuiqianDate = [calendar dateFromComponents:todayComp];
+        NSDate *shuiqianDate1 = [shuiqianDate dateByAddingTimeInterval: interval];
+        [[NSUserDefaults standardUserDefaults]setObject:shangwuDate forKey:KeyCheckReminderShangWu];
+        [[NSUserDefaults standardUserDefaults]setObject:xiawuDate forKey:KeyCheckReminderXiaWu];
+        [[NSUserDefaults standardUserDefaults]setObject:shuiqianDate forKey:KeyCheckReminderShuiQian];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+    }
+}
++(NSString *)getDateFormatOutput:(NSDate*)date
+{
+    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
+    [formatter setAMSymbol:@"上午"];
+    [formatter setPMSymbol:@"下午"];
+    [formatter setDateFormat:@"ahh:mm"];
+    return  [formatter stringFromDate:date];
 }
 @end
 

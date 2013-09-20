@@ -8,6 +8,7 @@
 
 #import "LZTimeSettingsViewController.h"
 #import "LZConstants.h"
+#import "LZUtility.h"
 @interface LZTimeSettingsViewController ()
 
 @end
@@ -33,10 +34,6 @@
     [self.datePicker addTarget:self action:@selector(datePickerValueChanged) forControlEvents:UIControlEventValueChanged];
     [self.datePicker setMinuteInterval:5];
     NSNumber *state = [[NSUserDefaults standardUserDefaults]objectForKey:KeyHealthCheckReminderState];
-    NSArray *localNotifyArray = [[UIApplication sharedApplication]scheduledLocalNotifications];
-    for (UILocalNotification * notify in localNotifyArray)
-    {
-    }
     if ([state boolValue])
     {
         [self.reminderStateSwitch setOn:YES];
@@ -45,6 +42,12 @@
     {
         [self.reminderStateSwitch setOn:NO];
     }
+    NSDate *shangwuDate = [[NSUserDefaults standardUserDefaults]objectForKey:KeyCheckReminderShangWu];
+    NSDate *xiawuDate = [[NSUserDefaults standardUserDefaults]objectForKey:KeyCheckReminderXiaWu];
+    NSDate *shuiqianDate = [[NSUserDefaults standardUserDefaults]objectForKey:KeyCheckReminderShuiQian];
+    self.shangwuTextField.text = [LZUtility getDateFormatOutput:shangwuDate];
+    self.xiawuTextField.text = [LZUtility getDateFormatOutput:xiawuDate];
+    self.shuiqianTextField.text = [LZUtility getDateFormatOutput:shuiqianDate];
 	// Do any additional setup after loading the view.
 }
 -(void)saveItemTapped
@@ -53,13 +56,7 @@
 }
 -(void)datePickerValueChanged
 {
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
-    //formatter.dateFormat = @"MMM dd',' h:mma";
-    [formatter setAMSymbol:@"上午"];
-    [formatter setPMSymbol:@"下午"];
-    [formatter setDateFormat:@"aHH:mm"];
-    self.shangwuTextField.text = [formatter stringFromDate:self.datePicker.date];
+    self.shangwuTextField.text = [LZUtility getDateFormatOutput:self.datePicker.date];
     
 }
 - (IBAction)switchChanged:(id)sender {
