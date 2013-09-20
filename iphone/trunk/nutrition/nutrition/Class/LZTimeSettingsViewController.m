@@ -103,14 +103,27 @@
 {
     if (textField == self.shangwuTextField)
     {
+        
+        NSDate *minDate = [LZUtility getDateForHour:4];
+        NSDate *maxDate = [LZUtility getDateForHour:12];
+        [self.datePicker setMinimumDate:minDate];
+        [self.datePicker setMaximumDate:maxDate];
         [self displayDate:self.shangwuDate];
     }
     else if (textField == self.xiawuTextField)
     {
+        NSDate *minDate = [LZUtility getDateForHour:12];
+        NSDate *maxDate = [LZUtility getDateForHour:20];
+        [self.datePicker setMinimumDate:minDate];
+        [self.datePicker setMaximumDate:maxDate];
         [self displayDate:self.xiawuDate];
     }
     else
     {
+        NSDate *minDate = [LZUtility getDateForHour:20];
+        NSDate *maxDate = [LZUtility getDateForHour:24];
+        [self.datePicker setMinimumDate:minDate];
+        [self.datePicker setMaximumDate:maxDate];
         [self displayDate:self.shuiqianDate];
     }
     textField.inputView = self.datePicker;

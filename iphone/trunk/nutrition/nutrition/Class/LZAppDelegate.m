@@ -94,7 +94,20 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    [[UIApplication sharedApplication]cancelAllLocalNotifications];
+    //[[UIApplication sharedApplication]cancelAllLocalNotifications];
+    NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
+    NSArray *oldScheduledNotify = [[UIApplication sharedApplication]scheduledLocalNotifications];
+    NSMutableArray *newScheduled = [[NSMutableArray alloc]init];
+
+    for (UILocalNotification * localNotify in oldScheduledNotify)
+    {
+        NSDictionary *info = [localNotify userInfo];
+        if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
+        {
+            [newScheduled addObject:localNotify];
+        }
+    }
+    
     UILocalNotification *local = [[UILocalNotification alloc]init];
     [local setAlertAction:@"打开"];
     [local setAlertBody:@"营养膳食指南竭诚帮您选出含有全面丰富营养的食物搭配，敬请使用!"];
@@ -103,13 +116,15 @@
     [local setFireDate:[currentDate dateByAddingTimeInterval:LocalNotifyTimeInterval]];
     [local setTimeZone:[NSTimeZone defaultTimeZone]];
     [local setSoundName:UILocalNotificationDefaultSoundName];
-    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"一分钟后触发" forKey:@"notifyType"];
+    NSDictionary *infoDict = [NSDictionary dictionaryWithObject:KeyNotifyTimeTypeReminder forKey:@"notifyType"];
     [local setUserInfo:infoDict];
-    [[UIApplication sharedApplication] scheduleLocalNotification:local];
- //   NSArray *scheduledArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+    [newScheduled addObject:local];
+    
+    [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
+//  NSArray *scheduledArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
 
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
-    // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+//  Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
+//  If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -119,8 +134,20 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [[UIApplication sharedApplication]cancelAllLocalNotifications];//we only cancel 
     [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
+    NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
+    NSArray *oldScheduledNotify = [[UIApplication sharedApplication]scheduledLocalNotifications];
+    NSMutableArray *newScheduled = [[NSMutableArray alloc]init];
+    
+    for (UILocalNotification * localNotify in oldScheduledNotify)
+    {
+        NSDictionary *info = [localNotify userInfo];
+        if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
+        {
+            [newScheduled addObject:localNotify];
+        }
+    }
+    [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 

@@ -823,6 +823,17 @@
     [formatter setDateFormat:@"ahh:mm"];
     return  [formatter stringFromDate:date];
 }
++(NSDate *)getDateForHour:(int)hour
+{
+    NSDate *date = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    unsigned unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit | NSDayCalendarUnit;
+    NSDateComponents *todayComp = [calendar components:unitFlags fromDate:date];
+    [todayComp setHour:hour];
+    NSDate *newDate = [calendar dateFromComponents:todayComp];
+    return newDate;
+
+}
 +(NSDate *)convertOldDateToTodayDate:(NSDate *)date
 {
     NSDate *today = [NSDate date];
@@ -851,7 +862,10 @@
             NSDictionary *info = [local userInfo];
             if(info == nil  || (![keySet containsObject:[info objectForKey:@"notifyType"]]))
             {
+                NSDictionary *userDict = [NSDictionary dictionaryWithObject:KeyNotifyTimeTypeReminder forKey:@"notifyType"];
+                [local setUserInfo:userDict];
                 [newScheduled addObject:local];
+                break;
             }
         }
         UILocalNotification *shangwuLocal = [[UILocalNotification alloc]init];
@@ -897,12 +911,16 @@
             NSDictionary *info = [local userInfo];
             if(info == nil  || (![keySet containsObject:[info objectForKey:@"notifyType"]]))
             {
+                NSDictionary *userDict = [NSDictionary dictionaryWithObject:KeyNotifyTimeTypeReminder forKey:@"notifyType"];
+                [local setUserInfo:userDict];
                 [newScheduled addObject:local];
+                break;
             }
         }
     }
     [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
 }
+
 @end
 
 

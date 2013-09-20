@@ -99,6 +99,8 @@
 +(NSDate *)convertOldDateToTodayDate:(NSDate *)date;
 
 +(void)setCheckReminderOn:(BOOL)isOn;
+
++(NSDate *)getDateForHour:(int)hour;
 @end
 
 
