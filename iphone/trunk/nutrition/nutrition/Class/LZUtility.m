@@ -798,19 +798,20 @@
         NSDateComponents *todayComp = [calendar components:unitFlags fromDate:date];
         [todayComp setHour:9];
         NSDate *shangwuDate = [calendar dateFromComponents:todayComp];
-        NSTimeZone *zone = [NSTimeZone systemTimeZone];
-        NSInteger interval = [zone secondsFromGMTForDate: date];
-        NSDate *shangwuDate1 = [shangwuDate  dateByAddingTimeInterval: interval];
+//        NSTimeZone *zone = [NSTimeZone systemTimeZone];
+//        NSInteger interval = [zone secondsFromGMTForDate: date];
+//        NSDate *shangwuDate1 = [shangwuDate  dateByAddingTimeInterval: interval];
         [todayComp setHour:16];
         NSDate *xiawuDate = [calendar dateFromComponents:todayComp];
-        NSDate *xiawuDate1 = [xiawuDate  dateByAddingTimeInterval: interval];
+//        NSDate *xiawuDate1 = [xiawuDate  dateByAddingTimeInterval: interval];
         [todayComp setHour:22];
         NSDate *shuiqianDate = [calendar dateFromComponents:todayComp];
-        NSDate *shuiqianDate1 = [shuiqianDate dateByAddingTimeInterval: interval];
+//        NSDate *shuiqianDate1 = [shuiqianDate dateByAddingTimeInterval: interval];
         [[NSUserDefaults standardUserDefaults]setObject:shangwuDate forKey:KeyCheckReminderShangWu];
         [[NSUserDefaults standardUserDefaults]setObject:xiawuDate forKey:KeyCheckReminderXiaWu];
         [[NSUserDefaults standardUserDefaults]setObject:shuiqianDate forKey:KeyCheckReminderShuiQian];
         [[NSUserDefaults standardUserDefaults]synchronize];
+        [LZUtility setCheckReminderOn:YES];
     }
 }
 +(NSString *)getDateFormatOutput:(NSDate*)date
@@ -821,6 +822,86 @@
     [formatter setPMSymbol:@"下午"];
     [formatter setDateFormat:@"ahh:mm"];
     return  [formatter stringFromDate:date];
+}
++(NSDate *)convertOldDateToTodayDate:(NSDate *)date
+{
+    NSDate *today = [NSDate date];
+    NSCalendar *calendar = [NSCalendar currentCalendar];
+    unsigned unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit | NSDayCalendarUnit;
+    unsigned unitFlags1 = NSHourCalendarUnit | NSMinuteCalendarUnit;
+    NSDateComponents *todayComp = [calendar components:unitFlags fromDate:today];
+    NSDateComponents *inputComp = [calendar components:unitFlags1 fromDate:date];
+    [todayComp setHour:[inputComp hour]];
+    [todayComp setMinute:[inputComp minute]];
+    NSDate *todayDate = [calendar dateFromComponents:todayComp];
+    return todayDate;
+}
++(void)setCheckReminderOn:(BOOL)isOn
+{
+    NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
+    NSArray *oldScheduledNotify = [[UIApplication sharedApplication]scheduledLocalNotifications];
+    NSMutableArray *newScheduled = [[NSMutableArray alloc]init];
+    if (isOn) //change localnotify state on
+    {
+        NSDate *shangwuDateDefault = [[NSUserDefaults standardUserDefaults]objectForKey:KeyCheckReminderShangWu];
+        NSDate *xiawuDateDeFault = [[NSUserDefaults standardUserDefaults]objectForKey:KeyCheckReminderXiaWu];
+        NSDate *shuiqianDateDefault = [[NSUserDefaults standardUserDefaults]objectForKey:KeyCheckReminderShuiQian];
+        for (UILocalNotification *local in oldScheduledNotify)
+        {
+            NSDictionary *info = [local userInfo];
+            if(info == nil  || (![keySet containsObject:[info objectForKey:@"notifyType"]]))
+            {
+                [newScheduled addObject:local];
+            }
+        }
+        UILocalNotification *shangwuLocal = [[UILocalNotification alloc]init];
+        [shangwuLocal setAlertAction:@"去诊断"];
+        [shangwuLocal setAlertBody:@"上午诊断时间到了"];
+        [shangwuLocal setRepeatInterval:NSDayCalendarUnit];
+        [shangwuLocal setApplicationIconBadgeNumber:1];
+        [shangwuLocal setFireDate:shangwuDateDefault];
+        [shangwuLocal setTimeZone:[NSTimeZone defaultTimeZone]];
+        [shangwuLocal setSoundName:UILocalNotificationDefaultSoundName];
+        NSDictionary *infoDict = [NSDictionary dictionaryWithObject:KeyCheckReminderShangWu forKey:@"notifyType"];
+        [shangwuLocal setUserInfo:infoDict];
+        [newScheduled addObject:shangwuLocal];
+        
+        UILocalNotification *xiawuLocal = [[UILocalNotification alloc]init];
+        [xiawuLocal setAlertAction:@"去诊断"];
+        [xiawuLocal setAlertBody:@"下午诊断时间到了"];
+        [xiawuLocal setRepeatInterval:NSDayCalendarUnit];
+        [xiawuLocal setApplicationIconBadgeNumber:1];
+        [xiawuLocal setFireDate:xiawuDateDeFault];
+        [xiawuLocal setTimeZone:[NSTimeZone defaultTimeZone]];
+        [xiawuLocal setSoundName:UILocalNotificationDefaultSoundName];
+        NSDictionary *infoDict1 = [NSDictionary dictionaryWithObject:KeyCheckReminderXiaWu forKey:@"notifyType"];
+        [xiawuLocal setUserInfo:infoDict1];
+        [newScheduled addObject:xiawuLocal];
+        
+        UILocalNotification *shuiqianLocal = [[UILocalNotification alloc]init];
+        [shuiqianLocal setAlertAction:@"去诊断"];
+        [shuiqianLocal setAlertBody:@"睡前诊断时间到了"];
+        [shuiqianLocal setRepeatInterval:NSDayCalendarUnit];
+        [shuiqianLocal setApplicationIconBadgeNumber:1];
+        [shuiqianLocal setFireDate:shuiqianDateDefault];
+        [shuiqianLocal setTimeZone:[NSTimeZone defaultTimeZone]];
+        [shuiqianLocal setSoundName:UILocalNotificationDefaultSoundName];
+        NSDictionary *infoDict2 = [NSDictionary dictionaryWithObject:KeyCheckReminderShuiQian forKey:@"notifyType"];
+        [shuiqianLocal setUserInfo:infoDict2];
+        [newScheduled addObject:shuiqianLocal];
+    }
+    else //remove localnotify
+    {
+        for (UILocalNotification *local in oldScheduledNotify)
+        {
+            NSDictionary *info = [local userInfo];
+            if(info == nil  || (![keySet containsObject:[info objectForKey:@"notifyType"]]))
+            {
+                [newScheduled addObject:local];
+            }
+        }
+    }
+    [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
 }
 @end
 

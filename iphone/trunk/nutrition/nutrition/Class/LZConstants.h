@@ -308,8 +308,10 @@
 
 #define SeperatorForNames @",,"
 
-
-
+#define KeyNotifyTimeTypeShangWu @"1"
+#define KeyNotifyTimeTypeXiaWu @"2"
+#define KeyNotifyTimeTypeShuiQian @"3"
+#define KeyNotifyTimeTypeReminder @"10"
 
 
 

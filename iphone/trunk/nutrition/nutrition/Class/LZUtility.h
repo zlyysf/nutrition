@@ -95,6 +95,10 @@
 +(void)initializeCheckReminder;
 
 +(NSString *)getDateFormatOutput:(NSDate*)date;
+
++(NSDate *)convertOldDateToTodayDate:(NSDate *)date;
+
++(void)setCheckReminderOn:(BOOL)isOn;
 @end
 
 

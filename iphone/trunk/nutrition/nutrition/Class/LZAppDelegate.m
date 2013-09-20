@@ -106,13 +106,8 @@
     NSDictionary *infoDict = [NSDictionary dictionaryWithObject:@"一分钟后触发" forKey:@"notifyType"];
     [local setUserInfo:infoDict];
     [[UIApplication sharedApplication] scheduleLocalNotification:local];
-    NSArray *scheduledArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
-    NSLog(@"%@",[scheduledArray debugDescription]);
-    UILocalNotification *local1 = [scheduledArray objectAtIndex:0];
-    [local1 setRepeatInterval:NSDayCalendarUnit];
-    NSArray *newScheduled = [NSArray arrayWithObject:local1];
-    [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
-    NSLog(@"%@",[[[UIApplication sharedApplication] scheduledLocalNotifications] debugDescription]);
+ //   NSArray *scheduledArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
+
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
@@ -124,7 +119,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
-    [[UIApplication sharedApplication]cancelAllLocalNotifications];
+    [[UIApplication sharedApplication]cancelAllLocalNotifications];//we only cancel 
     [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
