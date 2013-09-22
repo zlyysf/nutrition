@@ -33,6 +33,12 @@
 {
     [super viewDidLoad];
     self.title = @"诊断提醒";
+    UIImage *originBg = [UIImage imageNamed:@"outer_line_bg.png"];
+    UIImage *outerBg = [originBg stretchableImageWithLeftCapWidth:6 topCapHeight:6];
+    [self.outBoundImageView setImage:outerBg];
+    [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+    [self.line2View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+    [self.line3View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveItemTapped)];
     self.navigationItem.rightBarButtonItem = saveItem;
     self.datePicker = [[UIDatePicker alloc]init];
@@ -74,6 +80,15 @@
     [[NSUserDefaults standardUserDefaults]synchronize];
     [LZUtility setCheckReminderOn:[self.reminderState boolValue]];
     [self.navigationController popViewControllerAnimated:YES];
+}
+- (IBAction)shanwuButtonClicked:(id)sender {
+    [self.shangwuTextField becomeFirstResponder];
+}
+- (IBAction)xiawuButtonClicked:(id)sender {
+    [self.xiawuTextField becomeFirstResponder];
+}
+- (IBAction)shuiqianButtonClicked:(id)sender {
+    [self.shuiqianTextField becomeFirstResponder];
 }
 -(void)datePickerValueChanged
 {
@@ -235,6 +250,10 @@
     [self setReminderStateSwitch:nil];
     [self setXiawuTextField:nil];
     [self setShuiqianTextField:nil];
+    [self setLine1View:nil];
+    [self setLine2View:nil];
+    [self setLine3View:nil];
+    [self setOutBoundImageView:nil];
     [super viewDidUnload];
 }
 @end

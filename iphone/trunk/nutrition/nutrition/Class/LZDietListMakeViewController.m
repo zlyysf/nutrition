@@ -73,7 +73,11 @@
         [self.listView setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 
     }
-       if (backWithNoAnimation)
+    else
+    {
+        [self.listView setBackgroundColor:[UIColor whiteColor]];
+    }
+    if (backWithNoAnimation)
     {
         UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
         

@@ -224,6 +224,7 @@
 		5FA3D1FD17B0F410004F9D39 /* button_middle_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FA3D1FC17B0F40F004F9D39 /* button_middle_clicked@2x.png */; };
 		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
 		5FCC5BEB17AA30A600796B24 /* LZDebugSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC5BEA17AA30A600796B24 /* LZDebugSettingsViewController.m */; };
+		5FD4D36117EEE6CF007C5551 /* outer_line_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD4D36017EEE6CE007C5551 /* outer_line_bg@2x.png */; };
 		5FD76DE717D5AB6200746418 /* LZCheckResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD76DE617D5AB6200746418 /* LZCheckResultViewController.m */; };
 		5FD76DE917D5B3EE00746418 /* close_button_highlight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD76DE817D5B3EE00746418 /* close_button_highlight@2x.png */; };
 		5FD76DEC17D5B83600746418 /* LZEmptyClassCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD76DEB17D5B83600746418 /* LZEmptyClassCell.m */; };
@@ -262,7 +263,6 @@
 		5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
 		5FF8473D1758546900DEA6DE /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8473B1758546900DEA6DE /* README.mdown */; };
 		5FF8474117587F0100DEA6DE /* nav_back_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8474017587F0100DEA6DE /* nav_back_button@2x.png */; };
-		5FF847741758A0CC00DEA6DE /* setting_text_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF847731758A0CC00DEA6DE /* setting_text_back@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -540,6 +540,7 @@
 		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
 		5FCC5BE917AA30A600796B24 /* LZDebugSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDebugSettingsViewController.h; path = Class/LZDebugSettingsViewController.h; sourceTree = "<group>"; };
 		5FCC5BEA17AA30A600796B24 /* LZDebugSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDebugSettingsViewController.m; path = Class/LZDebugSettingsViewController.m; sourceTree = "<group>"; };
+		5FD4D36017EEE6CE007C5551 /* outer_line_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "outer_line_bg@2x.png"; path = "nutrition/Resource/outer_line_bg@2x.png"; sourceTree = "<group>"; };
 		5FD76DE517D5AB6200746418 /* LZCheckResultViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZCheckResultViewController.h; path = Class/LZCheckResultViewController.h; sourceTree = "<group>"; };
 		5FD76DE617D5AB6200746418 /* LZCheckResultViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZCheckResultViewController.m; path = Class/LZCheckResultViewController.m; sourceTree = "<group>"; };
 		5FD76DE817D5B3EE00746418 /* close_button_highlight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_button_highlight@2x.png"; path = "nutrition/Resource/close_button_highlight@2x.png"; sourceTree = "<group>"; };
@@ -596,7 +597,6 @@
 		5FF8473A1758546900DEA6DE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = nutrition/MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		5FF8473B1758546900DEA6DE /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.mdown; path = nutrition/MBProgressHUD/README.mdown; sourceTree = "<group>"; };
 		5FF8474017587F0100DEA6DE /* nav_back_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nav_back_button@2x.png"; path = "nutrition/Resource/nav_back_button@2x.png"; sourceTree = "<group>"; };
-		5FF847731758A0CC00DEA6DE /* setting_text_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting_text_back@2x.png"; path = "nutrition/Resource/setting_text_back@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -880,6 +880,7 @@
 				5F943F0817D735FE00AFBF47 /* nutritionButtonIcons */,
 				5F22A6C917CF580D0043D760 /* foodTypeButtonIcons */,
 				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
+				5FD4D36017EEE6CE007C5551 /* outer_line_bg@2x.png */,
 				5F84D1AF17D8343800DF83A0 /* basic_info_icon@2x.png */,
 				5F84D1B017D8343800DF83A0 /* dri_icon@2x.png */,
 				5FF632061771C6530068CBFE /* close_button@2x.png */,
@@ -913,7 +914,6 @@
 				5FE436D0175F3EF5003947ED /* Icon-Small@2x.png */,
 				5FE436D1175F3EF5003947ED /* Icon.png */,
 				5FE436D2175F3EF5003947ED /* Icon@2x.png */,
-				5FF847731758A0CC00DEA6DE /* setting_text_back@2x.png */,
 				5FDD1CA7179CED200046F752 /* add_by_nutrient_button@2x.png */,
 				5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */,
 				5F2584A51782F9A600D99C16 /* edit_left_clicked@2x.png */,
@@ -1415,7 +1415,6 @@
 				0882419F175621DE00E71E6E /* foodDealed in Resources */,
 				5FF8473D1758546900DEA6DE /* README.mdown in Resources */,
 				5FF8474117587F0100DEA6DE /* nav_back_button@2x.png in Resources */,
-				5FF847741758A0CC00DEA6DE /* setting_text_back@2x.png in Resources */,
 				5F638030175C4969005E5517 /* cellSelectedBack@2x.png in Resources */,
 				5FE436D3175F3EF5003947ED /* Icon-Small.png in Resources */,
 				5FE436D4175F3EF5003947ED /* Icon-Small@2x.png in Resources */,
@@ -1513,6 +1512,7 @@
 				5F8F9FB017E6B00300F6B295 /* icon-72@2x.png in Resources */,
 				5F241CA317E7FF0E00BC8529 /* nutrient_button_off@2x.png in Resources */,
 				5F241CA517E86ECC00BC8529 /* Magnesium_(mg)_button@2x.png in Resources */,
+				5FD4D36117EEE6CF007C5551 /* outer_line_bg@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
