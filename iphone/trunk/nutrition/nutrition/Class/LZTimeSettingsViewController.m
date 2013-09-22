@@ -79,18 +79,60 @@
 {
     if (self.currentDisplayField)
     {
-        self.currentDisplayField.text = [LZUtility getDateFormatOutput:self.datePicker.date];
+        //
+        NSDate *date = self.datePicker.date;
+        NSCalendar *calendar = [NSCalendar currentCalendar];
+        unsigned unitFlags = NSHourCalendarUnit;
+        NSDateComponents *todayComp = [calendar components:unitFlags fromDate:date];
         if (self.currentDisplayField == self.shangwuTextField)
         {
-            self.shangwuDate = self.datePicker.date;
+            if ([todayComp hour]>= 4 && [todayComp hour]< 12)
+            {
+                self.shangwuDate = self.datePicker.date;
+                self.currentDisplayField.text = [LZUtility getDateFormatOutput:self.shangwuDate];
+            }
+            else
+            {
+                [todayComp setHour:9];
+                NSDate *shangwuDateDefault = [calendar dateFromComponents:todayComp];
+                self.shangwuDate = shangwuDateDefault;
+                [self.datePicker setDate:self.shangwuDate animated:YES];
+                self.currentDisplayField.text = [LZUtility getDateFormatOutput:self.shangwuDate];
+            }            
         }
         else if(self.currentDisplayField == self.xiawuTextField)
         {
-            self.xiawuDate = self.datePicker.date;
+            if ([todayComp hour]>= 12 && [todayComp hour]< 20)
+            {
+                self.xiawuDate = self.datePicker.date;
+                self.currentDisplayField.text = [LZUtility getDateFormatOutput:self.xiawuDate];
+            }
+            else
+            {
+                [todayComp setHour:16];
+                NSDate *xiawuDateDefault = [calendar dateFromComponents:todayComp];
+                self.xiawuDate = xiawuDateDefault;
+                [self.datePicker setDate:self.xiawuDate animated:YES];
+                self.currentDisplayField.text = [LZUtility getDateFormatOutput:self.xiawuDate];
+                
+            }
+
         }
         else
         {
-            self.shuiqianDate = self.datePicker.date;
+            if ([todayComp hour]>= 4 && [todayComp hour]< 20)
+            {
+                [todayComp setHour:22];
+                NSDate *shuiqianDateDefault = [calendar dateFromComponents:todayComp];
+                self.shuiqianDate = shuiqianDateDefault;
+                [self.datePicker setDate:self.shuiqianDate animated:YES];
+                self.currentDisplayField.text = [LZUtility getDateFormatOutput:self.shuiqianDate];
+            }
+            else
+            {
+                self.shuiqianDate = self.datePicker.date;
+                self.currentDisplayField.text = [LZUtility getDateFormatOutput:self.shuiqianDate];
+            }
         }
     }
 }
@@ -104,26 +146,26 @@
     if (textField == self.shangwuTextField)
     {
         
-        NSDate *minDate = [LZUtility getDateForHour:4];
-        NSDate *maxDate = [LZUtility getDateForHour:12];
-        [self.datePicker setMinimumDate:minDate];
-        [self.datePicker setMaximumDate:maxDate];
+//        NSDate *minDate = [LZUtility getDateForHour:4];
+//        NSDate *maxDate = [LZUtility getDateForHour:12];
+//        [self.datePicker setMinimumDate:minDate];
+//        [self.datePicker setMaximumDate:maxDate];
         [self displayDate:self.shangwuDate];
     }
     else if (textField == self.xiawuTextField)
     {
-        NSDate *minDate = [LZUtility getDateForHour:12];
-        NSDate *maxDate = [LZUtility getDateForHour:20];
-        [self.datePicker setMinimumDate:minDate];
-        [self.datePicker setMaximumDate:maxDate];
+//        NSDate *minDate = [LZUtility getDateForHour:12];
+//        NSDate *maxDate = [LZUtility getDateForHour:20];
+//        [self.datePicker setMinimumDate:minDate];
+//        [self.datePicker setMaximumDate:maxDate];
         [self displayDate:self.xiawuDate];
     }
     else
     {
-        NSDate *minDate = [LZUtility getDateForHour:20];
-        NSDate *maxDate = [LZUtility getDateForHour:24];
-        [self.datePicker setMinimumDate:minDate];
-        [self.datePicker setMaximumDate:maxDate];
+//        NSDate *minDate = [LZUtility getDateForHour:20];
+//        NSDate *maxDate = [LZUtility getDateForHour:24];
+//        [self.datePicker setMinimumDate:minDate];
+//        [self.datePicker setMaximumDate:[minDate dateByAddingTimeInterval:60*60*8]];
         [self displayDate:self.shuiqianDate];
     }
     textField.inputView = self.datePicker;

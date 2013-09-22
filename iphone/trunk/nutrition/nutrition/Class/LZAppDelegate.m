@@ -150,7 +150,16 @@
     [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    NSDictionary *info = [notification userInfo];
+    NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
+    if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
+    {
+        //enterScheduledLocalNotifications
+    }
 
+}
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.

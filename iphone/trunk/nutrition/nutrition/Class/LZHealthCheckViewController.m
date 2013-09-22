@@ -42,7 +42,6 @@
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     }
     NSDictionary *titleDict = [NSDictionary dictionaryWithObjectsAndKeys:@"从早晨到现在，您有下列哪些状况？",@"上午",@"午饭后到现在，您有下列哪些状况？",@"下午",@"晚饭后到现在，您有下列哪些状况？",@"睡前", nil];
-    
     self.diseasesStateDict = [[NSMutableDictionary alloc]init];
     LZDataAccess *da = [LZDataAccess singleton];
     NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
@@ -50,7 +49,7 @@
     //NSString *illnessGroup = groupAry[0];
     NSString *timeType = [LZUtility getCurrentTimeIdentifier];
     self.sectionTitle = [titleDict objectForKey:timeType];
-    self.title =[NSString stringWithFormat:@"%@健康诊断",timeType] ;
+    self.title =[NSString stringWithFormat:@"%@健康诊断",timeType];
     //NSDictionary *info = [da getDiseaseNamesOfGroup:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:timeType];
     //NSLog(@"%@",info);
     self.diseaseNamesArray = [da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:timeType];
