@@ -46,10 +46,12 @@
     NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
     maxNutrientCount = [customNutrients count];
     [self.mainScrollView setContentSize:CGSizeMake(320, 391+30*maxNutrientCount+60)];
-    self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 391+30*maxNutrientCount+60-50, 320, 50)];
+    self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 391+30*maxNutrientCount+10, 320, 50)];
+    [self.listViewBGImage setFrame:CGRectMake(10, 391, 300, 30*maxNutrientCount)];
     [self.mainScrollView addSubview:self.admobView];
-    UIImage *textImage = [UIImage imageNamed:@"setting_cell_back.png"];
-    UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
+    UIImage *textImage = [UIImage imageNamed:@"outer_line_bg.png"];
+    UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
+    [self.listViewBGImage setImage:textBackImage];
     [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.line2View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.line3View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
@@ -619,6 +621,7 @@
     [self setLine4View:nil];
     [self setListView:nil];
     [self setEmptyDRILabel:nil];
+    [self setListViewBGImage:nil];
     [super viewDidUnload];
 }
 - (void)keyboardWillShow:(NSNotification *)notification {
@@ -682,24 +685,13 @@
     NSString *nutrientName = [nutrientStandard objectForKey:@"NutrientCnCaption"];
     NSNumber *foodNutrientContent = [nutrientStandard objectForKey:@"Amount"];
     NSString *unit = [nutrientStandard objectForKey:@"NutrientEnUnit"];
-    if (indexPath.row == 0)
+    if (indexPath.row == [nutrientStandardArray count]-1)
     {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_top@2x" ofType:@"png"];
-        UIImage * cellTopImage = [UIImage imageWithContentsOfFile:path];
-        
-        [cell.cellBackgroundImageView setImage:cellTopImage];
-    }
-    else if (indexPath.row == [nutrientStandardArray count]-1)
-    {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_bottom@2x" ofType:@"png"];
-        UIImage * cellBottomImage = [UIImage imageWithContentsOfFile:path];
-        [cell.cellBackgroundImageView setImage:cellBottomImage];
+        cell.sepratorLine.hidden = YES;
     }
     else
     {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_middle@2x" ofType:@"png"];
-        UIImage * cellMiddleImage = [UIImage imageWithContentsOfFile:path];
-        [cell.cellBackgroundImageView setImage:cellMiddleImage];
+        cell.sepratorLine.hidden = NO;
     }
     cell.nutritionNameLabel.text = nutrientName;
     cell.nutritionSupplyLabel.text = [NSString stringWithFormat:@"%.2f%@",[foodNutrientContent floatValue],unit];

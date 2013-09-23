@@ -31,6 +31,7 @@
 @property (strong,nonatomic)UIView *admobView;
 @property (nonatomic,readwrite)BOOL firstEnterEditView;
 @property (nonatomic, readwrite) int currentSexSelection;
+@property (strong, nonatomic) IBOutlet UIImageView *listViewBGImage;
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong, nonatomic) IBOutlet UILabel *emptyDRILabel;
 @property (nonatomic, readwrite) int currentActivityLevelSelection;

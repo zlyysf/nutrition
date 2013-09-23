@@ -871,7 +871,7 @@
         }
         UILocalNotification *shangwuLocal = [[UILocalNotification alloc]init];
         [shangwuLocal setAlertAction:@"去诊断"];
-        [shangwuLocal setAlertBody:@"上午诊断时间到了"];
+        [shangwuLocal setAlertBody:@"诊断时间到了"];
         [shangwuLocal setRepeatInterval:NSDayCalendarUnit];
         [shangwuLocal setApplicationIconBadgeNumber:1];
         [shangwuLocal setFireDate:shangwuDateDefault];
@@ -883,7 +883,7 @@
         
         UILocalNotification *xiawuLocal = [[UILocalNotification alloc]init];
         [xiawuLocal setAlertAction:@"去诊断"];
-        [xiawuLocal setAlertBody:@"下午诊断时间到了"];
+        [xiawuLocal setAlertBody:@"诊断时间到了"];
         [xiawuLocal setRepeatInterval:NSDayCalendarUnit];
         [xiawuLocal setApplicationIconBadgeNumber:1];
         [xiawuLocal setFireDate:xiawuDateDeFault];
@@ -895,7 +895,7 @@
         
         UILocalNotification *shuiqianLocal = [[UILocalNotification alloc]init];
         [shuiqianLocal setAlertAction:@"去诊断"];
-        [shuiqianLocal setAlertBody:@"睡前诊断时间到了"];
+        [shuiqianLocal setAlertBody:@"诊断时间到了"];
         [shuiqianLocal setRepeatInterval:NSDayCalendarUnit];
         [shuiqianLocal setApplicationIconBadgeNumber:1];
         [shuiqianLocal setFireDate:shuiqianDateDefault];

@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @interface LZHealthCheckViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
-@property (strong,nonatomic)NSArray *diseaseNamesArray;
+@property (strong,nonatomic)NSMutableArray *diseaseNamesArray;
 @property (strong,nonatomic)NSMutableDictionary *diseasesStateDict;
 @property (strong, nonatomic) IBOutlet UITableView *listView;
+@property (strong,nonatomic)NSString* checkType;
 @end

@@ -300,8 +300,8 @@
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0)
-    {
+//    if (indexPath.section == 0)
+//    {
         LZNutritionSupplyCell *cell = (LZNutritionSupplyCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionSupplyCell"];
         NSDictionary *aNutrient = [nutrientSupplyArray objectAtIndex:indexPath.row];
         NSString *nutrientName = [aNutrient objectForKey:@"Name"];
@@ -327,38 +327,38 @@
 
             cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%.2f/%.2f%@)",(int)([percent floatValue] *100),[food1Supply1NutrientAmount floatValue],[nutrientTotalDRI floatValue ],unit];
         return cell;
-    }
-    else
-    {
-        LZStandardContentCell *cell = (LZStandardContentCell *)[tableView dequeueReusableCellWithIdentifier:@"LZStandardContentCell"];
-        NSDictionary *nutrientStandard = [nutrientStandardArray objectAtIndex:indexPath.row];
-        NSString *nutrientName = [nutrientStandard objectForKey:@"Name"];
-        NSNumber *foodNutrientContent = [nutrientStandard objectForKey:@"foodNutrientContent"];
-        NSString *unit = [nutrientStandard objectForKey:@"Unit"];
-        if (indexPath.row == 0)
-        {
-            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_top@2x" ofType:@"png"];
-            UIImage * cellTopImage = [UIImage imageWithContentsOfFile:path];
-
-            [cell.cellBackgroundImageView setImage:cellTopImage];
-        }
-        else if (indexPath.row == [nutrientStandardArray count]-1)
-        {
-            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_bottom@2x" ofType:@"png"];
-            UIImage * cellBottomImage = [UIImage imageWithContentsOfFile:path];
-            [cell.cellBackgroundImageView setImage:cellBottomImage];
-        }
-        else
-        {
-            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_middle@2x" ofType:@"png"];
-            UIImage * cellMiddleImage = [UIImage imageWithContentsOfFile:path];
-            [cell.cellBackgroundImageView setImage:cellMiddleImage];
-        }
-        cell.nutritionNameLabel.text = nutrientName;
-        cell.nutritionSupplyLabel.text = [NSString stringWithFormat:@"%.2f%@",[foodNutrientContent floatValue],unit];
-        
-        return cell;
-    }
+//    }
+//    else
+//    {
+//        LZStandardContentCell *cell = (LZStandardContentCell *)[tableView dequeueReusableCellWithIdentifier:@"LZStandardContentCell"];
+//        NSDictionary *nutrientStandard = [nutrientStandardArray objectAtIndex:indexPath.row];
+//        NSString *nutrientName = [nutrientStandard objectForKey:@"Name"];
+//        NSNumber *foodNutrientContent = [nutrientStandard objectForKey:@"foodNutrientContent"];
+//        NSString *unit = [nutrientStandard objectForKey:@"Unit"];
+//        if (indexPath.row == 0)
+//        {
+//            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_top@2x" ofType:@"png"];
+//            UIImage * cellTopImage = [UIImage imageWithContentsOfFile:path];
+//
+//            [cell.cellBackgroundImageView setImage:cellTopImage];
+//        }
+//        else if (indexPath.row == [nutrientStandardArray count]-1)
+//        {
+//            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_bottom@2x" ofType:@"png"];
+//            UIImage * cellBottomImage = [UIImage imageWithContentsOfFile:path];
+//            [cell.cellBackgroundImageView setImage:cellBottomImage];
+//        }
+//        else
+//        {
+//            NSString *path = [[NSBundle mainBundle] pathForResource:@"cell_middle@2x" ofType:@"png"];
+//            UIImage * cellMiddleImage = [UIImage imageWithContentsOfFile:path];
+//            [cell.cellBackgroundImageView setImage:cellMiddleImage];
+//        }
+//        cell.nutritionNameLabel.text = nutrientName;
+//        cell.nutritionSupplyLabel.text = [NSString stringWithFormat:@"%.2f%@",[foodNutrientContent floatValue],unit];
+//        
+//        return cell;
+//    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {

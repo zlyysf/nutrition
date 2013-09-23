@@ -10,7 +10,7 @@
 
 @interface LZStandardContentCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *nutritionNameLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *cellBackgroundImageView;
 
+@property (strong, nonatomic) IBOutlet UIView *sepratorLine;
 @property (strong, nonatomic) IBOutlet UILabel *nutritionSupplyLabel;
 @end

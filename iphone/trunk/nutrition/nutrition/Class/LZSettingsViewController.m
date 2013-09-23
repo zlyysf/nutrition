@@ -71,8 +71,8 @@
     float titleLength = self.feedBackButton.titleLabel.frame.size.width;
     [self.feedBackButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 46, 0, 300-46-titleLength)];
 
-    UIImage *textImage = [UIImage imageNamed:@"setting_cell_back.png"];
-    UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:15 topCapHeight:15];
+    UIImage *textImage = [UIImage imageNamed:@"outer_line_bg.png"];
+    UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
     [self.personsBackImageView setImage:textBackImage];
 //    [self.editProfileButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
 //    [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];

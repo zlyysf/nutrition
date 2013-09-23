@@ -29,8 +29,8 @@
 {
     [super viewDidLoad];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textChanged:) name:UITextViewTextDidChangeNotification object:nil];
-    UIImage *textImage = [UIImage imageNamed:@"setting_cell_back.png"];
-    UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:30 topCapHeight:15];
+    UIImage *textImage = [UIImage imageNamed:@"outer_line_bg.png"];
+    UIImage *textBackImage = [textImage stretchableImageWithLeftCapWidth:6 topCapHeight:6];
     [self.contentBackgroundImage setImage:textBackImage];
     if (preInsertText != nil)
     {

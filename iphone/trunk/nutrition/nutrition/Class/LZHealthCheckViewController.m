@@ -19,10 +19,11 @@
 #import "LZTimeSettingsViewController.h"
 @interface LZHealthCheckViewController ()
 @property (nonatomic,strong)NSString *sectionTitle;
+@property (assign,nonatomic)BOOL isFirstLoad;
 @end
 
 @implementation LZHealthCheckViewController
-@synthesize diseaseNamesArray,diseasesStateDict,sectionTitle;
+@synthesize diseaseNamesArray,diseasesStateDict,sectionTitle,checkType,isFirstLoad;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,24 +42,12 @@
         UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     }
-    NSDictionary *titleDict = [NSDictionary dictionaryWithObjectsAndKeys:@"从早晨到现在，您有下列哪些状况？",@"上午",@"午饭后到现在，您有下列哪些状况？",@"下午",@"晚饭后到现在，您有下列哪些状况？",@"睡前", nil];
-    self.diseasesStateDict = [[NSMutableDictionary alloc]init];
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
-    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
-    //NSString *illnessGroup = groupAry[0];
     NSString *timeType = [LZUtility getCurrentTimeIdentifier];
-    self.sectionTitle = [titleDict objectForKey:timeType];
-    self.title =[NSString stringWithFormat:@"%@健康诊断",timeType];
-    //NSDictionary *info = [da getDiseaseNamesOfGroup:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:timeType];
-    //NSLog(@"%@",info);
-    self.diseaseNamesArray = [da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:timeType];
-    //NSDictionary * departmentDiseasesDict = [info objectForKey:@"departmentDiseasesDict"];
-    for(NSString *departName in diseaseNamesArray)
-    {
-        [self.diseasesStateDict setObject:[NSNumber numberWithBool:NO] forKey:departName];
-    }
-    //self.questionLabel.text = @"您最近有以下哪些症状?（可多选）";
+    self.checkType = timeType;
+    self.diseasesStateDict = [[NSMutableDictionary alloc]init];
+    self.diseaseNamesArray = [[NSMutableArray alloc]init];
+    self.isFirstLoad = YES;
+        //self.questionLabel.text = @"您最近有以下哪些症状?（可多选）";
     UIBarButtonItem *recheckItem = [[UIBarButtonItem alloc]initWithTitle:@"提醒设置" style:UIBarButtonItemStyleBordered target:self action:@selector(timeSettingItemTapped)];
     self.navigationItem.rightBarButtonItem = recheckItem;
     UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];//stretchableImageWithLeftCapWidth:20 topCapHeight:15];
@@ -88,6 +77,32 @@
     UIView *footerView = self.listView.tableFooterView;
     UIView *admobView = [footerView viewWithTag:51];
     [shared resetAdView:self andListView:admobView];
+    [self refreshViewAccordingToTime];
+}
+-(void)refreshViewAccordingToTime
+{
+    NSString *timeType = [LZUtility getCurrentTimeIdentifier];
+    if (![timeType isEqualToString: checkType] || isFirstLoad)
+    {
+        checkType = timeType;
+        NSDictionary *titleDict = [NSDictionary dictionaryWithObjectsAndKeys:@"从早晨到现在，您有下列哪些状况？",@"上午",@"午饭后到现在，您有下列哪些状况？",@"下午",@"晚饭后到现在，您有下列哪些状况？",@"睡前", nil];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
+        NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+        
+        self.sectionTitle = [titleDict objectForKey:timeType];
+        self.title =[NSString stringWithFormat:@"%@健康诊断",timeType];
+        [self.diseaseNamesArray removeAllObjects];
+        [self.diseaseNamesArray addObjectsFromArray:[da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:timeType]];
+        [self.diseasesStateDict removeAllObjects];
+        for(NSString *departName in diseaseNamesArray)
+        {
+            [self.diseasesStateDict setObject:[NSNumber numberWithBool:NO] forKey:departName];
+        }
+        isFirstLoad = NO;
+        [self.listView reloadData];
+    }
+    
 }
 - (void)viewWillDisappear:(BOOL)animated
 {
@@ -99,22 +114,6 @@
     LZTimeSettingsViewController* timeSettingsViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZTimeSettingsViewController"];
 
     [self.navigationController pushViewController:timeSettingsViewController animated:YES];
-
-//    for(NSString *departName in diseaseNamesArray)
-//    {
-//        NSMutableArray *stateArray = [self.diseasesStateDict objectForKey:departName];
-//        for(int i = 0;i< [stateArray count];i++)
-//        {
-//            NSArray *state = [stateArray objectAtIndex:i];
-//            NSString *diseaseName = [state objectAtIndex:0];
-//            NSNumber *newState = [NSNumber numberWithBool:NO];
-//            NSArray *newArray = [NSArray arrayWithObjects:diseaseName,newState, nil];
-//            [stateArray replaceObjectAtIndex:i withObject:newArray];
-//        }
-//    }
-//    [self.listView reloadData];
-//    [self.listView setContentOffset:CGPointMake(0, 0) animated:YES];
-
 }
 -(void)checkItemTapped
 {
@@ -170,7 +169,14 @@
     [cell.backView.layer setMasksToBounds:YES];
     [cell.backView.layer setCornerRadius:3.0f];
     cell.nameLabel.text = departmentName;
-    cell.stateImageView.hidden = ![checkState boolValue];
+    if ([checkState boolValue])
+    {
+        [cell.stateImageView setImage:[UIImage imageNamed:@"nutrient_button_on.png"]];
+    }
+    else
+    {
+        [cell.stateImageView setImage:[UIImage imageNamed:@"nutrient_button_off.png"]];
+    }
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
