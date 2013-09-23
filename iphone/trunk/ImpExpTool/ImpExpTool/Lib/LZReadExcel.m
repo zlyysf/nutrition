@@ -1098,11 +1098,13 @@
 -(void)convertExcelToSqlite_NutrientDisease
 {
     NSDictionary * dataInSheet0 = [self readNutrientDiseaseSheet_with0TypeSome:0];
-    NSDictionary * dataInSheet1 = [self readNutrientDiseaseSheet_with1TypeSome:1 andTypeSomeValue:@"Class"];
-    NSDictionary * dataInSheet2 = [self readNutrientDiseaseSheet_with0TypeSome:2];
+//    NSDictionary * dataInSheet1 = [self readNutrientDiseaseSheet_with1TypeSome:1 andTypeSomeValue:@"Class"];
+//    NSDictionary * dataInSheet2 = [self readNutrientDiseaseSheet_with0TypeSome:2];
+    NSDictionary * dataInSheet1 = [self readNutrientDiseaseSheet_with0TypeSome:1];
+    NSDictionary * dataInSheet2 = [self readNutrientDiseaseSheet_with2Type_TimeAndClass:2];
     NSDictionary * dataInSheet3 = [self readNutrientDiseaseSheet_with1TypeSome:3 andTypeSomeValue:@"Department"];
     //NO dataInSheet4
-    NSDictionary * dataInSheet5 = [self readNutrientDiseaseSheet_with2Type_TimeAndClass:5];
+//    NSDictionary * dataInSheet5 = [self readNutrientDiseaseSheet_with2Type_TimeAndClass:5];
     
     NSMutableArray *columnNames_DiseaseNutrient1 = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, COLUMN_NAME_DiseaseGroup, COLUMN_NAME_LackLevelMark, nil];
 //    NSMutableArray *columnNames_DiseaseNutrient2 = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, COLUMN_NAME_DiseaseGroup,nil];
@@ -1134,15 +1136,17 @@
     };
     [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet0[@"DiseaseGroup"],dataInSheet0[@"diseaseNutrientAry"],0)];
     [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet1[@"DiseaseGroup"],dataInSheet1[@"diseaseNutrientAry"],0)];
-    [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet2[@"DiseaseGroup"],dataInSheet2[@"diseaseNutrientAry"],0)];
+//    [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet2[@"DiseaseGroup"],dataInSheet2[@"diseaseNutrientAry"],0)];
+    [diseaseNutrientRows addObjectsFromArray:dataInSheet2[@"diseaseNutrientRows"]];
     [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet3[@"DiseaseGroup"],dataInSheet3[@"diseaseNutrientAry"],0)];
-    [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet5[@"DiseaseGroup"],dataInSheet5[@"diseaseNutrientAry"],3)];
+//    [diseaseNutrientRows addObjectsFromArray:generateDiseaseNutrientRelationsBlockVar(dataInSheet5[@"DiseaseGroup"],dataInSheet5[@"diseaseNutrientAry"],3)];
     
     [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet0[@"DiseaseGroup"],DiseaseGroupType_specialPeople, nil]];
-    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet1[@"DiseaseGroup"],DiseaseGroupType_discomfort, nil]];
-    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet2[@"DiseaseGroup"],DiseaseGroupType_healthCare, nil]];
+//    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet1[@"DiseaseGroup"],DiseaseGroupType_discomfort, nil]];
+    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet1[@"DiseaseGroup"],DiseaseGroupType_healthCare, nil]];
+    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet2[@"DiseaseGroup"],DiseaseGroupType_DailyDiseaseDiagnose, nil]];
     [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet3[@"DiseaseGroup"],DiseaseGroupType_illness, nil]];
-    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet5[@"DiseaseGroup"],DiseaseGroupType_DailyDiseaseDiagnose, nil]];
+//    [diseaseGroupAry addObject: [NSArray arrayWithObjects:dataInSheet5[@"DiseaseGroup"],DiseaseGroupType_DailyDiseaseDiagnose, nil]];
     
     NSMutableArray* (^generateGroupDiseaseRelationsBlockVar)(NSString *sDiseaseGroup,NSArray *validDiseaseAry2D) ;
     generateGroupDiseaseRelationsBlockVar = ^(NSString *sDiseaseGroup,NSArray *validDiseaseAry2D){
@@ -1159,7 +1163,7 @@
     [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet1[@"DiseaseGroup"],dataInSheet1[@"validDiseaseAry2D"])];
     [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet2[@"DiseaseGroup"],dataInSheet2[@"validDiseaseAry2D"])];
     [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet3[@"DiseaseGroup"],dataInSheet3[@"validDiseaseAry2D"])];
-    [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet5[@"DiseaseGroup"],dataInSheet5[@"validDiseaseAry2D"])];
+//    [diseaseInGroupAry addObjectsFromArray:generateGroupDiseaseRelationsBlockVar(dataInSheet5[@"DiseaseGroup"],dataInSheet5[@"validDiseaseAry2D"])];
     
     assert(dbCon!=nil);
     LZDBAccess *db = dbCon;
@@ -1491,7 +1495,7 @@
     assert(sDiseaseGroup.length>0);
     NSLog(@"sDiseaseGroup: %@",sDiseaseGroup);
     
-    NSMutableArray * diseaseNutrientAry = [NSMutableArray arrayWithCapacity:2000];
+    NSMutableArray * diseaseNutrientRows = [NSMutableArray arrayWithCapacity:2000];
     NSMutableArray * validDiseaseAry2D = [NSMutableArray arrayWithCapacity:diseaseNames.count];
     for(int iRow=0 ; iRow<diseaseNames.count ; iRow++){
         int idxRow = startRowPos+1+iRow;
@@ -1524,17 +1528,18 @@
             
             int idxCol = startNutrientDiseaseFlagColumnPos+iCol;
             //            NSLog(@"[%d,%d]",idxRow,idxCol);
-            DHcell *cellFlag = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:idxCol];
-            if (cellFlag.type!=cellBlank && cellFlag.val!=nil && [cellFlag.val intValue]==1){
-                NSArray *diseaseNutrient = [NSArray arrayWithObjects: diseaseName, nutrientId, nil];
-                NSLog(@"diseaseNutrient: %@ %@ %@ [%d,%d]",diseaseName,nutrientId,nutrientDesc,idxRow,idxCol);
-                [diseaseNutrientAry addObject:diseaseNutrient];
+            DHcell *cellFlagAndLevel = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:idxCol];
+            if (cellFlagAndLevel.type!=cellBlank && cellFlagAndLevel.val!=nil && [cellFlagAndLevel.val intValue]>0){
+                int levelVal = 7 / [cellFlagAndLevel.val intValue];// level1 = 7, level2 = 3
+                NSArray *diseaseNutrientRow = [NSArray arrayWithObjects: diseaseName, nutrientId, sDiseaseGroup, [NSNumber numberWithInt:levelVal], nil];
+                NSLog(@"diseaseNutrientRow: %@ %@ %d %@ [%d,%d]",diseaseName,nutrientId,levelVal,nutrientDesc,idxRow,idxCol);
+                [diseaseNutrientRows addObject:diseaseNutrientRow];
             }
         }//for iCol
     }//for iRow
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
-    [retData setObject:diseaseNutrientAry forKey:@"diseaseNutrientAry"];
+    [retData setObject:diseaseNutrientRows forKey:@"diseaseNutrientRows"];
     [retData setObject:sDiseaseGroup forKey:@"DiseaseGroup"];
     [retData setObject:validDiseaseAry2D forKey:@"validDiseaseAry2D"];
     return retData;
