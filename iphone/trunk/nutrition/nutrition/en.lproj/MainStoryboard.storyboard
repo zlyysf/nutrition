@@ -321,7 +321,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="LF2-8Q-vW1">
-                                                            <rect key="frame" x="1" y="1" width="75" height="50"/>
+                                                            <rect key="frame" x="1" y="0.0" width="75" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
@@ -394,7 +394,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="2fV-Aw-U9L">
-                                                            <rect key="frame" x="1" y="1" width="75" height="50"/>
+                                                            <rect key="frame" x="1" y="0.0" width="75" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
@@ -476,7 +476,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="1Tu-Iw-6PR">
-                                                            <rect key="frame" x="1" y="1" width="75" height="50"/>
+                                                            <rect key="frame" x="1" y="0.0" width="75" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
@@ -648,7 +648,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="krY-Ac-UJo">
-                                                            <rect key="frame" x="1" y="1" width="75" height="50"/>
+                                                            <rect key="frame" x="1" y="0.0" width="75" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
@@ -715,7 +715,7 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="hN3-f8-EtZ">
-                                                    <rect key="frame" x="82" y="5" width="192" height="15"/>
+                                                    <rect key="frame" x="82" y="5" width="194" height="15"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -869,7 +869,7 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="ppt-Hh-lbd">
-                                                            <rect key="frame" x="1" y="1" width="75" height="50"/>
+                                                            <rect key="frame" x="1" y="0.0" width="75" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
@@ -1127,40 +1127,6 @@
                                             <outlet property="nameButton" destination="Mm7-EQ-041" id="GvS-S6-n1F"/>
                                             <outlet property="nutrientSupplyLabel" destination="TRQ-yq-SPS" id="g61-tT-iu7"/>
                                             <outlet property="nutritionProgressView" destination="n4i-AI-Rrx" id="xLY-dc-htF"/>
-                                        </connections>
-                                    </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZStandardContentCell" rowHeight="30" id="8mG-XT-RE4" customClass="LZStandardContentCell">
-                                        <rect key="frame" x="0.0" y="64" width="320" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="29"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="mMJ-ZW-nAn">
-                                                    <rect key="frame" x="9" y="0.0" width="302" height="30"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="pmG-sF-0ZE">
-                                                    <rect key="frame" x="20" y="6" width="90" height="18"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vZq-Ay-CaS">
-                                                    <rect key="frame" x="193" y="6" width="107" height="18"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <connections>
-                                            <outlet property="cellBackgroundImageView" destination="mMJ-ZW-nAn" id="gEG-zV-DGR"/>
-                                            <outlet property="nutritionNameLabel" destination="pmG-sF-0ZE" id="yqq-hR-JEQ"/>
-                                            <outlet property="nutritionSupplyLabel" destination="vZq-Ay-CaS" id="4bV-L4-e3f"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -2068,6 +2034,7 @@
             <relationships>
                 <relationship kind="outlet" name="nutritionNameLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nutritionSupplyLabel" candidateClass="UILabel"/>
+                <relationship kind="outlet" name="sepratorLine" candidateClass="UIView"/>
             </relationships>
         </class>
         <class className="LZTimeSettingsViewController" superclassName="UIViewController">

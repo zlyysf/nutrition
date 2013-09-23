@@ -770,8 +770,8 @@
         }
         [cell.backView.layer setMasksToBounds:YES];
         [cell.backView.layer setCornerRadius:3.f];
-        [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,196,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
-        [cell adjustLabelAccordingToProgress:progress forLabelWidth:196];
+        [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,194,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
+        [cell adjustLabelAccordingToProgress:progress forLabelWidth:194];
         //[cell.backView setBackgroundColor:[UIColor clearColor]];
 //        if (KeyIsEnvironmentDebug)
 //        {
