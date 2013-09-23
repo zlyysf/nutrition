@@ -100,7 +100,7 @@
 
 +(void)setCheckReminderOn:(BOOL)isOn;
 
-+(NSDate *)getDateForHour:(int)hour;
++(NSDate *)getDateForHour:(int)hours Minutes:(int)minutes;
 @end
 
 

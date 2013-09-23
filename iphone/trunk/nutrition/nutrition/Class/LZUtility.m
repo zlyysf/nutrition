@@ -654,11 +654,11 @@
     unsigned unitFlags = NSHourCalendarUnit|NSMinuteCalendarUnit;
     NSDateComponents * currentComp = [calendar components:unitFlags fromDate:now];
     int hour = [currentComp hour];//([currentComp hour]+ ([currentComp minute]>0?1:0))%24;
-    if (hour >=4 && hour < 12)
+    if (hour >=6 && hour < 12)
     {
         return @"上午";
     }
-    else if (hour >=12 && hour < 20)
+    else if (hour >=12 && hour < 19)
     {
         return @"下午";
     }
@@ -823,13 +823,14 @@
     [formatter setDateFormat:@"ahh:mm"];
     return  [formatter stringFromDate:date];
 }
-+(NSDate *)getDateForHour:(int)hour
++(NSDate *)getDateForHour:(int)hours Minutes:(int)minutes
 {
     NSDate *date = [NSDate date];
     NSCalendar *calendar = [NSCalendar currentCalendar];
     unsigned unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit | NSDayCalendarUnit;
     NSDateComponents *todayComp = [calendar components:unitFlags fromDate:date];
-    [todayComp setHour:hour];
+    [todayComp setHour:hours];
+    [todayComp setMinute:minutes];
     NSDate *newDate = [calendar dateFromComponents:todayComp];
     return newDate;
 
