@@ -6,10 +6,10 @@
 //  Copyright (c) 2013 lingzhi mobile. All rights reserved.
 //
 
-#import "LZChangeDietNameButton.h"
+#import "LZCustomDataButton.h"
 
-@implementation LZChangeDietNameButton
-@synthesize dietInfo;
+@implementation LZCustomDataButton
+@synthesize customData;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

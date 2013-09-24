@@ -129,7 +129,7 @@
     }
     if ([userSelectedDiseaseNames count] == 0)
     {
-        UIAlertView *selectEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您还没有选择任何不适症状，请至少选择一项以便进行诊断。" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *selectEmptyAlert = [[UIAlertView alloc]initWithTitle:nil message:@"恭喜，你现在的身体状况还很健康，在以后的诊断中要继续保持哦！" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
         [selectEmptyAlert show];
         return;
     }
@@ -137,13 +137,52 @@
     NSString *text = [userSelectedDiseaseNames componentsJoinedByString:@"；"];
     NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrientRows_ByDiseaseNames:userSelectedDiseaseNames andDiseaseGroup:nil];
     
-    NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
-    for ( NSString* key in nutrientsByDiseaseDict) {
-        NSArray *nutrients = nutrientsByDiseaseDict[key];
-        [nutrientSet addObjectsFromArray:nutrients];
+    NSMutableSet *heavySet = [[NSMutableSet alloc]init];
+    NSMutableSet *lightSet = [[NSMutableSet alloc]init];
+    NSMutableArray *heavyArray = [[NSMutableArray alloc]init];
+    NSMutableArray *lightArray = [[NSMutableArray alloc]init];
+    
+    for (NSString * aDiseaseName in userSelectedDiseaseNames)
+    {
+        NSArray *relatedNutritionArray = [nutrientsByDiseaseDict objectForKey:aDiseaseName];
+        for (NSDictionary * nutritionInfo in relatedNutritionArray)
+        {
+            NSString *nutritientId = [nutritionInfo objectForKey:@"NutrientID"];
+            NSNumber *lackLevel = [nutritionInfo objectForKey:COLUMN_NAME_LackLevelMark];
+            if ([lackLevel intValue] == 7)
+            {
+                [heavySet addObject:nutritientId];
+            }
+            else
+            {
+                [lightSet addObject:nutritientId];
+            }
         }
-    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
-    NSArray *newPreferArray = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
+    }
+    [heavyArray addObjectsFromArray:[heavySet allObjects]];
+    NSArray *lightSetArray = [lightSet allObjects];
+    for (NSString *nutritientId in lightSetArray)
+    {
+        if (![heavySet containsObject:nutritientId])
+        {
+            [lightArray addObject:nutritientId];
+        }
+    }
+    NSLog(@"%@",heavyArray );
+    NSLog(@"%@",lightArray );
+    NSMutableArray *newPreferArray = [[NSMutableArray alloc]init];
+    [newPreferArray addObjectsFromArray:heavyArray];
+    [newPreferArray addObjectsFromArray:lightArray];
+    NSLog(@"%@",newPreferArray);
+    
+    
+//    NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
+//    for ( NSString* key in nutrientsByDiseaseDict) {
+//        NSArray *nutrients = nutrientsByDiseaseDict[key];
+//        [nutrientSet addObjectsFromArray:nutrients];
+//        }
+//    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
+//    NSArray *newPreferArray = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
     NSDictionary *emptyIntake = [[NSDictionary alloc]init];
     [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];

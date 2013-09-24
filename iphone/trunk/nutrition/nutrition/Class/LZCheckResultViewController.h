@@ -10,6 +10,8 @@
 
 @interface LZCheckResultViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (nonatomic,strong)NSArray *userPreferArray;
+@property (nonatomic,strong)NSArray *heavylyLackArray;
+@property (nonatomic,strong)NSArray *lightlyLackArray;
 @property (nonatomic,strong)NSString *userSelectedNames;
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic)NSMutableDictionary *recommendFoodDictForDisplay;

@@ -121,7 +121,7 @@
     NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss, nil];
     
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+    NSDictionary *takenFoodAmountDict = [[NSDictionary alloc]init];//[[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
     //    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
     NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_withUserInfo:userInfo andDecidedFoods:takenFoodAmountDict andOptions:options];
     

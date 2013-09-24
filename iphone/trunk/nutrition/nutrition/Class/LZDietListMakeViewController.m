@@ -495,18 +495,6 @@
         }
     }
 }
-//-(void)editFoodButtonTapped:(LZEditFoodAmountButton*)sender
-//{
-//    NSString *foodId = sender.foodId;
-//    //NSDictionary *cellInfoDict = [self.takenFoodDict objectForKey:foodId];
-//    currentEditFoodId = foodId;
-//    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"更改食物量" message:@"请输入更适合你的食物量" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-//    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-//    alert.tag = KChangeFoodAmountAlertTag;
-//    UITextField *tf = [alert textFieldAtIndex:0];
-//    tf.keyboardType = UIKeyboardTypeNumberPad;
-//    [alert show];
-//}
 - (void)keyboardWillShow:(NSNotification *)notification {
 	
     NSDictionary *userInfo = [notification userInfo];

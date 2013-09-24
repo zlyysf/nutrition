@@ -16,7 +16,7 @@
 #import "LZConstants.h"
 #import "LZDietCell.h"
 #import "LZDataAccess.h"
-#import "LZChangeDietNameButton.h"
+#import "LZCustomDataButton.h"
 #define KChangeDietAlertTag 99
 @interface LZUserDietListViewController ()<UIAlertViewDelegate>
 
@@ -142,9 +142,9 @@
                                                                           //sharedApplication].keyWindow.rootViewController;
     [self.navigationController pushViewController:settingsViewController animated:YES];
 }
--(void)changeNameButtonTapped:(LZChangeDietNameButton*)sender
+-(void)changeNameButtonTapped:(LZCustomDataButton*)sender
 {
-    NSDictionary *dietInfo = sender.dietInfo;
+    NSDictionary *dietInfo = (NSDictionary *)sender.customData;
     NSNumber *dietId = [dietInfo objectForKey:@"CollocationId"];
     currentEditDietId = dietId;
     NSString *dietName = [dietInfo objectForKey:@"CollocationName"];
@@ -207,7 +207,7 @@
 
     cell.dietInfo = aDiet;
 
-    cell.changeNameButton.dietInfo = aDiet;
+    cell.changeNameButton.customData = aDiet;
     [cell.changeNameButton addTarget:self action:@selector(changeNameButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }

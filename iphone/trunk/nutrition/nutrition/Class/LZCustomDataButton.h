@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface LZChangeDietNameButton : UIButton
-@property (nonatomic,strong)NSDictionary *dietInfo;
+@interface LZCustomDataButton : UIButton
+@property (nonatomic,strong)id customData;
 @end
