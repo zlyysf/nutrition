@@ -34,8 +34,8 @@
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
 //    [self.class test_DiseaseNutrient1];
-//    [self.class test_DiseaseNutrient2];
-    [self.class test_saveUserCheckDiseaseRecord_withDay];
+    [self.class test_DiseaseNutrient2];
+//    [self.class test_saveUserCheckDiseaseRecord_withDay];
 
     
 //    [self.class testFormatResult1];
