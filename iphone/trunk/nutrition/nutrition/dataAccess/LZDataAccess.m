@@ -1688,18 +1688,18 @@
     NSArray *diseaseNutrientRows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseNutrient andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease,COLUMN_NAME_NutrientID,COLUMN_NAME_LackLevelMark, nil] andOrderByPart:nil andNeedDistinct:true];
     NSLog(@"getDiseaseNutrientRows_ByDiseaseNames diseaseNutrientRows=%@", [LZUtility getObjectDescription:diseaseNutrientRows andIndent:0] );
     
-//    NSMutableDictionary * diseaseNutrientInfosByDiseaseDict = [NSMutableDictionary dictionaryWithCapacity:diseaseNames.count];
-    NSMutableDictionary * diseaseNutrientInfoByDiseaseDict = [NSMutableDictionary dictionaryWithCapacity:diseaseNames.count];
+    NSMutableDictionary * diseaseNutrientInfosByDiseaseDict = [NSMutableDictionary dictionaryWithCapacity:diseaseNames.count];
+//    NSMutableDictionary * diseaseNutrientInfoByDiseaseDict = [NSMutableDictionary dictionaryWithCapacity:diseaseNames.count];
     for(int i=0; i<diseaseNutrientRows.count; i++){
         NSDictionary *diseaseNutrientRow = diseaseNutrientRows[i];
         NSString *diseaseName = diseaseNutrientRow[COLUMN_NAME_Disease];
-//        [LZUtility addUnitItemToArrayDictionary_withUnitItem:diseaseNutrientRow withArrayDictionary:diseaseNutrientInfosByDiseaseDict andKey:diseaseName];
-        [diseaseNutrientInfoByDiseaseDict setObject:diseaseNutrientRow forKey:diseaseName];
+        [LZUtility addUnitItemToArrayDictionary_withUnitItem:diseaseNutrientRow withArrayDictionary:diseaseNutrientInfosByDiseaseDict andKey:diseaseName];
+//        [diseaseNutrientInfoByDiseaseDict setObject:diseaseNutrientRow forKey:diseaseName];
     }
-//    NSLog(@"in getDiseaseNutrientRows_ByDiseaseNames, diseaseNutrientInfosByDiseaseDict=%@",[LZUtility getObjectDescription:diseaseNutrientInfosByDiseaseDict andIndent:0]);
-//    return diseaseNutrientInfosByDiseaseDict;
-    NSLog(@"in getDiseaseNutrientRows_ByDiseaseNames, diseaseNutrientInfoByDiseaseDict=%@",[LZUtility getObjectDescription:diseaseNutrientInfoByDiseaseDict andIndent:0]);
-    return diseaseNutrientInfoByDiseaseDict;
+    NSLog(@"in getDiseaseNutrientRows_ByDiseaseNames, diseaseNutrientInfosByDiseaseDict=%@",[LZUtility getObjectDescription:diseaseNutrientInfosByDiseaseDict andIndent:0]);
+    return diseaseNutrientInfosByDiseaseDict;
+//    NSLog(@"in getDiseaseNutrientRows_ByDiseaseNames, diseaseNutrientInfoByDiseaseDict=%@",[LZUtility getObjectDescription:diseaseNutrientInfoByDiseaseDict andIndent:0]);
+//    return diseaseNutrientInfoByDiseaseDict;
 }
 
 
