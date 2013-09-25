@@ -69,20 +69,8 @@
         [[NSUserDefaults standardUserDefaults]setObject:stateOn forKey:KeyHealthCheckReminderState];
         [[NSUserDefaults standardUserDefaults]synchronize];
     }
-//    NSNumber *planPerson = [[NSUserDefaults standardUserDefaults] objectForKey:LZPlanPersonsKey];
-//    NSNumber *planDays = [[NSUserDefaults standardUserDefaults]objectForKey:LZPlanDaysKey];
-//    if (planPerson == nil)
-//    {
-//        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanPersonsKey];
-//        [[NSUserDefaults standardUserDefaults]synchronize];
-//    }
-//    if (planDays == nil)
-//    {
-//        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:1] forKey:LZPlanDaysKey];
-//        [[NSUserDefaults standardUserDefaults]synchronize];
-//
-//    }
     [[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:58/255.f green:170/255.f blue:44/255.f alpha:1.f]];
+    UILocalNotification *remoteNotif = [launchOptions objectForKey: UIApplicationLaunchOptionsLocalNotificationKey];
     return YES;
 }
 							
@@ -94,7 +82,6 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    //[[UIApplication sharedApplication]cancelAllLocalNotifications];
     NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
     NSArray *oldScheduledNotify = [[UIApplication sharedApplication]scheduledLocalNotifications];
     NSMutableArray *newScheduled = [[NSMutableArray alloc]init];
@@ -121,10 +108,6 @@
     [newScheduled addObject:local];
     
     [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
-//  NSArray *scheduledArray = [[UIApplication sharedApplication] scheduledLocalNotifications];
-
-//  Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-//  If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

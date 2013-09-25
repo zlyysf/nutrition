@@ -148,10 +148,24 @@
         }
         else
         {
+            UIColor *scoreColor;
+            if (self.userTotalScore >= 90)
+            {
+                scoreColor = [UIColor colorWithRed:61/255.f green:175/255.f blue:44/255.f alpha:1.0f];
+            }
+            else if (self.userTotalScore >= 60)
+            {
+                scoreColor = [UIColor colorWithRed:255/255.f green:230/255.f blue:33/255.f alpha:1.0f];
+            }
+            else
+            {
+                scoreColor = [UIColor colorWithRed:255/255.f green:33/255.f blue:33/255.f alpha:1.0f];
+            }
+
             NSString *scoreString = [NSString stringWithFormat:@"%d分",self.userTotalScore];
             CGSize labelSize = [scoreString sizeWithFont:[UIFont boldSystemFontOfSize:48]constrainedToSize:CGSizeMake(140, 9999) lineBreakMode:UILineBreakModeWordWrap];
             UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 140, labelSize.height)];
-            [scoreLabel setTextColor:[UIColor colorWithRed:61/255.f green:175/255.f blue:44/255.f alpha:1.0f]];
+            [scoreLabel setTextColor:scoreColor];
             [scoreLabel setBackgroundColor:[UIColor clearColor]];
             [cell.contentView addSubview:scoreLabel];
             [scoreLabel setFont:[UIFont boldSystemFontOfSize:48]];
@@ -162,15 +176,15 @@
             NSString *summaryString;
             if (self.userTotalScore >= 90)
             {
-                summaryString = @"恭喜您，您的身体很健康！";
+                summaryString = @"恭喜，您现在的身体很健康！";
             }
             else if (self.userTotalScore >= 60)
             {
-                summaryString = @"恭喜您，您的身体比较健康！";
+                summaryString = @"恭喜，您现在的身体比较健康！";
             }
             else
             {
-                summaryString = @"抱歉，您的身体比较糟糕！";
+                summaryString = @"抱歉，您现在的身体比较糟糕！";
             }
             CGSize labelSize1 = [summaryString sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(150, 9999) lineBreakMode:UILineBreakModeWordWrap];
             UILabel *healthSummaryLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 1, 150, labelSize1.height)];
@@ -211,7 +225,7 @@
         else
         {
             UILabel *contentLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, self.diseaseCellHeight -20)];
-            [contentLabel setTextColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.8]];
+            [contentLabel setTextColor:[UIColor blackColor]];
             [contentLabel setBackgroundColor:[UIColor clearColor]];
             [cell.contentView addSubview:contentLabel];
             contentLabel.numberOfLines = 0;
@@ -235,7 +249,7 @@
             {
                 UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 300, 18)];
                 [cell.contentView addSubview:emptyLabel];
-                emptyLabel.text = @"不缺乏";
+                emptyLabel.text = @"无，请关注轻度缺乏的营养！";
                 cell.hasLoaded = YES;
                 return cell;
             }
@@ -247,7 +261,10 @@
             [cell.nutritionButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_button.png",nutritionId]] forState:UIControlStateNormal];
             cell.nutritionButton.customData = nutritionId;
             [cell.nutritionButton addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-            cell.lackDescriptionLabel.text = nutritionId;
+            LZDataAccess *da = [LZDataAccess singleton];
+            NSDictionary *dict = [da getNutrientInfo:nutritionId];
+            NSString *lackInfo = [dict objectForKey:@"NutrientLackDescription"];
+            cell.lackDescriptionLabel.text = lackInfo;
             return cell;
         }
 
@@ -288,7 +305,7 @@
             {
                 UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 300, 18)];
                 [cell.contentView addSubview:emptyLabel];
-                emptyLabel.text = @"不缺乏";
+                emptyLabel.text = @"无，请关注严重缺乏的营养！";
             }
             cell.hasLoaded = YES;
             return cell;
@@ -471,19 +488,23 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section >= 0 && section <=3)
+    if (section == 0 ||section == 1 ||section == 3)
     {
         return 0;
+    }
+    if (section == 2)
+    {
+        return 10;
     }
     return 5;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section >= 0 && section <=3)
+    if (section == 0 ||section == 1 ||section == 3)
     {
         return nil;
     }
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 10)];
     [sectionView setBackgroundColor:[UIColor clearColor]];
     return sectionView;
 }
@@ -527,11 +548,11 @@
     }
     else if (section == 2)
     {
-        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内轻度缺乏的%d种营养",[self.heavylyLackArray count]];
+        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内严重缺乏的%d种营养",[self.heavylyLackArray count]];
     }
     else if (section == 3)
     {
-        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内严重缺乏的%d种营养",[self.lightlyLackArray count]];;
+        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内轻度缺乏的%d种营养",[self.lightlyLackArray count]];
     }
     else if (section == 4)
     {
