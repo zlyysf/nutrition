@@ -174,15 +174,7 @@
     [newPreferArray addObjectsFromArray:heavyArray];
     [newPreferArray addObjectsFromArray:lightArray];
     NSLog(@"%@",newPreferArray);
-    
-    
-//    NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
-//    for ( NSString* key in nutrientsByDiseaseDict) {
-//        NSArray *nutrients = nutrientsByDiseaseDict[key];
-//        [nutrientSet addObjectsFromArray:nutrients];
-//        }
-//    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
-//    NSArray *newPreferArray = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
+            
     NSDictionary *emptyIntake = [[NSDictionary alloc]init];
     [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
@@ -190,6 +182,9 @@
     LZCheckResultViewController *checkResultViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZCheckResultViewController"];
     checkResultViewController.userSelectedNames = text;
     checkResultViewController.userPreferArray = newPreferArray;
+    checkResultViewController.heavylyLackArray = heavyArray;
+    checkResultViewController.lightlyLackArray = lightArray;
+    checkResultViewController.userTotalScore = 100- 3*[lightArray count]-7*[heavyArray count];
     [self.navigationController pushViewController:checkResultViewController animated:YES];
     
 }

@@ -21,6 +21,9 @@
 #import "GADMasterViewController.h"
 #import "LZUserDietListViewController.h"
 #import "LZMainPageViewController.h"
+#import "LZRichNutritionViewController.h"
+#import "LZCustomDataButton.h"
+#import "LZHeavlyLackCell.h"
 @interface LZCheckResultViewController ()<MBProgressHUDDelegate,UIAlertViewDelegate>
 {
     MBProgressHUD *HUD;
@@ -32,7 +35,7 @@
 
 @implementation LZCheckResultViewController
 @synthesize userPreferArray,userSelectedNames,diseaseCellHeight,nutritionCellHeight,isFirstLoad,recommendFoodDictForDisplay,takenFoodIdsArray,takenFoodDict,nutrientInfoArray,takenFoodNutrientInfoDict,allFoodUnitDict;
-@synthesize heavylyLackArray,lightlyLackArray;
+@synthesize heavylyLackArray,lightlyLackArray,userTotalScore;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -56,8 +59,9 @@
     HUD.hidden = YES;
     HUD.delegate = self;
     self.title = @"诊断结果";
-    int totalFloor = [userPreferArray count]/4+ (([userPreferArray count]%4 == 0)?0:1);
-    self.nutritionCellHeight = totalFloor *30 + 20+ (totalFloor-1)*8;
+
+    int totalFloor = [lightlyLackArray count]/3+ (([lightlyLackArray count]%3 == 0)?0:1);
+    self.nutritionCellHeight = totalFloor *94 + 20+ (totalFloor-1)*8;
     CGSize labelSize = [userSelectedNames sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
     self.diseaseCellHeight = labelSize.height + 20;
     takenFoodIdsArray = [[NSMutableArray alloc]init];
@@ -108,15 +112,22 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
-    {
-        return 1;
-    }
-    else if (section == 1)
+    if (section ==0 || section ==1 || section == 3)
     {
         return 1;
     }
     else if (section == 2)
+    {
+        if ([self.heavylyLackArray count]==0)
+        {
+            return 1;
+        }
+        else
+        {
+            return [self.heavylyLackArray count];
+        }
+    }
+    else if(section == 4)
     {
         return [takenFoodIdsArray count];
     }
@@ -129,6 +140,68 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
+    {
+        LZEmptyClassCell * cell =(LZEmptyClassCell*)[tableView dequeueReusableCellWithIdentifier:@"UserScoreCell"];
+        if (cell.hasLoaded)
+        {
+            return cell;
+        }
+        else
+        {
+            NSString *scoreString = [NSString stringWithFormat:@"%d分",self.userTotalScore];
+            CGSize labelSize = [scoreString sizeWithFont:[UIFont boldSystemFontOfSize:48]constrainedToSize:CGSizeMake(140, 9999) lineBreakMode:UILineBreakModeWordWrap];
+            UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 140, labelSize.height)];
+            [scoreLabel setTextColor:[UIColor colorWithRed:61/255.f green:175/255.f blue:44/255.f alpha:1.0f]];
+            [scoreLabel setBackgroundColor:[UIColor clearColor]];
+            [cell.contentView addSubview:scoreLabel];
+            [scoreLabel setFont:[UIFont boldSystemFontOfSize:48]];
+            scoreLabel.text = scoreString;
+            scoreLabel.textAlignment = UITextAlignmentCenter;
+            CGPoint scoreCenter = scoreLabel.center;
+            
+            NSString *summaryString;
+            if (self.userTotalScore >= 90)
+            {
+                summaryString = @"恭喜您，您的身体很健康！";
+            }
+            else if (self.userTotalScore >= 60)
+            {
+                summaryString = @"恭喜您，您的身体比较健康！";
+            }
+            else
+            {
+                summaryString = @"抱歉，您的身体比较糟糕！";
+            }
+            CGSize labelSize1 = [summaryString sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(150, 9999) lineBreakMode:UILineBreakModeWordWrap];
+            UILabel *healthSummaryLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 1, 150, labelSize1.height)];
+            healthSummaryLabel.numberOfLines = 0;
+            [healthSummaryLabel setTextColor:[UIColor blackColor]];
+            [healthSummaryLabel setBackgroundColor:[UIColor clearColor]];
+            [cell.contentView addSubview:healthSummaryLabel];
+            [healthSummaryLabel setFont:[UIFont systemFontOfSize:15]];
+            healthSummaryLabel.text = summaryString;
+            CGPoint summaryCenter = healthSummaryLabel.center;
+            summaryCenter.y = scoreCenter.y;
+            healthSummaryLabel.center = summaryCenter;
+
+            UIImageView *healthBar = [[UIImageView alloc]initWithFrame:CGRectMake(10, 78, 300, 30)];
+            [cell.contentView addSubview:healthBar];
+            [healthBar setImage:[UIImage imageNamed:@"health_bar.png"]];
+            
+            UIImageView *healthPoint = [[UIImageView alloc]initWithFrame:CGRectMake(10, 65, 35, 40)];
+            [healthPoint setImage:[UIImage imageNamed:@"health_point.png"]];
+            [cell.contentView addSubview:healthPoint];
+            CGPoint myCenter = healthPoint.center;
+            int newX = 45 + (self.userTotalScore*230)/100;
+            myCenter.x = newX;
+            healthPoint.center = myCenter;
+            
+            cell.hasLoaded = YES;
+            return cell;
+        }
+
+    }
+    else if (indexPath.section == 1)
     {
         LZEmptyClassCell * cell =(LZEmptyClassCell*)[tableView dequeueReusableCellWithIdentifier:@"UserDiseaseCell"];
         if (cell.hasLoaded)
@@ -147,48 +220,110 @@
             cell.hasLoaded = YES;
             return cell;
         }
+
     }
-    else if (indexPath.section == 1)
+    else if (indexPath.section == 2)
     {
-        LZEmptyClassCell * cell =(LZEmptyClassCell*)[tableView dequeueReusableCellWithIdentifier:@"ResultNutritionCell"];
+        if ([self.heavylyLackArray count] == 0)
+        {
+            LZEmptyClassCell * cell =(LZEmptyClassCell*)[tableView dequeueReusableCellWithIdentifier:@"NutritionLackCell"];
+            if (cell.hasLoaded)
+            {
+                return cell;
+            }
+            else
+            {
+                UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 300, 18)];
+                [cell.contentView addSubview:emptyLabel];
+                emptyLabel.text = @"不缺乏";
+                cell.hasLoaded = YES;
+                return cell;
+            }
+        }
+        else
+        {
+            LZHeavlyLackCell *cell = (LZHeavlyLackCell*)[tableView dequeueReusableCellWithIdentifier:@"LZHeavlyLackCell"];
+            NSString *nutritionId = [self.heavylyLackArray objectAtIndex:indexPath.row];
+            [cell.nutritionButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_button.png",nutritionId]] forState:UIControlStateNormal];
+            cell.nutritionButton.customData = nutritionId;
+            [cell.nutritionButton addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            cell.lackDescriptionLabel.text = nutritionId;
+            return cell;
+        }
+
+        
+    }
+    else if (indexPath.section == 3)
+    {
+        LZEmptyClassCell * cell =(LZEmptyClassCell*)[tableView dequeueReusableCellWithIdentifier:@"NutritionLackCell"];
         if (cell.hasLoaded)
         {
             return cell;
         }
         else
         {
-            int floor = 1;
-            int countPerRow = 4;
-            float startX;
-            LZDataAccess *da =[LZDataAccess singleton];
-            for (int i = 0; i< [self.userPreferArray count];i++)
+            if ([self.lightlyLackArray count]!= 0)
             {
-                if (i>=floor *countPerRow)
+                float startY = 10;
+                int floor = 1;
+                int perRowCount = 3;
+                float startX;
+                for (int i=0; i< [self.lightlyLackArray count]; i++)
                 {
-                    floor+=1;
+                    
+                    if (i>=floor *perRowCount)
+                    {
+                        floor+=1;
+                    }
+                    startX = 10+(i-(floor-1)*perRowCount)*102;
+                    LZCustomDataButton *button = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94)];
+                    NSString *nutritionId = [self.lightlyLackArray objectAtIndex:i];
+                    [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_button.png",nutritionId]] forState:UIControlStateNormal];
+                    button.customData = nutritionId;
+                    [button addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+                    [cell.contentView addSubview:button];
                 }
-                startX = 10+(i-(floor-1)*countPerRow)*77;
-                UIButton *nutrientButton = [[UIButton alloc]initWithFrame:CGRectMake(startX, 10+(floor-1)*38, 69, 30)];
-                [cell.contentView addSubview:nutrientButton];
-                nutrientButton.tag = 101+i;
-                [nutrientButton addTarget:self action:@selector(nutrientButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
-                NSString *key = [userPreferArray objectAtIndex:i];
-                NSDictionary *dict = [da getNutrientInfo:key];
-                NSString *name = [dict objectForKey:@"NutrientCnCaption"];
-                [nutrientButton setTitle:name forState:UIControlStateNormal];
-                [nutrientButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-                UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:key];
-                [nutrientButton setBackgroundColor:fillColor];
-                [nutrientButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
-                [nutrientButton.layer setCornerRadius:3.0f];
-                [nutrientButton.layer setMasksToBounds:YES];
+            }
+            else
+            {
+                UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 300, 18)];
+                [cell.contentView addSubview:emptyLabel];
+                emptyLabel.text = @"不缺乏";
             }
             cell.hasLoaded = YES;
             return cell;
+
+//            int floor = 1;
+//            int countPerRow = 4;
+//            float startX;
+//            LZDataAccess *da =[LZDataAccess singleton];
+//            for (int i = 0; i< [self.userPreferArray count];i++)
+//            {
+//                if (i>=floor *countPerRow)
+//                {
+//                    floor+=1;
+//                }
+//                startX = 10+(i-(floor-1)*countPerRow)*77;
+//                UIButton *nutrientButton = [[UIButton alloc]initWithFrame:CGRectMake(startX, 10+(floor-1)*38, 69, 30)];
+//                [cell.contentView addSubview:nutrientButton];
+//                nutrientButton.tag = 101+i;
+//                [nutrientButton addTarget:self action:@selector(nutrientButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+//                NSString *key = [userPreferArray objectAtIndex:i];
+//                NSDictionary *dict = [da getNutrientInfo:key];
+//                NSString *name = [dict objectForKey:@"NutrientCnCaption"];
+//                [nutrientButton setTitle:name forState:UIControlStateNormal];
+//                [nutrientButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//                UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:key];
+//                [nutrientButton setBackgroundColor:fillColor];
+//                [nutrientButton.titleLabel setFont:[UIFont systemFontOfSize:13]];
+//                [nutrientButton.layer setCornerRadius:3.0f];
+//                [nutrientButton.layer setMasksToBounds:YES];
+//            }
+            
         }
 
     }
-    else if (indexPath.section == 2)
+    else if (indexPath.section == 4)
     {
         LZRecommendFoodCell *cell = (LZRecommendFoodCell *)[tableView dequeueReusableCellWithIdentifier:@"LZRecommendFoodCell"];
         NSString *foodId = [takenFoodIdsArray objectAtIndex:indexPath.row];
@@ -292,19 +427,40 @@
         return cell;
 
     }
-
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (indexPath.section == 0)
     {
+        return 118;
+    }
+    if (indexPath.section == 1)
+    {
         return self.diseaseCellHeight;
     }
-    else if(indexPath.section == 1)
+    else if(indexPath.section == 2)
     {
-        return self.nutritionCellHeight;
+        if ([self.heavylyLackArray count]!=0)
+        {
+            return 104;
+        }
+        else
+        {
+            return 38;
+        }
     }
-    else if (indexPath.section ==2)
+    else if(indexPath.section == 3)
+    {
+        if ([self.lightlyLackArray count]!=0)
+        {
+            return self.nutritionCellHeight;
+        }
+        else
+        {
+            return 38;
+        }
+    }
+    else if (indexPath.section ==4)
     {
         return 60;
     }
@@ -315,7 +471,7 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if (section == 0 || section == 1)
+    if (section >= 0 && section <=3)
     {
         return 0;
     }
@@ -323,7 +479,7 @@
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    if (section == 0 || section == 1)
+    if (section >= 0 && section <=3)
     {
         return nil;
     }
@@ -333,15 +489,27 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    if(section ==2)
+    if (section == 0)
     {
-        return 72;
+        return 0;
     }
-    return 27;
+    else if(section == 4)
+    {
+        return 82;
+    }
+    else
+    {
+        return 27;
+    }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 72)];
+    if (section == 0)
+    {
+        return nil;
+    }
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 82)];
+    [sectionView setBackgroundColor:[UIColor whiteColor]];
     UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
     [sectionView addSubview:sectionBarView];
     NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
@@ -353,22 +521,26 @@
     [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
     [sectionView addSubview:sectionTitleLabel];
     
-    if (section ==0)
+    if (section ==1)
     {
         sectionTitleLabel.text =  @"您所选的症状";
     }
-    else if (section == 1)
-    {
-        sectionTitleLabel.text = @"您缺少的营养元素";
-    }
     else if (section == 2)
     {
-        sectionTitleLabel.text =  @"您可以考虑的食物";
-        UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内轻度缺乏的%d种营养",[self.heavylyLackArray count]];
+    }
+    else if (section == 3)
+    {
+        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内严重缺乏的%d种营养",[self.lightlyLackArray count]];;
+    }
+    else if (section == 4)
+    {
+        sectionTitleLabel.text =  @"您需要补充的食物";
+        UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
         UIButton *recommendButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [recommendButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
         [recommendButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-        [recommendButton setFrame:CGRectMake(10, 37, 145, 30)];
+        [recommendButton setFrame:CGRectMake(10, 37, 145, 40)];
         [recommendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [recommendButton setTitle:@"换一组" forState:UIControlStateNormal];
         [recommendButton addTarget:self action:@selector(changeRecommend) forControlEvents:UIControlEventTouchUpInside];
@@ -377,7 +549,7 @@
         UIButton *saveDietButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [saveDietButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
         [saveDietButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-        [saveDietButton setFrame:CGRectMake(165, 37, 145, 30)];
+        [saveDietButton setFrame:CGRectMake(165, 37, 145, 40)];
         [saveDietButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
         [saveDietButton setTitle:@"保  存" forState:UIControlStateNormal];
         [saveDietButton addTarget:self action:@selector(saveToDiet) forControlEvents:UIControlEventTouchUpInside];
@@ -441,13 +613,7 @@
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 4;
-}
--(void)nutrientButtonTapped:(UIButton *)nutrientButton
-{
-    int tag = nutrientButton.tag-101;
-    NSString *key = [self.userPreferArray objectAtIndex:tag];
-    [[LZNutrientionManager SharedInstance]showNutrientInfo:key];
+    return 6;
 }
 - (void)recommendOnePlan
 {
@@ -571,7 +737,6 @@
     [allFoodUnitDict removeAllObjects];
     if (foodUnitDict != nil )
     {
-        
         [allFoodUnitDict addEntriesFromDictionary:foodUnitDict];
     }
 
@@ -603,13 +768,30 @@
     }
     else
     {
-        NSRange range = NSMakeRange(2, 2);
+        NSRange range = NSMakeRange(4, 2);
         NSIndexSet *reloadSet = [[NSIndexSet alloc]initWithIndexesInRange:range];
         [self.listView reloadSections:reloadSet withRowAnimation:UITableViewRowAnimationAutomatic];
     }
     //[self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
     
 }
+-(void)typeButtonTapped:(LZCustomDataButton *)sender
+{
+    NSDictionary *emptyIntake = [[NSDictionary alloc]init];
+    [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+    NSString *nutritionId = (NSString *)sender.customData;
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *dict = [da getNutrientInfo:nutritionId];
+    NSString *nutritionName = [dict objectForKey:@"NutrientCnCaption"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+    LZRichNutritionViewController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZRichNutritionViewController"];
+    addByNutrientController.nutrientDict = dict;
+    addByNutrientController.nutrientTitle = nutritionName;
+    [self.navigationController pushViewController:addByNutrientController animated:YES];
+    
+}
+
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     if(alertView.tag == 102)
@@ -663,13 +845,7 @@
 {
     if(alertView.tag == 103)
     {
-        if (buttonIndex == alertView.cancelButtonIndex)
-        {
-            //            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
-            //            [[NSUserDefaults standardUserDefaults]synchronize];
-            //            [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
-        }
-        else
+        if (buttonIndex != alertView.cancelButtonIndex)
         {
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
             LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];

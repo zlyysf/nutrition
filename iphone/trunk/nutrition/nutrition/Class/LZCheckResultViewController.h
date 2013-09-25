@@ -20,4 +20,6 @@
 @property (strong,nonatomic)NSMutableArray *nutrientInfoArray;
 @property (strong,nonatomic)NSMutableDictionary *takenFoodNutrientInfoDict;
 @property (strong,nonatomic)NSMutableDictionary *allFoodUnitDict;
+@property (assign,nonatomic)int userTotalScore;
+
 @end

@@ -107,6 +107,9 @@
 		5F3605D21753623A0058EC98 /* button_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F3605D11753623A0058EC98 /* button_back@2x.png */; };
 		5F4FD72017D4B04900DBA25A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3338C0172A407E0096E7AE /* MainStoryboard.storyboard */; };
 		5F4FD72317D4B75900DBA25A /* LZDiseaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4FD72217D4B75900DBA25A /* LZDiseaseCell.m */; };
+		5F537F2117F2BD3D00BDD014 /* health_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F537F1F17F2BD3D00BDD014 /* health_bar@2x.png */; };
+		5F537F2217F2BD3D00BDD014 /* health_point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F537F2017F2BD3D00BDD014 /* health_point@2x.png */; };
+		5F537F2517F2BFBE00BDD014 /* LZHeavlyLackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F537F2417F2BFBE00BDD014 /* LZHeavlyLackCell.m */; };
 		5F62743A175C93F3006E46CA /* LZFoodNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */; };
 		5F62743D175CAB63006E46CA /* LZAddByNutrientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743C175CAB63006E46CA /* LZAddByNutrientController.m */; };
 		5F627440175CACAC006E46CA /* LZNutrientFoodAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743F175CACAB006E46CA /* LZNutrientFoodAddCell.m */; };
@@ -370,6 +373,10 @@
 		5F4FD72217D4B75900DBA25A /* LZDiseaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDiseaseCell.m; path = Class/LZDiseaseCell.m; sourceTree = "<group>"; };
 		5F5096191754777300461964 /* LZValueSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZValueSelectorView.h; path = Class/LZValueSelectorView.h; sourceTree = "<group>"; };
 		5F50961A1754777300461964 /* LZValueSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZValueSelectorView.m; path = Class/LZValueSelectorView.m; sourceTree = "<group>"; };
+		5F537F1F17F2BD3D00BDD014 /* health_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "health_bar@2x.png"; path = "nutrition/Resource/health_bar@2x.png"; sourceTree = "<group>"; };
+		5F537F2017F2BD3D00BDD014 /* health_point@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "health_point@2x.png"; path = "nutrition/Resource/health_point@2x.png"; sourceTree = "<group>"; };
+		5F537F2317F2BFBE00BDD014 /* LZHeavlyLackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZHeavlyLackCell.h; path = Class/LZHeavlyLackCell.h; sourceTree = "<group>"; };
+		5F537F2417F2BFBE00BDD014 /* LZHeavlyLackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZHeavlyLackCell.m; path = Class/LZHeavlyLackCell.m; sourceTree = "<group>"; };
 		5F627438175C93F2006E46CA /* LZFoodNutritionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodNutritionCell.h; path = Class/LZFoodNutritionCell.h; sourceTree = "<group>"; };
 		5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodNutritionCell.m; path = Class/LZFoodNutritionCell.m; sourceTree = "<group>"; };
 		5F62743B175CAB62006E46CA /* LZAddByNutrientController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZAddByNutrientController.h; path = Class/LZAddByNutrientController.h; sourceTree = "<group>"; };
@@ -865,6 +872,8 @@
 				5F943F0817D735FE00AFBF47 /* nutritionButtonIcons */,
 				5F22A6C917CF580D0043D760 /* foodTypeButtonIcons */,
 				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
+				5F537F1F17F2BD3D00BDD014 /* health_bar@2x.png */,
+				5F537F2017F2BD3D00BDD014 /* health_point@2x.png */,
 				5FD4D36017EEE6CE007C5551 /* outer_line_bg@2x.png */,
 				5F84D1AF17D8343800DF83A0 /* basic_info_icon@2x.png */,
 				5F84D1B017D8343800DF83A0 /* dri_icon@2x.png */,
@@ -1079,6 +1088,8 @@
 				5F4FD72217D4B75900DBA25A /* LZDiseaseCell.m */,
 				5FD76DEA17D5B83600746418 /* LZEmptyClassCell.h */,
 				5FD76DEB17D5B83600746418 /* LZEmptyClassCell.m */,
+				5F537F2317F2BFBE00BDD014 /* LZHeavlyLackCell.h */,
+				5F537F2417F2BFBE00BDD014 /* LZHeavlyLackCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1484,6 +1495,8 @@
 				5F241CA317E7FF0E00BC8529 /* nutrient_button_off@2x.png in Resources */,
 				5F241CA517E86ECC00BC8529 /* Magnesium_(mg)_button@2x.png in Resources */,
 				5FD4D36117EEE6CF007C5551 /* outer_line_bg@2x.png in Resources */,
+				5F537F2117F2BD3D00BDD014 /* health_bar@2x.png in Resources */,
+				5F537F2217F2BD3D00BDD014 /* health_point@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1595,6 +1608,7 @@
 				5FD76DEC17D5B83600746418 /* LZEmptyClassCell.m in Sources */,
 				5F2E025217E01D1C00D26231 /* LZMainMenuButton.m in Sources */,
 				5F241CA817E8749200BC8529 /* LZTimeSettingsViewController.m in Sources */,
+				5F537F2517F2BFBE00BDD014 /* LZHeavlyLackCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
