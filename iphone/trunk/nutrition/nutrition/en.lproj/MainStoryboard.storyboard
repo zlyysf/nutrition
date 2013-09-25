@@ -1809,7 +1809,7 @@
         <!--Navigation View Controller-->
         <scene sceneID="GD4-ss-OS4">
             <objects>
-                <navigationController id="oag-kc-cUc" customClass="JWNavigationViewController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="JWNavigationViewController" id="oag-kc-cUc" customClass="JWNavigationViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="AOf-OV-L3Y">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

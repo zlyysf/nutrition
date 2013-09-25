@@ -13,4 +13,5 @@
 @property (strong,nonatomic)NSMutableDictionary *diseasesStateDict;
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic)NSString* checkType;
+@property (nonatomic,assign)BOOL backWithNoAnimation;
 @end

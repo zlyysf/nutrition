@@ -21,7 +21,7 @@
 #define Config_defaultFoodIncreaseUnit 1
 
 #define ViewControllerUseBackImage 0
-
+#define KeyAppLauchedForHealthCheck @"KeyAppLauchedForHealthCheck"
 
 #define Config_notAllowSameFood TRUE
 #define Config_ifNeedCustomDefinedFoods TRUE

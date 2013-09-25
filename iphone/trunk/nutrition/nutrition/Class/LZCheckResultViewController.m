@@ -247,9 +247,11 @@
             }
             else
             {
-                UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 300, 18)];
+                UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 18)];
+                [emptyLabel setFont:[UIFont systemFontOfSize:15]];
+                [emptyLabel setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:emptyLabel];
-                emptyLabel.text = @"无，请关注轻度缺乏的营养！";
+                emptyLabel.text = @"请关注轻度缺乏的营养！";
                 cell.hasLoaded = YES;
                 return cell;
             }
@@ -303,9 +305,11 @@
             }
             else
             {
-                UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 300, 18)];
+                UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 18)];
+                [emptyLabel setFont:[UIFont systemFontOfSize:15]];
+                [emptyLabel setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:emptyLabel];
-                emptyLabel.text = @"无，请关注严重缺乏的营养！";
+                emptyLabel.text = @"请关注严重缺乏的营养！";
             }
             cell.hasLoaded = YES;
             return cell;
@@ -494,6 +498,10 @@
     }
     if (section == 2)
     {
+        if ([self.heavylyLackArray count] == 0)
+        {
+            return 0;
+        }
         return 10;
     }
     return 5;
@@ -503,6 +511,14 @@
     if (section == 0 ||section == 1 ||section == 3)
     {
         return nil;
+    }
+    if (section == 2)
+    {
+        if ([self.heavylyLackArray count] == 0)
+        {
+            return nil;
+        }
+
     }
     UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 10)];
     [sectionView setBackgroundColor:[UIColor clearColor]];
@@ -548,11 +564,11 @@
     }
     else if (section == 2)
     {
-        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内严重缺乏的%d种营养",[self.heavylyLackArray count]];
+        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内严重缺乏%d种营养",[self.heavylyLackArray count]];
     }
     else if (section == 3)
     {
-        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内轻度缺乏的%d种营养",[self.lightlyLackArray count]];
+        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内轻度缺乏%d种营养",[self.lightlyLackArray count]];
     }
     else if (section == 4)
     {

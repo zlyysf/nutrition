@@ -1382,7 +1382,8 @@
         return;
     }
     UIActionSheet *shareSheet = [[UIActionSheet alloc]initWithTitle:@"分享到" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新浪微博",@"微信好友",@"微信朋友圈", nil];
-    [shareSheet showInView:self.view];
+    //[shareSheet showInView:self.view];
+    [shareSheet showInView:[UIApplication sharedApplication].keyWindow];
 }
 //- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
 //    NSString *message;

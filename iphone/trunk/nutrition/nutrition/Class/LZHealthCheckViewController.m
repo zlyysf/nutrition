@@ -23,7 +23,7 @@
 @end
 
 @implementation LZHealthCheckViewController
-@synthesize diseaseNamesArray,diseasesStateDict,sectionTitle,checkType,isFirstLoad;
+@synthesize diseaseNamesArray,diseasesStateDict,sectionTitle,checkType,isFirstLoad,backWithNoAnimation;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,6 +41,25 @@
         NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
         UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
+    }
+    if (backWithNoAnimation)
+    {
+        UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+        
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+        
+        [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+        [button setTitle:@"  返回" forState:UIControlStateNormal];
+        
+        button.frame = CGRectMake(0, 0, 48, 30);
+        [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+        [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+        [button addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+        
+        UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+        
+        self.navigationItem.leftBarButtonItem = cancelItem;
+        
     }
     NSString *timeType = [LZUtility getCurrentTimeIdentifier];
     self.checkType = timeType;
@@ -70,6 +89,12 @@
     
     
 }
+- (void)cancelButtonTapped
+{
+    [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
+    
+}
+
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:UmengPathJianKangZhenDuan];

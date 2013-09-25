@@ -94,6 +94,14 @@
         UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:editProfileViewController];
         [self presentModalViewController:navController animated:YES];
     }
+    else if ([[NSUserDefaults standardUserDefaults]boolForKey:KeyAppLauchedForHealthCheck])
+    {
+        [[NSUserDefaults standardUserDefaults]setBool:NO forKey:KeyAppLauchedForHealthCheck];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+        LZHealthCheckViewController *healthCheckViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZHealthCheckViewController"];
+        [self.navigationController pushViewController:healthCheckViewController animated:YES];
+    }
 
 }
 - (void)didReceiveMemoryWarning
