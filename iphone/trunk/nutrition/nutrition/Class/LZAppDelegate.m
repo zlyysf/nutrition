@@ -18,7 +18,7 @@
 #import "LZHealthCheckViewController.h" 
 #import "LZNutritionInfoView.h"
 #import "JWNavigationViewController.h"
-#import "BaiduMobAdWall.h"
+#import "LZRecommendFilterView.h"
 @implementation LZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -153,6 +153,10 @@
         else if ([aView isKindOfClass:[LZNutritionInfoView class]])
         {
             [(LZNutritionInfoView*)aView removeFromSuperview];
+        }
+        else if ([aView isKindOfClass:[LZRecommendFilterView class]])
+        {
+            [(LZRecommendFilterView*)aView removeFromSuperview];
         }
         else if (aView.subviews.count > 0) {
             for (UIView* aSubview in aView.subviews) {
