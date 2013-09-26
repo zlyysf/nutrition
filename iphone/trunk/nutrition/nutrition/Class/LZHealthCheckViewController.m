@@ -227,7 +227,7 @@
     NSNumber* checkState = [self.diseasesStateDict objectForKey:departmentName];
     [cell.backView.layer setMasksToBounds:YES];
     [cell.backView.layer setCornerRadius:3.0f];
-    cell.nameLabel.text = departmentName;
+    
     if ([checkState boolValue])
     {
         [cell.stateImageView setImage:[UIImage imageNamed:@"nutrient_button_on.png"]];
@@ -235,12 +235,40 @@
     else
     {
         [cell.stateImageView setImage:[UIImage imageNamed:@"nutrient_button_off.png"]];
+        
     }
+    NSString *onelineStr = @"行";
+    CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(273, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(273, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    float height;
+    if (labelSize.height > oneSize.height*2 )
+    {
+        height = labelSize.height;
+    }
+    else
+    {
+        height = oneSize.height*2;
+    }
+    [cell.backView setFrame:CGRectMake(10, 4, 275, height+2)];
+    [cell.nameLabel setFrame:CGRectMake(11, 5, 273, height)];
+    [cell.stateImageView setFrame:CGRectMake(287, (height-8)/2, 22, 18)];
+    cell.nameLabel.text = departmentName;
     return cell;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 58;
+    NSString *departmentName = [self.diseaseNamesArray objectAtIndex:indexPath.row];
+    NSString *onelineStr = @"行";
+    CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(273, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(273, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    if (labelSize.height > oneSize.height*2 )
+    {
+        return labelSize.height+10;
+    }
+    else
+    {
+        return oneSize.height*2+10;
+    }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {

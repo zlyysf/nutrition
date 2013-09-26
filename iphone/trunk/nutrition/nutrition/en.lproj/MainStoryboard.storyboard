@@ -1286,7 +1286,7 @@
                                                     <rect key="frame" x="287" y="20" width="22" height="18"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lh8-pd-efD">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lh8-pd-efD">
                                                     <rect key="frame" x="11" y="5" width="273" height="48"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -1968,6 +1968,8 @@
         <class className="LZFoodDetailController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodDetailController.h"/>
             <relationships>
+                <relationship kind="action" name="gUnitButtonTapped:" candidateClass="UIButton"/>
+                <relationship kind="action" name="unitButtonTapped:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="GUnitButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="UnitButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="foodAmountDisplayLabel" candidateClass="UILabel"/>
