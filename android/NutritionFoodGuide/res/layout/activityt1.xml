@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_pink_bg" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="26dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shadow1"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/TextView2"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/textView1"
+        android:layout_marginLeft="38dp"
+        android:layout_marginTop="26dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:background="@drawable/shadow2"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/TextView3"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/TextView2"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/shadow3"
+        android:text="TextView" />
+    
+    <TextView
+        android:id="@+id/TextView3_2"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignLeft="@+id/TextView2"
+        android:layout_alignTop="@+id/TextView3"
+        android:layout_marginTop="18dp"
+        android:background="@drawable/shadow3_2"
+        android:text="TextView3_2" />
+
+    <TextView
+        android:id="@+id/TextView5"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignRight="@+id/TextViewToastFrame"
+        android:layout_below="@+id/TextView4"
+        android:layout_marginTop="23dp"
+        android:background="@drawable/shadow5_container_dropshadow"
+        android:text="TextView" />
+
+    <TextView
+        android:id="@+id/TextViewToastFrame"
+        android:layout_width="100dp"
+        android:layout_height="70dp"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/TextView3"
+        android:layout_marginTop="60dp"
+        android:background="@android:drawable/toast_frame"
+        android:padding="4dp"
+        android:text="Use System resource"
+        android:textColor="@color/white" />
+
+    <TextView
+        android:id="@+id/TextView4"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/TextViewToastFrame"
+        android:layout_alignLeft="@+id/TextView2"
+        android:background="@drawable/shadow4"
+        android:text="TextView" />
+
+    <!-- 
+        <TextView
+        android:id="@+id/textView7"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignBaseline="@+id/textView6"
+        android:layout_alignBottom="@+id/textView6"
+        android:layout_alignLeft="@+id/TextView4"
+        android:background="@drawable/border_shape_half_corner"
+        android:text="HalfCorner" />
+    -->
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/TextView5"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/border_bgcolor_shape"
+        android:text="SimpleBorder" />
+
+    <TextView
+        android:id="@+id/TextView01"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/textView6"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/border_leftpart_bgcolor_shape"
+        android:text="LeftBorder" />
+
+    <TextView
+        android:id="@+id/TextView02"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignBaseline="@+id/TextView01"
+        android:layout_alignBottom="@+id/TextView01"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/border_leftright_bgcolor_shape"
+        android:text="2SideBorder" />
+
+</RelativeLayout>

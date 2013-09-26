@@ -1,0 +1,110 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.lingzhimobile.nutritionfoodguide"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="8"
+        android:targetSdkVersion="17" />
+    
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        
+        <activity
+            android:name="com.lingzhimobile.nutritionfoodguide.MainActivity"
+             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <activity android:name=".Activity_GroupList"  
+            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+            >
+            <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 的作用是去除界面的顶部的标题栏等 http://quanminchaoren.iteye.com/blog/1066178 -->
+		</activity>
+		<activity android:name=".Activity_DiseaseList" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
+		
+		<activity android:name=".ActivityDiseaseNutrientWizard" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
+		<activity android:name=".ActivityDiscomfort" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
+		<activity android:name=".ActivityFoodCombination" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
+		<activity android:name=".ActivityRichFood" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
+		
+		<activity android:name=".ActivityAllFoodExpandList" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
+		<activity android:name=".ActivitySearchFoodCustom" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
+		
+		<activity android:name=".ActivitySearchFoodT1" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+            <intent-filter>
+				<action android:name="android.intent.action.SEARCH"  />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+			<meta-data android:name="android.app.searchable"
+				android:resource="@xml/searchable_food" />
+		</activity>
+		
+		<activity android:name=".ActivitySearchFoodT1SingleTop" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:launchMode="singleTop"
+		    >
+            <intent-filter>
+				<action android:name="android.intent.action.SEARCH"  />
+				<category android:name="android.intent.category.DEFAULT" />
+			</intent-filter>
+			<meta-data android:name="android.app.searchable"
+				android:resource="@xml/searchable_food" />
+		</activity>
+		<activity android:name=".ActivityUserProfile" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:windowSoftInputMode="adjustUnspecified|stateHidden" 
+		    >
+			<!-- 用 android:windowSoftInputMode="adjustUnspecified|stateHidden"  可以使进入activity后不自动弹出键盘，但焦点还在编辑框 -->
+		</activity>
+
+		
+		<activity android:name=".ActivityT1" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
+		
+		<activity android:name=".ActivityTestCases" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
+		
+		<provider android:name="FoodProviderT1g"
+			android:authorities="FoodProviderT1gAuthority"
+			android:syncable="false" />
+        
+    </application>
+
+</manifest>

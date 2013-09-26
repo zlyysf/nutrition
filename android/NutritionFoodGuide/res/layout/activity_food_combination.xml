@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_2x"
+    android:orientation="vertical" >
+
+	<include android:id="@+id/topbarPart" layout="@layout/topbar" /> 
+	
+	<RelativeLayout
+        android:id="@+id/top2BarRLayout"
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        
+        <Button
+            android:id="@+id/btnRecommend"
+            android:layout_width="106dp"
+            android:layout_height="44dp"
+            android:layout_centerInParent="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_recommend_food_bg"
+            android:gravity="center_vertical|center_horizontal"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:layout_width="106dp"
+            android:layout_height="44dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_add_food_bg"
+            android:gravity="center_vertical|center_horizontal"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+        
+        <Button
+            android:id="@+id/btnShare"
+            android:layout_width="106dp"
+            android:layout_height="44dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:background="@drawable/btn_share_bg"
+            android:text=""
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+
+<!-- 
+	<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+	    <ImageButton
+	        android:id="@+id/imageButton1"
+	        android:layout_width="106dp"
+	        android:layout_height="44dp"
+	        android:layout_centerVertical="true"
+	        android:scaleType="center"
+	        android:src="@drawable/btn_recommend_food_bg" />
+    </LinearLayout>
+ -->
+
+	
+    <ExpandableListView
+        android:id="@+id/expandableListView1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+         >
+    </ExpandableListView>
+
+</LinearLayout>

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_2x"
+    android:contentDescription="Prev"
+    android:orientation="vertical" >
+
+    <!-- 
+    <RelativeLayout
+        android:id="@+id/topBarRLayout"
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nav_bar_2x" >
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/nutritionDiagnose"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btnCancel"
+            android:layout_width="50dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/btn_back_bg"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:text="@string/cancel"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+        
+        <Button
+            android:id="@+id/btnReset"
+            android:layout_width="80dp"
+            android:layout_height="40dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:gravity="center_vertical|center_horizontal"
+            android:layout_marginRight="10dp"
+            
+            android:background="@drawable/btn_topright_bg"
+            
+            android:text="@string/checkAgain"
+            android:textColor="@color/white"
+            android:textSize="15sp" />
+    </RelativeLayout>
+     -->
+    <include android:id="@+id/topbarPart" layout="@layout/topbar" /> 
+        
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpWizard"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="10dp" 
+        android:layout_margin="10dp"
+        android:background="@drawable/corners_shadow"
+        >
+        <!-- 
+        android:background="@drawable/table_list_bg_2x" 这个需要用 .9 图
+         -->
+    </android.support.v4.view.ViewPager>
+    
+    <RelativeLayout
+        android:id="@+id/bottomBarRLayout"
+        android:layout_weight="0"
+        android:layout_width="match_parent"
+        android:layout_height="50dip"
+        android:background="@color/transparent"
+        android:layout_marginBottom="0dip"
+        >
+        
+        <LinearLayout 
+            android:id="@+id/pagePointLLayout"
+            android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:orientation="horizontal"
+	        android:layout_centerInParent="true"
+	        >
+        </LinearLayout>
+        <!-- 
+        <Button
+	        android:id="@+id/btnPrev"
+	        android:layout_width="40dip"
+	        android:layout_height="40dip"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:background="@drawable/arrow_prev_bg"
+	        android:gravity="center_vertical|center_horizontal"
+	        android:textColor="#F00"
+	        android:textSize="15sp" />
+	        
+	    <Button
+		    android:id="@+id/btnNext"
+		    android:layout_width="wrap_content"
+		    android:layout_height="match_parent"
+		    android:layout_alignParentRight="true"
+		    android:layout_centerVertical="true"
+		    android:background="@drawable/arrow_next_bg"
+		    android:gravity="center_vertical|center_horizontal"
+		    android:text="@string/nextStep"
+		    android:textColor="#0F0"
+		    android:textSize="15sp" />
+         -->
+
+        <ImageButton
+            android:id="@+id/imgBtnPrev"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:background="@color/transparent"
+            android:gravity="center_vertical|center_horizontal"
+            android:paddingLeft="10dp"
+            android:src="@drawable/arrow_prev_bg" />
+            
+		<ImageButton
+		    android:id="@+id/imgBtnNext"
+		    android:layout_width="wrap_content"
+		    android:layout_height="40dip"
+		    android:layout_alignParentRight="true"
+		    android:layout_centerVertical="true"
+		    android:background="@color/transparent"
+		    android:gravity="center_vertical|center_horizontal"
+		    android:paddingRight="10dp"
+		    android:src="@drawable/arrow_next_bg" />
+        
+    </RelativeLayout>
+</LinearLayout>
+
+

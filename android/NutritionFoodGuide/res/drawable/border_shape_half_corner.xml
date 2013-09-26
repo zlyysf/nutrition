@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <corners  android:topLeftRadius="16dp"  android:bottomLeftRadius="16dp" 
+              android:topRightRadius="0dp"  android:bottomRightRadius="0dp"
+              />
+    <!-- 在android2.3上支持得不好，变成左上右下出圆角了 . android 4.0 是可以的。 -->
+              
+    <solid android:color="@color/radioAsTabBgColor" />  
+    <stroke android:width="2dip" android:color="@color/red"/> 
+
+</shape>

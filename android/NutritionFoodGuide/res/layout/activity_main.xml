@@ -1,0 +1,82 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/hello_world" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/btnButton1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ActivityT1" />
+
+        <Button
+            android:id="@+id/buttonGroups"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Groups" />
+        
+        <Button
+            android:id="@+id/buttonWizard"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wizard" />
+        
+        <Button
+            android:id="@+id/btnTestCases"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TestCases" />
+        
+        <Button
+            android:id="@+id/btnDiscomfort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Discomfort" />
+        
+        <Button
+            android:id="@+id/btnFoodCombination"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FoodCombination" />
+        
+        <Button
+            android:id="@+id/btnSearchFood"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SearchFood" />
+        
+        <Button
+            android:id="@+id/btnSearchFoodSingleTop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SearchFoodSingleTop" />
+        
+        <Button
+            android:id="@+id/btnUserProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="UserProfile" />
+        
+        
+
+    </LinearLayout>
+
+</RelativeLayout>

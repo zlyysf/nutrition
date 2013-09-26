@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">NutritionT1</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    
+    
+    <string name="cancel">取消</string>
+    <string name="back">后退</string>
+    <string name="nextStep">下一步</string>
+    <string name="prevStep">上一步</string>
+    <string name="save">保存</string>
+    <string name="finish">完成</string>
+    
+    <string name="diseaseGroupList">疾病组名清单</string>
+    <string name="diseaseNameList">疾病清单</string>
+    <string name="nutritionDiagnose">营养诊断</string>
+    <string name="checkAgain">重新测试</string>
+    <string name="recommendFood">推荐食物</string>
+    
+    <string name="searchFood">搜索食物</string>
+    <string name="inputFoodNamePart">输入食物部分名称</string>
+    
+    <string name="youChosenDiseaseItems">您所选的项目</string>
+    <string name="youNeededNutrients">您需要补充的营养元素</string>
+    <string name="weCanRecommend1InSum">我们可以继续为您推荐富含以上营养元素的食物</string>
+    
+    <string name="chooseRichFood">下列是富含%s的食物，您可以根据我们提供的推荐量来挑选适合自己的食物,没有推荐量时表示已经补满</string>
+    
+    <string name="basicInfo">基本信息</string>
+    <string name="male">男</string>
+    <string name="female">女</string>
+    <string name="age">年龄</string>
+    <string name="ageUnit">岁</string>
+    <string name="height">身高</string>
+    <string name="heightUnit">cm</string>
+    <string name="weight">体重</string>
+    <string name="weightUnit">kg</string>
+    <string name="activeLevel">活动强度</string>
+    <string name="activeLevelLight">轻</string>
+    <string name="activeLevelMiddle">中等</string>
+    <string name="activeLevelStrong">强</string>
+    <string name="activeLevelVeryStrong">很强</string>
+    <string name="nutritionDRI">个人每日营养摄入推荐量</string>
+
+
+</resources>
