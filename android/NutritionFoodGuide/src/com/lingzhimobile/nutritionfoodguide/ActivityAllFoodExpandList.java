@@ -1,5 +1,9 @@
 package com.lingzhimobile.nutritionfoodguide;
 
+/*
+ * 被 ActivitySearchFoodCustom 取代，TODO DELETE
+ */
+
 import java.util.*;
 
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination.ChildRowRelateData;

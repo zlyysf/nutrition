@@ -78,17 +78,8 @@
         android:background="@drawable/shadow4"
         android:text="TextView" />
 
-    <!-- 
-        <TextView
-        android:id="@+id/textView7"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_alignBaseline="@+id/textView6"
-        android:layout_alignBottom="@+id/textView6"
-        android:layout_alignLeft="@+id/TextView4"
-        android:background="@drawable/border_shape_half_corner"
-        android:text="HalfCorner" />
-    -->
+    <!-- -->
+    
 
     <TextView
         android:id="@+id/textView6"
@@ -118,5 +109,14 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/border_leftright_bgcolor_shape"
         android:text="2SideBorder" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignTop="@+id/TextView5"
+        android:layout_toRightOf="@+id/TextView3"
+        android:background="@drawable/border_shape_half_corner"
+        android:text="HalfCorner" />
 
 </RelativeLayout>

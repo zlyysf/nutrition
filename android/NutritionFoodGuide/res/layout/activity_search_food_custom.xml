@@ -19,9 +19,10 @@
 <!-- Layout for SearchableActivity.
  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:orientation="vertical"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/white"
+    android:orientation="vertical" >
         
     <include android:id="@+id/topbarPart" layout="@layout/topbar" />    
 
@@ -51,17 +52,23 @@
 	        android:id="@+id/tvBackgroundCorner"
 	        android:layout_width="fill_parent"
 	        android:layout_height="50dp"
+	        android:layout_gravity="center_horizontal"
 	        android:layout_marginLeft="5dp"
 	        android:layout_marginRight="5dp"
-	        android:background="@drawable/corners_search"
-	        android:drawableLeft="@drawable/search_glass_2x"
-	        android:paddingLeft="10dp" />
+	        android:background="@drawable/corners_search" />
 
+	    <TextView
+	        android:layout_width="80dp"
+	        android:layout_height="50dp"
+	        android:layout_gravity="left|center_vertical"
+	        android:drawableLeft="@drawable/search_glass_2x"
+	        android:paddingLeft="15dp" />
+	    
 	    <TextView
 	        android:id="@+id/tvSearchTextClear"
 	        android:layout_width="80dp"
 	        android:layout_height="50dp"
-	        android:layout_gravity="right"
+	        android:layout_gravity="right|center_vertical"
 	        android:drawableRight="@drawable/x_icon"
 	        android:paddingRight="15dp" />
 
@@ -69,30 +76,26 @@
 	        android:id="@+id/etSearch"
 	        android:layout_width="fill_parent"
 	        android:layout_height="46dp"
-	        android:layout_gravity="bottom"
+	        android:layout_gravity="center_vertical"
 	        android:layout_marginLeft="40dp"
 	        android:layout_marginRight="40dp"
 	        android:ems="10"
 	        android:hint="to input and search"
 	        android:imeOptions="actionDone"
-	        android:textSize="17dp" 
 	        android:singleLine="true"
-	        >
-	
-	        <requestFocus />
+	        android:textSize="17dp" >
+
 	    </EditText>
 
         
     </FrameLayout>
         
-
-
     <ExpandableListView
         android:id="@+id/expandableListView1"
         android:layout_width="match_parent"
-        android:layout_height="fill_parent" 
+        android:layout_height="fill_parent"
         android:layout_weight="1"
-        >
+        android:divider="@null" >
         
     </ExpandableListView>
 

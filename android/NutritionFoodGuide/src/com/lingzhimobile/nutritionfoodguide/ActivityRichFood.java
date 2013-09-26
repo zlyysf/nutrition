@@ -41,6 +41,7 @@ public class ActivityRichFood extends Activity {
 	
 	
 	String mNutrientId;
+	String mNutrientCnCaption;
 	double mToSupplyNutrientAmount ;
 
 	ArrayList<HashMap<String, Object>> m_foodsData;
@@ -60,13 +61,14 @@ public class ActivityRichFood extends Activity {
         
         mNutrientId =  paramIntent.getStringExtra(Constants.COLUMN_NAME_NutrientID);
         mToSupplyNutrientAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
+        mNutrientCnCaption = paramIntent.getStringExtra(Constants.Key_Name);
         
 //        m_foodsData = new ArrayList<HashMap<String, Object>>();
         DataAccess da = DataAccess.getSingleTon(this);
         m_foodsData = da.getRichNutritionFoodForNutrient(mNutrientId, mToSupplyNutrientAmount, false);
         
         TextView textView1 = (TextView)this.findViewById(R.id.textView1);
-        textView1.setText(Tool.getStringFromIdWithParams(getResources(), R.string.chooseRichFood,new String[]{mNutrientId}));
+        textView1.setText(Tool.getStringFromIdWithParams(getResources(), R.string.chooseRichFood,new String[]{mNutrientCnCaption}));
 		
 		ListView listView1 = (ListView)this.findViewById(R.id.listView1);
 		mListView1 = listView1;
@@ -187,7 +189,9 @@ public class ActivityRichFood extends Activity {
 			
 			HashMap<String, Object> foodInfo = m_foodsData.get(position);
 			tvFoodName.setText((String)foodInfo.get(Constants.COLUMN_NAME_CnCaption));
-			tvFoodAmount.setText(foodInfo.get(Constants.Key_Amount).toString());
+			Double foodAmount = (Double)foodInfo.get(Constants.Key_Amount);
+			int iAmount = (int)Math.ceil(foodAmount);
+			tvFoodAmount.setText(iAmount+"g");
 			ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)foodInfo.get(Constants.COLUMN_NAME_PicPath)));
 			
 //			EditText etFoodAmount = (EditText)convertView.findViewById(R.id.etFoodAmount);

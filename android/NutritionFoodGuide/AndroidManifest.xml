@@ -58,6 +58,7 @@
 		</activity>
 		<activity android:name=".ActivitySearchFoodCustom" 
 		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:windowSoftInputMode="adjustUnspecified|stateHidden" 
 		    >
 		</activity>
 		

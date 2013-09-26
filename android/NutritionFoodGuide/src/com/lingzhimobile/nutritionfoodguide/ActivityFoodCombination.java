@@ -44,7 +44,8 @@ public class ActivityFoodCombination extends Activity {
 //	ArrayList<Double> m_foodAmountList;
 	ArrayList<HashMap<String, Object>> m_nutrientsData;
 	HashMap<String, Object> m_paramsForCalculateNutritionSupply;
-	Button mBtnReset,m_btnCancel,m_btnAdd,m_btnShare,m_btnRecommend;
+	Button mBtnReset,m_btnCancel;
+	ImageButton m_imgbtnAdd,m_imgbtnShare,m_imgbtnRecommend;
 	
 	ExpandableListView m_expandableListView1;
 	
@@ -57,17 +58,18 @@ public class ActivityFoodCombination extends Activity {
         initViewHandles();
         setViewEventHandlers();
         setViewsContent();
-
     }
 	
 	void initViewHandles(){
 		mBtnReset = (Button) findViewById(R.id.btnReset);
         mBtnReset.setText(R.string.save);
         m_btnCancel = (Button) findViewById(R.id.btnCancel);
-        m_btnAdd = (Button) findViewById(R.id.btnAdd);
-        m_btnShare = (Button) findViewById(R.id.btnShare);
-        m_btnRecommend = (Button) findViewById(R.id.btnRecommend);
+        m_imgbtnAdd = (ImageButton) findViewById(R.id.imgbtnAdd);
+        m_imgbtnShare = (ImageButton) findViewById(R.id.imgbtnShare);
+        m_imgbtnRecommend = (ImageButton) findViewById(R.id.imgbtnRecommend);
         m_expandableListView1 = (ExpandableListView)this.findViewById(R.id.expandableListView1);
+        
+        m_imgbtnShare.setVisibility(View.GONE);
         
 	}
 	void setViewEventHandlers(){
@@ -86,6 +88,7 @@ public class ActivityFoodCombination extends Activity {
 					String nutrientId = (String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientID);
 					intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
 					intent.putExtra(Constants.Key_Amount, DRIsDict.get(nutrientId).toString());
+					intent.putExtra(Constants.Key_Name, (String)nutrientInfo.get(Constants.Key_Name));
 					startActivity(intent);
 				}
 				
@@ -104,21 +107,21 @@ public class ActivityFoodCombination extends Activity {
             	finish();
             }
         });
-        m_btnAdd.setOnClickListener(new View.OnClickListener() {
+        m_imgbtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-				Intent intent = new Intent(ActivityFoodCombination.this, ActivityAllFoodExpandList.class);
-				startActivityForResult(intent,IntentRequestCode_ActivityAllFoodExpandList);
-            }
-        });
-        m_btnShare.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-				Intent intent = new Intent(ActivityFoodCombination.this, ActivitySearchFoodCustom.class);
+            	Intent intent = new Intent(ActivityFoodCombination.this, ActivitySearchFoodCustom.class);
 				startActivityForResult(intent,IntentRequestCode_ActivitySearchFoodCustom);
             }
         });
-        m_btnRecommend.setOnClickListener(new View.OnClickListener() {
+        m_imgbtnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	Intent intent = new Intent(ActivityFoodCombination.this, ActivityAllFoodExpandList.class);
+				startActivityForResult(intent,IntentRequestCode_ActivityAllFoodExpandList);
+            }
+        });
+        m_imgbtnRecommend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             	showChooseNutrientsToRecommend();
@@ -461,7 +464,7 @@ public class ActivityFoodCombination extends Activity {
 //				Double foodAmount = m_foodAmountList.get(childPosition);
 				Double foodAmount = m_foodAmountHm.get(foodId);
 				tvFoodName.setText((String)foodInfo.get(Constants.COLUMN_NAME_CnCaption));
-				tvFoodAmount.setText(foodAmount.toString());
+				tvFoodAmount.setText(foodAmount.intValue()+"");
 				
 				ImageView ivFood = (ImageView)convertView.findViewById(R.id.ivFood);
 				ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)foodInfo.get(Constants.COLUMN_NAME_PicPath)));
@@ -554,6 +557,7 @@ public class ActivityFoodCombination extends Activity {
 				String nutrientId = (String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientID);
 				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
 				intent.putExtra(Constants.Key_Amount, DRIsDict.get(nutrientId).doubleValue());
+				intent.putExtra(Constants.Key_Name, (String)nutrientInfo.get(Constants.Key_Name));
 				startActivityForResult(intent,IntentRequestCode_ActivityRichFood);
 				
 			}
