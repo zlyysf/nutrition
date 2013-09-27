@@ -114,12 +114,12 @@
         }
         else
         {
-            UIImage *button30 = [[UIImage imageNamed:@"button_back"] stretchableImageWithLeftCapWidth:5 topCapHeight:5];
+            UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
             UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
             [cell.contentView addSubview:addButton];
             [addButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
             [addButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-            [addButton setFrame:CGRectMake(60, 10, 200, 30)];
+            [addButton setFrame:CGRectMake(60, 10, 200, 40)];
             [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
             [addButton setTitle:@"添加到新清单" forState:UIControlStateNormal];
             [addButton addTarget:self action:@selector(addToNewDiet) forControlEvents:UIControlEventTouchUpInside];
@@ -140,9 +140,9 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0) {
-        return 50;
-    }
+//    if (indexPath.section == 0) {
+//        return 60;
+//    }
     return 60;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
