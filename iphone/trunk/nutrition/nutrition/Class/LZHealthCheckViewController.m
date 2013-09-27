@@ -193,12 +193,10 @@
             [lightArray addObject:nutritientId];
         }
     }
-    NSLog(@"%@",heavyArray );
-    NSLog(@"%@",lightArray );
+    
     NSMutableArray *newPreferArray = [[NSMutableArray alloc]init];
     [newPreferArray addObjectsFromArray:heavyArray];
     [newPreferArray addObjectsFromArray:lightArray];
-    NSLog(@"%@",newPreferArray);
             
     NSDictionary *emptyIntake = [[NSDictionary alloc]init];
     [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
