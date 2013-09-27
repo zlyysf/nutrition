@@ -15,11 +15,11 @@
 @property (nonatomic,strong)NSDate *shuiqianDate;
 @property (nonatomic,strong)UITextField *currentDisplayField;
 @property (nonatomic,strong)NSNumber *reminderState;
-@property (nonatomic,strong)UIDatePicker *datePicker;
+@property (nonatomic,assign)BOOL isFirstLoad;
 @end
 
 @implementation LZTimeSettingsViewController
-
+@synthesize isFirstLoad;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -41,7 +41,7 @@
     [self.line3View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveItemTapped)];
     self.navigationItem.rightBarButtonItem = saveItem;
-    self.datePicker = [[UIDatePicker alloc]init];
+    //self.datePicker = [[UIDatePicker alloc]init];
     [self.datePicker setDatePickerMode:UIDatePickerModeTime];
     [self.datePicker setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
     [self.datePicker addTarget:self action:@selector(datePickerValueChanged) forControlEvents:UIControlEventValueChanged];
@@ -63,8 +63,20 @@
     self.shangwuTextField.text = [LZUtility getDateFormatOutput:self.shangwuDate];
     self.xiawuTextField.text = [LZUtility getDateFormatOutput:self.xiawuDate];
     self.shuiqianTextField.text = [LZUtility getDateFormatOutput:self.shuiqianDate];
+    self.shangwuIndicator.hidden = YES;
+    self.xiawuIndicator.hidden = YES;
+    self.shuiqianIndicator.hidden = YES;
 	// Do any additional setup after loading the view.
-    [self.shangwuTextField becomeFirstResponder];
+    //[self.shangwuTextField becomeFirstResponder];
+    isFirstLoad = YES;
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (isFirstLoad)
+    {
+        isFirstLoad = NO;
+        [self.shangwuTextField becomeFirstResponder];
+    }
 }
 -(void)displayDate:(NSDate*)date
 {
@@ -118,6 +130,9 @@
 {
     if (textField == self.shangwuTextField)
     {
+        self.shangwuIndicator.hidden = NO;
+        self.xiawuIndicator.hidden = YES;
+        self.shuiqianIndicator.hidden = YES;
         NSDate *minDate = [LZUtility getDateForHour:6 Minutes:0];
         NSDate *maxDate = [LZUtility getDateForHour:11 Minutes:59];
         [self.datePicker setMinimumDate:minDate];
@@ -126,6 +141,9 @@
     }
     else if (textField == self.xiawuTextField)
     {
+        self.shangwuIndicator.hidden = YES;
+        self.xiawuIndicator.hidden = NO;
+        self.shuiqianIndicator.hidden = YES;
         NSDate *minDate = [LZUtility getDateForHour:12 Minutes:0];
         NSDate *maxDate = [LZUtility getDateForHour:18 Minutes:59];
         [self.datePicker setMinimumDate:minDate];
@@ -134,15 +152,18 @@
     }
     else
     {
+        self.shangwuIndicator.hidden = YES;
+        self.xiawuIndicator.hidden = YES;
+        self.shuiqianIndicator.hidden = NO;
         NSDate *minDate = [LZUtility getDateForHour:19 Minutes:0];
         NSDate *maxDate = [LZUtility getDateForHour:24 Minutes:0];
         [self.datePicker setMinimumDate:minDate];
         [self.datePicker setMaximumDate:maxDate];
         [self displayDate:self.shuiqianDate];
     }
-    textField.inputView = self.datePicker;
+    //textField.inputView = self.datePicker;
     self.currentDisplayField = textField;
-    return YES;
+    return NO;
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -211,6 +232,9 @@
     [self setLine2View:nil];
     [self setLine3View:nil];
     [self setOutBoundImageView:nil];
+    [self setShangwuIndicator:nil];
+    [self setXiawuIndicator:nil];
+    [self setShuiqianIndicator:nil];
     [super viewDidUnload];
 }
 @end

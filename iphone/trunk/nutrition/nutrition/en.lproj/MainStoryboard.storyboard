@@ -1477,17 +1477,61 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                             </view>
+                            <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="time" minuteInterval="1" id="BHR-zz-aq4">
+                                <rect key="frame" x="0.0" y="244" width="320" height="216"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <date key="date" timeIntervalSinceReferenceDate="401945538.115201">
+                                    <!--2013-09-27 03:32:18 +0000-->
+                                </date>
+                                <timeZone key="timeZone" name="America/Los_Angeles">
+                                    <mutableData key="data">
+VFppZgAAAAAAAAAAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAC5AAAABAAAABCepkign7sVkKCGKqChmveQ
+y4kaoNIj9HDSYSYQ1v50INiArZDa/tGg28CQENzes6DdqayQ3r6VoN+JjpDgnneg4WlwkOJ+WaDjSVKQ
+5F47oOUpNJDmR1gg5xJREOgnOiDo8jMQ6gccIOrSFRDr5v4g7LH3EO3G4CDukdkQ76/8oPBxuxDxj96g
+8n/BkPNvwKD0X6OQ9U+ioPY/hZD3L4Sg+CiiEPkPZqD6CIQQ+viDIPvoZhD82GUg/chIEP64RyD/qCoQ
+AJgpIAGIDBACeAsgA3EokARhJ6AFUQqQBkEJoAcw7JAHjUOgCRDOkAmtvyAK8LCQC+CvoAzZzRANwJGg
+DrmvEA+priAQmZEQEYmQIBJ5cxATaXIgFFlVEBVJVCAWOTcQFyk2IBgiU5AZCRggGgI1kBryNKAb4heQ
+HNIWoB3B+ZAesfigH6HbkCB2KyAhgb2QIlYNICNq2hAkNe8gJUq8ECYV0SAnKp4QJ/7toCkKgBAp3s+g
+KupiECu+saAs036QLZ6ToC6zYJAvfnWgMJNCkDFnkiAycySQM0d0IDRTBpA1J1YgNjLokDcHOCA4HAUQ
+OOcaIDn75xA6xvwgO9vJEDywGKA9u6sQPo/6oD+bjRBAb9ygQYSpkEJPvqBDZIuQRC+goEVEbZBF89Mg
+Ry2KEEfTtSBJDWwQSbOXIErtThBLnLOgTNZqkE18laBOtkyQT1x3oFCWLpBRPFmgUnYQkFMcO6BUVfKQ
+VPwdoFY11JBW5TogWB7xEFjFHCBZ/tMQWqT+IFvetRBchOAgXb6XEF5kwiBfnnkQYE3eoGGHlZBiLcCg
+Y2d3kGQNoqBlR1mQZe2EoGcnO5BnzWagaQcdkGmtSKBq5v+Qa5ZlIGzQHBBtdkcgbq/+EG9WKSBwj+AQ
+cTYLIHJvwhBzFe0gdE+kEHT/CaB2OMCQdt7roHgYopB4vs2gefiEkHqer6B72GaQfH6RoH24SJB+XnOg
+f5gqkAABAAECAwEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
+AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
+AQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEAAQABAAEA
+AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
+</mutableData>
+                                </timeZone>
+                            </datePicker>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dot_indicator.png" id="x3t-ze-A4T">
+                                <rect key="frame" x="103" y="66" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dot_indicator.png" id="yBt-ab-FFU">
+                                <rect key="frame" x="103" y="107" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="dot_indicator.png" id="TTA-ek-kwP">
+                                <rect key="frame" x="103" y="148" width="12" height="12"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="datePicker" destination="BHR-zz-aq4" id="pOz-9F-em0"/>
                         <outlet property="line1View" destination="xIx-B9-6Gy" id="cBW-Up-xEp"/>
                         <outlet property="line2View" destination="eBE-yF-YlJ" id="ria-cm-fPJ"/>
                         <outlet property="line3View" destination="UzG-mD-niu" id="FJv-yu-nIW"/>
                         <outlet property="outBoundImageView" destination="3yI-c7-hcv" id="Tfo-DV-N8L"/>
                         <outlet property="reminderStateSwitch" destination="le4-TW-Rqm" id="me2-Or-7cR"/>
+                        <outlet property="shangwuIndicator" destination="x3t-ze-A4T" id="EJR-WE-SAi"/>
                         <outlet property="shangwuTextField" destination="oCl-8y-ywx" id="TzL-YS-js4"/>
+                        <outlet property="shuiqianIndicator" destination="TTA-ek-kwP" id="oOm-qW-Ppc"/>
                         <outlet property="shuiqianTextField" destination="dP1-q1-DX1" id="Vkz-cY-2hP"/>
+                        <outlet property="xiawuIndicator" destination="yBt-ab-FFU" id="iU6-0L-50O"/>
                         <outlet property="xiawuTextField" destination="yBG-vG-O9Z" id="Eka-fA-hPj"/>
                     </connections>
                 </viewController>
@@ -1841,6 +1885,7 @@
         <image name="change_name_button.png" width="16" height="16"/>
         <image name="change_name_clicked.png" width="16" height="16"/>
         <image name="diet_empty_icon.png" width="16" height="16"/>
+        <image name="dot_indicator.png" width="16" height="16"/>
         <image name="dri_icon.png" width="16" height="16"/>
         <image name="feedback_icon.png" width="16" height="16"/>
         <image name="recommend_icon.png" width="16" height="16"/>
@@ -1968,8 +2013,6 @@
         <class className="LZFoodDetailController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodDetailController.h"/>
             <relationships>
-                <relationship kind="action" name="gUnitButtonTapped:" candidateClass="UIButton"/>
-                <relationship kind="action" name="unitButtonTapped:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="GUnitButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="UnitButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="foodAmountDisplayLabel" candidateClass="UILabel"/>
@@ -1981,6 +2024,7 @@
         <class className="LZFoodNutritionCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZFoodNutritionCell.h"/>
             <relationships>
+                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="addFoodButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="backView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="nutritionNameButton" candidateClass="UIButton"/>
@@ -2029,7 +2073,6 @@
         <class className="LZNutritionSupplyCell" superclassName="UITableViewCell">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionSupplyCell.h"/>
             <relationships>
-                <relationship kind="action" name="nameButtonTapped:"/>
                 <relationship kind="outlet" name="nameButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="nutrientSupplyLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="nutritionProgressView" candidateClass="LZProgressView"/>
@@ -2093,13 +2136,17 @@
         <class className="LZTimeSettingsViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZTimeSettingsViewController.h"/>
             <relationships>
+                <relationship kind="outlet" name="datePicker" candidateClass="UIDatePicker"/>
                 <relationship kind="outlet" name="line1View" candidateClass="UIView"/>
                 <relationship kind="outlet" name="line2View" candidateClass="UIView"/>
                 <relationship kind="outlet" name="line3View" candidateClass="UIView"/>
                 <relationship kind="outlet" name="outBoundImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="reminderStateSwitch" candidateClass="UISwitch"/>
+                <relationship kind="outlet" name="shangwuIndicator" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="shangwuTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="shuiqianIndicator" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="shuiqianTextField" candidateClass="UITextField"/>
+                <relationship kind="outlet" name="xiawuIndicator" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="xiawuTextField" candidateClass="UITextField"/>
             </relationships>
         </class>
