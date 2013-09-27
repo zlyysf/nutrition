@@ -251,7 +251,7 @@
                 [emptyLabel setFont:[UIFont systemFontOfSize:15]];
                 [emptyLabel setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:emptyLabel];
-                emptyLabel.text = @"请关注轻度缺乏的营养！";
+                emptyLabel.text = @"无，请关注轻度缺乏的营养！";
                 cell.hasLoaded = YES;
                 return cell;
             }
@@ -309,7 +309,7 @@
                 [emptyLabel setFont:[UIFont systemFontOfSize:15]];
                 [emptyLabel setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:emptyLabel];
-                emptyLabel.text = @"请关注严重缺乏的营养！";
+                emptyLabel.text = @"无，请关注严重缺乏的营养！";
             }
             cell.hasLoaded = YES;
             return cell;
@@ -564,11 +564,25 @@
     }
     else if (section == 2)
     {
-        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内严重缺乏%d种营养",[self.heavylyLackArray count]];
+        if ([self.heavylyLackArray count]==0)
+        {
+            sectionTitleLabel.text = @"您现在体内严重缺乏的营养";
+        }
+        else
+        {
+            sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内严重缺乏%d种营养",[self.heavylyLackArray count]];
+        }
     }
     else if (section == 3)
     {
-        sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内轻度缺乏%d种营养",[self.lightlyLackArray count]];
+        if([self.lightlyLackArray count]==0)
+        {
+            sectionTitleLabel.text = @"您现在体内轻度缺乏的营养";
+        }
+        else
+        {
+            sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内轻度缺乏%d种营养",[self.lightlyLackArray count]];
+        }
     }
     else if (section == 4)
     {
