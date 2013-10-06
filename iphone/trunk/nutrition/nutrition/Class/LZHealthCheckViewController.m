@@ -69,23 +69,18 @@
         //self.questionLabel.text = @"您最近有以下哪些症状?（可多选）";
     UIBarButtonItem *recheckItem = [[UIBarButtonItem alloc]initWithTitle:@"提醒设置" style:UIBarButtonItemStyleBordered target:self action:@selector(timeSettingItemTapped)];
     self.navigationItem.rightBarButtonItem = recheckItem;
-    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];//stretchableImageWithLeftCapWidth:20 topCapHeight:15];
-    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 110)];
-    UIButton *checkButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    [footerView addSubview:checkButton];
-    [checkButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
-    [checkButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-    [checkButton setFrame:CGRectMake(85, 10, 150, 40)];
-    [checkButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [checkButton setTitle:@"诊    断" forState:UIControlStateNormal];
-    [checkButton addTarget:self action:@selector(checkItemTapped) forControlEvents:UIControlEventTouchUpInside];
-    [checkButton setBackgroundImage:button30 forState:UIControlStateNormal];
     
-    UIView *admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 60, 320, 50)];
-    [footerView addSubview:admobView];
+    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];//stretchableImageWithLeftCapWidth:20 topCapHeight:15];
+
+//    [self.checkItemButton.titleLabel setFont:[UIFont systemFontOfSize:23]];
+//    [self.checkItemButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+//    [self.checkItemButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    [self.checkItemButton setTitle:@"诊断" forState:UIControlStateNormal];
+    [self.checkItemButton setBackgroundImage:button30 forState:UIControlStateNormal];
+
+    UIView *admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
     [admobView setBackgroundColor:[UIColor clearColor]];
-    admobView.tag =51;
-    self.listView.tableFooterView = footerView;
+    self.listView.tableFooterView = admobView;
     
     
 }
@@ -100,8 +95,7 @@
     [MobClick beginLogPageView:UmengPathJianKangZhenDuan];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
-    UIView *admobView = [footerView viewWithTag:51];
-    [shared resetAdView:self andListView:admobView];
+    [shared resetAdView:self andListView:footerView];
     [self refreshViewAccordingToTime];
 }
 -(void)refreshViewAccordingToTime
@@ -140,7 +134,7 @@
 
     [self.navigationController pushViewController:timeSettingsViewController animated:YES];
 }
--(void)checkItemTapped
+-(IBAction)checkItemTapped:(id)sender
 {
     NSMutableArray *userSelectedDiseaseNames = [[NSMutableArray alloc]init];
     for(NSString *departName in diseaseNamesArray)
@@ -315,6 +309,7 @@
 
 - (void)viewDidUnload {
     [self setListView:nil];
+    [self setCheckItemButton:nil];
     [super viewDidUnload];
 }
 @end
