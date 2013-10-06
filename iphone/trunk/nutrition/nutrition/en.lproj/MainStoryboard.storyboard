@@ -317,11 +317,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="EIg-Xj-1yl">
-                                                    <rect key="frame" x="10" y="5" width="300" height="53"/>
+                                                    <rect key="frame" x="10" y="5" width="300" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="LF2-8Q-vW1">
-                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
+                                                            <rect key="frame" x="1" y="1" width="75" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
@@ -390,11 +390,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="r1N-Rq-pdZ">
-                                                    <rect key="frame" x="10" y="5" width="300" height="53"/>
+                                                    <rect key="frame" x="10" y="5" width="300" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="2fV-Aw-U9L">
-                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
+                                                            <rect key="frame" x="1" y="1" width="75" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
@@ -472,11 +472,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="Dkc-VR-pZM">
-                                                    <rect key="frame" x="10" y="5" width="300" height="53"/>
+                                                    <rect key="frame" x="10" y="5" width="300" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="1Tu-Iw-6PR">
-                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
+                                                            <rect key="frame" x="1" y="1" width="75" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
@@ -687,11 +687,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="AyL-hD-eR6">
-                                                    <rect key="frame" x="10" y="5" width="300" height="53"/>
+                                                    <rect key="frame" x="10" y="5" width="300" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="krY-Ac-UJo">
-                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
+                                                            <rect key="frame" x="1" y="1" width="75" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>
@@ -908,11 +908,11 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <view contentMode="scaleToFill" id="LY8-dg-s9l">
-                                                    <rect key="frame" x="10" y="5" width="300" height="53"/>
+                                                    <rect key="frame" x="10" y="5" width="300" height="55"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="ppt-Hh-lbd">
-                                                            <rect key="frame" x="0.0" y="0.0" width="75" height="50"/>
+                                                            <rect key="frame" x="1" y="1" width="75" height="50"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                         </imageView>

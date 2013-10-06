@@ -49,11 +49,11 @@
 
     }
     self.menuArray = [[NSArray alloc]initWithObjects:
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"健康诊断",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"食物查询",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"营养元素",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"膳食清单",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"个人信息",@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"诊断",@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"查询",@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"营养",@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"清单",@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:@"信息",@"menuName", nil],
                       [NSDictionary dictionaryWithObjectsAndKeys:@"设置",@"menuName", nil],nil];
 
     [self.view addSubview:self.admobView];

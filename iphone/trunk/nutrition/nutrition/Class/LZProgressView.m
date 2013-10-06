@@ -56,7 +56,7 @@
     {
         return;
     }
-    CGRect fillRect = CGRectMake(drawingRect.origin.x+3, drawingRect.origin.y+3, (drawingRect.size.width-6)*drawingProgress, drawingRect.size.height-6);
+    CGRect fillRect = CGRectMake(drawingRect.origin.x+3, drawingRect.origin.y+3, (drawingRect.size.width-6)*drawingProgress, drawingRect.size.height-5.5);
 
     [drawingFillColor setStroke];
     [drawingFillColor setFill];
