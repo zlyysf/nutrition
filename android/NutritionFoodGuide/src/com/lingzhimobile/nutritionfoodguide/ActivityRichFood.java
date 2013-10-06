@@ -132,36 +132,32 @@ public class ActivityRichFood extends Activity {
 	class ListViewEventListener implements OnItemSelectedListener,OnItemClickListener{
 
 		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,
-				long id) {
-			HashMap<String, Object> foodInfo = m_foodsData.get(position);
-			
-			Intent intent = new Intent();
-        	intent.putExtra(Constants.COLUMN_NAME_NDB_No, (String)foodInfo.get(Constants.COLUMN_NAME_NDB_No));
-        	intent.putExtra(Constants.Key_Amount, 456.45);
-        	setResult(IntentResultCode, intent);
-        	
-        	finish();
+		public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
+//			HashMap<String, Object> foodInfo = m_foodsData.get(position);
+//			
+//			Intent intent = new Intent();
+//        	intent.putExtra(Constants.COLUMN_NAME_NDB_No, (String)foodInfo.get(Constants.COLUMN_NAME_NDB_No));
+//        	intent.putExtra(Constants.Key_Amount, 456.45);
+//        	setResult(IntentResultCode, intent);
+//        	
+//        	finish();
 			
 		}
 
 		@Override
-		public void onItemSelected(AdapterView<?> parent, View view,
-				int position, long id) {
-			// TODO Auto-generated method stub
-			
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 		}
 
 		@Override
 		public void onNothingSelected(AdapterView<?> parent) {
-			// TODO Auto-generated method stub
-			
 		}
 		
 	}
     
     
 	class RichFoodAdapter extends BaseAdapter{
+		
+//		AlertDialog mPrevAlertDialog;
 
 		@Override
 		public int getCount() {
@@ -177,6 +173,20 @@ public class ActivityRichFood extends Activity {
 		public long getItemId(int position) {
 			return position;
 		}
+		
+//		void closePrevAlertDialog(){
+//			Log.d(LogTag, "closePrevAlertDialog enter ");
+//			if (mPrevAlertDialog!=null){
+//				if (mPrevAlertDialog.isShowing()){
+//					Log.d(LogTag, "closePrevAlertDialog before mPrevAlertDialog.dismiss "+mPrevAlertDialog);
+//					mPrevAlertDialog.dismiss();
+//					Log.d(LogTag, "closePrevAlertDialog after  mPrevAlertDialog.dismiss "+mPrevAlertDialog);
+//				}else{
+//					Log.d(LogTag, "closePrevAlertDialog NOT mPrevAlertDialog.isShowing "+mPrevAlertDialog);
+//				}
+//				mPrevAlertDialog = null;
+//			}
+//		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
@@ -260,13 +270,23 @@ public class ActivityRichFood extends Activity {
 				dlgBuilder.setPositiveButton("OK", dialogInterfaceEventListener_EditText1);
 				dlgBuilder.setNegativeButton("Cancel", dialogInterfaceEventListener_EditText1);
 				
+				
 				AlertDialog dlg = dlgBuilder.create();
+				
+//				closePrevAlertDialog();//Activity  has leaked window 的问题，发现是与ListViewEventListener.onItemClick 中调用了 finish() 有关。
+//				mPrevAlertDialog = dlg;
+				
 				dialogInterfaceEventListener_EditText1.SetDialog(dlg);
 				dlg.setOnShowListener(dialogInterfaceEventListener_EditText1);
+				dlg.setOnDismissListener(dialogInterfaceEventListener_EditText1);
+				Log.d(LogTag, "before show AlertDialog "+dlg);
 				dlg.show();
+				Log.d(LogTag, "after  show AlertDialog "+dlg);
+				
+				
 			}
 			
-			class DialogInterfaceEventListener_EditText implements DialogInterface.OnClickListener, DialogInterface.OnShowListener{
+			class DialogInterfaceEventListener_EditText implements DialogInterface.OnClickListener, DialogInterface.OnShowListener, DialogInterface.OnDismissListener{
 				Dialog mDialog;
 				EditText m_editText1;
 				public DialogInterfaceEventListener_EditText(EditText editText1){
@@ -289,7 +309,7 @@ public class ActivityRichFood extends Activity {
 				@Override
 				public void onClick(DialogInterface dlgInterface, int which) {
 					if(which == DialogInterface.BUTTON_POSITIVE){
-						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick OK");
+						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick OK "+mDialog);
 						String sInput = m_editText1.getText().toString();
 						HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
 						String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
@@ -300,23 +320,29 @@ public class ActivityRichFood extends Activity {
 		            	ActivityRichFood.this.setResult(IntentResultCode, intent);
 		            	
 		            	ActivityRichFood.this.finish();
-//		            	finish();
 					}else if(which == DialogInterface.BUTTON_NEGATIVE){
+						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick Cancel "+mDialog);
 					}else if(which == DialogInterface.BUTTON_NEUTRAL){//忽略按键的点击事件
+						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick Ignore "+mDialog);
+					}else{
+						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick other "+mDialog);
 					}
-					m_editText1 = null;
-	            	mDialog = null;
+//					m_editText1 = null;
+//	            	mDialog = null;//Activity  has leaked window 的问题，发现是与ListViewEventListener.onItemClick 中调用了 finish() 有关。
 				}
 
 				@Override
 				public void onShow(DialogInterface dlgInterface) {
-					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onShow");
+					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onShow "+mDialog);
 					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_IMPLICIT);//能show出键盘
 //			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_FORCED);//能show出键盘
 //					m_editText1.requestFocus();
+				}
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onDismiss "+mDialog+ " | "+dialog);
 					
-			        
 				}
 			}//class DialogInterfaceOnClickListener_EditText
 			
