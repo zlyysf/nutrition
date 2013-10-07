@@ -230,19 +230,19 @@
         
     }
     NSString *onelineStr = @"行";
-    CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(273, 9999) lineBreakMode:UILineBreakModeWordWrap];
-    CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(273, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(260, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(260, 9999) lineBreakMode:UILineBreakModeWordWrap];
     float height;
     if (labelSize.height > oneSize.height*2 )
     {
-        height = labelSize.height;
+        height = labelSize.height+16;
     }
     else
     {
-        height = oneSize.height*2;
+        height = oneSize.height *2+16;
     }
-    [cell.backView setFrame:CGRectMake(10, 4, 275, height+2)];
-    [cell.nameLabel setFrame:CGRectMake(11, 5, 273, height)];
+    [cell.backView setFrame:CGRectMake(10, 7, 262,labelSize.height+2)];
+    [cell.nameLabel setFrame:CGRectMake(11, 8, 260, labelSize.height)];
     [cell.stateImageView setFrame:CGRectMake(287, (height-8)/2, 22, 18)];
     cell.nameLabel.text = departmentName;
     return cell;
@@ -251,15 +251,15 @@
 {
     NSString *departmentName = [self.diseaseNamesArray objectAtIndex:indexPath.row];
     NSString *onelineStr = @"行";
-    CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(273, 9999) lineBreakMode:UILineBreakModeWordWrap];
-    CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(273, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(260, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(260, 9999) lineBreakMode:UILineBreakModeWordWrap];
     if (labelSize.height > oneSize.height*2 )
     {
-        return labelSize.height+10;
+        return labelSize.height+16;
     }
     else
     {
-        return oneSize.height*2+10;
+        return oneSize.height*2+16;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
