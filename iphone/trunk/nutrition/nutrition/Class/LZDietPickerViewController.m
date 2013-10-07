@@ -179,7 +179,7 @@
     [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
     [sectionView addSubview:sectionTitleLabel];
-    sectionTitleLabel.text =  @"添加到已有的膳食清单";
+    sectionTitleLabel.text =  @"添加到已有的清单";
     
     return sectionView;
 

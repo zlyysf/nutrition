@@ -44,7 +44,7 @@
     }
     if (isFromOut)
     {
-        self.title = @"食物查询";
+        self.title = @"查询";
     }
     else
     {

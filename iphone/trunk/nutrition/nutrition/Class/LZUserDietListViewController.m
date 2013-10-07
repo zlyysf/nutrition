@@ -60,7 +60,7 @@
         self.navigationItem.leftBarButtonItem = backItem;
     }
 
-    self.title = @"膳食清单";
+    self.title = @"清单";
     self.dietArray = [[NSMutableArray alloc]init];
     currentEditDietId = nil;
 

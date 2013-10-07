@@ -642,7 +642,7 @@
         [formatter setDateFormat:@"MM月dd号"];
         NSString* time = [formatter stringFromDate:now];
         NSString *text = [NSString stringWithFormat:@"%@的饮食计划",time];
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存到膳食清单" message:@"给你的食物清单加个名称吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存清单" message:@"给你的食物清单加个名称吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         alert.tag = 102;
         UITextField *tf = [alert textFieldAtIndex:0];
@@ -877,7 +877,7 @@
             NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
             if(nmCollocationId)
             {
-                UIAlertView *didSaveAlert = [[UIAlertView alloc]initWithTitle:@"保存成功" message:@"您可以进入膳食清单页面查看你的保存结果" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:@"去看看",nil];
+                UIAlertView *didSaveAlert = [[UIAlertView alloc]initWithTitle:@"保存成功" message:@"您可以进入清单页面查看你的保存结果" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:@"去看看",nil];
                 didSaveAlert.tag = 103;
                 didSaveAlert.delegate = self;
                 [didSaveAlert show];

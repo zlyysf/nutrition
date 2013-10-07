@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"营养元素";
+    self.title = @"营养";
     if (ViewControllerUseBackImage) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
         UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
