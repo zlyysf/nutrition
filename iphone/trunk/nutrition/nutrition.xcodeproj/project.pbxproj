@@ -139,6 +139,7 @@
 		5F86C85B17CC51A0001DDC34 /* LZDietPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F86C85A17CC51A0001DDC34 /* LZDietPickerCell.m */; };
 		5F87498517D09D050061E36D /* LZNutritionListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F87498417D09D040061E36D /* LZNutritionListViewController.m */; };
 		5F87498B17D0C2EE0061E36D /* LZRichNutritionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F87498A17D0C2EB0061E36D /* LZRichNutritionViewController.m */; };
+		5F894A8C18028B5F00A122F4 /* MIT-LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 5F894A8B18028B5F00A122F4 /* MIT-LICENSE */; };
 		5F8DEE9517951DB000C6E9F5 /* LZRecommendFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */; };
 		5F8F9FAF17E6B00300F6B295 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F8F9FAD17E6B00300F6B295 /* Icon-72.png */; };
 		5F8F9FB017E6B00300F6B295 /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F8F9FAE17E6B00300F6B295 /* Icon-72@2x.png */; };
@@ -426,6 +427,7 @@
 		5F87498417D09D040061E36D /* LZNutritionListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZNutritionListViewController.m; path = Class/LZNutritionListViewController.m; sourceTree = "<group>"; };
 		5F87498917D0C2EA0061E36D /* LZRichNutritionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRichNutritionViewController.h; path = Class/LZRichNutritionViewController.h; sourceTree = "<group>"; };
 		5F87498A17D0C2EB0061E36D /* LZRichNutritionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRichNutritionViewController.m; path = Class/LZRichNutritionViewController.m; sourceTree = "<group>"; };
+		5F894A8B18028B5F00A122F4 /* MIT-LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MIT-LICENSE"; sourceTree = "<group>"; };
 		5F8DEE9317951DB000C6E9F5 /* LZRecommendFilterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFilterView.h; path = Class/LZRecommendFilterView.h; sourceTree = "<group>"; };
 		5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFilterView.m; path = Class/LZRecommendFilterView.m; sourceTree = "<group>"; };
 		5F8F9FAD17E6B00300F6B295 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "nutrition/Icon-72.png"; sourceTree = "<group>"; };
@@ -762,6 +764,7 @@
 			children = (
 				5F0081E917C47E6F000938C2 /* JWNavigationViewController.h */,
 				5F0081EA17C47E6F000938C2 /* JWNavigationViewController.m */,
+				5F894A8B18028B5F00A122F4 /* MIT-LICENSE */,
 			);
 			name = JWNavigationViewController;
 			path = nutrition/JWNavigationViewController;
@@ -1579,6 +1582,7 @@
 				5FAB57A1180266C300657793 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
 				5FAB57A5180266C300657793 /* ShareSDKiPhoneDefaultShareViewUI.bundle in Resources */,
 				5FAB57A7180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.bundle in Resources */,
+				5F894A8C18028B5F00A122F4 /* MIT-LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
