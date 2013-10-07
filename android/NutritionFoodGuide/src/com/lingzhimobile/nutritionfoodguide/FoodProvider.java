@@ -75,7 +75,7 @@ public class FoodProvider extends ContentProvider {
 
     @Override
     public boolean onCreate() {
-    	m_da = DataAccess.getSingleTon(getContext());
+    	m_da = DataAccess.getSingleton(getContext());
         return true;
     }
 

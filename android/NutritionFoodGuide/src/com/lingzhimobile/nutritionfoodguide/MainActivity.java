@@ -33,6 +33,8 @@ public class MainActivity extends Activity implements OnClickListener{
         button1.setOnClickListener(this);
         button1 = (Button)findViewById(R.id.btnFoodCombination);
         button1.setOnClickListener(this);
+        button1 = (Button)findViewById(R.id.btnFoodCombinationList);
+        button1.setOnClickListener(this);
         
         button1 = (Button)findViewById(R.id.btnSearchFood);
         button1.setOnClickListener(this);
@@ -87,6 +89,10 @@ public class MainActivity extends Activity implements OnClickListener{
 				break;
 			case R.id.btnFoodCombination:	
 				intent = new Intent(this, ActivityFoodCombination.class);
+				startActivity(intent);
+				break;
+			case R.id.btnFoodCombinationList:	
+				intent = new Intent(this, ActivityFoodCombinationList.class);
 				startActivity(intent);
 				break;
 			case R.id.btnSearchFood:	

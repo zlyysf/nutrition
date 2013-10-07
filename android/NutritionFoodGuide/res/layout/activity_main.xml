@@ -58,6 +58,12 @@
             android:text="FoodCombination" />
         
         <Button
+            android:id="@+id/btnFoodCombinationList"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FoodCombinationList" />
+        
+        <Button
             android:id="@+id/btnSearchFood"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

@@ -31,7 +31,7 @@ implements OnItemSelectedListener,OnItemClickListener
 		
 		String groupName =  getIntent().getStringExtra("groupName");
 		if (groupName!=null &&groupName.length()>0){
-			DataAccess da = DataAccess.getSingleTon(this);
+			DataAccess da = DataAccess.getSingleton(this);
 			
 			Cursor csDisease = da.getDiseaseNamesOfGroup(groupName);
 			ArrayList<String> alDisease = Tool.getDataFromCursor(csDisease, 0);

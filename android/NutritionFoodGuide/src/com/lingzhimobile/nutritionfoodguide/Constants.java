@@ -107,6 +107,8 @@ public class Constants {
 	public static final String COLUMN_NAME_CollocationId ="CollocationId";
 	public static final String COLUMN_NAME_FoodId ="FoodId";
 	public static final String COLUMN_NAME_FoodAmount ="FoodAmount";
+	public static final String COLUMN_NAME_CollocationName = "CollocationName";
+	public static final String COLUMN_NAME_CollocationCreateTime = "CollocationCreateTime";
 
 	public static final String TABLE_NAME_CustomRichFood ="CustomRichFood";
 

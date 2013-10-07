@@ -5,6 +5,7 @@ import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 
+import android.R.bool;
 import android.content.*;
 import android.database.*;
 import android.database.sqlite.*;
@@ -14,7 +15,7 @@ import android.util.*;
 public class DataAccess {
 	
 	static DataAccess m_singleton = null;
-	public static DataAccess getSingleTon(Context ctx){
+	public static DataAccess getSingleton(Context ctx){
 		if (m_singleton == null){
 			m_singleton = new DataAccess(ctx.getApplicationContext());
 		}
@@ -1178,6 +1179,210 @@ public class DataAccess {
 		Log.d(LogTag, "getNutrientInfoAs2LevelDictionary_withNutrientIds ret:"+dic2Level.toString());
 	    return dic2Level;
 	}	
+	
+	
+	
+	
+	/*
+	 单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
+	 return auto increment id value
+	 */
+	long insertFoodCollocation_withName(String collationName)
+	{
+		java.util.Date dtNow = new java.util.Date();
+		long llms = dtNow.getTime();
+
+	    ContentValues values = new ContentValues();
+	    values.put(Constants.COLUMN_NAME_CollocationName, collationName);
+	    values.put(Constants.COLUMN_NAME_CollocationCreateTime, llms);
+	    long rowId = mDBcon.insert(Constants.TABLE_NAME_FoodCollocation, null, values);//TODO check rowId be same as CollocationId
+	    return rowId;
+	    
+//		String insertSql = "INSERT INTO FoodCollocation (CollocationName, CollocationCreateTime) VALUES (?,?);";
+//		Object[] bindArgs = new Object[]{collationName,llms};
+//	    mDBcon.execSQL(insertSql, bindArgs);
+	    
+	}
+	/*
+	 单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
+	 */
+	int updateFoodCollocationName(String collationName,long nmCollocationId)
+	{
+//	    String updSql = "UPDATE FoodCollocation SET CollocationName=? WHERE CollocationId=?;";
+//	    Object[] bindArgs = new Object[]{collationName,nmCollocationId};
+//	    mDBcon.execSQL(updSql, bindArgs);
+		
+		ContentValues values = new ContentValues();
+	    values.put(Constants.COLUMN_NAME_CollocationName, collationName);
+	    String whereClause = "CollocationId=?";
+	    String[] whereArgs = new String[]{""+nmCollocationId};
+		int rowCount = mDBcon.update(Constants.TABLE_NAME_FoodCollocation, values, whereClause, whereArgs);
+	    return rowCount;
+	}
+	int updateFoodCollocationTime(long collationTime, long nmCollocationId)
+	{
+//		String updSql = "UPDATE FoodCollocation SET CollocationCreateTime=? WHERE CollocationId=?;";
+//		Object[] bindArgs = new Object[]{collationTime,nmCollocationId};
+		ContentValues values = new ContentValues();
+	    values.put(Constants.COLUMN_NAME_CollocationCreateTime, collationTime);
+	    String whereClause = "CollocationId=?";
+	    String[] whereArgs = new String[]{""+nmCollocationId};
+		int rowCount = mDBcon.update(Constants.TABLE_NAME_FoodCollocation, values, whereClause, whereArgs);
+	    return rowCount;
+	}
+	int deleteFoodCollocationById(long nmCollocationId)
+	{
+		String whereClause = "CollocationId=?";
+		String[] whereArgs = new String[]{""+nmCollocationId};
+		return mDBcon.delete(Constants.TABLE_NAME_FoodCollocation, whereClause, whereArgs);
+	}
+	/*
+	 单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
+	 */
+	HashMap<String, Object> getFoodCollocationById(long nmCollocationId)
+	{
+		Cursor cs = mDBcon.query(Constants.TABLE_NAME_FoodCollocation, null, "CollocationId=?", new String[]{""+nmCollocationId}, null, null, null);
+		cs.moveToFirst();
+		HashMap<String, Object> rowDict = Tool.get1RowDataWithTypeFromCursorCurrentPosition(cs);
+		cs.close();
+	    return rowDict;
+	}
+	
+	public ArrayList<HashMap<String, Object>> getAllFoodCollocation()
+	{
+		Cursor cs = mDBcon.query(Constants.TABLE_NAME_FoodCollocation, null, null, null, null, null, null);
+		ArrayList<HashMap<String, Object>> rows = Tool.getRowsWithTypeFromCursor(cs);
+		cs.close();
+		Log.d(LogTag, Tool.getIndentFormatStringOfObject(rows, 0));
+	    return rows;
+	}
+
+	public ArrayList<HashMap<String, Object>> getCollocationFoodData_withCollocationId(long nmCollocationId)
+	{
+		String[] columns = new String[]{Constants.COLUMN_NAME_FoodId, Constants.COLUMN_NAME_FoodAmount};
+		Cursor cs = mDBcon.query(Constants.TABLE_NAME_CollocationFood, columns, "CollocationId=?", new String[]{""+nmCollocationId}, null, null, null);
+		ArrayList<HashMap<String, Object>> rows = Tool.getRowsWithTypeFromCursor(cs);
+		cs.close();
+	    return rows;
+	}
+	/*
+	 单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
+	 */
+	int deleteCollocationFoodData_withCollocationId(long nmCollocationId)
+	{
+		String whereClause = Constants.COLUMN_NAME_CollocationId+"=?";
+		String[] whereArgs = new String[]{""+nmCollocationId};
+		return mDBcon.delete(Constants.TABLE_NAME_CollocationFood, whereClause, whereArgs);
+	}
+
+	/*
+	 单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
+	 */
+	void insertCollocationFood_withCollocationId(long nmCollocationId, String foodId, double foodAmount)
+	{
+	    ContentValues values = new ContentValues();
+	    values.put(Constants.COLUMN_NAME_CollocationId, nmCollocationId);
+	    values.put(Constants.COLUMN_NAME_FoodId, foodId);
+	    values.put(Constants.COLUMN_NAME_FoodAmount, foodAmount);
+	    long rowId = mDBcon.insert(Constants.TABLE_NAME_CollocationFood, null, values);//TODO check rowId be no use //try-catch?
+	}
+
+	
+	public void insertCollocationFoods_withCollocationId(long nmCollocationId ,ArrayList<Object[]> foodAmount2LevelArray)
+	{
+		if (foodAmount2LevelArray == null || foodAmount2LevelArray.size()==0)
+			return;
+		
+//		boolean outerTransactionExist = mDBcon.inTransaction();// as the doc says: Transactions can be nested . so need not care if outerTransactionExist 
+		mDBcon.beginTransaction();
+		try {
+		    for(int i=0; i<foodAmount2LevelArray.size(); i++){
+		    	Object[] foodAndAmount = foodAmount2LevelArray.get(i);
+		    	assert(foodAndAmount!=null && foodAndAmount.length==2);
+		        String foodId = (String) foodAndAmount[0];
+		        Double nmFoodAmount = (Double) foodAndAmount[1];
+		        insertCollocationFood_withCollocationId(nmCollocationId,foodId,nmFoodAmount.doubleValue());//try-catch?
+		    }
+			
+			mDBcon.setTransactionSuccessful();
+		} finally {
+			mDBcon.endTransaction();
+		}
+	    return ;
+	}
+
+
+	public long insertFoodCollocationData_withCollocationName(String collationName, ArrayList<Object[]> foodAmount2LevelArray)
+	{
+		mDBcon.beginTransaction();
+		try {
+			long nmCollocationId = insertFoodCollocation_withName(collationName);
+		    insertCollocationFoods_withCollocationId(nmCollocationId,foodAmount2LevelArray);
+			mDBcon.setTransactionSuccessful();
+			return nmCollocationId;
+		} finally {
+			mDBcon.endTransaction();
+		}
+	}
+
+
+	/*
+	 如果 collocationName 为nil，则不改name。
+	 */
+	public void updateFoodCollocationData_withCollocationId(long nmCollocationId,String new_collocationName, ArrayList<Object[]> foodAmount2LevelArray)
+	{
+		mDBcon.beginTransaction();
+		try {
+			if (new_collocationName!=null)
+				updateFoodCollocationName(new_collocationName,nmCollocationId);
+			deleteCollocationFoodData_withCollocationId(nmCollocationId);
+			insertCollocationFoods_withCollocationId(nmCollocationId,foodAmount2LevelArray);
+			java.util.Date dtNow = new java.util.Date();
+			long llmsNow = dtNow.getTime();
+			updateFoodCollocationTime(llmsNow,nmCollocationId);
+			mDBcon.setTransactionSuccessful();
+		} finally {
+			mDBcon.endTransaction();
+		}
+	}
+
+	public HashMap<String, Object> getFoodCollocationData_withCollocationId(long nmCollocationId)
+	{
+		HashMap<String, Object> rowFoodCollocation = getFoodCollocationById(nmCollocationId);
+		ArrayList<HashMap<String, Object>> foodAndAmountArray = getCollocationFoodData_withCollocationId(nmCollocationId);
+		HashMap<String, Object> retDict = new HashMap<String, Object>();
+	    if (rowFoodCollocation!=null)
+	    	retDict.put("rowFoodCollocation", rowFoodCollocation);
+	    if (foodAndAmountArray!=null)
+	    	retDict.put("foodAndAmountArray", foodAndAmountArray);
+
+	    Log.d(LogTag, "getFoodCollocationData_withCollocationId "+nmCollocationId+" ret:"+Tool.getIndentFormatStringOfObject(retDict, 0));
+	    return retDict;
+	}
+
+	public void deleteFoodCollocationData_withCollocationId(long nmCollocationId)
+	{
+		mDBcon.beginTransaction();
+		try {
+			deleteFoodCollocationById(nmCollocationId);
+		    deleteCollocationFoodData_withCollocationId(nmCollocationId);
+
+			mDBcon.setTransactionSuccessful();
+		} finally {
+			mDBcon.endTransaction();
+		}
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	public Cursor getDiseaseGroupInfo_byType(String groupType){

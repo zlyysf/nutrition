@@ -17,7 +17,7 @@ public class GlobalVar {
 			throws IOException
 	{
 		if (DiseaseGroups==null && DiseasesOfGroup_Collection==null){
-			DataAccess da = DataAccess.getSingleTon(ctx);//throws IOException
+			DataAccess da = DataAccess.getSingleton(ctx);//throws IOException
 			Cursor csGroups = da.getDiseaseGroupInfo_byType("wizard");
 			ArrayList<String> alGroup = Tool.getDataFromCursor(csGroups, 0);
 			csGroups.close();

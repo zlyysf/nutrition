@@ -111,7 +111,7 @@ public class ActivitySearchFoodT1 extends Activity {
 //            
 //        }
         
-        DataAccess da = DataAccess.getSingleTon(this);
+        DataAccess da = DataAccess.getSingleton(this);
         ArrayList<HashMap<String, Object>> foods = da.getFoodsByLikeCnName(query);
         ArrayList<Object> foodCnCaptionLst = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_CnCaption, foods);
         ArrayAdapter<Object> aryAdapterGroup = new ArrayAdapter<Object>(this,android.R.layout.simple_list_item_multiple_choice, foodCnCaptionLst);

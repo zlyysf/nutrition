@@ -52,7 +52,7 @@ public class ActivitySearchFoodCustom extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_food_custom);
         
-        DataAccess da = DataAccess.getSingleTon(this);
+        DataAccess da = DataAccess.getSingleton(this);
 		
 		ArrayList<HashMap<String, Object>> allfoods = da.getAllFood();
 		SearchFoodTextWatcher searchFoodTextWatcher1 = new SearchFoodTextWatcher();

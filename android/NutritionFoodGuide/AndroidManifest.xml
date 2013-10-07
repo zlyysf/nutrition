@@ -90,6 +90,11 @@
 		    >
 			<!-- 用 android:windowSoftInputMode="adjustUnspecified|stateHidden"  可以使进入activity后不自动弹出键盘，但焦点还在编辑框 -->
 		</activity>
+		
+		<activity android:name=".ActivityFoodCombinationList" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
 
 		
 		<activity android:name=".ActivityT1" 

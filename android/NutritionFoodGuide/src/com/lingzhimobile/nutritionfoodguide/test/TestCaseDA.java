@@ -2,8 +2,10 @@ package com.lingzhimobile.nutritionfoodguide.test;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
+import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.RecommendFood;
@@ -17,11 +19,12 @@ public class TestCaseDA {
 	
 	public static void testMain(Context ctx){
 //		test1(ctx);
-		test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(ctx);
+//		test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(ctx);
+		test_foodCollocationApis(ctx);
 	}
 	
 	static void test1(Context ctx){
-		DataAccess da = DataAccess.getSingleTon(ctx);
+		DataAccess da = DataAccess.getSingleton(ctx);
 		da.getDRIbyGender(Constants.Gender_female	, 30);
 	}
 	
@@ -60,7 +63,7 @@ public class TestCaseDA {
 	    allFoodIdList.add(dynamicFoodId);
 	    String[] allFoodIds = Tool.convertToStringArray(allFoodIdList);
 	    
-	    DataAccess da = DataAccess.getSingleTon(ctx);
+	    DataAccess da = DataAccess.getSingleton(ctx);
 	    ArrayList<HashMap<String, Object>> allFoodAttrAry = da.getFoodAttributesByIds(allFoodIds);
 	    HashMap<String, HashMap<String, Object>> allFoodAttr2LevelDict = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_NDB_No, allFoodAttrAry);
 	    HashMap<String, Object> dynamicFoodAttrs = allFoodAttr2LevelDict.get(dynamicFoodId);
@@ -74,6 +77,47 @@ public class TestCaseDA {
 	    params.put("staticFoodAmountDict", staticFoodAmountDict);
 	    rf.calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(params);
 
+	}
+	
+	static void test_foodCollocationApis(Context ctx){
+		DataAccess da = DataAccess.getSingleton(ctx);
+		
+		String collationName;
+    	ArrayList<Object[]> foodAmount2LevelArray;
+    	Object[] foodAmountPair;
+    	long collocationId;
+    	
+    	collationName = "collationName "+(new Date()).toString();
+    	foodAmount2LevelArray = new ArrayList<Object[]>();
+    	foodAmountPair = new Object[]{"20450", Double.valueOf(101)};
+		foodAmount2LevelArray.add(foodAmountPair);
+		foodAmountPair = new Object[]{"16108", Double.valueOf(102)};
+		foodAmount2LevelArray.add(foodAmountPair);
+    	collocationId = da.insertFoodCollocationData_withCollocationName(collationName, foodAmount2LevelArray);
+    	Log.d(LogTag, "collocationId1="+collocationId);
+    	
+    	collationName = "collationName "+(new Date()).toString();
+    	foodAmount2LevelArray = new ArrayList<Object[]>();
+    	foodAmountPair = new Object[]{"09003", Double.valueOf(201)};
+		foodAmount2LevelArray.add(foodAmountPair);
+		collocationId = da.insertFoodCollocationData_withCollocationName(collationName, foodAmount2LevelArray);
+    	Log.d(LogTag, "collocationId2="+collocationId);
+    	
+    	da.getAllFoodCollocation();
+    	
+    	collationName = "collationName2 "+(new Date()).toString();
+    	foodAmount2LevelArray = new ArrayList<Object[]>();
+    	foodAmountPair = new Object[]{"09003", Double.valueOf(221)};
+		foodAmount2LevelArray.add(foodAmountPair);
+		foodAmountPair = new Object[]{"16108", Double.valueOf(222)};
+		foodAmount2LevelArray.add(foodAmountPair);
+		da.updateFoodCollocationData_withCollocationId(collocationId, collationName, foodAmount2LevelArray);
+		
+		da.getAllFoodCollocation();
+		
+		da.getFoodCollocationData_withCollocationId(collocationId);
+		
+		
 	}
 
 }

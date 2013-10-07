@@ -225,7 +225,7 @@ public class ActivityDiseaseNutrientWizard extends FragmentActivity {
     	TextView tvDiseases = (TextView)vwSum.findViewById(R.id.tvDiseases);
     	tvDiseases.setText(msgDiseasesChosen);
     	
-    	DataAccess da = DataAccess.getSingleTon(this);
+    	DataAccess da = DataAccess.getSingleton(this);
 		String[] nutrientIds = da.getUniqueNutrients_ByDiseaseNames(strAryDiseaseObjChosen);
 		HashMap<String, HashMap<String, Object>> nutrientInfosHm = da.getNutrientInfoAs2LevelDictionary_withNutrientIds(null);
 

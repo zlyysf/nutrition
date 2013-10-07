@@ -75,7 +75,7 @@ public class FoodProviderT1g extends ContentProvider {
 
 	private Cursor getSuggestions(String query) {
 		String foodNamePart = query;
-		DataAccess da = DataAccess.getSingleTon(getContext());
+		DataAccess da = DataAccess.getSingleton(getContext());
 		ArrayList<HashMap<String, Object>> foodLst = da.getFoodsByLikeCnName(foodNamePart);
 		String[] COLUMNS = { "_id",
 				SearchManager.SUGGEST_COLUMN_TEXT_1,

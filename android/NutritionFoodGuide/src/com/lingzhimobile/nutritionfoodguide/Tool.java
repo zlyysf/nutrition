@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 
 import android.R.bool;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -248,13 +249,16 @@ public class Tool {
 	 * 只分string和double类型。特殊处理NDB_No列的类型为string。
 	 */
 	public static HashMap<String, Object> get1RowDataWithTypeFromCursorCurrentPosition(Cursor cs){
+		if (cs.isBeforeFirst() || cs.isAfterLast() || cs.isClosed())
+			return null;
+		
 		String[] colNames = cs.getColumnNames();
 		HashMap<String, Object> hmRow = new HashMap<String, Object>();
 		for(int i=0; i<colNames.length; i++){
 			String colName = colNames[i];
 			int colIdx = cs.getColumnIndex(colName);
 			String colValStr = cs.getString(colIdx);
-			if (Constants.COLUMN_NAME_NDB_No.equalsIgnoreCase(colName)){
+			if (Constants.COLUMN_NAME_NDB_No.equalsIgnoreCase(colName) || Constants.COLUMN_NAME_FoodId.equalsIgnoreCase(colName)){
 				hmRow.put(colName, colValStr);
 			}else{
 //				Object colValObj = null;
@@ -834,7 +838,9 @@ public class Tool {
 	
 	
 	
-	
+	public static void ShowMessageByDialog(Context ctx,String message){
+		new AlertDialog.Builder(ctx).setMessage(message).create().show();
+	}
 	
 	
 	

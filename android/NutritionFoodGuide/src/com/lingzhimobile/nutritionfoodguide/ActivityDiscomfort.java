@@ -28,7 +28,7 @@ public class ActivityDiscomfort extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_discomfort);
         
-        DataAccess da = DataAccess.getSingleTon(this);
+        DataAccess da = DataAccess.getSingleton(this);
 
 		
 //			Cursor csGroups = da.getDiseaseGroupInfo_byType("discomfort");

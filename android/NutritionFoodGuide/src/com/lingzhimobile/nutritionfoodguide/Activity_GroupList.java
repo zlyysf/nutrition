@@ -29,7 +29,7 @@ implements OnItemSelectedListener,OnItemClickListener
 		//setContentView(R.layout.activity_grouplist);
 		setContentView(R.layout.activity_grouplist_style1);
 
-		DataAccess da = DataAccess.getSingleTon(this);
+		DataAccess da = DataAccess.getSingleton(this);
 		
 		Cursor csGroups = da.getDiseaseGroupInfo_byType("wizard");
 		ArrayList<String> alGroup = Tool.getDataFromCursor(csGroups, 0);

@@ -51,7 +51,7 @@ public class ActivityAllFoodExpandList extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_allfood_expandlist);
         
-        DataAccess da = DataAccess.getSingleTon(this);
+        DataAccess da = DataAccess.getSingleton(this);
 		
 		ArrayList<HashMap<String, Object>> allfoods = da.getAllFood();
 		

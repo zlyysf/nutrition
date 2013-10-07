@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.*;
 
 import com.lingzhimobile.nutritionfoodguide.ActivityRichFood.RichFoodAdapter.OnClickListenerForInputAmount.DialogInterfaceEventListener_EditText;
+import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
 
 
 import android.R.integer;
@@ -30,21 +31,21 @@ public class ActivityFoodCombination extends Activity {
 	public static final int IntentRequestCode_ActivityAllFoodExpandList = 101;
 	public static final int IntentRequestCode_ActivitySearchFoodCustom = 102;
 	
+	public static final int IntentResultCode = 1101;
+	
 	static final String LogTag = "ActivityFoodCombination";
 	
 	static final String[] GroupTitles = new String[]{"一天的食物","一天的营养比例"};
 	
-	
+	long m_collocationId = -1;
 	HashMap<String, Double> m_foodAmountHm;
 	ArrayList<String> m_OrderedFoodIdList ;
 	HashMap<String, HashMap<String, Object>> m_foods2LevelHm ;
 	
-//	ArrayList<HashMap<String, Object>> m_foodsData;
-//	ArrayList<String> m_foodIdList;
-//	ArrayList<Double> m_foodAmountList;
+
 	ArrayList<HashMap<String, Object>> m_nutrientsData;
 	HashMap<String, Object> m_paramsForCalculateNutritionSupply;
-	Button mBtnReset,m_btnCancel;
+	Button mBtnSave,m_btnCancel;
 	ImageButton m_imgbtnAdd,m_imgbtnShare,m_imgbtnRecommend;
 	
 	ExpandableListView m_expandableListView1;
@@ -55,14 +56,18 @@ public class ActivityFoodCombination extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_food_combination);
+        
+        Intent paramIntent = getIntent();
+        m_collocationId =  paramIntent.getLongExtra(Constants.COLUMN_NAME_CollocationId,-1);
+        
         initViewHandles();
         setViewEventHandlers();
         setViewsContent();
     }
 	
 	void initViewHandles(){
-		mBtnReset = (Button) findViewById(R.id.btnReset);
-        mBtnReset.setText(R.string.save);
+		mBtnSave = (Button) findViewById(R.id.btnReset);
+        mBtnSave.setText(R.string.save);
         m_btnCancel = (Button) findViewById(R.id.btnCancel);
         m_imgbtnAdd = (ImageButton) findViewById(R.id.imgbtnAdd);
         m_imgbtnShare = (ImageButton) findViewById(R.id.imgbtnShare);
@@ -96,9 +101,47 @@ public class ActivityFoodCombination extends Activity {
 			}
         });
         
-        mBtnReset.setOnClickListener(new View.OnClickListener() {
+        mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+            	if (m_foodAmountHm!=null && m_foodAmountHm.size()>0){
+            		if (m_collocationId<0){//to new
+            			Date dtNow = new Date();
+            			String collocationName = Tool.getStringFromIdWithParams(getResources(), R.string.defaultFoodCollocationName,new String[]{dtNow.toString()});
+            			
+            			DialogHelperSimpleInput myDialogHelperSimpleInput = new DialogHelperSimpleInput(ActivityFoodCombination.this);
+        				myDialogHelperSimpleInput.prepareDialogAttributes("保存食物清单", "给你的食物清单加个名称吧", collocationName);
+        				myDialogHelperSimpleInput.setInterfaceWhenConfirmInput(new InterfaceWhenConfirmInput() {
+        					@Override
+        					public void onConfirmInput(String input) {
+        						if (input==null || input.length()==0){
+        							Tool.ShowMessageByDialog(ActivityFoodCombination.this, "输入不能为空");
+        						}else{
+        							String collocationName2 = input;
+        							ArrayList<Object[]> foodAmount2LevelArray = convertFoodAmountHashmapToPairList();
+        							DataAccess da = DataAccess.getSingleton();
+        							da.insertFoodCollocationData_withCollocationName(collocationName2, foodAmount2LevelArray);
+        	                    	Intent intent = new Intent();
+        	                    	ActivityFoodCombination.this.setResult(IntentResultCode, intent);
+        	                    	finish();
+        						}
+        					}
+        				});
+        				myDialogHelperSimpleInput.show();
+            			return;
+            		}else{//to edit
+            			ArrayList<Object[]> foodAmount2LevelArray = convertFoodAmountHashmapToPairList();
+                    	DataAccess da = DataAccess.getSingleton();
+            			da.updateFoodCollocationData_withCollocationId(m_collocationId, null, foodAmount2LevelArray);
+            			Intent intent = new Intent();
+                    	ActivityFoodCombination.this.setResult(IntentResultCode, intent);
+                    	finish();
+                    	return;
+            		}
+            	}else{//NOT if (m_foodAmountHm!=null && m_foodAmountHm.size()>0)
+            		Tool.ShowMessageByDialog(ActivityFoodCombination.this, "不能保存不含任何食物的食物搭配");
+            		return;
+            	}
             }
         });
         m_btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -133,11 +176,29 @@ public class ActivityFoodCombination extends Activity {
         m_foodAmountHm = new HashMap<String, Double>();
         m_OrderedFoodIdList = new ArrayList<String>();
         m_foods2LevelHm = new HashMap<String, HashMap<String,Object>>();
-//        m_foodsData = new ArrayList<HashMap<String, Object>>();
-//        m_foodIdList = new ArrayList<String>();
-//        m_foodAmountList = new ArrayList<Double>();
         
-//        m_nutrientsData = new ArrayList<Object>();
+        if (m_collocationId > 0){
+        	DataAccess da = DataAccess.getSingleton(ActivityFoodCombination.this);
+        	//ArrayList<HashMap<String, Object>> collocationFoodData 
+        	HashMap<String, Object> foodCollocationData = da.getFoodCollocationData_withCollocationId(m_collocationId);
+        	ArrayList<HashMap<String, Object>> foodAndAmountArray = (ArrayList<HashMap<String, Object>>)foodCollocationData.get("foodAndAmountArray") ;
+        	if (foodAndAmountArray!=null && foodAndAmountArray.size()>0 ){
+        		String[] foodIdAry = new String[foodAndAmountArray.size()];
+        		for(int i=0; i<foodAndAmountArray.size(); i++){
+        			HashMap<String, Object> foodAndAmountInfo = foodAndAmountArray.get(i);
+        			String foodId = (String)foodAndAmountInfo.get(Constants.COLUMN_NAME_FoodId);
+        			Double foodAmount = (Double)foodAndAmountInfo.get(Constants.COLUMN_NAME_FoodAmount);
+        			m_foodAmountHm.put(foodId, foodAmount);
+        			foodIdAry[i] = foodId;
+        		}
+        		ArrayList<HashMap<String, Object>> foodAttrAry = da.getFoodAttributesByIds(foodIdAry);
+        		m_foods2LevelHm = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_NDB_No, foodAttrAry);
+        		m_OrderedFoodIdList = da.getOrderedFoodIds(foodIdAry);
+        	}
+        	
+        }
+
+
         
         RecommendFood rf = new RecommendFood(this);
         HashMap<String, Object> userInfo = StoredConfigTool.getUserInfo(this);
@@ -145,8 +206,8 @@ public class ActivityFoodCombination extends Activity {
 	    params.put(Constants.Key_userInfo, userInfo);
 //	    params.put("dynamicFoodAttrs", dynamicFoodAttrs);
 //	    params.put("dynamicFoodAmount", dObj_dynamicFoodAmount);
-//	    params.put("staticFoodAttrsDict2Level", allFoodAttr2LevelDict);
-//	    params.put("staticFoodAmountDict", staticFoodAmountDict);
+	    params.put("staticFoodAttrsDict2Level", m_foods2LevelHm);
+	    params.put("staticFoodAmountDict", m_foodAmountHm);
 	    m_nutrientsData = rf.calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(params);
 
 	    m_paramsForCalculateNutritionSupply = params;
@@ -168,6 +229,20 @@ public class ActivityFoodCombination extends Activity {
         m_expandableListView1.setGroupIndicator(null);//去掉ExpandableListView 默认的组上的下拉箭头
 	}
 	
+	ArrayList<Object[]> convertFoodAmountHashmapToPairList(){
+		ArrayList<Object[]> foodAmount2LevelArray = null;
+		if (m_foodAmountHm!=null && m_foodAmountHm.size()>0){
+    		foodAmount2LevelArray = new ArrayList<Object[]>();
+        	String[] foodIds = m_foodAmountHm.keySet().toArray(new String[m_foodAmountHm.size()]);
+        	for(int i=0; i<foodIds.length; i++){
+        		String foodId = foodIds[i];
+        		Double foodAmount = m_foodAmountHm.get(foodId);
+        		Object[] foodAmountPair = new Object[]{foodId, foodAmount};
+        		foodAmount2LevelArray.add(foodAmountPair);
+        	}
+		}
+		return foodAmount2LevelArray;
+	}
 	
 	class DialogInterfaceEventListener_SelectNutrients implements DialogInterface.OnClickListener, DialogInterface.OnMultiChoiceClickListener{
 		AlertDialog mAlertDialog;
@@ -308,7 +383,7 @@ public class ActivityFoodCombination extends Activity {
 	    HashMap<String, HashMap<String, Object>> preChooseFoodInfoDict = (HashMap<String, HashMap<String, Object>>)retDict.get(Constants.Key_preChooseFoodInfoDict);
 	    m_foodAmountHm.putAll(recommendFoodAmountDict);
 	    m_foods2LevelHm.putAll(preChooseFoodInfoDict);
-	    DataAccess da  = DataAccess.getSingleTon(ActivityFoodCombination.this);
+	    DataAccess da  = DataAccess.getSingleton(ActivityFoodCombination.this);
 	    m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
 
 	    
@@ -338,7 +413,7 @@ public class ActivityFoodCombination extends Activity {
 //						m_foodAmountList.add(Double.valueOf(foodAmount));
 						Tool.addDoubleToDictionaryItem(foodAmount, m_foodAmountHm, foodId);
 						
-						DataAccess da  = DataAccess.getSingleTon(ActivityFoodCombination.this);
+						DataAccess da  = DataAccess.getSingleton(ActivityFoodCombination.this);
 						m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
 						
 						ArrayList<HashMap<String, Object>> foodInfoList = da.getFoodAttributesByIds(new String[]{foodId});
@@ -346,18 +421,6 @@ public class ActivityFoodCombination extends Activity {
 						assert(foodInfoList.size()==1);
 //						m_foodsData.addAll(foodInfoList);
 						m_foods2LevelHm.put(foodId, foodInfoList.get(0));
-						
-//						RecommendFood rf = new RecommendFood(this);
-//				        HashMap<String, Object> userInfo = StoredConfigTool.getUserInfo(this);
-//					    HashMap<String, Object> params = new HashMap<String, Object>();
-////					    params.put(Constants.Key_userInfo, userInfo);
-//					    params.put(Constants.Key_DRI, m_paramsForCalculateNutritionSupply.get(Constants.Key_DRI));
-////					    params.put("dynamicFoodAttrs", dynamicFoodAttrs);
-////					    params.put("dynamicFoodAmount", dObj_dynamicFoodAmount);
-//					    params.put("staticFoodAttrsDict2Level", m_foods2LevelHm);
-//					    params.put("staticFoodAmountDict", m_foodAmountHm);
-//					    m_nutrientsData = rf.calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(params);
-//					    m_paramsForCalculateNutritionSupply = params;
 						reCalculateFoodSupplyNutrient();
 						
 						mListAdapter.notifyDataSetChanged();

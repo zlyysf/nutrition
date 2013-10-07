@@ -64,7 +64,7 @@ public class ActivityRichFood extends Activity {
         mNutrientCnCaption = paramIntent.getStringExtra(Constants.Key_Name);
         
 //        m_foodsData = new ArrayList<HashMap<String, Object>>();
-        DataAccess da = DataAccess.getSingleTon(this);
+        DataAccess da = DataAccess.getSingleton(this);
         m_foodsData = da.getRichNutritionFoodForNutrient(mNutrientId, mToSupplyNutrientAmount, false);
         
         TextView textView1 = (TextView)this.findViewById(R.id.textView1);
@@ -211,7 +211,8 @@ public class ActivityRichFood extends Activity {
 			OnClickListenerForInputAmount myOnClickListenerForInputAmount = null;
 			myOnClickListenerForInputAmount = (OnClickListenerForInputAmount)llToInputFoodAmount.getTag();
 			if (myOnClickListenerForInputAmount == null){
-				myOnClickListenerForInputAmount = new OnClickListenerForInputAmount(position) ;
+				myOnClickListenerForInputAmount = new OnClickListenerForInputAmount() ;
+				myOnClickListenerForInputAmount.initInputData(position);
 				llToInputFoodAmount.setTag(myOnClickListenerForInputAmount);
 				llToInputFoodAmount.setOnClickListener(myOnClickListenerForInputAmount);
 //				etFoodAmount.setOnClickListener(myOnClickListenerForInputAmount);//在disabled的状态时，看来事件不被触发
@@ -230,16 +231,7 @@ public class ActivityRichFood extends Activity {
 			return convertView;
 		}
 		
-		class OnClickListenerForInputAmount implements OnClickListener,OnTouchListener,OnFocusChangeListener{
-			int m_rowPos ;
-			public OnClickListenerForInputAmount(int rowPos){
-				m_rowPos = rowPos;
-			}
-			
-			public void initInputData(int rowPos){
-				m_rowPos = rowPos;
-			}
-			
+		class OnClickListenerForInputAmount extends OnClickListenerInListItem implements OnTouchListener,OnFocusChangeListener{
 
 			@Override
 			public void onClick(View v) {

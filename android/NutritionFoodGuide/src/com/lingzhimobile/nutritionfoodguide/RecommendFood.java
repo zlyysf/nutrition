@@ -24,7 +24,7 @@ public class RecommendFood {
 //			mDataAccess = new DataAccess(mContext);
 //		}
 //		return mDataAccess;
-		return DataAccess.getSingleTon(mContext);
+		return DataAccess.getSingleton(mContext);
 	}
 //	public void close(){
 //		if (mDataAccess!=null){
