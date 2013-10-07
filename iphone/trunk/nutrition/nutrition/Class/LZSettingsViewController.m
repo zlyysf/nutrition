@@ -105,12 +105,12 @@
                                                              authViewStyle:SSAuthViewStyleFullScreenPopup
                                                               viewDelegate:nil
                                                    authManagerViewDelegate:nil];
-        [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
-                                        [ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"营养膳食指南"],
-                                        SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
-                                        //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
-                                        //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
-                                        nil]];
+//        [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
+//                                //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"营养膳食指南"],
+//                                        SHARE_TYPE_NUMBER(ShareTypeSinaWeibo),
+//                                        //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
+//                                        //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
+//                                        nil]];
         [ShareSDK authWithType:ShareTypeSinaWeibo options:authOptions result:^(SSAuthState state, id<ICMErrorInfo> error) {
             if (state == SSAuthStateCancel || state == SSAuthStateFail)
             {
