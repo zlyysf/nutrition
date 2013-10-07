@@ -547,6 +547,7 @@
 		5FAB578D180266C300657793 /* ShareSDKiPhoneDefaultShareViewUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKiPhoneDefaultShareViewUI.framework; sourceTree = "<group>"; };
 		5FAB578E180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKiPhoneSimpleShareViewUI.bundle; sourceTree = "<group>"; };
 		5FAB578F180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKiPhoneSimpleShareViewUI.framework; sourceTree = "<group>"; };
+		5FAB57A91802878400657793 /* BaiduMobAdCommonConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaiduMobAdCommonConfig.h; path = "../../../../../../Desktop/Products-1/ios_api/BaiduMobAdCommonConfig.h"; sourceTree = "<group>"; };
 		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = nutrition/Class/LZUtility.h; sourceTree = "<group>"; };
 		5FB8C0B7172BC61D00E90387 /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = nutrition/Class/LZUtility.m; sourceTree = "<group>"; };
 		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
@@ -1070,6 +1071,7 @@
 		5F90D7D017AF8873000AEC06 /* BaiduSDK */ = {
 			isa = PBXGroup;
 			children = (
+				5FAB57A91802878400657793 /* BaiduMobAdCommonConfig.h */,
 				5F90D7D117AF8873000AEC06 /* BaiduMobAdDelegateProtocol.h */,
 				5F90D7D217AF8873000AEC06 /* baidumobadsdk.bundle */,
 				5F90D7D317AF8873000AEC06 /* BaiduMobAdView.h */,

@@ -8,26 +8,7 @@
 //  Baidu Mobads SDK Version 3.0
 //
 
-/**
- *  性别类型
- */
-typedef enum
-{
-	BaiduMobAdMale=0,
-	BaiduMobAdFeMale=1,   
-    BaiduMobAdSexUnknown=2,
-} BaiduMobAdUserGender;
-
-/**
- *  广告展示失败类型枚举
- */
-typedef enum _BaiduMobFailReason
-{
-    BaiduMobFailReason_NOAD = 0,
-    // 没有推广返回
-    BaiduMobFailReason_EXCEPTION 
-    //网络或其它异常
-} BaiduMobFailReason;
+#import "BaiduMobAdCommonConfig.h"
 
 ///---------------------------------------------------------------------------------------
 /// @name 协议板块
@@ -50,6 +31,8 @@ typedef enum _BaiduMobFailReason
  */
 - (NSString*) appSpec;
 
+
+
 @optional
 /**
  *  启动位置信息
@@ -65,6 +48,22 @@ typedef enum _BaiduMobFailReason
  *  广告载入失败
  */
 -(void) failedDisplayAd:(BaiduMobFailReason) reason;
+
+/**
+ *  本次广告展示成功时的回调
+ */
+-(void) didAdImpressed;
+
+/**
+ *  本次广告展示被用户点击时的回调
+ */
+-(void) didAdClicked;
+
+/**
+ *  在用户点击完广告条出现全屏广告页面以后，用户关闭广告时的回调
+ */
+-(void) didDismissLandingPage;
+
 
 
 ///---------------------------------------------------------------------------------------
@@ -106,8 +105,8 @@ typedef enum _BaiduMobFailReason
 /**
  *  - 用户最高教育学历
  *  - 学历输入数字，范围为0-6
- *  - 0表示小学，1表示初中，2表示中专/高中，3表示专科
- *  - 4表示本科，5表示硕士，6表示博士
+ *  - 0代表小学，1代表初中，2代表中专/高中，3代表专科
+ *  - 4代表本科，5代表硕士，6代表博士
  */
 -(NSInteger) userEducation;
 
@@ -126,5 +125,7 @@ typedef enum _BaiduMobFailReason
  *  其他自定义字段,key以及value都为NSString
  */
 -(NSDictionary*) userOtherAttributes;
+
+
 
 @end
