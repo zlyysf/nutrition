@@ -78,6 +78,8 @@
     UIView *topBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 120, 44)];
     [topBarView setBackgroundColor:[UIColor clearColor]];
     UILabel *topTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, 7, 80, 30)];
+    [topTitleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [topTitleLabel setShadowColor:[UIColor darkGrayColor]];
     [topTitleLabel setFont:[UIFont boldSystemFontOfSize:20]];
     [topTitleLabel setTextColor:[UIColor whiteColor]];
     [topTitleLabel setBackgroundColor:[UIColor clearColor]];
