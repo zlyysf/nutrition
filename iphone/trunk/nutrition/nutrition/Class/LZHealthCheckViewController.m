@@ -17,6 +17,7 @@
 #import "MobClick.h"
 #import "GADMasterViewController.h"
 #import "LZTimeSettingsViewController.h"
+#define DiagnosticLabelLength 245.f
 @interface LZHealthCheckViewController ()
 @property (nonatomic,strong)NSString *sectionTitle;
 @property (assign,nonatomic)BOOL isFirstLoad;
@@ -222,28 +223,32 @@
     
     if ([checkState boolValue])
     {
-        [cell.stateImageView setImage:[UIImage imageNamed:@"nutrient_button_on.png"]];
+        [cell.stateImageView setImage:[UIImage imageNamed:@"cell_check_on.png"]];
     }
     else
     {
-        [cell.stateImageView setImage:[UIImage imageNamed:@"nutrient_button_off.png"]];
+        [cell.stateImageView setImage:[UIImage imageNamed:@"cell_check_off.png"]];
         
     }
     NSString *onelineStr = @"行";
-    CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(260, 9999) lineBreakMode:UILineBreakModeWordWrap];
-    CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(260, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(DiagnosticLabelLength, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(DiagnosticLabelLength, 9999) lineBreakMode:UILineBreakModeWordWrap];
     float height;
     if (labelSize.height > oneSize.height*2 )
     {
-        height = labelSize.height+16;
+        height = labelSize.height;
+        [cell.backView setFrame:CGRectMake(10, 9, DiagnosticLabelLength+2,height+2)];
+        [cell.nameLabel setFrame:CGRectMake(11, 10, DiagnosticLabelLength, height)];
+        [cell.stateImageView setFrame:CGRectMake(270, (height+20-31)/2, 40, 31)];
     }
     else
     {
-        height = oneSize.height *2+16;
+        height = oneSize.height *2;
+        [cell.backView setFrame:CGRectMake(10, 14, DiagnosticLabelLength+2,height+2)];
+        [cell.nameLabel setFrame:CGRectMake(11, 15, DiagnosticLabelLength, height)];
+        [cell.stateImageView setFrame:CGRectMake(270, (height+30-31)/2, 40, 31)];
     }
-    [cell.backView setFrame:CGRectMake(10, 7, 262,labelSize.height+2)];
-    [cell.nameLabel setFrame:CGRectMake(11, 8, 260, labelSize.height)];
-    [cell.stateImageView setFrame:CGRectMake(287, (height-8)/2, 22, 18)];
+
     cell.nameLabel.text = departmentName;
     return cell;
 }
@@ -251,15 +256,15 @@
 {
     NSString *departmentName = [self.diseaseNamesArray objectAtIndex:indexPath.row];
     NSString *onelineStr = @"行";
-    CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(260, 9999) lineBreakMode:UILineBreakModeWordWrap];
-    CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(260, 9999) lineBreakMode:UILineBreakModeWordWrap];
-    if (labelSize.height > oneSize.height*2 )
+    CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(DiagnosticLabelLength, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(DiagnosticLabelLength, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    if (labelSize.height > oneSize.height*2)
     {
-        return labelSize.height+16;
+        return labelSize.height+20;
     }
     else
     {
-        return oneSize.height*2+16;
+        return oneSize.height*2+30;
     }
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
