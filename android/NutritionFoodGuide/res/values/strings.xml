@@ -21,6 +21,7 @@
     <string name="recommendFood">推荐食物</string>
     
     <string name="foodCombinationList">膳食清单</string>
+    <string name="nutrients">营养元素</string>
     
     <string name="searchFood">搜索食物</string>
     <string name="inputFoodNamePart">输入食物部分名称</string>

@@ -2,6 +2,8 @@ package com.lingzhimobile.nutritionfoodguide;
 
 import java.util.*;
 
+import android.content.Context;
+
 public class NutritionTool {
 	public static final double kFatFactor = 1.0/9; //means 1g fat contains 9Kcal energy
 	public static final double kCarbFactor = 1.0/4; //means 1g carbohydrt contains 4Kcal energy
@@ -429,7 +431,7 @@ public class NutritionTool {
 	        limitedNutrientsCanBeCal = new String[]{
 	                                    "Vit_A_RAE","Vit_C_(mg)","Vit_D_(µg)","Vit_E_(mg)",
 	                                    "Riboflavin_(mg)","Vit_B6_(mg)","Folate_Tot_(µg)","Vit_B12_(µg)",
-	                                    "Calcium_(mg)","Iron_(mg)","Zinc_(mg)","Fiber_TD_(g)",
+	                                    "Calcium_(mg)","Iron_(mg)","Magnesium_(mg)","Zinc_(mg)","Fiber_TD_(g)",
 	                                    "Protein_(g)", //"Energ_Kcal",
 	        							};
 	    }else{
@@ -491,7 +493,12 @@ public class NutritionTool {
 	
 		
 		
-	
+	public static HashMap<String, Double> getDRIsDictOfCurrentUser(Context ctx,HashMap<String, Object> options){
+		HashMap<String, Object> userInfo = StoredConfigTool.getUserInfo(ctx);
+		DataAccess da = DataAccess.getSingleton(ctx);
+	    HashMap<String, Double> DRIsDict = da.getStandardDRIs_withUserInfo(userInfo,options);
+	    return DRIsDict;
+	}
 	
 	
 	
