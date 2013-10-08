@@ -1083,8 +1083,9 @@
     NSString *title = @"哪些营养素是您重点关注且是不能缺少的，请选择：";
     LZRecommendFilterView *viewtoAnimate = [[LZRecommendFilterView alloc]initWithFrame:CGRectMake(0, 20, screenSize.width, screenSize.height-20) backColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5] filterInfo:preferNutrient tipsStr:title delegate:self];
     
-    LZAppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-    [appDelegate.window addSubview:viewtoAnimate];
+    //LZAppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+    //[appDelegate.window addSubview:viewtoAnimate];
+    [self.navigationController.view addSubview:viewtoAnimate];
     CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
     scale.duration = duration;
     scale.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.5f],

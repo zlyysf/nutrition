@@ -19,6 +19,7 @@
 #import "LZNutritionInfoView.h"
 #import "JWNavigationViewController.h"
 #import "LZRecommendFilterView.h"
+#import "LZCheckTypeSwitchView.h"
 @implementation LZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -157,6 +158,10 @@
         else if ([aView isKindOfClass:[LZRecommendFilterView class]])
         {
             [(LZRecommendFilterView*)aView removeFromSuperview];
+        }
+        else if ([aView isKindOfClass:[LZCheckTypeSwitchView class]])
+        {
+            [(LZCheckTypeSwitchView*)aView removeFromSuperview];
         }
         else if (aView.subviews.count > 0) {
             for (UIView* aSubview in aView.subviews) {

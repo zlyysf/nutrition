@@ -17,8 +17,9 @@
 #import "MobClick.h"
 #import "GADMasterViewController.h"
 #import "LZTimeSettingsViewController.h"
+#import "LZCheckTypeSwitchView.h"
 #define DiagnosticLabelLength 245.f
-@interface LZHealthCheckViewController ()
+@interface LZHealthCheckViewController ()<LZCheckTypeSwitchViewDelegate>
 @property (nonatomic,strong)NSString *sectionTitle;
 @property (assign,nonatomic)BOOL isFirstLoad;
 @end
@@ -71,57 +72,81 @@
     UIBarButtonItem *recheckItem = [[UIBarButtonItem alloc]initWithTitle:@"提醒设置" style:UIBarButtonItemStyleBordered target:self action:@selector(timeSettingItemTapped)];
     self.navigationItem.rightBarButtonItem = recheckItem;
     
-    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];//stretchableImageWithLeftCapWidth:20 topCapHeight:15];
-
-//    [self.checkItemButton.titleLabel setFont:[UIFont systemFontOfSize:23]];
-//    [self.checkItemButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
-//    [self.checkItemButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-//    [self.checkItemButton setTitle:@"诊断" forState:UIControlStateNormal];
+    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
     [self.checkItemButton setBackgroundImage:button30 forState:UIControlStateNormal];
-
+    
+    UIView *topBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 120, 44)];
+    [topBarView setBackgroundColor:[UIColor clearColor]];
+    UILabel *topTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, 7, 80, 30)];
+    [topTitleLabel setFont:[UIFont boldSystemFontOfSize:20]];
+    [topTitleLabel setTextColor:[UIColor whiteColor]];
+    [topTitleLabel setBackgroundColor:[UIColor clearColor]];
+    topTitleLabel.textAlignment = UITextAlignmentCenter;
+    topTitleLabel.tag = 20;
+    [topBarView addSubview:topTitleLabel];
+    
+    UIImageView *switchIndicatorView = [[UIImageView alloc]initWithFrame:CGRectMake(95, 16, 12, 12)];
+    [switchIndicatorView setImage:[UIImage imageNamed:@"arrow_down.png"]];
+    switchIndicatorView.tag = 21;
+    [topBarView addSubview:switchIndicatorView];
+    UIButton *switchButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120, 44)];
+    [switchButton addTarget:self action:@selector(switchTapped) forControlEvents:UIControlEventTouchUpInside];
+    [topBarView addSubview:switchButton];
+    self.navigationItem.titleView = topBarView;
     UIView *admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
     [admobView setBackgroundColor:[UIColor clearColor]];
     self.listView.tableFooterView = admobView;
-    
-    
+}
+-(void)switchTapped
+{
+    CGSize screenSize = [[UIScreen mainScreen]bounds].size;
+    UIView *topbarView = self.navigationItem.titleView;
+    UIImageView *switchIndicatorView = (UIImageView *)[topbarView viewWithTag:21];
+    [switchIndicatorView setImage:[UIImage imageNamed:@"arrow_up.png"]];
+    NSArray *array = [NSArray arrayWithObjects:@"上午",@"下午",@"睡前", nil];
+    NSDictionary *dict = [[NSDictionary alloc]initWithObjectsAndKeys:array,@"buttonTitles",checkType,@"currentType", nil];
+    LZCheckTypeSwitchView *switchView = [[LZCheckTypeSwitchView alloc]initWithFrame:CGRectMake(0, 20, screenSize.width, screenSize.height-20) andInfo:dict delegate:self];
+    [self.navigationController.view addSubview:switchView];
 }
 - (void)cancelButtonTapped
 {
     [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
-    
 }
-
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:UmengPathJianKangZhenDuan];
     GADMasterViewController *shared = [GADMasterViewController singleton];
     UIView *footerView = self.listView.tableFooterView;
     [shared resetAdView:self andListView:footerView];
-    [self refreshViewAccordingToTime];
-}
--(void)refreshViewAccordingToTime
-{
-    NSString *timeType = [LZUtility getCurrentTimeIdentifier];
-    if (![timeType isEqualToString: checkType] || isFirstLoad)
+    if (isFirstLoad)
     {
-        checkType = timeType;
-        NSDictionary *titleDict = [NSDictionary dictionaryWithObjectsAndKeys:@"从早晨到现在，您有下列哪些状况？",@"上午",@"午饭后到现在，您有下列哪些状况？",@"下午",@"晚饭后到现在，您有下列哪些状况？",@"睡前", nil];
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
-        NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
-        
-        self.sectionTitle = [titleDict objectForKey:timeType];
-        self.title =[NSString stringWithFormat:@"%@健康诊断",timeType];
-        [self.diseaseNamesArray removeAllObjects];
-        [self.diseaseNamesArray addObjectsFromArray:[da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:timeType]];
-        [self.diseasesStateDict removeAllObjects];
-        for(NSString *departName in diseaseNamesArray)
-        {
-            [self.diseasesStateDict setObject:[NSNumber numberWithBool:NO] forKey:departName];
-        }
-        isFirstLoad = NO;
-        [self.listView reloadData];
+        [self refreshViewAccordingToTime:checkType];
     }
+
+}
+-(void)refreshViewAccordingToTime:(NSString *)timeType
+{
+    checkType = timeType;
+    NSDictionary *titleDict = [NSDictionary dictionaryWithObjectsAndKeys:@"从早晨到现在，您有下列哪些状况？",@"上午",@"午饭后到现在，您有下列哪些状况？",@"下午",@"晚饭后到现在，您有下列哪些状况？",@"睡前", nil];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
+    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+    
+    self.sectionTitle = [titleDict objectForKey:timeType];
+    UIView *topbarView = self.navigationItem.titleView;
+    UILabel *topbarLabel = (UILabel *)[topbarView viewWithTag:20];
+    [topbarLabel setText:[NSString stringWithFormat:@"%@诊断",timeType]];
+    //self.title =[NSString stringWithFormat:@"%@诊断",timeType];
+    [self.diseaseNamesArray removeAllObjects];
+    [self.diseaseNamesArray addObjectsFromArray:[da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:timeType]];
+    [self.diseasesStateDict removeAllObjects];
+    for(NSString *departName in diseaseNamesArray)
+    {
+        [self.diseasesStateDict setObject:[NSNumber numberWithBool:NO] forKey:departName];
+    }
+    isFirstLoad = NO;
+    [self.listView reloadData];
+    [self.listView setContentOffset:CGPointMake(0, 0) animated:YES];
     
 }
 - (void)viewWillDisappear:(BOOL)animated
@@ -316,5 +341,26 @@
     [self setListView:nil];
     [self setCheckItemButton:nil];
     [super viewDidUnload];
+}
+- (void)switchViewClosed:(LZCheckTypeSwitchView *)switchView
+{
+    UIView *topbarView = self.navigationItem.titleView;
+    UIImageView *switchIndicatorView = (UIImageView *)[topbarView viewWithTag:21];
+    [switchIndicatorView setImage:[UIImage imageNamed:@"arrow_down.png"]];
+    if(switchView.superview )
+    {
+        [switchView removeFromSuperview];
+    }
+}
+- (void)switchViewSubmitted:(LZCheckTypeSwitchView *)switchView selection:(NSString *)type
+{
+    UIView *topbarView = self.navigationItem.titleView;
+    UIImageView *switchIndicatorView = (UIImageView *)[topbarView viewWithTag:21];
+    [switchIndicatorView setImage:[UIImage imageNamed:@"arrow_down.png"]];
+    if(switchView.superview )
+    {
+        [switchView removeFromSuperview];
+    }
+    [self refreshViewAccordingToTime:type];
 }
 @end
