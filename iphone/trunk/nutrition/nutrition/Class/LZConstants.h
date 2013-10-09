@@ -301,9 +301,11 @@
 #define UmengPathYingYangFuHan @"营养素富含食物页面"
 #define UmengPathJianKangZhenDuan @"健康诊断页面"
 #define UmengPathZhenDuanJieGuo @"诊断结果页面"
+#define UmengPathTiXingSheZhi @"提醒设置页面"
 
 #define UmengEventTuiJian @"Recommend"
 #define UmengEventHuanYiZu @"ChangeFood"
+#define UmengEventZhenDuan @"HealthCheck"
 
 
 #define SeperatorForNames @",,"

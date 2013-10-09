@@ -179,6 +179,8 @@
 }
 -(IBAction)checkItemTapped:(id)sender
 {
+    
+    [MobClick event:UmengEventZhenDuan];
     NSMutableArray *userSelectedDiseaseNames = [[NSMutableArray alloc]init];
     for(NSString *departName in diseaseNamesArray)
     {

@@ -9,6 +9,7 @@
 #import "LZTimeSettingsViewController.h"
 #import "LZConstants.h"
 #import "LZUtility.h"
+#import "MobClick.h"
 @interface LZTimeSettingsViewController ()
 @property (nonatomic,strong)NSDate *shangwuDate;
 @property (nonatomic,strong)NSDate *xiawuDate;
@@ -69,6 +70,10 @@
 	// Do any additional setup after loading the view.
     //[self.shangwuTextField becomeFirstResponder];
     isFirstLoad = YES;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [MobClick beginLogPageView:UmengPathTiXingSheZhi];
 }
 -(void)viewDidAppear:(BOOL)animated
 {
@@ -167,6 +172,7 @@
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
+    [MobClick endLogPageView:UmengPathTiXingSheZhi];
 }// return NO to disallow editing.
 //- (void)textFieldDidBeginEditing:(UITextField *)textField
 //{
