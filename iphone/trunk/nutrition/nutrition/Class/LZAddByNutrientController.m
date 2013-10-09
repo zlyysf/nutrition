@@ -315,12 +315,12 @@
     if(amount <= 0)
     {
         cell.recommendAmountLabel.hidden = YES;
-        [cell centeredFoodNameButton:YES];
+        //[cell centeredFoodNameButton:YES];
     }
     else
     {
         cell.recommendAmountLabel.hidden = NO;
-        [cell centeredFoodNameButton:NO];
+        //[cell centeredFoodNameButton:NO];
     }
     cell.recommendAmountLabel.text = [NSString stringWithFormat:@"%dg",amount];
     //int num = [intake intValue];

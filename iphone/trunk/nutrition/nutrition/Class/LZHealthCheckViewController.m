@@ -22,10 +22,11 @@
 @interface LZHealthCheckViewController ()<LZCheckTypeSwitchViewDelegate>
 @property (nonatomic,strong)NSString *sectionTitle;
 @property (assign,nonatomic)BOOL isFirstLoad;
+@property (assign,nonatomic)BOOL pushToNextView;
 @end
 
 @implementation LZHealthCheckViewController
-@synthesize diseaseNamesArray,diseasesStateDict,sectionTitle,checkType,isFirstLoad,backWithNoAnimation;
+@synthesize diseaseNamesArray,diseasesStateDict,sectionTitle,checkType,isFirstLoad,backWithNoAnimation,pushToNextView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -95,7 +96,7 @@
     [switchButton addTarget:self action:@selector(switchTapped) forControlEvents:UIControlEventTouchUpInside];
     [topBarView addSubview:switchButton];
     self.navigationItem.titleView = topBarView;
-    UIView *admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    UIView *admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     [admobView setBackgroundColor:[UIColor clearColor]];
     self.listView.tableFooterView = admobView;
 }
@@ -124,7 +125,21 @@
     {
         [self refreshViewAccordingToTime:checkType];
     }
+    if (pushToNextView)
+    {
+        pushToNextView = NO;
+        [self resetPage];
+    }
 
+}
+-(void)resetPage
+{
+    for(NSString *departName in diseaseNamesArray)
+    {
+        [self.diseasesStateDict setObject:[NSNumber numberWithBool:NO] forKey:departName];
+    }
+    [self.listView reloadData];
+    [self.listView setContentOffset:CGPointMake(0, 0) animated:YES];
 }
 -(void)refreshViewAccordingToTime:(NSString *)timeType
 {
@@ -230,6 +245,7 @@
     checkResultViewController.heavylyLackArray = heavyArray;
     checkResultViewController.lightlyLackArray = lightArray;
     checkResultViewController.userTotalScore = 100- 3*[lightArray count]-7*[heavyArray count];
+    self.pushToNextView = YES;
     [self.navigationController pushViewController:checkResultViewController animated:YES];
     
 }

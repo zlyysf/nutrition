@@ -43,7 +43,7 @@
     {
         [self.dietNameLabel setTextColor:[UIColor blackColor]];
         [self.arrowImageView setImage:[UIImage imageNamed:@"big_arrow.png"]];
-        [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
+        [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"dietCellBack.png"]]];
         self.changeNameButton.userInteractionEnabled = YES;
     }
 }

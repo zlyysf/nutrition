@@ -39,7 +39,7 @@
     else
     {
         [self.dietNameLabel setTextColor:[UIColor blackColor]];
-        [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
+        [self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"dietCellBack.png"]]];
     }
 }
 -(void)adjustLabelAccordingToDietName:(NSString *)dietName

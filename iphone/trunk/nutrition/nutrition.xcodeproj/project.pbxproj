@@ -66,6 +66,8 @@
 		5F03D351174B924B008EFB60 /* defaulFoodPic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F03D34F174B924B008EFB60 /* defaulFoodPic@2x.png */; };
 		5F0971811793ABD3000030AA /* LZUserDietListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0971801793ABD3000030AA /* LZUserDietListViewController.m */; };
 		5F145D8317C4987E00D6B615 /* LZMainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F145D8217C4987E00D6B615 /* LZMainPageViewController.m */; };
+		5F17888B180510BA0017F55D /* dietCellBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F17888A180510BA0017F55D /* dietCellBack@2x.png */; };
+		5F17888D1805202E0017F55D /* check_bottom_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F17888C1805202E0017F55D /* check_bottom_bar@2x.png */; };
 		5F20148A17BB2F7B0009B735 /* LZValueSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F50961A1754777300461964 /* LZValueSelectorView.m */; };
 		5F20148C17BB35A50009B735 /* valuepicker_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20148B17BB35A50009B735 /* valuepicker_bg@2x.png */; };
 		5F20148E17BB40140009B735 /* valuepicker_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20148D17BB40140009B735 /* valuepicker_cover@2x.png */; };
@@ -338,6 +340,8 @@
 		5F0971801793ABD3000030AA /* LZUserDietListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUserDietListViewController.m; path = Class/LZUserDietListViewController.m; sourceTree = "<group>"; };
 		5F145D8117C4987E00D6B615 /* LZMainPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZMainPageViewController.h; path = Class/LZMainPageViewController.h; sourceTree = "<group>"; };
 		5F145D8217C4987E00D6B615 /* LZMainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZMainPageViewController.m; path = Class/LZMainPageViewController.m; sourceTree = "<group>"; };
+		5F17888A180510BA0017F55D /* dietCellBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dietCellBack@2x.png"; path = "nutrition/Resource/dietCellBack@2x.png"; sourceTree = "<group>"; };
+		5F17888C1805202E0017F55D /* check_bottom_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check_bottom_bar@2x.png"; path = "nutrition/Resource/check_bottom_bar@2x.png"; sourceTree = "<group>"; };
 		5F20148B17BB35A50009B735 /* valuepicker_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "valuepicker_bg@2x.png"; path = "nutrition/Resource/valuepicker_bg@2x.png"; sourceTree = "<group>"; };
 		5F20148D17BB40140009B735 /* valuepicker_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "valuepicker_cover@2x.png"; path = "nutrition/Resource/valuepicker_cover@2x.png"; sourceTree = "<group>"; };
 		5F20148F17BB600F0009B735 /* unit_button_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unit_button_clicked@2x.png"; path = "nutrition/Resource/unit_button_clicked@2x.png"; sourceTree = "<group>"; };
@@ -919,6 +923,7 @@
 				5F943F0817D735FE00AFBF47 /* nutritionButtonIcons */,
 				5F22A6C917CF580D0043D760 /* foodTypeButtonIcons */,
 				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
+				5F17888C1805202E0017F55D /* check_bottom_bar@2x.png */,
 				5F894AA01803FDF100A122F4 /* arrow_down@2x.png */,
 				5F894AA11803FDF100A122F4 /* arrow_up@2x.png */,
 				5FF352F517F5504200B29E6A /* dot_indicator@2x.png */,
@@ -961,6 +966,7 @@
 				5FE436CF175F3EF5003947ED /* Icon-Small.png */,
 				5FE436D0175F3EF5003947ED /* Icon-Small@2x.png */,
 				5FE436D1175F3EF5003947ED /* Icon.png */,
+				5F17888A180510BA0017F55D /* dietCellBack@2x.png */,
 				5FE436D2175F3EF5003947ED /* Icon@2x.png */,
 				5FDD1CA7179CED200046F752 /* add_by_nutrient_button@2x.png */,
 				5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */,
@@ -1620,6 +1626,8 @@
 				5F894A9B1803EB4300A122F4 /* switch_top@2x.png in Resources */,
 				5F894AA21803FDF200A122F4 /* arrow_down@2x.png in Resources */,
 				5F894AA31803FDF200A122F4 /* arrow_up@2x.png in Resources */,
+				5F17888B180510BA0017F55D /* dietCellBack@2x.png in Resources */,
+				5F17888D1805202E0017F55D /* check_bottom_bar@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -42,14 +42,7 @@
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 
     }
-    if (isFromOut)
-    {
-        self.title = @"查询";
-    }
-    else
-    {
-        self.title = @"食物分类";
-    }
+    self.title = @"食物";
     UISearchBar *searchBar = self.searchResultVC.searchBar;
     UIView *barBack = [searchBar.subviews objectAtIndex:0];
     UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchbar_bg.png"]];

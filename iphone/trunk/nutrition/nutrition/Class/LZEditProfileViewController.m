@@ -39,7 +39,7 @@
 
     }
     self.nutrientStandardArray = [[NSMutableArray alloc]init];
-    self.title = @"信息";
+    self.title = @"个人";
     
     UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;

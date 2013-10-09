@@ -733,7 +733,6 @@
                 swipeRightGesture.direction = UISwipeGestureRecognizerDirectionRight;
                 [cell addGestureRecognizer:swipeLeftGesture];
                 [cell addGestureRecognizer:swipeRightGesture];
-                //[cell.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"foodCellBack.png"]]];
                 return cell;
             }
     }
