@@ -80,28 +80,28 @@ public class ActivityFoodCombination extends Activity {
         
 	}
 	void setViewEventHandlers(){
-        m_expandableListView1.setOnChildClickListener(new OnChildClickListener(){
-
-			@Override
-			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-				Log.d(LogTag, "expandableListView1 onChildClick ["+groupPosition+","+childPosition+"]");//没有反应
-				if (groupPosition==0){
-					
-				}else{
-					HashMap<String, Double> DRIsDict = (HashMap<String, Double>)(m_paramsForCalculateNutritionSupply.get(Constants.Key_DRI));
-					
-					HashMap<String, Object> nutrientInfo = m_nutrientsData.get(childPosition);
-					Intent intent = new Intent(ActivityFoodCombination.this, ActivityRichFood.class);
-					String nutrientId = (String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientID);
-					intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
-					intent.putExtra(Constants.Key_Amount, DRIsDict.get(nutrientId).toString());
-					intent.putExtra(Constants.Key_Name, (String)nutrientInfo.get(Constants.Key_Name));
-					startActivity(intent);
-				}
-				
-				return true;
-			}
-        });
+//        m_expandableListView1.setOnChildClickListener(new OnChildClickListener(){
+//
+//			@Override
+//			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+//				Log.d(LogTag, "expandableListView1 onChildClick ["+groupPosition+","+childPosition+"]");//没有反应
+//				if (groupPosition==0){
+//					
+//				}else{
+//					HashMap<String, Double> DRIsDict = (HashMap<String, Double>)(m_paramsForCalculateNutritionSupply.get(Constants.Key_DRI));
+//					
+//					HashMap<String, Object> nutrientInfo = m_nutrientsData.get(childPosition);
+//					Intent intent = new Intent(ActivityFoodCombination.this, ActivityRichFood.class);
+//					String nutrientId = (String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientID);
+//					intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
+//					intent.putExtra(Constants.Key_Amount, DRIsDict.get(nutrientId).toString());
+//					intent.putExtra(Constants.Key_Name, (String)nutrientInfo.get(Constants.Key_Name));
+//					startActivity(intent);
+//				}
+//				
+//				return true;
+//			}
+//        });
         
         mBtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -583,6 +583,7 @@ public class ActivityFoodCombination extends Activity {
 				TextView tvNutrient = (TextView)convertView.findViewById(R.id.tvNutrient);
 				tvNutrient.setText((String)nutrientInfo.get(Constants.Key_Name));
 				
+				LinearLayout llProgress = (LinearLayout)convertView.findViewById(R.id.llProgress);
 				ProgressBar pbSupplyPercent = (ProgressBar)convertView.findViewById(R.id.pbSupplyPercent);
 				ImageButton imgBtnAddByNutrient = (ImageButton)convertView.findViewById(R.id.imgBtnAddByNutrient);
 				
@@ -600,7 +601,8 @@ public class ActivityFoodCombination extends Activity {
 				}else{
 					onClickListenerToAddFoodByNutrient1.initInputData(groupPosition,childPosition);
 				}
-				pbSupplyPercent.setOnClickListener(onClickListenerToAddFoodByNutrient1);
+//				pbSupplyPercent.setOnClickListener(onClickListenerToAddFoodByNutrient1);
+				llProgress.setOnClickListener(onClickListenerToAddFoodByNutrient1);
 				imgBtnAddByNutrient.setOnClickListener(onClickListenerToAddFoodByNutrient1);
 			}
 			return convertView;
@@ -609,7 +611,7 @@ public class ActivityFoodCombination extends Activity {
 		class OnClickListenerToAddFoodByNutrient extends OnClickListenerInExpandListItem{
 			@Override
 			public void onClick(View v) {
-				Log.d(LogTag, "2levelPos=["+m_Data2LevelPosition.groupPos+","+m_Data2LevelPosition.childPos+"]");
+				Log.d(LogTag, "OnClickListenerToAddFoodByNutrient 2levelPos=["+m_Data2LevelPosition.groupPos+","+m_Data2LevelPosition.childPos+"]"+v);
 				
 				HashMap<String, Double> DRIsDict = (HashMap<String, Double>)(m_paramsForCalculateNutritionSupply.get(Constants.Key_DRI));
 				
