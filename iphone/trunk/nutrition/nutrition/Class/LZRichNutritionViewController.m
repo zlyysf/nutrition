@@ -47,7 +47,7 @@
     }
     
     
-    NSString *tipsStr = [NSString stringWithFormat:@"下列是富含%@的食物，您可以根据我们提供的推荐量来挑选适合自己的食物，补足一天的需求。", nutrientTitle];
+    NSString *tipsStr = [NSString stringWithFormat:@"下列是含%@的食物，克数代表一天的推荐量。", nutrientTitle];
     CGSize tipSize = [tipsStr sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
     UIView * headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, tipSize.height+15)];
     UILabel *tipsLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, tipSize.height)];

@@ -605,6 +605,9 @@
         [saveDietButton setTitle:@"保  存" forState:UIControlStateNormal];
         [saveDietButton addTarget:self action:@selector(saveToDiet) forControlEvents:UIControlEventTouchUpInside];
         [saveDietButton setBackgroundImage:button30 forState:UIControlStateNormal];
+        UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 81, 320, 1)];
+        [lineView setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
+        [sectionView addSubview:lineView];
         [sectionView addSubview:recommendButton];
         [sectionView addSubview:saveDietButton];
         if (ViewControllerUseBackImage) {
