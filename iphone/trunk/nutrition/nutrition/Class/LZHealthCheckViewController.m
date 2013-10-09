@@ -261,8 +261,8 @@
     LZDiseaseCell * cell =(LZDiseaseCell*)[tableView dequeueReusableCellWithIdentifier:@"LZDiseaseCell"];
     NSString *departmentName = [self.diseaseNamesArray objectAtIndex:indexPath.row];
     NSNumber* checkState = [self.diseasesStateDict objectForKey:departmentName];
-    [cell.backView.layer setMasksToBounds:YES];
-    [cell.backView.layer setCornerRadius:3.0f];
+    //[cell.backView.layer setMasksToBounds:YES];
+    //[cell.backView.layer setCornerRadius:3.0f];
     
     if ([checkState boolValue])
     {
@@ -280,14 +280,14 @@
     if (labelSize.height > oneSize.height*2 )
     {
         height = labelSize.height;
-        [cell.backView setFrame:CGRectMake(10, 9, DiagnosticLabelLength+2,height+2)];
+        //[cell.backView setFrame:CGRectMake(10, 9, DiagnosticLabelLength+2,height+2)];
         [cell.nameLabel setFrame:CGRectMake(11, 10, DiagnosticLabelLength, height)];
         [cell.stateImageView setFrame:CGRectMake(270, (height+20-31)/2, 40, 31)];
     }
     else
     {
         height = oneSize.height *2;
-        [cell.backView setFrame:CGRectMake(10, 14, DiagnosticLabelLength+2,height+2)];
+        //[cell.backView setFrame:CGRectMake(10, 14, DiagnosticLabelLength+2,height+2)];
         [cell.nameLabel setFrame:CGRectMake(11, 15, DiagnosticLabelLength, height)];
         [cell.stateImageView setFrame:CGRectMake(270, (height+30-31)/2, 40, 31)];
     }
@@ -345,7 +345,7 @@
     NSNumber *newState = [NSNumber numberWithBool:!isOn];
     [self.diseasesStateDict setObject:newState forKey:departmentName];
     NSArray *reloadCell = [NSArray arrayWithObject:indexPath];
-    [self.listView reloadRowsAtIndexPaths:reloadCell withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.listView reloadRowsAtIndexPaths:reloadCell withRowAnimation:UITableViewRowAnimationNone];
 
 }
 

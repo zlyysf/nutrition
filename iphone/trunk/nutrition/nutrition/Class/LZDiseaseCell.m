@@ -29,16 +29,6 @@
 {
     [super setHighlighted:highlighted animated:animated];
     [self.sepratorLine setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
-    if (highlighted)
-    {
-        [self.nameLabel setTextColor:[UIColor whiteColor]];
-        [self.backView setBackgroundColor:[UIColor colorWithRed:198/255.f green:185/255.f blue:173/255.f alpha:1.0f]];
-    }
-    else
-    {
-        [self.nameLabel setTextColor:[UIColor blackColor]];
-        [self.backView setBackgroundColor:[UIColor clearColor]];
-    }
 }
 
 @end

@@ -1272,11 +1272,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="57"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <view contentMode="scaleToFill" id="YRE-3c-jhl">
-                                                    <rect key="frame" x="10" y="4" width="252" height="50"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                                </view>
                                                 <view contentMode="scaleToFill" id="Ne0-RF-UDz">
                                                     <rect key="frame" x="0.0" y="57" width="320" height="1"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -1297,7 +1292,6 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
-                                            <outlet property="backView" destination="YRE-3c-jhl" id="gNV-RS-UJw"/>
                                             <outlet property="nameLabel" destination="lh8-pd-efD" id="zwK-Gp-4Jd"/>
                                             <outlet property="sepratorLine" destination="Ne0-RF-UDz" id="qGv-dD-ICW"/>
                                             <outlet property="stateImageView" destination="heo-wQ-jwh" id="YAS-AY-7V6"/>
