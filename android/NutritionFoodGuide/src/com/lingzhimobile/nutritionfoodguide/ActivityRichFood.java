@@ -3,6 +3,8 @@ package com.lingzhimobile.nutritionfoodguide;
 
 import java.util.*;
 
+import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
+
 
 import android.R.integer;
 import android.app.Activity;
@@ -14,6 +16,7 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.*;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -38,8 +41,11 @@ public class ActivityRichFood extends Activity {
 	
 	static final String LogTag = "ActivityRichFood";
 	
+	public static final String Key_InvokerType = "InvokerType";
+	public static final String InvokerType_FromNutrients = "FromNutrients";
+	public static final String InvokerType_FromFoodCombination = "FromFoodCombination";
 	
-	
+	String mInvokerType = null;
 	String mNutrientId;
 	String mNutrientCnCaption;
 	double mToSupplyNutrientAmount ;
@@ -207,14 +213,14 @@ public class ActivityRichFood extends Activity {
 //			EditText etFoodAmount = (EditText)convertView.findViewById(R.id.etFoodAmount);
 //			Button btnShowInputDialog = (Button)convertView.findViewById(R.id.btnShowInputDialog);//用 imageview 代替 button ,利用上层的 llToInputFoodAmount 的事件处理，而不必像button那样必须加一个
 
-			LinearLayout llToInputFoodAmount = (LinearLayout)convertView.findViewById(R.id.llToInputFoodAmount);
+			LinearLayout llRowNutrient = (LinearLayout)convertView.findViewById(R.id.llRowNutrient);
 			OnClickListenerForInputAmount myOnClickListenerForInputAmount = null;
-			myOnClickListenerForInputAmount = (OnClickListenerForInputAmount)llToInputFoodAmount.getTag();
+			myOnClickListenerForInputAmount = (OnClickListenerForInputAmount)llRowNutrient.getTag();
 			if (myOnClickListenerForInputAmount == null){
 				myOnClickListenerForInputAmount = new OnClickListenerForInputAmount() ;
 				myOnClickListenerForInputAmount.initInputData(position);
-				llToInputFoodAmount.setTag(myOnClickListenerForInputAmount);
-				llToInputFoodAmount.setOnClickListener(myOnClickListenerForInputAmount);
+				llRowNutrient.setTag(myOnClickListenerForInputAmount);
+				llRowNutrient.setOnClickListener(myOnClickListenerForInputAmount);
 //				etFoodAmount.setOnClickListener(myOnClickListenerForInputAmount);//在disabled的状态时，看来事件不被触发
 //				etFoodAmount.setOnClickListener(myOnClickListenerForInputAmount);//在enabled的状态时，先要获得focus，再点击才能触发onclick事件
 //				etFoodAmount.setOnTouchListener(myOnClickListenerForInputAmount);//在disabled的状态时，看来事件不被触发
@@ -249,94 +255,127 @@ public class ActivityRichFood extends Activity {
 				}
 			}
 			void showInputDialog(){
-				AlertDialog.Builder dlgBuilder =new AlertDialog.Builder(ActivityRichFood.this);
-				View vwDialogContent = getLayoutInflater().inflate(R.layout.dialog_input_food_amount, null);
-				EditText etAmount = (EditText)vwDialogContent.findViewById(R.id.etAmount);
-				TextView tvFood = (TextView)vwDialogContent.findViewById(R.id.tvFood);
 				HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
 				String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
-				tvFood.setText(foodName);
 				
-				DialogInterfaceEventListener_EditText dialogInterfaceEventListener_EditText1 = new DialogInterfaceEventListener_EditText(etAmount);
-				dlgBuilder.setView(vwDialogContent);
-				dlgBuilder.setPositiveButton("OK", dialogInterfaceEventListener_EditText1);
-				dlgBuilder.setNegativeButton("Cancel", dialogInterfaceEventListener_EditText1);
+				Double foodAmount = (Double)foodData.get(Constants.Key_Amount);
+				int iAmount = (int)Math.ceil(foodAmount);
+				String preInput = iAmount+"";
 				
+				DialogHelperSimpleInput myDialogHelperSimpleInput = new DialogHelperSimpleInput(ActivityRichFood.this);
+				EditText etInput = myDialogHelperSimpleInput.getInput();
+				etInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+				myDialogHelperSimpleInput.prepareDialogAttributes("输入食物数量", foodName, preInput);
+				myDialogHelperSimpleInput.setInterfaceWhenConfirmInput(new InterfaceWhenConfirmInput() {
+					@Override
+					public void onConfirmInput(String input) {
+						if (input==null || input.length()==0){
+							Tool.ShowMessageByDialog(ActivityRichFood.this, "输入不能为空");
+						}else{
+							Log.d(LogTag, "onConfirmInput "+input);
+							String sInput = input;
+							HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
+							String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
+							
+							Intent intent = new Intent();
+			            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+			            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
+			            	ActivityRichFood.this.setResult(IntentResultCode, intent);
+			            	
+			            	ActivityRichFood.this.finish();
+						}
+					}
+				});
+				myDialogHelperSimpleInput.show();
 				
-				AlertDialog dlg = dlgBuilder.create();
-				
-//				closePrevAlertDialog();//Activity  has leaked window 的问题，发现是与ListViewEventListener.onItemClick 中调用了 finish() 有关。
-//				mPrevAlertDialog = dlg;
-				
-				dialogInterfaceEventListener_EditText1.SetDialog(dlg);
-				dlg.setOnShowListener(dialogInterfaceEventListener_EditText1);
-				dlg.setOnDismissListener(dialogInterfaceEventListener_EditText1);
-				Log.d(LogTag, "before show AlertDialog "+dlg);
-				dlg.show();
-				Log.d(LogTag, "after  show AlertDialog "+dlg);
+//				AlertDialog.Builder dlgBuilder =new AlertDialog.Builder(ActivityRichFood.this);
+//				View vwDialogContent = getLayoutInflater().inflate(R.layout.dialog_input_food_amount, null);
+//				EditText etAmount = (EditText)vwDialogContent.findViewById(R.id.etAmount);
+//				TextView tvFood = (TextView)vwDialogContent.findViewById(R.id.tvFood);
+//				HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
+//				String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
+//				tvFood.setText(foodName);
+//				
+//				DialogInterfaceEventListener_EditText dialogInterfaceEventListener_EditText1 = new DialogInterfaceEventListener_EditText(etAmount);
+//				dlgBuilder.setView(vwDialogContent);
+//				dlgBuilder.setPositiveButton("OK", dialogInterfaceEventListener_EditText1);
+//				dlgBuilder.setNegativeButton("Cancel", dialogInterfaceEventListener_EditText1);
+//				
+//				
+//				AlertDialog dlg = dlgBuilder.create();
+//				
+////				closePrevAlertDialog();//Activity  has leaked window 的问题，发现是与ListViewEventListener.onItemClick 中调用了 finish() 有关。
+////				mPrevAlertDialog = dlg;
+//				
+//				dialogInterfaceEventListener_EditText1.SetDialog(dlg);
+//				dlg.setOnShowListener(dialogInterfaceEventListener_EditText1);
+//				dlg.setOnDismissListener(dialogInterfaceEventListener_EditText1);
+//				Log.d(LogTag, "before show AlertDialog "+dlg);
+//				dlg.show();
+//				Log.d(LogTag, "after  show AlertDialog "+dlg);
 				
 				
 			}
 			
-			class DialogInterfaceEventListener_EditText implements DialogInterface.OnClickListener, DialogInterface.OnShowListener, DialogInterface.OnDismissListener{
-				Dialog mDialog;
-				EditText m_editText1;
-				public DialogInterfaceEventListener_EditText(EditText editText1){
-					m_editText1 = editText1;
-				}
-				public void SetDialog(Dialog dlg){
-					mDialog = dlg;
-					
-//					m_editText1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-//						@Override
-//						public void onFocusChange(View v, boolean hasFocus) {
-//							Log.d(LogTag, "DialogInterfaceOnClickListener_EditText m_editText1 onFocusChange, hasFocus="+hasFocus);
-//							if (hasFocus) {
-//								mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-//					       }
-//						}
-//					});
-				}
-				
-				@Override
-				public void onClick(DialogInterface dlgInterface, int which) {
-					if(which == DialogInterface.BUTTON_POSITIVE){
-						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick OK "+mDialog);
-						String sInput = m_editText1.getText().toString();
-						HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
-						String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
-						
-						Intent intent = new Intent();
-		            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
-		            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
-		            	ActivityRichFood.this.setResult(IntentResultCode, intent);
-		            	
-		            	ActivityRichFood.this.finish();
-					}else if(which == DialogInterface.BUTTON_NEGATIVE){
-						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick Cancel "+mDialog);
-					}else if(which == DialogInterface.BUTTON_NEUTRAL){//忽略按键的点击事件
-						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick Ignore "+mDialog);
-					}else{
-						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick other "+mDialog);
-					}
-//					m_editText1 = null;
-//	            	mDialog = null;//Activity  has leaked window 的问题，发现是与ListViewEventListener.onItemClick 中调用了 finish() 有关。
-				}
-
-				@Override
-				public void onShow(DialogInterface dlgInterface) {
-					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onShow "+mDialog);
-					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_IMPLICIT);//能show出键盘
-//			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_FORCED);//能show出键盘
-//					m_editText1.requestFocus();
-				}
-				@Override
-				public void onDismiss(DialogInterface dialog) {
-					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onDismiss "+mDialog+ " | "+dialog);
-					
-				}
-			}//class DialogInterfaceOnClickListener_EditText
+//			class DialogInterfaceEventListener_EditText implements DialogInterface.OnClickListener, DialogInterface.OnShowListener, DialogInterface.OnDismissListener{
+//				Dialog mDialog;
+//				EditText m_editText1;
+//				public DialogInterfaceEventListener_EditText(EditText editText1){
+//					m_editText1 = editText1;
+//				}
+//				public void SetDialog(Dialog dlg){
+//					mDialog = dlg;
+//					
+////					m_editText1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+////						@Override
+////						public void onFocusChange(View v, boolean hasFocus) {
+////							Log.d(LogTag, "DialogInterfaceOnClickListener_EditText m_editText1 onFocusChange, hasFocus="+hasFocus);
+////							if (hasFocus) {
+////								mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+////					       }
+////						}
+////					});
+//				}
+//				
+//				@Override
+//				public void onClick(DialogInterface dlgInterface, int which) {
+//					if(which == DialogInterface.BUTTON_POSITIVE){
+//						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick OK "+mDialog);
+//						String sInput = m_editText1.getText().toString();
+//						HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
+//						String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
+//						
+//						Intent intent = new Intent();
+//		            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+//		            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
+//		            	ActivityRichFood.this.setResult(IntentResultCode, intent);
+//		            	
+//		            	ActivityRichFood.this.finish();
+//					}else if(which == DialogInterface.BUTTON_NEGATIVE){
+//						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick Cancel "+mDialog);
+//					}else if(which == DialogInterface.BUTTON_NEUTRAL){//忽略按键的点击事件
+//						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick Ignore "+mDialog);
+//					}else{
+//						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick other "+mDialog);
+//					}
+////					m_editText1 = null;
+////	            	mDialog = null;//Activity  has leaked window 的问题，发现是与ListViewEventListener.onItemClick 中调用了 finish() 有关。
+//				}
+//
+//				@Override
+//				public void onShow(DialogInterface dlgInterface) {
+//					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onShow "+mDialog);
+//					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_IMPLICIT);//能show出键盘
+////			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_FORCED);//能show出键盘
+////					m_editText1.requestFocus();
+//				}
+//				@Override
+//				public void onDismiss(DialogInterface dialog) {
+//					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onDismiss "+mDialog+ " | "+dialog);
+//					
+//				}
+//			}//class DialogInterfaceOnClickListener_EditText
 			
 		}//class OnClickListenerForInputAmount
 		

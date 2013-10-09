@@ -5,18 +5,20 @@
     android:orientation="horizontal" >
     
     <LinearLayout 
+        android:id="@+id/llRowFood"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_margin="5dp"
-	    android:background="@drawable/row_food"
+	    android:background="@drawable/row_clickable_bg"
 	    android:orientation="horizontal" >
+	    <!-- 使用 row_clickable_bg 没有起到点上去行背景变色的作用。后来发现加了click listener后可以了。 -->
     
 	    <ImageView
 	        android:id="@+id/ivFood"
 	        android:layout_width="75dp"
 	        android:layout_height="50dp"
 	        android:layout_weight="0"
-	        android:src="@drawable/back_button" />
+	        android:src="@color/blue" />
 	
 	    <TextView
 	        android:id="@+id/tvFoodName"
@@ -54,6 +56,7 @@
 	         android:layout_width="40dp"
 	         android:layout_height="40dp"
 	         android:layout_gravity="center_vertical"
+	         android:background="@null"
 	         android:gravity="center_vertical"
 	         android:src="@drawable/x_icon" />
      

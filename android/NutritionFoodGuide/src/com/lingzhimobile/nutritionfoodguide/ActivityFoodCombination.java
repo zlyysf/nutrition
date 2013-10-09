@@ -3,8 +3,9 @@ package com.lingzhimobile.nutritionfoodguide;
 import java.io.IOException;
 import java.util.*;
 
-import com.lingzhimobile.nutritionfoodguide.ActivityRichFood.RichFoodAdapter.OnClickListenerForInputAmount.DialogInterfaceEventListener_EditText;
+
 import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
+import com.lingzhimobile.nutritionfoodguide.OnClickListenerInExpandListItem.Data2LevelPosition;
 
 
 import android.R.integer;
@@ -16,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.*;
 import android.view.Gravity;
 import android.view.View;
@@ -499,10 +501,8 @@ public class ActivityFoodCombination extends Activity {
 			}
 		}
 	
-		public View getChildView(int groupPosition, int childPosition,
-				boolean isLastChild, View convertView, ViewGroup parent)
+		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent)
 		{
-			View vwItem = null;
 			if (groupPosition==0){
 				boolean needNewView = false;
 				TextView tvFoodName = null;
@@ -517,7 +517,7 @@ public class ActivityFoodCombination extends Activity {
 				if (needNewView){
 					convertView = m_actv.getLayoutInflater().inflate(R.layout.row_food, null);
 				}
-				vwItem = convertView;
+
 				if (tvFoodName == null) tvFoodName = (TextView)convertView.findViewById(R.id.tvFoodName);
 				TextView tvFoodAmount = (TextView)convertView.findViewById(R.id.tvFoodAmount);
 				String foodId = m_OrderedFoodIdList.get(childPosition);
@@ -532,17 +532,29 @@ public class ActivityFoodCombination extends Activity {
 				ImageView ivFood = (ImageView)convertView.findViewById(R.id.ivFood);
 				ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)foodInfo.get(Constants.COLUMN_NAME_PicPath)));
 				
+				LinearLayout llRowFood = (LinearLayout)convertView.findViewById(R.id.llRowFood);
+				OnClickListenerToEditFoodAmount myOnClickListenerToEditFoodAmount = (OnClickListenerToEditFoodAmount)llRowFood.getTag();
+				if (myOnClickListenerToEditFoodAmount == null){
+					myOnClickListenerToEditFoodAmount = new OnClickListenerToEditFoodAmount();
+					myOnClickListenerToEditFoodAmount.initInputData(groupPosition,childPosition);
+					llRowFood.setTag(myOnClickListenerToEditFoodAmount);
+					llRowFood.setOnClickListener(myOnClickListenerToEditFoodAmount);
+				}else{
+					myOnClickListenerToEditFoodAmount.initInputData(groupPosition,childPosition);
+				}
+				
+				
 				ImageButton imgBtnRemoveFood = (ImageButton)convertView.findViewById(R.id.imgBtnRemoveFood);
-				ChildRowRelateData tagData = new ChildRowRelateData();
-				tagData.childPosition = childPosition;
-				tagData.groupPosition = groupPosition;
+				Data2LevelPosition tagData = new Data2LevelPosition();
+				tagData.childPos = childPosition;
+				tagData.groupPos = groupPosition;
 				imgBtnRemoveFood.setTag(tagData);
 				imgBtnRemoveFood.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
-						ChildRowRelateData tagData = (ChildRowRelateData)v.getTag();
-						String foodId = m_OrderedFoodIdList.get(tagData.childPosition);
-						m_OrderedFoodIdList.remove(tagData.childPosition);
+						Data2LevelPosition tagData = (Data2LevelPosition)v.getTag();
+						String foodId = m_OrderedFoodIdList.get(tagData.childPos);
+						m_OrderedFoodIdList.remove(tagData.childPos);
 						m_foodAmountHm.remove(foodId);
 						m_foods2LevelHm.remove(foodId);
 						reCalculateFoodSupplyNutrient();
@@ -564,67 +576,85 @@ public class ActivityFoodCombination extends Activity {
 				if (needNewView){
 					convertView = m_actv.getLayoutInflater().inflate(R.layout.row_nutrient, null);
 				}
-				vwItem = convertView;
 				
 				HashMap<String, Object> nutrientInfo = m_nutrientsData.get(childPosition);
 				Double dObj_supplyRate = (Double)nutrientInfo.get(Constants.Key_supplyNutrientRate);
 				int supplyPercent = (int) Math.round( dObj_supplyRate.doubleValue() * 100 );
-				TextView tvNutrient = (TextView)vwItem.findViewById(R.id.tvNutrient);
+				TextView tvNutrient = (TextView)convertView.findViewById(R.id.tvNutrient);
 				tvNutrient.setText((String)nutrientInfo.get(Constants.Key_Name));
 				
-				ProgressBar pbSupplyPercent = (ProgressBar)vwItem.findViewById(R.id.pbSupplyPercent);
-				ImageButton imgBtnAddByNutrient = (ImageButton)vwItem.findViewById(R.id.imgBtnAddByNutrient);
+				ProgressBar pbSupplyPercent = (ProgressBar)convertView.findViewById(R.id.pbSupplyPercent);
+				ImageButton imgBtnAddByNutrient = (ImageButton)convertView.findViewById(R.id.imgBtnAddByNutrient);
 				
-				if (tvSupplyPercent==null) tvSupplyPercent = (TextView)vwItem.findViewById(R.id.tvSupplyPercent);
+				if (tvSupplyPercent==null) tvSupplyPercent = (TextView)convertView.findViewById(R.id.tvSupplyPercent);
 				tvSupplyPercent.setText(supplyPercent+"%");
 				pbSupplyPercent.setProgress(supplyPercent);
 				
-				ChildRowRelateData childRowRelateData1 = new ChildRowRelateData();
-				childRowRelateData1.childPosition = childPosition;
-				childRowRelateData1.groupPosition = groupPosition;
+
 				OnClickListenerToAddFoodByNutrient onClickListenerToAddFoodByNutrient1 = null;
 				onClickListenerToAddFoodByNutrient1 = (OnClickListenerToAddFoodByNutrient)imgBtnAddByNutrient.getTag();
 				if (onClickListenerToAddFoodByNutrient1 == null){
-					onClickListenerToAddFoodByNutrient1 = new OnClickListenerToAddFoodByNutrient(childRowRelateData1);
+					onClickListenerToAddFoodByNutrient1 = new OnClickListenerToAddFoodByNutrient();
+					onClickListenerToAddFoodByNutrient1.initInputData(groupPosition,childPosition);
 					imgBtnAddByNutrient.setTag(onClickListenerToAddFoodByNutrient1);
 				}else{
-					onClickListenerToAddFoodByNutrient1.initInputData(childRowRelateData1);
+					onClickListenerToAddFoodByNutrient1.initInputData(groupPosition,childPosition);
 				}
 				pbSupplyPercent.setOnClickListener(onClickListenerToAddFoodByNutrient1);
 				imgBtnAddByNutrient.setOnClickListener(onClickListenerToAddFoodByNutrient1);
 			}
-			return vwItem;
+			return convertView;
 		}
 		
-		class OnClickListenerToAddFoodByNutrient implements View.OnClickListener{
-			
-			ChildRowRelateData m_ChildRowRelateData ;
-			
-			public OnClickListenerToAddFoodByNutrient(ChildRowRelateData childRowRelateData){
-				m_ChildRowRelateData = childRowRelateData;
-			}
-			public void initInputData(ChildRowRelateData childRowRelateData){
-				m_ChildRowRelateData = childRowRelateData;
-			}
-
+		class OnClickListenerToAddFoodByNutrient extends OnClickListenerInExpandListItem{
 			@Override
 			public void onClick(View v) {
-				//ChildRowRelateData tagData = (ChildRowRelateData)v.getTag();
-				ChildRowRelateData tagData = m_ChildRowRelateData;
-				Log.d(LogTag, "groupPosition,groupPosition=["+tagData.groupPosition+","+tagData.childPosition+"]");
+				Log.d(LogTag, "2levelPos=["+m_Data2LevelPosition.groupPos+","+m_Data2LevelPosition.childPos+"]");
 				
 				HashMap<String, Double> DRIsDict = (HashMap<String, Double>)(m_paramsForCalculateNutritionSupply.get(Constants.Key_DRI));
 				
-				HashMap<String, Object> nutrientInfo = m_nutrientsData.get(tagData.childPosition);
+				HashMap<String, Object> nutrientInfo = m_nutrientsData.get(m_Data2LevelPosition.childPos);
 				Intent intent = new Intent(ActivityFoodCombination.this, ActivityRichFood.class);
 				String nutrientId = (String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientID);
 				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
 				intent.putExtra(Constants.Key_Amount, DRIsDict.get(nutrientId).doubleValue());
 				intent.putExtra(Constants.Key_Name, (String)nutrientInfo.get(Constants.Key_Name));
 				startActivityForResult(intent,IntentRequestCode_ActivityRichFood);
-				
 			}
+		}
+		
+		class OnClickListenerToEditFoodAmount extends OnClickListenerInExpandListItem{
+
 			
+			@Override
+			public void onClick(View v) {
+				Log.d(LogTag, "2levelPos=["+m_Data2LevelPosition.groupPos+","+m_Data2LevelPosition.childPos+"]");
+				
+				String foodId = m_OrderedFoodIdList.get(m_Data2LevelPosition.childPos);
+				Double foodAmount = m_foodAmountHm.get(foodId);
+				HashMap<String, Object> foodInfo = m_foods2LevelHm.get(foodId);
+				
+				DialogHelperSimpleInput myDialogHelperSimpleInput = new DialogHelperSimpleInput(ActivityFoodCombination.this);
+				EditText etInput = myDialogHelperSimpleInput.getInput();
+				etInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+				myDialogHelperSimpleInput.prepareDialogAttributes("修改食物数量", (String)foodInfo.get(Constants.COLUMN_NAME_CnCaption), foodAmount.intValue()+"");
+				myDialogHelperSimpleInput.setInterfaceWhenConfirmInput(new InterfaceWhenConfirmInput() {
+					@Override
+					public void onConfirmInput(String input) {
+						if (input==null || input.length()==0){
+							Tool.ShowMessageByDialog(ActivityFoodCombination.this, "输入不能为空");
+						}else{
+							String amount2 = input;
+							String foodId = m_OrderedFoodIdList.get(m_Data2LevelPosition.childPos);
+							m_foodAmountHm.put(foodId, Double.parseDouble(amount2));
+							reCalculateFoodSupplyNutrient();
+							notifyDataSetChanged();
+						}
+					}
+				});
+				myDialogHelperSimpleInput.show();
+    			return;
+			}
 		}
 		
 		public View getGroupView(int groupPosition, boolean isExpanded,	View convertView, ViewGroup parent)
@@ -663,11 +693,6 @@ public class ActivityFoodCombination extends Activity {
 			return true;
 		}
 	
-	}
-	    
-    class ChildRowRelateData {
-		public int groupPosition;
-		public int childPosition;
 	}
     
 }

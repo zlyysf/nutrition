@@ -7,6 +7,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import android.text.Selection;
+import android.text.Spannable;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
@@ -105,6 +107,13 @@ public class DialogHelperSimpleInput
 			Log.d(LogTag, "onShow "+m_dialog+ " | "+dlgInterface);
 			InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
 	        imm.showSoftInput(m_etInput, InputMethodManager.SHOW_IMPLICIT);//能show出键盘
+	        
+	        //文本框中的光标默认在最前，这里把光标移到最后
+	        CharSequence text = m_etInput.getText();
+	        if (text instanceof Spannable) {
+	             Spannable spanText = (Spannable)text;
+	             Selection.setSelection(spanText, text.length());
+	        }
 		}
 		
 		@Override

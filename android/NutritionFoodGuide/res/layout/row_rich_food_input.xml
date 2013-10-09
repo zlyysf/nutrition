@@ -9,10 +9,11 @@
     >
     
     <LinearLayout 
+        android:id="@+id/llRowNutrient"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
 	    android:layout_margin="5dp"
-	    android:background="@drawable/row_food"
+	    android:background="@drawable/row_clickable_bg"
 	    android:orientation="horizontal" >
 	
 	    <ImageView
@@ -29,7 +30,8 @@
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_vertical"
 	        android:layout_weight="1"
-	        android:orientation="horizontal" >
+	        android:orientation="horizontal" 
+	        >
 	        
 		    <LinearLayout
 		        android:layout_width="match_parent"

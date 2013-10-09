@@ -6,9 +6,9 @@ package com.lingzhimobile.nutritionfoodguide;
 
 import java.util.*;
 
-import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination.ChildRowRelateData;
+
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination.ExpandableListAdapter_FoodNutrition.OnClickListenerToAddFoodByNutrient;
-import com.lingzhimobile.nutritionfoodguide.ActivityRichFood.RichFoodAdapter.OnClickListenerForInputAmount.DialogInterfaceEventListener_EditText;
+
 
 
 import android.app.Activity;
@@ -196,17 +196,15 @@ public class ActivityAllFoodExpandList extends Activity {
 			ImageView ivAsEditText = (ImageView)vwItem.findViewById(R.id.ivAsEditText);
 //			Button btnShowInputDialog = (Button)vwItem.findViewById(R.id.btnShowInputDialog);
 			
-			ChildRowRelateData childRowRelateData1 = new ChildRowRelateData();
-			childRowRelateData1.childPosition = childPosition;
-			childRowRelateData1.groupPosition = groupPosition;
 			OnClickListenerForInputAmount onClickListenerToAddFood1 = null;
 			onClickListenerToAddFood1 = (OnClickListenerForInputAmount)tvFoodName.getTag();
 			if (onClickListenerToAddFood1 == null){
-				onClickListenerToAddFood1 = new OnClickListenerForInputAmount(childRowRelateData1);
+				onClickListenerToAddFood1 = new OnClickListenerForInputAmount();
+				onClickListenerToAddFood1.initInputData(groupPosition,childPosition);
 				ivAsEditText.setOnClickListener(onClickListenerToAddFood1);
 				tvFoodName.setTag(onClickListenerToAddFood1);
 			}else{
-				onClickListenerToAddFood1.initInputData(childRowRelateData1);
+				onClickListenerToAddFood1.initInputData(groupPosition,childPosition);
 			}
 			
 			return vwItem;
@@ -214,18 +212,7 @@ public class ActivityAllFoodExpandList extends Activity {
 		
 
 
-		class OnClickListenerForInputAmount implements OnClickListener,OnTouchListener,OnFocusChangeListener{
-			
-			ChildRowRelateData m_ChildRowRelateData ;
-			
-			public OnClickListenerForInputAmount(ChildRowRelateData childRowRelateData){
-				m_ChildRowRelateData = childRowRelateData;
-			}
-			public void initInputData(ChildRowRelateData childRowRelateData){
-				m_ChildRowRelateData = childRowRelateData;
-			}
-			
-
+		class OnClickListenerForInputAmount extends OnClickListenerInExpandListItem implements OnTouchListener,OnFocusChangeListener{
 			@Override
 			public void onClick(View v) {
 				showInputDialog();
@@ -246,7 +233,7 @@ public class ActivityAllFoodExpandList extends Activity {
 				View vwDialogContent = getLayoutInflater().inflate(R.layout.dialog_input_food_amount, null);
 				EditText etAmount = (EditText)vwDialogContent.findViewById(R.id.etAmount);
 				TextView tvFood = (TextView)vwDialogContent.findViewById(R.id.tvFood);
-				HashMap<String, Object> foodData = (HashMap<String, Object>)getChild(m_ChildRowRelateData.groupPosition,m_ChildRowRelateData.childPosition); // m_foodsData.get(m_rowPos);
+				HashMap<String, Object> foodData = (HashMap<String, Object>)getChild(m_Data2LevelPosition.groupPos,m_Data2LevelPosition.childPos); // m_foodsData.get(m_rowPos);
 				String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
 				tvFood.setText(foodName);
 				
@@ -286,7 +273,7 @@ public class ActivityAllFoodExpandList extends Activity {
 					if(which == DialogInterface.BUTTON_POSITIVE){
 						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick OK");
 						String sInput = m_editText1.getText().toString();
-						HashMap<String, Object> foodData =  (HashMap<String, Object>)getChild(m_ChildRowRelateData.groupPosition,m_ChildRowRelateData.childPosition); //m_foodsData.get(m_rowPos);
+						HashMap<String, Object> foodData =  (HashMap<String, Object>)getChild(m_Data2LevelPosition.groupPos,m_Data2LevelPosition.childPos); //m_foodsData.get(m_rowPos);
 						String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
 						
 						Intent intent = new Intent();
@@ -316,11 +303,6 @@ public class ActivityAllFoodExpandList extends Activity {
 			}//class DialogInterfaceOnClickListener_EditText
 			
 		}//class OnClickListenerForInputAmount
-		
-		class ChildRowRelateData {
-			public int groupPosition;
-			public int childPosition;
-		}
 
 
 		
