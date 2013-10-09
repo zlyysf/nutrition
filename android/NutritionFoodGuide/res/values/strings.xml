@@ -32,6 +32,9 @@
     
     <string name="chooseRichFood">下列是富含%s的食物，您可以根据我们提供的推荐量来挑选适合自己的食物,没有推荐量时表示已经补满。</string>
     
+    <string name="addToNewFoodCombination">添加到新清单</string>
+    <string name="addToExistFoodCombination">添加已有的膳食清单</string>
+    
     <string name="defaultFoodCollocationName">饮食计划%s</string>
     
     <string name="basicInfo">基本信息</string>

@@ -41,7 +41,7 @@ public class ActivityRichFood extends Activity {
 	
 	static final String LogTag = "ActivityRichFood";
 	
-	public static final String Key_InvokerType = "InvokerType";
+	public static final String IntentParamKey_InvokerType = "InvokerType";
 	public static final String InvokerType_FromNutrients = "FromNutrients";
 	public static final String InvokerType_FromFoodCombination = "FromFoodCombination";
 	
@@ -65,6 +65,7 @@ public class ActivityRichFood extends Activity {
         
         Intent paramIntent = getIntent();
         
+        mInvokerType = paramIntent.getStringExtra(IntentParamKey_InvokerType);
         mNutrientId =  paramIntent.getStringExtra(Constants.COLUMN_NAME_NutrientID);
         mToSupplyNutrientAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
         mNutrientCnCaption = paramIntent.getStringExtra(Constants.Key_Name);
@@ -80,85 +81,47 @@ public class ActivityRichFood extends Activity {
 		mListView1 = listView1;
 		RichFoodAdapter adapter = new RichFoodAdapter();
         listView1.setAdapter(adapter);
-        ListViewEventListener lvEventListener = new ListViewEventListener();
-        listView1.setOnItemClickListener(lvEventListener);
+//        ListViewEventListener lvEventListener = new ListViewEventListener();
+//        listView1.setOnItemClickListener(lvEventListener);
         
       
 		m_btnCancel = (Button) findViewById(R.id.btnCancel);
         m_btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//            	Intent intent = new Intent();
-//            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, "12345");
-//            	intent.putExtra(Constants.Key_Amount, 123.45);
-//            	setResult(IntentResultCode, intent);
             	finish();
-            	
             }
         });
         
         mBtnSave = (Button) findViewById(R.id.btnReset);
         mBtnSave.setVisibility(View.INVISIBLE);
-//        mBtnSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            	ArrayList<String> foodIdList = new ArrayList<String>();
-//            	ArrayList<String> foodAmountList = new ArrayList<String>();
-//            	for(int i=0; i<m_foodsData.size(); i++){
-//            		View rowView = mListView1.getChildAt(i);//MAYBE null pointer
-//            		EditText etFoodAmount = (EditText)rowView.findViewById(R.id.etFoodAmount);
-//            		String sAmount = etFoodAmount.getText().toString();
-//            		if (sAmount.length()>0){
-//	            		int iAmount = Integer.parseInt(sAmount);
-//	            		if (iAmount > 0){
-//	            			HashMap<String, Object> foodInfo = m_foodsData.get(i);
-//	            			String foodId = (String)foodInfo.get(Constants.COLUMN_NAME_NDB_No);
-//	            			foodIdList.add(foodId);
-//	            			foodAmountList.add(iAmount+"");
-//	            		}
-//            		}
-//            	}
-//            	
-//            	
-//            	
-//            	Intent intent = new Intent();
-//            	intent.putStringArrayListExtra(IntentResultKey_foodIdCol, foodIdList);
-//            	intent.putStringArrayListExtra(IntentResultKey_foodAmountCol, foodAmountList);
-////            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, "12345");
-////            	intent.putExtra(Constants.Key_Amount, 123.45);
-//            	setResult(IntentResultCode, intent);
-//            	
-//            	finish();
-//            	
-//            }
-//        });
         
     }
     
-	class ListViewEventListener implements OnItemSelectedListener,OnItemClickListener{
-
-		@Override
-		public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
-//			HashMap<String, Object> foodInfo = m_foodsData.get(position);
+//	class ListViewEventListener implements OnItemSelectedListener,OnItemClickListener{
+//
+//		@Override
+//		public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
+////			HashMap<String, Object> foodInfo = m_foodsData.get(position);
+////			
+////			Intent intent = new Intent();
+////        	intent.putExtra(Constants.COLUMN_NAME_NDB_No, (String)foodInfo.get(Constants.COLUMN_NAME_NDB_No));
+////        	intent.putExtra(Constants.Key_Amount, 456.45);
+////        	setResult(IntentResultCode, intent);
+////        	
+////        	finish();
 //			
-//			Intent intent = new Intent();
-//        	intent.putExtra(Constants.COLUMN_NAME_NDB_No, (String)foodInfo.get(Constants.COLUMN_NAME_NDB_No));
-//        	intent.putExtra(Constants.Key_Amount, 456.45);
-//        	setResult(IntentResultCode, intent);
-//        	
-//        	finish();
-			
-		}
-
-		@Override
-		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-		}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> parent) {
-		}
-		
-	}
+//		}
+//
+//		@Override
+//		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//		}
+//
+//		@Override
+//		public void onNothingSelected(AdapterView<?> parent) {
+//		}
+//		
+//	}
     
     
 	class RichFoodAdapter extends BaseAdapter{
@@ -197,45 +160,81 @@ public class ActivityRichFood extends Activity {
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null){
-				convertView = getLayoutInflater().inflate(R.layout.row_rich_food_input, null);
+				if (InvokerType_FromNutrients.equals(mInvokerType)){
+					convertView = getLayoutInflater().inflate(R.layout.row_rich_food, null);
+				}else{
+					convertView = getLayoutInflater().inflate(R.layout.row_rich_food_input, null);
+				}
 			}
 			ImageView ivFood = (ImageView)convertView.findViewById(R.id.ivFood);
 			TextView tvFoodName = (TextView)convertView.findViewById(R.id.tvFoodName);
 			TextView tvFoodAmount = (TextView)convertView.findViewById(R.id.tvFoodAmount);
 			
 			HashMap<String, Object> foodInfo = m_foodsData.get(position);
+			String foodId = (String)foodInfo.get(Constants.COLUMN_NAME_NDB_No);
 			tvFoodName.setText((String)foodInfo.get(Constants.COLUMN_NAME_CnCaption));
 			Double foodAmount = (Double)foodInfo.get(Constants.Key_Amount);
 			int iAmount = (int)Math.ceil(foodAmount);
 			tvFoodAmount.setText(iAmount+"g");
 			ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)foodInfo.get(Constants.COLUMN_NAME_PicPath)));
 			
-//			EditText etFoodAmount = (EditText)convertView.findViewById(R.id.etFoodAmount);
-//			Button btnShowInputDialog = (Button)convertView.findViewById(R.id.btnShowInputDialog);//用 imageview 代替 button ,利用上层的 llToInputFoodAmount 的事件处理，而不必像button那样必须加一个
-
-			LinearLayout llRowNutrient = (LinearLayout)convertView.findViewById(R.id.llRowNutrient);
-			OnClickListenerForInputAmount myOnClickListenerForInputAmount = null;
-			myOnClickListenerForInputAmount = (OnClickListenerForInputAmount)llRowNutrient.getTag();
-			if (myOnClickListenerForInputAmount == null){
-				myOnClickListenerForInputAmount = new OnClickListenerForInputAmount() ;
-				myOnClickListenerForInputAmount.initInputData(position);
-				llRowNutrient.setTag(myOnClickListenerForInputAmount);
-				llRowNutrient.setOnClickListener(myOnClickListenerForInputAmount);
-//				etFoodAmount.setOnClickListener(myOnClickListenerForInputAmount);//在disabled的状态时，看来事件不被触发
-//				etFoodAmount.setOnClickListener(myOnClickListenerForInputAmount);//在enabled的状态时，先要获得focus，再点击才能触发onclick事件
-//				etFoodAmount.setOnTouchListener(myOnClickListenerForInputAmount);//在disabled的状态时，看来事件不被触发
-//				etFoodAmount.setOnFocusChangeListener(myOnClickListenerForInputAmount);//在enabled的状态时，焦点的变换在cancal时会导致死循环
-//				btnShowInputDialog.setOnClickListener(myOnClickListenerForInputAmount);
+			if (InvokerType_FromNutrients.equals(mInvokerType)){
+				ImageButton imgBtnAddFood = (ImageButton)convertView.findViewById(R.id.imgBtnAddFood);
+				OnClickListenerToAddFoodToList myOnClickListenerToAddFoodToList =  (OnClickListenerToAddFoodToList)imgBtnAddFood.getTag();
+				if (myOnClickListenerToAddFoodToList==null){
+					myOnClickListenerToAddFoodToList = new OnClickListenerToAddFoodToList();
+					myOnClickListenerToAddFoodToList.initInputData(position,foodId,foodAmount);
+					imgBtnAddFood.setTag(myOnClickListenerToAddFoodToList);
+					imgBtnAddFood.setOnClickListener(myOnClickListenerToAddFoodToList);
+				}else{
+					myOnClickListenerToAddFoodToList.initInputData(position,foodId,foodAmount);
+				}
+				
 			}else{
-				Log.d(LogTag, "reused EditText reuse OnClickListenerForInputAmount");
-				myOnClickListenerForInputAmount.initInputData(position);
+				LinearLayout llRowNutrient = (LinearLayout)convertView.findViewById(R.id.llRowNutrient);
+				OnClickListenerForInputAmount myOnClickListenerForInputAmount = null;
+				myOnClickListenerForInputAmount = (OnClickListenerForInputAmount)llRowNutrient.getTag();
+				if (myOnClickListenerForInputAmount == null){
+					myOnClickListenerForInputAmount = new OnClickListenerForInputAmount() ;
+					myOnClickListenerForInputAmount.initInputData(position);
+					llRowNutrient.setTag(myOnClickListenerForInputAmount);
+					llRowNutrient.setOnClickListener(myOnClickListenerForInputAmount);
+				}else{
+					Log.d(LogTag, "reused EditText reuse OnClickListenerForInputAmount");
+					myOnClickListenerForInputAmount.initInputData(position);
+				}
 			}
-			
-//			etFoodAmount.setEnabled(false);
-			
 			
 			return convertView;
 		}
+		
+		class OnClickListenerToAddFoodToList extends OnClickListenerInListItem{
+			String m_foodId;
+			Double m_foodAmount;
+			
+			@Override
+			public void initInputData(int rowPos) {
+				throw new RuntimeException("method abandoned");
+			}
+			
+			public void initInputData(int rowPos, String foodId, Double foodAmount){
+				super.initInputData(rowPos);
+				m_foodId = foodId;
+				m_foodAmount = foodAmount;
+			}
+			
+			
+			@Override
+			public void onClick(View v) {
+//				HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
+				Intent intent = new Intent(ActivityRichFood.this,ActivityAddFoodChooseList.class);
+//				intent.putExtra(ActivityAddFoodChooseList.IntentKey_ActionType, ActivityAddFoodChooseList.ActionType_ToFoodCombination);
+            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, m_foodId);
+            	intent.putExtra(Constants.Key_Amount, m_foodAmount.doubleValue());
+				startActivity(intent);
+
+			}
+		}//OnClickListenerToAddFoodToList
 		
 		class OnClickListenerForInputAmount extends OnClickListenerInListItem implements OnTouchListener,OnFocusChangeListener{
 
@@ -287,96 +286,7 @@ public class ActivityRichFood extends Activity {
 					}
 				});
 				myDialogHelperSimpleInput.show();
-				
-//				AlertDialog.Builder dlgBuilder =new AlertDialog.Builder(ActivityRichFood.this);
-//				View vwDialogContent = getLayoutInflater().inflate(R.layout.dialog_input_food_amount, null);
-//				EditText etAmount = (EditText)vwDialogContent.findViewById(R.id.etAmount);
-//				TextView tvFood = (TextView)vwDialogContent.findViewById(R.id.tvFood);
-//				HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
-//				String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
-//				tvFood.setText(foodName);
-//				
-//				DialogInterfaceEventListener_EditText dialogInterfaceEventListener_EditText1 = new DialogInterfaceEventListener_EditText(etAmount);
-//				dlgBuilder.setView(vwDialogContent);
-//				dlgBuilder.setPositiveButton("OK", dialogInterfaceEventListener_EditText1);
-//				dlgBuilder.setNegativeButton("Cancel", dialogInterfaceEventListener_EditText1);
-//				
-//				
-//				AlertDialog dlg = dlgBuilder.create();
-//				
-////				closePrevAlertDialog();//Activity  has leaked window 的问题，发现是与ListViewEventListener.onItemClick 中调用了 finish() 有关。
-////				mPrevAlertDialog = dlg;
-//				
-//				dialogInterfaceEventListener_EditText1.SetDialog(dlg);
-//				dlg.setOnShowListener(dialogInterfaceEventListener_EditText1);
-//				dlg.setOnDismissListener(dialogInterfaceEventListener_EditText1);
-//				Log.d(LogTag, "before show AlertDialog "+dlg);
-//				dlg.show();
-//				Log.d(LogTag, "after  show AlertDialog "+dlg);
-				
-				
 			}
-			
-//			class DialogInterfaceEventListener_EditText implements DialogInterface.OnClickListener, DialogInterface.OnShowListener, DialogInterface.OnDismissListener{
-//				Dialog mDialog;
-//				EditText m_editText1;
-//				public DialogInterfaceEventListener_EditText(EditText editText1){
-//					m_editText1 = editText1;
-//				}
-//				public void SetDialog(Dialog dlg){
-//					mDialog = dlg;
-//					
-////					m_editText1.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-////						@Override
-////						public void onFocusChange(View v, boolean hasFocus) {
-////							Log.d(LogTag, "DialogInterfaceOnClickListener_EditText m_editText1 onFocusChange, hasFocus="+hasFocus);
-////							if (hasFocus) {
-////								mDialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
-////					       }
-////						}
-////					});
-//				}
-//				
-//				@Override
-//				public void onClick(DialogInterface dlgInterface, int which) {
-//					if(which == DialogInterface.BUTTON_POSITIVE){
-//						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick OK "+mDialog);
-//						String sInput = m_editText1.getText().toString();
-//						HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
-//						String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
-//						
-//						Intent intent = new Intent();
-//		            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
-//		            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
-//		            	ActivityRichFood.this.setResult(IntentResultCode, intent);
-//		            	
-//		            	ActivityRichFood.this.finish();
-//					}else if(which == DialogInterface.BUTTON_NEGATIVE){
-//						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick Cancel "+mDialog);
-//					}else if(which == DialogInterface.BUTTON_NEUTRAL){//忽略按键的点击事件
-//						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick Ignore "+mDialog);
-//					}else{
-//						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick other "+mDialog);
-//					}
-////					m_editText1 = null;
-////	            	mDialog = null;//Activity  has leaked window 的问题，发现是与ListViewEventListener.onItemClick 中调用了 finish() 有关。
-//				}
-//
-//				@Override
-//				public void onShow(DialogInterface dlgInterface) {
-//					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onShow "+mDialog);
-//					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_IMPLICIT);//能show出键盘
-////			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_FORCED);//能show出键盘
-////					m_editText1.requestFocus();
-//				}
-//				@Override
-//				public void onDismiss(DialogInterface dialog) {
-//					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onDismiss "+mDialog+ " | "+dialog);
-//					
-//				}
-//			}//class DialogInterfaceOnClickListener_EditText
-			
 		}//class OnClickListenerForInputAmount
 		
 		

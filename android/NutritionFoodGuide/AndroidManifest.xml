@@ -8,6 +8,10 @@
         android:targetSdkVersion="17" />
     
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <!--
+    -->
 
     <application
         android:allowBackup="true"
@@ -114,6 +118,11 @@
 		</activity>
 		
 		<activity android:name=".ActivityNutrients" 
+		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    >
+		</activity>
+		
+		<activity android:name=".ActivityAddFoodChooseList" 
 		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
 		    >
 		</activity>

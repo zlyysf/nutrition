@@ -44,6 +44,7 @@ public class ActivityHome extends Activity{
 	@Override
 	public void onCreate(Bundle savedInstanceState)
 	{
+		Log.d(LogTag, "onCreate savedInstanceState="+savedInstanceState);
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
@@ -111,12 +112,43 @@ public class ActivityHome extends Activity{
 				default:
 					break;
 				}
-
 			}//onItemClick
 		});//setOnItemClickListener
+		
+		dealParamIntent();
 
 	}
 
 
+	@Override
+    protected void onNewIntent(Intent intent){
+		Log.d(LogTag, "onNewIntent intent="+intent);
+    	super.onNewIntent(intent);
+    	setIntent(intent);
+    	
+    	dealParamIntent();
+    }
+	
+	void dealParamIntent(){
+		Tool.printActivityStack(this);
+		
+		Intent paramIntent = getIntent();
+		Log.d(LogTag, "dealParamIntent paramIntent="+paramIntent);
+		if (paramIntent != null){
+			long collocationId = paramIntent.getLongExtra(Constants.COLUMN_NAME_CollocationId, -1);
+			String foodId = paramIntent.getStringExtra(Constants.COLUMN_NAME_NDB_No);
+			double foodAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
+			setIntent(null);
+			Log.d(LogTag, "dealParamIntent collocationId="+collocationId+", foodId="+foodId+", foodAmount="+foodAmount);
+			if (foodId != null && foodId.length()>0 ){
+				Intent intent2 = new Intent(ActivityHome.this, ActivityFoodCombinationList.class);
+				intent2.putExtra(ActivityFoodCombinationList.IntentKey_aim,ActivityFoodCombinationList.IntentValue_aim_EditItem);
+				intent2.putExtra(Constants.COLUMN_NAME_CollocationId, collocationId);
+				intent2.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+		    	intent2.putExtra(Constants.Key_Amount, foodAmount);
+				startActivity(intent2);
+			}
+		}
+	}
     
 }

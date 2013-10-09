@@ -40,11 +40,12 @@ public class ActivityFoodCombination extends Activity {
 	static final String[] GroupTitles = new String[]{"一天的食物","一天的营养比例"};
 	
 	long m_collocationId = -1;
+	String m_in_foodId;
+	double m_in_foodAmount;
 	HashMap<String, Double> m_foodAmountHm;
 	ArrayList<String> m_OrderedFoodIdList ;
 	HashMap<String, HashMap<String, Object>> m_foods2LevelHm ;
 	
-
 	ArrayList<HashMap<String, Object>> m_nutrientsData;
 	HashMap<String, Object> m_paramsForCalculateNutritionSupply;
 	Button mBtnSave,m_btnCancel;
@@ -60,7 +61,10 @@ public class ActivityFoodCombination extends Activity {
         setContentView(R.layout.activity_food_combination);
         
         Intent paramIntent = getIntent();
+        Log.d(LogTag, "onCreate paramIntent="+paramIntent);
         m_collocationId =  paramIntent.getLongExtra(Constants.COLUMN_NAME_CollocationId,-1);
+        m_in_foodId = paramIntent.getStringExtra(Constants.COLUMN_NAME_NDB_No);
+        m_in_foodAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
         
         initViewHandles();
         setViewEventHandlers();
@@ -174,33 +178,44 @@ public class ActivityFoodCombination extends Activity {
         });
 	}
 	void setViewsContent(){
-
         m_foodAmountHm = new HashMap<String, Double>();
         m_OrderedFoodIdList = new ArrayList<String>();
         m_foods2LevelHm = new HashMap<String, HashMap<String,Object>>();
-        
+        DataAccess da = DataAccess.getSingleton(ActivityFoodCombination.this);
         if (m_collocationId > 0){
-        	DataAccess da = DataAccess.getSingleton(ActivityFoodCombination.this);
         	//ArrayList<HashMap<String, Object>> collocationFoodData 
         	HashMap<String, Object> foodCollocationData = da.getFoodCollocationData_withCollocationId(m_collocationId);
         	ArrayList<HashMap<String, Object>> foodAndAmountArray = (ArrayList<HashMap<String, Object>>)foodCollocationData.get("foodAndAmountArray") ;
         	if (foodAndAmountArray!=null && foodAndAmountArray.size()>0 ){
-        		String[] foodIdAry = new String[foodAndAmountArray.size()];
+        		ArrayList<String> foodIds = new ArrayList<String>();
         		for(int i=0; i<foodAndAmountArray.size(); i++){
         			HashMap<String, Object> foodAndAmountInfo = foodAndAmountArray.get(i);
         			String foodId = (String)foodAndAmountInfo.get(Constants.COLUMN_NAME_FoodId);
         			Double foodAmount = (Double)foodAndAmountInfo.get(Constants.COLUMN_NAME_FoodAmount);
         			m_foodAmountHm.put(foodId, foodAmount);
-        			foodIdAry[i] = foodId;
+        			foodIds.add(foodId);
         		}
+        		if (m_in_foodId!=null && m_in_foodId.length()>0){
+        			if ( m_foodAmountHm.get(m_in_foodId)==null ){
+        				m_foodAmountHm.put(m_in_foodId, Double.valueOf(m_in_foodAmount));
+        				foodIds.add(m_in_foodId);
+        			}else{
+        				Tool.addDoubleToDictionaryItem(m_in_foodAmount, m_foodAmountHm, m_in_foodId);
+        			}
+        		}
+        		String[] foodIdAry = foodIds.toArray(new String[foodIds.size()]);
         		ArrayList<HashMap<String, Object>> foodAttrAry = da.getFoodAttributesByIds(foodIdAry);
         		m_foods2LevelHm = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_NDB_No, foodAttrAry);
         		m_OrderedFoodIdList = da.getOrderedFoodIds(foodIdAry);
         	}
-        	
+        }else{
+        	if (m_in_foodId!=null && m_in_foodId.length()>0){
+        		m_foodAmountHm.put(m_in_foodId, Double.valueOf(m_in_foodAmount));
+        		m_OrderedFoodIdList.add(m_in_foodId);
+        		ArrayList<HashMap<String, Object>> foodAttrAry = da.getFoodAttributesByIds(new String[]{m_in_foodId});
+        		m_foods2LevelHm = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_NDB_No, foodAttrAry);
+        	}
         }
-
-
         
         RecommendFood rf = new RecommendFood(this);
         HashMap<String, Object> userInfo = StoredConfigTool.getUserInfo(this);
@@ -613,14 +628,23 @@ public class ActivityFoodCombination extends Activity {
 			public void onClick(View v) {
 				Log.d(LogTag, "OnClickListenerToAddFoodByNutrient 2levelPos=["+m_Data2LevelPosition.groupPos+","+m_Data2LevelPosition.childPos+"]"+v);
 				
-				HashMap<String, Double> DRIsDict = (HashMap<String, Double>)(m_paramsForCalculateNutritionSupply.get(Constants.Key_DRI));
+				HashMap<String, Object> nutrientData = m_nutrientsData.get(m_Data2LevelPosition.childPos);
+				String nutrientId = (String)nutrientData.get(Constants.COLUMN_NAME_NutrientID);
 				
-				HashMap<String, Object> nutrientInfo = m_nutrientsData.get(m_Data2LevelPosition.childPos);
+				HashMap<String, Double> DRIsDict = (HashMap<String, Double>)(m_paramsForCalculateNutritionSupply.get(Constants.Key_DRI));
+				Double amountDRI = DRIsDict.get(nutrientId);
+				Double dObj_supplyNutrientAmount = (Double)nutrientData.get(Constants.Key_supplyNutrientAmount);
+				
+				double toSupplyDelta = amountDRI.doubleValue() - dObj_supplyNutrientAmount.doubleValue();
+				Log.d(LogTag, "OnClickListenerToAddFoodByNutrient amountDRI="+amountDRI+", dObj_supplyNutrientAmount="+dObj_supplyNutrientAmount+", toSupplyDelta1="+toSupplyDelta);
+				if (toSupplyDelta<0)
+					toSupplyDelta = 0;
+				
 				Intent intent = new Intent(ActivityFoodCombination.this, ActivityRichFood.class);
-				String nutrientId = (String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientID);
+				intent.putExtra(ActivityRichFood.IntentParamKey_InvokerType, ActivityRichFood.InvokerType_FromFoodCombination);
 				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
-				intent.putExtra(Constants.Key_Amount, DRIsDict.get(nutrientId).doubleValue());
-				intent.putExtra(Constants.Key_Name, (String)nutrientInfo.get(Constants.Key_Name));
+				intent.putExtra(Constants.Key_Amount, toSupplyDelta);
+				intent.putExtra(Constants.Key_Name, (String)nutrientData.get(Constants.Key_Name));
 				startActivityForResult(intent,IntentRequestCode_ActivityRichFood);
 			}
 		}

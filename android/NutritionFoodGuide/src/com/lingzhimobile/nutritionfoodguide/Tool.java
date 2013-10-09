@@ -9,7 +9,9 @@ import org.apache.commons.lang3.StringUtils;
 
 
 import android.R.bool;
+import android.app.ActivityManager;
 import android.app.AlertDialog;
+import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -843,7 +845,17 @@ public class Tool {
 	}
 	
 	
-	
+	public static void printActivityStack(Context ctx){
+		//SecurityException: Permission Denial: getTasks() from pid=19086, uid=10092 requires android.permission.GET_TASKS
+		
+		ActivityManager manager = (ActivityManager) ctx.getSystemService(Context.ACTIVITY_SERVICE);
+		List<RunningTaskInfo> runningTaskInfos = manager.getRunningTasks(100);
+		for(int i=0; i<runningTaskInfos.size(); i++){
+			RunningTaskInfo RunningTaskInfo1 = runningTaskInfos.get(i);
+			Log.d(LogTag, "i="+i+", numActivities="+RunningTaskInfo1.numActivities
+					+", topActivity="+RunningTaskInfo1.topActivity.getClassName()+", baseActivity="+RunningTaskInfo1.baseActivity.getClassName());
+		}
+	}
 	
 	
 	

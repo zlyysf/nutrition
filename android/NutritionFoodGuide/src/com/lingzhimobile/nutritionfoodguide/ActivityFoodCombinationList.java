@@ -36,6 +36,9 @@ public class ActivityFoodCombinationList extends Activity {
 	
 	static final String LogTag = "ActivityFoodCombinationList";
 	
+	public static final String IntentKey_aim = "aim";
+	public static final String IntentValue_aim_EditItem = "EditItem";
+	
 	public static final int IntentRequestCode_ActivityFoodCombination = 100;
 
 	ArrayList<HashMap<String, Object>> m_foodCollocationList;
@@ -50,6 +53,7 @@ public class ActivityFoodCombinationList extends Activity {
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
+		Log.d(LogTag, "onCreate savedInstanceState="+savedInstanceState);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodcombination_list);
         
@@ -80,7 +84,30 @@ public class ActivityFoodCombinationList extends Activity {
         mListView1 = (ListView)this.findViewById(R.id.listView1);
 		mListAdapter = new FoodCombinationAdapter();
 		mListView1.setAdapter(mListAdapter);
+		
+		dealParamIntent();
     }
+	
+	void dealParamIntent(){
+		Tool.printActivityStack(this);
+		
+		Intent paramIntent = getIntent();
+		Log.d(LogTag, "dealParamIntent paramIntent="+paramIntent);
+		if (paramIntent != null){
+			String aim = paramIntent.getStringExtra(IntentKey_aim);
+			long collocationId = paramIntent.getLongExtra(Constants.COLUMN_NAME_CollocationId, -1);
+			String foodId = paramIntent.getStringExtra(Constants.COLUMN_NAME_NDB_No);
+			double foodAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
+			
+			if (IntentValue_aim_EditItem.equals(aim)){
+				Intent intent2 = new Intent(this, ActivityFoodCombination.class);
+				intent2.putExtra(Constants.COLUMN_NAME_CollocationId, collocationId);
+				intent2.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+		    	intent2.putExtra(Constants.Key_Amount, foodAmount);
+				startActivityForResult(intent2,IntentRequestCode_ActivityFoodCombination);
+			}
+		}
+	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data)
