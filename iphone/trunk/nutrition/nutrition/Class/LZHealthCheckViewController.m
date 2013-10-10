@@ -71,9 +71,8 @@
     self.isFirstLoad = YES;
         //self.questionLabel.text = @"您最近有以下哪些症状?（可多选）";
     UIBarButtonItem *recheckItem = [[UIBarButtonItem alloc]initWithTitle:@"提醒设置" style:UIBarButtonItemStyleBordered target:self action:@selector(timeSettingItemTapped)];
-    self.navigationItem.rightBarButtonItem = recheckItem;
-    
-    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
+    self.navigationItem.rightBarButtonItem = recheckItem;   
+    UIImage *button30 = [[UIImage imageNamed:@"button_back_40"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
     [self.checkItemButton setBackgroundImage:button30 forState:UIControlStateNormal];
     
     UIView *topBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 120, 44)];

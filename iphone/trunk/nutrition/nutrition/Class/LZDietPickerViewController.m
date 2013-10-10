@@ -114,7 +114,7 @@
         }
         else
         {
-            UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
+            UIImage *button30 = [[UIImage imageNamed:@"button_back_40"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
             UIButton *addButton = [UIButton buttonWithType:UIButtonTypeCustom];
             [cell.contentView addSubview:addButton];
             [addButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];

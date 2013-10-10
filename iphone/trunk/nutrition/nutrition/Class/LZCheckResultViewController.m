@@ -621,7 +621,7 @@
     else if (section == 4)
     {
         sectionTitleLabel.text =  @"您需要补充的食物";
-        UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(5, 5, 5, 5) resizingMode:UIImageResizingModeStretch];
+        UIImage *button30 = [[UIImage imageNamed:@"button_back_40"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
         UIButton *recommendButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [recommendButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
         [recommendButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
