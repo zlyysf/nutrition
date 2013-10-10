@@ -1506,8 +1506,8 @@
 {
     if(type == ShareTypeWeixiSession || type == ShareTypeWeixiTimeline)
     {
-        if ([WXApi isWXAppInstalled])
-        {
+//        if ([WXApi isWXAppInstalled])
+//        {
             NSData *shareData = [self getShareData];
             //isWXAppInstalled
             //getWXAppInstallUrl
@@ -1563,11 +1563,11 @@
                                 }];
                 }
 
-        }
-        else
-        {
-            [self popWeiChatInstallAlert];
-        }
+//        }
+//        else
+//        {
+//            [self popWeiChatInstallAlert];
+//        }
     }
     else if (type == ShareTypeSinaWeibo)
     {
