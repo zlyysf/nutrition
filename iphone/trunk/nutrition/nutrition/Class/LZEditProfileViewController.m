@@ -362,6 +362,7 @@
     }
     self.emptyDRILabel.hidden = YES;
     self.listView.hidden = NO;
+    self.listViewBGImage.hidden = NO;
 
     
 //    NSLog(@"%@",self.nutrientStandardArray);
@@ -469,6 +470,7 @@
 -(void)displayEmptyState
 {
     self.listView.hidden = YES;
+    self.listViewBGImage.hidden = YES;
     self.emptyDRILabel.hidden = NO;
     
 }

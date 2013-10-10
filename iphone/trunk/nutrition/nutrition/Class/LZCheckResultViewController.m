@@ -75,8 +75,23 @@
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
     self.listView.tableFooterView = footerView;
+    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
+    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
+    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
+    [button setTitle:@"  返回" forState:UIControlStateNormal];
+    button.frame = CGRectMake(0, 0, 48, 30);
+    [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
+    [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
+    [button addTarget:self action:@selector(backButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] initWithCustomView:button];
+    self.navigationItem.leftBarButtonItem = backItem;
+
 
 	// Do any additional setup after loading the view.
+}
+-(void)backButtonTapped
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
