@@ -2,7 +2,9 @@
 <resources>
     <!-- http://www.w3schools.com/html/html_colors.asp -->
     
-    <color name="radioAsTabBgColor">#3daf2d</color>
+    <color name="border_gray">#c2c2c2</color>
+    <color name="radioAsTabBgColor">#3daf2c</color>
+    <color name="radioAsTabBgColor2">#3daf2d</color>
     <color name="buttonsBarInFoodCombination">#5af4f2ec</color>  <!--65%透明度 --> 
 
     <color name="green">#7700ff00</color>

@@ -43,7 +43,7 @@ public class ActivityDiseaseNutrientWizard extends FragmentActivity {
         mVpWizard = (ViewPager) findViewById(R.id.vpWizard);
         mLstPagerView = new ArrayList<View>();
         mBtnCancel = (Button) findViewById(R.id.btnCancel);
-        mBtnReset = (Button) findViewById(R.id.btnReset);
+        mBtnReset = (Button) findViewById(R.id.btnTopRight);
 //        mBtnPrev = (Button) findViewById(R.id.btnPrev);
 //    	mBtnNext = (Button) findViewById(R.id.btnNext);
     	mImgBtnPrev = (ImageButton) findViewById(R.id.imgBtnPrev);
@@ -195,7 +195,7 @@ public class ActivityDiseaseNutrientWizard extends FragmentActivity {
         //ArrayAdapter<String> aryAdapterDisease = new ArrayAdapter<String>(this,android.R.layout.simple_list_item_multiple_choice, alDisease);
     	ArrayAdapter<String> aryAdapterDisease = new ArrayAdapter<String>(this,R.layout.simple_list_item_multiple_choice, alDisease);
         View vwItem = this.getLayoutInflater().inflate(R.layout.wizarditem_disease, null);
-        TextView tvTitle = (TextView)vwItem.findViewById(R.id.title);
+        TextView tvTitle = (TextView)vwItem.findViewById(R.id.tvTitle);
         tvTitle.setText(GlobalVar.DiseaseGroups.get(wizardIdx));
         ListView listview1 = (ListView)vwItem.findViewById(R.id.listView1);
 		listview1.setAdapter(aryAdapterDisease);

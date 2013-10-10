@@ -83,6 +83,8 @@ public class ActivityRichFood extends Activity {
 //        ListViewEventListener lvEventListener = new ListViewEventListener();
 //        listView1.setOnItemClickListener(lvEventListener);
         
+        TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+        tvTitle.setText(mNutrientCnCaption);
       
 		m_btnCancel = (Button) findViewById(R.id.btnCancel);
         m_btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -92,9 +94,8 @@ public class ActivityRichFood extends Activity {
             }
         });
         
-        mBtnSave = (Button) findViewById(R.id.btnReset);
+        mBtnSave = (Button) findViewById(R.id.btnTopRight);
         mBtnSave.setVisibility(View.INVISIBLE);
-        
     }
     
     

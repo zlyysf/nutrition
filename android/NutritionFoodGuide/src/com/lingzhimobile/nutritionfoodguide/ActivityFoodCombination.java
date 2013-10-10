@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.text.InputType;
 import android.util.*;
 import android.view.Gravity;
@@ -48,6 +49,7 @@ public class ActivityFoodCombination extends Activity {
 	
 	ArrayList<HashMap<String, Object>> m_nutrientsData;
 	HashMap<String, Object> m_paramsForCalculateNutritionSupply;
+	HashMap<String, HashMap<String, Object>> m_nutrientInfoDict2Level;
 	Button mBtnSave,m_btnCancel;
 	ImageButton m_imgbtnAdd,m_imgbtnShare,m_imgbtnRecommend;
 	
@@ -72,7 +74,7 @@ public class ActivityFoodCombination extends Activity {
     }
 	
 	void initViewHandles(){
-		mBtnSave = (Button) findViewById(R.id.btnReset);
+		mBtnSave = (Button) findViewById(R.id.btnTopRight);
         mBtnSave.setText(R.string.save);
         m_btnCancel = (Button) findViewById(R.id.btnCancel);
         m_imgbtnAdd = (ImageButton) findViewById(R.id.imgbtnAdd);
@@ -228,6 +230,7 @@ public class ActivityFoodCombination extends Activity {
 	    m_nutrientsData = rf.calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(params);
 
 	    m_paramsForCalculateNutritionSupply = params;
+	    m_nutrientInfoDict2Level = (HashMap<String, HashMap<String, Object>>)m_paramsForCalculateNutritionSupply.get("nutrientInfoDict2Level");
 		
 	    ExpandableListAdapter_FoodNutrition adapter = new ExpandableListAdapter_FoodNutrition(this);
         mListAdapter = adapter;
@@ -481,7 +484,6 @@ public class ActivityFoodCombination extends Activity {
 	{
 		Activity m_actv;
 		
-		
 		public ExpandableListAdapter_FoodNutrition(Activity actv){
 			assert(actv!=null);
 			m_actv = actv;
@@ -504,7 +506,6 @@ public class ActivityFoodCombination extends Activity {
 		{
 			return childPosition;
 		}
-	
 
 		public int getChildrenCount(int groupPosition)
 		{
@@ -592,11 +593,26 @@ public class ActivityFoodCombination extends Activity {
 					convertView = m_actv.getLayoutInflater().inflate(R.layout.row_nutrient, null);
 				}
 				
-				HashMap<String, Object> nutrientInfo = m_nutrientsData.get(childPosition);
-				Double dObj_supplyRate = (Double)nutrientInfo.get(Constants.Key_supplyNutrientRate);
+				HashMap<String, Object> nutrientData = m_nutrientsData.get(childPosition);
+				String nutrientId = (String)nutrientData.get(Constants.COLUMN_NAME_NutrientID);
+				HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
+				
+				Double dObj_supplyRate = (Double)nutrientData.get(Constants.Key_supplyNutrientRate);
 				int supplyPercent = (int) Math.round( dObj_supplyRate.doubleValue() * 100 );
 				TextView tvNutrient = (TextView)convertView.findViewById(R.id.tvNutrient);
-				tvNutrient.setText((String)nutrientInfo.get(Constants.Key_Name));
+				tvNutrient.setText((String)nutrientData.get(Constants.Key_Name));
+				LinearLayout llNutrient = (LinearLayout)convertView.findViewById(R.id.llNutrient);
+				
+				OnClickListenerToShowNutrientDescription myOnClickListenerToShowNutrientDescription = (OnClickListenerToShowNutrientDescription)llNutrient.getTag();
+				if (myOnClickListenerToShowNutrientDescription == null){
+					myOnClickListenerToShowNutrientDescription = new OnClickListenerToShowNutrientDescription();
+					myOnClickListenerToShowNutrientDescription.initInputData((String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientDescription));
+					llNutrient.setOnClickListener(myOnClickListenerToShowNutrientDescription);
+					llNutrient.setTag(myOnClickListenerToShowNutrientDescription);
+				}else{
+					myOnClickListenerToShowNutrientDescription.initInputData((String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientDescription));
+				}
+				
 				
 				LinearLayout llProgress = (LinearLayout)convertView.findViewById(R.id.llProgress);
 				ProgressBar pbSupplyPercent = (ProgressBar)convertView.findViewById(R.id.pbSupplyPercent);
@@ -605,22 +621,36 @@ public class ActivityFoodCombination extends Activity {
 				if (tvSupplyPercent==null) tvSupplyPercent = (TextView)convertView.findViewById(R.id.tvSupplyPercent);
 				tvSupplyPercent.setText(supplyPercent+"%");
 				pbSupplyPercent.setProgress(supplyPercent);
-				
 
-				OnClickListenerToAddFoodByNutrient onClickListenerToAddFoodByNutrient1 = null;
-				onClickListenerToAddFoodByNutrient1 = (OnClickListenerToAddFoodByNutrient)imgBtnAddByNutrient.getTag();
+				OnClickListenerToAddFoodByNutrient onClickListenerToAddFoodByNutrient1 = (OnClickListenerToAddFoodByNutrient)imgBtnAddByNutrient.getTag();
 				if (onClickListenerToAddFoodByNutrient1 == null){
 					onClickListenerToAddFoodByNutrient1 = new OnClickListenerToAddFoodByNutrient();
 					onClickListenerToAddFoodByNutrient1.initInputData(groupPosition,childPosition);
+					imgBtnAddByNutrient.setOnClickListener(onClickListenerToAddFoodByNutrient1);
+					llProgress.setOnClickListener(onClickListenerToAddFoodByNutrient1);
 					imgBtnAddByNutrient.setTag(onClickListenerToAddFoodByNutrient1);
 				}else{
 					onClickListenerToAddFoodByNutrient1.initInputData(groupPosition,childPosition);
 				}
 //				pbSupplyPercent.setOnClickListener(onClickListenerToAddFoodByNutrient1);
-				llProgress.setOnClickListener(onClickListenerToAddFoodByNutrient1);
-				imgBtnAddByNutrient.setOnClickListener(onClickListenerToAddFoodByNutrient1);
+//				llProgress.setOnClickListener(onClickListenerToAddFoodByNutrient1);
+//				imgBtnAddByNutrient.setOnClickListener(onClickListenerToAddFoodByNutrient1);
 			}
 			return convertView;
+		}
+		
+		class OnClickListenerToShowNutrientDescription implements View.OnClickListener{
+			String m_nutrientDescription;
+			
+			public void initInputData(String nutrientDescription){
+				m_nutrientDescription = nutrientDescription;
+			}
+
+			@Override
+			public void onClick(View v) {
+				new AlertDialog.Builder(ActivityFoodCombination.this).setMessage(m_nutrientDescription).setPositiveButton("OK", null).show();
+				
+			}
 		}
 		
 		class OnClickListenerToAddFoodByNutrient extends OnClickListenerInExpandListItem{
@@ -650,8 +680,6 @@ public class ActivityFoodCombination extends Activity {
 		}
 		
 		class OnClickListenerToEditFoodAmount extends OnClickListenerInExpandListItem{
-
-			
 			@Override
 			public void onClick(View v) {
 				Log.d(LogTag, "2levelPos=["+m_Data2LevelPosition.groupPos+","+m_Data2LevelPosition.childPos+"]");
@@ -706,8 +734,6 @@ public class ActivityFoodCombination extends Activity {
 		{
 			return groupPosition;
 		}
-	
-	
 	
 		public boolean isChildSelectable(int groupPosition, int childPosition)
 		{

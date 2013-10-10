@@ -55,7 +55,7 @@ public class ActivityNutrients extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nutrients);
 		
-		Button btnReset = (Button) findViewById(R.id.btnReset);
+		Button btnReset = (Button) findViewById(R.id.btnTopRight);
 		btnReset.setVisibility(View.GONE);
         Button btnCancel = (Button) findViewById(R.id.btnCancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +64,8 @@ public class ActivityNutrients extends Activity{
             	finish();
             }
         });
-        TextView tvTitle = (TextView) findViewById(R.id.title);
-        tvTitle.setText(R.string.nutrients);
+        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText(R.string.title_nutrients);
         
         m_DRIsDict = NutritionTool.getDRIsDictOfCurrentUser(this, null);
         DataAccess da = DataAccess.getSingleton(this);

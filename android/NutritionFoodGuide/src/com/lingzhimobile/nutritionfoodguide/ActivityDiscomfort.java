@@ -83,7 +83,7 @@ public class ActivityDiscomfort extends Activity {
 			}
         });
         
-        mBtnReset = (Button) findViewById(R.id.btnReset);
+        mBtnReset = (Button) findViewById(R.id.btnTopRight);
         mBtnReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

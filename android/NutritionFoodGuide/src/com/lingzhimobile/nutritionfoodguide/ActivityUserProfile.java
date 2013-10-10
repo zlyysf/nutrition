@@ -35,12 +35,15 @@ public class ActivityUserProfile extends Activity {
 	
 	static final String LogTag = "ActivityUserProfile";
 	
+	TextView m_tvTitle;
+	Button m_btnCancel,mBtnSave;
+	
 	RadioGroup m_radioGroupSex,m_radioGroupActiveLevel;
 	RadioButton m_rbMale, m_rbFemale, m_rbLevelLight, m_rbLevelMid, m_rbLevelStrong, m_rbLevelVeryStrong;
 	EditText m_etAge, m_etHeight, m_etWeight;
 	
-	Button mBtnSave;
-	Button m_btnCancel;
+
+	
 	
 
 	@Override
@@ -78,6 +81,13 @@ public class ActivityUserProfile extends Activity {
 	
 	
 	void initViewHandles(){
+		m_tvTitle = (TextView)findViewById(R.id.tvTitle);
+		mBtnSave = (Button) findViewById(R.id.btnTopRight);
+        m_btnCancel = (Button) findViewById(R.id.btnCancel);
+        
+        m_tvTitle.setText(R.string.title_userinfo);
+        mBtnSave.setText(R.string.save);
+        
 		m_radioGroupSex = (RadioGroup)this.findViewById(R.id.radioGroupSex);
         m_etAge = (EditText)this.findViewById(R.id.etAge);
         m_etHeight = (EditText)this.findViewById(R.id.etHeight);
@@ -91,10 +101,9 @@ public class ActivityUserProfile extends Activity {
         m_rbLevelStrong = (RadioButton)this.findViewById(R.id.rbLevelStrong);
         m_rbLevelVeryStrong = (RadioButton)this.findViewById(R.id.rbLevelVeryStrong);
         
-        mBtnSave = (Button) findViewById(R.id.btnReset);
-        m_btnCancel = (Button) findViewById(R.id.btnCancel);
         
-        mBtnSave.setText(R.string.save);
+        
+        
 	}
 	void setViewEventHandlers(){
         m_radioGroupSex.setOnCheckedChangeListener(new OnCheckedChangeListener() {

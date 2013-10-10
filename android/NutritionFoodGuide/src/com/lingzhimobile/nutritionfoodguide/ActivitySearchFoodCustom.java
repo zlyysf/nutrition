@@ -98,7 +98,7 @@ public class ActivitySearchFoodCustom extends Activity {
 			}
         });
         
-        mBtnFinish = (Button) findViewById(R.id.btnReset);
+        mBtnFinish = (Button) findViewById(R.id.btnTopRight);
         mBtnFinish.setVisibility(View.INVISIBLE);
 
         

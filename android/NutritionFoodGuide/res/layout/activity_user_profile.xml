@@ -28,24 +28,28 @@
 			    android:orientation="horizontal"
 			    android:layout_margin="5dp"
 			    >
+
 		        <ImageView
 		            android:id="@+id/imageView1"
-		            android:layout_width="wrap_content"
-		            android:layout_height="wrap_content"
+		            android:layout_width="18dp"
+		            android:layout_height="18dp"
 		            android:layout_gravity="center_vertical"
 		            android:layout_weight="0"
 		            android:src="@drawable/basic_info_icon_2x" />
+
 			    <TextView
 			        android:id="@+id/tvBasicInfo"
 			        android:layout_width="match_parent"
 			        android:layout_height="40dp"
 			        android:layout_gravity="center_vertical"
 			        android:layout_marginLeft="10dp"
-			        android:gravity="center_vertical"
 			        android:layout_weight="1"
+			        android:gravity="center_vertical"
 			        android:text="@string/basicInfo"
 			        android:textColor="@color/black"
+			        android:textSize="18sp"
 			        android:textStyle="bold" />
+
 			    <!-- 
 			    想去掉下面文本框的焦点不行。虽然可以不弹键盘了。
 			    -->
@@ -68,13 +72,16 @@
 		    <LinearLayout
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:layout_margin="5dp"
+		        android:layout_marginBottom="5dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginTop="5dp"
 		        
 		        >
 			    <RadioGroup
 			        android:id="@+id/radioGroupSex"
 				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content"
+				    android:layout_height="40dp"
 				    android:fadingEdge="none"
 			    	android:orientation="horizontal"
 			        >
@@ -82,8 +89,7 @@
 				    <RadioButton
 				        android:id="@+id/rbMale"
 				        android:layout_width="match_parent"
-				        android:layout_height="50dp"
-	
+				        android:layout_height="match_parent"
 				        android:layout_weight="1"
 				        android:background="@drawable/radio_astab_left_bg"
 				        android:button="@null"
@@ -103,8 +109,7 @@
 				    <RadioButton
 				        android:id="@+id/rbFemale"
 				        android:layout_width="match_parent"
-				        android:layout_height="50dp"
-	
+				        android:layout_height="match_parent"
 				        android:layout_weight="1"
 				        android:background="@drawable/radio_astab_right_bg"
 				        android:textColor="@color/radio_astab_changecolor" 
@@ -117,26 +122,29 @@
 			
 		    <LinearLayout
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
+		        android:layout_height="40dp"
+		        android:layout_marginBottom="5dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginTop="5dp"
 		        android:background="@drawable/corners_row"
-		        android:orientation="horizontal" 
-		        android:layout_margin="5dp"
-		        >
+		        android:orientation="horizontal" >
 	
 			    <TextView
-			        android:layout_width="60dp"
-			        android:layout_height="40dp"
+			        android:layout_width="wrap_content"
+			        android:layout_height="match_parent"
+			        android:layout_marginLeft="10dp"
 			        android:layout_weight="0"
 			        android:gravity="center_vertical|center_horizontal"
-			        android:text="@string/age" 
-			        />
+			        android:text="@string/age" />
 	
 			   <EditText
 			       android:id="@+id/etAge"
 			       android:layout_width="match_parent"
-			       android:layout_height="wrap_content"
+			       android:layout_height="match_parent"
 			       android:layout_gravity="center_vertical"
 			       android:layout_weight="1"
+			       android:background="@null"
 			       android:ems="10"
 			       android:gravity="center_vertical|right"
 			       android:inputType="number"
@@ -146,7 +154,7 @@
 			    
 			    <TextView
 			        android:layout_width="40dp"
-			        android:layout_height="40dp"
+			        android:layout_height="match_parent"
 			        android:layout_weight="0"
 			        android:gravity="center_vertical|center_horizontal"
 			        android:text="@string/ageUnit" />
@@ -154,14 +162,18 @@
 			
 		    <LinearLayout
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
+		        android:layout_height="40dp"
 		        android:background="@drawable/corners_row"
 		        android:orientation="horizontal" 
-		        android:layout_margin="5dp"
+		        android:layout_marginBottom="5dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginTop="5dp"
 		        >
 			    <TextView
-			        android:layout_width="60dp"
-			        android:layout_height="40dp"
+			        android:layout_width="wrap_content"
+			        android:layout_height="match_parent"
+			        android:layout_marginLeft="10dp"
 			        android:layout_weight="0"
 			        android:gravity="center_vertical|center_horizontal"
 			        android:text="@string/height" />
@@ -169,17 +181,19 @@
 			    <EditText
 			        android:id="@+id/etHeight"
 			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
+			        android:layout_height="match_parent"
 			        android:layout_weight="1"
+			        android:background="@null"
 			        android:ems="10"
 			        android:gravity="center_vertical|right"
 			        android:inputType="number"
 			        android:text="123" >
+
 			    </EditText>
 			    
 			    <TextView
 			        android:layout_width="40dp"
-			        android:layout_height="40dp"
+			        android:layout_height="match_parent"
 			        android:layout_weight="0"
 			        android:gravity="center_vertical|center_horizontal"
 			        android:text="@string/heightUnit" />
@@ -187,14 +201,18 @@
 			
 		    <LinearLayout
 		        android:layout_width="match_parent"
-		        android:layout_height="wrap_content"
+		        android:layout_height="40dp"
 		        android:background="@drawable/corners_row"
 		        android:orientation="horizontal" 
-		        android:layout_margin="5dp"
+		        android:layout_marginBottom="5dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginTop="5dp"
 		        >
 			    <TextView
-			        android:layout_width="60dp"
-			        android:layout_height="40dp"
+			        android:layout_width="wrap_content"
+			        android:layout_height="match_parent"
+			        android:layout_marginLeft="10dp"
 			        android:layout_weight="0"
 			        android:gravity="center_vertical|center_horizontal"
 			        android:text="@string/weight" />
@@ -202,19 +220,21 @@
 			    <EditText
 			        android:id="@+id/etWeight"
 			        android:layout_width="match_parent"
-			        android:layout_height="wrap_content"
+			        android:layout_height="match_parent"
 			        android:layout_weight="1"
+			        android:background="@null"
 			        android:ems="10"
 			        android:gravity="center_vertical|right"
+			        android:imeOptions="actionDone"
 			        android:inputType="number"
 			        android:singleLine="true"
-			        android:imeOptions="actionDone"
 			        android:text="123" >
+
 			    </EditText>
 	
 			    <TextView
 			        android:layout_width="40dp"
-			        android:layout_height="40dp"
+			        android:layout_height="match_parent"
 			        android:layout_weight="0"
 			        android:gravity="center_vertical|center_horizontal"
 			        android:text="@string/weightUnit" />
@@ -224,21 +244,23 @@
 		    <LinearLayout
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content" 
-	
+			    android:layout_marginBottom="5dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginTop="5dp"
 		        android:orientation="horizontal" 
 			    >
 	
 		        <TextView
-			        android:id="@+id/tvActiveLevel"
-			        android:layout_width="match_parent"
-			        android:layout_height="40dp"
-			        android:layout_gravity="center_vertical"
-			        android:layout_marginLeft="10dp"
-			        android:gravity="center_vertical"
-			        android:text="@string/activeLevel"
-			        android:textColor="@color/black"
-			        />
-	
+		            android:id="@+id/tvActiveLevel"
+		            android:layout_width="match_parent"
+		            android:layout_height="22dp"
+		            android:layout_gravity="center_vertical"
+		            android:layout_marginLeft="5dp"
+		            android:gravity="center_vertical"
+		            android:text="@string/activeLevel"
+		            android:textColor="@color/black"
+		            android:textSize="18sp" />
 	
 			</LinearLayout>
 			
@@ -246,13 +268,16 @@
 		    <LinearLayout
 		        android:layout_width="match_parent"
 		        android:layout_height="wrap_content"
-		        android:background="@drawable/corners_row"
-		        android:layout_margin="5dp"
+		        
+		        android:layout_marginBottom="5dp"
+		        android:layout_marginLeft="10dp"
+		        android:layout_marginRight="10dp"
+		        android:layout_marginTop="5dp"
 		        >
 			    <RadioGroup
 			        android:id="@+id/radioGroupActiveLevel"
 				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content"
+				    android:layout_height="40dp"
 				    android:fadingEdge="none"
 			    	android:orientation="horizontal"
 			        >
@@ -260,7 +285,7 @@
 				    <RadioButton
 				        android:id="@+id/rbLevelLight"
 				        android:layout_width="match_parent"
-				        android:layout_height="50dp"
+				        android:layout_height="match_parent"
 				        android:layout_weight="1"
 	
 				        android:background="@drawable/radio_astab_left_bg"
@@ -273,10 +298,10 @@
 				    <RadioButton
 				        android:id="@+id/rbLevelMid"
 				        android:layout_width="match_parent"
-				        android:layout_height="48dp"
+				        android:layout_height="match_parent"
 				        android:layout_weight="1"
 	
-				        android:background="@drawable/radio_astab_mid_leftborder"
+				        android:background="@drawable/radio_astab_mid_bg"
 				        android:textColor="@color/radio_astab_changecolor" 
 				        android:button="@null"
 				        android:gravity="center_vertical|center_horizontal"
@@ -285,10 +310,10 @@
 				    <RadioButton
 				        android:id="@+id/rbLevelStrong"
 				        android:layout_width="match_parent"
-				        android:layout_height="48dp"
+				        android:layout_height="match_parent"
 				        android:layout_weight="1"
 	
-				        android:background="@drawable/radio_astab_mid_2sideborder"
+				        android:background="@drawable/radio_astab_mid_bg"
 				        android:textColor="@color/radio_astab_changecolor" 
 				        android:button="@null"
 				        android:gravity="center_vertical|center_horizontal"
@@ -297,7 +322,7 @@
 				    <RadioButton
 					    android:id="@+id/rbLevelVeryStrong"
 					    android:layout_width="match_parent"
-					    android:layout_height="50dp"
+					    android:layout_height="match_parent"
 					    android:layout_weight="1"
 	
 					    android:textColor="@color/radio_astab_changecolor" 
@@ -310,7 +335,9 @@
 				</RadioGroup>
 			</LinearLayout>
 			
-		    		    
+		    <!-- 
+		    
+		    
 		    <LinearLayout
 			    android:layout_width="match_parent"
 			    android:layout_height="wrap_content" 
@@ -364,6 +391,8 @@
 	            android:layout_height="100dp"
 	            android:layout_weight="1" >
 	        </ListView>
+	        
+	        -->
 		    
 	
 	

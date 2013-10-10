@@ -55,7 +55,7 @@ implements OnItemSelectedListener,OnItemClickListener
 			listview1.setOnItemSelectedListener(this);
 		}
 		
-		TextView tvTitle = (TextView) findViewById(R.id.title);
+		TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
 		tvTitle.setText(groupName);
 		
 		setViewItemForBackButton();

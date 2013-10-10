@@ -94,7 +94,7 @@ public class ActivityAllFoodExpandList extends Activity {
 			}
         });
         
-        mBtnFinish = (Button) findViewById(R.id.btnReset);
+        mBtnFinish = (Button) findViewById(R.id.btnTopRight);
         mBtnFinish.setText(R.string.finish);
         mBtnFinish.setOnClickListener(new View.OnClickListener() {
             @Override

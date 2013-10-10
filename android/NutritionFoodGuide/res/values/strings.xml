@@ -14,14 +14,21 @@
     <string name="finish">完成</string>
     <string name="add">添加</string>
     
+    <string name="title_foodCombinationList">清单</string>
+    <string name="title_nutrients">营养</string>
+    <string name="title_searchfood">食物</string>
+    <string name="title_userinfo">个人</string>
+    
+    <string name="title_addfood_tolist_ornew">添加食物</string>
+    
     <string name="diseaseGroupList">疾病组名清单</string>
     <string name="diseaseNameList">疾病清单</string>
     <string name="nutritionDiagnose">营养诊断</string>
     <string name="checkAgain">重新测试</string>
     <string name="recommendFood">推荐食物</string>
     
-    <string name="foodCombinationList">膳食清单</string>
-    <string name="nutrients">营养元素</string>
+
+    
     
     <string name="searchFood">搜索食物</string>
     <string name="inputFoodNamePart">输入食物部分名称</string>

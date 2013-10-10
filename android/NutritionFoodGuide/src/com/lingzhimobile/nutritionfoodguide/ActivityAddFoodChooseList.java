@@ -56,10 +56,10 @@ public class ActivityAddFoodChooseList extends Activity {
         m_foodId =  paramIntent.getStringExtra(Constants.COLUMN_NAME_NDB_No);
         m_foodAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
         
-        TextView tv_title = (TextView)this.findViewById(R.id.title);
-        tv_title.setText(R.string.foodCombinationList);
+        TextView tv_title = (TextView)this.findViewById(R.id.tvTitle);
+        tv_title.setText(R.string.title_addfood_tolist_ornew);
 		
-        Button btn1 = (Button) findViewById(R.id.btnReset);
+        Button btn1 = (Button) findViewById(R.id.btnTopRight);
         btn1.setVisibility(View.GONE);
         
         Button btnCancel = (Button) findViewById(R.id.btnCancel);

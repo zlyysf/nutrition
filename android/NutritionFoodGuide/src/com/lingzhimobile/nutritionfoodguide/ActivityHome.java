@@ -34,7 +34,9 @@ public class ActivityHome extends Activity{
     
     static final int[] menuItemImageResIds = new int[]{R.drawable.menu_item_2x_foodlist, R.drawable.menu_item_2x_userinfo, 
     	R.drawable.menu_item_2x_nutrient, R.drawable.menu_item_2x_searchfood};
-    static final String[] menuItemTexts = new String[]{"膳食清单","个人信息","营养元素","食物查询"};
+    //static final String[] menuItemTexts = new String[]{"膳食清单","个人信息","营养元素","食物查询"};
+    static final int[] menuItemTextResIds = new int[]{R.string.title_foodCombinationList, R.string.title_userinfo, 
+    	R.string.title_nutrients, R.string.title_searchfood};
     static final int Position_foodlist = 0;
     static final int Position_userinfo = 1;
     static final int Position_nutrient = 2;
@@ -48,11 +50,11 @@ public class ActivityHome extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
-		Button btnReset = (Button) findViewById(R.id.btnReset);
+		Button btnReset = (Button) findViewById(R.id.btnTopRight);
 		btnReset.setVisibility(View.GONE);
         Button btnCancel = (Button) findViewById(R.id.btnCancel);
         btnCancel.setVisibility(View.GONE);
-        TextView tvTitle = (TextView) findViewById(R.id.title);
+        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(R.string.app_name);
 		
         Button btnTempMain = (Button) findViewById(R.id.btnTempMain);
@@ -74,7 +76,9 @@ public class ActivityHome extends Activity{
 		{
 		    HashMap<String, Object> map = new HashMap<String, Object>();
 		    map.put(Key_ItemImage, menuItemImageResIds[i]);
-		    map.put(Key_ItemText, menuItemTexts[i]);
+		    //map.put(Key_ItemText, menuItemTexts[i]);
+		    
+		    map.put(Key_ItemText, getResources().getString(menuItemTextResIds[i]) );
 		    meumList.add(map);
 		}
 		SimpleAdapter SimpleAdapter1 = new SimpleAdapter(this,meumList,R.layout.grid_cell_square_image_text, 

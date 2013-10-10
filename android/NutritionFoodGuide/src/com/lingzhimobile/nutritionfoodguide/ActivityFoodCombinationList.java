@@ -60,8 +60,8 @@ public class ActivityFoodCombinationList extends Activity {
         DataAccess da = DataAccess.getSingleton(this);
         m_foodCollocationList = da.getAllFoodCollocation();
         
-        TextView tv_title = (TextView)this.findViewById(R.id.title);
-        tv_title.setText(R.string.foodCombinationList);
+        TextView tv_title = (TextView)this.findViewById(R.id.tvTitle);
+        tv_title.setText(R.string.title_foodCombinationList);
 		
 		m_btnCancel = (Button) findViewById(R.id.btnCancel);
         m_btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -71,7 +71,7 @@ public class ActivityFoodCombinationList extends Activity {
             }
         });
         
-        mBtnNew = (Button) findViewById(R.id.btnReset);
+        mBtnNew = (Button) findViewById(R.id.btnTopRight);
         mBtnNew.setText(R.string.add);
         mBtnNew.setOnClickListener(new View.OnClickListener() {
             @Override
