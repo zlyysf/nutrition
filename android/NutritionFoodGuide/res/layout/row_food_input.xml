@@ -31,27 +31,58 @@
 	        android:text="苹果(1个)"
 	        android:textSize="18sp" />
 
-	    <ImageView
-	        android:id="@+id/ivAsEditText"
-	        android:layout_width="70dp"
+	    <LinearLayout
+	        android:id="@+id/llToInputFoodAmount"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_gravity="center_vertical"
+	        android:orientation="horizontal" 
+	        >
+	        
+		    <ImageView
+		        android:id="@+id/ivAsEditText"
+		        android:layout_width="50dp"
+		        android:layout_height="40dp"
+		        android:layout_gravity="center_vertical"
+		        android:layout_weight="0"
+		        android:background="@drawable/like_edittext" />
+		    <!-- TODO improve ui effect of @drawable/like_edittext or use a .9 pic -->
+		    <TextView
+			        android:id="@+id/tvLabel"
+			        android:layout_width="wrap_content"
+			        android:layout_height="wrap_content"
+			        android:layout_gravity="center_vertical"
+			        android:layout_marginRight="10dp"
+			        android:layout_weight="0"
+			        android:gravity="center_vertical"
+			        android:text="g"
+			        android:textSize="15sp" />
+
+		    <!-- 
+		    	<Button
+			        android:id="@+id/btnShowInputDialog"
+			        android:layout_width="80dp"
+			        android:layout_height="40dp"
+			        android:layout_weight="0"
+			        android:gravity="center_vertical"
+			        android:background="@color/white"
+			        android:text="" />
+		      -->
+		</LinearLayout>
+
+	    <ImageButton
+	        android:id="@+id/imgBtnAddFood"
+	        android:layout_width="50dp"
 	        android:layout_height="40dp"
 	        android:layout_gravity="center_vertical"
-	        android:layout_marginRight="10dp"
 	        android:layout_weight="0"
-	        android:background="@drawable/like_edittext" />
+	        android:background="@null"
+	        android:gravity="center_vertical"
+	        android:scaleType="centerInside"
+	        android:src="@drawable/btn_add_by_nutrient" />
 
-		    <!-- TODO improve ui effect of @drawable/like_edittext or use a .9 pic -->
 		    
-	     <!-- 
-	    	<Button
-		        android:id="@+id/btnShowInputDialog"
-		        android:layout_width="80dp"
-		        android:layout_height="40dp"
-		        android:layout_weight="0"
-		        android:gravity="center_vertical"
-		        android:background="@color/white"
-		        android:text="" />
-	      -->
+	     
 	</LinearLayout>
 
 </LinearLayout>

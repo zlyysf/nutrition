@@ -41,9 +41,8 @@ public class ActivityRichFood extends Activity {
 	
 	static final String LogTag = "ActivityRichFood";
 	
-	public static final String IntentParamKey_InvokerType = "InvokerType";
-	public static final String InvokerType_FromNutrients = "FromNutrients";
-	public static final String InvokerType_FromFoodCombination = "FromFoodCombination";
+
+	
 	
 	String mInvokerType = null;
 	String mNutrientId;
@@ -65,7 +64,7 @@ public class ActivityRichFood extends Activity {
         
         Intent paramIntent = getIntent();
         
-        mInvokerType = paramIntent.getStringExtra(IntentParamKey_InvokerType);
+        mInvokerType = paramIntent.getStringExtra(Constants.IntentParamKey_InvokerType);
         mNutrientId =  paramIntent.getStringExtra(Constants.COLUMN_NAME_NutrientID);
         mToSupplyNutrientAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
         mNutrientCnCaption = paramIntent.getStringExtra(Constants.Key_Name);
@@ -98,35 +97,10 @@ public class ActivityRichFood extends Activity {
         
     }
     
-//	class ListViewEventListener implements OnItemSelectedListener,OnItemClickListener{
-//
-//		@Override
-//		public void onItemClick(AdapterView<?> parent, View view, int position,	long id) {
-////			HashMap<String, Object> foodInfo = m_foodsData.get(position);
-////			
-////			Intent intent = new Intent();
-////        	intent.putExtra(Constants.COLUMN_NAME_NDB_No, (String)foodInfo.get(Constants.COLUMN_NAME_NDB_No));
-////        	intent.putExtra(Constants.Key_Amount, 456.45);
-////        	setResult(IntentResultCode, intent);
-////        	
-////        	finish();
-//			
-//		}
-//
-//		@Override
-//		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//		}
-//
-//		@Override
-//		public void onNothingSelected(AdapterView<?> parent) {
-//		}
-//		
-//	}
     
     
 	class RichFoodAdapter extends BaseAdapter{
-		
-//		AlertDialog mPrevAlertDialog;
+
 
 		@Override
 		public int getCount() {
@@ -143,24 +117,11 @@ public class ActivityRichFood extends Activity {
 			return position;
 		}
 		
-//		void closePrevAlertDialog(){
-//			Log.d(LogTag, "closePrevAlertDialog enter ");
-//			if (mPrevAlertDialog!=null){
-//				if (mPrevAlertDialog.isShowing()){
-//					Log.d(LogTag, "closePrevAlertDialog before mPrevAlertDialog.dismiss "+mPrevAlertDialog);
-//					mPrevAlertDialog.dismiss();
-//					Log.d(LogTag, "closePrevAlertDialog after  mPrevAlertDialog.dismiss "+mPrevAlertDialog);
-//				}else{
-//					Log.d(LogTag, "closePrevAlertDialog NOT mPrevAlertDialog.isShowing "+mPrevAlertDialog);
-//				}
-//				mPrevAlertDialog = null;
-//			}
-//		}
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
 			if (convertView == null){
-				if (InvokerType_FromNutrients.equals(mInvokerType)){
+				if (Constants.InvokerType_FromNutrients.equals(mInvokerType)){
 					convertView = getLayoutInflater().inflate(R.layout.row_rich_food, null);
 				}else{
 					convertView = getLayoutInflater().inflate(R.layout.row_rich_food_input, null);
@@ -178,7 +139,7 @@ public class ActivityRichFood extends Activity {
 			tvFoodAmount.setText(iAmount+"g");
 			ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)foodInfo.get(Constants.COLUMN_NAME_PicPath)));
 			
-			if (InvokerType_FromNutrients.equals(mInvokerType)){
+			if (Constants.InvokerType_FromNutrients.equals(mInvokerType)){
 				ImageButton imgBtnAddFood = (ImageButton)convertView.findViewById(R.id.imgBtnAddFood);
 				OnClickListenerToAddFoodToList myOnClickListenerToAddFoodToList =  (OnClickListenerToAddFoodToList)imgBtnAddFood.getTag();
 				if (myOnClickListenerToAddFoodToList==null){

@@ -641,7 +641,7 @@ public class ActivityFoodCombination extends Activity {
 					toSupplyDelta = 0;
 				
 				Intent intent = new Intent(ActivityFoodCombination.this, ActivityRichFood.class);
-				intent.putExtra(ActivityRichFood.IntentParamKey_InvokerType, ActivityRichFood.InvokerType_FromFoodCombination);
+				intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromFoodCombination);
 				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
 				intent.putExtra(Constants.Key_Amount, toSupplyDelta);
 				intent.putExtra(Constants.Key_Name, (String)nutrientData.get(Constants.Key_Name));

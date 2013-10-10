@@ -94,11 +94,10 @@ public class ActivityNutrients extends Activity{
 						+", cellLayout w="+cellLayout.getWidth()+", h="+cellLayout.getHeight()
 						);
 				
-				Intent intent = null;
 				String nutrientId = NutrientIds[position];
 				HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientId);
-				intent = new Intent(ActivityNutrients.this, ActivityRichFood.class);
-				intent.putExtra(ActivityRichFood.IntentParamKey_InvokerType, ActivityRichFood.InvokerType_FromNutrients);
+				Intent intent = new Intent(ActivityNutrients.this, ActivityRichFood.class);
+				intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromNutrients);
 				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
 				intent.putExtra(Constants.Key_Amount, m_DRIsDict.get(nutrientId).doubleValue());
 				intent.putExtra(Constants.Key_Name, (String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientCnCaption));

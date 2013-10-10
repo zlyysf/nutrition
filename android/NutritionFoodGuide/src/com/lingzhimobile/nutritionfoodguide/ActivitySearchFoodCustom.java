@@ -35,12 +35,9 @@ public class ActivitySearchFoodCustom extends Activity {
 	
 	static final String LogTag = "ActivitySearchFoodCustom";
 	
-//	HashMap<String,Object> m_all_foodsByCnTypeHm;//Object is ArrayList<Object2> and Object2 is HashMap<String, Object>
-//	String[] m_all_foodCnTypes;
 	
-//	ArrayList<HashMap<String, Object>> m_foods;
-//	HashMap<String,ArrayList<HashMap<String, Object>>> m_foodsByCnTypeHm;
-//	String[] m_foodCnTypes;
+	
+	String mInvokerType = null;
 
 
 	EditText m_etSearch;
@@ -48,12 +45,15 @@ public class ActivitySearchFoodCustom extends Activity {
 	ExpandableListView m_expandableListView1;
 	FoodsByTypeExpandableListAdapter m_FoodsByTypeExpandableListAdapter;
 	Button mBtnFinish,m_btnCancel;
-	
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_food_custom);
+        
+        Intent paramIntent = getIntent();
+        mInvokerType = paramIntent.getStringExtra(Constants.IntentParamKey_InvokerType);
+
         
         DataAccess da = DataAccess.getSingleton(this);
 		
@@ -100,14 +100,7 @@ public class ActivitySearchFoodCustom extends Activity {
         
         mBtnFinish = (Button) findViewById(R.id.btnReset);
         mBtnFinish.setVisibility(View.INVISIBLE);
-//        mBtnFinish.setText(R.string.finish);
-//        mBtnFinish.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//            	//...
-//            	finish();
-//            }
-//        });
+
         
         m_btnCancel = (Button) findViewById(R.id.btnCancel);
         m_btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -299,20 +292,36 @@ public class ActivitySearchFoodCustom extends Activity {
 			ImageView ivFood = (ImageView)vwItem.findViewById(R.id.ivFood);
 			ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));
 			
-			ImageView ivAsEditText = (ImageView)vwItem.findViewById(R.id.ivAsEditText);
-//			Button btnShowInputDialog = (Button)vwItem.findViewById(R.id.btnShowInputDialog);
-			
-			OnClickListenerForInputAmount onClickListenerToAddFood1 = null;
-			onClickListenerToAddFood1 = (OnClickListenerForInputAmount)tvFoodName.getTag();
-			if (onClickListenerToAddFood1 == null){
-				onClickListenerToAddFood1 = new OnClickListenerForInputAmount();
-				onClickListenerToAddFood1.initInputData(groupPosition,childPosition);
-				ivAsEditText.setOnClickListener(onClickListenerToAddFood1);
-				tvFoodName.setTag(onClickListenerToAddFood1);
+			LinearLayout llToInputFoodAmount = (LinearLayout)vwItem.findViewById(R.id.llToInputFoodAmount);
+//			ImageView ivAsEditText = (ImageView)vwItem.findViewById(R.id.ivAsEditText);
+			ImageButton imgBtnAddFood = (ImageButton)vwItem.findViewById(R.id.imgBtnAddFood);
+			if (Constants.InvokerType_FromSearchFood.equals(mInvokerType)){
+				llToInputFoodAmount.setVisibility(View.GONE);
+				imgBtnAddFood.setVisibility(View.VISIBLE);
+				OnClickListenerForInputAmount myOnClickListenerToAddFoodToList = (OnClickListenerForInputAmount)imgBtnAddFood.getTag();
+				if (myOnClickListenerToAddFoodToList == null){
+					myOnClickListenerToAddFoodToList = new OnClickListenerForInputAmount();
+					myOnClickListenerToAddFoodToList.initInputData(groupPosition, childPosition);
+					imgBtnAddFood.setOnClickListener(myOnClickListenerToAddFoodToList);
+					imgBtnAddFood.setTag(myOnClickListenerToAddFoodToList);
+				}else{
+					myOnClickListenerToAddFoodToList.initInputData(groupPosition, childPosition);
+				}
+				
 			}else{
-				onClickListenerToAddFood1.initInputData(groupPosition,childPosition);
+				llToInputFoodAmount.setVisibility(View.VISIBLE);
+				imgBtnAddFood.setVisibility(View.GONE);
+				
+				OnClickListenerForInputAmount onClickListenerToAddFood1 = (OnClickListenerForInputAmount)llToInputFoodAmount.getTag();
+				if (onClickListenerToAddFood1 == null){
+					onClickListenerToAddFood1 = new OnClickListenerForInputAmount();
+					onClickListenerToAddFood1.initInputData(groupPosition,childPosition);
+					llToInputFoodAmount.setOnClickListener(onClickListenerToAddFood1);
+					llToInputFoodAmount.setTag(onClickListenerToAddFood1);
+				}else{
+					onClickListenerToAddFood1.initInputData(groupPosition,childPosition);
+				}
 			}
-			
 			return vwItem;
 		}
 
@@ -352,89 +361,28 @@ public class ActivitySearchFoodCustom extends Activity {
 							HashMap<String, Object> foodData = (HashMap<String, Object>)getChild(m_Data2LevelPosition.groupPos,m_Data2LevelPosition.childPos); 
 							String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
 							
-							Intent intent = new Intent();
-			            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
-			            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
-			            	ActivitySearchFoodCustom.this.setResult(IntentResultCode, intent);
-			            	
-			            	ActivitySearchFoodCustom.this.finish();
+							if (Constants.InvokerType_FromSearchFood.equals(mInvokerType)){
+								Intent intent = new Intent(ActivitySearchFoodCustom.this,ActivityAddFoodChooseList.class);
+//								intent.putExtra(ActivityAddFoodChooseList.IntentKey_ActionType, ActivityAddFoodChooseList.ActionType_ToFoodCombination);
+				            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+				            	intent.putExtra(Constants.Key_Amount, Double.parseDouble(input));
+								startActivity(intent);
+								return;
+							}else{
+								Intent intent = new Intent();
+				            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+				            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
+				            	setResult(IntentResultCode, intent);
+				            	finish();
+				            	return;
+							}
 						}
 					}
 				});
 				myDialogHelperSimpleInput.show();
-				
-				
-				
-				
-//				AlertDialog.Builder dlgBuilder =new AlertDialog.Builder(ActivitySearchFoodCustom.this);
-//				View vwDialogContent = getLayoutInflater().inflate(R.layout.dialog_input_food_amount, null);
-//				EditText etAmount = (EditText)vwDialogContent.findViewById(R.id.etAmount);
-//				TextView tvFood = (TextView)vwDialogContent.findViewById(R.id.tvFood);
-//				HashMap<String, Object> foodData = (HashMap<String, Object>)getChild(m_Data2LevelPosition.groupPos,m_Data2LevelPosition.childPos); // m_foodsData.get(m_rowPos);
-//				String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
-//				tvFood.setText(foodName);
-//				
-//				DialogInterfaceEventListener_EditText dialogInterfaceEventListener_EditText1 = new DialogInterfaceEventListener_EditText(etAmount);
-//				dlgBuilder.setView(vwDialogContent);
-//				dlgBuilder.setPositiveButton("OK", dialogInterfaceEventListener_EditText1);
-//				dlgBuilder.setNegativeButton("Cancel", dialogInterfaceEventListener_EditText1);
-//				
-//				AlertDialog dlg = dlgBuilder.create();
-//				dialogInterfaceEventListener_EditText1.SetDialog(dlg);
-//				dlg.setOnShowListener(dialogInterfaceEventListener_EditText1);
-//				dlg.show();
 			}
-			
-//			class DialogInterfaceEventListener_EditText implements DialogInterface.OnClickListener, DialogInterface.OnShowListener{
-//				Dialog mDialog;
-//				EditText m_editText1;
-//				public DialogInterfaceEventListener_EditText(EditText editText1){
-//					m_editText1 = editText1;
-//				}
-//				public void SetDialog(Dialog dlg){
-//					mDialog = dlg;
-//				}
-//				
-//				@Override
-//				public void onClick(DialogInterface dlgInterface, int which) {
-//					if(which == DialogInterface.BUTTON_POSITIVE){
-//						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick OK");
-//						String sInput = m_editText1.getText().toString();
-//						HashMap<String, Object> foodData =  (HashMap<String, Object>)getChild(m_Data2LevelPosition.groupPos,m_Data2LevelPosition.childPos); //m_foodsData.get(m_rowPos);
-//						String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
-//						
-//						Intent intent = new Intent();
-//		            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
-//		            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
-//		            	ActivitySearchFoodCustom.this.setResult(IntentResultCode, intent);
-//		            	
-//		            	//ActivitySearchFoodCustom.this.finish();
-//		            	ActivitySearchFoodCustom.this.doFinish();
-////		            	finish();
-//					}else if(which == DialogInterface.BUTTON_NEGATIVE){
-//					}else if(which == DialogInterface.BUTTON_NEUTRAL){//忽略按键的点击事件
-//					}
-//					m_editText1 = null;
-//	            	mDialog = null;
-//				}
-//
-//				@Override
-//				public void onShow(DialogInterface dlgInterface) {
-//					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onShow");
-//					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_IMPLICIT);//能show出键盘
-////			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_FORCED);//能show出键盘
-////					m_editText1.requestFocus();
-//					
-//			        
-//				}
-//			}//class DialogInterfaceOnClickListener_EditText
 		}//class OnClickListenerForInputAmount
-		
 	}//class FoodsByTypeExpandableListAdapter
-    
-    
-    
 }
 
 

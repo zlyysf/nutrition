@@ -106,7 +106,11 @@ public class ActivityHome extends Activity{
 					startActivity(intent);
 					break;
 				case Position_searchfood:
+//					intent = new Intent(ActivityHome.this, ActivitySearchFoodCustom.class);
+//					startActivity(intent);
+					
 					intent = new Intent(ActivityHome.this, ActivitySearchFoodCustom.class);
+					intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromSearchFood);
 					startActivity(intent);
 					break;
 				default:
