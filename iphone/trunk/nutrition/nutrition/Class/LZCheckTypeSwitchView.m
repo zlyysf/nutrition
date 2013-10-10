@@ -24,8 +24,11 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
+        UIView  *tapView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         UITapGestureRecognizer *tapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userTapped:)];
-        [self addGestureRecognizer:tapGesture];
+        [tapView addGestureRecognizer:tapGesture];
+        [self addSubview:tapView];
+        [tapView setBackgroundColor:[UIColor clearColor]];
         UIImageView *outerView = [[UIImageView alloc]initWithFrame:CGRectMake(59, 34, 202, 162)];
         [outerView setImage:[UIImage imageNamed:@"switch_back.png"]];
         [self addSubview:outerView];
