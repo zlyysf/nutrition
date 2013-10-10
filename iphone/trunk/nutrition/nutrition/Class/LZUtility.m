@@ -501,7 +501,7 @@
     NSDictionary * colorDict = [NSDictionary dictionaryWithObjectsAndKeys:
                                 [UIColor colorWithRed:255/255.f green:92/255.f blue:54/255.f alpha:1.0f],@"Vit_A_RAE",
                                 [UIColor colorWithRed:62/255.f green:171/255.f blue:47/255.f alpha:1.0f],@"Vit_C_(mg)",
-                                [UIColor colorWithRed:255/255.f green:199/255.f blue:42/255.f alpha:1.0f],@"Vit_D_(µg)",
+                                [UIColor colorWithRed:255/255.f green:144/255.f blue:86/255.f alpha:1.0f],@"Vit_D_(µg)",
                                 [UIColor colorWithRed:1/255.f green:162/255.f blue:144/255.f alpha:1.0f],@"Vit_E_(mg)",
                                 [UIColor colorWithRed:56/255.f green:240/255.f blue:242/255.f alpha:1.0f],@"Vit_K_(µg)",
                                 [UIColor colorWithRed:227/255.f green:28/255.f blue:121/255.f alpha:1.0f],@"Thiamin_(mg)",

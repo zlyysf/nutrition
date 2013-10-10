@@ -431,13 +431,19 @@
         [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,216,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
         [cell adjustLabelAccordingToProgress:progress forLabelWidth:216];
         cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(floorf([percent floatValue] *100))];
-        NSSet *selectNutrient = [NSSet setWithArray:self.userPreferArray];
-
+        //NSSet *selectNutrient = [NSSet setWithArray:self.userPreferArray];
+        NSSet *heavySet = [NSSet setWithArray:self.heavylyLackArray];
+        NSSet *lightSet = [NSSet setWithArray:self.lightlyLackArray];
         cell.nameLabel.text =[nutrient objectForKey:@"Name"];
-        if ([selectNutrient containsObject:nutrientId])
+        if ([heavySet containsObject:nutrientId])
         {
             [cell.nameLabel setFont:[UIFont boldSystemFontOfSize:16]];
-            [cell.nameLabel setTextColor:[UIColor blackColor]];
+            [cell.nameLabel setTextColor:[UIColor colorWithRed:255/255.f green:33/255.f blue:33/255.f alpha:1.0f]];
+        }
+        else if([lightSet containsObject:nutrientId])
+        {
+            [cell.nameLabel setFont:[UIFont boldSystemFontOfSize:16]];
+            [cell.nameLabel setTextColor: [UIColor colorWithRed:255/255.f green:230/255.f blue:33/255.f alpha:1.0f]];
         }
         else
         {
@@ -549,7 +555,20 @@
     [sectionView setBackgroundColor:[UIColor whiteColor]];
     UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
     [sectionView addSubview:sectionBarView];
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
+    NSString *path ;
+    if (section == 2)
+    {
+        path = [[NSBundle mainBundle] pathForResource:@"heavy_lack_bar@2x" ofType:@"png"];
+    }
+    else if (section == 3)
+    {
+        path = [[NSBundle mainBundle] pathForResource:@"light_lack_bar@2x" ofType:@"png"];
+    }
+    else
+    {
+        path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
+    }
+    
     UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
     [sectionBarView setImage:sectionBarImage];
     UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
