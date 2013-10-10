@@ -2,6 +2,8 @@ package com.lingzhimobile.nutritionfoodguide;
 
 import java.util.*;
 
+import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
+
 
 
 import android.app.Activity;
@@ -13,6 +15,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.*;
 import android.view.Gravity;
@@ -299,37 +302,21 @@ public class ActivitySearchFoodCustom extends Activity {
 			ImageView ivAsEditText = (ImageView)vwItem.findViewById(R.id.ivAsEditText);
 //			Button btnShowInputDialog = (Button)vwItem.findViewById(R.id.btnShowInputDialog);
 			
-			ChildRowRelateData childRowRelateData1 = new ChildRowRelateData();
-			childRowRelateData1.childPosition = childPosition;
-			childRowRelateData1.groupPosition = groupPosition;
 			OnClickListenerForInputAmount onClickListenerToAddFood1 = null;
 			onClickListenerToAddFood1 = (OnClickListenerForInputAmount)tvFoodName.getTag();
 			if (onClickListenerToAddFood1 == null){
-				onClickListenerToAddFood1 = new OnClickListenerForInputAmount(childRowRelateData1);
+				onClickListenerToAddFood1 = new OnClickListenerForInputAmount();
+				onClickListenerToAddFood1.initInputData(groupPosition,childPosition);
 				ivAsEditText.setOnClickListener(onClickListenerToAddFood1);
 				tvFoodName.setTag(onClickListenerToAddFood1);
 			}else{
-				onClickListenerToAddFood1.initInputData(childRowRelateData1);
+				onClickListenerToAddFood1.initInputData(groupPosition,childPosition);
 			}
 			
 			return vwItem;
 		}
 
-		class ChildRowRelateData {
-			public int groupPosition;
-			public int childPosition;
-		}
-		class OnClickListenerForInputAmount implements OnClickListener,OnTouchListener,OnFocusChangeListener{
-			
-			ChildRowRelateData m_ChildRowRelateData ;
-			
-			public OnClickListenerForInputAmount(ChildRowRelateData childRowRelateData){
-				m_ChildRowRelateData = childRowRelateData;
-			}
-			public void initInputData(ChildRowRelateData childRowRelateData){
-				m_ChildRowRelateData = childRowRelateData;
-			}
-			
+		class OnClickListenerForInputAmount extends OnClickListenerInExpandListItem implements OnTouchListener,OnFocusChangeListener{
 
 			@Override
 			public void onClick(View v) {
@@ -347,69 +334,101 @@ public class ActivitySearchFoodCustom extends Activity {
 				}
 			}
 			void showInputDialog(){
-				AlertDialog.Builder dlgBuilder =new AlertDialog.Builder(ActivitySearchFoodCustom.this);
-				View vwDialogContent = getLayoutInflater().inflate(R.layout.dialog_input_food_amount, null);
-				EditText etAmount = (EditText)vwDialogContent.findViewById(R.id.etAmount);
-				TextView tvFood = (TextView)vwDialogContent.findViewById(R.id.tvFood);
-				HashMap<String, Object> foodData = (HashMap<String, Object>)getChild(m_ChildRowRelateData.groupPosition,m_ChildRowRelateData.childPosition); // m_foodsData.get(m_rowPos);
+				HashMap<String, Object> foodData = (HashMap<String, Object>)getChild(m_Data2LevelPosition.groupPos,m_Data2LevelPosition.childPos); 
 				String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
-				tvFood.setText(foodName);
 				
-				DialogInterfaceEventListener_EditText dialogInterfaceEventListener_EditText1 = new DialogInterfaceEventListener_EditText(etAmount);
-				dlgBuilder.setView(vwDialogContent);
-				dlgBuilder.setPositiveButton("OK", dialogInterfaceEventListener_EditText1);
-				dlgBuilder.setNegativeButton("Cancel", dialogInterfaceEventListener_EditText1);
+				DialogHelperSimpleInput myDialogHelperSimpleInput = new DialogHelperSimpleInput(ActivitySearchFoodCustom.this);
+				EditText etInput = myDialogHelperSimpleInput.getInput();
+				etInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+				myDialogHelperSimpleInput.prepareDialogAttributes("输入食物数量", foodName, null);
+				myDialogHelperSimpleInput.setInterfaceWhenConfirmInput(new InterfaceWhenConfirmInput() {
+					@Override
+					public void onConfirmInput(String input) {
+						if (input==null || input.length()==0){
+							Tool.ShowMessageByDialog(ActivitySearchFoodCustom.this, "输入不能为空");
+						}else{
+							Log.d(LogTag, "onConfirmInput "+input);
+							String sInput = input;
+							HashMap<String, Object> foodData = (HashMap<String, Object>)getChild(m_Data2LevelPosition.groupPos,m_Data2LevelPosition.childPos); 
+							String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
+							
+							Intent intent = new Intent();
+			            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+			            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
+			            	ActivitySearchFoodCustom.this.setResult(IntentResultCode, intent);
+			            	
+			            	ActivitySearchFoodCustom.this.finish();
+						}
+					}
+				});
+				myDialogHelperSimpleInput.show();
 				
-				AlertDialog dlg = dlgBuilder.create();
-				dialogInterfaceEventListener_EditText1.SetDialog(dlg);
-				dlg.setOnShowListener(dialogInterfaceEventListener_EditText1);
-				dlg.show();
+				
+				
+				
+//				AlertDialog.Builder dlgBuilder =new AlertDialog.Builder(ActivitySearchFoodCustom.this);
+//				View vwDialogContent = getLayoutInflater().inflate(R.layout.dialog_input_food_amount, null);
+//				EditText etAmount = (EditText)vwDialogContent.findViewById(R.id.etAmount);
+//				TextView tvFood = (TextView)vwDialogContent.findViewById(R.id.tvFood);
+//				HashMap<String, Object> foodData = (HashMap<String, Object>)getChild(m_Data2LevelPosition.groupPos,m_Data2LevelPosition.childPos); // m_foodsData.get(m_rowPos);
+//				String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
+//				tvFood.setText(foodName);
+//				
+//				DialogInterfaceEventListener_EditText dialogInterfaceEventListener_EditText1 = new DialogInterfaceEventListener_EditText(etAmount);
+//				dlgBuilder.setView(vwDialogContent);
+//				dlgBuilder.setPositiveButton("OK", dialogInterfaceEventListener_EditText1);
+//				dlgBuilder.setNegativeButton("Cancel", dialogInterfaceEventListener_EditText1);
+//				
+//				AlertDialog dlg = dlgBuilder.create();
+//				dialogInterfaceEventListener_EditText1.SetDialog(dlg);
+//				dlg.setOnShowListener(dialogInterfaceEventListener_EditText1);
+//				dlg.show();
 			}
 			
-			class DialogInterfaceEventListener_EditText implements DialogInterface.OnClickListener, DialogInterface.OnShowListener{
-				Dialog mDialog;
-				EditText m_editText1;
-				public DialogInterfaceEventListener_EditText(EditText editText1){
-					m_editText1 = editText1;
-				}
-				public void SetDialog(Dialog dlg){
-					mDialog = dlg;
-				}
-				
-				@Override
-				public void onClick(DialogInterface dlgInterface, int which) {
-					if(which == DialogInterface.BUTTON_POSITIVE){
-						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick OK");
-						String sInput = m_editText1.getText().toString();
-						HashMap<String, Object> foodData =  (HashMap<String, Object>)getChild(m_ChildRowRelateData.groupPosition,m_ChildRowRelateData.childPosition); //m_foodsData.get(m_rowPos);
-						String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
-						
-						Intent intent = new Intent();
-		            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
-		            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
-		            	ActivitySearchFoodCustom.this.setResult(IntentResultCode, intent);
-		            	
-		            	//ActivitySearchFoodCustom.this.finish();
-		            	ActivitySearchFoodCustom.this.doFinish();
-//		            	finish();
-					}else if(which == DialogInterface.BUTTON_NEGATIVE){
-					}else if(which == DialogInterface.BUTTON_NEUTRAL){//忽略按键的点击事件
-					}
-					m_editText1 = null;
-	            	mDialog = null;
-				}
-
-				@Override
-				public void onShow(DialogInterface dlgInterface) {
-					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onShow");
-					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_IMPLICIT);//能show出键盘
-//			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_FORCED);//能show出键盘
-//					m_editText1.requestFocus();
-					
-			        
-				}
-			}//class DialogInterfaceOnClickListener_EditText
+//			class DialogInterfaceEventListener_EditText implements DialogInterface.OnClickListener, DialogInterface.OnShowListener{
+//				Dialog mDialog;
+//				EditText m_editText1;
+//				public DialogInterfaceEventListener_EditText(EditText editText1){
+//					m_editText1 = editText1;
+//				}
+//				public void SetDialog(Dialog dlg){
+//					mDialog = dlg;
+//				}
+//				
+//				@Override
+//				public void onClick(DialogInterface dlgInterface, int which) {
+//					if(which == DialogInterface.BUTTON_POSITIVE){
+//						Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onClick OK");
+//						String sInput = m_editText1.getText().toString();
+//						HashMap<String, Object> foodData =  (HashMap<String, Object>)getChild(m_Data2LevelPosition.groupPos,m_Data2LevelPosition.childPos); //m_foodsData.get(m_rowPos);
+//						String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
+//						
+//						Intent intent = new Intent();
+//		            	intent.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+//		            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
+//		            	ActivitySearchFoodCustom.this.setResult(IntentResultCode, intent);
+//		            	
+//		            	//ActivitySearchFoodCustom.this.finish();
+//		            	ActivitySearchFoodCustom.this.doFinish();
+////		            	finish();
+//					}else if(which == DialogInterface.BUTTON_NEGATIVE){
+//					}else if(which == DialogInterface.BUTTON_NEUTRAL){//忽略按键的点击事件
+//					}
+//					m_editText1 = null;
+//	            	mDialog = null;
+//				}
+//
+//				@Override
+//				public void onShow(DialogInterface dlgInterface) {
+//					Log.d(LogTag, "DialogInterfaceOnClickListener_EditText onShow");
+//					InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_IMPLICIT);//能show出键盘
+////			        imm.showSoftInput(m_editText1, InputMethodManager.SHOW_FORCED);//能show出键盘
+////					m_editText1.requestFocus();
+//					
+//			        
+//				}
+//			}//class DialogInterfaceOnClickListener_EditText
 		}//class OnClickListenerForInputAmount
 		
 	}//class FoodsByTypeExpandableListAdapter
