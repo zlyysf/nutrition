@@ -443,7 +443,7 @@
         else if([lightSet containsObject:nutrientId])
         {
             [cell.nameLabel setFont:[UIFont boldSystemFontOfSize:16]];
-            [cell.nameLabel setTextColor: [UIColor colorWithRed:255/255.f green:230/255.f blue:33/255.f alpha:1.0f]];
+            [cell.nameLabel setTextColor: [UIColor colorWithRed:255/255.f green:158/255.f blue:33/255.f alpha:1.0f]];
         }
         else
         {
