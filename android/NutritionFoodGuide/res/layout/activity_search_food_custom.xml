@@ -33,7 +33,7 @@
         android:layout_height="50dp"
         android:background="@drawable/corners_search"
         android:drawableLeft="@drawable/search_glass_2x"
-        android:drawableRight="@drawable/x_icon"
+        android:drawableRight="@drawable/btn_delete_icon"
         android:ems="10"
         android:gravity="center_vertical"
         android:hint="to input and search"
@@ -69,7 +69,7 @@
 	        android:layout_width="80dp"
 	        android:layout_height="50dp"
 	        android:layout_gravity="right|center_vertical"
-	        android:drawableRight="@drawable/x_icon"
+	        android:drawableRight="@drawable/btn_delete_icon"
 	        android:paddingRight="15dp" />
 
 	    <EditText

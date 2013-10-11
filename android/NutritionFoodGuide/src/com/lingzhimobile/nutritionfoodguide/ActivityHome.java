@@ -42,6 +42,7 @@ public class ActivityHome extends Activity{
     static final int Position_nutrient = 2;
     static final int Position_searchfood = 3;
 
+    String m_currentTitle;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -54,8 +55,10 @@ public class ActivityHome extends Activity{
 		btnReset.setVisibility(View.GONE);
         Button btnCancel = (Button) findViewById(R.id.btnCancel);
         btnCancel.setVisibility(View.GONE);
+        
+        m_currentTitle = getResources().getString(R.string.app_name);
         TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvTitle.setText(R.string.app_name);
+        tvTitle.setText(m_currentTitle);
 		
         Button btnTempMain = (Button) findViewById(R.id.btnTempMain);
 //        btnTempMain.setVisibility(View.GONE);
@@ -99,14 +102,17 @@ public class ActivityHome extends Activity{
 				switch (position) {
 				case Position_foodlist:
 					intent = new Intent(ActivityHome.this, ActivityFoodCombinationList.class);
+					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 					startActivity(intent);
 					break;
 				case Position_userinfo:
 					intent = new Intent(ActivityHome.this, ActivityUserProfile.class);
+					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 					startActivity(intent);
 					break;
 				case Position_nutrient:
 					intent = new Intent(ActivityHome.this, ActivityNutrients.class);
+					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 					startActivity(intent);
 					break;
 				case Position_searchfood:
@@ -114,6 +120,7 @@ public class ActivityHome extends Activity{
 //					startActivity(intent);
 					
 					intent = new Intent(ActivityHome.this, ActivitySearchFoodCustom.class);
+					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 					intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromSearchFood);
 					startActivity(intent);
 					break;

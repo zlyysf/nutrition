@@ -47,6 +47,7 @@ public class ActivityNutrients extends Activity{
 
     HashMap<String, Double> m_DRIsDict ;
     HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level;
+    String m_currentTitle;
 
 	
 	@Override
@@ -55,17 +56,24 @@ public class ActivityNutrients extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nutrients);
 		
-		Button btnReset = (Button) findViewById(R.id.btnTopRight);
-		btnReset.setVisibility(View.GONE);
+		Intent paramIntent = getIntent();
+        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
         Button btnCancel = (Button) findViewById(R.id.btnCancel);
+        if (prevActvTitle!=null)
+        	btnCancel.setText(prevActvTitle);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             	finish();
             }
         });
+        
+        Button btnTopRight = (Button) findViewById(R.id.btnTopRight);
+		btnTopRight.setVisibility(View.GONE);
+        
+        m_currentTitle = getResources().getString(R.string.title_nutrients);
         TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
-        tvTitle.setText(R.string.title_nutrients);
+        tvTitle.setText(m_currentTitle);
         
         m_DRIsDict = NutritionTool.getDRIsDictOfCurrentUser(this, null);
         DataAccess da = DataAccess.getSingleton(this);
@@ -97,6 +105,7 @@ public class ActivityNutrients extends Activity{
 				String nutrientId = NutrientIds[position];
 				HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientId);
 				Intent intent = new Intent(ActivityNutrients.this, ActivityRichFood.class);
+				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 				intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromNutrients);
 				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
 				intent.putExtra(Constants.Key_Amount, m_DRIsDict.get(nutrientId).doubleValue());

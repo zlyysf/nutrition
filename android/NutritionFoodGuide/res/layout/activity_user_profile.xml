@@ -97,8 +97,8 @@
 				        android:gravity="center_vertical|center_horizontal"
 				        android:text="@string/male"
 				        android:textColor="@color/radio_astab_changecolor"
-
-				         />
+				        android:textSize="18sp"
+				        android:textStyle="bold" />
 	
 				    <!-- 
 				    android:background="@drawable/corners_row"
@@ -112,10 +112,12 @@
 				        android:layout_height="match_parent"
 				        android:layout_weight="1"
 				        android:background="@drawable/radio_astab_right_bg"
-				        android:textColor="@color/radio_astab_changecolor" 
 				        android:button="@null"
 				        android:gravity="center_vertical|center_horizontal"
-				        android:text="@string/female" />
+				        android:text="@string/female"
+				        android:textColor="@color/radio_astab_changecolor"
+				        android:textSize="18sp"
+				        android:textStyle="bold" />
 	
 				</RadioGroup>
 			</LinearLayout>
@@ -136,7 +138,9 @@
 			        android:layout_marginLeft="10dp"
 			        android:layout_weight="0"
 			        android:gravity="center_vertical|center_horizontal"
-			        android:text="@string/age" />
+			        android:text="@string/age"
+			        android:textColor="@color/userInfoNormalFontColor"
+			        android:textSize="18sp" />
 	
 			   <EditText
 			       android:id="@+id/etAge"
@@ -156,8 +160,12 @@
 			        android:layout_width="40dp"
 			        android:layout_height="match_parent"
 			        android:layout_weight="0"
-			        android:gravity="center_vertical|center_horizontal"
-			        android:text="@string/ageUnit" />
+			        android:gravity="left|center_vertical"
+			        android:paddingLeft="5dp"
+			        android:text="@string/ageUnit"
+			        android:textColor="@color/userInfoNormalFontColor"
+			        android:textSize="18sp" />
+
 			</LinearLayout>
 			
 		    <LinearLayout
@@ -170,13 +178,16 @@
 		        android:layout_marginRight="10dp"
 		        android:layout_marginTop="5dp"
 		        >
+
 			    <TextView
 			        android:layout_width="wrap_content"
 			        android:layout_height="match_parent"
 			        android:layout_marginLeft="10dp"
 			        android:layout_weight="0"
 			        android:gravity="center_vertical|center_horizontal"
-			        android:text="@string/height" />
+			        android:text="@string/height"
+			        android:textColor="@color/userInfoNormalFontColor"
+			        android:textSize="18sp" />
 	
 			    <EditText
 			        android:id="@+id/etHeight"
@@ -190,13 +201,17 @@
 			        android:text="123" >
 
 			    </EditText>
-			    
+
 			    <TextView
 			        android:layout_width="40dp"
 			        android:layout_height="match_parent"
 			        android:layout_weight="0"
-			        android:gravity="center_vertical|center_horizontal"
-			        android:text="@string/heightUnit" />
+			        android:gravity="left|center_vertical"
+			        android:paddingLeft="5dp"
+			        android:text="@string/heightUnit"
+			        android:textColor="@color/userInfoNormalFontColor"
+			        android:textSize="18sp" />
+
 			</LinearLayout>
 			
 		    <LinearLayout
@@ -209,13 +224,16 @@
 		        android:layout_marginRight="10dp"
 		        android:layout_marginTop="5dp"
 		        >
+
 			    <TextView
 			        android:layout_width="wrap_content"
 			        android:layout_height="match_parent"
 			        android:layout_marginLeft="10dp"
 			        android:layout_weight="0"
 			        android:gravity="center_vertical|center_horizontal"
-			        android:text="@string/weight" />
+			        android:text="@string/weight"
+			        android:textColor="@color/userInfoNormalFontColor"
+			        android:textSize="18sp" />
 	
 			    <EditText
 			        android:id="@+id/etWeight"
@@ -236,8 +254,11 @@
 			        android:layout_width="40dp"
 			        android:layout_height="match_parent"
 			        android:layout_weight="0"
-			        android:gravity="center_vertical|center_horizontal"
-			        android:text="@string/weightUnit" />
+			        android:gravity="left|center_vertical"
+			        android:paddingLeft="5dp"
+			        android:text="@string/weightUnit"
+			        android:textColor="@color/userInfoNormalFontColor"
+			        android:textSize="18sp" />
 	
 			</LinearLayout>
 			
@@ -259,7 +280,7 @@
 		            android:layout_marginLeft="5dp"
 		            android:gravity="center_vertical"
 		            android:text="@string/activeLevel"
-		            android:textColor="@color/black"
+		            android:textColor="@color/userInfoNormalFontColor"
 		            android:textSize="18sp" />
 	
 			</LinearLayout>
@@ -287,51 +308,54 @@
 				        android:layout_width="match_parent"
 				        android:layout_height="match_parent"
 				        android:layout_weight="1"
-	
 				        android:background="@drawable/radio_astab_left_bg"
-				        android:textColor="@color/radio_astab_changecolor" 
 				        android:button="@null"
-				        android:gravity="center_vertical|center_horizontal"
 				        android:checked="true"
-				        android:text="@string/activeLevelLight" />
+				        android:gravity="center_vertical|center_horizontal"
+				        android:text="@string/activeLevelLight"
+				        android:textColor="@color/radio_astab_changecolor"
+				        android:textSize="18sp"
+				        android:textStyle="bold" />
 				    
 				    <RadioButton
 				        android:id="@+id/rbLevelMid"
 				        android:layout_width="match_parent"
 				        android:layout_height="match_parent"
 				        android:layout_weight="1"
-	
 				        android:background="@drawable/radio_astab_mid_bg"
-				        android:textColor="@color/radio_astab_changecolor" 
 				        android:button="@null"
 				        android:gravity="center_vertical|center_horizontal"
-				        android:text="@string/activeLevelMiddle" />
+				        android:text="@string/activeLevelMiddle"
+				        android:textColor="@color/radio_astab_changecolor"
+				        android:textSize="18sp"
+				        android:textStyle="bold" />
 				    
 				    <RadioButton
 				        android:id="@+id/rbLevelStrong"
 				        android:layout_width="match_parent"
 				        android:layout_height="match_parent"
 				        android:layout_weight="1"
-	
 				        android:background="@drawable/radio_astab_mid_bg"
-				        android:textColor="@color/radio_astab_changecolor" 
 				        android:button="@null"
 				        android:gravity="center_vertical|center_horizontal"
-				        android:text="@string/activeLevelStrong" />
+				        android:text="@string/activeLevelStrong"
+				        android:textColor="@color/radio_astab_changecolor"
+				        android:textSize="18sp"
+				        android:textStyle="bold" />
 		
 				    <RadioButton
-					    android:id="@+id/rbLevelVeryStrong"
-					    android:layout_width="match_parent"
-					    android:layout_height="match_parent"
-					    android:layout_weight="1"
-	
-					    android:textColor="@color/radio_astab_changecolor" 
+				        android:id="@+id/rbLevelVeryStrong"
+				        android:layout_width="match_parent"
+				        android:layout_height="match_parent"
+				        android:layout_weight="1"
+				        android:background="@drawable/radio_astab_right_bg"
 				        android:button="@null"
 				        android:gravity="center_vertical|center_horizontal"
-					    android:background="@drawable/radio_astab_right_bg"
-					    android:text="@string/activeLevelVeryStrong" 
-					    
-					    />
+				        android:text="@string/activeLevelVeryStrong"
+				        android:textColor="@color/radio_astab_changecolor"
+				        android:textSize="18sp"
+				        android:textStyle="bold" />
+
 				</RadioGroup>
 			</LinearLayout>
 			

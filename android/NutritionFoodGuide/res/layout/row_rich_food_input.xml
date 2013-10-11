@@ -1,28 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linearLayout1"
     android:layout_width="fill_parent"
-    android:layout_height="60dp"
-    android:orientation="horizontal" 
-    >
+    android:layout_height="65dp"
+    android:orientation="horizontal" >
     
-    <LinearLayout 
+    <LinearLayout
         android:id="@+id/llRowNutrient"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_margin="5dp"
-	    android:background="@drawable/row_clickable_bg"
-	    android:orientation="horizontal" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/row_clickable_bg"
+        android:orientation="horizontal"
+        android:padding="0dp" >
 	
 	    <ImageView
 	        android:id="@+id/ivFood"
 	        android:layout_width="75dp"
 	        android:layout_height="50dp"
-	        android:layout_gravity="center_vertical"
+	        android:layout_marginTop="1dp"
+	        android:layout_marginLeft="1dp"
+	        android:layout_marginBottom="4dp"
 	        android:layout_weight="0"
-	        />
+	        android:background="@color/blue" />
 	
 	    <LinearLayout
 	        android:id="@+id/llToInputFoodAmount"
@@ -40,23 +40,28 @@
 		        android:layout_marginLeft="5dp"
 		        android:layout_marginRight="5dp"
 		        android:layout_weight="1"
-		        android:orientation="vertical" >
+		        android:orientation="horizontal" >
 		        
 		        <TextView
-			        android:id="@+id/tvFoodName"
-			        android:layout_width="fill_parent"
-			        android:layout_height="fill_parent"
-			        android:layout_weight="1"
-			        android:gravity="center_vertical"
-			        android:text="苹果"
-			        android:textSize="18sp" />
+		            android:id="@+id/tvFoodName"
+		            android:layout_width="fill_parent"
+		            android:layout_height="fill_parent"
+		            android:layout_weight="1"
+		            android:gravity="center_vertical"
+		            android:text="苹果"
+		            android:textColor="@color/black"
+		            android:textSize="18sp" />
+
 			     <TextView
 			         android:id="@+id/tvFoodAmount"
-			         android:layout_width="fill_parent"
+			         android:layout_width="50dp"
 			         android:layout_height="fill_parent"
-			         android:layout_weight="1"
-			         android:text="推荐量：123g"
-			         android:textSize="13sp" />
+			         android:layout_weight="0"
+			         android:gravity="center_vertical|right"
+			         android:text="1234g"
+			         android:textColor="@color/black"
+			         android:textSize="18sp" />
+
 		    </LinearLayout>
 		    
 	
@@ -77,10 +82,13 @@
 		        android:layout_width="50dp"
 		        android:layout_height="40dp"
 		        android:layout_gravity="center_vertical"
+		        android:layout_marginRight="5dp"
 		        android:layout_weight="0"
 		        android:background="@drawable/like_edittext" />
+
 		    <!-- TODO improve ui effect of @drawable/like_edittext or use a .9 pic -->
 	
+	<!-- 
 		    <TextView
 		        android:id="@+id/tvLabel"
 		        android:layout_width="wrap_content"
@@ -90,8 +98,9 @@
 		        android:layout_weight="0"
 		        android:gravity="center_vertical"
 		        android:text="g"
-		        android:textSize="15sp" />
-
+		        android:textColor="@color/black"
+		        android:textSize="18sp" />
+	-->
 	     </LinearLayout>
      
     </LinearLayout>

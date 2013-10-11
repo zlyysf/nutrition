@@ -49,6 +49,7 @@ public class ActivityFoodCombinationList extends Activity {
 	Button m_btnCancel;
 	
 	FoodCombinationAdapter mListAdapter;
+	String m_currentTitle;
 	
 
 	@Override
@@ -57,13 +58,11 @@ public class ActivityFoodCombinationList extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_foodcombination_list);
         
-        DataAccess da = DataAccess.getSingleton(this);
-        m_foodCollocationList = da.getAllFoodCollocation();
-        
-        TextView tv_title = (TextView)this.findViewById(R.id.tvTitle);
-        tv_title.setText(R.string.title_foodCombinationList);
-		
-		m_btnCancel = (Button) findViewById(R.id.btnCancel);
+        Intent paramIntent = getIntent();
+        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        m_btnCancel = (Button) findViewById(R.id.btnCancel);
+        if (prevActvTitle!=null)
+        	m_btnCancel.setText(prevActvTitle);
         m_btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,12 +70,20 @@ public class ActivityFoodCombinationList extends Activity {
             }
         });
         
+        DataAccess da = DataAccess.getSingleton(this);
+        m_foodCollocationList = da.getAllFoodCollocation();
+        
+        m_currentTitle = getResources().getString(R.string.title_foodCombinationList);
+        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText(m_currentTitle);
+		
         mBtnNew = (Button) findViewById(R.id.btnTopRight);
         mBtnNew.setText(R.string.add);
         mBtnNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             	Intent intent = new Intent(ActivityFoodCombinationList.this, ActivityFoodCombination.class);
+            	intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 				startActivityForResult(intent,IntentRequestCode_ActivityFoodCombination);
             }
         });
@@ -101,6 +108,7 @@ public class ActivityFoodCombinationList extends Activity {
 			
 			if (IntentValue_aim_EditItem.equals(aim)){
 				Intent intent2 = new Intent(this, ActivityFoodCombination.class);
+				intent2.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);//
 				intent2.putExtra(Constants.COLUMN_NAME_CollocationId, collocationId);
 				intent2.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
 		    	intent2.putExtra(Constants.Key_Amount, foodAmount);
@@ -265,8 +273,8 @@ public class ActivityFoodCombinationList extends Activity {
 				long collocationId = obj_collocationId.longValue();
 				
 				Intent intent = new Intent(ActivityFoodCombinationList.this, ActivityFoodCombination.class);
+				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 				intent.putExtra(Constants.COLUMN_NAME_CollocationId, collocationId);
-				
 				startActivityForResult(intent,IntentRequestCode_ActivityFoodCombination);
 			}
 		}//class OnRowClickListener

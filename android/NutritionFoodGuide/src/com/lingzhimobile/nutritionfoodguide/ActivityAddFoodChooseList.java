@@ -46,6 +46,7 @@ public class ActivityAddFoodChooseList extends Activity {
 	
 	ListView m_listView1;
 	FoodCombinationAdapter mListAdapter;
+	String m_currentTitle;
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,20 +56,23 @@ public class ActivityAddFoodChooseList extends Activity {
         Intent paramIntent = getIntent();
         m_foodId =  paramIntent.getStringExtra(Constants.COLUMN_NAME_NDB_No);
         m_foodAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
-        
-        TextView tv_title = (TextView)this.findViewById(R.id.tvTitle);
-        tv_title.setText(R.string.title_addfood_tolist_ornew);
-		
-        Button btn1 = (Button) findViewById(R.id.btnTopRight);
-        btn1.setVisibility(View.GONE);
-        
+        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
         Button btnCancel = (Button) findViewById(R.id.btnCancel);
+        if (prevActvTitle!=null)
+        	btnCancel.setText(prevActvTitle);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
             	finish();
             }
         });
+        
+        m_currentTitle = getResources().getString(R.string.title_addfood_tolist_ornew);
+        TextView tv_title = (TextView)this.findViewById(R.id.tvTitle);
+        tv_title.setText(m_currentTitle);
+		
+        Button btn1 = (Button) findViewById(R.id.btnTopRight);
+        btn1.setVisibility(View.GONE);
         
         Button btnAddToNew = (Button) findViewById(R.id.btnAddToNew);
         btnAddToNew.setOnClickListener(new View.OnClickListener() {

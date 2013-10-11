@@ -52,6 +52,7 @@ public class ActivityUserProfile extends Activity {
         setContentView(R.layout.activity_user_profile);
         
         initViewHandles();
+        initViewsContent();
         
 //        Intent paramIntent = getIntent(); 
 //        mNutrientId =  paramIntent.getStringExtra(Constants.COLUMN_NAME_NutrientID);
@@ -85,9 +86,6 @@ public class ActivityUserProfile extends Activity {
 		mBtnSave = (Button) findViewById(R.id.btnTopRight);
         m_btnCancel = (Button) findViewById(R.id.btnCancel);
         
-        m_tvTitle.setText(R.string.title_userinfo);
-        mBtnSave.setText(R.string.save);
-        
 		m_radioGroupSex = (RadioGroup)this.findViewById(R.id.radioGroupSex);
         m_etAge = (EditText)this.findViewById(R.id.etAge);
         m_etHeight = (EditText)this.findViewById(R.id.etHeight);
@@ -101,9 +99,16 @@ public class ActivityUserProfile extends Activity {
         m_rbLevelStrong = (RadioButton)this.findViewById(R.id.rbLevelStrong);
         m_rbLevelVeryStrong = (RadioButton)this.findViewById(R.id.rbLevelVeryStrong);
         
+	}
+	void initViewsContent(){
+
+		Intent paramIntent = getIntent();
+        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        if (prevActvTitle!=null)
+        	m_btnCancel.setText(prevActvTitle);
         
-        
-        
+		 m_tvTitle.setText(R.string.title_userinfo);
+	     mBtnSave.setText(R.string.save);
 	}
 	void setViewEventHandlers(){
         m_radioGroupSex.setOnCheckedChangeListener(new OnCheckedChangeListener() {

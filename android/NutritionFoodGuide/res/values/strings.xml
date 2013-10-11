@@ -20,6 +20,8 @@
     <string name="title_userinfo">个人</string>
     
     <string name="title_addfood_tolist_ornew">添加食物</string>
+    <string name="title_food_combination">营养搭配</string>
+    <string name="title_search_food">食物</string>
     
     <string name="diseaseGroupList">疾病组名清单</string>
     <string name="diseaseNameList">疾病清单</string>
@@ -40,7 +42,7 @@
     <string name="chooseRichFood">下列是富含%s的食物，您可以根据我们提供的推荐量来挑选适合自己的食物,没有推荐量时表示已经补满。</string>
     
     <string name="addToNewFoodCombination">添加到新清单</string>
-    <string name="addToExistFoodCombination">添加已有的膳食清单</string>
+    <string name="addToExistFoodCombination">添加到已有的清单</string>
     
     <string name="defaultFoodCollocationName">饮食计划%s</string>
     

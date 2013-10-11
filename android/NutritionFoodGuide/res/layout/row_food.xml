@@ -1,24 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="60dp"
+    android:layout_height="65dp"
     android:orientation="horizontal" >
     
-    <LinearLayout 
+    <LinearLayout
         android:id="@+id/llRowFood"
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:layout_margin="5dp"
-	    android:background="@drawable/row_clickable_bg"
-	    android:orientation="horizontal" >
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:background="@drawable/row_clickable_bg"
+        android:orientation="horizontal"
+        android:padding="0dp" >
+
 	    <!-- 使用 row_clickable_bg 没有起到点上去行背景变色的作用。后来发现加了click listener后可以了。 -->
     
 	    <ImageView
 	        android:id="@+id/ivFood"
 	        android:layout_width="75dp"
 	        android:layout_height="50dp"
+	        android:layout_marginTop="1dp"
+	        android:layout_marginLeft="1dp"
+	        android:layout_marginBottom="4dp"
 	        android:layout_weight="0"
-	        android:src="@color/blue" />
+	        android:src="@color/blueviolet" />
+
+	    <!-- 
+	    
+	    	android:layout_marginTop="1dp"
+	        android:layout_marginLeft="1dp"
+	        android:layout_marginBottom="4dp"
+	        这对应于 row_clickable_bg 所用的.9.png 的框上、左、下边缘的宽度
+	        
+	        android:layout_marginTop="2px"
+	        android:layout_marginLeft="2px"
+	        android:layout_marginBottom="8px"
+	     -->
 	
 	    <TextView
 	        android:id="@+id/tvFoodName"
@@ -30,7 +47,8 @@
 	        android:layout_weight="1"
 	        android:gravity="center_vertical"
 	        android:text="苹果(1个)"
-	        android:textSize="20sp" />
+	        android:textColor="@color/black"
+	        android:textSize="18sp" />
 	    
 	     <TextView
 	         android:id="@+id/tvFoodAmount"
@@ -40,6 +58,7 @@
 	         android:layout_weight="0"
 	         android:gravity="right|center_vertical"
 	         android:text="1234"
+	         android:textColor="@color/black"
 	         android:textSize="18sp" />
 	     
 	     <TextView
@@ -49,6 +68,7 @@
 	         android:layout_weight="0"
 	         android:gravity="center_vertical|center_horizontal"
 	         android:text="g"
+	         android:textColor="@color/black"
 	         android:textSize="18sp" />
 	     
 	     <ImageButton
@@ -58,7 +78,7 @@
 	         android:layout_gravity="center_vertical"
 	         android:background="@null"
 	         android:gravity="center_vertical"
-	         android:src="@drawable/x_icon" />
+	         android:src="@drawable/btn_delete_icon" />
      
      </LinearLayout>
 

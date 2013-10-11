@@ -56,6 +56,7 @@ public class ActivityFoodCombination extends Activity {
 	ExpandableListView m_expandableListView1;
 	
 	ExpandableListAdapter_FoodNutrition mListAdapter;
+	String m_currentTitle;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,13 +70,14 @@ public class ActivityFoodCombination extends Activity {
         m_in_foodAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
         
         initViewHandles();
+        initViewsContent();
         setViewEventHandlers();
         setViewsContent();
     }
 	
 	void initViewHandles(){
 		mBtnSave = (Button) findViewById(R.id.btnTopRight);
-        mBtnSave.setText(R.string.save);
+        
         m_btnCancel = (Button) findViewById(R.id.btnCancel);
         m_imgbtnAdd = (ImageButton) findViewById(R.id.imgbtnAdd);
         m_imgbtnShare = (ImageButton) findViewById(R.id.imgbtnShare);
@@ -83,7 +85,18 @@ public class ActivityFoodCombination extends Activity {
         m_expandableListView1 = (ExpandableListView)this.findViewById(R.id.expandableListView1);
         
         m_imgbtnShare.setVisibility(View.GONE);
+	}
+	void initViewsContent(){
+		Intent paramIntent = getIntent();
+        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        if (prevActvTitle!=null)
+        	m_btnCancel.setText(prevActvTitle);
         
+        mBtnSave.setText(R.string.save);
+        
+        m_currentTitle = getResources().getString(R.string.title_food_combination);
+        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText(m_currentTitle);
 	}
 	void setViewEventHandlers(){
 //        m_expandableListView1.setOnChildClickListener(new OnChildClickListener(){
@@ -162,6 +175,7 @@ public class ActivityFoodCombination extends Activity {
             @Override
             public void onClick(View v) {
             	Intent intent = new Intent(ActivityFoodCombination.this, ActivitySearchFoodCustom.class);
+            	intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 				startActivityForResult(intent,IntentRequestCode_ActivitySearchFoodCustom);
             }
         });
@@ -671,6 +685,7 @@ public class ActivityFoodCombination extends Activity {
 					toSupplyDelta = 0;
 				
 				Intent intent = new Intent(ActivityFoodCombination.this, ActivityRichFood.class);
+				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 				intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromFoodCombination);
 				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
 				intent.putExtra(Constants.Key_Amount, toSupplyDelta);

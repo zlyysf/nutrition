@@ -34,7 +34,7 @@
         android:paddingTop="7dp"
         android:text="@string/cancel"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="12sp" />
     
     <Button
         android:id="@+id/btnTopRight"
@@ -51,7 +51,7 @@
         android:paddingTop="7dp"
         android:text="@string/checkAgain"
         android:textColor="@color/white"
-        android:textSize="15sp" />
+        android:textSize="12sp" />
 
     <!-- 
     android:background="@drawable/btn_3state_bg"

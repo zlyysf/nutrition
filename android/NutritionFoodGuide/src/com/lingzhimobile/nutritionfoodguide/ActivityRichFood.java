@@ -42,7 +42,7 @@ public class ActivityRichFood extends Activity {
 	static final String LogTag = "ActivityRichFood";
 	
 
-	
+	String m_currentTitle;
 	
 	String mInvokerType = null;
 	String mNutrientId;
@@ -53,7 +53,7 @@ public class ActivityRichFood extends Activity {
 
 
 	ListView mListView1;
-	Button mBtnSave;
+	Button btnTopRight;
 	Button m_btnCancel;
 	
 
@@ -68,6 +68,24 @@ public class ActivityRichFood extends Activity {
         mNutrientId =  paramIntent.getStringExtra(Constants.COLUMN_NAME_NutrientID);
         mToSupplyNutrientAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
         mNutrientCnCaption = paramIntent.getStringExtra(Constants.Key_Name);
+        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        m_btnCancel = (Button) findViewById(R.id.btnCancel);
+        if (prevActvTitle!=null)
+        	m_btnCancel.setText(prevActvTitle);
+        
+        m_btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	finish();
+            }
+        });
+        
+        btnTopRight = (Button) findViewById(R.id.btnTopRight);
+        btnTopRight.setVisibility(View.INVISIBLE);
+        
+        m_currentTitle = mNutrientCnCaption;
+        TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
+        tvTitle.setText(m_currentTitle);
         
 //        m_foodsData = new ArrayList<HashMap<String, Object>>();
         DataAccess da = DataAccess.getSingleton(this);
@@ -83,19 +101,10 @@ public class ActivityRichFood extends Activity {
 //        ListViewEventListener lvEventListener = new ListViewEventListener();
 //        listView1.setOnItemClickListener(lvEventListener);
         
-        TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
-        tvTitle.setText(mNutrientCnCaption);
-      
-		m_btnCancel = (Button) findViewById(R.id.btnCancel);
-        m_btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	finish();
-            }
-        });
         
-        mBtnSave = (Button) findViewById(R.id.btnTopRight);
-        mBtnSave.setVisibility(View.INVISIBLE);
+      
+		
+        
     }
     
     
@@ -190,6 +199,7 @@ public class ActivityRichFood extends Activity {
 			public void onClick(View v) {
 //				HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
 				Intent intent = new Intent(ActivityRichFood.this,ActivityAddFoodChooseList.class);
+				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 //				intent.putExtra(ActivityAddFoodChooseList.IntentKey_ActionType, ActivityAddFoodChooseList.ActionType_ToFoodCombination);
             	intent.putExtra(Constants.COLUMN_NAME_NDB_No, m_foodId);
             	intent.putExtra(Constants.Key_Amount, m_foodAmount.doubleValue());

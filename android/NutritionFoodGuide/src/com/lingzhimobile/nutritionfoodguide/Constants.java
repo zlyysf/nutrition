@@ -230,6 +230,8 @@ public class Constants {
 	public static final int Value_activityLevel_strong = 2;
 	public static final int Value_activityLevel_veryStrong = 3;
 	
+	public static final String IntentParamKey_BackButtonTitle = "BackButtonTitle";
+	
 	public static final String IntentParamKey_InvokerType = "InvokerType";
 	public static final String InvokerType_FromNutrients = "FromNutrients";
 	public static final String InvokerType_FromSearchFood = "FromSearchFood";

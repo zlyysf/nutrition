@@ -45,6 +45,7 @@ public class ActivitySearchFoodCustom extends Activity {
 	ExpandableListView m_expandableListView1;
 	FoodsByTypeExpandableListAdapter m_FoodsByTypeExpandableListAdapter;
 	Button mBtnFinish,m_btnCancel;
+	String m_currentTitle;
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,7 +54,23 @@ public class ActivitySearchFoodCustom extends Activity {
         
         Intent paramIntent = getIntent();
         mInvokerType = paramIntent.getStringExtra(Constants.IntentParamKey_InvokerType);
-
+        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        m_btnCancel = (Button) findViewById(R.id.btnCancel);
+        if (prevActvTitle!=null)
+        	m_btnCancel.setText(prevActvTitle);
+        m_btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	finish();
+            }
+        });
+        
+        mBtnFinish = (Button) findViewById(R.id.btnTopRight);
+        mBtnFinish.setVisibility(View.INVISIBLE);
+        
+        m_currentTitle = getResources().getString(R.string.title_search_food);
+        TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
+        tvTitle.setText(m_currentTitle);
         
         DataAccess da = DataAccess.getSingleton(this);
 		
@@ -97,19 +114,6 @@ public class ActivitySearchFoodCustom extends Activity {
 				return true;
 			}
         });
-        
-        mBtnFinish = (Button) findViewById(R.id.btnTopRight);
-        mBtnFinish.setVisibility(View.INVISIBLE);
-
-        
-        m_btnCancel = (Button) findViewById(R.id.btnCancel);
-        m_btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	finish();
-            }
-        });
-        
         
     }
 	
