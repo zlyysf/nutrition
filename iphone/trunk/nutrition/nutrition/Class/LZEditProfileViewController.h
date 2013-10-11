@@ -35,6 +35,13 @@
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong, nonatomic) IBOutlet UILabel *emptyDRILabel;
 @property (nonatomic, readwrite) int currentActivityLevelSelection;
+@property (strong, nonatomic) IBOutlet UILabel *ageUnitLabel;
 @property (strong,nonatomic)NSMutableArray *nutrientStandardArray;
+@property (strong, nonatomic) IBOutlet UILabel *basicinfoLabel;
+@property (strong, nonatomic) IBOutlet UILabel *ageLabel;
+@property (strong, nonatomic) IBOutlet UILabel *heightLabel;
 @property (assign,nonatomic)int maxNutrientCount;
+@property (strong, nonatomic) IBOutlet UILabel *weightLabel;
+@property (strong, nonatomic) IBOutlet UILabel *activityLevelLabel;
+@property (strong, nonatomic) IBOutlet UILabel *DRILabel;
 @end

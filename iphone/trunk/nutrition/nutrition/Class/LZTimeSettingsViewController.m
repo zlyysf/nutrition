@@ -33,14 +33,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"诊断提醒";
+    self.title = NSLocalizedString(@"timesettings_viewtitle",@"诊断提醒");
     UIImage *originBg = [UIImage imageNamed:@"outer_line_bg.png"];
     UIImage *outerBg = [originBg stretchableImageWithLeftCapWidth:6 topCapHeight:6];
     [self.outBoundImageView setImage:outerBg];
     [self.line1View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.line2View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
     [self.line3View setBackgroundColor:[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1.0f]];
-    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveItemTapped)];
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"baocunbutton",@"保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveItemTapped)];
     self.navigationItem.rightBarButtonItem = saveItem;
     //self.datePicker = [[UIDatePicker alloc]init];
     [self.datePicker setDatePickerMode:UIDatePickerModeTime];
@@ -70,7 +70,7 @@
     UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"  返回" forState:UIControlStateNormal];
+    [button setTitle:NSLocalizedString(@"fanhuibutton",@"  返回") forState:UIControlStateNormal];
     button.frame = CGRectMake(0, 0, 48, 30);
     [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
     [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
@@ -80,6 +80,10 @@
 	// Do any additional setup after loading the view.
     //[self.shangwuTextField becomeFirstResponder];
     isFirstLoad = YES;
+    self.reminderSwitchLabel.text = NSLocalizedString(@"timesettings_switchlabel",@"开启闹钟提醒");
+    self.shangwuLabel.text = NSLocalizedString(@"timesettings_shangwulabel",@"上午提示");
+    self.xiawuLabel.text =NSLocalizedString(@"timesettings_xiawulabel", @"下午提示");
+    self.shuiqianLabel.text = NSLocalizedString(@"timesettings_shuiqianlabel",@"睡前提示");
 }
 -(void)backButtonTapped
 {
@@ -256,6 +260,10 @@
     [self setShangwuIndicator:nil];
     [self setXiawuIndicator:nil];
     [self setShuiqianIndicator:nil];
+    [self setReminderSwitchLabel:nil];
+    [self setShangwuLabel:nil];
+    [self setXiawuLabel:nil];
+    [self setShuiqianLabel:nil];
     [super viewDidUnload];
 }
 @end

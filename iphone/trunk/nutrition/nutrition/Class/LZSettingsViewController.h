@@ -16,6 +16,8 @@
 @property (strong, nonatomic) IBOutlet UIView *line5View;
 @property (strong, nonatomic) IBOutlet UIImageView *personsBackImageView;
 //@property (strong, nonatomic) IBOutlet UIButton *editProfileButton;
+@property (strong, nonatomic) IBOutlet UILabel *shareAuthLabel;
+@property (strong, nonatomic) IBOutlet UILabel *sinaWeiboLabel;
 @property (strong, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (strong, nonatomic)UITextField * currentTextField;
 @property (strong, nonatomic) IBOutlet UISwitch *weiboAuthSwitch;

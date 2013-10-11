@@ -46,6 +46,11 @@
             self.wordCountLabel.text = [NSString stringWithFormat:@"%i/140",[content length]];
         }
     }
+    self.title = NSLocalizedString(@"shareview_viewtitle",@"分享");
+    UIBarButtonItem *cancelButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"quxiaobutton",@"取消") style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped:)];
+    self.navigationItem.leftBarButtonItem = cancelButton;
+    UIBarButtonItem *publishButton = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"fabiaobutton",@"发表") style:UIBarButtonItemStyleBordered target:self action:@selector(publishButtonTapped:)];
+    self.navigationItem.rightBarButtonItem = publishButton;
 	// Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated
@@ -104,7 +109,7 @@
     self.contentTextView.text = @"";
     self.wordCountLabel.text = [NSString stringWithFormat:@"%i/140",0];
 }
-- (IBAction)publishButtonTapped:(id)sender {
+- (void)publishButtonTapped:(id)sender {
     //NSString *imagePath = [[NSBundle mainBundle] pathForResource:@"image" ofType:@"jpg"];
     
     if (self.previewImageView.image)
@@ -112,7 +117,7 @@
         NSString *content = [self.contentTextView.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
         if ([content length]==0)
         {
-            content = @"来自@营养膳食指南";
+            content = NSLocalizedString(@"share_insertcontent",@"来自@营养膳食指南");
         }
         UIImage *shareImage = self.previewImageView.image;
     id<ISSContent> publishContent = [ShareSDK content:content
@@ -135,14 +140,14 @@
                         }
                         else if (state == SSPublishContentStateFail)
                         {
-                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"分享失败" message:[error errorDescription] delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"share_alert0_title",@"分享失败") message:[error errorDescription] delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles: nil];
                             [alert show];
                         }
                     }];
     }
 
 }
-- (IBAction)cancelButtonTapped:(id)sender {
+- (void)cancelButtonTapped:(id)sender {
     [self dismissModalViewControllerAnimated:YES];
 }
 

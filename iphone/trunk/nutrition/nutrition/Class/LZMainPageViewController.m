@@ -39,19 +39,19 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    self.title = @"营养膳食指南";
+    self.title = NSLocalizedString(@"mainpage_viewtitle",@"营养膳食指南");
     if (ViewControllerUseBackImage) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
         UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     }
     self.menuArray = [[NSArray alloc]initWithObjects:
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"诊断",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"食物",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"营养",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"清单",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"个人",@"menuName", nil],
-                      [NSDictionary dictionaryWithObjectsAndKeys:@"设置",@"menuName", nil],nil];
+                      [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"mainpage_menuitem_zhenduan", @"诊断"),@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"mainpage_menuitem_shiwu", @"食物"),@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"mainpage_menuitem_yingyang", @"营养"),@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"mainpage_menuitem_qingdan",@"清单"),@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"mainpage_menuitem_geren",@"个人"),@"menuName", nil],
+                      [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"mainpage_menuitem_shezhi",@"设置"),@"menuName", nil],nil];
 
     [self.view addSubview:self.admobView];
     int totalFloor = [self.menuArray count]/2+ (([self.menuArray count]%2 == 0)?0:1);

@@ -61,7 +61,7 @@
     [MobClick startWithAppkey:UMSDKAPPKey];
     //[MobClick startWithAppkey:UMSDKAPPKey reportPolicy:REALTIME channelId:MobChannelIdAppStore];
     //检查更新
-    [MobClick checkUpdate:@"检测到新版本" cancelButtonTitle:@"下次再说" otherButtonTitles:@"去下载"];
+    [MobClick checkUpdate:NSLocalizedString(@"umeng_checkupdate_title",@"检测到新版本") cancelButtonTitle:NSLocalizedString(@"umeng_checkupdate_cancel",@"下次再说" )otherButtonTitles:NSLocalizedString(@"umeng_checkupdate_other",@"去下载")];
     //initialize persons and days setting
     [ShareSDK registerApp:ShareSDKAPPKey];
     [ShareSDK connectSinaWeiboWithAppKey:SinaWeiboAppKey
@@ -192,8 +192,8 @@
     }
     
     UILocalNotification *local = [[UILocalNotification alloc]init];
-    [local setAlertAction:@"打开"];
-    [local setAlertBody:@"营养膳食指南竭诚帮您选出含有全面丰富营养的食物搭配，敬请使用!"];
+    [local setAlertAction:NSLocalizedString(@"localnotify_3dayreminder_action",@"打开")];
+    [local setAlertBody:NSLocalizedString(@"localnotify_3dayreminder_content",@"营养膳食指南竭诚帮您选出含有全面丰富营养的食物搭配，敬请使用!")];
     [local setApplicationIconBadgeNumber:1];
     NSDate *currentDate = [NSDate date];
     [local setFireDate:[currentDate dateByAddingTimeInterval:LocalNotifyTimeInterval]];

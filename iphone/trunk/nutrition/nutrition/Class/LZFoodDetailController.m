@@ -51,14 +51,14 @@
 
     }
     self.title = foodName;
-    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc]initWithTitle:@"取消" style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
+    UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"quxiaobutton", @"取消") style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
     NSString *rightTitle;
     if (isForEdit) {
-        rightTitle = @"保存"; 
+        rightTitle = NSLocalizedString(@"baocunbutton", @"保存"); 
     }
     else
     {
-       rightTitle = @"添加";
+       rightTitle = NSLocalizedString(@"tianjiabutton", @"添加");
     }
     UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:rightTitle style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.leftBarButtonItem = cancelItem;
@@ -90,6 +90,8 @@
     }
     isFirstLoad = YES;
     self.listView.hidden = YES;
+    [self.GUnitButton setTitle:NSLocalizedString(@"weightunit_g", @"克") forState:UIControlStateNormal];
+    [self.UnitButton setTitle:NSLocalizedString(@"weightunit_unit", @"个") forState:UIControlStateNormal];
 }
 -(void)displayNutrientUI
 {
@@ -163,10 +165,10 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     if (isCalForAll) {
-        self.sectionLabel.text = @"所有食物的一天营养比例";
+        self.sectionLabel.text = NSLocalizedString(@"fooddetail_tablesection_title1", @"所有食物的一天营养比例");
     }
     else{
-        self.sectionLabel.text = @"当前食物的一天营养比例";
+        self.sectionLabel.text = NSLocalizedString(@"fooddetail_tablesection_title2",@"当前食物的一天营养比例");
     }
 
     [MobClick beginLogPageView:UmengPathShiWuXiangQing];
@@ -455,11 +457,11 @@
         {
             if ((value-(int)value)<Config_nearZero)
             {
-                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@(%d克)",(index/2),unitName,(int)value];
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@(%d%@)",(index/2),unitName,(int)value,NSLocalizedString(@"weightunit_g", @"克")];
             }
             else
             {
-                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@(%.1f克)",(index/2),unitName,value];
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@(%.1f%@)",(index/2),unitName,value,NSLocalizedString(@"weightunit_g", @"克")];
             }
             
         }
@@ -467,18 +469,18 @@
         {
             if ((value-(int)value)<Config_nearZero)
             {
-                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f%@(%d克)",((float)index/2),unitName,(int)value];
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f%@(%d%@)",((float)index/2),unitName,(int)value,NSLocalizedString(@"weightunit_g", @"克")];
             }
             else
             {
-                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f%@(%.1f克)",((float)index/2),unitName,value];
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f%@(%.1f%@)",((float)index/2),unitName,value,NSLocalizedString(@"weightunit_g", @"克")];
             }
         }
     }
     else
     {
         currentSelectValue = [NSNumber numberWithFloat:index];
-        self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d克",index ];
+        self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@",index,NSLocalizedString(@"weightunit_g", @"克")];
     }
     [self displayNutrientUI];
 }

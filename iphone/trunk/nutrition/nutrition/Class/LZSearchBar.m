@@ -27,7 +27,7 @@
         if([cc isKindOfClass:[UIButton class]])
         {
             UIButton *btn = (UIButton *)cc;
-            [btn setTitle:@"取消"  forState:UIControlStateNormal];
+            [btn setTitle:NSLocalizedString(@"quxiaobutton",@"取消")  forState:UIControlStateNormal];
         }
     }
 }

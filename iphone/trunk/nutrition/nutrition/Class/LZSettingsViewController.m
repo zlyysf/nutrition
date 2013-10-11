@@ -36,13 +36,14 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"设置";
+    self.title =NSLocalizedString(@"settings_viewtitle", @"设置");
     if (ViewControllerUseBackImage) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
         UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     }
-    
+    self.shareAuthLabel.text = NSLocalizedString(@"settingsview_shareauth_content",@"分享授权");
+    self.sinaWeiboLabel.text = NSLocalizedString(@"settingsview_sinaweibo_content",@"新浪微博");
 //    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -55,19 +56,19 @@
 //    self.navigationItem.leftBarButtonItem = backItem;
     self.reviewAppButton.titleLabel.textAlignment = UITextAlignmentLeft;
     [self.reviewAppButton.titleLabel setFont:[UIFont systemFontOfSize:18]];
-    [self.reviewAppButton setTitle:@"给我们评分" forState:UIControlStateNormal];
+    [self.reviewAppButton setTitle:NSLocalizedString(@"settings_pingfenbutton",@"给我们评分") forState:UIControlStateNormal];
     float title1Length = self.reviewAppButton.titleLabel.frame.size.width;
     [self.reviewAppButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 46, 0, 300-46-title1Length)];
     
     self.recommendAppButton.titleLabel.textAlignment = UITextAlignmentLeft;
     [self.recommendAppButton.titleLabel setFont:[UIFont systemFontOfSize:18]];
-    [self.recommendAppButton setTitle:@"推荐应用" forState:UIControlStateNormal];
+    [self.recommendAppButton setTitle:NSLocalizedString(@"settings_tuijianbutton",@"推荐应用") forState:UIControlStateNormal];
     float title2Length = self.recommendAppButton.titleLabel.frame.size.width;
     [self.recommendAppButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 46, 0, 300-46-title2Length)];
     
     self.feedBackButton.titleLabel.textAlignment = UITextAlignmentLeft;
     [self.feedBackButton.titleLabel setFont:[UIFont systemFontOfSize:18]];
-    [self.feedBackButton setTitle:@"意见反馈" forState:UIControlStateNormal];
+    [self.feedBackButton setTitle:NSLocalizedString(@"settings_fankuibutton",@"意见反馈") forState:UIControlStateNormal];
     float titleLength = self.feedBackButton.titleLabel.frame.size.width;
     [self.feedBackButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 46, 0, 300-46-titleLength)];
 
@@ -122,7 +123,7 @@
     }
     else
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"解除新浪微博绑定？" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"解除", nil];//[ShareSDK cancelAuthWithType:ShareTypeSinaWeibo];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"settings_alert0_message",@"解除新浪微博绑定？") delegate:self cancelButtonTitle:NSLocalizedString(@"quxiaobutton",@"取消") otherButtonTitles:NSLocalizedString(@"jiechubutton",@"解除") ,nil];
         [alert show];
     }
 }
@@ -222,7 +223,7 @@
             [self displayComposerSheet];
         }
         else{
-            [self alertWithTitle:@"温馨提示" msg:@"你还没有邮件账户，请到系统设置里面创建一个"];
+            [self alertWithTitle:NSLocalizedString(@"settings_alert1_title",@"温馨提示") msg:NSLocalizedString(@"settings_alert1_message",@"你还没有邮件账户，请到系统设置里面创建一个")];
         }
     }
 
@@ -234,7 +235,7 @@
     mailPicker.mailComposeDelegate = self;
     
     //设置主题
-    [mailPicker setSubject: @"用户意见反馈"];
+    [mailPicker setSubject: NSLocalizedString(@"settings_email_title",@"用户意见反馈")];
     
     //添加发送者
     NSArray *toRecipients = [NSArray arrayWithObjects: @"support@lingzhimobile.com",nil];
@@ -255,15 +256,15 @@
         case MFMailComposeResultCancelled:
             break;
         case MFMailComposeResultSaved:
-            msg = @"邮件保存成功";
+            msg = NSLocalizedString(@"settings_sendemail_result0",@"邮件保存成功");
             [self alertWithTitle:nil msg:msg];
             break;
         case MFMailComposeResultSent:
-            msg = @"邮件发送成功";
+            msg = NSLocalizedString(@"settings_sendemail_result1",@"邮件发送成功");
             [self alertWithTitle:nil msg:msg];
             break;
         case MFMailComposeResultFailed:
-            msg = @"邮件发送失败";
+            msg = NSLocalizedString(@"settings_sendemail_result2",@"邮件发送失败");
             [self alertWithTitle:nil msg:msg];
             break;
         default:
@@ -277,7 +278,7 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_title_
                                                     message:msg
                                                    delegate:nil
-                                          cancelButtonTitle:@"确定"
+                                          cancelButtonTitle:NSLocalizedString(@"quedingbutton",@"确定")
                                           otherButtonTitles:nil];
     [alert show];
 }
@@ -341,7 +342,7 @@
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:@"完成" delegate:self];
+    LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:NSLocalizedString(@"wanchengbutton",@"完成") delegate:self];
     textField.inputAccessoryView = keyboardToolbar;
     currentTextField = textField;
 
@@ -372,6 +373,8 @@
     [self setReviewAppButton:nil];
     [self setRecommendAppButton:nil];
     [self setFeedBackButton:nil];
+    [self setShareAuthLabel:nil];
+    [self setSinaWeiboLabel:nil];
     [super viewDidUnload];
 }
 #pragma mark BaiduMobAdWallDelegate

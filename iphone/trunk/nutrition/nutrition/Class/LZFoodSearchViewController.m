@@ -42,7 +42,7 @@
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 
     }
-    self.title = @"食物";
+    self.title = NSLocalizedString(@"foodsearch_viewtitle",@"食物");
     UISearchBar *searchBar = self.searchResultVC.searchBar;
     UIView *barBack = [searchBar.subviews objectAtIndex:0];
     UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchbar_bg.png"]];
@@ -78,6 +78,7 @@
     self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, scrollHeight-50, 320, 50)];
     [self.listView addSubview:self.admobView];
     [self.listView setContentSize:CGSizeMake(320, scrollHeight)];
+    [self.searchResultVC.searchBar setPlaceholder:NSLocalizedString(@"foodsearch_searchbar_placeholder",@"快速查找食物")];
 }
 -(void)viewWillAppear:(BOOL)animated
 {

@@ -39,9 +39,9 @@
 
     }
     self.nutrientStandardArray = [[NSMutableArray alloc]init];
-    self.title = @"个人";
+    self.title = NSLocalizedString(@"editprofile_viewtitle",@"个人");
     
-    UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
+    UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"baocunbutton",@"保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;
     NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
     maxNutrientCount = [customNutrients count];
@@ -76,6 +76,16 @@
     [self.level3Button addTarget:self action:@selector(levelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.femaleButton addTarget:self action:@selector(sexButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self.maleButton addTarget:self action:@selector(sexButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [self.maleButton setTitle:NSLocalizedString(@"malebutton", @"男") forState:UIControlStateNormal];
+    [self.femaleButton setTitle:NSLocalizedString(@"femalebutton", @"女") forState:UIControlStateNormal];
+    self.basicinfoLabel.text = NSLocalizedString(@"editprofile_basicinfolabel", @"基本信息");
+    self.ageLabel.text = NSLocalizedString(@"editprofile_agelabel", @"年龄");
+    self.ageUnitLabel.text = NSLocalizedString(@"editprofile_ageunitlabel", @"岁");
+    self.heightLabel.text = NSLocalizedString(@"editprofile_heightlabel", @"身高");
+    self.weightLabel.text = NSLocalizedString(@"editprofile_weightlabel", @"体重");
+    self.activityLevelLabel.text = NSLocalizedString(@"editprofile_activitylabel", @"活动强度");
+    self.DRILabel.text =NSLocalizedString(@"editprofile_DRIlabel",  @"个人每日营养摄入推荐量");
+    self.emptyDRILabel.text = NSLocalizedString(@"editprofile_emptyDRIlabel", @"很抱歉，由于您的基本信息不完全，目前无法显示营养摄入推荐量。");
 
     self.ageTextField.tag= 200;
     self.heightTextField.tag = 201;
@@ -370,7 +380,7 @@
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
 {
-    LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:@"完成" delegate:self];
+    LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:NSLocalizedString(@"wanchengbutton",@"完成") delegate:self];
     textField.inputAccessoryView = keyboardToolbar;
     self.currentTextField = textField;
     int tag = textField.tag;
@@ -535,7 +545,7 @@
     {
         if (shouldPopAlert)
         {
-            [self alertWithTitle:@"温馨提示" msg:@"性别选择错误，请重新选择"];
+            [self alertWithTitle:NSLocalizedString(@"editprofile_alert0_title",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert0_message",@"性别选择错误，请重新选择")];
         }
         return nil;
     }
@@ -547,7 +557,7 @@
     {
         if (shouldPopAlert)
         {
-            [self alertWithTitle:@"温馨提示" msg:@"活动强度选择错误，请重新选择"];
+            [self alertWithTitle:NSLocalizedString(@"editprofile_alert1_title",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert1_message",@"活动强度选择错误，请重新选择")];
         }
         return nil;
     }
@@ -560,7 +570,7 @@
     {
         if (shouldPopAlert)
         {
-            [self alertWithTitle:@"温馨提示" msg:@"年龄填写错误，请重新填写"];
+            [self alertWithTitle:NSLocalizedString(@"editprofile_alert2_title",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert2_message",@"年龄填写错误，请重新填写")];
         }
         return nil;
     }
@@ -573,7 +583,7 @@
     {
         if (shouldPopAlert)
         {
-            [self alertWithTitle:@"温馨提示" msg:@"身高填写错误，请重新填写"];
+            [self alertWithTitle:NSLocalizedString(@"editprofile_alert3_title",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert3_message",@"身高填写错误，请重新填写")];
         }
         return nil;
     }
@@ -587,7 +597,7 @@
     {
         if (shouldPopAlert)
         {
-            [self alertWithTitle:@"温馨提示" msg:@"体重填写错误，请重新填写"];
+            [self alertWithTitle:NSLocalizedString(@"editprofile_alert4_title",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert4_message",@"体重填写错误，请重新填写")];
         }
         return nil;
     }
@@ -598,7 +608,7 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_title_
                                                     message:msg
                                                    delegate:nil
-                                          cancelButtonTitle:@"确定"
+                                          cancelButtonTitle:NSLocalizedString(@"quedingbutton",@"确定")
                                           otherButtonTitles:nil];
     [alert show];
 }
@@ -624,6 +634,13 @@
     [self setListView:nil];
     [self setEmptyDRILabel:nil];
     [self setListViewBGImage:nil];
+    [self setBasicinfoLabel:nil];
+    [self setAgeLabel:nil];
+    [self setHeightLabel:nil];
+    [self setWeightLabel:nil];
+    [self setAgeUnitLabel:nil];
+    [self setActivityLevelLabel:nil];
+    [self setDRILabel:nil];
     [super viewDidUnload];
 }
 - (void)keyboardWillShow:(NSNotification *)notification {

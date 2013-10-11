@@ -52,7 +52,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         
         [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-        [button setTitle:@"  返回" forState:UIControlStateNormal];
+        [button setTitle:NSLocalizedString(@"fanhuibutton",@"  返回") forState:UIControlStateNormal];
         
         button.frame = CGRectMake(0, 0, 48, 30);
         [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
@@ -70,10 +70,11 @@
     self.diseaseNamesArray = [[NSMutableArray alloc]init];
     self.isFirstLoad = YES;
         //self.questionLabel.text = @"您最近有以下哪些症状?（可多选）";
-    UIBarButtonItem *recheckItem = [[UIBarButtonItem alloc]initWithTitle:@"提醒设置" style:UIBarButtonItemStyleBordered target:self action:@selector(timeSettingItemTapped)];
+    UIBarButtonItem *recheckItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"tixingshezhibutton",@"提醒设置") style:UIBarButtonItemStyleBordered target:self action:@selector(timeSettingItemTapped)];
     self.navigationItem.rightBarButtonItem = recheckItem;   
     UIImage *button30 = [[UIImage imageNamed:@"button_back_40"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
     [self.checkItemButton setBackgroundImage:button30 forState:UIControlStateNormal];
+    [self.checkItemButton setTitle:NSLocalizedString(@"zhenduanbutton",@"诊断") forState:UIControlStateNormal];
     
     UIView *topBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 120, 44)];
     [topBarView setBackgroundColor:[UIColor clearColor]];
@@ -143,15 +144,16 @@
 -(void)refreshViewAccordingToTime:(NSString *)timeType
 {
     checkType = timeType;
-    NSDictionary *titleDict = [NSDictionary dictionaryWithObjectsAndKeys:@"从早晨到现在，您有下列哪些状况？",@"上午",@"午饭后到现在，您有下列哪些状况？",@"下午",@"晚饭后到现在，您有下列哪些状况？",@"睡前", nil];
+    NSDictionary *headerDict = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"healthcheck_headercontent0",@"从早晨到现在，您有下列哪些状况？"),@"上午",NSLocalizedString(@"healthcheck_headercontent1",@"午饭后到现在，您有下列哪些状况？"),@"下午",NSLocalizedString(@"healthcheck_headercontent2",@"晚饭后到现在，您有下列哪些状况？"),@"睡前", nil];
     LZDataAccess *da = [LZDataAccess singleton];
     NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
     NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
     
-    self.sectionTitle = [titleDict objectForKey:timeType];
+    self.sectionTitle = [headerDict objectForKey:timeType];
     UIView *topbarView = self.navigationItem.titleView;
     UILabel *topbarLabel = (UILabel *)[topbarView viewWithTag:20];
-    [topbarLabel setText:[NSString stringWithFormat:@"%@诊断",timeType]];
+    NSDictionary *titleDict = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"healthcheck_viewtitle0",@"上午诊断"),@"上午",NSLocalizedString(@"healthcheck_viewtitle1",@"下午诊断"),@"下午",NSLocalizedString(@"healthcheck_viewtitle2",@"睡前诊断"),@"睡前", nil];
+    [topbarLabel setText:[titleDict objectForKey:timeType]];
     //self.title =[NSString stringWithFormat:@"%@诊断",timeType];
     [self.diseaseNamesArray removeAllObjects];
     [self.diseaseNamesArray addObjectsFromArray:[da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:timeType]];
@@ -192,7 +194,7 @@
     }
     if ([userSelectedDiseaseNames count] == 0)
     {
-        UIAlertView *selectEmptyAlert = [[UIAlertView alloc]initWithTitle:nil message:@"恭喜，你现在的身体状况还很健康，在以后的诊断中要继续保持哦！" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *selectEmptyAlert = [[UIAlertView alloc]initWithTitle:nil message:NSLocalizedString(@"heathcheck_alert0_title",@"恭喜，你现在的身体状况还很健康，在以后的诊断中要继续保持哦！") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
         [selectEmptyAlert show];
         return;
     }

@@ -42,7 +42,7 @@
 
     }
     self.dietArray = [[NSMutableArray alloc]init];
-    self.title = @"添加食物";
+    self.title = NSLocalizedString(@"dietpicker_viewtitle",@"添加食物");
 //    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
 //    [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
@@ -121,7 +121,7 @@
             [addButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
             [addButton setFrame:CGRectMake(60, 10, 200, 40)];
             [addButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-            [addButton setTitle:@"添加到新清单" forState:UIControlStateNormal];
+            [addButton setTitle:NSLocalizedString(@"dietpicker_addtonewlist_button",@"添加到新清单") forState:UIControlStateNormal];
             [addButton addTarget:self action:@selector(addToNewDiet) forControlEvents:UIControlEventTouchUpInside];
             [addButton setBackgroundImage:button30 forState:UIControlStateNormal];
             cell.hasLoaded = YES;
@@ -179,7 +179,7 @@
     [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:14]];
     [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
     [sectionView addSubview:sectionTitleLabel];
-    sectionTitleLabel.text =  @"添加到已有的清单";
+    sectionTitleLabel.text =  NSLocalizedString(@"dietpicker_tablesection_title",@"添加到已有的清单");
     
     return sectionView;
 

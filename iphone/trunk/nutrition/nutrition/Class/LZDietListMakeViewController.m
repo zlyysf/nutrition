@@ -54,11 +54,11 @@
     [super viewDidLoad];
     if (useRecommendNutrient)
     {
-        self.title = @"推荐的食物";
+        self.title = NSLocalizedString(@"listmake_viewtitle1",@"推荐的食物");
     }
     else if (self.listType == dietListTypeNew)
     {
-        self.title = @"营养搭配";
+        self.title = NSLocalizedString(@"listmake_viewtitle2",@"营养搭配");
     }
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
     [self.view addSubview:HUD];
@@ -84,7 +84,7 @@
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         
         [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-        [button setTitle:@"  返回" forState:UIControlStateNormal];
+        [button setTitle:NSLocalizedString(@"fanhuibutton",@"  返回") forState:UIControlStateNormal];
         
         button.frame = CGRectMake(0, 0, 48, 30);
         [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
@@ -97,7 +97,7 @@
 
     }
     
-    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"baocunbutton",@"保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.rightBarButtonItem = saveItem;
     needRefresh = NO;
     takenFoodIdsArray = [[NSMutableArray alloc]init];
@@ -130,7 +130,7 @@
     {
         if([self.takenFoodIdsArray count] == 0)
         {
-            UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert0_title",@"温馨提示") message:NSLocalizedString(@"listmake_alert0_message",@"食物列表还是空的呢，马上添加食物或点击推荐吧!") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
             [foodEmptyAlert show];
             return;
         }
@@ -143,11 +143,11 @@
             NSDate *now = [NSDate date];
             NSDateFormatter *formatter= [[NSDateFormatter alloc] init];
             [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
-            [formatter setDateFormat:@"MM月dd号"];
+            [formatter setDateFormat:NSLocalizedString(@"listmake_savefoodalert_content1",@"MM月dd号")];
             NSString* time = [formatter stringFromDate:now];
-            NSString *text = [NSString stringWithFormat:@"%@的饮食计划",time];
+            NSString *text = [NSString stringWithFormat:NSLocalizedString(@"listmake_savefoodalert_content2",@"%@的饮食计划"),time];
             //7月29号的饮食计划
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存食物清单" message:@"给你的食物清单加个名称吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert1_title",@"保存食物清单") message:NSLocalizedString(@"listmake_alert1_message",@"给你的食物清单加个名称吧!") delegate:self cancelButtonTitle:NSLocalizedString(@"quxiaobutton",@"取消" )otherButtonTitles:NSLocalizedString(@"quedingbutton",@"确定"), nil];
             alert.alertViewStyle = UIAlertViewStylePlainTextInput;
             alert.tag = KSaveDietTitleAlertTag;
             UITextField *tf = [alert textFieldAtIndex:0];
@@ -176,7 +176,7 @@
             }
             else
             {
-                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert2_title",@"保存失败") message:NSLocalizedString(@"listmake_alert2_message",@"出现了错误，请重试") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
                 [saveFailedAlert show];
             }
         }
@@ -660,7 +660,7 @@
                     [cell.contentView addSubview:contentLabel];
                     contentLabel.numberOfLines = 0;
                     [contentLabel setFont:[UIFont systemFontOfSize:14]];
-                    contentLabel.text = @"我们app的作用是帮您找到适合您一天的各营养需要量的食物搭配，您可以通过我们的推荐功能快速得到，也可以加入自己的选择以找到最适合您的方案。";
+                    contentLabel.text = NSLocalizedString(@"listmake_emptyfoodlabel_content",@"我们app的作用是帮您找到适合您一天的各营养需要量的食物搭配，您可以通过我们的推荐功能快速得到，也可以加入自己的选择以找到最适合您的方案。");
                     cell.hasLoaded = YES;
                     return cell;
                 }
@@ -830,9 +830,9 @@
     [sectionView addSubview:sectionTitleLabel];
     
     if (section == 0)
-        sectionTitleLabel.text =  @"一天的食物";
+        sectionTitleLabel.text =  NSLocalizedString(@"listmake_tablesection0_title",@"一天的食物");
     else
-        sectionTitleLabel.text =  @"一天的营养比例";
+        sectionTitleLabel.text =  NSLocalizedString(@"listmake_tablesection1_title",@"一天的营养比例");
     
     return sectionView;
 }
@@ -1079,7 +1079,7 @@
     float duration = 0.5;
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
     NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
-    NSString *title = @"哪些营养素是您重点关注且是不能缺少的，请选择：";
+    NSString *title = NSLocalizedString(@"listmake_filterview_title",@"哪些营养素是您重点关注且是不能缺少的，请选择：");
     LZRecommendFilterView *viewtoAnimate = [[LZRecommendFilterView alloc]initWithFrame:CGRectMake(0, 20, screenSize.width, screenSize.height-20) backColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5] filterInfo:preferNutrient tipsStr:title delegate:self];
     
     //LZAppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
@@ -1167,7 +1167,7 @@
     NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
     if (recommendFoodAmountDict == nil || [recommendFoodAmountDict count]==0)
     {
-        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"已有的这组食物搭配已经能够满足您所关注的营养需要，如需另行推荐，您可以通过左右滑动来删掉一些食物再使用推荐功能。" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert3_title",@"温馨提示") message:NSLocalizedString(@"listmake_alert3_message",@"已有的这组食物搭配已经能够满足您所关注的营养需要，如需另行推荐，您可以通过左右滑动来删掉一些食物再使用推荐功能。") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles: nil];
         [noRecommendAlert show];
         [HUD hide:YES];
         self.listView.hidden = NO;
@@ -1254,7 +1254,7 @@
     [HUD show:YES];
     //self.listView.hidden = YES;
     
-    HUD.labelText = @"智能推荐中...";
+    HUD.labelText = NSLocalizedString(@"listmake_HUDLabel_content",@"智能推荐中...");
     
     [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
     
@@ -1377,32 +1377,14 @@
 {
     if([self.takenFoodIdsArray count] == 0)
     {
-        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢，马上添加食物或点击推荐吧!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert4_title",@"温馨提示") message:NSLocalizedString(@"listmake_alert4_message",@"食物列表还是空的呢，马上添加食物或点击推荐吧!") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
         [foodEmptyAlert show];
         return;
     }
-    UIActionSheet *shareSheet = [[UIActionSheet alloc]initWithTitle:@"分享到" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"新浪微博",@"微信好友",@"微信朋友圈", nil];
+    UIActionSheet *shareSheet = [[UIActionSheet alloc]initWithTitle:NSLocalizedString(@"listmake_actionsheet0_title",@"分享到") delegate:self cancelButtonTitle:NSLocalizedString(@"quxiaobutton",@"取消") destructiveButtonTitle:nil otherButtonTitles:NSLocalizedString(@"listmake_actionsheet0_button1",@"新浪微博"),NSLocalizedString(@"listmake_actionsheet0_button2",@"微信好友"),NSLocalizedString(@"listmake_actionsheet0_button3",@"微信朋友圈"), nil];
     //[shareSheet showInView:self.view];
     [shareSheet showInView:[UIApplication sharedApplication].keyWindow];
 }
-//- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
-//    NSString *message;
-//    NSString *title;
-//    if (!error) {
-//        title = NSLocalizedString(@"储存成功", @"");
-//        message = NSLocalizedString(@"您的图片已正确的储存至照片数据", @"");
-//    }
-//    else {
-//        title = NSLocalizedString(@"储存失败", @"");
-//        message = [error description];
-//    }
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
-//                                                    message:message
-//                                                   delegate:nil
-//                                          cancelButtonTitle:NSLocalizedString(@"好", @"")
-//                                          otherButtonTitles:nil];
-//    [alert show];
-//}
 -(NSString *)getShareContentsForShareType:(ShareType)type
 {
     if(type == ShareTypeSinaWeibo)
@@ -1421,7 +1403,7 @@
 //        }
 //        else
 //        {
-            NSString *contents = @"我用@营养膳食指南(http://t.cn/zH1gxw5 )挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
+        NSString *contents = [NSString stringWithFormat:NSLocalizedString(@"listmake_weiboshare_content",@"我用@营养膳食指南%@挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!"),@"(http://t.cn/zH1gxw5 )"];
             return contents;
 //        }
     }
@@ -1442,7 +1424,7 @@
 //        }
 //        else
 //        {
-            NSString *contents = @"我用 营养膳食指南(http://t.cn/zH1gxw5 ) 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!";
+        NSString *contents = [NSString stringWithFormat:NSLocalizedString(@"listmake_wechatshare_content",@"我用 营养膳食指南%@ 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!"),@"(http://t.cn/zH1gxw5 )"];
             return contents;
 //        }
         
@@ -1493,7 +1475,7 @@
         }
         else
         {
-            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"我知道了" otherButtonTitles: nil];
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"" message:NSLocalizedString(@"listmake_alert5_message",@"出现了错误，请重试") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles: nil];
             [alert show];
             return nil;
         }
@@ -1551,10 +1533,10 @@
                                     {
                                         if ([error errorCode] == -22003)
                                         {
-                                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"分享失败"
+                                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"listmake_alert6_title",@"分享失败")
                                                                                                 message:[error errorDescription]
                                                                                                delegate:nil
-                                                                                      cancelButtonTitle:@"知道了"
+                                                                                      cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了")
                                                                                       otherButtonTitles:nil];
                                             [alertView show];
                                             
@@ -1578,11 +1560,13 @@
             if ([ShareSDK hasAuthorizedWithType:type])
             {
                 UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+                
                 LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
+                UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:shareViewController];
                 NSString *contents = [self getShareContentsForShareType:type ];
                 shareViewController.preInsertText = contents;
                 shareViewController.shareImageData = shareData;
-                [self presentModalViewController:shareViewController animated:YES];
+                [self presentModalViewController:nav animated:YES];
             }
             else
             {
@@ -1602,10 +1586,11 @@
                     {
                         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
                         LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
+                        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:shareViewController];
                         NSString * contents = [self getShareContentsForShareType:type];
                         shareViewController.preInsertText = contents;
                         shareViewController.shareImageData = shareData;
-                        [self presentModalViewController:shareViewController animated:YES];
+                        [self presentModalViewController:nav animated:YES];
                     }
                     //NSLog(@"ssauthState %d",state);
                 }];
@@ -1616,12 +1601,12 @@
     }
     
 }
-- (void)popWeiChatInstallAlert
-{
-    UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"还没有安装微信，立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
-    insallWeichatAlert.tag = KInstallWechatAlertTag;
-    [insallWeichatAlert show];
-}
+//- (void)popWeiChatInstallAlert
+//{
+//    UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"还没有安装微信，立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+//    insallWeichatAlert.tag = KInstallWechatAlertTag;
+//    [insallWeichatAlert show];
+//}
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
 //    if (alertView.tag == KChangeFoodAmountAlertTag)
@@ -1690,7 +1675,7 @@
             NSString *trimedName = [collocationName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             if ([trimedName length] == 0)
             {
-                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您输入的名称不规范，请重新输入" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert7_title",@"温馨提示") message:NSLocalizedString(@"listmake_alert7_message",@"您输入的名称不规范，请重新输入") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了" )otherButtonTitles: nil];
                 [invalidNameAlert show];
                 return;
             }
@@ -1712,7 +1697,7 @@
             }
             else
             {
-                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert8_title",@"保存失败") message:NSLocalizedString(@"listmake_alert8_message",@"出现了错误，请重试") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
                 [saveFailedAlert show];
             }
         }

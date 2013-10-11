@@ -40,7 +40,7 @@
         int index = [array indexOfObject:currentType];
         
         UIButton *buttonShangWu = [[UIButton alloc]initWithFrame:CGRectMake(59, 44, 202, 50)];
-        [buttonShangWu setTitle:@"上午诊断" forState:UIControlStateNormal];
+        [buttonShangWu setTitle:NSLocalizedString(@"healthcheck_viewtitle0",@"上午诊断") forState:UIControlStateNormal];
         [buttonShangWu.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
         [buttonShangWu.titleLabel setTextColor:[UIColor whiteColor]];
         buttonShangWu.tag = 100;
@@ -52,7 +52,7 @@
         }
         
         UIButton *buttonXiaWu = [[UIButton alloc]initWithFrame:CGRectMake(59, 95, 202, 50)];
-        [buttonXiaWu setTitle:@"下午诊断" forState:UIControlStateNormal];
+        [buttonXiaWu setTitle:NSLocalizedString(@"healthcheck_viewtitle1",@"下午诊断") forState:UIControlStateNormal];
         [buttonXiaWu.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
         [buttonXiaWu.titleLabel setTextColor:[UIColor whiteColor]];
         buttonXiaWu.tag = 101;
@@ -64,7 +64,7 @@
         }
 
         UIButton *buttonShuiQian = [[UIButton alloc]initWithFrame:CGRectMake(59, 146, 202, 50)];
-        [buttonShuiQian setTitle:@"睡前诊断" forState:UIControlStateNormal];
+        [buttonShuiQian setTitle:NSLocalizedString(@"healthcheck_viewtitle2",@"睡前诊断") forState:UIControlStateNormal];
         [buttonShuiQian.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
         [buttonShuiQian.titleLabel setTextColor:[UIColor whiteColor]];
         buttonShuiQian.tag = 102;

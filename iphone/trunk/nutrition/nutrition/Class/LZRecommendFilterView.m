@@ -160,7 +160,7 @@
         pointY += self.listView.frame.size.height+20;
         UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
         self.cancelButton = [[UIButton alloc]initWithFrame:CGRectMake(50, pointY, 75, 30)];
-        [self.cancelButton setTitle:@"取消" forState:UIControlStateNormal];
+        [self.cancelButton setTitle:NSLocalizedString(@"quxiaobutton",@"取消") forState:UIControlStateNormal];
         [self.cancelButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
         [self.cancelButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         [self.cancelButton addTarget:self action:@selector(cancelButtonTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -168,7 +168,7 @@
         [backView addSubview:self.cancelButton];
         
         self.submitButton = [[UIButton alloc]initWithFrame:CGRectMake(175, pointY, 75, 30)];
-        [self.submitButton setTitle:@"确认" forState:UIControlStateNormal];
+        [self.submitButton setTitle:NSLocalizedString(@"querenbutton",@"确认") forState:UIControlStateNormal];
         [self.submitButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
         [self.submitButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         [self.submitButton addTarget:self action:@selector(submitButtonTapped) forControlEvents:UIControlEventTouchUpInside];
@@ -306,7 +306,7 @@
 {
     if ([self isAllUnSelected:self.filterArray])
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请至少选择一个营养素" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"recommendfilter_alert0_title",@"温馨提示") message:NSLocalizedString(@"recommendfilter_alert0_message",@"请至少选择一个营养素") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles: nil];
         [alert show];
         return;
     }

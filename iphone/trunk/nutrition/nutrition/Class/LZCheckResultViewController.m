@@ -58,7 +58,7 @@
     [self.view addSubview:HUD];
     HUD.hidden = YES;
     HUD.delegate = self;
-    self.title = @"诊断结果";
+    self.title = NSLocalizedString(@"checkresult_viewtitle",@"诊断结果");
 
     int totalFloor = [lightlyLackArray count]/3+ (([lightlyLackArray count]%3 == 0)?0:1);
     self.nutritionCellHeight = totalFloor *94 + 20+ (totalFloor-1)*8;
@@ -78,7 +78,7 @@
     UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
     UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setBackgroundImage:buttonImage forState:UIControlStateNormal];
-    [button setTitle:@"  返回" forState:UIControlStateNormal];
+    [button setTitle:NSLocalizedString(@"fanhuibutton",@"  返回") forState:UIControlStateNormal];
     button.frame = CGRectMake(0, 0, 48, 30);
     [button.titleLabel setFont:[UIFont boldSystemFontOfSize:12]];
     [button.titleLabel setShadowOffset:CGSizeMake(0, -1)];
@@ -114,7 +114,7 @@
         [HUD show:YES];
         self.listView.hidden = YES;
 
-        HUD.labelText = @"智能推荐中...";
+        HUD.labelText = NSLocalizedString(@"checkresult_HUDLabel_content",@"智能推荐中...");
 
         [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
     }
@@ -177,7 +177,7 @@
                 scoreColor = [UIColor colorWithRed:255/255.f green:33/255.f blue:33/255.f alpha:1.0f];
             }
 
-            NSString *scoreString = [NSString stringWithFormat:@"%d分",self.userTotalScore];
+            NSString *scoreString = [NSString stringWithFormat:@"%d%@",self.userTotalScore,NSLocalizedString(@"checkresult_resultfen",@"分")];
             CGSize labelSize = [scoreString sizeWithFont:[UIFont boldSystemFontOfSize:48]constrainedToSize:CGSizeMake(140, 9999) lineBreakMode:UILineBreakModeWordWrap];
             UILabel *scoreLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 140, labelSize.height)];
             [scoreLabel setTextColor:scoreColor];
@@ -191,15 +191,15 @@
             NSString *summaryString;
             if (self.userTotalScore >= 90)
             {
-                summaryString = @"恭喜，您现在的身体很健康！";
+                summaryString = NSLocalizedString(@"checkresult_result_summary0",@"恭喜，您现在的身体很健康！");
             }
             else if (self.userTotalScore >= 60)
             {
-                summaryString = @"恭喜，您现在的身体比较健康！";
+                summaryString = NSLocalizedString(@"checkresult_result_summary1",@"恭喜，您现在的身体比较健康！");
             }
             else
             {
-                summaryString = @"抱歉，您现在的身体比较糟糕！";
+                summaryString = NSLocalizedString(@"checkresult_result_summary2",@"抱歉，您现在的身体比较糟糕！");
             }
             CGSize labelSize1 = [summaryString sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(150, 9999) lineBreakMode:UILineBreakModeWordWrap];
             UILabel *healthSummaryLabel = [[UILabel alloc]initWithFrame:CGRectMake(160, 1, 150, labelSize1.height)];
@@ -266,7 +266,7 @@
                 [emptyLabel setFont:[UIFont systemFontOfSize:15]];
                 [emptyLabel setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:emptyLabel];
-                emptyLabel.text = @"无，请关注轻度缺乏的营养！";
+                emptyLabel.text = NSLocalizedString(@"checkresult_nolightlylack",@"无，请关注轻度缺乏的营养！");
                 cell.hasLoaded = YES;
                 return cell;
             }
@@ -324,7 +324,7 @@
                 [emptyLabel setFont:[UIFont systemFontOfSize:15]];
                 [emptyLabel setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:emptyLabel];
-                emptyLabel.text = @"无，请关注严重缺乏的营养！";
+                emptyLabel.text = NSLocalizedString(@"checkresult_noheavylylack",@"无，请关注严重缺乏的营养！");
             }
             cell.hasLoaded = YES;
             return cell;
@@ -594,40 +594,40 @@
     
     if (section ==1)
     {
-        sectionTitleLabel.text =  @"您所选的症状";
+        sectionTitleLabel.text =  NSLocalizedString(@"checkresult_section1_title",@"您所选的症状");
     }
     else if (section == 2)
     {
         if ([self.heavylyLackArray count]==0)
         {
-            sectionTitleLabel.text = @"您现在体内严重缺乏的营养";
+            sectionTitleLabel.text = NSLocalizedString(@"checkresult_section2_title1",@"您现在体内严重缺乏的营养");
         }
         else
         {
-            sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内严重缺乏%d种营养",[self.heavylyLackArray count]];
+            sectionTitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"checkresult_section2_title2",@"您现在体内严重缺乏%d种营养"),[self.heavylyLackArray count]];
         }
     }
     else if (section == 3)
     {
         if([self.lightlyLackArray count]==0)
         {
-            sectionTitleLabel.text = @"您现在体内轻度缺乏的营养";
+            sectionTitleLabel.text = NSLocalizedString(@"checkresult_section3_title1",@"您现在体内轻度缺乏的营养");
         }
         else
         {
-            sectionTitleLabel.text = [NSString stringWithFormat:@"您现在体内轻度缺乏%d种营养",[self.lightlyLackArray count]];
+            sectionTitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"checkresult_section3_title2",@"您现在体内轻度缺乏%d种营养"),[self.lightlyLackArray count]];
         }
     }
     else if (section == 4)
     {
-        sectionTitleLabel.text =  @"您需要补充的食物";
+        sectionTitleLabel.text =  NSLocalizedString(@"checkresult_section4_title",@"您需要补充的食物");
         UIImage *button30 = [[UIImage imageNamed:@"button_back_40"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
         UIButton *recommendButton = [UIButton buttonWithType:UIButtonTypeCustom];
         [recommendButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
         [recommendButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         [recommendButton setFrame:CGRectMake(10, 37, 145, 40)];
         [recommendButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [recommendButton setTitle:@"换一组" forState:UIControlStateNormal];
+        [recommendButton setTitle:NSLocalizedString(@"huanyizubutton",@"换一组") forState:UIControlStateNormal];
         [recommendButton addTarget:self action:@selector(changeRecommend) forControlEvents:UIControlEventTouchUpInside];
         [recommendButton setBackgroundImage:button30 forState:UIControlStateNormal];
         
@@ -636,7 +636,7 @@
         [saveDietButton.titleLabel setShadowOffset:CGSizeMake(0, -1)];
         [saveDietButton setFrame:CGRectMake(165, 37, 145, 40)];
         [saveDietButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-        [saveDietButton setTitle:@"保  存" forState:UIControlStateNormal];
+        [saveDietButton setTitle:NSLocalizedString(@"baocunbutton1",@"保  存") forState:UIControlStateNormal];
         [saveDietButton addTarget:self action:@selector(saveToDiet) forControlEvents:UIControlEventTouchUpInside];
         [saveDietButton setBackgroundImage:button30 forState:UIControlStateNormal];
         UIView *lineView = [[UIView alloc]initWithFrame:CGRectMake(0, 81, 320, 1)];
@@ -653,7 +653,7 @@
     }
     else
     {
-        sectionTitleLabel.text =  @"以上食物一天的营养比例";
+        sectionTitleLabel.text =  NSLocalizedString(@"checkresult_section5_title",@"以上食物一天的营养比例");
     }
     
     return sectionView;
@@ -665,7 +665,7 @@
     {
         if([self.takenFoodIdsArray count] == 0)
         {
-            UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"食物列表还是空的呢!" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+            UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"checkresult_alert0_title",@"温馨提示") message:NSLocalizedString(@"checkresult_alert0_message",@"食物列表还是空的呢!") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
             [foodEmptyAlert show];
             return;
         }
@@ -676,10 +676,10 @@
         NSDate *now = [NSDate date];
         NSDateFormatter *formatter= [[NSDateFormatter alloc] init];
         [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
-        [formatter setDateFormat:@"MM月dd号"];
+        [formatter setDateFormat:NSLocalizedString(@"checkresult_savefoodalert_content1",@"MM月dd号")];
         NSString* time = [formatter stringFromDate:now];
-        NSString *text = [NSString stringWithFormat:@"%@的饮食计划",time];
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"保存清单" message:@"给你的食物清单加个名称吧!" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
+        NSString *text = [NSString stringWithFormat:NSLocalizedString(@"checkresult_savefoodalert_content2",@"%@的饮食计划"),time];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"checkresult_alert1_title",@"保存清单") message:NSLocalizedString(@"checkresult_alert1_message",@"给你的食物清单加个名称吧!" )delegate:self cancelButtonTitle:NSLocalizedString(@"quxiaobutton",@"取消") otherButtonTitles:NSLocalizedString(@"quedingbutton",@"确定"), nil];
         alert.alertViewStyle = UIAlertViewStylePlainTextInput;
         alert.tag = 102;
         UITextField *tf = [alert textFieldAtIndex:0];
@@ -695,7 +695,7 @@
     HUD.hidden = NO;
     [HUD show:YES];
     
-    HUD.labelText = @"智能推荐中...";
+    HUD.labelText = NSLocalizedString(@"checkresult_HUDLabel_content",@"智能推荐中...");
     
     [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.f];
 }
@@ -899,7 +899,7 @@
             NSString *trimedName = [collocationName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             if ([trimedName length] == 0)
             {
-                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"您输入的名称不规范，请重新输入" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles: nil];
+                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"checkresult_alert2_title",@"温馨提示") message:NSLocalizedString(@"checkresult_alert2_message",@"您输入的名称不规范，请重新输入") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles: nil];
                 [invalidNameAlert show];
                 return;
             }
@@ -914,14 +914,14 @@
             NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
             if(nmCollocationId)
             {
-                UIAlertView *didSaveAlert = [[UIAlertView alloc]initWithTitle:@"保存成功" message:@"您可以进入清单页面查看你的保存结果" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:@"去看看",nil];
+                UIAlertView *didSaveAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"checkresult_alert3_title",@"保存成功") message:NSLocalizedString(@"checkresult_alert3_message",@"您可以进入清单页面查看你的保存结果") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:NSLocalizedString(@"qukankanbutton",@"去看看"),nil];
                 didSaveAlert.tag = 103;
                 didSaveAlert.delegate = self;
                 [didSaveAlert show];
             }
             else
             {
-                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:@"保存失败" message:@"出现了错误，请重试" delegate:nil cancelButtonTitle:@"知道了" otherButtonTitles:nil];
+                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"checkresult_alert4_title",@"保存失败") message:NSLocalizedString(@"checkresult_alert4_message",@"出现了错误，请重试") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
                 [saveFailedAlert show];
             }
         }

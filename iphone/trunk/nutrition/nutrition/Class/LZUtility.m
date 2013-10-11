@@ -551,11 +551,11 @@
 
 + (NSDictionary *)getActivityLevelInfo
 {
-    NSArray *levelArray = [[NSArray alloc]initWithObjects:@"轻",@"中等",@"强",@"很强", nil];
-    NSDictionary *levelDescription = [[NSDictionary alloc]initWithObjectsAndKeys:@"每日仅做一些轻度运动，如散步，购物，做家务等。",@"轻",
-                                                                                 @"每日做大概30分钟中等运动，如快速步行，平地骑车，跳交谊舞等。",@"中等",  
-                                                                                 @"每日做大概60分钟中等运动；或30分钟的强度运动，如中速跑步，爬山，打羽毛球等。",@"强",
-                                                                                 @"每日做大概45~60分钟的剧烈运动，如快跑，游泳，打篮球等。",@"很强",nil];
+    NSArray *levelArray = [[NSArray alloc]initWithObjects:NSLocalizedString(@"activitylevel0",@"轻"),NSLocalizedString(@"activitylevel1", @"中等"),NSLocalizedString(@"activitylevel2",@"强"),NSLocalizedString(@"activitylevel3",@"很强"), nil];
+    NSDictionary *levelDescription = [[NSDictionary alloc]initWithObjectsAndKeys:NSLocalizedString(@"activitylevel0_des",@"每日仅做一些轻度运动，如散步，购物，做家务等。"),NSLocalizedString(@"activitylevel0",@"轻"),
+                                                                                 NSLocalizedString(@"activitylevel1_des",@"每日做大概30分钟中等运动，如快速步行，平地骑车，跳交谊舞等。"),NSLocalizedString(@"activitylevel1",@"中等"),  
+                                                                                 NSLocalizedString(@"activitylevel2_des",@"每日做大概60分钟中等运动；或30分钟的强度运动，如中速跑步，爬山，打羽毛球等。"),NSLocalizedString(@"activitylevel2",@"强"),
+                                                                                 NSLocalizedString(@"activitylevel3_des",@"每日做大概45~60分钟的剧烈运动，如快跑，游泳，打篮球等。"),NSLocalizedString(@"activitylevel3",@"很强"),nil];
     NSDictionary *activityDict = [[NSDictionary alloc]initWithObjectsAndKeys:levelArray,@"levelArray",levelDescription,@"levelDescription" ,nil];
     return activityDict;
     
@@ -761,7 +761,7 @@
         [[UIApplication sharedApplication].keyWindow addSubview:hud];
         hud.mode = MBProgressHUDModeText;
         hud.removeFromSuperViewOnHide = YES;
-        hud.labelText = @"添加成功！";
+        hud.labelText = NSLocalizedString(@"tianjia_HUDLabel_content",@"添加成功！");
         hud.animationType = MBProgressHUDAnimationZoomIn;
         [hud show:NO];
         [hud hide:YES afterDelay:1.0f];
@@ -818,9 +818,9 @@
 {
     NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
     [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
-    [formatter setAMSymbol:@"上午"];
-    [formatter setPMSymbol:@"下午"];
-    [formatter setDateFormat:@"ahh:mm"];
+    [formatter setAMSymbol:NSLocalizedString(@"AMSymbol",@"上午")];
+    [formatter setPMSymbol:NSLocalizedString(@"PMSymbol",@"下午")];
+    [formatter setDateFormat:NSLocalizedString(@"timeformat_timesettings",@"ahh:mm ,for chinese we set ahh:mm,for en we should set hh:mma")];
     return  [formatter stringFromDate:date];
 }
 +(NSDate *)getDateForHour:(int)hours Minutes:(int)minutes
@@ -870,8 +870,8 @@
             }
         }
         UILocalNotification *shangwuLocal = [[UILocalNotification alloc]init];
-        [shangwuLocal setAlertAction:@"去诊断"];
-        [shangwuLocal setAlertBody:@"诊断时间到了"];
+        [shangwuLocal setAlertAction:NSLocalizedString(@"localnotify_checkreminder_action",@"去诊断")];
+        [shangwuLocal setAlertBody:NSLocalizedString(@"localnotify_checkreminder_content",@"诊断时间到了")];
         [shangwuLocal setRepeatInterval:NSDayCalendarUnit];
         [shangwuLocal setApplicationIconBadgeNumber:1];
         [shangwuLocal setFireDate:shangwuDateDefault];
@@ -882,8 +882,8 @@
         [newScheduled addObject:shangwuLocal];
         
         UILocalNotification *xiawuLocal = [[UILocalNotification alloc]init];
-        [xiawuLocal setAlertAction:@"去诊断"];
-        [xiawuLocal setAlertBody:@"诊断时间到了"];
+        [xiawuLocal setAlertAction:NSLocalizedString(@"localnotify_checkreminder_action",@"去诊断")];
+        [xiawuLocal setAlertBody:NSLocalizedString(@"localnotify_checkreminder_content",@"诊断时间到了")];
         [xiawuLocal setRepeatInterval:NSDayCalendarUnit];
         [xiawuLocal setApplicationIconBadgeNumber:1];
         [xiawuLocal setFireDate:xiawuDateDeFault];
@@ -894,8 +894,8 @@
         [newScheduled addObject:xiawuLocal];
         
         UILocalNotification *shuiqianLocal = [[UILocalNotification alloc]init];
-        [shuiqianLocal setAlertAction:@"去诊断"];
-        [shuiqianLocal setAlertBody:@"诊断时间到了"];
+        [shuiqianLocal setAlertAction:NSLocalizedString(@"localnotify_checkreminder_action",@"去诊断")];
+        [shuiqianLocal setAlertBody:NSLocalizedString(@"localnotify_checkreminder_content",@"诊断时间到了")];
         [shuiqianLocal setRepeatInterval:NSDayCalendarUnit];
         [shuiqianLocal setApplicationIconBadgeNumber:1];
         [shuiqianLocal setFireDate:shuiqianDateDefault];
