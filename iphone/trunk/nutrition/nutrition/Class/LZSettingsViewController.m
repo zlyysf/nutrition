@@ -223,7 +223,7 @@
             [self displayComposerSheet];
         }
         else{
-            [self alertWithTitle:NSLocalizedString(@"settings_alert1_title",@"温馨提示") msg:NSLocalizedString(@"settings_alert1_message",@"你还没有邮件账户，请到系统设置里面创建一个")];
+            [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:NSLocalizedString(@"settings_alert1_message",@"你还没有邮件账户，请到系统设置里面创建一个")];
         }
     }
 

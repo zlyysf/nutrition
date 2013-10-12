@@ -130,7 +130,7 @@
     {
         if([self.takenFoodIdsArray count] == 0)
         {
-            UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert0_title",@"温馨提示") message:NSLocalizedString(@"listmake_alert0_message",@"食物列表还是空的呢，马上添加食物或点击推荐吧!") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
+            UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") message:NSLocalizedString(@"listmake_alert0_message",@"食物列表还是空的呢，马上添加食物或点击推荐吧!") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
             [foodEmptyAlert show];
             return;
         }
@@ -1167,7 +1167,7 @@
     NSDictionary *recommendFoodAmountDict = [retDict objectForKey:Key_recommendFoodAmountDict];
     if (recommendFoodAmountDict == nil || [recommendFoodAmountDict count]==0)
     {
-        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert3_title",@"温馨提示") message:NSLocalizedString(@"listmake_alert3_message",@"已有的这组食物搭配已经能够满足您所关注的营养需要，如需另行推荐，您可以通过左右滑动来删掉一些食物再使用推荐功能。") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles: nil];
+        UIAlertView *noRecommendAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") message:NSLocalizedString(@"listmake_alert3_message",@"已有的这组食物搭配已经能够满足您所关注的营养需要，如需另行推荐，您可以通过左右滑动来删掉一些食物再使用推荐功能。") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles: nil];
         [noRecommendAlert show];
         [HUD hide:YES];
         self.listView.hidden = NO;
@@ -1377,7 +1377,7 @@
 {
     if([self.takenFoodIdsArray count] == 0)
     {
-        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert4_title",@"温馨提示") message:NSLocalizedString(@"listmake_alert4_message",@"食物列表还是空的呢，马上添加食物或点击推荐吧!") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
+        UIAlertView *foodEmptyAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") message:NSLocalizedString(@"listmake_alert4_message",@"食物列表还是空的呢，马上添加食物或点击推荐吧!") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
         [foodEmptyAlert show];
         return;
     }
@@ -1675,7 +1675,7 @@
             NSString *trimedName = [collocationName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             if ([trimedName length] == 0)
             {
-                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert7_title",@"温馨提示") message:NSLocalizedString(@"listmake_alert7_message",@"您输入的名称不规范，请重新输入") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了" )otherButtonTitles: nil];
+                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") message:NSLocalizedString(@"listmake_alert7_message",@"您输入的名称不规范，请重新输入") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了" )otherButtonTitles: nil];
                 [invalidNameAlert show];
                 return;
             }

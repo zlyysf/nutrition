@@ -545,7 +545,7 @@
     {
         if (shouldPopAlert)
         {
-            [self alertWithTitle:NSLocalizedString(@"editprofile_alert0_title",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert0_message",@"性别选择错误，请重新选择")];
+            [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert0_message",@"性别选择错误，请重新选择")];
         }
         return nil;
     }
@@ -557,7 +557,7 @@
     {
         if (shouldPopAlert)
         {
-            [self alertWithTitle:NSLocalizedString(@"editprofile_alert1_title",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert1_message",@"活动强度选择错误，请重新选择")];
+            [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert1_message",@"活动强度选择错误，请重新选择")];
         }
         return nil;
     }
@@ -570,7 +570,7 @@
     {
         if (shouldPopAlert)
         {
-            [self alertWithTitle:NSLocalizedString(@"editprofile_alert2_title",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert2_message",@"年龄填写错误，请重新填写")];
+            [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert2_message",@"年龄填写错误，请重新填写")];
         }
         return nil;
     }
@@ -583,7 +583,7 @@
     {
         if (shouldPopAlert)
         {
-            [self alertWithTitle:NSLocalizedString(@"editprofile_alert3_title",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert3_message",@"身高填写错误，请重新填写")];
+            [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert3_message",@"身高填写错误，请重新填写")];
         }
         return nil;
     }
@@ -597,7 +597,7 @@
     {
         if (shouldPopAlert)
         {
-            [self alertWithTitle:NSLocalizedString(@"editprofile_alert4_title",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert4_message",@"体重填写错误，请重新填写")];
+            [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert4_message",@"体重填写错误，请重新填写")];
         }
         return nil;
     }
