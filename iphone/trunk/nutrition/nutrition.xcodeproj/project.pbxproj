@@ -437,12 +437,12 @@
 		5F82A0A71807D84E0000C9A1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		5F82A0A91807DB6F0000C9A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		5F82A0AB1807DB730000C9A1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		5F82A0AD1807FA4D0000C9A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = en.lproj/Default.png; sourceTree = "<group>"; };
-		5F82A0AF1807FA500000C9A1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Default.png"; sourceTree = "<group>"; };
-		5F82A0B11807FA560000C9A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Default@2x.png"; sourceTree = "<group>"; };
-		5F82A0B31807FA590000C9A1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Default@2x.png"; sourceTree = "<group>"; };
-		5F82A0B51807FA5E0000C9A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Default-568h@2x.png"; sourceTree = "<group>"; };
-		5F82A0B71807FA620000C9A1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Default-568h@2x.png"; sourceTree = "<group>"; };
+		5F82A0AD1807FA4D0000C9A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = en.lproj/Default.png; sourceTree = "<group>"; };
+		5F82A0AF1807FA500000C9A1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Default.png"; sourceTree = "<group>"; };
+		5F82A0B11807FA560000C9A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Default@2x.png"; sourceTree = "<group>"; };
+		5F82A0B31807FA590000C9A1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Default@2x.png"; sourceTree = "<group>"; };
+		5F82A0B51807FA5E0000C9A1 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Default-568h@2x.png"; sourceTree = "<group>"; };
+		5F82A0B71807FA620000C9A1 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Default-568h@2x.png"; sourceTree = "<group>"; };
 		5F84D1AF17D8343800DF83A0 /* basic_info_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "basic_info_icon@2x.png"; path = "nutrition/Resource/basic_info_icon@2x.png"; sourceTree = "<group>"; };
 		5F84D1B017D8343800DF83A0 /* dri_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dri_icon@2x.png"; path = "nutrition/Resource/dri_icon@2x.png"; sourceTree = "<group>"; };
 		5F86C85617CC4DF7001DDC34 /* LZDietPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDietPickerViewController.h; path = Class/LZDietPickerViewController.h; sourceTree = "<group>"; };
@@ -585,7 +585,7 @@
 		5FAB578D180266C300657793 /* ShareSDKiPhoneDefaultShareViewUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKiPhoneDefaultShareViewUI.framework; sourceTree = "<group>"; };
 		5FAB578E180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ShareSDKiPhoneSimpleShareViewUI.bundle; sourceTree = "<group>"; };
 		5FAB578F180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ShareSDKiPhoneSimpleShareViewUI.framework; sourceTree = "<group>"; };
-		5FAB57A91802878400657793 /* BaiduMobAdCommonConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BaiduMobAdCommonConfig.h; path = "../../../../../../Desktop/Products-1/ios_api/BaiduMobAdCommonConfig.h"; sourceTree = "<group>"; };
+		5FAB57A91802878400657793 /* BaiduMobAdCommonConfig.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BaiduMobAdCommonConfig.h; sourceTree = "<group>"; };
 		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = nutrition/Class/LZUtility.h; sourceTree = "<group>"; };
 		5FB8C0B7172BC61D00E90387 /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = nutrition/Class/LZUtility.m; sourceTree = "<group>"; };
 		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
