@@ -22,7 +22,7 @@
         <!-- 
         <activity
             android:name="com.lingzhimobile.nutritionfoodguide.MainActivity"
-             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+             android:theme="@android:style/Theme.NoTitleBar"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,7 +33,7 @@
         
         <activity
              android:name="com.lingzhimobile.nutritionfoodguide.ActivityHome"
-             android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
+             android:theme="@android:style/Theme.NoTitleBar"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,50 +41,50 @@
             </intent-filter>
         </activity>
         <activity android:name=".MainActivity" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
         
         
         <activity android:name=".Activity_GroupList"  
-            android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+            android:theme="@android:style/Theme.NoTitleBar" 
             >
-            <!-- android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 的作用是去除界面的顶部的标题栏等 http://quanminchaoren.iteye.com/blog/1066178 -->
+            <!-- android:theme="@android:style/Theme.NoTitleBar" 的作用是去除界面的顶部的标题栏等 http://quanminchaoren.iteye.com/blog/1066178 -->
 		</activity>
 		<activity android:name=".Activity_DiseaseList" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 		
 		<activity android:name=".ActivityDiseaseNutrientWizard" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 		<activity android:name=".ActivityDiscomfort" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 		<activity android:name=".ActivityFoodCombination" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 		<activity android:name=".ActivityRichFood" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 		
 		<activity android:name=".ActivityAllFoodExpandList" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 		<activity android:name=".ActivitySearchFoodCustom" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    android:windowSoftInputMode="adjustUnspecified|stateHidden" 
 		    >
 		</activity>
 		
 		<activity android:name=".ActivitySearchFoodT1" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
             <intent-filter>
 				<action android:name="android.intent.action.SEARCH"  />
@@ -95,7 +95,7 @@
 		</activity>
 		
 		<activity android:name=".ActivitySearchFoodT1SingleTop" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    android:launchMode="singleTop"
 		    >
             <intent-filter>
@@ -106,35 +106,35 @@
 				android:resource="@xml/searchable_food" />
 		</activity>
 		<activity android:name=".ActivityUserProfile" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    android:windowSoftInputMode="adjustUnspecified|stateHidden" 
 		    >
 			<!-- 用 android:windowSoftInputMode="adjustUnspecified|stateHidden"  可以使进入activity后不自动弹出键盘，但焦点还在编辑框 -->
 		</activity>
 		
 		<activity android:name=".ActivityFoodCombinationList" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 		
 		<activity android:name=".ActivityNutrients" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 		
 		<activity android:name=".ActivityAddFoodChooseList" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 
 		
 		<activity android:name=".ActivityT1" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 		
 		<activity android:name=".ActivityTestCases" 
-		    android:theme="@android:style/Theme.NoTitleBar.Fullscreen" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
 		

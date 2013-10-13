@@ -27,6 +27,15 @@
 	        android:layout_marginBottom="4dp"
 	        android:layout_weight="0"
 	        android:background="@color/blue"
+	        android:scaleType="fitXY"
+	        />
+	    <ImageView
+	        android:id="@+id/ivAsSeperateLine"
+	        android:layout_width="2px"
+	        android:layout_height="match_parent"
+	        android:layout_marginTop="1dp"
+	        android:layout_marginBottom="4dp"
+	        android:background="@color/border_gray"
 	        />
 	
 	    <LinearLayout

@@ -44,6 +44,7 @@ public class ActivityFoodCombinationList extends Activity {
 	ArrayList<HashMap<String, Object>> m_foodCollocationList;
 
 
+	LinearLayout m_llWhenEmptyList;
 	ListView mListView1;
 	Button mBtnNew;
 	Button m_btnCancel;
@@ -78,7 +79,7 @@ public class ActivityFoodCombinationList extends Activity {
         tvTitle.setText(m_currentTitle);
 		
         mBtnNew = (Button) findViewById(R.id.btnTopRight);
-        mBtnNew.setText(R.string.add);
+        mBtnNew.setText(R.string.create);
         mBtnNew.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,11 +89,14 @@ public class ActivityFoodCombinationList extends Activity {
             }
         });
         
+        m_llWhenEmptyList = (LinearLayout)findViewById(R.id.llWhenEmptyList);
         mListView1 = (ListView)this.findViewById(R.id.listView1);
 		mListAdapter = new FoodCombinationAdapter();
 		mListView1.setAdapter(mListAdapter);
 		
 		dealParamIntent();
+		
+		showOrHideEmptyNote();
     }
 	
 	void dealParamIntent(){
@@ -142,6 +146,15 @@ public class ActivityFoodCombinationList extends Activity {
 		}
 	}
 
+	void showOrHideEmptyNote(){
+		if (m_foodCollocationList==null || m_foodCollocationList.size()==0){
+			mListView1.setVisibility(View.GONE);
+			m_llWhenEmptyList.setVisibility(View.VISIBLE);
+		}else{
+			mListView1.setVisibility(View.VISIBLE);
+			m_llWhenEmptyList.setVisibility(View.GONE);
+		}
+	}
     
     
 	class FoodCombinationAdapter extends BaseAdapter{
@@ -166,6 +179,7 @@ public class ActivityFoodCombinationList extends Activity {
 		@Override
 		public void notifyDataSetChanged(){
 			super.notifyDataSetChanged();
+			showOrHideEmptyNote();
 		}
 
 		@Override

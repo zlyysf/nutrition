@@ -148,8 +148,8 @@ public class ActivityUserProfile extends Activity {
 		Integer intObj_activityLevel = (Integer)userInfo.get(Constants.ParamKey_activityLevel);
 		
 		m_etAge.setText(intObj_age.toString());
-		m_etHeight.setText(dblObj_height.toString());
-		m_etWeight.setText(dblObj_weight.toString());
+		m_etHeight.setText(dblObj_height.intValue()+"");
+		m_etWeight.setText(dblObj_weight.intValue()+"");
 		
 		if (Constants.Value_sex_female == intObj_sex.intValue()){
 			m_rbFemale.setChecked(true);

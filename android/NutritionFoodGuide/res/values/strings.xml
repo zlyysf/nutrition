@@ -12,7 +12,12 @@
     <string name="prevStep">上一步</string>
     <string name="save">保存</string>
     <string name="finish">完成</string>
+    
+    <string name="create">新建</string>
+    
+    <!-- 
     <string name="add">添加</string>
+     -->
     
     <string name="title_foodCombinationList">清单</string>
     <string name="title_nutrients">营养</string>
@@ -40,6 +45,10 @@
     <string name="weCanRecommend1InSum">我们可以继续为您推荐富含以上营养元素的食物</string>
     
     <string name="chooseRichFood">下列是富含%s的食物，您可以根据我们提供的推荐量来挑选适合自己的食物,没有推荐量时表示已经补满。</string>
+    <string name="chooseNutrientsExplain">哪些营养素是您重点关注且是不能缺少的，请选择：</string>
+    
+    <string name="noFoodCombinationListForNow">暂无膳食清单</string>
+    <string name="suggestToMakeFoodCombination">制定适合您的口味的每日膳食搭配，保证每日全面丰富的营养。</string>
     
     <string name="addToNewFoodCombination">添加到新清单</string>
     <string name="addToExistFoodCombination">添加到已有的清单</string>

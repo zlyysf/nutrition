@@ -57,6 +57,8 @@ public class ActivityFoodCombination extends Activity {
 	
 	ExpandableListAdapter_FoodNutrition mListAdapter;
 	String m_currentTitle;
+	
+
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,14 @@ public class ActivityFoodCombination extends Activity {
         m_currentTitle = getResources().getString(R.string.title_food_combination);
         TextView tvTitle = (TextView) findViewById(R.id.tvTitle);
         tvTitle.setText(m_currentTitle);
+        if (m_collocationId > 0){
+        	DataAccess da = DataAccess.getSingleton();
+        	HashMap<String, Object> foodCollocation = da.getFoodCollocationById(m_collocationId);
+        	if (foodCollocation!=null){
+        		String collocationName = (String)foodCollocation.get(Constants.COLUMN_NAME_CollocationName);
+        		tvTitle.setText(collocationName);
+        	}
+        }
 	}
 	void setViewEventHandlers(){
 //        m_expandableListView1.setOnChildClickListener(new OnChildClickListener(){
@@ -198,6 +208,7 @@ public class ActivityFoodCombination extends Activity {
         m_OrderedFoodIdList = new ArrayList<String>();
         m_foods2LevelHm = new HashMap<String, HashMap<String,Object>>();
         DataAccess da = DataAccess.getSingleton(ActivityFoodCombination.this);
+        
         if (m_collocationId > 0){
         	//ArrayList<HashMap<String, Object>> collocationFoodData 
         	HashMap<String, Object> foodCollocationData = da.getFoodCollocationData_withCollocationId(m_collocationId);
@@ -281,11 +292,13 @@ public class ActivityFoodCombination extends Activity {
 	class DialogInterfaceEventListener_SelectNutrients implements DialogInterface.OnClickListener, DialogInterface.OnMultiChoiceClickListener{
 		AlertDialog mAlertDialog;
 		CheckBox m_cbSelectAll;
-		String[] m_nutrientItems;
+		String[] m_nutrientIds;
+//		String[] m_nutrientNames;
 		boolean[] m_flagsForNutrients;
-		public DialogInterfaceEventListener_SelectNutrients(CheckBox cbSelectAll, String[] nutrientItems, boolean[] flagsForNutrients){
+		public DialogInterfaceEventListener_SelectNutrients(CheckBox cbSelectAll, String[] nutrientIds, boolean[] flagsForNutrients){
 			m_cbSelectAll = cbSelectAll;
-			m_nutrientItems = nutrientItems;
+			m_nutrientIds = nutrientIds;
+//			m_nutrientNames = nutrientNames;
 			m_flagsForNutrients = flagsForNutrients;
 		}
 		public void SetDialog(AlertDialog dlg){
@@ -296,7 +309,7 @@ public class ActivityFoodCombination extends Activity {
 				public void onClick(View v) {
 					boolean checked = m_cbSelectAll.isChecked();
 					ListView lv = mAlertDialog.getListView();
-					for(int i=0; i<m_nutrientItems.length; i++){
+					for(int i=0; i<m_nutrientIds.length; i++){
 						m_flagsForNutrients[i] = checked;
 						lv.setItemChecked(i, checked);
 					}
@@ -321,9 +334,9 @@ public class ActivityFoodCombination extends Activity {
 //						selNutrients.add(selNutrient);
 //					}
 //				}
-				for(int i=0; i<m_nutrientItems.length; i++){
+				for(int i=0; i<m_nutrientIds.length; i++){
 					if (m_flagsForNutrients[i]){
-						String selNutrient = m_nutrientItems[i];
+						String selNutrient = m_nutrientIds[i];
 						selNutrients.add(selNutrient);
 					}
 				}
@@ -359,25 +372,27 @@ public class ActivityFoodCombination extends Activity {
 		AlertDialog.Builder dlgBuilder =new AlertDialog.Builder(this);
 		
 		View vwDialogContent = getLayoutInflater().inflate(R.layout.dialog_customertitle_selectall, null);
+		TextView tvTitleDialog = (TextView)vwDialogContent.findViewById(R.id.tvTitleDialog);
+		tvTitleDialog.setText(R.string.chooseNutrientsExplain);
 		CheckBox cbSelectAll = (CheckBox)vwDialogContent.findViewById(R.id.cbSelectAll);
 		boolean initialChecked = true;
 		cbSelectAll.setChecked(initialChecked);
 
-//		String[] nutrients = NutritionTool.getCustomNutrients(null);
-//		boolean[] flagsForNutrients = Tool.generateArrayWithFillItem(initialChecked, nutrients.length);
+//		String[] nutrientIds = NutritionTool.getCustomNutrients(null);
+//		boolean[] flagsForNutrients = Tool.generateArrayWithFillItem(initialChecked, nutrientIds.length);
 		String[] prevSelNutrients = StoredConfigTool.getNutrientsToRecommend(this);
-		String[] nutrients = NutritionTool.getCustomNutrients(null);
-		boolean[] flagsForNutrients = Tool.generateContainFlags(nutrients, prevSelNutrients);
+		String[] nutrientIds = NutritionTool.getCustomNutrients(null);
+		boolean[] flagsForNutrients = Tool.generateContainFlags(nutrientIds, prevSelNutrients);
+		String[] nutrientNames = getNutrientNames(nutrientIds);
 		
-		DialogInterfaceEventListener_SelectNutrients diEventListener = new DialogInterfaceEventListener_SelectNutrients(cbSelectAll, nutrients, flagsForNutrients);
+		DialogInterfaceEventListener_SelectNutrients diEventListener = new DialogInterfaceEventListener_SelectNutrients(cbSelectAll, nutrientIds, flagsForNutrients);
 		dlgBuilder.setCustomTitle(vwDialogContent);
 		//这里setMultiChoiceItems的第二个参数有讲究，如果传了值，则在程序中只用 dialogListview.setItemChecked 会导致没有效果，需要先设置 flagsForNutrients 的相应条目才行.参见下面的url和文字。
 		//http://stackoverflow.com/questions/3608018/toggling-check-boxes-in-multichoice-alertdialog-in-android
 		//One thing to watch for: you must specify "null" for the "checkedItems" parameter in your "setMultiChoiceItems" call -- otherwise the "setItemChecked" calls won't work as expected. It would end up using that array to store the checked state, and "setItemChecked" would'nt update it correctly, so everything would get confused. Odd, but true.
 		//但是，就算不传值而是传 null 值，还是有问题----使用 getCheckedItemPositions 不准确，当列表太长预置全选状态时就选不到未显示的一些条目.
 		//正确方式是，传有值，如flagsForNutrients，然后同步设置它的值。目前暂时没发现问题。
-		dlgBuilder.setMultiChoiceItems(nutrients, flagsForNutrients, diEventListener);
-//		dlgBuilder.setMultiChoiceItems(nutrients, null, diEventListener);
+		dlgBuilder.setMultiChoiceItems(nutrientNames, flagsForNutrients, diEventListener);
 		
 		dlgBuilder.setPositiveButton("OK", diEventListener);
 		dlgBuilder.setNegativeButton("Cancel", diEventListener);
@@ -386,6 +401,16 @@ public class ActivityFoodCombination extends Activity {
 		
 		diEventListener.SetDialog(dlg);
 		dlg.show();
+	}
+	String[] getNutrientNames(String[] nutrientIds){
+		String[] nutrientNames = new String[nutrientIds.length];
+		for(int i=0; i<nutrientIds.length; i++){
+			String nutrientId = nutrientIds[i];
+			HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
+			String nutrientName = (String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientCnCaption);
+			nutrientNames[i] = nutrientName;
+		}
+		return nutrientNames;
 	}
 	
 	void doRecommend(ArrayList<String> selectedNutrients){

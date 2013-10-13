@@ -18,11 +18,20 @@
 	        android:id="@+id/ivFood"
 	        android:layout_width="75dp"
 	        android:layout_height="50dp"
-	        android:layout_marginTop="1dp"
-	        android:layout_marginLeft="1dp"
 	        android:layout_marginBottom="4dp"
+	        android:layout_marginLeft="1dp"
+	        android:layout_marginTop="1dp"
 	        android:layout_weight="0"
-	        android:background="@color/blue" />
+	        android:background="@color/blue"
+	        android:scaleType="fitXY" />
+	    <ImageView
+	        android:id="@+id/ivAsSeperateLine"
+	        android:layout_width="2px"
+	        android:layout_height="match_parent"
+	        android:layout_marginTop="1dp"
+	        android:layout_marginBottom="4dp"
+	        android:background="@color/border_gray"
+	        />
 	
 	    <LinearLayout
 	        android:id="@+id/llToInputFoodAmount"
@@ -84,9 +93,9 @@
 		        android:layout_gravity="center_vertical"
 		        android:layout_marginRight="5dp"
 		        android:layout_weight="0"
-		        android:background="@drawable/like_edittext" />
+		        android:background="@drawable/like_edittext_input" />
 
-		    <!-- TODO improve ui effect of @drawable/like_edittext or use a .9 pic -->
+		    <!--  improve ui effect of @drawable/like_edittext or use a .9 pic -->
 	
 	<!-- 
 		    <TextView
