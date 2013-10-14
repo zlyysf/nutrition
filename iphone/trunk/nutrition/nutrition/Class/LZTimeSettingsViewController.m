@@ -44,7 +44,18 @@
     self.navigationItem.rightBarButtonItem = saveItem;
     //self.datePicker = [[UIDatePicker alloc]init];
     [self.datePicker setDatePickerMode:UIDatePickerModeTime];
-    [self.datePicker setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
+
+
+   // NSLog(@"%@",[NSLocale ISOLanguageCodes]);
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        [self.datePicker setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh"]];
+    }
+    else
+    {
+        [self.datePicker setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"en"]];
+    }
+    
     [self.datePicker addTarget:self action:@selector(datePickerValueChanged) forControlEvents:UIControlEventValueChanged];
     self.reminderState = [[NSUserDefaults standardUserDefaults]objectForKey:KeyHealthCheckReminderState];
     if ([self.reminderState boolValue])

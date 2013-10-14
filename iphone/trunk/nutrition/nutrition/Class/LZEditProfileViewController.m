@@ -13,12 +13,14 @@
 #import "LZRecommendFood.h"
 #import "LZStandardContentCell.h"
 #import "GADMasterViewController.h"
+#define kKGConvertLBRatio 2.2046
 @interface LZEditProfileViewController ()
-
+@property (assign,nonatomic)BOOL usePound;
 @end
 
 @implementation LZEditProfileViewController
 @synthesize currentTextField,firstEnterEditView,nutrientStandardArray,maxNutrientCount,admobView;
+
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -86,10 +88,20 @@
     self.activityLevelLabel.text = NSLocalizedString(@"editprofile_activitylabel", @"活动强度");
     self.DRILabel.text =NSLocalizedString(@"editprofile_DRIlabel",  @"个人每日营养摄入推荐量");
     self.emptyDRILabel.text = NSLocalizedString(@"editprofile_emptyDRIlabel", @"很抱歉，由于您的基本信息不完全，目前无法显示营养摄入推荐量。");
-
+    if([LZUtility isCurrentLanguageChinese])
+    {
+        self.usePound = NO;
+        self.weightSymbol.text = @"kg";
+    }
+    else
+    {
+        self.usePound = YES;
+        self.weightSymbol.text = @"lg";
+    }
     self.ageTextField.tag= 200;
     self.heightTextField.tag = 201;
     self.weightTextField.tag = 202;
+    
     [self initialPage];
 }
 -(void)initialPage
@@ -132,7 +144,14 @@
     }
     else
     {
-        self.weightTextField.text = [NSString stringWithFormat:@"%d",[userWeight intValue]];
+        if (self.usePound)
+        {
+            self.weightTextField.text = [NSString stringWithFormat:@"%d",(int)([userWeight intValue]*kKGConvertLBRatio)];
+        }
+        else
+        {
+            self.weightTextField.text = [NSString stringWithFormat:@"%d",[userWeight intValue]];
+        }
     }
     
     int activityLevel = [userActivityLevel intValue];
@@ -591,7 +610,15 @@
     int userWeight = [self.weightTextField.text intValue];
     if (userWeight > 0)//体重 kg
     {
-        [dataToSave setObject:[NSNumber numberWithInt:userWeight] forKey:LZUserWeightKey];
+        if (self.usePound)
+        {
+            int convertedWeight = (int)(userWeight/kKGConvertLBRatio);
+            [dataToSave setObject:[NSNumber numberWithInt:convertedWeight] forKey:LZUserWeightKey];
+        }
+        else
+        {
+            [dataToSave setObject:[NSNumber numberWithInt:userWeight] forKey:LZUserWeightKey];
+        }
     }
     else
     {
@@ -641,6 +668,7 @@
     [self setAgeUnitLabel:nil];
     [self setActivityLevelLabel:nil];
     [self setDRILabel:nil];
+    [self setWeightSymbol:nil];
     [super viewDidUnload];
 }
 - (void)keyboardWillShow:(NSNotification *)notification {

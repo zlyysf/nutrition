@@ -921,7 +921,16 @@
     }
     [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
 }
-
++(BOOL)isCurrentLanguageChinese
+{
+    NSArray *languages = [NSLocale preferredLanguages];
+    NSString *currentLanguage = [languages objectAtIndex:0];
+    if ([currentLanguage isEqualToString:@"zh-Hans"])
+    {
+        return YES;
+    }
+    return NO;
+}
 @end
 
 

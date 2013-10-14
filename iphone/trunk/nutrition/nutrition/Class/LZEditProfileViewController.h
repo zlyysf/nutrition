@@ -44,4 +44,5 @@
 @property (strong, nonatomic) IBOutlet UILabel *weightLabel;
 @property (strong, nonatomic) IBOutlet UILabel *activityLevelLabel;
 @property (strong, nonatomic) IBOutlet UILabel *DRILabel;
+@property (strong, nonatomic) IBOutlet UILabel *weightSymbol;
 @end
