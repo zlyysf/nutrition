@@ -56,6 +56,7 @@
     <string name="defaultFoodCollocationName">%s的饮食计划</string>
     
     <string name="calculating">计算中...</string>
+    <string name="alreadyChooseEnoughFoodAndNeedToDelete">已有的这组食物搭配已经能够满足您所关注的营养需要，如需另行推荐，您可以删掉一些食物再使用推荐功能。</string>
     
     <string name="basicInfo">基本信息</string>
     <string name="male">男</string>

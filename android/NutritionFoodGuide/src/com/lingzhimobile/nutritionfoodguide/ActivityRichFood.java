@@ -107,7 +107,9 @@ public class ActivityRichFood extends Activity {
         
     }
     
-    
+    int getIntAmount(double dAmount){
+    	return (int)Math.ceil(dAmount);
+    }
     
 	class RichFoodAdapter extends BaseAdapter{
 
@@ -145,7 +147,7 @@ public class ActivityRichFood extends Activity {
 			String foodId = (String)foodInfo.get(Constants.COLUMN_NAME_NDB_No);
 			tvFoodName.setText((String)foodInfo.get(Constants.COLUMN_NAME_CnCaption));
 			Double foodAmount = (Double)foodInfo.get(Constants.Key_Amount);
-			int iAmount = (int)Math.ceil(foodAmount);
+			int iAmount = getIntAmount(foodAmount);
 			tvFoodAmount.setText(iAmount+"g");
 			ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)foodInfo.get(Constants.COLUMN_NAME_PicPath)));
 			
@@ -198,11 +200,12 @@ public class ActivityRichFood extends Activity {
 			@Override
 			public void onClick(View v) {
 //				HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
+				int iAmount = getIntAmount(m_foodAmount);
 				Intent intent = new Intent(ActivityRichFood.this,ActivityAddFoodChooseList.class);
 				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 //				intent.putExtra(ActivityAddFoodChooseList.IntentKey_ActionType, ActivityAddFoodChooseList.ActionType_ToFoodCombination);
             	intent.putExtra(Constants.COLUMN_NAME_NDB_No, m_foodId);
-            	intent.putExtra(Constants.Key_Amount, m_foodAmount.doubleValue());
+            	intent.putExtra(Constants.Key_Amount, Double.valueOf(iAmount));
 				startActivity(intent);
 
 			}

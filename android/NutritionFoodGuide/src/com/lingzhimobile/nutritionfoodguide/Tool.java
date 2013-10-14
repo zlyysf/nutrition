@@ -843,6 +843,9 @@ public class Tool {
 	public static void ShowMessageByDialog(Context ctx,String message){
 		new AlertDialog.Builder(ctx).setMessage(message).create().show();
 	}
+	public static void ShowMessageByDialog(Context ctx,int messageId){
+		new AlertDialog.Builder(ctx).setMessage(messageId).create().show();
+	}
 	
 	
 	public static void printActivityStack(Context ctx){

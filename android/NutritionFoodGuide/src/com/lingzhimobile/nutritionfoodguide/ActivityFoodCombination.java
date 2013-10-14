@@ -79,13 +79,19 @@ public class ActivityFoodCombination extends Activity {
 
             	HashMap<String, Double> recommendFoodAmountDict = (HashMap<String, Double>)retDict.get(Constants.Key_recommendFoodAmountDict);
         	    HashMap<String, HashMap<String, Object>> preChooseFoodInfoDict = (HashMap<String, HashMap<String, Object>>)retDict.get(Constants.Key_preChooseFoodInfoDict);
-        	    m_foodAmountHm.putAll(recommendFoodAmountDict);
-        	    m_foods2LevelHm.putAll(preChooseFoodInfoDict);
-        	    DataAccess da  = DataAccess.getSingleton(ActivityFoodCombination.this);
-        	    m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
+        	    if (recommendFoodAmountDict != null && recommendFoodAmountDict.size()>0 ){
+        	    	m_foodAmountHm.putAll(recommendFoodAmountDict);
+            	    m_foods2LevelHm.putAll(preChooseFoodInfoDict);
+            	    DataAccess da  = DataAccess.getSingleton(ActivityFoodCombination.this);
+            	    m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
 
-        	    reCalculateFoodSupplyNutrient();
-        		mListAdapter.notifyDataSetChanged();
+            	    reCalculateFoodSupplyNutrient();
+            		mListAdapter.notifyDataSetChanged();
+        	    }else{
+        	    	Tool.ShowMessageByDialog(ActivityFoodCombination.this, R.string.alreadyChooseEnoughFoodAndNeedToDelete);
+        	    }
+        	    
+        	    
                 break;
             }
         }
