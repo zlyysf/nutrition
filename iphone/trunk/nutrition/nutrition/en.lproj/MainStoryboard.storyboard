@@ -1561,6 +1561,11 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
+                                    <view contentMode="scaleToFill" id="kj4-Bk-jcf">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" id="LyI-os-UxH">
                                         <rect key="frame" x="11" y="92" width="299" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1753,7 +1758,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <rect key="frame" x="10" y="391" width="300" height="480"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     </imageView>
-                                    <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="s1F-hO-zRh">
+                                    <tableView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="s1F-hO-zRh">
                                         <rect key="frame" x="10" y="391" width="300" height="480"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -1821,7 +1826,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="U7f-L7-GYO">
-                                        <rect key="frame" x="10" y="391" width="300" height="44"/>
+                                        <rect key="frame" x="10" y="391" width="300" height="66"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -1858,6 +1863,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         <outlet property="listViewBGImage" destination="XF2-x9-tVj" id="6Hu-fa-Z6o"/>
                         <outlet property="mainScrollView" destination="WeN-o5-fmr" id="1wW-6I-C6k"/>
                         <outlet property="maleButton" destination="agL-0k-5rr" id="CMw-o7-nMf"/>
+                        <outlet property="userTouchReceiverView" destination="kj4-Bk-jcf" id="aVL-Ti-mDK"/>
                         <outlet property="weightBackImageView" destination="v12-yS-c4c" id="gpb-To-id1"/>
                         <outlet property="weightLabel" destination="uKa-Ef-H6S" id="hEO-W0-EMf"/>
                         <outlet property="weightSymbol" destination="mZL-Mt-4PE" id="j0x-7P-QA5"/>
@@ -2018,6 +2024,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                 <relationship kind="outlet" name="listViewBGImage" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="mainScrollView" candidateClass="UIScrollView"/>
                 <relationship kind="outlet" name="maleButton" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="userTouchReceiverView" candidateClass="UIView"/>
                 <relationship kind="outlet" name="weightBackImageView" candidateClass="UIImageView"/>
                 <relationship kind="outlet" name="weightLabel" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="weightSymbol" candidateClass="UILabel"/>

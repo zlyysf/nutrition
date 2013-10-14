@@ -42,6 +42,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *heightLabel;
 @property (assign,nonatomic)int maxNutrientCount;
 @property (strong, nonatomic) IBOutlet UILabel *weightLabel;
+@property (strong, nonatomic) IBOutlet UIView *userTouchReceiverView;
 @property (strong, nonatomic) IBOutlet UILabel *activityLevelLabel;
 @property (strong, nonatomic) IBOutlet UILabel *DRILabel;
 @property (strong, nonatomic) IBOutlet UILabel *weightSymbol;

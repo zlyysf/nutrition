@@ -101,8 +101,17 @@
     self.ageTextField.tag= 200;
     self.heightTextField.tag = 201;
     self.weightTextField.tag = 202;
-    
+    [self.userTouchReceiverView setFrame:CGRectMake(0, 0, 320, 391+30*maxNutrientCount+60)];
+    UITapGestureRecognizer *userTapGesture = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userTouchReceived:)];
+    [self.userTouchReceiverView addGestureRecognizer:userTapGesture];
     [self initialPage];
+}
+-(void)userTouchReceived:(UITapGestureRecognizer*)sender
+{
+    if(self.currentTextField)
+    {
+        [self.currentTextField resignFirstResponder];
+    }
 }
 -(void)initialPage
 {
@@ -472,7 +481,10 @@
 }// called when 'return' key pressed. return NO to
 -(void)toolbarKeyboardDone
 {
-    [self.currentTextField resignFirstResponder];
+    if(self.currentTextField)
+    {
+        [self.currentTextField resignFirstResponder];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -669,6 +681,7 @@
     [self setActivityLevelLabel:nil];
     [self setDRILabel:nil];
     [self setWeightSymbol:nil];
+    [self setUserTouchReceiverView:nil];
     [super viewDidUnload];
 }
 - (void)keyboardWillShow:(NSNotification *)notification {

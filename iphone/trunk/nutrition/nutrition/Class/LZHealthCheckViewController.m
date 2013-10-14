@@ -45,8 +45,8 @@
         UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     }
-    if (backWithNoAnimation)
-    {
+//    if (backWithNoAnimation)
+//    {
         UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
         
         UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -63,7 +63,7 @@
         
         self.navigationItem.leftBarButtonItem = cancelItem;
         
-    }
+    //}
     NSString *timeType = [LZUtility getCurrentTimeIdentifier];
     self.checkType = timeType;
     self.diseasesStateDict = [[NSMutableDictionary alloc]init];
@@ -75,24 +75,36 @@
     UIImage *button30 = [[UIImage imageNamed:@"button_back_40"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
     [self.checkItemButton setBackgroundImage:button30 forState:UIControlStateNormal];
     [self.checkItemButton setTitle:NSLocalizedString(@"zhenduanbutton",@"诊断") forState:UIControlStateNormal];
-    
-    UIView *topBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 120, 44)];
+    float indicatorX;
+    float fontSize;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        indicatorX = 140;
+        fontSize = 20;
+    }
+    else
+    {
+        indicatorX = 180;
+        fontSize =  18;
+    }
+
+    UIView *topBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
     [topBarView setBackgroundColor:[UIColor clearColor]];
-    UILabel *topTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(13, 7, 80, 30)];
+    UILabel *topTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(3, 7, 175, 30)];
     [topTitleLabel setShadowOffset:CGSizeMake(0, -1)];
     [topTitleLabel setShadowColor:[UIColor darkGrayColor]];
-    [topTitleLabel setFont:[UIFont boldSystemFontOfSize:20]];
+    [topTitleLabel setFont:[UIFont boldSystemFontOfSize:fontSize]];
     [topTitleLabel setTextColor:[UIColor whiteColor]];
     [topTitleLabel setBackgroundColor:[UIColor clearColor]];
     topTitleLabel.textAlignment = UITextAlignmentCenter;
     topTitleLabel.tag = 20;
     [topBarView addSubview:topTitleLabel];
-    
-    UIImageView *switchIndicatorView = [[UIImageView alloc]initWithFrame:CGRectMake(95, 16, 12, 12)];
+        
+    UIImageView *switchIndicatorView = [[UIImageView alloc]initWithFrame:CGRectMake(indicatorX, 18, 12, 12)];
     [switchIndicatorView setImage:[UIImage imageNamed:@"arrow_down.png"]];
     switchIndicatorView.tag = 21;
     [topBarView addSubview:switchIndicatorView];
-    UIButton *switchButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 120, 44)];
+    UIButton *switchButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];
     [switchButton addTarget:self action:@selector(switchTapped) forControlEvents:UIControlEventTouchUpInside];
     [topBarView addSubview:switchButton];
     self.navigationItem.titleView = topBarView;
