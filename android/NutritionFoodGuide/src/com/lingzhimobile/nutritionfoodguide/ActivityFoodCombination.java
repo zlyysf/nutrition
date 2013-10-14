@@ -10,6 +10,7 @@ import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhe
 import com.lingzhimobile.nutritionfoodguide.OnClickListenerInExpandListItem.Data2LevelPosition;
 
 
+
 import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -19,6 +20,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.text.InputType;
 import android.util.*;
@@ -60,6 +63,33 @@ public class ActivityFoodCombination extends Activity {
 	ExpandableListAdapter_FoodNutrition mListAdapter;
 	String m_currentTitle;
 	
+	myProgressDialog m_prgressDialog;
+	private AsyncTaskDoRecommend m_AsyncTaskDoRecommend;
+	
+	public Handler myHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (m_prgressDialog!=null)
+            	m_prgressDialog.dismiss();
+            switch (msg.what) {
+            case Constants.MessageID_OK:
+            	HashMap<String, Object> retDict =  (HashMap<String, Object>)msg.obj;
+
+            	HashMap<String, Double> recommendFoodAmountDict = (HashMap<String, Double>)retDict.get(Constants.Key_recommendFoodAmountDict);
+        	    HashMap<String, HashMap<String, Object>> preChooseFoodInfoDict = (HashMap<String, HashMap<String, Object>>)retDict.get(Constants.Key_preChooseFoodInfoDict);
+        	    m_foodAmountHm.putAll(recommendFoodAmountDict);
+        	    m_foods2LevelHm.putAll(preChooseFoodInfoDict);
+        	    DataAccess da  = DataAccess.getSingleton(ActivityFoodCombination.this);
+        	    m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
+
+        	    reCalculateFoodSupplyNutrient();
+        		mListAdapter.notifyDataSetChanged();
+                break;
+            }
+        }
+    };
 
 
 	@Override
@@ -356,7 +386,10 @@ public class ActivityFoodCombination extends Activity {
 				}else{
 					StoredConfigTool.saveNutrientsToRecommend(getApplicationContext(), selNutrients);
 					
+					
+//					m_prgressDialog = myProgressDialog.show(ActivityFoodCombination.this, null, R.string.calculating);
 					doRecommend(selNutrients);
+//					m_prgressDialog.cancel();
 				}
 				
 			}else if(which == DialogInterface.BUTTON_NEGATIVE){
@@ -442,19 +475,28 @@ public class ActivityFoodCombination extends Activity {
 	    if (selectedNutrients!=null && selectedNutrients.size()>0)  params.put(Constants.Key_givenNutrients, Tool.convertToStringArray(selectedNutrients));
 	    
 	    RecommendFood rf = new RecommendFood(ActivityFoodCombination.this);
-	    HashMap<String, Object> retDict = rf.recommendFoodBySmallIncrementWithPreIntakeOut(takenFoodAmountDict,userInfo,options,params);
+//	    HashMap<String, Object> retDict = rf.recommendFoodBySmallIncrementWithPreIntakeOut(takenFoodAmountDict,userInfo,options,params);
+	    HashMap<String, Object> paramsRecommendForTask = new HashMap<String, Object>();
+	    paramsRecommendForTask.put("RecommendFood", rf);
+	    paramsRecommendForTask.put("takenFoodAmountDict", takenFoodAmountDict);
+	    paramsRecommendForTask.put("userInfo", userInfo);
+	    paramsRecommendForTask.put("options", options);
+	    paramsRecommendForTask.put("params", params);
 	    
+	    m_AsyncTaskDoRecommend = new AsyncTaskDoRecommend(paramsRecommendForTask, myHandler.obtainMessage());
+	    m_AsyncTaskDoRecommend.execute();
+	    m_prgressDialog = myProgressDialog.show(ActivityFoodCombination.this, null, R.string.calculating);
 
-	    HashMap<String, Double> recommendFoodAmountDict = (HashMap<String, Double>)retDict.get(Constants.Key_recommendFoodAmountDict);
-	    HashMap<String, HashMap<String, Object>> preChooseFoodInfoDict = (HashMap<String, HashMap<String, Object>>)retDict.get(Constants.Key_preChooseFoodInfoDict);
-	    m_foodAmountHm.putAll(recommendFoodAmountDict);
-	    m_foods2LevelHm.putAll(preChooseFoodInfoDict);
-	    DataAccess da  = DataAccess.getSingleton(ActivityFoodCombination.this);
-	    m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
-
-	    
-	    reCalculateFoodSupplyNutrient();
-		mListAdapter.notifyDataSetChanged();
+//	    HashMap<String, Double> recommendFoodAmountDict = (HashMap<String, Double>)retDict.get(Constants.Key_recommendFoodAmountDict);
+//	    HashMap<String, HashMap<String, Object>> preChooseFoodInfoDict = (HashMap<String, HashMap<String, Object>>)retDict.get(Constants.Key_preChooseFoodInfoDict);
+//	    m_foodAmountHm.putAll(recommendFoodAmountDict);
+//	    m_foods2LevelHm.putAll(preChooseFoodInfoDict);
+//	    DataAccess da  = DataAccess.getSingleton(ActivityFoodCombination.this);
+//	    m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
+//
+//	    
+//	    reCalculateFoodSupplyNutrient();
+//		mListAdapter.notifyDataSetChanged();
 	}
     
 	@Override

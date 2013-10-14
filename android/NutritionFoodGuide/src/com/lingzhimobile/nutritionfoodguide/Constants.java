@@ -237,5 +237,6 @@ public class Constants {
 	public static final String InvokerType_FromSearchFood = "FromSearchFood";
 	public static final String InvokerType_FromFoodCombination = "FromFoodCombination";
 	
+	public static final int MessageID_OK = 1;
 
 }
