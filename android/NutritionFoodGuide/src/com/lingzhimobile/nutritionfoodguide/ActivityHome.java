@@ -32,15 +32,18 @@ public class ActivityHome extends Activity{
     static final String Key_ItemImage = "ItemImage";
     static final String Key_ItemText = "ItemText";
     
-    static final int[] menuItemImageResIds = new int[]{R.drawable.menu_item_2x_foodlist, R.drawable.menu_item_2x_userinfo, 
-    	R.drawable.menu_item_2x_nutrient, R.drawable.menu_item_2x_searchfood};
+    static final int[] menuItemImageResIds = new int[]{R.drawable.menu_item_2x_searchfood, R.drawable.menu_item_2x_nutrient,
+    	R.drawable.menu_item_2x_foodlist, R.drawable.menu_item_2x_userinfo 
+    	 };
     //static final String[] menuItemTexts = new String[]{"膳食清单","个人信息","营养元素","食物查询"};
-    static final int[] menuItemTextResIds = new int[]{R.string.title_foodCombinationList, R.string.title_userinfo, 
-    	R.string.title_nutrients, R.string.title_searchfood};
-    static final int Position_foodlist = 0;
-    static final int Position_userinfo = 1;
-    static final int Position_nutrient = 2;
-    static final int Position_searchfood = 3;
+    static final int[] menuItemTextResIds = new int[]{R.string.title_searchfood, R.string.title_nutrients, 
+    	R.string.title_foodCombinationList, R.string.title_userinfo};
+    
+    static final int Position_searchfood = 0;
+    static final int Position_nutrient = 1;
+    static final int Position_foodlist = 2;
+    static final int Position_userinfo = 3;
+    
 
     String m_currentTitle;
 	

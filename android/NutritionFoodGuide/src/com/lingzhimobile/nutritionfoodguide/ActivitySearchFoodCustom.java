@@ -303,12 +303,15 @@ public class ActivitySearchFoodCustom extends Activity {
 			if (Constants.InvokerType_FromSearchFood.equals(mInvokerType)){
 				llToInputFoodAmount.setVisibility(View.GONE);
 				imgBtnAddFood.setVisibility(View.VISIBLE);
-				OnClickListenerForInputAmount myOnClickListenerToAddFoodToList = (OnClickListenerForInputAmount)imgBtnAddFood.getTag();
+//				OnClickListenerForInputAmount myOnClickListenerToAddFoodToList = (OnClickListenerForInputAmount)imgBtnAddFood.getTag();
+				OnClickListenerForInputAmount myOnClickListenerToAddFoodToList = (OnClickListenerForInputAmount)llRowFood.getTag();
 				if (myOnClickListenerToAddFoodToList == null){
 					myOnClickListenerToAddFoodToList = new OnClickListenerForInputAmount();
 					myOnClickListenerToAddFoodToList.initInputData(groupPosition, childPosition);
+					llRowFood.setOnClickListener(myOnClickListenerToAddFoodToList);
 					imgBtnAddFood.setOnClickListener(myOnClickListenerToAddFoodToList);
-					imgBtnAddFood.setTag(myOnClickListenerToAddFoodToList);
+//					imgBtnAddFood.setTag(myOnClickListenerToAddFoodToList);
+					llRowFood.setTag(myOnClickListenerToAddFoodToList);
 				}else{
 					myOnClickListenerToAddFoodToList.initInputData(groupPosition, childPosition);
 				}

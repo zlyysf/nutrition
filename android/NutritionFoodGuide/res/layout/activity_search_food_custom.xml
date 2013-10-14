@@ -81,7 +81,7 @@
 	        android:layout_marginRight="40dp"
 	        android:background="@null"
 	        android:ems="10"
-	        android:hint="to input and search"
+	        android:hint="@string/searchFoodHint"
 	        android:imeOptions="actionDone"
 	        android:paddingLeft="5dp"
 	        android:singleLine="true"

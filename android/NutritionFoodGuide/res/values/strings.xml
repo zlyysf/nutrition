@@ -38,6 +38,7 @@
     <string name="inputFoodAmount">输入食物数量(g)</string>
     
     <string name="searchFood">搜索食物</string>
+    <string name="searchFoodHint">快速查找食物</string>
     <string name="inputFoodNamePart">输入食物部分名称</string>
     
     <string name="youChosenDiseaseItems">您所选的项目</string>
@@ -57,6 +58,7 @@
     
     <string name="calculating">计算中...</string>
     <string name="alreadyChooseEnoughFoodAndNeedToDelete">已有的这组食物搭配已经能够满足您所关注的营养需要，如需另行推荐，您可以删掉一些食物再使用推荐功能。</string>
+    
     
     <string name="basicInfo">基本信息</string>
     <string name="male">男</string>

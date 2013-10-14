@@ -777,7 +777,7 @@ public class ActivityFoodCombination extends Activity {
 		class OnClickListenerToEditFoodAmount extends OnClickListenerInExpandListItem{
 			@Override
 			public void onClick(View v) {
-				Log.d(LogTag, "2levelPos=["+m_Data2LevelPosition.groupPos+","+m_Data2LevelPosition.childPos+"]");
+				Log.d(LogTag, "OnClickListenerToEditFoodAmount onClick 2levelPos=["+m_Data2LevelPosition.groupPos+","+m_Data2LevelPosition.childPos+"]");
 				
 				String foodId = m_OrderedFoodIdList.get(m_Data2LevelPosition.childPos);
 				Double foodAmount = m_foodAmountHm.get(foodId);
@@ -786,6 +786,7 @@ public class ActivityFoodCombination extends Activity {
 				DialogHelperSimpleInput myDialogHelperSimpleInput = new DialogHelperSimpleInput(ActivityFoodCombination.this);
 				EditText etInput = myDialogHelperSimpleInput.getInput();
 				etInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+//				etInput.setInputType(InputType.TYPE_CLASS_PHONE);//android 4.1 上的键盘 与 TYPE_CLASS_NUMBER 看来是一样
 				myDialogHelperSimpleInput.prepareDialogAttributes("修改食物数量", (String)foodInfo.get(Constants.COLUMN_NAME_CnCaption), foodAmount.intValue()+"");
 				myDialogHelperSimpleInput.setInterfaceWhenConfirmInput(new InterfaceWhenConfirmInput() {
 					@Override

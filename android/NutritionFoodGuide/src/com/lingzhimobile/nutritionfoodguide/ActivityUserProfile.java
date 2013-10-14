@@ -140,31 +140,53 @@ public class ActivityUserProfile extends Activity {
             }
         });
         
-//        OnFocusChangeListenerToSetCursorAtEnd myOnFocusChangeListenerToSetCursorAtEnd = new OnFocusChangeListenerToSetCursorAtEnd();
-//        m_etAge.setOnFocusChangeListener(myOnFocusChangeListenerToSetCursorAtEnd);//没能把光标移到末尾
-//        m_etHeight.setOnFocusChangeListener(myOnFocusChangeListenerToSetCursorAtEnd);
-//        m_etWeight.setOnFocusChangeListener(myOnFocusChangeListenerToSetCursorAtEnd);
+        OnFocusChangeListenerToSetCursorAtEnd myOnFocusChangeListenerToSetCursorAtEnd = new OnFocusChangeListenerToSetCursorAtEnd();
+        m_etAge.setOnFocusChangeListener(myOnFocusChangeListenerToSetCursorAtEnd);//没能把光标移到末尾
+        m_etHeight.setOnFocusChangeListener(myOnFocusChangeListenerToSetCursorAtEnd);
+        m_etWeight.setOnFocusChangeListener(myOnFocusChangeListenerToSetCursorAtEnd);
+        
+
+
 	}
 	
-//	class OnFocusChangeListenerToSetCursorAtEnd implements OnFocusChangeListener{
-//		@Override
-//		public void onFocusChange(View v, boolean hasFocus) {
-//			Log.d(LogTag, "OnFocusChangeListenerToSetCursorAtEnd.onFocusChange hasFocus="+hasFocus + ", v.hasFocus="+v.hasFocus());
-//			if (hasFocus){
-//				EditText et = (EditText)v;
-//				if (et != null){
-//					CharSequence text = et.getText();
-//			        if (text instanceof Spannable) {
-//			        	Log.d(LogTag, "OnFocusChangeListenerToSetCursorAtEnd.onFocusChange text instanceof Spannable");
-//			            Spannable spanText = (Spannable)text;
-//			            Selection.setSelection(spanText, text.length());
-//			        }else{
-//			        	Log.d(LogTag, "OnFocusChangeListenerToSetCursorAtEnd.onFocusChange NOT text instanceof Spannable");
-//			        }
-//				}
-//			}
-//		}
-//	}
+	class OnFocusChangeListenerToSetCursorAtEnd implements OnFocusChangeListener{
+		@Override
+		public void onFocusChange(View v, boolean hasFocus) {
+			Log.d(LogTag, "OnFocusChangeListenerToSetCursorAtEnd.onFocusChange hasFocus="+hasFocus + ", v.hasFocus="+v.hasFocus());
+			setCursorAtEnd(v);
+		}
+		
+		void setCursorAtEnd(View v){
+			if (v.hasFocus()){
+				EditText et = (EditText)v;
+				if (et != null){
+					CharSequence text = et.getText();
+			        if (text instanceof Spannable) {
+			        	Log.d(LogTag, "OnFocusChangeListenerToSetCursorAtEnd. text instanceof Spannable");
+			            Spannable spanText = (Spannable)text;
+//			            et.setSelection(text.length(),text.length());//FAIL to set cursor to end
+//			            et.append("");//FAIL to set cursor to end
+			            et.post(new RunnableSetCursor(et));//OK to set cursor to end
+			            
+			        }else{
+			        	Log.d(LogTag, "OnFocusChangeListenerToSetCursorAtEnd. NOT text instanceof Spannable");
+			        }
+				}
+			}
+		}
+
+		
+		class RunnableSetCursor implements Runnable{
+			EditText m_et;
+			public RunnableSetCursor(EditText et){
+				m_et = et;
+			}
+			@Override
+            public void run() {
+				m_et.setSelection(m_et.getText().length());
+            }
+		}
+	}
 	
 	void setViewsContent(){
 		HashMap<String, Object> userInfo = StoredConfigTool.getUserInfo(this);

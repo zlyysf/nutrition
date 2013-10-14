@@ -7,6 +7,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 
+import android.text.InputType;
 import android.text.Selection;
 import android.text.Spannable;
 import android.util.Log;
