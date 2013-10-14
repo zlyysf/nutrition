@@ -96,7 +96,7 @@
     else
     {
         self.usePound = YES;
-        self.weightSymbol.text = @"lg";
+        self.weightSymbol.text = @"lb";
     }
     self.ageTextField.tag= 200;
     self.heightTextField.tag = 201;

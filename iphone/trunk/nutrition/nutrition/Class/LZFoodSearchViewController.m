@@ -15,6 +15,7 @@
 #import "JWNavigationViewController.h"
 #import "MobClick.h"
 #import "GADMasterViewController.h"
+#import "LZDietListMakeViewController.h"
 @interface LZFoodSearchViewController ()<LZFoodDetailViewControllerDelegate>
 {
     BOOL isfirstLoad;
@@ -275,6 +276,15 @@
 -(void)didChangeFoodId:(NSString *)foodId toAmount:(NSNumber*)changedValue
 {
     [LZUtility addFood:foodId withFoodAmount:changedValue];
+    for (UIViewController *vc in self.navigationController.viewControllers)
+    {
+        if ([vc isMemberOfClass:[LZDietListMakeViewController class]])
+        {
+            [self.navigationController popToViewController:vc animated:NO];
+            break;
+        }
+    }
+
 }
 
 - (void)viewDidUnload {

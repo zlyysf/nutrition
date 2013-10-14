@@ -14,6 +14,7 @@
 #import "LZRecommendFood.h"
 #import "LZFoodDetailController.h"
 #import "JWNavigationViewController.h"
+#import "LZDietListMakeViewController.h"
 @interface LZDailyIntakeViewController ()<LZFoodDetailViewControllerDelegate>
 
 @end
@@ -557,6 +558,15 @@
 //        [[NSUserDefaults  standardUserDefaults]synchronize];
 //    }
     [LZUtility addFood:foodId withFoodAmount:changedValue];
+    for (UIViewController *vc in self.navigationController.viewControllers)
+    {
+        if ([vc isMemberOfClass:[LZDietListMakeViewController class]])
+        {
+           [self.navigationController popToViewController:vc animated:NO];
+            break;
+    
+        }
+    }
     //[self.listView reloadData];
 }
 
