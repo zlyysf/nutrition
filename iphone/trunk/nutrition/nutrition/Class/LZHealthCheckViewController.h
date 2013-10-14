@@ -15,4 +15,5 @@
 @property (strong,nonatomic)NSString* checkType;
 @property (nonatomic,assign)BOOL backWithNoAnimation;
 @property (strong, nonatomic) IBOutlet UIButton *checkItemButton;
+@property (strong,nonatomic)NSDictionary *headerDict;
 @end

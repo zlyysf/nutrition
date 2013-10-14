@@ -26,7 +26,7 @@
 @end
 
 @implementation LZHealthCheckViewController
-@synthesize diseaseNamesArray,diseasesStateDict,sectionTitle,checkType,isFirstLoad,backWithNoAnimation,pushToNextView;
+@synthesize diseaseNamesArray,diseasesStateDict,sectionTitle,checkType,isFirstLoad,backWithNoAnimation,pushToNextView,headerDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -99,6 +99,7 @@
     UIView *admobView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 100)];
     [admobView setBackgroundColor:[UIColor clearColor]];
     self.listView.tableFooterView = admobView;
+    headerDict = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"healthcheck_headercontent0",@"从早晨到现在，您有下列哪些状况？"),@"上午",NSLocalizedString(@"healthcheck_headercontent1",@"午饭后到现在，您有下列哪些状况？"),@"下午",NSLocalizedString(@"healthcheck_headercontent2",@"晚饭后到现在，您有下列哪些状况？"),@"睡前", nil];
 }
 -(void)switchTapped
 {
@@ -144,7 +145,7 @@
 -(void)refreshViewAccordingToTime:(NSString *)timeType
 {
     checkType = timeType;
-    NSDictionary *headerDict = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"healthcheck_headercontent0",@"从早晨到现在，您有下列哪些状况？"),@"上午",NSLocalizedString(@"healthcheck_headercontent1",@"午饭后到现在，您有下列哪些状况？"),@"下午",NSLocalizedString(@"healthcheck_headercontent2",@"晚饭后到现在，您有下列哪些状况？"),@"睡前", nil];
+    
     LZDataAccess *da = [LZDataAccess singleton];
     NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
     NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
@@ -276,7 +277,7 @@
         [cell.stateImageView setImage:[UIImage imageNamed:@"cell_check_off.png"]];
         
     }
-    NSString *onelineStr = @"行";
+    NSString *onelineStr = @"1";
     CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(DiagnosticLabelLength, 9999) lineBreakMode:UILineBreakModeWordWrap];
     CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(DiagnosticLabelLength, 9999) lineBreakMode:UILineBreakModeWordWrap];
     float height;
@@ -301,7 +302,7 @@
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NSString *departmentName = [self.diseaseNamesArray objectAtIndex:indexPath.row];
-    NSString *onelineStr = @"行";
+    NSString *onelineStr = @"1";
     CGSize oneSize = [onelineStr sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(DiagnosticLabelLength, 9999) lineBreakMode:UILineBreakModeWordWrap];
     CGSize labelSize = [departmentName sizeWithFont:[UIFont systemFontOfSize:18.0] constrainedToSize:CGSizeMake(DiagnosticLabelLength, 9999) lineBreakMode:UILineBreakModeWordWrap];
     if (labelSize.height > oneSize.height*2)
@@ -315,17 +316,42 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 {
-    return 27;
+    NSString *onelineStr = @"1";
+    CGSize oneSize = [onelineStr sizeWithFont:[UIFont boldSystemFontOfSize:15.0] constrainedToSize:CGSizeMake(305, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [self.sectionTitle sizeWithFont:[UIFont boldSystemFontOfSize:15.0] constrainedToSize:CGSizeMake(305, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    if(labelSize.height > oneSize.height)
+    {
+        return labelSize.height +10;
+    }
+    else
+    {
+        return 27;
+    }
 }
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
 {
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
-    UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, 27)];
+    float secHeight;
+    NSString *onelineStr = @"1";
+    CGSize oneSize = [onelineStr sizeWithFont:[UIFont boldSystemFontOfSize:15.0] constrainedToSize:CGSizeMake(305, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    CGSize labelSize = [self.sectionTitle sizeWithFont:[UIFont boldSystemFontOfSize:15.0] constrainedToSize:CGSizeMake(305, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    if(labelSize.height > oneSize.height)
+    {
+        secHeight = labelSize.height +10;
+    }
+    else
+    {
+       secHeight = 27;
+    }
+
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, secHeight)];
+    UIImageView *sectionBarView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, 320, secHeight)];
     [sectionView addSubview:sectionBarView];
     NSString *path = [[NSBundle mainBundle] pathForResource:@"section_bar@2x" ofType:@"png"];
     UIImage * sectionBarImage = [UIImage imageWithContentsOfFile:path];
-    [sectionBarView setImage:sectionBarImage];
-    UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 310, 27)];
+    UIImage *strechImage = [sectionBarImage stretchableImageWithLeftCapWidth:0 topCapHeight:5];
+    [sectionBarView setImage:strechImage];
+    UILabel *sectionTitleLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 305, labelSize.height)];
+    [sectionTitleLabel setNumberOfLines:0];
     [sectionTitleLabel setTextColor:[UIColor whiteColor]];
     [sectionTitleLabel setFont:[UIFont boldSystemFontOfSize:15]];
     [sectionTitleLabel setBackgroundColor:[UIColor clearColor]];
