@@ -764,7 +764,7 @@
         hud.labelText = NSLocalizedString(@"tianjia_HUDLabel_content",@"添加成功！");
         hud.animationType = MBProgressHUDAnimationZoomIn;
         [hud show:NO];
-        [hud hide:YES afterDelay:1.0f];
+        [hud hide:YES afterDelay:0.4f];
         //NSLog(@"%@",[UIApplication sharedApplication].keyWindow.subviews);
     }
 

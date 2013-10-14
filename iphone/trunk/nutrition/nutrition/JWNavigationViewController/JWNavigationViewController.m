@@ -8,7 +8,7 @@
 
 #import "JWNavigationViewController.h"
 
-#define kPushAnimationDuration  0.4
+#define kPushAnimationDuration  0.3
 #define kOverlayViewAlpha       0.5
 #define kTransformScale         0.95
 #define kBoundaryWidthRatio     0.25
