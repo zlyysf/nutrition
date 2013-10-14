@@ -236,7 +236,8 @@ public class ActivityRichFood extends Activity {
 				DialogHelperSimpleInput myDialogHelperSimpleInput = new DialogHelperSimpleInput(ActivityRichFood.this);
 				EditText etInput = myDialogHelperSimpleInput.getInput();
 				etInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-				myDialogHelperSimpleInput.prepareDialogAttributes("输入食物数量", foodName, preInput);
+				String titleDialog = getResources().getString(R.string.inputFoodAmount);
+				myDialogHelperSimpleInput.prepareDialogAttributes(titleDialog, foodName, preInput);
 				myDialogHelperSimpleInput.setInterfaceWhenConfirmInput(new InterfaceWhenConfirmInput() {
 					@Override
 					public void onConfirmInput(String input) {

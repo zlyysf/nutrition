@@ -1,6 +1,8 @@
 package com.lingzhimobile.nutritionfoodguide;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -138,7 +140,12 @@ public class ActivityFoodCombination extends Activity {
             	if (m_foodAmountHm!=null && m_foodAmountHm.size()>0){
             		if (m_collocationId<0){//to new
             			Date dtNow = new Date();
-            			String collocationName = Tool.getStringFromIdWithParams(getResources(), R.string.defaultFoodCollocationName,new String[]{dtNow.toString()});
+            			SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
+            			String datePart = sdf.format(dtNow);
+//            			DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+//            			String datePart = df.format(dtNow);
+            			
+            			String collocationName = Tool.getStringFromIdWithParams(getResources(), R.string.defaultFoodCollocationName,new String[]{datePart});
             			
             			DialogHelperSimpleInput myDialogHelperSimpleInput = new DialogHelperSimpleInput(ActivityFoodCombination.this);
         				myDialogHelperSimpleInput.prepareDialogAttributes("保存食物清单", "给你的食物清单加个名称吧", collocationName);
@@ -344,7 +351,7 @@ public class ActivityFoodCombination extends Activity {
 				if (selNutrients.size()==0){
 //					Toast toast1 = Toast.makeText(ActivityFoodCombination.this, "您必须至少选择一个", Toast.LENGTH_SHORT);
 //					toast1.show();
-					new AlertDialog.Builder(ActivityFoodCombination.this).setTitle("您必须至少选择一个").setPositiveButton("OK", null).show();
+					new AlertDialog.Builder(ActivityFoodCombination.this).setTitle("您必须至少选择一个").setPositiveButton(R.string.OK, null).show();
 					
 				}else{
 					StoredConfigTool.saveNutrientsToRecommend(getApplicationContext(), selNutrients);
@@ -394,8 +401,8 @@ public class ActivityFoodCombination extends Activity {
 		//正确方式是，传有值，如flagsForNutrients，然后同步设置它的值。目前暂时没发现问题。
 		dlgBuilder.setMultiChoiceItems(nutrientNames, flagsForNutrients, diEventListener);
 		
-		dlgBuilder.setPositiveButton("OK", diEventListener);
-		dlgBuilder.setNegativeButton("Cancel", diEventListener);
+		dlgBuilder.setPositiveButton(R.string.OK, diEventListener);
+		dlgBuilder.setNegativeButton(R.string.cancel, diEventListener);
 		
 		AlertDialog dlg = dlgBuilder.create();
 		

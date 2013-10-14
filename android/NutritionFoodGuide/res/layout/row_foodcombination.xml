@@ -27,11 +27,12 @@
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_vertical"
 	        android:layout_marginBottom="5dp"
+	        android:layout_marginLeft="4dp"
 	        android:layout_marginTop="5dp"
 	        android:layout_weight="1"
 	        android:gravity="center_vertical"
 	        android:paddingLeft="5dp"
-	        android:text="食物搭配1"
+	        android:text="食物搭配1aaaaaaaa1111sdfdfgdgdfgdfgdfgdfgdfg"
 	        android:textColor="@color/black"
 	        android:textSize="18sp" />
 	    

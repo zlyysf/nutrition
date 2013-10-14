@@ -88,13 +88,11 @@
         android:layout_width="40dp"
         android:layout_height="fill_parent"
         android:layout_gravity="center_vertical"
-        android:layout_marginBottom="5dp"
-        android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:background="@null"
         android:gravity="center_vertical"
+        android:paddingTop="18dp"
         android:scaleType="centerInside"
         android:src="@drawable/btn_add_icon" />
 

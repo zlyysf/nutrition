@@ -14,6 +14,8 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.text.Selection;
+import android.text.Spannable;
 import android.util.*;
 import android.view.Gravity;
 import android.view.MotionEvent;
@@ -137,7 +139,32 @@ public class ActivityUserProfile extends Activity {
             	finish();
             }
         });
+        
+//        OnFocusChangeListenerToSetCursorAtEnd myOnFocusChangeListenerToSetCursorAtEnd = new OnFocusChangeListenerToSetCursorAtEnd();
+//        m_etAge.setOnFocusChangeListener(myOnFocusChangeListenerToSetCursorAtEnd);//没能把光标移到末尾
+//        m_etHeight.setOnFocusChangeListener(myOnFocusChangeListenerToSetCursorAtEnd);
+//        m_etWeight.setOnFocusChangeListener(myOnFocusChangeListenerToSetCursorAtEnd);
 	}
+	
+//	class OnFocusChangeListenerToSetCursorAtEnd implements OnFocusChangeListener{
+//		@Override
+//		public void onFocusChange(View v, boolean hasFocus) {
+//			Log.d(LogTag, "OnFocusChangeListenerToSetCursorAtEnd.onFocusChange hasFocus="+hasFocus + ", v.hasFocus="+v.hasFocus());
+//			if (hasFocus){
+//				EditText et = (EditText)v;
+//				if (et != null){
+//					CharSequence text = et.getText();
+//			        if (text instanceof Spannable) {
+//			        	Log.d(LogTag, "OnFocusChangeListenerToSetCursorAtEnd.onFocusChange text instanceof Spannable");
+//			            Spannable spanText = (Spannable)text;
+//			            Selection.setSelection(spanText, text.length());
+//			        }else{
+//			        	Log.d(LogTag, "OnFocusChangeListenerToSetCursorAtEnd.onFocusChange NOT text instanceof Spannable");
+//			        }
+//				}
+//			}
+//		}
+//	}
 	
 	void setViewsContent(){
 		HashMap<String, Object> userInfo = StoredConfigTool.getUserInfo(this);

@@ -105,15 +105,15 @@ public class ActivitySearchFoodCustom extends Activity {
 //        expandableListView1.setGroupIndicator(null);//去掉ExpandableListView 默认的组上的下拉箭头
         
         
-        m_expandableListView1.setOnChildClickListener(new OnChildClickListener(){
-
-			@Override
-			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-				//...
-				
-				return true;
-			}
-        });
+//        m_expandableListView1.setOnChildClickListener(new OnChildClickListener(){
+//
+//			@Override
+//			public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+//				//...
+//				
+//				return true;
+//			}
+//        });
         
     }
 	
@@ -297,6 +297,7 @@ public class ActivitySearchFoodCustom extends Activity {
 			ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));
 			
 			LinearLayout llToInputFoodAmount = (LinearLayout)vwItem.findViewById(R.id.llToInputFoodAmount);
+			LinearLayout llRowFood = (LinearLayout)convertView.findViewById(R.id.llRowFood);
 //			ImageView ivAsEditText = (ImageView)vwItem.findViewById(R.id.ivAsEditText);
 			ImageButton imgBtnAddFood = (ImageButton)vwItem.findViewById(R.id.imgBtnAddFood);
 			if (Constants.InvokerType_FromSearchFood.equals(mInvokerType)){
@@ -316,12 +317,15 @@ public class ActivitySearchFoodCustom extends Activity {
 				llToInputFoodAmount.setVisibility(View.VISIBLE);
 				imgBtnAddFood.setVisibility(View.GONE);
 				
-				OnClickListenerForInputAmount onClickListenerToAddFood1 = (OnClickListenerForInputAmount)llToInputFoodAmount.getTag();
+//				OnClickListenerForInputAmount onClickListenerToAddFood1 = (OnClickListenerForInputAmount)llToInputFoodAmount.getTag();
+				OnClickListenerForInputAmount onClickListenerToAddFood1 = (OnClickListenerForInputAmount)llRowFood.getTag();
 				if (onClickListenerToAddFood1 == null){
 					onClickListenerToAddFood1 = new OnClickListenerForInputAmount();
 					onClickListenerToAddFood1.initInputData(groupPosition,childPosition);
-					llToInputFoodAmount.setOnClickListener(onClickListenerToAddFood1);
-					llToInputFoodAmount.setTag(onClickListenerToAddFood1);
+//					llToInputFoodAmount.setOnClickListener(onClickListenerToAddFood1);
+//					llToInputFoodAmount.setTag(onClickListenerToAddFood1);
+					llRowFood.setOnClickListener(onClickListenerToAddFood1);
+					llRowFood.setTag(onClickListenerToAddFood1);
 				}else{
 					onClickListenerToAddFood1.initInputData(groupPosition,childPosition);
 				}
@@ -353,7 +357,8 @@ public class ActivitySearchFoodCustom extends Activity {
 				DialogHelperSimpleInput myDialogHelperSimpleInput = new DialogHelperSimpleInput(ActivitySearchFoodCustom.this);
 				EditText etInput = myDialogHelperSimpleInput.getInput();
 				etInput.setInputType(InputType.TYPE_CLASS_NUMBER);
-				myDialogHelperSimpleInput.prepareDialogAttributes("输入食物数量", foodName, null);
+				String titleDialog = getResources().getString(R.string.inputFoodAmount);
+				myDialogHelperSimpleInput.prepareDialogAttributes(titleDialog, foodName, null);
 				myDialogHelperSimpleInput.setInterfaceWhenConfirmInput(new InterfaceWhenConfirmInput() {
 					@Override
 					public void onConfirmInput(String input) {

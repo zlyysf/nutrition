@@ -67,7 +67,7 @@
 	         android:layout_weight="0"
 	         android:background="@drawable/like_edittext_input"
 	         android:gravity="right|center_vertical"
-	         android:paddingRight="3dp"
+	         android:paddingRight="5dp"
 	         android:text="1234"
 	         android:textColor="@color/black"
 	         android:textSize="18sp" />

@@ -35,7 +35,7 @@
     <string name="recommendFood">推荐食物</string>
     
 
-    
+    <string name="inputFoodAmount">输入食物数量(g)</string>
     
     <string name="searchFood">搜索食物</string>
     <string name="inputFoodNamePart">输入食物部分名称</string>
@@ -44,7 +44,7 @@
     <string name="youNeededNutrients">您需要补充的营养元素</string>
     <string name="weCanRecommend1InSum">我们可以继续为您推荐富含以上营养元素的食物</string>
     
-    <string name="chooseRichFood">下列是富含%s的食物，您可以根据我们提供的推荐量来挑选适合自己的食物,没有推荐量时表示已经补满。</string>
+    <string name="chooseRichFood">下列是富含%s的食物，克数代表一天的推荐量。</string>
     <string name="chooseNutrientsExplain">哪些营养素是您重点关注且是不能缺少的，请选择：</string>
     
     <string name="noFoodCombinationListForNow">暂无膳食清单</string>
@@ -53,7 +53,7 @@
     <string name="addToNewFoodCombination">添加到新清单</string>
     <string name="addToExistFoodCombination">添加到已有的清单</string>
     
-    <string name="defaultFoodCollocationName">饮食计划%s</string>
+    <string name="defaultFoodCollocationName">%s的饮食计划</string>
     
     <string name="basicInfo">基本信息</string>
     <string name="male">男</string>

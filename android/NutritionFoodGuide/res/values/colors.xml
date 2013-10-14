@@ -4,6 +4,7 @@
     
     <color name="userInfoNormalFontColor">#575757</color>
     <color name="border_gray">#c2c2c2</color>
+    <color name="nutrientRowClickBackgroundGray">#b7a99a</color>
     <color name="asLinkBlue">#203e7a</color>
     <color name="radioAsTabBgColor">#3daf2c</color>
     <color name="radioAsTabBgColor2">#3daf2d</color>
