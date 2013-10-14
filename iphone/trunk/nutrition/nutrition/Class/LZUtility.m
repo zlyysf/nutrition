@@ -817,7 +817,7 @@
 +(NSString *)getDateFormatOutput:(NSDate*)date
 {
     NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:@"zh_Hans"]];
+    [formatter setLocale:[[NSLocale alloc] init]];
     [formatter setAMSymbol:NSLocalizedString(@"AMSymbol",@"上午")];
     [formatter setPMSymbol:NSLocalizedString(@"PMSymbol",@"下午")];
     [formatter setDateFormat:NSLocalizedString(@"timeformat_timesettings",@"ahh:mm ,for chinese we set ahh:mm,for en we should set hh:mma")];
