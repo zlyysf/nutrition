@@ -189,7 +189,7 @@
                 [self displayLocalDietList];
             }
             else{
-                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"dietlist_alert2_title",@"更改失败")message:NSLocalizedString(@"dietlist_shibaialert2_message",@"出现了错误，请重试") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
+                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"dietlist_alert2_title",@"更改失败")message:NSLocalizedString(@"alertmessage_tryagain",@"出现了错误，请重试") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
                 [saveFailedAlert show];
             }
         }
@@ -264,7 +264,7 @@
     }
     else
     {
-        UIAlertView *deleteFailAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"dietlist_alert3_title",@"删除失败") message:NSLocalizedString(@"dietlist_alert3_message",@"出现了错误，请重试") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
+        UIAlertView *deleteFailAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"dietlist_alert3_title",@"删除失败") message:NSLocalizedString(@"alertmessage_tryagain",@"出现了错误，请重试") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
         [deleteFailAlert show];
     }
 //    NSDictionary *takenFoodAmountDict = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];

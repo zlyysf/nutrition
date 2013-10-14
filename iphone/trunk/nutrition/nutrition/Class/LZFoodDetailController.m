@@ -91,7 +91,6 @@
     isFirstLoad = YES;
     self.listView.hidden = YES;
     [self.GUnitButton setTitle:NSLocalizedString(@"weightunit_g", @"克") forState:UIControlStateNormal];
-    [self.UnitButton setTitle:NSLocalizedString(@"weightunit_unit", @"个") forState:UIControlStateNormal];
 }
 -(void)displayNutrientUI
 {

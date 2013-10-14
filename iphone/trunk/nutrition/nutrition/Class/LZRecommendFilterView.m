@@ -84,8 +84,8 @@
         
         UIButton *allselectButton = [[UIButton alloc]initWithFrame:CGRectMake(pointX+20+kSelectButtonSide, pointY, 80, kSelectButtonSide)];
         [allselectButton.titleLabel setFont:[UIFont systemFontOfSize:15]];
-        [allselectButton setTitle:@"全选" forState:UIControlStateNormal];
-        [allselectButton setTitle:@"全选" forState:UIControlStateHighlighted];
+        [allselectButton setTitle:NSLocalizedString(@"quanxuanbutton",@"全选") forState:UIControlStateNormal];
+        [allselectButton setTitle:NSLocalizedString(@"quanxuanbutton",@"全选") forState:UIControlStateHighlighted];
         [allselectButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateNormal];
         [allselectButton setTitleColor:[UIColor darkTextColor] forState:UIControlStateHighlighted];
         allselectButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
