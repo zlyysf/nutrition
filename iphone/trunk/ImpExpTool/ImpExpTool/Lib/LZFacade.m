@@ -96,7 +96,12 @@
 {
     LZReadExcel *workRe = [[LZReadExcel alloc]init];
 //    [workRe checkExcelForFoodPicPath];
-    [workRe checkExcelForUnSynchronizedFoodFullEnName];
+//    [workRe checkExcelForUnSynchronizedFoodFullEnName];
+    
+    LZDBAccess *db = [LZDBAccess singletonCustomDB];
+    [db getFoodCnTypes];
+    [db getFoodSingleItemUnitNames];
+    
 }
 
 +(void)generateVariousCsv_withDBFilePath:(NSString *)dbFilePath

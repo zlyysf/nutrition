@@ -738,10 +738,27 @@
 }
 
 
+-(NSArray *)getFoodCnTypes
+{
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+    [sqlStr appendString:@"SELECT distinct CnType FROM FoodCustom FC\n"];
+    NSString *orderByPart = @" ORDER BY CnType";
+    NSArray * dataAry = [_da getRowsByQuery:sqlStr andFilters:nil andWhereExistInQuery:false andAfterWherePart:orderByPart andOptions:nil];
+    NSArray * valAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:@"CnType" andDictionaryArray:dataAry];
+    NSLog(@"getFoodCnTypes ret: %@",[LZUtility getObjectDescription:valAry andIndent:0] );
+    return valAry;
+}
 
-
-
-
+-(NSArray *)getFoodSingleItemUnitNames
+{
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+    [sqlStr appendString:@"SELECT distinct SingleItemUnitName FROM FoodCustom FC\n"];
+    NSString *orderByPart = @" ORDER BY SingleItemUnitName";
+    NSArray * dataAry = [_da getRowsByQuery:sqlStr andFilters:nil andWhereExistInQuery:false andAfterWherePart:orderByPart andOptions:nil];
+    NSArray * valAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:@"SingleItemUnitName" andDictionaryArray:dataAry];
+    NSLog(@"getFoodSingleItemUnitNames ret: %@",[LZUtility getObjectDescription:valAry andIndent:0] );
+    return valAry;
+}
 
 
 
