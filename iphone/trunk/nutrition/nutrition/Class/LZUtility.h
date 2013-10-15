@@ -103,6 +103,9 @@
 +(NSDate *)getDateForHour:(int)hours Minutes:(int)minutes;
 
 +(BOOL)isCurrentLanguageChinese;
+
++(NSDictionary *)getNutritionNameInfo:(NSString *)name;
++ (UIImage *) createImageWithColor: (UIColor *) color imageSize:(CGSize )imageSize;
 @end
 
 

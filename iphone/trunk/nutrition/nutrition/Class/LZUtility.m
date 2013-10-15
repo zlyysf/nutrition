@@ -931,6 +931,41 @@
     }
     return NO;
 }
+
++(NSDictionary *)getNutritionNameInfo:(NSString *)name
+{
+    NSString *chinisePart = @"";
+    NSString *englishPart = @"";
+    int alength = [name length];
+    for (int i = 0; i<alength; i++) {
+        //char commitChar = [name characterAtIndex:i];
+        NSString *temp = [name substringWithRange:NSMakeRange(i,1)];
+        const char *u8Temp = [temp UTF8String];
+        if (3==strlen(u8Temp))
+        {
+            chinisePart = [chinisePart stringByAppendingString:temp];
+        }
+        else
+        {
+            englishPart = [englishPart stringByAppendingString:temp];
+        }
+    }
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:chinisePart,@"ChinesePart",englishPart,@"EnglishPart", nil];
+    return dict;
+}
+
++ (UIImage *) createImageWithColor: (UIColor *) color imageSize:(CGSize )imageSize
+{
+    CGRect rect = CGRectMake(0, 0, imageSize.width, imageSize.height);
+    UIGraphicsBeginImageContext(rect.size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(context, [color CGColor]);
+    CGContextFillRect(context, rect);
+    
+    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return theImage;
+}
 @end
 
 

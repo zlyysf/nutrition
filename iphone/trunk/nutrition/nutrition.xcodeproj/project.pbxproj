@@ -238,20 +238,6 @@
 		5FE3AC2A180CEB2D00C5C611 /* recommend_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC2C180CEB2D00C5C611 /* recommend_icon@2x.png */; };
 		5FE3AC2E180CEB3900C5C611 /* addfood_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC30180CEB3900C5C611 /* addfood_icon@2x.png */; };
 		5FE3AC32180CEB7100C5C611 /* health_point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC34180CEB7100C5C611 /* health_point@2x.png */; };
-		5FE3AC36180CEBD500C5C611 /* Calcium_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC38180CEBD500C5C611 /* Calcium_(mg)_button@2x.png */; };
-		5FE3AC39180CEBDA00C5C611 /* Fiber_TD_(g)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC3B180CEBDA00C5C611 /* Fiber_TD_(g)_button@2x.png */; };
-		5FE3AC3C180CEBDE00C5C611 /* Folate_Tot_(µg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC3E180CEBDE00C5C611 /* Folate_Tot_(µg)_button@2x.png */; };
-		5FE3AC42180CEBF500C5C611 /* Iron_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC44180CEBF500C5C611 /* Iron_(mg)_button@2x.png */; };
-		5FE3AC46180CEBFF00C5C611 /* Magnesium_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC48180CEBFF00C5C611 /* Magnesium_(mg)_button@2x.png */; };
-		5FE3AC4A180CEC0B00C5C611 /* Protein_(g)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC4C180CEC0B00C5C611 /* Protein_(g)_button@2x.png */; };
-		5FE3AC4E180CEC1400C5C611 /* Riboflavin_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC50180CEC1400C5C611 /* Riboflavin_(mg)_button@2x.png */; };
-		5FE3AC52180CEC1E00C5C611 /* Vit_A_RAE_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC54180CEC1E00C5C611 /* Vit_A_RAE_button@2x.png */; };
-		5FE3AC56180CEC2600C5C611 /* Vit_B6_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC58180CEC2600C5C611 /* Vit_B6_(mg)_button@2x.png */; };
-		5FE3AC5A180CEC2F00C5C611 /* Vit_B12_(µg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC5C180CEC2F00C5C611 /* Vit_B12_(µg)_button@2x.png */; };
-		5FE3AC5E180CEC3700C5C611 /* Vit_C_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC60180CEC3700C5C611 /* Vit_C_(mg)_button@2x.png */; };
-		5FE3AC62180CEC4100C5C611 /* Vit_D_(µg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC64180CEC4100C5C611 /* Vit_D_(µg)_button@2x.png */; };
-		5FE3AC66180CEC4F00C5C611 /* Vit_E_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC68180CEC4F00C5C611 /* Vit_E_(mg)_button@2x.png */; };
-		5FE3AC6A180CEC5800C5C611 /* Zinc_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC6C180CEC5800C5C611 /* Zinc_(mg)_button@2x.png */; };
 		5FE3AC70180CF71000C5C611 /* LZNutritionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE3AC6F180CF71000C5C611 /* LZNutritionButton.m */; };
 		5FE3AC72180D0DE000C5C611 /* diet_topbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC71180D0DDD00C5C611 /* diet_topbar_bg@2x.png */; };
 		5FE436CE175F29D5003947ED /* LZKeyboardToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE436CD175F29D5003947ED /* LZKeyboardToolBar.m */; };
@@ -587,34 +573,6 @@
 		5FE3AC31180CEB3F00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/addfood_icon@2x.png"; sourceTree = "<group>"; };
 		5FE3AC33180CEB7100C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/health_point@2x.png"; sourceTree = "<group>"; };
 		5FE3AC35180CEB9600C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/health_point@2x.png"; sourceTree = "<group>"; };
-		5FE3AC37180CEBD500C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Calcium_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC3A180CEBDA00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Fiber_TD_(g)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC3D180CEBDE00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Folate_Tot_(µg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC3F180CEBE700C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Folate_Tot_(µg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC40180CEBEB00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Fiber_TD_(g)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC41180CEBEE00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Calcium_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC43180CEBF500C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Iron_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC45180CEBF900C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Iron_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC47180CEBFF00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Magnesium_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC49180CEC0300C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Magnesium_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC4B180CEC0B00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Protein_(g)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC4D180CEC0F00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Protein_(g)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC4F180CEC1400C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Riboflavin_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC51180CEC1900C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Riboflavin_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC53180CEC1E00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Vit_A_RAE_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC55180CEC2100C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_A_RAE_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC57180CEC2600C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Vit_B6_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC59180CEC2A00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_B6_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC5B180CEC2F00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Vit_B12_(µg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC5D180CEC3200C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_B12_(µg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC5F180CEC3700C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Vit_C_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC61180CEC3B00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_C_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC63180CEC4100C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Vit_D_(µg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC65180CEC4A00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_D_(µg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC67180CEC4F00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Vit_E_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC69180CEC5300C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_E_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC6B180CEC5800C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/Zinc_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5FE3AC6D180CEC5C00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/Zinc_(mg)_button@2x.png"; sourceTree = "<group>"; };
 		5FE3AC6E180CF71000C5C611 /* LZNutritionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZNutritionButton.h; path = Class/LZNutritionButton.h; sourceTree = "<group>"; };
 		5FE3AC6F180CF71000C5C611 /* LZNutritionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZNutritionButton.m; path = Class/LZNutritionButton.m; sourceTree = "<group>"; };
 		5FE3AC71180D0DDD00C5C611 /* diet_topbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "diet_topbar_bg@2x.png"; path = "nutrition/Resource/diet_topbar_bg@2x.png"; sourceTree = "<group>"; };
@@ -943,7 +901,6 @@
 			isa = PBXGroup;
 			children = (
 				5F2E024317E019F400D26231 /* MainMenuItems */,
-				5F943F0817D735FE00AFBF47 /* nutritionButtonIcons */,
 				5F22A6C917CF580D0043D760 /* foodTypeButtonIcons */,
 				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
 				5F17888C1805202E0017F55D /* check_bottom_bar@2x.png */,
@@ -1251,27 +1208,6 @@
 			);
 			name = BaiduWallSDK;
 			path = nutrition/BaiduWallSDK;
-			sourceTree = "<group>";
-		};
-		5F943F0817D735FE00AFBF47 /* nutritionButtonIcons */ = {
-			isa = PBXGroup;
-			children = (
-				5FE3AC38180CEBD500C5C611 /* Calcium_(mg)_button@2x.png */,
-				5FE3AC3B180CEBDA00C5C611 /* Fiber_TD_(g)_button@2x.png */,
-				5FE3AC3E180CEBDE00C5C611 /* Folate_Tot_(µg)_button@2x.png */,
-				5FE3AC44180CEBF500C5C611 /* Iron_(mg)_button@2x.png */,
-				5FE3AC48180CEBFF00C5C611 /* Magnesium_(mg)_button@2x.png */,
-				5FE3AC4C180CEC0B00C5C611 /* Protein_(g)_button@2x.png */,
-				5FE3AC50180CEC1400C5C611 /* Riboflavin_(mg)_button@2x.png */,
-				5FE3AC54180CEC1E00C5C611 /* Vit_A_RAE_button@2x.png */,
-				5FE3AC58180CEC2600C5C611 /* Vit_B6_(mg)_button@2x.png */,
-				5FE3AC5C180CEC2F00C5C611 /* Vit_B12_(µg)_button@2x.png */,
-				5FE3AC60180CEC3700C5C611 /* Vit_C_(mg)_button@2x.png */,
-				5FE3AC64180CEC4100C5C611 /* Vit_D_(µg)_button@2x.png */,
-				5FE3AC68180CEC4F00C5C611 /* Vit_E_(mg)_button@2x.png */,
-				5FE3AC6C180CEC5800C5C611 /* Zinc_(mg)_button@2x.png */,
-			);
-			name = nutritionButtonIcons;
 			sourceTree = "<group>";
 		};
 		5FAB5764180266C200657793 /* ShareSDK_v2.5.1 */ = {
@@ -1594,19 +1530,6 @@
 				5F943F0517D721F400AFBF47 /* 豆制品@2x.png in Resources */,
 				5F943F0617D721F400AFBF47 /* 零食@2x.png in Resources */,
 				5F943F0717D721F400AFBF47 /* 饮料@2x.png in Resources */,
-				5FE3AC36180CEBD500C5C611 /* Calcium_(mg)_button@2x.png in Resources */,
-				5FE3AC39180CEBDA00C5C611 /* Fiber_TD_(g)_button@2x.png in Resources */,
-				5FE3AC3C180CEBDE00C5C611 /* Folate_Tot_(µg)_button@2x.png in Resources */,
-				5FE3AC42180CEBF500C5C611 /* Iron_(mg)_button@2x.png in Resources */,
-				5FE3AC4A180CEC0B00C5C611 /* Protein_(g)_button@2x.png in Resources */,
-				5FE3AC4E180CEC1400C5C611 /* Riboflavin_(mg)_button@2x.png in Resources */,
-				5FE3AC52180CEC1E00C5C611 /* Vit_A_RAE_button@2x.png in Resources */,
-				5FE3AC56180CEC2600C5C611 /* Vit_B6_(mg)_button@2x.png in Resources */,
-				5FE3AC5A180CEC2F00C5C611 /* Vit_B12_(µg)_button@2x.png in Resources */,
-				5FE3AC5E180CEC3700C5C611 /* Vit_C_(mg)_button@2x.png in Resources */,
-				5FE3AC62180CEC4100C5C611 /* Vit_D_(µg)_button@2x.png in Resources */,
-				5FE3AC66180CEC4F00C5C611 /* Vit_E_(mg)_button@2x.png in Resources */,
-				5FE3AC6A180CEC5800C5C611 /* Zinc_(mg)_button@2x.png in Resources */,
 				5F84D1B117D8343800DF83A0 /* basic_info_icon@2x.png in Resources */,
 				5F84D1B217D8343800DF83A0 /* dri_icon@2x.png in Resources */,
 				5F2E024A17E01A0700D26231 /* menu_item_4@2x.png in Resources */,
@@ -1618,7 +1541,6 @@
 				5F8F9FAF17E6B00300F6B295 /* Icon-72.png in Resources */,
 				5F8F9FB017E6B00300F6B295 /* Icon-72@2x.png in Resources */,
 				5F241CA317E7FF0E00BC8529 /* nutrient_button_off@2x.png in Resources */,
-				5FE3AC46180CEBFF00C5C611 /* Magnesium_(mg)_button@2x.png in Resources */,
 				5FD4D36117EEE6CF007C5551 /* outer_line_bg@2x.png in Resources */,
 				5F537F2117F2BD3D00BDD014 /* health_bar@2x.png in Resources */,
 				5FE3AC32180CEB7100C5C611 /* health_point@2x.png in Resources */,
@@ -1891,146 +1813,6 @@
 				5FE3AC35180CEB9600C5C611 /* zh-Hans */,
 			);
 			name = "health_point@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC38180CEBD500C5C611 /* Calcium_(mg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC37180CEBD500C5C611 /* en */,
-				5FE3AC41180CEBEE00C5C611 /* zh-Hans */,
-			);
-			name = "Calcium_(mg)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC3B180CEBDA00C5C611 /* Fiber_TD_(g)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC3A180CEBDA00C5C611 /* en */,
-				5FE3AC40180CEBEB00C5C611 /* zh-Hans */,
-			);
-			name = "Fiber_TD_(g)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC3E180CEBDE00C5C611 /* Folate_Tot_(µg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC3D180CEBDE00C5C611 /* en */,
-				5FE3AC3F180CEBE700C5C611 /* zh-Hans */,
-			);
-			name = "Folate_Tot_(µg)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC44180CEBF500C5C611 /* Iron_(mg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC43180CEBF500C5C611 /* en */,
-				5FE3AC45180CEBF900C5C611 /* zh-Hans */,
-			);
-			name = "Iron_(mg)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC48180CEBFF00C5C611 /* Magnesium_(mg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC47180CEBFF00C5C611 /* en */,
-				5FE3AC49180CEC0300C5C611 /* zh-Hans */,
-			);
-			name = "Magnesium_(mg)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC4C180CEC0B00C5C611 /* Protein_(g)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC4B180CEC0B00C5C611 /* en */,
-				5FE3AC4D180CEC0F00C5C611 /* zh-Hans */,
-			);
-			name = "Protein_(g)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC50180CEC1400C5C611 /* Riboflavin_(mg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC4F180CEC1400C5C611 /* en */,
-				5FE3AC51180CEC1900C5C611 /* zh-Hans */,
-			);
-			name = "Riboflavin_(mg)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC54180CEC1E00C5C611 /* Vit_A_RAE_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC53180CEC1E00C5C611 /* en */,
-				5FE3AC55180CEC2100C5C611 /* zh-Hans */,
-			);
-			name = "Vit_A_RAE_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC58180CEC2600C5C611 /* Vit_B6_(mg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC57180CEC2600C5C611 /* en */,
-				5FE3AC59180CEC2A00C5C611 /* zh-Hans */,
-			);
-			name = "Vit_B6_(mg)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC5C180CEC2F00C5C611 /* Vit_B12_(µg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC5B180CEC2F00C5C611 /* en */,
-				5FE3AC5D180CEC3200C5C611 /* zh-Hans */,
-			);
-			name = "Vit_B12_(µg)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC60180CEC3700C5C611 /* Vit_C_(mg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC5F180CEC3700C5C611 /* en */,
-				5FE3AC61180CEC3B00C5C611 /* zh-Hans */,
-			);
-			name = "Vit_C_(mg)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC64180CEC4100C5C611 /* Vit_D_(µg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC63180CEC4100C5C611 /* en */,
-				5FE3AC65180CEC4A00C5C611 /* zh-Hans */,
-			);
-			name = "Vit_D_(µg)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC68180CEC4F00C5C611 /* Vit_E_(mg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC67180CEC4F00C5C611 /* en */,
-				5FE3AC69180CEC5300C5C611 /* zh-Hans */,
-			);
-			name = "Vit_E_(mg)_button@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC6C180CEC5800C5C611 /* Zinc_(mg)_button@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC6B180CEC5800C5C611 /* en */,
-				5FE3AC6D180CEC5C00C5C611 /* zh-Hans */,
-			);
-			name = "Zinc_(mg)_button@2x.png";
 			path = nutrition/Resource;
 			sourceTree = "<group>";
 		};

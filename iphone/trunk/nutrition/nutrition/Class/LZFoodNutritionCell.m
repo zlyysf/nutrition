@@ -38,7 +38,7 @@
     if (highlighted)
     {
         [self.supplyPercentlabel setTextColor:[UIColor whiteColor]];
-        [self.backView setBackgroundColor:[UIColor colorWithRed:198/255.f green:185/255.f blue:173/255.f alpha:1.0f]];
+        [self.backView setBackgroundColor:[UIColor colorWithRed:61/255.f green:175/255.f blue:45/255.f alpha:1.0f]];
         //[self.backView setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"cellSelectedBack.png"]]];
         [self.nutritionNameButton setUserInteractionEnabled:NO];
         [self.addFoodButton setUserInteractionEnabled:NO];

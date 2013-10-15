@@ -228,14 +228,6 @@
                                                 <rect key="frame" x="12" y="8" width="22" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="big_arrow.png" id="X0E-xB-oEw">
-                                                <rect key="frame" x="280" y="12" width="10" height="15"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="big_arrow.png" id="OPf-WO-wng">
-                                                <rect key="frame" x="280" y="94" width="10" height="15"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
                                             <view contentMode="scaleToFill" id="Pkk-QF-PA6">
                                                 <rect key="frame" x="0.0" y="40" width="300" height="1"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -263,10 +255,6 @@
                                             </button>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="store_icon.png" id="IVG-Xp-sQm">
                                                 <rect key="frame" x="12" y="50" width="22" height="22"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                            </imageView>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="big_arrow.png" id="r26-ei-mPa">
-                                                <rect key="frame" x="280" y="53" width="10" height="15"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             </imageView>
                                         </subviews>
@@ -1893,7 +1881,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="add_by_nutrient_button.png" width="16" height="16"/>
         <image name="addfood_icon.png" width="16" height="16"/>
         <image name="basic_info_icon.png" width="16" height="16"/>
-        <image name="big_arrow.png" width="16" height="16"/>
         <image name="button_bottom_clicked.png" width="16" height="16"/>
         <image name="button_bottom_normal.png" width="16" height="16"/>
         <image name="button_middle.png" width="16" height="16"/>

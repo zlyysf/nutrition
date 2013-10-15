@@ -12,6 +12,7 @@
 #import "LZConstants.h"
 #import "MobClick.h"
 #import "GADMasterViewController.h"
+#import "LZNutritionButton.h"
 @interface LZNutritionListViewController ()
 @property (assign,nonatomic)BOOL isFirstLoad;
 @end
@@ -76,10 +77,17 @@
             floor+=1;
         }
         startX = 10+(i-(floor-1)*perRowCount)*102;
-        UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94)];
-        [self.listView addSubview:button];
         NSString *nutritionId = [self.nutritionArray objectAtIndex:i];
-        [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_button.png",nutritionId]] forState:UIControlStateNormal];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSDictionary *dict = [da getNutrientInfo:nutritionId];
+        UIColor *backColor = [LZUtility getNutrientColorForNutrientId:nutritionId];
+        //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
+        NSString *nutritionName = [dict objectForKey:@"NutrientCnCaption"];
+        NSDictionary *info = [LZUtility getNutritionNameInfo:nutritionName];
+        UIImage*backImage = [LZUtility createImageWithColor:backColor imageSize:CGSizeMake(94, 94)];
+        LZNutritionButton *button = [[LZNutritionButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94) info:info image:backImage];
+        [self.listView addSubview:button];
+        //[button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_button.png",nutritionId]] forState:UIControlStateNormal];
         button.tag = i+100;
         [button addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     }

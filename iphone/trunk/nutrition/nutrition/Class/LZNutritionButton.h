@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LZNutritionButton : UIButton
-
+- (id)initWithFrame:(CGRect)frame
+               info:(NSDictionary *)info
+              image:(UIImage *)backImage;
 @end
