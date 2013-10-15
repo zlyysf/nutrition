@@ -116,9 +116,10 @@
 
 //#define TABLE_NAME_FoodNutritionCustom @"FoodNutritionCustom" // TO be replaced by CustomFood join FoodNutrition OR same name view
 #define VIEW_NAME_FoodNutritionCustom @"FoodNutritionCustom" 
-#define COLUMN_NAME_CnCaption @"CnCaption"
+#define COLUMN_NAME_CnCaption @"CnCaption"  // 食物的中文名
+#define COLUMN_NAME_FoodNameEn @"FoodNameEn" //食物的英文名
 #define COLUMN_NAME_CnType @"CnType"
-#define COLUMN_NAME_classify @"classify"
+#define COLUMN_NAME_classify @"classify" //食物的内部分类
 #define TABLE_NAME_FoodCnDescription @"FoodCnDescription" // TO BE changed to CustomFood
 #define TABLE_NAME_FoodCustom @"FoodCustom"
 

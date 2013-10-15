@@ -561,22 +561,22 @@
     DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
 	assert(reader);
     NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No
-                                   , COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify
+                                   , COLUMN_NAME_CnCaption,COLUMN_NAME_FoodNameEn, COLUMN_NAME_CnType,COLUMN_NAME_classify
                                    , COLUMN_NAME_PicPath
                                    , COLUMN_NAME_Lower_Limit,COLUMN_NAME_increment_unit,COLUMN_NAME_first_recommend,COLUMN_NAME_normal_value,COLUMN_NAME_Upper_Limit
                                    , COLUMN_NAME_SingleItemUnitName,COLUMN_NAME_SingleItemUnitWeight
                                    , nil];
     
-    int idxInXls_Id = 2, idxInXls_CnCaption = 3, idxInXls_CnType = 5, idxInXls_Classify=6,
-        idxInXls_PicPath = 7,
-        idxInXls_Lower_Limit=8, idxInXls_increment_unit=9, idxInXls_first_recommend=10, idxInXls_normal_value=11, idxInXls_Upper_Limit=12,
-        idxInXls_Enable=13,
-        idxInXls_SingleItemUnitName = 14, idxInXls_SingleItemUnitWeight = 15;
+    int idxInXls_Id = 2, idxInXls_CnCaption = 3, idxInXls_FoodNameEn = 4, idxInXls_CnType = 6, idxInXls_Classify=7,
+        idxInXls_PicPath = 8,
+        idxInXls_Lower_Limit=9, idxInXls_increment_unit=10, idxInXls_first_recommend=11, idxInXls_normal_value=12, idxInXls_Upper_Limit=13,
+        idxInXls_Enable=14,
+        idxInXls_SingleItemUnitName = 15, idxInXls_SingleItemUnitWeight = 16;
     int idxRow=2;
     
     NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
     NSMutableArray *row;
-    DHcell *cell_Id, *cell_CnCaption, *cell_CnType, *cell_Classify,
+    DHcell *cell_Id, *cell_CnCaption, *cell_FoodNameEn, *cell_CnType, *cell_Classify,
         *cell_PicPath, *cell_Lower_Limit, *cell_Upper_Limit, *cell_normal_value, *cell_first_recommend, *cell_increment_unit,
         *cell_Enable,
         *cell_SingleItemUnitName, *cell_SingleItemUnitWeight;
@@ -584,6 +584,7 @@
     do {
         cell_Id = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
         cell_CnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+        cell_FoodNameEn = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_FoodNameEn];
         cell_CnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
         cell_Classify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
         cell_PicPath = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_PicPath];
@@ -596,24 +597,27 @@
         cell_SingleItemUnitName = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_SingleItemUnitName];
         cell_SingleItemUnitWeight = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_SingleItemUnitWeight];
         allRowCellBlank = true;//注意cell_SingleItemUnitName 和 cell_SingleItemUnitWeight是可填项，不像其他的是必填项
-        allRowCellBlank = (cell_Id.type==cellBlank && cell_CnCaption.type==cellBlank && cell_CnType.type==cellBlank && cell_Classify.type==cellBlank
-                           && cell_PicPath.type==cellBlank
-                           && cell_Lower_Limit.type==cellBlank && cell_Upper_Limit.type==cellBlank && cell_normal_value.type==cellBlank && cell_first_recommend.type==cellBlank && cell_increment_unit.type==cellBlank
-                           && cell_Enable.type==cellBlank
+        allRowCellBlank = (cell_Id.type==cellBlank
+               && cell_CnCaption.type==cellBlank && cell_FoodNameEn.type==cellBlank && cell_CnType.type==cellBlank && cell_Classify.type==cellBlank
+               && cell_PicPath.type==cellBlank
+               && cell_Lower_Limit.type==cellBlank && cell_Upper_Limit.type==cellBlank && cell_normal_value.type==cellBlank && cell_first_recommend.type==cellBlank && cell_increment_unit.type==cellBlank
+               && cell_Enable.type==cellBlank
                            );
         if(allRowCellBlank)
             break;
         bool allRowCellNotBlank = false;
-        allRowCellNotBlank = (cell_Id.type!=cellBlank && cell_CnCaption.type!=cellBlank && cell_CnType.type!=cellBlank && cell_Classify.type!=cellBlank
-                              && cell_PicPath.type!=cellBlank
-                              && cell_Lower_Limit.type!=cellBlank && cell_Upper_Limit.type!=cellBlank && cell_normal_value.type!=cellBlank && cell_first_recommend.type!=cellBlank && cell_increment_unit.type!=cellBlank
-                              && cell_Enable.type!=cellBlank
+        allRowCellNotBlank = (cell_Id.type!=cellBlank
+              && cell_CnCaption.type!=cellBlank && cell_FoodNameEn.type!=cellBlank && cell_CnType.type!=cellBlank && cell_Classify.type!=cellBlank
+              && cell_PicPath.type!=cellBlank
+              && cell_Lower_Limit.type!=cellBlank && cell_Upper_Limit.type!=cellBlank && cell_normal_value.type!=cellBlank && cell_first_recommend.type!=cellBlank && cell_increment_unit.type!=cellBlank
+              && cell_Enable.type!=cellBlank
                               );
         if(allRowCellNotBlank){
             bool allRowCellNotEmpty = false;
-            allRowCellNotEmpty = (cell_Id.str.length>0 && cell_CnCaption.str.length>0 && cell_CnType.str.length>0 && cell_Classify.str.length>0
-                                  && cell_PicPath.str.length>0 && cell_Lower_Limit.str.length>0 && cell_Upper_Limit.str.length>0 && cell_normal_value.str.length>0 && cell_first_recommend.str.length>0 && cell_increment_unit.str.length>0
-                                  && cell_Enable.str.length>0
+            allRowCellNotEmpty = (cell_Id.str.length>0
+                  && cell_CnCaption.str.length>0 && cell_FoodNameEn.str.length>0 && cell_CnType.str.length>0 && cell_Classify.str.length>0
+                  && cell_PicPath.str.length>0 && cell_Lower_Limit.str.length>0 && cell_Upper_Limit.str.length>0 && cell_normal_value.str.length>0 && cell_first_recommend.str.length>0 && cell_increment_unit.str.length>0
+                  && cell_Enable.str.length>0
                                   );
             if (allRowCellNotEmpty){
                 if ([cell_Enable.val integerValue]==1){
@@ -622,6 +626,7 @@
                     assert(strId.length==5);
                     [row addObject:strId];
                     [row addObject:cell_CnCaption.str];
+                    [row addObject:cell_FoodNameEn.str];
                     [row addObject:cell_CnType.str];
                     [row addObject:cell_Classify.str];
                     [row addObject:cell_PicPath.str];
