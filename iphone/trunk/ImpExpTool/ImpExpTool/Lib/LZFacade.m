@@ -95,7 +95,8 @@
 +(void)runSomeTool
 {
     LZReadExcel *workRe = [[LZReadExcel alloc]init];
-    [workRe checkExcelForFoodPicPath];
+//    [workRe checkExcelForFoodPicPath];
+    [workRe checkExcelForUnSynchronizedFoodFullEnName];
 }
 
 +(void)generateVariousCsv_withDBFilePath:(NSString *)dbFilePath

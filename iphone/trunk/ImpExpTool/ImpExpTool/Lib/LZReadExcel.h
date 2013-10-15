@@ -24,7 +24,7 @@
 //-(void)convertExcelToSqlite_FoodCustom;
 -(void)convertExcelToSqlite_FoodCustom_v1_3;
 
-
+-(BOOL)checkExcelForUnSynchronizedFoodFullEnName;
 -(BOOL)checkExcelForFoodPicPath;
 -(void)convertExcelToSqlite_CustomRichFood;
 

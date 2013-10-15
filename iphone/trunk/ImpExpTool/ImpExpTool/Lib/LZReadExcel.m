@@ -673,6 +673,71 @@
     [db.da insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
 }
 
+-(BOOL)checkExcelForUnSynchronizedFoodFullEnName
+{
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
+    NSLog(@"in checkExcelForUnSynchronizedFoodFullEnName, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+
+    int idxInXls_EnFullName=1, idxInXls_Id=2, idxInXls_CnCaption=3  ;
+    int idxRow=2;
+    
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+    NSMutableArray *row;
+    NSMutableArray *foodIds = [NSMutableArray arrayWithCapacity:1000];
+    DHcell *cell_Id, *cell_EnFullName, *cell_CnCaption;
+
+    bool allRowCellBlank = false;
+    do {
+        cell_Id = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
+        cell_EnFullName = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_EnFullName];
+        cell_CnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
+        allRowCellBlank = (cell_Id.type==cellBlank && cell_EnFullName.type==cellBlank && cell_CnCaption.type==cellBlank);
+        if(allRowCellBlank)
+            break;
+        bool careRowCellNotBlank = (cell_Id.type!=cellBlank && cell_EnFullName.type!=cellBlank );
+        if(careRowCellNotBlank){
+            bool careRowCellNotEmpty = (cell_Id.str.length>0 && cell_EnFullName.str.length>0);
+            if (careRowCellNotEmpty){
+                row = [NSMutableArray arrayWithCapacity:2];
+                NSString *strId = cell_Id.str;
+                assert(strId.length==5);
+                [row addObject:strId];
+                [row addObject:cell_EnFullName.str];
+                [rows2D addObject:row];
+                [foodIds addObject:strId];
+            }//if (allRowCellNotEmpty)
+        }//if(allRowCellNotBlank)
+        idxRow++;
+    } while (!allRowCellBlank);
+    
+//    NSLog(@"in checkExcelForUnSynchronizedFoodFullEnName, rows2D=\n%@",rows2D);
+    LZDBAccess *da = [LZDBAccess singletonCustomDB];
+    NSArray * foodInfoAry = [da getFoodOriginalAttributesByIds:foodIds];
+    NSMutableDictionary* foodInfoDict = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_NDB_No andDicArray:foodInfoAry];
+    
+    NSMutableArray *rows2Ddif = [NSMutableArray arrayWithCapacity:100];
+    int okCount = 0;
+    for(int i=0; i<rows2D.count; i++){
+        NSArray *row = rows2D[i];
+        NSString *foodId = row[0];
+        NSString *foodEnFullName = row[1];
+        NSDictionary *foodInfo = foodInfoDict[foodId];
+        NSString *originalEnFullName = foodInfo[@"Shrt_Desc"];
+        if (! [originalEnFullName isEqualToString:foodEnFullName]){
+            NSMutableArray *rowDif = [NSMutableArray arrayWithObjects:foodId, foodEnFullName, originalEnFullName, nil];
+            [rows2Ddif addObject:rowDif];
+        }else{
+            okCount ++;
+        }
+    }
+    NSLog(@"in checkExcelForUnSynchronizedFoodFullEnName, rows2Ddif=\n%@",rows2Ddif);
+    NSLog(@"in checkExcelForUnSynchronizedFoodFullEnName, rows2D.count=%d, okCount=%d",rows2D.count,okCount);
+    return (rows2Ddif.count == 0);
+}
+
+
 -(BOOL)checkExcelForFoodPicPath
 {
     BOOL retval = TRUE;
@@ -712,68 +777,6 @@
     NSLog(@"checkExcelForFoodPicPath ret:%d",retval);
     return retval;
 }
-
-//-(NSDictionary *)readFoodCustomT2
-//{
-//    NSLog(@"readFoodCustomT2 begin");
-//    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
-//    NSLog(@"in readFoodCustomT2, xlsPath=%@",xlsPath);
-//    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
-//	assert(reader);
-//    
-//    int idxInXls_Id = 1, idxInXls_CnCaption = 3, idxInXls_CnType = 5, idxInXls_Classify=6 ;
-//    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_NDB_No, COLUMN_NAME_CnCaption,COLUMN_NAME_CnType,COLUMN_NAME_classify, nil];
-//    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
-//    
-//    int idxRow=2;
-//    DHcell *cellId, *cellCnCaption, *cellCnType, *cellClassify;
-//    cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
-//    cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
-//    cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
-//    cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
-//    while (cellId.type!=cellBlank || cellCnCaption.type!=cellBlank || cellCnType.type!=cellBlank || cellClassify.type!=cellBlank) {
-//        if (cellId.type!=cellBlank && cellCnCaption.type!=cellBlank && cellCnType.type!=cellBlank && cellClassify.type!=cellBlank){
-//            assert(cellId.type == cellString);
-//            NSString *strId = cellId.str;
-//            assert(strId.length==5);
-//            NSMutableArray *row = [NSMutableArray arrayWithCapacity:3];
-//            [row addObject:strId];
-//            [row addObject:cellCnCaption.str];
-//            [row addObject:cellCnType.str];
-//            [row addObject:cellClassify.str];
-//            [rows2D addObject:row];
-//        }
-//        idxRow++;
-//        cellId = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Id];
-//        cellCnCaption = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnCaption];
-//        cellCnType = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_CnType];
-//        cellClassify = [reader cellInWorkSheetIndex:0 row:idxRow col:idxInXls_Classify];
-//    }
-//    
-//    NSLog(@"in readFoodCustomT2, columnNames=%@, rows2D=\n%@",columnNames,rows2D);
-//    
-//    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
-//    [retData setObject:columnNames forKey:@"columnNames"];
-//    [retData setObject:rows2D forKey:@"rows2D"];
-//    return retData;
-//}
-//
-//-(void)dealExcelAndSqlite_FoodCustomT2
-//{
-//    NSDictionary *data = [self readFoodCustomT2];
-//    NSArray *columnNames = [data objectForKey:@"columnNames"];
-//    NSArray *rows2D = [data objectForKey:@"rows2D"];
-//    
-//    assert(dbCon!=nil);
-//    LZDBAccess *db = dbCon;
-//    NSString *tableName = @"FoodCustomT2" ;
-//    NSString *primaryKey = COLUMN_NAME_NDB_No;
-//    [db createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:primaryKey andIfNeedDropTable:true];
-//    [db insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:true];
-//    
-//    [db getDifferenceFromFoodCustomAndFoodCustomT2];
-//
-//}
 
 //
 //-(void)mergeFoodPicPathAndFoodLimitToFoodcommon
@@ -858,48 +861,48 @@
 //}
 
 
--(NSMutableArray *)readFoodCommonOld1// TODO 按照8列读下来
-{
-    NSLog(@"readFoodCommonOld1 begin");
-    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
-    NSLog(@"in readFoodCommonOld1, xlsPath=%@",xlsPath);
-    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
-	assert(reader);
-    
-    int columnCount = 8;
-    int idxRow=1;
-
-    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
-    
-    NSMutableArray *row;
-    DHcell *cell;
-    bool allRowCellEmpty;
-    
-    do {
-        allRowCellEmpty = true;
-        row = [NSMutableArray arrayWithCapacity:columnCount];
-        for(int i=1; i<=columnCount; i++){
-            cell = [reader cellInWorkSheetIndex:0 row:idxRow col:i];
-            if (cell.type!=cellBlank){
-                NSString *cellStr = cell.str;
-                [row addObject:cellStr];
-                if (cellStr.length > 0){
-                    allRowCellEmpty = false;
-                }
-            }else{
-                [row addObject:@""];
-            }
-        }
-        
-        if (!allRowCellEmpty) {
-            [rows2D addObject:row];
-            idxRow++;
-        }
-    } while (!allRowCellEmpty);
-    
-    NSLog(@"in readFoodCommonOld1, rows2D=\n%@",rows2D);
-    return rows2D;
-}
+//-(NSMutableArray *)readFoodCommonOld1// TODO 按照8列读下来
+//{
+//    NSLog(@"readFoodCommonOld1 begin");
+//    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Food_common.xls"];
+//    NSLog(@"in readFoodCommonOld1, xlsPath=%@",xlsPath);
+//    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+//	assert(reader);
+//    
+//    int columnCount = 8;
+//    int idxRow=1;
+//
+//    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+//    
+//    NSMutableArray *row;
+//    DHcell *cell;
+//    bool allRowCellEmpty;
+//    
+//    do {
+//        allRowCellEmpty = true;
+//        row = [NSMutableArray arrayWithCapacity:columnCount];
+//        for(int i=1; i<=columnCount; i++){
+//            cell = [reader cellInWorkSheetIndex:0 row:idxRow col:i];
+//            if (cell.type!=cellBlank){
+//                NSString *cellStr = cell.str;
+//                [row addObject:cellStr];
+//                if (cellStr.length > 0){
+//                    allRowCellEmpty = false;
+//                }
+//            }else{
+//                [row addObject:@""];
+//            }
+//        }
+//        
+//        if (!allRowCellEmpty) {
+//            [rows2D addObject:row];
+//            idxRow++;
+//        }
+//    } while (!allRowCellEmpty);
+//    
+//    NSLog(@"in readFoodCommonOld1, rows2D=\n%@",rows2D);
+//    return rows2D;
+//}
 
 
 

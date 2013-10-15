@@ -704,10 +704,38 @@
 
 
 
-
-
-
-
+-(NSArray *)getFoodOriginalAttributesByIds:(NSArray *)idAry
+{
+    NSLog(@"getFoodOriginalAttributesByIds begin");
+    if (idAry==nil || idAry.count ==0)
+        return nil;
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+    [sqlStr appendString:@"SELECT F.* FROM FoodNutrition F\n"];
+    
+    
+//    NSMutableArray *exprIncludeORdata = [NSMutableArray array];
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+//    NSMutableArray *exprExcludedata = [NSMutableArray array];
+    
+    if (idAry.count>0){
+        NSString *strColumn = @"F.NDB_No";
+        NSString *strOp = @"IN";
+        NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+        [expr addObject:strColumn];
+        [expr addObject:strOp];
+        [expr addObject:idAry];
+        [exprIncludeANDdata addObject:expr];
+    }
+    
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+//                             exprIncludeORdata,@"includeOR",
+                             exprIncludeANDdata,@"includeAND",
+//                             exprExcludedata,@"exclude",
+                             nil];
+    NSArray * dataAry = [_da getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:nil andOptions:nil];
+    return dataAry;
+}
 
 
 

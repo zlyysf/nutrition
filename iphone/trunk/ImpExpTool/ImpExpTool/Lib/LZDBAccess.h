@@ -65,7 +65,7 @@
 
 
 
-
+-(NSArray *)getFoodOriginalAttributesByIds:(NSArray *)idAry;
 
 
 -(void)getDifferenceFromFoodCustomAndFoodCustomT2;
