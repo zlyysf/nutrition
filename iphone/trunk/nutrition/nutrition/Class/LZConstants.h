@@ -167,6 +167,7 @@
 #define TABLE_NAME_DiseaseGroup @"DiseaseGroup"
 #define TABLE_NAME_DiseaseInGroup @"DiseaseInGroup"
 #define COLUMN_NAME_Disease @"Disease"
+#define COLUMN_NAME_DiseaseEn @"DiseaseEn"
 #define COLUMN_NAME_DiseaseGroup @"DiseaseGroup"
 #define COLUMN_NAME_dsGroupType @"dsGroupType"
 //#define COLUMN_NAME_dsGroupWizardOrder @"dsGroupWizardOrder" //TODO delete

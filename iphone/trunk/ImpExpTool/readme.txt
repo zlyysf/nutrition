@@ -73,20 +73,19 @@ CREATE TABLE CustomRichFood ('NutrientID' TEXT,'NDB_No' TEXT);
 
 
 CREATE TABLE DiseaseNutrient (Disease TEXT, NutrientID TEXT, DiseaseGroup TEXT, LackLevelMark INTEGER);
-  CREATE UNIQUE INDEX uniqueIndexDiseaseNutrient ON DiseaseNutrient(Disease, NutrientID, DiseaseGroup);
+  //CREATE UNIQUE INDEX uniqueIndexDiseaseNutrient ON DiseaseNutrient(Disease, NutrientID, DiseaseGroup);
   由于疾病与营养的对应关系上还有一些其他属性，如缺乏程度分值，并且这个属性只在特定的group上出现，考虑到在特定group中疾病营养对有重复的情况，这里干脆加一个DiseaseGroup列。
 CREATE TABLE DiseaseGroup(DiseaseGroup TEXT, dsGroupType TEXT); 
     由于向导页已经取消，dsGroupWizardOrder列用不着了，会被删掉
-CREATE TABLE DiseaseInGroup(DiseaseGroup TEXT, Disease TEXT, DiseaseDepartment TEXT, DiseaseType TEXT, DiseaseTimeType TEXT);
+CREATE TABLE DiseaseInGroup(DiseaseGroup TEXT, Disease TEXT,DiseaseEn TEXT, DiseaseDepartment TEXT, DiseaseType TEXT, DiseaseTimeType TEXT);
     这里 Disease 与 Group 的关系目前是一个Disease只在一个Group中出现，从而可以认为Disease唯一，Group只是Disease的一个属性。
-
-注意 不同group中可能有相同的disease
+    不同group中可能有相同的disease。但后来又改过数据，目前应该不存在这种情况。从而Disease 可以作为ID用。
+    目前 Disease 是中文名称，DiseaseEn 是英文名称。现在把中文名称作为ID用，虽然默认显示英文。
 
 
 //CREATE TABLE UserInfo(AvgHealthValue REAL, HealthCalCount INTEGER, AllUserAvgHealthValue REAL);
 CREATE TABLE UserCheckDiseaseRecord(Day INTEGER, TimeType INTEGER, UpdateTime INTEGER, Diseases TEXT, LackNutrientIDs TEXT, HealthMark INTEGER);
-
-
+目前 UserCheckDiseaseRecord 没有用上
 
 
 

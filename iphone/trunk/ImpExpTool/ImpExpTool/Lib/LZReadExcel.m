@@ -1117,7 +1117,7 @@
     NSMutableArray *columnNames_DiseaseNutrient1 = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, COLUMN_NAME_DiseaseGroup, COLUMN_NAME_LackLevelMark, nil];
 //    NSMutableArray *columnNames_DiseaseNutrient2 = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, COLUMN_NAME_DiseaseGroup,nil];
     NSMutableArray *columnNames_DiseaseGroup = [NSMutableArray arrayWithObjects: COLUMN_NAME_DiseaseGroup, COLUMN_NAME_dsGroupType, nil];
-    NSMutableArray *columnNames_DiseaseInGroup = [NSMutableArray arrayWithObjects: COLUMN_NAME_DiseaseGroup, COLUMN_NAME_Disease, COLUMN_NAME_DiseaseDepartment, COLUMN_NAME_DiseaseType, COLUMN_NAME_DiseaseTimeType,  nil];
+    NSMutableArray *columnNames_DiseaseInGroup = [NSMutableArray arrayWithObjects: COLUMN_NAME_DiseaseGroup, COLUMN_NAME_Disease, COLUMN_NAME_DiseaseEn, COLUMN_NAME_DiseaseDepartment, COLUMN_NAME_DiseaseType, COLUMN_NAME_DiseaseTimeType,  nil];
     
 //    NSMutableArray * diseaseNutrientAry = [NSMutableArray arrayWithCapacity:2000];
     NSMutableArray * diseaseNutrientRows = [NSMutableArray arrayWithCapacity:5000];
@@ -1160,7 +1160,7 @@
     generateGroupDiseaseRelationsBlockVar = ^(NSString *sDiseaseGroup,NSArray *validDiseaseAry2D){
         NSMutableArray * diseaseInGroupAry = [NSMutableArray arrayWithCapacity:validDiseaseAry2D.count];
         for(int i=0; i<validDiseaseAry2D.count; i++){
-            NSMutableArray *diseaseInGroup = [NSMutableArray arrayWithCapacity:3];
+            NSMutableArray *diseaseInGroup = [NSMutableArray arrayWithCapacity:5];
             [diseaseInGroup addObject:sDiseaseGroup];
             [diseaseInGroup addObjectsFromArray:validDiseaseAry2D[i]];
             [diseaseInGroupAry addObject:diseaseInGroup];
@@ -1227,7 +1227,7 @@
     //    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, nil];
     int startColumnPos = 1, startRowPos = 2;
     int startNutrientColumnPos = startColumnPos+3;
-    DHcell *cell;
+    DHcell *cell, *cell_diseaseName, *cell_diseaseEnName;
     cell = [reader cellInWorkSheetIndex:0 row:startColumnPos col:startRowPos];
     assert(cell.type==cellBlank);
     cell = [reader cellInWorkSheetIndex:0 row:startColumnPos+1 col:startRowPos];
@@ -1238,20 +1238,26 @@
     NSDictionary *nutrientDescToIdDict = [self getNutrientDescInDiseaseToNutrientIdDict];
     
     NSMutableArray *diseaseNames = [NSMutableArray arrayWithCapacity:100];
+    NSMutableArray *diseaseEnNames = [NSMutableArray arrayWithCapacity:100];
     NSMutableArray *nutrientDescs = [NSMutableArray arrayWithCapacity:40];
     
     int idxRow,idxCol;
     
     idxRow=startRowPos+1;
-    int columnPos_diseaseName = startColumnPos+1;
+    int columnPos_diseaseName = startColumnPos+1, columnPos_diseaseEnName = startColumnPos+2;
     BOOL existDiseaseRow = false;
     do {
-        cell = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:columnPos_diseaseName];
-        existDiseaseRow = (cell.type!=cellBlank && cell.str.length>0);
+        cell_diseaseName = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:columnPos_diseaseName];
+        cell_diseaseEnName = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:columnPos_diseaseEnName];
+        existDiseaseRow = (cell_diseaseName.type!=cellBlank && cell_diseaseName.str.length>0);
         if (existDiseaseRow){
-            NSString *diseaseName = cell.str;
-            NSLog(@"diseaseName: %@ [%d]",diseaseName,idxRow);
+            NSString *diseaseName = cell_diseaseName.str;
+            NSString *diseaseEnName = cell_diseaseEnName.str;
+            if (diseaseEnName == nil)
+                diseaseEnName = @"";
+            NSLog(@"diseaseName: %@  %@ [%d]",diseaseName,diseaseEnName,idxRow);
             [diseaseNames addObject:diseaseName];
+            [diseaseEnNames addObject:diseaseEnName];
         }
         idxRow++;
     } while (existDiseaseRow);
@@ -1291,6 +1297,7 @@
         
         NSMutableArray * validDiseaseAry = [NSMutableArray arrayWithCapacity:2];
         [validDiseaseAry addObject:diseaseName];
+        [validDiseaseAry addObject:diseaseEnNames[iRow]];
         [validDiseaseAry addObject:@""];
         [validDiseaseAry addObject:@""];
         [validDiseaseAry addObject:@""];
@@ -1334,7 +1341,7 @@
     //    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, nil];
     int startColumnPos = 1, startRowPos = 2;
     int startNutrientDiseaseFlagColumnPos = startColumnPos+4;
-    DHcell *cell;
+    DHcell *cell, *cell_diseaseName, *cell_diseaseEnName;
     cell = [reader cellInWorkSheetIndex:0 row:startColumnPos col:startRowPos];
     assert(cell.type==cellBlank);
     cell = [reader cellInWorkSheetIndex:0 row:startColumnPos+1 col:startRowPos];
@@ -1345,6 +1352,7 @@
     NSDictionary *nutrientDescToIdDict = [self getNutrientDescInDiseaseToNutrientIdDict];
     
     NSMutableArray *diseaseNames = [NSMutableArray arrayWithCapacity:100];
+    NSMutableArray *diseaseEnNames = [NSMutableArray arrayWithCapacity:100];
     NSMutableArray *nutrientDescs = [NSMutableArray arrayWithCapacity:40];
     
     
@@ -1352,14 +1360,20 @@
     
     idxRow=startRowPos+1;
     int columnPos_diseaseName = startColumnPos+1;
+    int columnPos_diseaseEnName = startColumnPos+2;
     BOOL existDiseaseRow = false;
     do {
-        cell = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:columnPos_diseaseName];
-        existDiseaseRow = (cell.type!=cellBlank && cell.str.length>0);
+        cell_diseaseName = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:columnPos_diseaseName];
+        cell_diseaseEnName = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:columnPos_diseaseEnName];
+        existDiseaseRow = (cell_diseaseName.type!=cellBlank && cell_diseaseName.str.length>0);
         if (existDiseaseRow){
-            NSString *diseaseName = cell.str;
-            NSLog(@"diseaseName: %@ [%d]",diseaseName,idxRow);
+            NSString *diseaseName = cell_diseaseName.str;
+            NSString *diseaseEnName = cell_diseaseEnName.str;
+            if (diseaseEnName == nil)
+                diseaseEnName = @"";
+            NSLog(@"diseaseName: %@ %@ [%d]",diseaseName,diseaseEnName,idxRow);
             [diseaseNames addObject:diseaseName];
+            [diseaseEnNames addObject:diseaseEnName];
         }
         idxRow++;
     } while (existDiseaseRow);
@@ -1404,6 +1418,7 @@
         }
         NSMutableArray * validDiseaseAry = [NSMutableArray arrayWithCapacity:2];
         [validDiseaseAry addObject:diseaseName];
+        [validDiseaseAry addObject:diseaseEnNames[iRow]];
         if ([typeSomeValue isEqualToString:@"Department"]){
             [validDiseaseAry addObject:sDiseaseTypeSome];
             [validDiseaseAry addObject:@""];
@@ -1449,7 +1464,7 @@
     //    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_Disease, COLUMN_NAME_NutrientID, nil];
     int startColumnPos = 1, startRowPos = 2;
     int startNutrientDiseaseFlagColumnPos = startColumnPos+5;
-    DHcell *cell;
+    DHcell *cell, *cell_diseaseName, *cell_diseaseEnName;
     cell = [reader cellInWorkSheetIndex:0 row:startColumnPos col:startRowPos];
     assert(cell.type==cellBlank);
     cell = [reader cellInWorkSheetIndex:0 row:startColumnPos+1 col:startRowPos];
@@ -1460,6 +1475,7 @@
     NSDictionary *nutrientDescToIdDict = [self getNutrientDescInDiseaseToNutrientIdDict];
     
     NSMutableArray *diseaseNames = [NSMutableArray arrayWithCapacity:100];
+    NSMutableArray *diseaseEnNames = [NSMutableArray arrayWithCapacity:100];
     NSMutableArray *nutrientDescs = [NSMutableArray arrayWithCapacity:40];
     
     
@@ -1467,14 +1483,20 @@
     
     idxRow=startRowPos+1;
     int columnPos_diseaseName = startColumnPos+1;
+    int columnPos_diseaseEnName = startColumnPos+2;
     BOOL existDiseaseRow = false;
     do {
-        cell = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:columnPos_diseaseName];
-        existDiseaseRow = (cell.type!=cellBlank && cell.str.length>0);
+        cell_diseaseName = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:columnPos_diseaseName];
+        cell_diseaseEnName = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:columnPos_diseaseEnName];
+        existDiseaseRow = (cell_diseaseName.type!=cellBlank && cell_diseaseName.str.length>0);
         if (existDiseaseRow){
-            NSString *diseaseName = cell.str;
-            NSLog(@"diseaseName: %@ [%d]",diseaseName,idxRow);
+            NSString *diseaseName = cell_diseaseName.str;
+            NSString *diseaseEnName = cell_diseaseEnName.str;
+            if (diseaseEnName == nil)
+                diseaseEnName = @"";
+            NSLog(@"diseaseName: %@ %@ [%d]",diseaseName,diseaseEnName,idxRow);
             [diseaseNames addObject:diseaseName];
+            [diseaseEnNames addObject:diseaseEnName];
         }
         idxRow++;
     } while (existDiseaseRow);
@@ -1524,6 +1546,7 @@
         }
         NSMutableArray * validDiseaseAry = [NSMutableArray arrayWithCapacity:2];
         [validDiseaseAry addObject:diseaseName];
+        [validDiseaseAry addObject:diseaseEnNames[iRow]];
         [validDiseaseAry addObject:@""];
         [validDiseaseAry addObject:sDiseaseClass];
         [validDiseaseAry addObject:sDiseaseTimeType];
