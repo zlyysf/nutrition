@@ -51,9 +51,9 @@
         NSFileManager * defFileManager = [NSFileManager defaultManager];
         
         NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+        //NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
         NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-        NSString *flagKey = [NSString stringWithFormat:@"%@%@-DB",appName,appVersion];
+        NSString *flagKey = [NSString stringWithFormat:@"%@%@-DB",AppVersionJudgeName,appVersion];
 
         BOOL fileExists,isDir;
         fileExists = [defFileManager fileExistsAtPath:dbFilePath isDirectory:&isDir];

@@ -772,9 +772,9 @@
 +(void)setReviewFlagForNewVersion
 {
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-    NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
+    //NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
     NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    NSString *flagKey = [NSString stringWithFormat:@"%@%@-RF",appName,appVersion];
+    NSString *flagKey = [NSString stringWithFormat:@"%@%@-RF",AppVersionJudgeName,appVersion];
     BOOL flagExists = [[NSUserDefaults standardUserDefaults]boolForKey:flagKey];
     if (flagExists)
     {
@@ -965,6 +965,67 @@
     UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return theImage;
+
+    
+    
+//    CGRect frame = CGRectMake(0, 0, imageSize.width, imageSize.height);
+//    UIGraphicsBeginImageContext(frame.size);
+//    CGContextRef     context = UIGraphicsGetCurrentContext();
+//    CGSize          myShadowOffset = CGSizeMake (1.5,  1.5);
+//    float           myColorValues[] = {140/255.f, 137/255.f, 137/255.f, 0.75};
+//    CGColorRef      myColor;
+//    CGColorSpaceRef myColorSpace;
+//    CGContextSaveGState(context);
+//    //    CGContextSetShadow (myContext, myShadowOffset, 0);
+//    
+//    // Your drawing code here
+//    myColorSpace = CGColorSpaceCreateDeviceRGB ();
+//    myColor = CGColorCreate (myColorSpace, myColorValues);
+//    CGContextSetShadowWithColor (context, myShadowOffset, 0, myColor);
+//    // Your drawing code here
+//    [[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1] setStroke];
+//    [color setFill];
+//    //CGContextRef     context = UIGraphicsGetCurrentContext();
+//    
+//    //CGMutablePathRef pathRef = [self pathwithFrame:rect withRadius:radius];
+//    CGPoint x1,x2,x3,x4; //x为4个顶点
+//    CGPoint y1,y2,y3,y4,y5,y6,y7,y8; //y为4个控制点
+//    //从左上角顶点开始，顺时针旋转,x1->y1->y2->x2
+//    
+//    x1 = frame.origin;
+//    x2 = CGPointMake(frame.origin.x+frame.size.width, frame.origin.y);
+//    x3 = CGPointMake(frame.origin.x+frame.size.width, frame.origin.y+frame.size.height);
+//    x4 = CGPointMake(frame.origin.x                 , frame.origin.y+frame.size.height);
+//    
+//    
+//    y1 = CGPointMake(frame.origin.x, frame.origin.y);
+//    y2 = CGPointMake(frame.origin.x+frame.size.width, frame.origin.y);
+//    y3 = CGPointMake(frame.origin.x+frame.size.width, frame.origin.y);
+//    y4 = CGPointMake(frame.origin.x+frame.size.width, frame.origin.y+frame.size.height);
+//    
+//    y5 = CGPointMake(frame.origin.x+frame.size.width, frame.origin.y+frame.size.height);
+//    y6 = CGPointMake(frame.origin.x, frame.origin.y+frame.size.height);
+//    y7 = CGPointMake(frame.origin.x, frame.origin.y+frame.size.height);
+//    y8 = CGPointMake(frame.origin.x, frame.origin.y);
+//    
+//    
+//    CGMutablePathRef pathRef = CGPathCreateMutable();
+//    
+//        CGPathMoveToPoint(pathRef,    &CGAffineTransformIdentity, x1.x,x1.y);
+//        CGPathAddLineToPoint(pathRef, &CGAffineTransformIdentity, x2.x,x2.y);
+//        CGPathAddLineToPoint(pathRef, &CGAffineTransformIdentity, x3.x,x3.y);
+//        CGPathAddLineToPoint(pathRef, &CGAffineTransformIdentity, x4.x,x4.y);
+//    CGPathCloseSubpath(pathRef);
+//    
+//    CGContextAddPath(context, pathRef);
+//    CGContextSetLineWidth(context, 0.5);
+//    CGContextDrawPath(context,kCGPathFillStroke);
+//    UIImage *theImage = UIGraphicsGetImageFromCurrentImageContext();
+//    CGPathRelease(pathRef);
+//    UIGraphicsEndImageContext();
+//    return theImage;
+
+    
 }
 @end
 

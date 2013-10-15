@@ -12,7 +12,7 @@
 #define KeyIsEnvironmentDebug 0
 
 #define KeyDebugSettingsDict @"KeyDebugSettingsDict"
-
+#define AppVersionJudgeName @"NutritionFoodGuide"
 #define Config_needConsiderNutrientLoss FALSE
 #define Config_foodUpperLimit 1000 // unit g
 #define Config_foodLowerLimit 1 // unit g
@@ -286,7 +286,6 @@
 //百度广告APP SID 和计费名
 #define BaiduAdsAppSID @"f06ac562"
 #define BaiduAdsAppSpec @"f06ac562"
-
 #define UmengPathZhuYeMian @"主页面"
 #define UmengPathShanShiQingDan @"膳食清单页面"
 #define UmengPathYingYangDaPei @"营养搭配页面"
