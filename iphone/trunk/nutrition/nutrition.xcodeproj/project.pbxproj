@@ -79,7 +79,6 @@
 		5F22A69217CF37940043D760 /* searchbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A69117CF37940043D760 /* searchbar_bg@2x.png */; };
 		5F22A6C817CF4C6E0043D760 /* LZFoodTypeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A6C717CF4C6D0043D760 /* LZFoodTypeButton.m */; };
 		5F241CA317E7FF0E00BC8529 /* nutrient_button_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F241CA217E7FF0E00BC8529 /* nutrient_button_off@2x.png */; };
-		5F241CA517E86ECC00BC8529 /* Magnesium_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F241CA417E86ECC00BC8529 /* Magnesium_(mg)_button@2x.png */; };
 		5F241CA817E8749200BC8529 /* LZTimeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F241CA717E8749200BC8529 /* LZTimeSettingsViewController.m */; };
 		5F25849F17829DDA00D99C16 /* LZEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F25849E17829DD900D99C16 /* LZEditProfileViewController.m */; };
 		5F2584A41782BD0D00D99C16 /* button_middle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A31782BD0C00D99C16 /* button_middle@2x.png */; };
@@ -107,19 +106,12 @@
 		5F4FD72017D4B04900DBA25A /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5F3338C0172A407E0096E7AE /* MainStoryboard.storyboard */; };
 		5F4FD72317D4B75900DBA25A /* LZDiseaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4FD72217D4B75900DBA25A /* LZDiseaseCell.m */; };
 		5F537F2117F2BD3D00BDD014 /* health_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F537F1F17F2BD3D00BDD014 /* health_bar@2x.png */; };
-		5F537F2217F2BD3D00BDD014 /* health_point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F537F2017F2BD3D00BDD014 /* health_point@2x.png */; };
 		5F537F2517F2BFBE00BDD014 /* LZHeavlyLackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F537F2417F2BFBE00BDD014 /* LZHeavlyLackCell.m */; };
 		5F62743A175C93F3006E46CA /* LZFoodNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */; };
 		5F62743D175CAB63006E46CA /* LZAddByNutrientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743C175CAB63006E46CA /* LZAddByNutrientController.m */; };
 		5F627440175CACAC006E46CA /* LZNutrientFoodAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743F175CACAB006E46CA /* LZNutrientFoodAddCell.m */; };
 		5F638030175C4969005E5517 /* cellSelectedBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */; };
 		5F65274A17D49DA50089CBB5 /* LZHealthCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F65274917D49DA50089CBB5 /* LZHealthCheckViewController.m */; };
-		5F6A3F5D17964D7F0029B8C9 /* addfood_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A3F5A17964D7F0029B8C9 /* addfood_icon@2x.png */; };
-		5F6A3F5E17964D7F0029B8C9 /* recommend_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A3F5B17964D7F0029B8C9 /* recommend_icon@2x.png */; };
-		5F6A3F5F17964D7F0029B8C9 /* share_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A3F5C17964D7F0029B8C9 /* share_icon@2x.png */; };
-		5F6A3F63179652E50029B8C9 /* addfood_icon_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A3F60179652E30029B8C9 /* addfood_icon_clicked@2x.png */; };
-		5F6A3F64179652E50029B8C9 /* recommend_icon_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A3F61179652E40029B8C9 /* recommend_icon_clicked@2x.png */; };
-		5F6A3F65179652E50029B8C9 /* share_icon_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A3F62179652E40029B8C9 /* share_icon_clicked@2x.png */; };
 		5F6A3F67179655650029B8C9 /* sepline@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F6A3F66179655640029B8C9 /* sepline@2x.png */; };
 		5F746C011769A83E00E68D0E /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746BFF1769A83E00E68D0E /* libMobClickLibrary.a */; };
 		5F746C031769A9BD00E68D0E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C021769A9BD00E68D0E /* libz.dylib */; };
@@ -199,19 +191,6 @@
 		5F943F0517D721F400AFBF47 /* 豆制品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF717D721F400AFBF47 /* 豆制品@2x.png */; };
 		5F943F0617D721F400AFBF47 /* 零食@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF817D721F400AFBF47 /* 零食@2x.png */; };
 		5F943F0717D721F400AFBF47 /* 饮料@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF917D721F400AFBF47 /* 饮料@2x.png */; };
-		5F943F1617D7364D00AFBF47 /* Calcium_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F0917D7364D00AFBF47 /* Calcium_(mg)_button@2x.png */; };
-		5F943F1717D7364D00AFBF47 /* Fiber_TD_(g)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F0A17D7364D00AFBF47 /* Fiber_TD_(g)_button@2x.png */; };
-		5F943F1817D7364D00AFBF47 /* Folate_Tot_(µg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F0B17D7364D00AFBF47 /* Folate_Tot_(µg)_button@2x.png */; };
-		5F943F1917D7364D00AFBF47 /* Iron_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F0C17D7364D00AFBF47 /* Iron_(mg)_button@2x.png */; };
-		5F943F1A17D7364D00AFBF47 /* Protein_(g)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F0D17D7364D00AFBF47 /* Protein_(g)_button@2x.png */; };
-		5F943F1B17D7364D00AFBF47 /* Riboflavin_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F0E17D7364D00AFBF47 /* Riboflavin_(mg)_button@2x.png */; };
-		5F943F1C17D7364D00AFBF47 /* Vit_A_RAE_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F0F17D7364D00AFBF47 /* Vit_A_RAE_button@2x.png */; };
-		5F943F1D17D7364D00AFBF47 /* Vit_B6_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F1017D7364D00AFBF47 /* Vit_B6_(mg)_button@2x.png */; };
-		5F943F1E17D7364D00AFBF47 /* Vit_B12_(µg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F1117D7364D00AFBF47 /* Vit_B12_(µg)_button@2x.png */; };
-		5F943F1F17D7364D00AFBF47 /* Vit_C_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F1217D7364D00AFBF47 /* Vit_C_(mg)_button@2x.png */; };
-		5F943F2017D7364D00AFBF47 /* Vit_D_(µg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F1317D7364D00AFBF47 /* Vit_D_(µg)_button@2x.png */; };
-		5F943F2117D7364D00AFBF47 /* Vit_E_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F1417D7364D00AFBF47 /* Vit_E_(mg)_button@2x.png */; };
-		5F943F2217D7364D00AFBF47 /* Zinc_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943F1517D7364D00AFBF47 /* Zinc_(mg)_button@2x.png */; };
 		5F94A86517531CC100664B57 /* LZDietListMakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */; };
 		5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86717531ED700664B57 /* LZSettingsViewController.m */; };
 		5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
@@ -258,6 +237,27 @@
 		5FDED102176F2E2D0026BCA3 /* text_clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */; };
 		5FE210541784058100F45253 /* feedback_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE210501784058100F45253 /* feedback_icon@2x.png */; };
 		5FE210551784058100F45253 /* review_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE210511784058100F45253 /* review_icon@2x.png */; };
+		5FE3AC1A180CEAE700C5C611 /* share_icon_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC1C180CEAE700C5C611 /* share_icon_clicked@2x.png */; };
+		5FE3AC1E180CEAF500C5C611 /* recommend_icon_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC20180CEAF500C5C611 /* recommend_icon_clicked@2x.png */; };
+		5FE3AC22180CEB0300C5C611 /* addfood_icon_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC24180CEB0300C5C611 /* addfood_icon_clicked@2x.png */; };
+		5FE3AC26180CEB2000C5C611 /* share_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC28180CEB2000C5C611 /* share_icon@2x.png */; };
+		5FE3AC2A180CEB2D00C5C611 /* recommend_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC2C180CEB2D00C5C611 /* recommend_icon@2x.png */; };
+		5FE3AC2E180CEB3900C5C611 /* addfood_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC30180CEB3900C5C611 /* addfood_icon@2x.png */; };
+		5FE3AC32180CEB7100C5C611 /* health_point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC34180CEB7100C5C611 /* health_point@2x.png */; };
+		5FE3AC36180CEBD500C5C611 /* Calcium_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC38180CEBD500C5C611 /* Calcium_(mg)_button@2x.png */; };
+		5FE3AC39180CEBDA00C5C611 /* Fiber_TD_(g)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC3B180CEBDA00C5C611 /* Fiber_TD_(g)_button@2x.png */; };
+		5FE3AC3C180CEBDE00C5C611 /* Folate_Tot_(µg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC3E180CEBDE00C5C611 /* Folate_Tot_(µg)_button@2x.png */; };
+		5FE3AC42180CEBF500C5C611 /* Iron_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC44180CEBF500C5C611 /* Iron_(mg)_button@2x.png */; };
+		5FE3AC46180CEBFF00C5C611 /* Magnesium_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC48180CEBFF00C5C611 /* Magnesium_(mg)_button@2x.png */; };
+		5FE3AC4A180CEC0B00C5C611 /* Protein_(g)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC4C180CEC0B00C5C611 /* Protein_(g)_button@2x.png */; };
+		5FE3AC4E180CEC1400C5C611 /* Riboflavin_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC50180CEC1400C5C611 /* Riboflavin_(mg)_button@2x.png */; };
+		5FE3AC52180CEC1E00C5C611 /* Vit_A_RAE_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC54180CEC1E00C5C611 /* Vit_A_RAE_button@2x.png */; };
+		5FE3AC56180CEC2600C5C611 /* Vit_B6_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC58180CEC2600C5C611 /* Vit_B6_(mg)_button@2x.png */; };
+		5FE3AC5A180CEC2F00C5C611 /* Vit_B12_(µg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC5C180CEC2F00C5C611 /* Vit_B12_(µg)_button@2x.png */; };
+		5FE3AC5E180CEC3700C5C611 /* Vit_C_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC60180CEC3700C5C611 /* Vit_C_(mg)_button@2x.png */; };
+		5FE3AC62180CEC4100C5C611 /* Vit_D_(µg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC64180CEC4100C5C611 /* Vit_D_(µg)_button@2x.png */; };
+		5FE3AC66180CEC4F00C5C611 /* Vit_E_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC68180CEC4F00C5C611 /* Vit_E_(mg)_button@2x.png */; };
+		5FE3AC6A180CEC5800C5C611 /* Zinc_(mg)_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC6C180CEC5800C5C611 /* Zinc_(mg)_button@2x.png */; };
 		5FE436CE175F29D5003947ED /* LZKeyboardToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE436CD175F29D5003947ED /* LZKeyboardToolBar.m */; };
 		5FE436D3175F3EF5003947ED /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436CF175F3EF5003947ED /* Icon-Small.png */; };
 		5FE436D4175F3EF5003947ED /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D0175F3EF5003947ED /* Icon-Small@2x.png */; };
@@ -359,7 +359,6 @@
 		5F22A6C617CF4C6D0043D760 /* LZFoodTypeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodTypeButton.h; path = Class/LZFoodTypeButton.h; sourceTree = "<group>"; };
 		5F22A6C717CF4C6D0043D760 /* LZFoodTypeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodTypeButton.m; path = Class/LZFoodTypeButton.m; sourceTree = "<group>"; };
 		5F241CA217E7FF0E00BC8529 /* nutrient_button_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_off@2x.png"; path = "nutrition/Resource/nutrient_button_off@2x.png"; sourceTree = "<group>"; };
-		5F241CA417E86ECC00BC8529 /* Magnesium_(mg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Magnesium_(mg)_button@2x.png"; path = "nutrition/Resource/Magnesium_(mg)_button@2x.png"; sourceTree = "<group>"; };
 		5F241CA617E8749200BC8529 /* LZTimeSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZTimeSettingsViewController.h; path = Class/LZTimeSettingsViewController.h; sourceTree = "<group>"; };
 		5F241CA717E8749200BC8529 /* LZTimeSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZTimeSettingsViewController.m; path = Class/LZTimeSettingsViewController.m; sourceTree = "<group>"; };
 		5F25849D17829DD900D99C16 /* LZEditProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZEditProfileViewController.h; path = Class/LZEditProfileViewController.h; sourceTree = "<group>"; };
@@ -398,7 +397,6 @@
 		5F5096191754777300461964 /* LZValueSelectorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZValueSelectorView.h; path = Class/LZValueSelectorView.h; sourceTree = "<group>"; };
 		5F50961A1754777300461964 /* LZValueSelectorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZValueSelectorView.m; path = Class/LZValueSelectorView.m; sourceTree = "<group>"; };
 		5F537F1F17F2BD3D00BDD014 /* health_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "health_bar@2x.png"; path = "nutrition/Resource/health_bar@2x.png"; sourceTree = "<group>"; };
-		5F537F2017F2BD3D00BDD014 /* health_point@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "health_point@2x.png"; path = "nutrition/Resource/health_point@2x.png"; sourceTree = "<group>"; };
 		5F537F2317F2BFBE00BDD014 /* LZHeavlyLackCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZHeavlyLackCell.h; path = Class/LZHeavlyLackCell.h; sourceTree = "<group>"; };
 		5F537F2417F2BFBE00BDD014 /* LZHeavlyLackCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZHeavlyLackCell.m; path = Class/LZHeavlyLackCell.m; sourceTree = "<group>"; };
 		5F627438175C93F2006E46CA /* LZFoodNutritionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodNutritionCell.h; path = Class/LZFoodNutritionCell.h; sourceTree = "<group>"; };
@@ -410,12 +408,6 @@
 		5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cellSelectedBack@2x.png"; path = "nutrition/Resource/cellSelectedBack@2x.png"; sourceTree = "<group>"; };
 		5F65274817D49DA50089CBB5 /* LZHealthCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZHealthCheckViewController.h; path = Class/LZHealthCheckViewController.h; sourceTree = "<group>"; };
 		5F65274917D49DA50089CBB5 /* LZHealthCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZHealthCheckViewController.m; path = Class/LZHealthCheckViewController.m; sourceTree = "<group>"; };
-		5F6A3F5A17964D7F0029B8C9 /* addfood_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "addfood_icon@2x.png"; path = "nutrition/Resource/addfood_icon@2x.png"; sourceTree = "<group>"; };
-		5F6A3F5B17964D7F0029B8C9 /* recommend_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "recommend_icon@2x.png"; path = "nutrition/Resource/recommend_icon@2x.png"; sourceTree = "<group>"; };
-		5F6A3F5C17964D7F0029B8C9 /* share_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "share_icon@2x.png"; path = "nutrition/Resource/share_icon@2x.png"; sourceTree = "<group>"; };
-		5F6A3F60179652E30029B8C9 /* addfood_icon_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "addfood_icon_clicked@2x.png"; path = "nutrition/Resource/addfood_icon_clicked@2x.png"; sourceTree = "<group>"; };
-		5F6A3F61179652E40029B8C9 /* recommend_icon_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "recommend_icon_clicked@2x.png"; path = "nutrition/Resource/recommend_icon_clicked@2x.png"; sourceTree = "<group>"; };
-		5F6A3F62179652E40029B8C9 /* share_icon_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "share_icon_clicked@2x.png"; path = "nutrition/Resource/share_icon_clicked@2x.png"; sourceTree = "<group>"; };
 		5F6A3F66179655640029B8C9 /* sepline@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sepline@2x.png"; path = "nutrition/Resource/sepline@2x.png"; sourceTree = "<group>"; };
 		5F746BFF1769A83E00E68D0E /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = nutrition/YouMengSDK/libMobClickLibrary.a; sourceTree = "<group>"; };
 		5F746C001769A83E00E68D0E /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = nutrition/YouMengSDK/MobClick.h; sourceTree = "<group>"; };
@@ -532,19 +524,6 @@
 		5F943EF717D721F400AFBF47 /* 豆制品@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "豆制品@2x.png"; path = "nutrition/Resource/豆制品@2x.png"; sourceTree = "<group>"; };
 		5F943EF817D721F400AFBF47 /* 零食@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "零食@2x.png"; path = "nutrition/Resource/零食@2x.png"; sourceTree = "<group>"; };
 		5F943EF917D721F400AFBF47 /* 饮料@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "饮料@2x.png"; path = "nutrition/Resource/饮料@2x.png"; sourceTree = "<group>"; };
-		5F943F0917D7364D00AFBF47 /* Calcium_(mg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Calcium_(mg)_button@2x.png"; path = "nutrition/Resource/Calcium_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F0A17D7364D00AFBF47 /* Fiber_TD_(g)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Fiber_TD_(g)_button@2x.png"; path = "nutrition/Resource/Fiber_TD_(g)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F0B17D7364D00AFBF47 /* Folate_Tot_(µg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Folate_Tot_(µg)_button@2x.png"; path = "nutrition/Resource/Folate_Tot_(µg)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F0C17D7364D00AFBF47 /* Iron_(mg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Iron_(mg)_button@2x.png"; path = "nutrition/Resource/Iron_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F0D17D7364D00AFBF47 /* Protein_(g)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Protein_(g)_button@2x.png"; path = "nutrition/Resource/Protein_(g)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F0E17D7364D00AFBF47 /* Riboflavin_(mg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Riboflavin_(mg)_button@2x.png"; path = "nutrition/Resource/Riboflavin_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F0F17D7364D00AFBF47 /* Vit_A_RAE_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Vit_A_RAE_button@2x.png"; path = "nutrition/Resource/Vit_A_RAE_button@2x.png"; sourceTree = "<group>"; };
-		5F943F1017D7364D00AFBF47 /* Vit_B6_(mg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Vit_B6_(mg)_button@2x.png"; path = "nutrition/Resource/Vit_B6_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F1117D7364D00AFBF47 /* Vit_B12_(µg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Vit_B12_(µg)_button@2x.png"; path = "nutrition/Resource/Vit_B12_(µg)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F1217D7364D00AFBF47 /* Vit_C_(mg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Vit_C_(mg)_button@2x.png"; path = "nutrition/Resource/Vit_C_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F1317D7364D00AFBF47 /* Vit_D_(µg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Vit_D_(µg)_button@2x.png"; path = "nutrition/Resource/Vit_D_(µg)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F1417D7364D00AFBF47 /* Vit_E_(mg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Vit_E_(mg)_button@2x.png"; path = "nutrition/Resource/Vit_E_(mg)_button@2x.png"; sourceTree = "<group>"; };
-		5F943F1517D7364D00AFBF47 /* Zinc_(mg)_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Zinc_(mg)_button@2x.png"; path = "nutrition/Resource/Zinc_(mg)_button@2x.png"; sourceTree = "<group>"; };
 		5F94A86317531CC100664B57 /* LZDietListMakeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDietListMakeViewController.h; path = Class/LZDietListMakeViewController.h; sourceTree = "<group>"; };
 		5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDietListMakeViewController.m; path = Class/LZDietListMakeViewController.m; sourceTree = "<group>"; };
 		5F94A86617531ED700664B57 /* LZSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSettingsViewController.h; path = Class/LZSettingsViewController.h; sourceTree = "<group>"; };
@@ -608,6 +587,48 @@
 		5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "text_clear@2x.png"; path = "nutrition/Resource/text_clear@2x.png"; sourceTree = "<group>"; };
 		5FE210501784058100F45253 /* feedback_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feedback_icon@2x.png"; path = "nutrition/Resource/feedback_icon@2x.png"; sourceTree = "<group>"; };
 		5FE210511784058100F45253 /* review_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "review_icon@2x.png"; path = "nutrition/Resource/review_icon@2x.png"; sourceTree = "<group>"; };
+		5FE3AC1B180CEAE700C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/share_icon_clicked@2x.png"; sourceTree = "<group>"; };
+		5FE3AC1D180CEAEB00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/share_icon_clicked@2x.png"; sourceTree = "<group>"; };
+		5FE3AC1F180CEAF500C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/recommend_icon_clicked@2x.png"; sourceTree = "<group>"; };
+		5FE3AC21180CEAFA00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/recommend_icon_clicked@2x.png"; sourceTree = "<group>"; };
+		5FE3AC23180CEB0300C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/addfood_icon_clicked@2x.png"; sourceTree = "<group>"; };
+		5FE3AC25180CEB0600C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/addfood_icon_clicked@2x.png"; sourceTree = "<group>"; };
+		5FE3AC27180CEB2000C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/share_icon@2x.png"; sourceTree = "<group>"; };
+		5FE3AC29180CEB2500C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/share_icon@2x.png"; sourceTree = "<group>"; };
+		5FE3AC2B180CEB2D00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/recommend_icon@2x.png"; sourceTree = "<group>"; };
+		5FE3AC2D180CEB3300C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/recommend_icon@2x.png"; sourceTree = "<group>"; };
+		5FE3AC2F180CEB3900C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/addfood_icon@2x.png"; sourceTree = "<group>"; };
+		5FE3AC31180CEB3F00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/addfood_icon@2x.png"; sourceTree = "<group>"; };
+		5FE3AC33180CEB7100C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/health_point@2x.png"; sourceTree = "<group>"; };
+		5FE3AC35180CEB9600C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/health_point@2x.png"; sourceTree = "<group>"; };
+		5FE3AC37180CEBD500C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Calcium_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC3A180CEBDA00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Fiber_TD_(g)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC3D180CEBDE00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Folate_Tot_(µg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC3F180CEBE700C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Folate_Tot_(µg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC40180CEBEB00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Fiber_TD_(g)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC41180CEBEE00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Calcium_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC43180CEBF500C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Iron_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC45180CEBF900C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Iron_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC47180CEBFF00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Magnesium_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC49180CEC0300C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Magnesium_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC4B180CEC0B00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Protein_(g)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC4D180CEC0F00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Protein_(g)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC4F180CEC1400C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Riboflavin_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC51180CEC1900C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Riboflavin_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC53180CEC1E00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Vit_A_RAE_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC55180CEC2100C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_A_RAE_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC57180CEC2600C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Vit_B6_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC59180CEC2A00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_B6_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC5B180CEC2F00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Vit_B12_(µg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC5D180CEC3200C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_B12_(µg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC5F180CEC3700C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Vit_C_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC61180CEC3B00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_C_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC63180CEC4100C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Vit_D_(µg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC65180CEC4A00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_D_(µg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC67180CEC4F00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Vit_E_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC69180CEC5300C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Vit_E_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC6B180CEC5800C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = file; name = en; path = "en.lproj/Zinc_(mg)_button@2x.png"; sourceTree = "<group>"; };
+		5FE3AC6D180CEC5C00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = file; name = "zh-Hans"; path = "zh-Hans.lproj/Zinc_(mg)_button@2x.png"; sourceTree = "<group>"; };
 		5FE436CC175F29D5003947ED /* LZKeyboardToolBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZKeyboardToolBar.h; path = Class/LZKeyboardToolBar.h; sourceTree = "<group>"; };
 		5FE436CD175F29D5003947ED /* LZKeyboardToolBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZKeyboardToolBar.m; path = Class/LZKeyboardToolBar.m; sourceTree = "<group>"; };
 		5FE436CF175F3EF5003947ED /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "nutrition/Icon-Small.png"; sourceTree = "<group>"; };
@@ -949,7 +970,7 @@
 				5F894A961803EB4300A122F4 /* switch_middle@2x.png */,
 				5F894A971803EB4300A122F4 /* switch_top@2x.png */,
 				5F537F1F17F2BD3D00BDD014 /* health_bar@2x.png */,
-				5F537F2017F2BD3D00BDD014 /* health_point@2x.png */,
+				5FE3AC34180CEB7100C5C611 /* health_point@2x.png */,
 				5FD4D36017EEE6CE007C5551 /* outer_line_bg@2x.png */,
 				5F84D1AF17D8343800DF83A0 /* basic_info_icon@2x.png */,
 				5F894A8D1803B50200A122F4 /* cell_check_off@2x.png */,
@@ -957,11 +978,11 @@
 				5F84D1B017D8343800DF83A0 /* dri_icon@2x.png */,
 				5FF632061771C6530068CBFE /* close_button@2x.png */,
 				5FD76DE817D5B3EE00746418 /* close_button_highlight@2x.png */,
-				5F6A3F5A17964D7F0029B8C9 /* addfood_icon@2x.png */,
+				5FE3AC30180CEB3900C5C611 /* addfood_icon@2x.png */,
 				5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */,
-				5F6A3F5B17964D7F0029B8C9 /* recommend_icon@2x.png */,
+				5FE3AC2C180CEB2D00C5C611 /* recommend_icon@2x.png */,
 				5F241CA217E7FF0E00BC8529 /* nutrient_button_off@2x.png */,
-				5F6A3F5C17964D7F0029B8C9 /* share_icon@2x.png */,
+				5FE3AC28180CEB2000C5C611 /* share_icon@2x.png */,
 				5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */,
 				5FDD1CAB179D19140046F752 /* change_name_button@2x.png */,
 				5FDD1CAC179D19150046F752 /* change_name_clicked@2x.png */,
@@ -999,9 +1020,9 @@
 				5FF631F5177165C20068CBFE /* button_top_clicked@2x.png */,
 				5F0122AD174C83AF00AC0156 /* nav_bar@2x.png */,
 				5F0122AE174C83AF00AC0156 /* section_bar@2x.png */,
-				5F6A3F60179652E30029B8C9 /* addfood_icon_clicked@2x.png */,
-				5F6A3F61179652E40029B8C9 /* recommend_icon_clicked@2x.png */,
-				5F6A3F62179652E40029B8C9 /* share_icon_clicked@2x.png */,
+				5FE3AC24180CEB0300C5C611 /* addfood_icon_clicked@2x.png */,
+				5FE3AC20180CEAF500C5C611 /* recommend_icon_clicked@2x.png */,
+				5FE3AC1C180CEAE700C5C611 /* share_icon_clicked@2x.png */,
 				5F20148F17BB600F0009B735 /* unit_button_clicked@2x.png */,
 				5F20149017BB600F0009B735 /* unit_button_normal@2x.png */,
 				5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */,
@@ -1251,20 +1272,20 @@
 		5F943F0817D735FE00AFBF47 /* nutritionButtonIcons */ = {
 			isa = PBXGroup;
 			children = (
-				5F943F0917D7364D00AFBF47 /* Calcium_(mg)_button@2x.png */,
-				5F943F0A17D7364D00AFBF47 /* Fiber_TD_(g)_button@2x.png */,
-				5F943F0B17D7364D00AFBF47 /* Folate_Tot_(µg)_button@2x.png */,
-				5F943F0C17D7364D00AFBF47 /* Iron_(mg)_button@2x.png */,
-				5F241CA417E86ECC00BC8529 /* Magnesium_(mg)_button@2x.png */,
-				5F943F0D17D7364D00AFBF47 /* Protein_(g)_button@2x.png */,
-				5F943F0E17D7364D00AFBF47 /* Riboflavin_(mg)_button@2x.png */,
-				5F943F0F17D7364D00AFBF47 /* Vit_A_RAE_button@2x.png */,
-				5F943F1017D7364D00AFBF47 /* Vit_B6_(mg)_button@2x.png */,
-				5F943F1117D7364D00AFBF47 /* Vit_B12_(µg)_button@2x.png */,
-				5F943F1217D7364D00AFBF47 /* Vit_C_(mg)_button@2x.png */,
-				5F943F1317D7364D00AFBF47 /* Vit_D_(µg)_button@2x.png */,
-				5F943F1417D7364D00AFBF47 /* Vit_E_(mg)_button@2x.png */,
-				5F943F1517D7364D00AFBF47 /* Zinc_(mg)_button@2x.png */,
+				5FE3AC38180CEBD500C5C611 /* Calcium_(mg)_button@2x.png */,
+				5FE3AC3B180CEBDA00C5C611 /* Fiber_TD_(g)_button@2x.png */,
+				5FE3AC3E180CEBDE00C5C611 /* Folate_Tot_(µg)_button@2x.png */,
+				5FE3AC44180CEBF500C5C611 /* Iron_(mg)_button@2x.png */,
+				5FE3AC48180CEBFF00C5C611 /* Magnesium_(mg)_button@2x.png */,
+				5FE3AC4C180CEC0B00C5C611 /* Protein_(g)_button@2x.png */,
+				5FE3AC50180CEC1400C5C611 /* Riboflavin_(mg)_button@2x.png */,
+				5FE3AC54180CEC1E00C5C611 /* Vit_A_RAE_button@2x.png */,
+				5FE3AC58180CEC2600C5C611 /* Vit_B6_(mg)_button@2x.png */,
+				5FE3AC5C180CEC2F00C5C611 /* Vit_B12_(µg)_button@2x.png */,
+				5FE3AC60180CEC3700C5C611 /* Vit_C_(mg)_button@2x.png */,
+				5FE3AC64180CEC4100C5C611 /* Vit_D_(µg)_button@2x.png */,
+				5FE3AC68180CEC4F00C5C611 /* Vit_E_(mg)_button@2x.png */,
+				5FE3AC6C180CEC5800C5C611 /* Zinc_(mg)_button@2x.png */,
 			);
 			name = nutritionButtonIcons;
 			sourceTree = "<group>";
@@ -1557,12 +1578,12 @@
 				5FE210541784058100F45253 /* feedback_icon@2x.png in Resources */,
 				5FE210551784058100F45253 /* review_icon@2x.png in Resources */,
 				5FEC69371795372C00E80BE6 /* nutrient_button_on@2x.png in Resources */,
-				5F6A3F5D17964D7F0029B8C9 /* addfood_icon@2x.png in Resources */,
-				5F6A3F5E17964D7F0029B8C9 /* recommend_icon@2x.png in Resources */,
-				5F6A3F5F17964D7F0029B8C9 /* share_icon@2x.png in Resources */,
-				5F6A3F63179652E50029B8C9 /* addfood_icon_clicked@2x.png in Resources */,
-				5F6A3F64179652E50029B8C9 /* recommend_icon_clicked@2x.png in Resources */,
-				5F6A3F65179652E50029B8C9 /* share_icon_clicked@2x.png in Resources */,
+				5FE3AC2E180CEB3900C5C611 /* addfood_icon@2x.png in Resources */,
+				5FE3AC2A180CEB2D00C5C611 /* recommend_icon@2x.png in Resources */,
+				5FE3AC26180CEB2000C5C611 /* share_icon@2x.png in Resources */,
+				5FE3AC22180CEB0300C5C611 /* addfood_icon_clicked@2x.png in Resources */,
+				5FE3AC1E180CEAF500C5C611 /* recommend_icon_clicked@2x.png in Resources */,
+				5FE3AC1A180CEAE700C5C611 /* share_icon_clicked@2x.png in Resources */,
 				5F6A3F67179655650029B8C9 /* sepline@2x.png in Resources */,
 				5F7E5AA317965B47007CA18A /* recommend_sign@2x.png in Resources */,
 				5F7E5AAB17969463007CA18A /* diet_empty_icon@2x.png in Resources */,
@@ -1596,19 +1617,19 @@
 				5F943F0517D721F400AFBF47 /* 豆制品@2x.png in Resources */,
 				5F943F0617D721F400AFBF47 /* 零食@2x.png in Resources */,
 				5F943F0717D721F400AFBF47 /* 饮料@2x.png in Resources */,
-				5F943F1617D7364D00AFBF47 /* Calcium_(mg)_button@2x.png in Resources */,
-				5F943F1717D7364D00AFBF47 /* Fiber_TD_(g)_button@2x.png in Resources */,
-				5F943F1817D7364D00AFBF47 /* Folate_Tot_(µg)_button@2x.png in Resources */,
-				5F943F1917D7364D00AFBF47 /* Iron_(mg)_button@2x.png in Resources */,
-				5F943F1A17D7364D00AFBF47 /* Protein_(g)_button@2x.png in Resources */,
-				5F943F1B17D7364D00AFBF47 /* Riboflavin_(mg)_button@2x.png in Resources */,
-				5F943F1C17D7364D00AFBF47 /* Vit_A_RAE_button@2x.png in Resources */,
-				5F943F1D17D7364D00AFBF47 /* Vit_B6_(mg)_button@2x.png in Resources */,
-				5F943F1E17D7364D00AFBF47 /* Vit_B12_(µg)_button@2x.png in Resources */,
-				5F943F1F17D7364D00AFBF47 /* Vit_C_(mg)_button@2x.png in Resources */,
-				5F943F2017D7364D00AFBF47 /* Vit_D_(µg)_button@2x.png in Resources */,
-				5F943F2117D7364D00AFBF47 /* Vit_E_(mg)_button@2x.png in Resources */,
-				5F943F2217D7364D00AFBF47 /* Zinc_(mg)_button@2x.png in Resources */,
+				5FE3AC36180CEBD500C5C611 /* Calcium_(mg)_button@2x.png in Resources */,
+				5FE3AC39180CEBDA00C5C611 /* Fiber_TD_(g)_button@2x.png in Resources */,
+				5FE3AC3C180CEBDE00C5C611 /* Folate_Tot_(µg)_button@2x.png in Resources */,
+				5FE3AC42180CEBF500C5C611 /* Iron_(mg)_button@2x.png in Resources */,
+				5FE3AC4A180CEC0B00C5C611 /* Protein_(g)_button@2x.png in Resources */,
+				5FE3AC4E180CEC1400C5C611 /* Riboflavin_(mg)_button@2x.png in Resources */,
+				5FE3AC52180CEC1E00C5C611 /* Vit_A_RAE_button@2x.png in Resources */,
+				5FE3AC56180CEC2600C5C611 /* Vit_B6_(mg)_button@2x.png in Resources */,
+				5FE3AC5A180CEC2F00C5C611 /* Vit_B12_(µg)_button@2x.png in Resources */,
+				5FE3AC5E180CEC3700C5C611 /* Vit_C_(mg)_button@2x.png in Resources */,
+				5FE3AC62180CEC4100C5C611 /* Vit_D_(µg)_button@2x.png in Resources */,
+				5FE3AC66180CEC4F00C5C611 /* Vit_E_(mg)_button@2x.png in Resources */,
+				5FE3AC6A180CEC5800C5C611 /* Zinc_(mg)_button@2x.png in Resources */,
 				5F84D1B117D8343800DF83A0 /* basic_info_icon@2x.png in Resources */,
 				5F84D1B217D8343800DF83A0 /* dri_icon@2x.png in Resources */,
 				5F2E024A17E01A0700D26231 /* menu_item_4@2x.png in Resources */,
@@ -1620,10 +1641,10 @@
 				5F8F9FAF17E6B00300F6B295 /* Icon-72.png in Resources */,
 				5F8F9FB017E6B00300F6B295 /* Icon-72@2x.png in Resources */,
 				5F241CA317E7FF0E00BC8529 /* nutrient_button_off@2x.png in Resources */,
-				5F241CA517E86ECC00BC8529 /* Magnesium_(mg)_button@2x.png in Resources */,
+				5FE3AC46180CEBFF00C5C611 /* Magnesium_(mg)_button@2x.png in Resources */,
 				5FD4D36117EEE6CF007C5551 /* outer_line_bg@2x.png in Resources */,
 				5F537F2117F2BD3D00BDD014 /* health_bar@2x.png in Resources */,
-				5F537F2217F2BD3D00BDD014 /* health_point@2x.png in Resources */,
+				5FE3AC32180CEB7100C5C611 /* health_point@2x.png in Resources */,
 				5FF352F617F5504400B29E6A /* dot_indicator@2x.png in Resources */,
 				5FAB5793180266C300657793 /* ShareSDKLocalizable.strings in Resources */,
 				5FAB5794180266C300657793 /* Resource.bundle in Resources */,
@@ -1852,6 +1873,216 @@
 				5FAB576E180266C200657793 /* zh-Hans */,
 			);
 			name = ShareSDKLocalizable.strings;
+			sourceTree = "<group>";
+		};
+		5FE3AC1C180CEAE700C5C611 /* share_icon_clicked@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC1B180CEAE700C5C611 /* zh-Hans */,
+				5FE3AC1D180CEAEB00C5C611 /* en */,
+			);
+			name = "share_icon_clicked@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC20180CEAF500C5C611 /* recommend_icon_clicked@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC1F180CEAF500C5C611 /* zh-Hans */,
+				5FE3AC21180CEAFA00C5C611 /* en */,
+			);
+			name = "recommend_icon_clicked@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC24180CEB0300C5C611 /* addfood_icon_clicked@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC23180CEB0300C5C611 /* zh-Hans */,
+				5FE3AC25180CEB0600C5C611 /* en */,
+			);
+			name = "addfood_icon_clicked@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC28180CEB2000C5C611 /* share_icon@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC27180CEB2000C5C611 /* en */,
+				5FE3AC29180CEB2500C5C611 /* zh-Hans */,
+			);
+			name = "share_icon@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC2C180CEB2D00C5C611 /* recommend_icon@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC2B180CEB2D00C5C611 /* en */,
+				5FE3AC2D180CEB3300C5C611 /* zh-Hans */,
+			);
+			name = "recommend_icon@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC30180CEB3900C5C611 /* addfood_icon@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC2F180CEB3900C5C611 /* en */,
+				5FE3AC31180CEB3F00C5C611 /* zh-Hans */,
+			);
+			name = "addfood_icon@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC34180CEB7100C5C611 /* health_point@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC33180CEB7100C5C611 /* en */,
+				5FE3AC35180CEB9600C5C611 /* zh-Hans */,
+			);
+			name = "health_point@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC38180CEBD500C5C611 /* Calcium_(mg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC37180CEBD500C5C611 /* en */,
+				5FE3AC41180CEBEE00C5C611 /* zh-Hans */,
+			);
+			name = "Calcium_(mg)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC3B180CEBDA00C5C611 /* Fiber_TD_(g)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC3A180CEBDA00C5C611 /* en */,
+				5FE3AC40180CEBEB00C5C611 /* zh-Hans */,
+			);
+			name = "Fiber_TD_(g)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC3E180CEBDE00C5C611 /* Folate_Tot_(µg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC3D180CEBDE00C5C611 /* en */,
+				5FE3AC3F180CEBE700C5C611 /* zh-Hans */,
+			);
+			name = "Folate_Tot_(µg)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC44180CEBF500C5C611 /* Iron_(mg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC43180CEBF500C5C611 /* en */,
+				5FE3AC45180CEBF900C5C611 /* zh-Hans */,
+			);
+			name = "Iron_(mg)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC48180CEBFF00C5C611 /* Magnesium_(mg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC47180CEBFF00C5C611 /* en */,
+				5FE3AC49180CEC0300C5C611 /* zh-Hans */,
+			);
+			name = "Magnesium_(mg)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC4C180CEC0B00C5C611 /* Protein_(g)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC4B180CEC0B00C5C611 /* en */,
+				5FE3AC4D180CEC0F00C5C611 /* zh-Hans */,
+			);
+			name = "Protein_(g)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC50180CEC1400C5C611 /* Riboflavin_(mg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC4F180CEC1400C5C611 /* en */,
+				5FE3AC51180CEC1900C5C611 /* zh-Hans */,
+			);
+			name = "Riboflavin_(mg)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC54180CEC1E00C5C611 /* Vit_A_RAE_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC53180CEC1E00C5C611 /* en */,
+				5FE3AC55180CEC2100C5C611 /* zh-Hans */,
+			);
+			name = "Vit_A_RAE_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC58180CEC2600C5C611 /* Vit_B6_(mg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC57180CEC2600C5C611 /* en */,
+				5FE3AC59180CEC2A00C5C611 /* zh-Hans */,
+			);
+			name = "Vit_B6_(mg)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC5C180CEC2F00C5C611 /* Vit_B12_(µg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC5B180CEC2F00C5C611 /* en */,
+				5FE3AC5D180CEC3200C5C611 /* zh-Hans */,
+			);
+			name = "Vit_B12_(µg)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC60180CEC3700C5C611 /* Vit_C_(mg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC5F180CEC3700C5C611 /* en */,
+				5FE3AC61180CEC3B00C5C611 /* zh-Hans */,
+			);
+			name = "Vit_C_(mg)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC64180CEC4100C5C611 /* Vit_D_(µg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC63180CEC4100C5C611 /* en */,
+				5FE3AC65180CEC4A00C5C611 /* zh-Hans */,
+			);
+			name = "Vit_D_(µg)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC68180CEC4F00C5C611 /* Vit_E_(mg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC67180CEC4F00C5C611 /* en */,
+				5FE3AC69180CEC5300C5C611 /* zh-Hans */,
+			);
+			name = "Vit_E_(mg)_button@2x.png";
+			path = nutrition/Resource;
+			sourceTree = "<group>";
+		};
+		5FE3AC6C180CEC5800C5C611 /* Zinc_(mg)_button@2x.png */ = {
+			isa = PBXVariantGroup;
+			children = (
+				5FE3AC6B180CEC5800C5C611 /* en */,
+				5FE3AC6D180CEC5C00C5C611 /* zh-Hans */,
+			);
+			name = "Zinc_(mg)_button@2x.png";
+			path = nutrition/Resource;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
