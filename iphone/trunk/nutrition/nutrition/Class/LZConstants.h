@@ -12,7 +12,7 @@
 #define KeyIsEnvironmentDebug 0
 
 #define KeyDebugSettingsDict @"KeyDebugSettingsDict"
-#define AppVersionJudgeName @"NutritionFoodGuide"
+#define AppVersionCheckName @"NutritionFoodGuide"
 #define Config_needConsiderNutrientLoss FALSE
 #define Config_foodUpperLimit 1000 // unit g
 #define Config_foodLowerLimit 1 // unit g

@@ -774,7 +774,7 @@
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
     //NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
     NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-    NSString *flagKey = [NSString stringWithFormat:@"%@%@-RF",AppVersionJudgeName,appVersion];
+    NSString *flagKey = [NSString stringWithFormat:@"%@%@-RF",AppVersionCheckName,appVersion];
     BOOL flagExists = [[NSUserDefaults standardUserDefaults]boolForKey:flagKey];
     if (flagExists)
     {
