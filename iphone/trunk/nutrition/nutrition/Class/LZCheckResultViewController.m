@@ -466,7 +466,16 @@
 
             }
         }
-        NSString *foodName = [aFood objectForKey:@"Name"];
+        NSString *foodNameKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            foodNameKey = @"CnCaption";
+        }
+        else
+        {
+            foodNameKey = @"FoodNameEn";
+        }
+        NSString *foodName = [foodAtr objectForKey:foodNameKey];
         cell.foodNameLabel.text = [NSString stringWithFormat:@"%@ %@",foodName,foodTotalUnit];
         return cell;
     }

@@ -730,7 +730,17 @@
                     
                     }
                 }
-                NSString *foodName = [aFood objectForKey:@"Name"];
+                NSString *foodNameKey;
+                if ([LZUtility isCurrentLanguageChinese])
+                {
+                    foodNameKey = @"CnCaption";
+                }
+                else
+                {
+                    foodNameKey = @"FoodNameEn";
+                }
+
+                NSString *foodName = [foodAtr objectForKey:foodNameKey];
                 cell.foodNameLabel.text = [NSString stringWithFormat:@"%@ %@",foodName,foodTotalUnit];
                 UISwipeGestureRecognizer *swipeLeftGesture = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(foodCellSwiped:)];
                 swipeLeftGesture.direction = UISwipeGestureRecognizerDirectionLeft;
@@ -876,7 +886,16 @@
             NSDictionary * foodAtr = [allFoodUnitDict objectForKey:ndb_No];
             //NSArray *nutrientSupplyArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
             //NSArray *nutrientStandardArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
-            NSString *foodName = [aFood objectForKey:@"Name"];
+            NSString *foodNameKey;
+            if ([LZUtility isCurrentLanguageChinese])
+            {
+                foodNameKey = @"CnCaption";
+            }
+            else
+            {
+                foodNameKey = @"FoodNameEn";
+            }
+            NSString *foodName = [foodAtr objectForKey:foodNameKey];
             NSNumber *weight = [aFood objectForKey:@"Amount"];
             UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
             LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
@@ -1064,7 +1083,7 @@
             
         }
         LZRecommendFoodCell* cell =(LZRecommendFoodCell*)[self.listView cellForRowAtIndexPath:index];
-        NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+        //NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
         NSNumber *weight = [NSNumber numberWithInt:changed];
         cell.foodUnitLabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
         NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
@@ -1096,7 +1115,16 @@
 
             }
         }
-        NSString *foodName = [aFood objectForKey:@"Name"];
+        NSString *foodNameKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            foodNameKey = @"CnCaption";
+        }
+        else
+        {
+            foodNameKey = @"FoodNameEn";
+        }
+        NSString *foodName = [foodAtr objectForKey:foodNameKey];
         cell.foodNameLabel.text = [NSString stringWithFormat:@"%@ %@",foodName,foodTotalUnit];
         
         [self refreshFoodNureitentProcessForAll:NO];
