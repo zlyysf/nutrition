@@ -93,7 +93,7 @@
 -(NSArray*)getUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType;
 -(BOOL)saveUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType UpdateTime:(NSDate*)UpdateTime andDiseases:(NSArray*)Diseases andLackNutrientIDs:(NSArray*)LackNutrientIDs andHealthMark:(int)HealthMark;
 
-
+-(NSDictionary*)getTranslationItemsDictionaryByType:(NSString*)itemType;
 
 @end
 

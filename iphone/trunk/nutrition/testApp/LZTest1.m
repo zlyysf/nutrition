@@ -25,7 +25,6 @@
 
 +(void)test1
 {
-
 //    [self.class caseUser1_randseed_1];
 //    [self.class caseUser1_preTaken_4full];
 //    [self.class testDA1];
@@ -34,8 +33,9 @@
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
 //    [self.class test_DiseaseNutrient1];
-    [self.class test_DiseaseNutrient2];
+//    [self.class test_DiseaseNutrient2];
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
+    [self.class test_TranslationItem1];
 
     
 //    [self.class testFormatResult1];
@@ -2326,6 +2326,19 @@ BOOL needLimitNutrients = FALSE;
     [da getUserCheckDiseaseRecord_withDay:day andTimeType:0];
     
 }
+
+
++(void)test_TranslationItem1
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *translationItemInfo2LevelDict = [da getTranslationItemsDictionaryByType:TranslationItemType_FoodCnType];
+    
+    translationItemInfo2LevelDict = [da getTranslationItemsDictionaryByType:TranslationItemType_SingleItemUnitName];
+    
+    
+}
+
+
 
 @end
 
