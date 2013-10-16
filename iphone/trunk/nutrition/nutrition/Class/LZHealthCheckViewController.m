@@ -81,11 +81,13 @@
     {
         indicatorX = 140;
         fontSize = 20;
+        [self.checkItemButton.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
     }
     else
     {
         indicatorX = 180;
         fontSize =  18;
+        [self.checkItemButton.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
     }
 
     UIView *topBarView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 200, 44)];

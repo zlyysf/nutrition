@@ -7,7 +7,7 @@
 //
 
 #import "LZCheckTypeSwitchView.h"
-
+#import "LZUtility.h"
 @implementation LZCheckTypeSwitchView
 - (id)initWithFrame:(CGRect)frame
 {
@@ -34,14 +34,22 @@
         [self addSubview:outerView];
         // Initialization code
         self.delegate = switchDelegate;
-        
+        float buttonFontSize;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            buttonFontSize = 20;
+        }
+        else
+        {
+            buttonFontSize = 18;
+        }
         NSArray *array = [infoDict objectForKey:@"buttonTitles"];
         NSString *currentType = [infoDict objectForKey:@"currentType"];
         int index = [array indexOfObject:currentType];
         
         UIButton *buttonShangWu = [[UIButton alloc]initWithFrame:CGRectMake(59, 44, 202, 50)];
         [buttonShangWu setTitle:NSLocalizedString(@"healthcheck_viewtitle0",@"上午诊断") forState:UIControlStateNormal];
-        [buttonShangWu.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
+        [buttonShangWu.titleLabel setFont:[UIFont boldSystemFontOfSize:buttonFontSize]];
         [buttonShangWu.titleLabel setTextColor:[UIColor whiteColor]];
         buttonShangWu.tag = 100;
         [buttonShangWu addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -53,7 +61,7 @@
         
         UIButton *buttonXiaWu = [[UIButton alloc]initWithFrame:CGRectMake(59, 95, 202, 50)];
         [buttonXiaWu setTitle:NSLocalizedString(@"healthcheck_viewtitle1",@"下午诊断") forState:UIControlStateNormal];
-        [buttonXiaWu.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
+        [buttonXiaWu.titleLabel setFont:[UIFont boldSystemFontOfSize:buttonFontSize]];
         [buttonXiaWu.titleLabel setTextColor:[UIColor whiteColor]];
         buttonXiaWu.tag = 101;
         [buttonXiaWu addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
@@ -65,7 +73,7 @@
 
         UIButton *buttonShuiQian = [[UIButton alloc]initWithFrame:CGRectMake(59, 146, 202, 50)];
         [buttonShuiQian setTitle:NSLocalizedString(@"healthcheck_viewtitle2",@"睡前诊断") forState:UIControlStateNormal];
-        [buttonShuiQian.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
+        [buttonShuiQian.titleLabel setFont:[UIFont boldSystemFontOfSize:buttonFontSize]];
         [buttonShuiQian.titleLabel setTextColor:[UIColor whiteColor]];
         buttonShuiQian.tag = 102;
         [buttonShuiQian addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
