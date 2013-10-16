@@ -8,6 +8,7 @@
 
 #import "LZNutritionInfoView.h"
 #import <QuartzCore/QuartzCore.h>
+#import "LZUtility.h"
 @implementation LZNutritionInfoView
 @synthesize backView;
 - (id)initWithFrame:(CGRect)frame
@@ -45,7 +46,20 @@
         [nutrientNameLabel setFont:[UIFont boldSystemFontOfSize:18]];
         [nutrientNameLabel setBackgroundColor:[UIColor clearColor]];
         [nutrientNameLabel setTextColor:[UIColor blackColor]];
-        nutrientNameLabel.text = [infoDict objectForKey:@"NutrientCnCaption"];
+        NSString *captionKey;
+        NSString *descriptionKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            captionKey = @"NutrientCnCaption";
+            descriptionKey = @"NutrientDescription";
+        }
+        else
+        {
+            captionKey = @"NutrientEnCaption";
+            descriptionKey = @"NutrientDescriptionEn";
+        }
+
+        nutrientNameLabel.text = [infoDict objectForKey:captionKey];
         [descriptionView addSubview:nutrientNameLabel];
         
         UITextView *textView = [[UITextView alloc]initWithFrame:CGRectMake(10, 38,280, frame.size.height-65)];
@@ -56,7 +70,7 @@
 //            NSString *content = [infoDict objectForKey:key];
 //            contents = [contents stringByAppendingFormat:@" %@ : %@ \n",key,content];
 //        }
-        textView.text =[infoDict objectForKey:@"NutrientDescription"];// [NSString stringWithFormat:@"%@",infoDict];//[infoDict description];
+        textView.text =[infoDict objectForKey:descriptionKey];// [NSString stringWithFormat:@"%@",infoDict];//[infoDict description];
         textView.showsVerticalScrollIndicator = YES;
         [textView setBackgroundColor:[UIColor clearColor]];
         textView.editable = NO;

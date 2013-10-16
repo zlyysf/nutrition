@@ -24,5 +24,8 @@ typedef enum listType
 @property (assign,nonatomic)BOOL needRefresh;
 @property (strong,nonatomic)NSNumber *dietId;
 @property (nonatomic,assign)BOOL backWithNoAnimation;
+@property (strong, nonatomic) IBOutlet UIButton *addFoodButton;
+@property (strong, nonatomic) IBOutlet UIButton *recommendFoodButton;
+@property (strong, nonatomic) IBOutlet UIButton *shareButton;
 @property (nonatomic,assign)BOOL useRecommendNutrient;
 @end

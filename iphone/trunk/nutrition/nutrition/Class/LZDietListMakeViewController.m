@@ -112,6 +112,8 @@
     self.listView.tableFooterView = footerView;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(takenFoodChanged:) name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
+    [self.addFoodButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
+
     [self refreshFoodNureitentProcessForAll:YES];
     isCapturing = NO;
 }
@@ -225,6 +227,9 @@
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_TakenFoodChangedKey object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:Notification_SettingsChangedKey object:nil];
     [self setListView:nil];
+    [self setAddFoodButton:nil];
+    [self setRecommendFoodButton:nil];
+    [self setShareButton:nil];
     [super viewDidUnload];
 }
 - (void)didReceiveMemoryWarning
@@ -740,8 +745,21 @@
     {
         LZFoodNutritionCell *cell = (LZFoodNutritionCell *)[tableView dequeueReusableCellWithIdentifier:@"LZFoodNutritionCell"];
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
-        [cell.nutritionNameButton setTitle:[nutrient objectForKey:@"Name"] forState:UIControlStateNormal];
+        
         NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSDictionary *dict = [da getNutrientInfo:nutrientId];
+        NSString *queryKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+        NSString *nutritionName = [dict objectForKey:queryKey];
+        [cell.nutritionNameButton setTitle:nutritionName forState:UIControlStateNormal];
         cell.nutrientId = nutrientId;
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
         NSNumber *percent = [nutrient objectForKey:@"nutrientSupplyRate"];
@@ -937,11 +955,23 @@
         needRefresh = YES;
         
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
-        NSString *nutrientName = [nutrient objectForKey:@"Name"];
+        NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSDictionary *dict = [da getNutrientInfo:nutrientId];
+        NSString *queryKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+        NSString *nutritionName = [dict objectForKey:queryKey];
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
         LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
         addByNutrientController.nutrientDict = nutrient;
-        addByNutrientController.nutrientTitle = nutrientName;
+        addByNutrientController.nutrientTitle = nutritionName;
         [self.navigationController pushViewController:addByNutrientController animated:YES];
     }
 }
@@ -1326,11 +1356,23 @@
     needRefresh = YES;
         
     NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:tag];
-    NSString *nutrientName = [nutrient objectForKey:@"Name"];
+    NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *dict = [da getNutrientInfo:nutrientId];
+    NSString *queryKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        queryKey = @"NutrientCnCaption";
+    }
+    else
+    {
+        queryKey = @"NutrientEnCaption";
+    }
+    NSString *nutritionName = [dict objectForKey:queryKey];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
     addByNutrientController.nutrientDict = nutrient;
-    addByNutrientController.nutrientTitle = nutrientName;
+    addByNutrientController.nutrientTitle = nutritionName;
     [self.navigationController pushViewController:addByNutrientController animated:YES];
 }
 - (IBAction)addFoodByNutrient:(UIButton *)sender {

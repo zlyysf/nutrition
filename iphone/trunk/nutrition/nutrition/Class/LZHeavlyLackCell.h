@@ -7,9 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "LZCustomDataButton.h"
 @interface LZHeavlyLackCell : UITableViewCell
 
 @property (strong, nonatomic) IBOutlet UILabel *lackDescriptionLabel;
-@property (strong, nonatomic) IBOutlet LZCustomDataButton *nutritionButton;
 @end

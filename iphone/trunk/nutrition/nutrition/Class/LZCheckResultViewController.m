@@ -22,8 +22,8 @@
 #import "LZUserDietListViewController.h"
 #import "LZMainPageViewController.h"
 #import "LZRichNutritionViewController.h"
-#import "LZCustomDataButton.h"
 #import "LZHeavlyLackCell.h"
+#import "LZNutritionButton.h"
 @interface LZCheckResultViewController ()<MBProgressHUDDelegate,UIAlertViewDelegate>
 {
     MBProgressHUD *HUD;
@@ -274,13 +274,39 @@
         else
         {
             LZHeavlyLackCell *cell = (LZHeavlyLackCell*)[tableView dequeueReusableCellWithIdentifier:@"LZHeavlyLackCell"];
+            for (UIView *vc in cell.subviews)
+            {
+                if ([vc isMemberOfClass:[LZNutritionButton class]])
+                {
+                    [vc removeFromSuperview];
+                }
+            }
             NSString *nutritionId = [self.heavylyLackArray objectAtIndex:indexPath.row];
-            [cell.nutritionButton setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_button.png",nutritionId]] forState:UIControlStateNormal];
-            cell.nutritionButton.customData = nutritionId;
-            [cell.nutritionButton addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
             LZDataAccess *da = [LZDataAccess singleton];
             NSDictionary *dict = [da getNutrientInfo:nutritionId];
-            NSString *lackInfo = [dict objectForKey:@"NutrientLackDescription"];
+            UIColor *backColor = [LZUtility getNutrientColorForNutrientId:nutritionId];
+            //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
+            NSString *queryKey;
+            NSString *lackDescriptionKey;
+            if ([LZUtility isCurrentLanguageChinese])
+            {
+                queryKey = @"IconTitleCn";
+                lackDescriptionKey = @"NutrientLackDescription";
+            }
+            else
+            {
+                queryKey = @"IconTitleEn";
+                lackDescriptionKey = @"NutrientLackDescriptionEn";
+            }
+            NSString *nutritionName = [dict objectForKey:queryKey];
+            NSDictionary *info = [LZUtility getNutritionNameInfo:nutritionName];
+            UIImage*backImage = [LZUtility createImageWithColor:backColor imageSize:CGSizeMake(94, 94)];
+            LZNutritionButton* nutritionButton = [[LZNutritionButton alloc]initWithFrame:CGRectMake(10, 10, 94, 94) info:info image:backImage];
+            nutritionButton.customData = nutritionId;
+            [nutritionButton addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+            [cell addSubview:nutritionButton];
+            nutritionButton.tag = 10;
+            NSString *lackInfo = [dict objectForKey:lackDescriptionKey];
             cell.lackDescriptionLabel.text = lackInfo;
             return cell;
         }
@@ -310,9 +336,23 @@
                         floor+=1;
                     }
                     startX = 10+(i-(floor-1)*perRowCount)*102;
-                    LZCustomDataButton *button = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94)];
                     NSString *nutritionId = [self.lightlyLackArray objectAtIndex:i];
-                    [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_button.png",nutritionId]] forState:UIControlStateNormal];
+                    LZDataAccess *da = [LZDataAccess singleton];
+                    NSDictionary *dict = [da getNutrientInfo:nutritionId];
+                    UIColor *backColor = [LZUtility getNutrientColorForNutrientId:nutritionId];
+                    NSString *queryKey;
+                    if ([LZUtility isCurrentLanguageChinese])
+                    {
+                        queryKey = @"IconTitleCn";
+                    }
+                    else
+                    {
+                        queryKey = @"IconTitleEn";
+                    }
+                    NSString *nutritionName = [dict objectForKey:queryKey];
+                    NSDictionary *info = [LZUtility getNutritionNameInfo:nutritionName];
+                    UIImage*backImage = [LZUtility createImageWithColor:backColor imageSize:CGSizeMake(94, 94)];
+                    LZNutritionButton *button = [[LZNutritionButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94) info:info image:backImage];
                     button.customData = nutritionId;
                     [button addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     [cell.contentView addSubview:button];
@@ -449,7 +489,19 @@
         //NSSet *selectNutrient = [NSSet setWithArray:self.userPreferArray];
         NSSet *heavySet = [NSSet setWithArray:self.heavylyLackArray];
         NSSet *lightSet = [NSSet setWithArray:self.lightlyLackArray];
-        cell.nameLabel.text =[nutrient objectForKey:@"Name"];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSDictionary *dict = [da getNutrientInfo:nutrientId];
+        NSString *queryKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+        NSString *nutritionName = [dict objectForKey:queryKey];
+        cell.nameLabel.text = nutritionName;
         if ([heavySet containsObject:nutrientId])
         {
             [cell.nameLabel setFont:[UIFont boldSystemFontOfSize:16]];
@@ -863,7 +915,7 @@
     //[self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
     
 }
--(void)typeButtonTapped:(LZCustomDataButton *)sender
+-(void)typeButtonTapped:(LZNutritionButton *)sender
 {
     NSDictionary *emptyIntake = [[NSDictionary alloc]init];
     [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
@@ -871,7 +923,17 @@
     NSString *nutritionId = (NSString *)sender.customData;
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary *dict = [da getNutrientInfo:nutritionId];
-    NSString *nutritionName = [dict objectForKey:@"NutrientCnCaption"];
+    NSString *queryKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        queryKey = @"NutrientCnCaption";
+    }
+    else
+    {
+        queryKey = @"NutrientEnCaption";
+    }
+
+    NSString *nutritionName = [dict objectForKey:queryKey];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZRichNutritionViewController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZRichNutritionViewController"];
     addByNutrientController.nutrientDict = dict;

@@ -742,7 +742,17 @@
     
     LZStandardContentCell *cell = (LZStandardContentCell *)[tableView dequeueReusableCellWithIdentifier:@"LZStandardContentCell"];
     NSDictionary *nutrientStandard = [nutrientStandardArray objectAtIndex:indexPath.row];
-    NSString *nutrientName = [nutrientStandard objectForKey:@"NutrientCnCaption"];
+    NSString *queryKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        queryKey = @"NutrientCnCaption";
+    }
+    else
+    {
+        queryKey = @"NutrientEnCaption";
+    }
+
+    NSString *nutrientName = [nutrientStandard objectForKey:queryKey];
     NSNumber *foodNutrientContent = [nutrientStandard objectForKey:@"Amount"];
     NSString *unit = [nutrientStandard objectForKey:@"NutrientEnUnit"];
     if (indexPath.row == [nutrientStandardArray count]-1)

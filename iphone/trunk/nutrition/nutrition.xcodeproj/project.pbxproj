@@ -65,6 +65,10 @@
 		5F03D34D174B9241008EFB60 /* LZStandardContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D346174B9241008EFB60 /* LZStandardContentCell.m */; };
 		5F03D351174B924B008EFB60 /* defaulFoodPic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F03D34F174B924B008EFB60 /* defaulFoodPic@2x.png */; };
 		5F0971811793ABD3000030AA /* LZUserDietListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0971801793ABD3000030AA /* LZUserDietListViewController.m */; };
+		5F0A4155180E685F007B8715 /* LZCustomDataButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0A4154180E685F007B8715 /* LZCustomDataButton.m */; };
+		5F0A4159180E6C7F007B8715 /* addfood_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0A4156180E6C7F007B8715 /* addfood_icon@2x.png */; };
+		5F0A415A180E6C7F007B8715 /* recommend_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0A4157180E6C7F007B8715 /* recommend_icon@2x.png */; };
+		5F0A415B180E6C7F007B8715 /* share_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F0A4158180E6C7F007B8715 /* share_icon@2x.png */; };
 		5F145D8317C4987E00D6B615 /* LZMainPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F145D8217C4987E00D6B615 /* LZMainPageViewController.m */; };
 		5F17888B180510BA0017F55D /* dietCellBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F17888A180510BA0017F55D /* dietCellBack@2x.png */; };
 		5F17888D1805202E0017F55D /* check_bottom_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F17888C1805202E0017F55D /* check_bottom_bar@2x.png */; };
@@ -229,14 +233,10 @@
 		5FD76DEC17D5B83600746418 /* LZEmptyClassCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD76DEB17D5B83600746418 /* LZEmptyClassCell.m */; };
 		5FDD1CAA179CFCAE0046F752 /* add_by_nutrient_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_button@2x.png */; };
 		5FDD1CAE179D19150046F752 /* change_name_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CAC179D19150046F752 /* change_name_button@2x.png */; };
-		5FDD1CB1179D3EC90046F752 /* LZCustomDataButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDD1CB0179D3EC90046F752 /* LZCustomDataButton.m */; };
 		5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */; };
 		5FDED102176F2E2D0026BCA3 /* text_clear@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */; };
 		5FE210541784058100F45253 /* feedback_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE210501784058100F45253 /* feedback_icon@2x.png */; };
 		5FE210551784058100F45253 /* review_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE210511784058100F45253 /* review_icon@2x.png */; };
-		5FE3AC26180CEB2000C5C611 /* share_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC28180CEB2000C5C611 /* share_icon@2x.png */; };
-		5FE3AC2A180CEB2D00C5C611 /* recommend_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC2C180CEB2D00C5C611 /* recommend_icon@2x.png */; };
-		5FE3AC2E180CEB3900C5C611 /* addfood_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC30180CEB3900C5C611 /* addfood_icon@2x.png */; };
 		5FE3AC32180CEB7100C5C611 /* health_point@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC34180CEB7100C5C611 /* health_point@2x.png */; };
 		5FE3AC70180CF71000C5C611 /* LZNutritionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE3AC6F180CF71000C5C611 /* LZNutritionButton.m */; };
 		5FE3AC72180D0DE000C5C611 /* diet_topbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE3AC71180D0DDD00C5C611 /* diet_topbar_bg@2x.png */; };
@@ -323,6 +323,11 @@
 		5F03D34F174B924B008EFB60 /* defaulFoodPic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "defaulFoodPic@2x.png"; path = "nutrition/Resource/defaulFoodPic@2x.png"; sourceTree = "<group>"; };
 		5F09717F1793ABD3000030AA /* LZUserDietListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUserDietListViewController.h; path = Class/LZUserDietListViewController.h; sourceTree = "<group>"; };
 		5F0971801793ABD3000030AA /* LZUserDietListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUserDietListViewController.m; path = Class/LZUserDietListViewController.m; sourceTree = "<group>"; };
+		5F0A4153180E685F007B8715 /* LZCustomDataButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZCustomDataButton.h; path = Class/LZCustomDataButton.h; sourceTree = "<group>"; };
+		5F0A4154180E685F007B8715 /* LZCustomDataButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZCustomDataButton.m; path = Class/LZCustomDataButton.m; sourceTree = "<group>"; };
+		5F0A4156180E6C7F007B8715 /* addfood_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "addfood_icon@2x.png"; path = "nutrition/Resource/addfood_icon@2x.png"; sourceTree = "<group>"; };
+		5F0A4157180E6C7F007B8715 /* recommend_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "recommend_icon@2x.png"; path = "nutrition/Resource/recommend_icon@2x.png"; sourceTree = "<group>"; };
+		5F0A4158180E6C7F007B8715 /* share_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "share_icon@2x.png"; path = "nutrition/Resource/share_icon@2x.png"; sourceTree = "<group>"; };
 		5F145D8117C4987E00D6B615 /* LZMainPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZMainPageViewController.h; path = Class/LZMainPageViewController.h; sourceTree = "<group>"; };
 		5F145D8217C4987E00D6B615 /* LZMainPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZMainPageViewController.m; path = Class/LZMainPageViewController.m; sourceTree = "<group>"; };
 		5F17888A180510BA0017F55D /* dietCellBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dietCellBack@2x.png"; path = "nutrition/Resource/dietCellBack@2x.png"; sourceTree = "<group>"; };
@@ -558,19 +563,11 @@
 		5FD76DEB17D5B83600746418 /* LZEmptyClassCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZEmptyClassCell.m; path = Class/LZEmptyClassCell.m; sourceTree = "<group>"; };
 		5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_by_nutrient_button@2x.png"; path = "nutrition/Resource/add_by_nutrient_button@2x.png"; sourceTree = "<group>"; };
 		5FDD1CAC179D19150046F752 /* change_name_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_name_button@2x.png"; path = "nutrition/Resource/change_name_button@2x.png"; sourceTree = "<group>"; };
-		5FDD1CAF179D3EC80046F752 /* LZCustomDataButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZCustomDataButton.h; path = Class/LZCustomDataButton.h; sourceTree = "<group>"; };
-		5FDD1CB0179D3EC90046F752 /* LZCustomDataButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZCustomDataButton.m; path = Class/LZCustomDataButton.m; sourceTree = "<group>"; };
 		5FDED0FE176F1D8E0026BCA3 /* LZShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZShareViewController.h; path = Class/LZShareViewController.h; sourceTree = "<group>"; };
 		5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZShareViewController.m; path = Class/LZShareViewController.m; sourceTree = "<group>"; };
 		5FDED101176F2E2D0026BCA3 /* text_clear@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "text_clear@2x.png"; path = "nutrition/Resource/text_clear@2x.png"; sourceTree = "<group>"; };
 		5FE210501784058100F45253 /* feedback_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "feedback_icon@2x.png"; path = "nutrition/Resource/feedback_icon@2x.png"; sourceTree = "<group>"; };
 		5FE210511784058100F45253 /* review_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "review_icon@2x.png"; path = "nutrition/Resource/review_icon@2x.png"; sourceTree = "<group>"; };
-		5FE3AC27180CEB2000C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/share_icon@2x.png"; sourceTree = "<group>"; };
-		5FE3AC29180CEB2500C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/share_icon@2x.png"; sourceTree = "<group>"; };
-		5FE3AC2B180CEB2D00C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/recommend_icon@2x.png"; sourceTree = "<group>"; };
-		5FE3AC2D180CEB3300C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/recommend_icon@2x.png"; sourceTree = "<group>"; };
-		5FE3AC2F180CEB3900C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/addfood_icon@2x.png"; sourceTree = "<group>"; };
-		5FE3AC31180CEB3F00C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/addfood_icon@2x.png"; sourceTree = "<group>"; };
 		5FE3AC33180CEB7100C5C611 /* en */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = en; path = "en.lproj/health_point@2x.png"; sourceTree = "<group>"; };
 		5FE3AC35180CEB9600C5C611 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "zh-Hans"; path = "zh-Hans.lproj/health_point@2x.png"; sourceTree = "<group>"; };
 		5FE3AC6E180CF71000C5C611 /* LZNutritionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZNutritionButton.h; path = Class/LZNutritionButton.h; sourceTree = "<group>"; };
@@ -923,15 +920,15 @@
 				5F894A8E1803B50200A122F4 /* cell_check_on@2x.png */,
 				5F84D1B017D8343800DF83A0 /* dri_icon@2x.png */,
 				5FD76DE817D5B3EE00746418 /* close_button@2x.png */,
-				5FE3AC30180CEB3900C5C611 /* addfood_icon@2x.png */,
 				5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */,
-				5FE3AC2C180CEB2D00C5C611 /* recommend_icon@2x.png */,
 				5F241CA217E7FF0E00BC8529 /* nutrient_button_off@2x.png */,
-				5FE3AC28180CEB2000C5C611 /* share_icon@2x.png */,
 				5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */,
 				5FDD1CAC179D19150046F752 /* change_name_button@2x.png */,
 				5F7E5AA217965B47007CA18A /* recommend_sign@2x.png */,
 				5FE210501784058100F45253 /* feedback_icon@2x.png */,
+				5F0A4156180E6C7F007B8715 /* addfood_icon@2x.png */,
+				5F0A4157180E6C7F007B8715 /* recommend_icon@2x.png */,
+				5F0A4158180E6C7F007B8715 /* share_icon@2x.png */,
 				5FE210511784058100F45253 /* review_icon@2x.png */,
 				5FF632271772DA8E0068CBFE /* big_arrow_clicked@2x.png */,
 				5FF631EA17715F0A0068CBFE /* big_arrow@2x.png */,
@@ -1028,6 +1025,8 @@
 		5F8DEE9717951E2B00C6E9F5 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				5F0A4153180E685F007B8715 /* LZCustomDataButton.h */,
+				5F0A4154180E685F007B8715 /* LZCustomDataButton.m */,
 				5F03D33D174B923F008EFB60 /* LZRecommendFoodCell.h */,
 				5F03D33E174B923F008EFB60 /* LZRecommendFoodCell.m */,
 				5F03D33F174B9240008EFB60 /* LZCheckNutritionCell.h */,
@@ -1069,8 +1068,6 @@
 				5FE436CD175F29D5003947ED /* LZKeyboardToolBar.m */,
 				5FF6320217718E0F0068CBFE /* LZNutritionInfoView.h */,
 				5FF6320317718E100068CBFE /* LZNutritionInfoView.m */,
-				5FDD1CAF179D3EC80046F752 /* LZCustomDataButton.h */,
-				5FDD1CB0179D3EC90046F752 /* LZCustomDataButton.m */,
 				5F22A68C17CF11930043D760 /* LZSearchBar.h */,
 				5F22A68D17CF11930043D760 /* LZSearchBar.m */,
 				5F22A6C617CF4C6D0043D760 /* LZFoodTypeButton.h */,
@@ -1497,9 +1494,6 @@
 				5FE210541784058100F45253 /* feedback_icon@2x.png in Resources */,
 				5FE210551784058100F45253 /* review_icon@2x.png in Resources */,
 				5FEC69371795372C00E80BE6 /* nutrient_button_on@2x.png in Resources */,
-				5FE3AC2E180CEB3900C5C611 /* addfood_icon@2x.png in Resources */,
-				5FE3AC2A180CEB2D00C5C611 /* recommend_icon@2x.png in Resources */,
-				5FE3AC26180CEB2000C5C611 /* share_icon@2x.png in Resources */,
 				5F7E5AA317965B47007CA18A /* recommend_sign@2x.png in Resources */,
 				5F7E5AAB17969463007CA18A /* diet_empty_icon@2x.png in Resources */,
 				5FDD1CAA179CFCAE0046F752 /* add_by_nutrient_button@2x.png in Resources */,
@@ -1570,6 +1564,9 @@
 				5F82A0A0180686170000C9A1 /* button_back_40@2x.png in Resources */,
 				5F82A0AA1807DB6F0000C9A1 /* Localizable.strings in Resources */,
 				5FE3AC72180D0DE000C5C611 /* diet_topbar_bg@2x.png in Resources */,
+				5F0A4159180E6C7F007B8715 /* addfood_icon@2x.png in Resources */,
+				5F0A415A180E6C7F007B8715 /* recommend_icon@2x.png in Resources */,
+				5F0A415B180E6C7F007B8715 /* share_icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1645,7 +1642,6 @@
 				5F0971811793ABD3000030AA /* LZUserDietListViewController.m in Sources */,
 				5F8DEE9517951DB000C6E9F5 /* LZRecommendFilterView.m in Sources */,
 				5F7E5AA917967A95007CA18A /* LZDietCell.m in Sources */,
-				5FDD1CB1179D3EC90046F752 /* LZCustomDataButton.m in Sources */,
 				5FCC5BEB17AA30A600796B24 /* LZDebugSettingsViewController.m in Sources */,
 				5F90D80317AF8873000AEC06 /* mongoose.c in Sources */,
 				5F90D80417AF8873000AEC06 /* OpenUDID.m in Sources */,
@@ -1684,6 +1680,7 @@
 				5F537F2517F2BFBE00BDD014 /* LZHeavlyLackCell.m in Sources */,
 				5F894A931803E56600A122F4 /* LZCheckTypeSwitchView.m in Sources */,
 				5FE3AC70180CF71000C5C611 /* LZNutritionButton.m in Sources */,
+				5F0A4155180E685F007B8715 /* LZCustomDataButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1774,36 +1771,6 @@
 				5FAB576E180266C200657793 /* zh-Hans */,
 			);
 			name = ShareSDKLocalizable.strings;
-			sourceTree = "<group>";
-		};
-		5FE3AC28180CEB2000C5C611 /* share_icon@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC27180CEB2000C5C611 /* en */,
-				5FE3AC29180CEB2500C5C611 /* zh-Hans */,
-			);
-			name = "share_icon@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC2C180CEB2D00C5C611 /* recommend_icon@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC2B180CEB2D00C5C611 /* en */,
-				5FE3AC2D180CEB3300C5C611 /* zh-Hans */,
-			);
-			name = "recommend_icon@2x.png";
-			path = nutrition/Resource;
-			sourceTree = "<group>";
-		};
-		5FE3AC30180CEB3900C5C611 /* addfood_icon@2x.png */ = {
-			isa = PBXVariantGroup;
-			children = (
-				5FE3AC2F180CEB3900C5C611 /* en */,
-				5FE3AC31180CEB3F00C5C611 /* zh-Hans */,
-			);
-			name = "addfood_icon@2x.png";
-			path = nutrition/Resource;
 			sourceTree = "<group>";
 		};
 		5FE3AC34180CEB7100C5C611 /* health_point@2x.png */ = {

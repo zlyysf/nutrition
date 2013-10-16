@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface LZNutritionButton : UIButton
+@property (nonatomic,strong)id customData;
 - (id)initWithFrame:(CGRect)frame
                info:(NSDictionary *)info
               image:(UIImage *)backImage;

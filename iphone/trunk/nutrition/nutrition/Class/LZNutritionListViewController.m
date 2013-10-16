@@ -82,7 +82,16 @@
         NSDictionary *dict = [da getNutrientInfo:nutritionId];
         UIColor *backColor = [LZUtility getNutrientColorForNutrientId:nutritionId];
         //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
-        NSString *nutritionName = [dict objectForKey:@"NutrientCnCaption"];
+        NSString *queryKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            queryKey = @"IconTitleCn";
+        }
+        else
+        {
+            queryKey = @"IconTitleEn";
+        }
+        NSString *nutritionName = [dict objectForKey:queryKey];
         NSDictionary *info = [LZUtility getNutritionNameInfo:nutritionName];
         UIImage*backImage = [LZUtility createImageWithColor:backColor imageSize:CGSizeMake(94, 94)];
         LZNutritionButton *button = [[LZNutritionButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94) info:info image:backImage];
@@ -101,8 +110,18 @@
     NSString *nutritionId = [self.nutritionArray objectAtIndex:tag];
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary *dict = [da getNutrientInfo:nutritionId];
+    NSString *queryKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        queryKey = @"NutrientCnCaption";
+    }
+    else
+    {
+        queryKey = @"NutrientEnCaption";
+    }
+
     //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
-    NSString *nutritionName = [dict objectForKey:@"NutrientCnCaption"];
+    NSString *nutritionName = [dict objectForKey:queryKey];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZRichNutritionViewController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZRichNutritionViewController"];
     addByNutrientController.nutrientDict = dict;

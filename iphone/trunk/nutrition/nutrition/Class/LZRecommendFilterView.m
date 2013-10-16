@@ -10,6 +10,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "LZDataAccess.h"
 #import "LZConstants.h"
+#import "LZUtility.h"
 #define kSelectButtonSide 22.f
 #define kButtonAreaSide 40.f
 #define kTagAddNum 20
@@ -107,7 +108,17 @@
             NSArray *keys = [nutrientState allKeys];
             NSString *key = [keys objectAtIndex:0];
             NSDictionary *dict = [da getNutrientInfo:key];
-            NSString *name = [dict objectForKey:@"NutrientCnCaption"];
+            NSString *queryKey;
+            if ([LZUtility isCurrentLanguageChinese])
+            {
+                queryKey = @"NutrientCnCaption";
+            }
+            else
+            {
+                queryKey = @"NutrientEnCaption";
+            }
+
+            NSString *name = [dict objectForKey:queryKey];
             NSNumber *state = [nutrientState objectForKey:key];
             float buttonX;
             float labelX;

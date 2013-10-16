@@ -9,7 +9,7 @@
 #import "LZNutritionButton.h"
 
 @implementation LZNutritionButton
-
+@synthesize customData;
 - (id)initWithFrame:(CGRect)frame
                info:(NSDictionary *)info
               image:(UIImage *)backImage

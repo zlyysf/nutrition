@@ -304,11 +304,22 @@
 //    {
         LZNutritionSupplyCell *cell = (LZNutritionSupplyCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionSupplyCell"];
         NSDictionary *aNutrient = [nutrientSupplyArray objectAtIndex:indexPath.row];
-        NSString *nutrientName = [aNutrient objectForKey:@"Name"];
         NSString *nutrientId = [aNutrient objectForKey:@"NutrientID"];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSDictionary *dict = [da getNutrientInfo:nutrientId];
+        NSString *queryKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+        NSString *nutritionName = [dict objectForKey:queryKey];
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
         cell.nutrientId = nutrientId;
-        [cell.nameButton setTitle:nutrientName forState:UIControlStateNormal];
+        [cell.nameButton setTitle:nutritionName forState:UIControlStateNormal];
         NSNumber *percent = [aNutrient objectForKey:@"1foodSupply1NutrientRate"];
         NSNumber *food1Supply1NutrientAmount = [aNutrient objectForKey:@"food1Supply1NutrientAmount"];
         NSNumber *nutrientTotalDRI = [aNutrient objectForKey:@"nutrientTotalDRI"];
