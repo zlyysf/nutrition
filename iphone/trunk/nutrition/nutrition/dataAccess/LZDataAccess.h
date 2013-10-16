@@ -83,12 +83,15 @@
 -(BOOL)deleteFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId;
 
 -(NSArray*)getDiseaseGroupInfo_byType:(NSString*)groupType;
-//-(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName;
--(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType;
-//-(NSDictionary*)getDiseasesOrganizedByDepartment_OfGroup:(NSString*)groupName;
--(NSDictionary*)getDiseasesOrganizedByColumn:(NSString*)organizedByColumn andFilters_Group:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType;
-//-(NSDictionary*)getDiseaseNutrients_ByDiseaseNames:(NSArray*)diseaseNames;
--(NSDictionary*)getDiseaseNutrientRows_ByDiseaseNames:(NSArray*)diseaseNames andDiseaseGroup:(NSString*)groupName;
+//-(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType;
+-(NSArray*)getDiseaseIdsOfGroup:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType;
+-(NSArray*)getDiseaseInfosOfGroup:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType;
+
+//-(NSDictionary*)getDiseasesOrganizedByColumn:(NSString*)organizedByColumn andFilters_Group:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType;
+-(NSDictionary*)getDiseaseInfosOrganizedByColumn:(NSString*)organizedByColumn andFilters_Group:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType;
+
+//-(NSDictionary*)getDiseaseNutrientRows_ByDiseaseNames:(NSArray*)diseaseNames andDiseaseGroup:(NSString*)groupName;
+-(NSDictionary*)getDiseaseNutrientRows_ByDiseaseIds:(NSArray*)diseaseIds andDiseaseGroup:(NSString*)groupName;
 
 -(NSArray*)getUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType;
 -(BOOL)saveUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType UpdateTime:(NSDate*)UpdateTime andDiseases:(NSArray*)Diseases andLackNutrientIDs:(NSArray*)LackNutrientIDs andHealthMark:(int)HealthMark;

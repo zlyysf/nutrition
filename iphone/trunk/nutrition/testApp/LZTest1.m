@@ -33,9 +33,9 @@
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
 //    [self.class test_DiseaseNutrient1];
-//    [self.class test_DiseaseNutrient2];
+    [self.class test_DiseaseNutrient2];
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
-    [self.class test_TranslationItem1];
+//    [self.class test_TranslationItem1];
 
     
 //    [self.class testFormatResult1];
@@ -2243,29 +2243,61 @@ BOOL needLimitNutrients = FALSE;
 }
 
 
-+(void)test_DiseaseNutrient1
-{
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_wizard];
-    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
-    NSArray *diseaseNames = [da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:nil];
-//    NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrients_ByDiseaseNames:diseaseNames];
+//+(void)test_DiseaseNutrient1
+//{
+//    LZDataAccess *da = [LZDataAccess singleton];
+//    NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_wizard];
+//    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+//    NSArray *diseaseNames = [da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:nil];
+////    NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrients_ByDiseaseNames:diseaseNames];
+////    
+////    NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
+////    for ( NSString* key in nutrientsByDiseaseDict) {
+////        NSArray *nutrients = nutrientsByDiseaseDict[key];
+////        [nutrientSet addObjectsFromArray:nutrients];
+////    }
+////    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
+////    NSArray *orderedNutrientsInSet = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
+////    NSLog(@"orderedNutrientsInSet=%@",[orderedNutrientsInSet debugDescription]);
 //    
-//    NSMutableSet * nutrientSet = [NSMutableSet setWithCapacity:100];
-//    for ( NSString* key in nutrientsByDiseaseDict) {
-//        NSArray *nutrients = nutrientsByDiseaseDict[key];
-//        [nutrientSet addObjectsFromArray:nutrients];
-//    }
-//    NSArray *customNutrients = [LZRecommendFood getCustomNutrients:nil];
-//    NSArray *orderedNutrientsInSet = [LZUtility arrayIntersectSet_withArray:[NSMutableArray arrayWithArray:customNutrients] andSet:nutrientSet];
-//    NSLog(@"orderedNutrientsInSet=%@",[orderedNutrientsInSet debugDescription]);
-    
-//    NSDictionary * nutrientInfo2LevelDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
-//    NSLog(@"one nutrientInfo=%@",nutrientInfo2LevelDict[orderedNutrientsInSet[0]]);
-    
-//    diseaseNames = [da getDiseaseNamesOfGroup:groupAry[1]];
-    
-}
+////    NSDictionary * nutrientInfo2LevelDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:customNutrients];
+////    NSLog(@"one nutrientInfo=%@",nutrientInfo2LevelDict[orderedNutrientsInSet[0]]);
+//    
+////    diseaseNames = [da getDiseaseNamesOfGroup:groupAry[1]];
+//    
+//}
+
+//+(void)test_DiseaseNutrient2
+//{
+//    LZDataAccess *da = [LZDataAccess singleton];
+//    NSArray *diseaseGroupInfoArray;
+//    NSArray *groupAry;
+//    NSString *illnessGroup;
+//    
+//    //预防与调理
+////    diseaseGroupInfoArray= [da getDiseaseGroupInfo_byType:DiseaseGroupType_illness];
+////    groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+////    illnessGroup = groupAry[0];
+////    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseDepartment andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
+//    
+//    //不适症状
+////    diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_discomfort];
+////    groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+////    illnessGroup = groupAry[0];
+////    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
+//    
+//    //分时间段诊断
+//    diseaseGroupInfoArray= [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
+//    groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+//    illnessGroup = groupAry[0];
+////    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:@"下午"];
+//    [da getDiseaseNamesOfGroup:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:@"下午"];
+//
+//    NSArray *diseaseNames = [NSArray arrayWithObjects:@"鼻塞，感冒",@"脑门热，发烧", nil];
+//    NSDictionary * nutrientInfosByDiseaseDict = [da getDiseaseNutrientRows_ByDiseaseNames:diseaseNames andDiseaseGroup:illnessGroup];
+//
+//}
+
 
 +(void)test_DiseaseNutrient2
 {
@@ -2278,24 +2310,32 @@ BOOL needLimitNutrients = FALSE;
 //    diseaseGroupInfoArray= [da getDiseaseGroupInfo_byType:DiseaseGroupType_illness];
 //    groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
 //    illnessGroup = groupAry[0];
-//    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseDepartment andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
+//    [da getDiseaseInfosOrganizedByColumn:COLUMN_NAME_DiseaseDepartment andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
     
     //不适症状
 //    diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_discomfort];
 //    groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
 //    illnessGroup = groupAry[0];
-//    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
+//    [da getDiseaseInfosOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
     
     //分时间段诊断
     diseaseGroupInfoArray= [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
     groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
     illnessGroup = groupAry[0];
-//    [da getDiseasesOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:@"下午"];
-    [da getDiseaseNamesOfGroup:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:@"下午"];
-
-    NSArray *diseaseNames = [NSArray arrayWithObjects:@"鼻塞，感冒",@"脑门热，发烧", nil];
-    NSDictionary * nutrientInfosByDiseaseDict = [da getDiseaseNutrientRows_ByDiseaseNames:diseaseNames andDiseaseGroup:illnessGroup];
-
+//    [da getDiseaseInfosOrganizedByColumn:COLUMN_NAME_DiseaseType andFilters_Group:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:@"下午"];
+    [da getDiseaseIdsOfGroup:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:@"下午"];
+    
+    NSArray *diseaseIds = [NSArray arrayWithObjects:@"鼻塞，感冒",@"脑门热，发烧", nil];
+    NSDictionary * nutrientInfosByDiseaseDict = [da getDiseaseNutrientRows_ByDiseaseIds:diseaseIds andDiseaseGroup:illnessGroup];
+    
+    NSArray *diseaseInfoAry = [da getDiseaseInfosOfGroup:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
+    NSDictionary *diseaseInfo2LevelDict = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_Disease andDicArray:diseaseInfoAry];
+    NSString *diseaseId = diseaseIds[0];
+    NSDictionary *diseaseInfo = [diseaseInfo2LevelDict objectForKey:diseaseId];
+    NSString *diseaseCnName = [diseaseInfo objectForKey:COLUMN_NAME_Disease];
+    NSString *diseaseEnName = [diseaseInfo objectForKey:COLUMN_NAME_DiseaseEn];
+    NSLog(@"diseaseCnName=%@, diseaseEnName=%@, diseaseInfo=%@",diseaseCnName,diseaseEnName, [LZUtility getObjectDescription:diseaseInfo andIndent:0]);
+    
 }
 
 +(void)test_saveUserCheckDiseaseRecord_withDay
