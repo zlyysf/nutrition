@@ -59,7 +59,16 @@
     {
         NSDictionary *afood = [allFood objectAtIndex:i];
         NSString *foodType = [afood objectForKey:@"CnType"];
-        [allFoodNamesArray addObject:[afood objectForKey:@"CnCaption"]];
+        NSString *foodQueryKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            foodQueryKey = @"CnCaption";
+        }
+        else
+        {
+            foodQueryKey = @"FoodNameEn";
+        }
+        [allFoodNamesArray addObject:[afood objectForKey:foodQueryKey]];
         if (![foodTypeSet containsObject:foodType])
         {
             NSMutableArray *foodName = [[NSMutableArray alloc]init];
@@ -182,7 +191,8 @@
     }
     UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
     [cell.imageView setImage:foodImage];
-	cell.textLabel.text = [resultDict objectForKey:@"CnCaption"];
+
+	cell.textLabel.text = [resultDict objectForKey:@"Name"];
 	return cell;
 }
 
@@ -193,11 +203,23 @@
     [self.searchResultVC.searchBar resignFirstResponder];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     NSDictionary *resultDict = [self.searchResultArray objectAtIndex:indexPath.row];
-    NSString *resultName = [resultDict objectForKey:@"CnCaption"];
+
+
+    NSString *resultName = [resultDict objectForKey:@"Name"];
     
     int index = [self.allFoodNamesArray indexOfObject:resultName];
     NSDictionary *foodAtr = [self.allFood  objectAtIndex:index];
-    NSString *foodName = [foodAtr objectForKey:@"CnCaption"];
+    NSString *foodQueryKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        foodQueryKey = @"CnCaption";
+    }
+    else
+    {
+        foodQueryKey = @"FoodNameEn";
+    }
+
+    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
     NSNumber *weight = [NSNumber numberWithInt:100];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
@@ -252,7 +274,7 @@
         {
             NSDictionary *afood = [allFood objectAtIndex:i];
             NSString *picPath = [afood objectForKey:@"PicPath"];
-            NSDictionary *resultDict = [NSDictionary dictionaryWithObjectsAndKeys:cnName ,@"CnCaption",picPath,@"PicPath", nil];
+            NSDictionary *resultDict = [NSDictionary dictionaryWithObjectsAndKeys:cnName ,@"Name",picPath,@"PicPath", nil];
             [self.searchResultArray addObject:resultDict];
         }
     

@@ -306,8 +306,17 @@
     }
     UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
     [cell.foodPicView setImage:foodImage];
-    
-    cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];
+    NSString *foodQueryKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        foodQueryKey = @"CnCaption";
+    }
+    else
+    {
+        foodQueryKey = @"FoodNameEn";
+    }
+
+    cell.foodNameLabel.text = [aFood objectForKey:foodQueryKey];
     //NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
     NSNumber *foodAmount = [aFood objectForKey:Key_FoodAmount];
     //NSNumber *intake= [self.tempIntakeDict objectForKey:NDB_No];
@@ -335,7 +344,16 @@
     //self.pushToNextView = YES;
     NSDictionary *foodAtr = [self.foodArray objectAtIndex:indexPath.row];
     //NSString *NDB_No = [foodAtr objectForKey:@"NDB_No"];
-    NSString *foodName = [foodAtr objectForKey:@"CnCaption"];
+    NSString *foodQueryKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        foodQueryKey = @"CnCaption";
+    }
+    else
+    {
+        foodQueryKey = @"FoodNameEn";
+    }
+    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
     NSNumber *weight ;//= [self.tempIntakeDict objectForKey:NDB_No];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];

@@ -159,19 +159,19 @@
 -(void)refreshViewAccordingToTime:(NSString *)timeType
 {
     checkType = timeType;
-    
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
-    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
-    
     self.sectionTitle = [headerDict objectForKey:timeType];
     UIView *topbarView = self.navigationItem.titleView;
     UILabel *topbarLabel = (UILabel *)[topbarView viewWithTag:20];
     NSDictionary *titleDict = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"healthcheck_viewtitle0",@"上午诊断"),@"上午",NSLocalizedString(@"healthcheck_viewtitle1",@"下午诊断"),@"下午",NSLocalizedString(@"healthcheck_viewtitle2",@"睡前诊断"),@"睡前", nil];
     [topbarLabel setText:[titleDict objectForKey:timeType]];
-    //self.title =[NSString stringWithFormat:@"%@诊断",timeType];
+
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSArray *diseaseGroupInfoArray = [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
+    NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+    NSString *illnessGroup = groupAry[0];
+    NSArray *idArray = [da getDiseaseIdsOfGroup:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:timeType];
     [self.diseaseNamesArray removeAllObjects];
-    [self.diseaseNamesArray addObjectsFromArray:[da getDiseaseNamesOfGroup:groupAry[0] andDepartment:nil andDiseaseType:nil andTimeType:timeType]];
+    [self.diseaseNamesArray addObjectsFromArray:idArray];
     [self.diseasesStateDict removeAllObjects];
     for(NSString *departName in diseaseNamesArray)
     {
@@ -215,7 +215,7 @@
     }
     LZDataAccess *da = [LZDataAccess singleton];
     NSString *text = [userSelectedDiseaseNames componentsJoinedByString:@"；"];
-    NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrientRows_ByDiseaseNames:userSelectedDiseaseNames andDiseaseGroup:nil];
+    NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrientRows_ByDiseaseIds:userSelectedDiseaseNames andDiseaseGroup:nil];
     
     NSMutableSet *heavySet = [[NSMutableSet alloc]init];
     NSMutableSet *lightSet = [[NSMutableSet alloc]init];

@@ -270,7 +270,16 @@
         UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
         [cell.foodPicView setImage:foodImage];
         cell.foodAmountLabel.hidden = YES;
-        cell.foodNameLabel.text = [aFood objectForKey:@"CnCaption"];
+        NSString *foodQueryKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            foodQueryKey = @"CnCaption";
+        }
+        else
+        {
+            foodQueryKey = @"FoodNameEn";
+        }
+        cell.foodNameLabel.text = [aFood objectForKey:foodQueryKey];
         //NSString *NDB_No = [aFood objectForKey:@"NDB_No"];
         //NSNumber *intake = [self.foodIntakeDictionary objectForKey:NDB_No];
 //        UIImage *textImage = [UIImage imageNamed:@"setting_text_back.png"];
@@ -315,7 +324,16 @@
     //NSDictionary * foodAttr = [allFoodUnitDict objectForKey:ndb_No];
     //NSArray *nutrientSupplyArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
     //NSArray *nutrientStandardArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
-    NSString *foodName = [foodAtr objectForKey:@"CnCaption"];
+    NSString *foodQueryKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        foodQueryKey = @"CnCaption";
+    }
+    else
+    {
+        foodQueryKey = @"FoodNameEn";
+    }
+    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
     NSNumber *weight = [NSNumber numberWithInt:100];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
