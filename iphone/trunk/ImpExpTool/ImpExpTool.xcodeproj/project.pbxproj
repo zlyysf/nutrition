@@ -10,6 +10,7 @@
 		08529CF1177C3672008E1397 /* Female_UL.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08529CEF177C3672008E1397 /* Female_UL.xls */; };
 		08529CF2177C3672008E1397 /* Male_UL.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08529CF0177C3672008E1397 /* Male_UL.xls */; };
 		0853BDD717957DD300B05122 /* LZRecommendFood.m in Sources */ = {isa = PBXBuildFile; fileRef = 0853BDD617957DD300B05122 /* LZRecommendFood.m */; };
+		08559AA0180E3EEC00571FDD /* SomeItemCnEn.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08559A9F180E3EEC00571FDD /* SomeItemCnEn.xls */; };
 		088240811740924300E71E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240801740924300E71E6E /* UIKit.framework */; };
 		088240831740924300E71E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240821740924300E71E6E /* Foundation.framework */; };
 		088240851740924300E71E6E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 088240841740924300E71E6E /* CoreGraphics.framework */; };
@@ -76,6 +77,7 @@
 		08529CF0177C3672008E1397 /* Male_UL.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Male_UL.xls; path = ../../../data/Male_UL.xls; sourceTree = "<group>"; };
 		0853BDD517957DD300B05122 /* LZRecommendFood.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFood.h; path = ../nutrition/nutrition/Class/LZRecommendFood.h; sourceTree = "<group>"; };
 		0853BDD617957DD300B05122 /* LZRecommendFood.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZRecommendFood.m; path = ../nutrition/nutrition/Class/LZRecommendFood.m; sourceTree = "<group>"; };
+		08559A9F180E3EEC00571FDD /* SomeItemCnEn.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = SomeItemCnEn.xls; path = ../../../data/SomeItemCnEn.xls; sourceTree = "<group>"; };
 		0882407D1740924300E71E6E /* ImpExpTool.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ImpExpTool.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		088240801740924300E71E6E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		088240821740924300E71E6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -299,6 +301,7 @@
 		0882411A1740E02D00E71E6E /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				08559A9F180E3EEC00571FDD /* SomeItemCnEn.xls */,
 				088821C517B132FB0054FABD /* benefits_nutrition_mapping.xls */,
 				08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */,
 				08529CEF177C3672008E1397 /* Female_UL.xls */,
@@ -416,6 +419,7 @@
 				08CDEAD417A6865E00AFA47E /* CustomRichFood.xls in Resources */,
 				088821C617B132FB0054FABD /* benefits_nutrition_mapping.xls in Resources */,
 				08ED42D017D48BAD00917C78 /* README.mdown in Resources */,
+				08559AA0180E3EEC00571FDD /* SomeItemCnEn.xls in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

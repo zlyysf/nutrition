@@ -55,6 +55,7 @@
 -(void)convertExcelToSqlite_NutrientDisease;
 -(NSDictionary *)readNutrientDiseaseSheet_withDepartment:(int)sheetIndex;
 
+-(void)convertExcelToSqlite_TranslationItem;
 
 @end
 

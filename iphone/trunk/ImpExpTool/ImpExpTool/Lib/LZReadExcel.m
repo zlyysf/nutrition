@@ -1577,8 +1577,78 @@
 }
 
 
+-(void)convertExcelToSqlite_TranslationItem
+{
+    NSDictionary * dataFoodCnType = [self readTranslationItemSheet:0 andItemType:TranslationItemType_FoodCnType];
+    NSDictionary * dataSingleItemUnitName = [self readTranslationItemSheet:1 andItemType:TranslationItemType_SingleItemUnitName];
+   
+    NSMutableArray *columnNames = [dataFoodCnType objectForKey:@"columnNames"];
+    
+    NSArray *rows2DFoodCnType = [dataFoodCnType objectForKey:@"rows2D"];
+    NSArray *rows2DSingleItemUnitName = [dataSingleItemUnitName objectForKey:@"rows2D"];
+    
+    NSString *tableName = TABLE_NAME_TranslationItem;
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    [db.da createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2DFoodCnType withPrimaryKey:nil andIfNeedDropTable:true];
+    [db.da insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2DFoodCnType andIfNeedClearTable:false];
+    [db.da insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2DSingleItemUnitName andIfNeedClearTable:false];
+}
 
 
+
+-(NSDictionary *)readTranslationItemSheet:(int)sheetIndex andItemType:(NSString*)itemType
+{
+    NSString *fileName = @"SomeItemCnEn.xls";
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
+    NSLog(@"in readTranslationItemSheet, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+      
+    NSMutableArray *columnNames = [NSMutableArray arrayWithObjects: COLUMN_NAME_ItemType
+                                   , COLUMN_NAME_ItemID,COLUMN_NAME_ItemNameCn, COLUMN_NAME_ItemNameEn
+                                   , nil];
+    int idxInXls_CnType = 1, idxInXls_EnType = 2;
+    int idxRow=2;
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:1000];
+    NSMutableArray *row;
+    DHcell *cell_CnType, *cell_EnType;
+    bool allRowCellBlank;
+    do {
+        cell_CnType = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:idxInXls_CnType];
+        cell_EnType = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:idxInXls_EnType];
+        allRowCellBlank = true;
+        allRowCellBlank = (cell_CnType.type==cellBlank && cell_EnType.type==cellBlank);
+        if(allRowCellBlank)
+            break;
+        bool allRowCellNotBlank = false;
+        allRowCellNotBlank = (cell_CnType.type!=cellBlank && cell_EnType.type!=cellBlank);
+        if(allRowCellNotBlank){
+            bool allRowCellNotEmpty = false;
+            allRowCellNotEmpty = (cell_CnType.str.length>0 && cell_EnType.str.length>0);
+            if (allRowCellNotEmpty){
+                row = [NSMutableArray arrayWithCapacity:4];
+                NSString *strItemNameCn = cell_CnType.str;
+                NSString *strItemNameEn = cell_EnType.str;
+                NSString *strItemID = strItemNameCn;
+                [row addObject:itemType];
+                [row addObject:strItemID];
+                [row addObject:strItemNameCn];
+                [row addObject:strItemNameEn];
+                [rows2D addObject:row];
+            }//if (allRowCellNotEmpty)
+        }//if(allRowCellNotBlank)
+        idxRow++;
+    } while (!allRowCellBlank);
+    
+    NSLog(@"in readTranslationItemSheet, columnNames=%@, rows2D=\n%@",columnNames,rows2D);
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:2];
+    [retData setObject:columnNames forKey:@"columnNames"];
+    [retData setObject:rows2D forKey:@"rows2D"];
+    return retData;
+}
 
 
 

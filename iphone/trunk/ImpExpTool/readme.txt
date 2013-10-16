@@ -89,7 +89,7 @@ CREATE TABLE UserCheckDiseaseRecord(Day INTEGER, TimeType INTEGER, UpdateTime IN
 
 
 
-
+CREATE TABLE TranslationItem (ItemType TEXT, ItemID TEXT, ItemNameCn TEXT, ItemNameEn TEXT);
 
 
 

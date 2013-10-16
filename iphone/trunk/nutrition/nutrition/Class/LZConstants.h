@@ -180,6 +180,14 @@
 #define COLUMN_NAME_Day @"Day"
 #define COLUMN_NAME_TimeType @"TimeType"
 
+#define TABLE_NAME_TranslationItem @"TranslationItem"
+#define COLUMN_NAME_ItemType @"ItemType"
+#define COLUMN_NAME_ItemID @"ItemID"
+#define COLUMN_NAME_ItemNameCn @"ItemNameCn"
+#define COLUMN_NAME_ItemNameEn @"ItemNameEn"
+
+#define TranslationItemType_FoodCnType @"FoodCnType"
+#define TranslationItemType_SingleItemUnitName @"SingleItemUnitName"
 
 #define DiseaseGroupType_wizard @"wizard"
 #define DiseaseGroupType_specialPeople @"specialPeople"
