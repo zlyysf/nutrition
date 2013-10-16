@@ -106,6 +106,8 @@
 
 +(NSDictionary *)getNutritionNameInfo:(NSString *)name;
 + (UIImage *) createImageWithColor: (UIColor *) color imageSize:(CGSize )imageSize;
+
++(NSString *)getSingleItemUnitName:(NSString *)unitName;
 @end
 
 

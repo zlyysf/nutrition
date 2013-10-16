@@ -1027,6 +1027,25 @@
 
     
 }
+
+
++(NSString *)getSingleItemUnitName:(NSString *)unitName
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary* translationItemInfo2LevelDict = [da getTranslationItemsDictionaryByType:TranslationItemType_SingleItemUnitName];
+    NSDictionary *aItem = [translationItemInfo2LevelDict objectForKey:unitName];
+    NSString *queryKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        queryKey = @"ItemNameCn";
+    }
+    else
+    {
+        queryKey = @"ItemNameEn";
+    }
+    NSString *name = [aItem objectForKey:queryKey];
+    return name;
+}
 @end
 
 

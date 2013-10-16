@@ -1750,7 +1750,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                         </view>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cQ9-jD-kyc">
-                                                            <rect key="frame" x="11" y="6" width="90" height="18"/>
+                                                            <rect key="frame" x="11" y="6" width="160" height="18"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -2053,7 +2053,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZHeavlyLackCell.h"/>
             <relationships>
                 <relationship kind="outlet" name="lackDescriptionLabel" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="nutritionButton" candidateClass="LZNutritionButton"/>
             </relationships>
         </class>
         <class className="LZMainPageViewController" superclassName="UIViewController">
@@ -2067,9 +2066,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <relationships>
                 <relationship kind="outlet" name="recommendAmountLabel" candidateClass="UILabel"/>
             </relationships>
-        </class>
-        <class className="LZNutritionButton" superclassName="UIButton">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionButton.h"/>
         </class>
         <class className="LZNutritionListViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/LZNutritionListViewController.h"/>

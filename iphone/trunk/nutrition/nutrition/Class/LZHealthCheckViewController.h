@@ -16,4 +16,5 @@
 @property (nonatomic,assign)BOOL backWithNoAnimation;
 @property (strong, nonatomic) IBOutlet UIButton *checkItemButton;
 @property (strong,nonatomic)NSDictionary *headerDict;
+@property (strong,nonatomic)NSMutableArray *diseaseIdsArray;
 @end

@@ -382,7 +382,7 @@
     //}
     
     
-    NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
+    NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName]];
     NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
     if ([weight intValue]>= [upper intValue])
     {

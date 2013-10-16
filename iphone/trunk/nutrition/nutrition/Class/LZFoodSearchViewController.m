@@ -119,11 +119,25 @@
             floor+=1;
         }
         startX = 10+(i-(floor-1)*perRowCount)*102;
-        NSString *typeName = [self.foodTypeArray objectAtIndex:i];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSDictionary *translationItemInfo2LevelDict = [da getTranslationItemsDictionaryByType:TranslationItemType_FoodCnType];
+        NSString *typeKey = [self.foodTypeArray objectAtIndex:i];
+        NSDictionary *typeDict = [translationItemInfo2LevelDict objectForKey:typeKey];
+        NSString *queryKey;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            queryKey = @"ItemNameCn";
+        }
+        else
+        {
+            queryKey = @"ItemNameEn";
+        }
+
+        NSString *typeName = [typeDict objectForKey:queryKey];
         LZFoodTypeButton *button = [[LZFoodTypeButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94)];
         [self.listView addSubview:button];
         //button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
-        [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png",typeName]] forState:UIControlStateNormal];
+        [button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@.png",typeKey]] forState:UIControlStateNormal];
         button.tag = i+100;
         [button addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [button.typeLabel setText:typeName];
@@ -150,9 +164,25 @@
     int tag = sender.tag -100;
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZDailyIntakeViewController *dailyIntakeViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *translationItemInfo2LevelDict = [da getTranslationItemsDictionaryByType:TranslationItemType_FoodCnType];
+    NSString *typeKey = [self.foodTypeArray objectAtIndex:tag];
+    NSDictionary *typeDict = [translationItemInfo2LevelDict objectForKey:typeKey];
+    NSString *queryKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        queryKey = @"ItemNameCn";
+    }
+    else
+    {
+        queryKey = @"ItemNameEn";
+    }
+    
+    NSString *typeName = [typeDict objectForKey:queryKey];
+
     dailyIntakeViewController.foodArray = [self.foodNameArray objectAtIndex:tag];
     //dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
-    dailyIntakeViewController.titleString = [self.foodTypeArray objectAtIndex:tag];
+    dailyIntakeViewController.titleString = typeName;
     dailyIntakeViewController.isFromOut = isFromOut;
     [self.navigationController pushViewController:dailyIntakeViewController animated:YES];
 }
@@ -224,7 +254,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
     //            NSString *sectionTitle = [NSString stringWithFormat:@"%dg%@",[weight intValue],foodName];
-    NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
+    NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName]];
     NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
     //    if ([weight intValue]>= [upper intValue])
     //    {

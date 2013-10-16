@@ -26,7 +26,7 @@
 @end
 
 @implementation LZHealthCheckViewController
-@synthesize diseaseNamesArray,diseasesStateDict,sectionTitle,checkType,isFirstLoad,backWithNoAnimation,pushToNextView,headerDict;
+@synthesize diseaseNamesArray,diseasesStateDict,sectionTitle,checkType,isFirstLoad,backWithNoAnimation,pushToNextView,headerDict,diseaseIdsArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -68,6 +68,7 @@
     self.checkType = timeType;
     self.diseasesStateDict = [[NSMutableDictionary alloc]init];
     self.diseaseNamesArray = [[NSMutableArray alloc]init];
+    self.diseaseIdsArray = [[NSMutableArray alloc]init];
     self.isFirstLoad = YES;
         //self.questionLabel.text = @"您最近有以下哪些症状?（可多选）";
     UIBarButtonItem *recheckItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"tixingshezhibutton",@"提醒设置") style:UIBarButtonItemStyleBordered target:self action:@selector(timeSettingItemTapped)];
@@ -170,12 +171,28 @@
     NSArray *groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
     NSString *illnessGroup = groupAry[0];
     NSArray *idArray = [da getDiseaseIdsOfGroup:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:timeType];
-    [self.diseaseNamesArray removeAllObjects];
-    [self.diseaseNamesArray addObjectsFromArray:idArray];
-    [self.diseasesStateDict removeAllObjects];
-    for(NSString *departName in diseaseNamesArray)
+    [self.diseaseIdsArray removeAllObjects];
+    [self.diseaseIdsArray addObjectsFromArray:idArray];
+    NSArray *diseaseInfoAry = [da getDiseaseInfosOfGroup:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
+    NSDictionary *diseaseInfo2LevelDict = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_Disease andDicArray:diseaseInfoAry];
+    NSString *queryKey;
+    if ([LZUtility isCurrentLanguageChinese])
     {
-        [self.diseasesStateDict setObject:[NSNumber numberWithBool:NO] forKey:departName];
+        queryKey = @"Disease";
+    }
+    else
+    {
+        queryKey = @"DiseaseEn";
+    }
+    [self.diseaseNamesArray removeAllObjects];
+    [self.diseasesStateDict removeAllObjects];
+    for (NSString *diseaseId in self.diseaseIdsArray)
+    {
+        NSDictionary *diseaseInfo = [diseaseInfo2LevelDict objectForKey:diseaseId];
+        NSString *diseaseName = [diseaseInfo objectForKey:queryKey];
+        [self.diseaseNamesArray addObject:diseaseName];
+        [self.diseasesStateDict setObject:[NSNumber numberWithBool:NO] forKey:diseaseName];
+        
     }
     isFirstLoad = NO;
     [self.listView reloadData];
@@ -198,12 +215,15 @@
     
     [MobClick event:UmengEventZhenDuan];
     NSMutableArray *userSelectedDiseaseNames = [[NSMutableArray alloc]init];
-    for(NSString *departName in diseaseNamesArray)
+    NSMutableArray *userSelectedDiseaseIds = [[NSMutableArray alloc]init];
+    for(int i = 0;i< [self.diseaseNamesArray count];i++)
     {
+        NSString *departName  =  [diseaseNamesArray objectAtIndex:i];
         NSNumber *checkState = [self.diseasesStateDict objectForKey:departName];
 
             if ([checkState boolValue])
             {
+                [userSelectedDiseaseIds addObject:[self.diseaseIdsArray objectAtIndex:i]];
                 [userSelectedDiseaseNames addObject:departName];
             }
     }
@@ -214,15 +234,21 @@
         return;
     }
     LZDataAccess *da = [LZDataAccess singleton];
-    NSString *text = [userSelectedDiseaseNames componentsJoinedByString:@"；"];
-    NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrientRows_ByDiseaseIds:userSelectedDiseaseNames andDiseaseGroup:nil];
+    NSArray *diseaseGroupInfoArray;
+    NSArray *groupAry;
+    NSString *illnessGroup;
+    diseaseGroupInfoArray= [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
+    groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
+    illnessGroup = groupAry[0];
+    NSString *text = [userSelectedDiseaseNames componentsJoinedByString:@";"];
+    NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrientRows_ByDiseaseIds:userSelectedDiseaseIds andDiseaseGroup:illnessGroup];
     
     NSMutableSet *heavySet = [[NSMutableSet alloc]init];
     NSMutableSet *lightSet = [[NSMutableSet alloc]init];
     NSMutableArray *heavyArray = [[NSMutableArray alloc]init];
     NSMutableArray *lightArray = [[NSMutableArray alloc]init];
     
-    for (NSString * aDiseaseName in userSelectedDiseaseNames)
+    for (NSString * aDiseaseName in userSelectedDiseaseIds)
     {
         NSArray *relatedNutritionArray = [nutrientsByDiseaseDict objectForKey:aDiseaseName];
         for (NSDictionary * nutritionInfo in relatedNutritionArray)

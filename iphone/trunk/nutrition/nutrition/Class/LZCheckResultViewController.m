@@ -262,11 +262,15 @@
             }
             else
             {
-                UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 18)];
+                NSString *content = NSLocalizedString(@"checkresult_nolightlylack",@"无，请关注轻度缺乏的营养！");
+                CGSize descriptionSize = [content sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
+                UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, descriptionSize.width, descriptionSize.height)];
+                emptyLabel.numberOfLines = 0;
                 [emptyLabel setFont:[UIFont systemFontOfSize:15]];
                 [emptyLabel setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:emptyLabel];
-                emptyLabel.text = NSLocalizedString(@"checkresult_nolightlylack",@"无，请关注轻度缺乏的营养！");
+                
+                emptyLabel.text = content;
                 cell.hasLoaded = YES;
                 return cell;
             }
@@ -360,11 +364,14 @@
             }
             else
             {
-                UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, 300, 18)];
+                NSString *content = NSLocalizedString(@"checkresult_noheavylylack",@"无，请关注严重缺乏的营养！");
+                CGSize descriptionSize = [content sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
+                UILabel *emptyLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 10, descriptionSize.width, descriptionSize.height)];
+                emptyLabel.numberOfLines = 0;
                 [emptyLabel setFont:[UIFont systemFontOfSize:15]];
                 [emptyLabel setTextColor:[UIColor blackColor]];
                 [cell.contentView addSubview:emptyLabel];
-                emptyLabel.text = NSLocalizedString(@"checkresult_noheavylylack",@"无，请关注严重缺乏的营养！");
+                emptyLabel.text = content;
             }
             cell.hasLoaded = YES;
             return cell;
@@ -431,7 +438,7 @@
         NSNumber *weight = [aFood objectForKey:@"Amount"];
         cell.foodUnitLabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
         NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
-        NSString *singleUnitName = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName];
+        NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName]];
         NSString *foodTotalUnit = @"";
         if ([singleUnitName length]==0)
         {
@@ -540,7 +547,9 @@
         }
         else
         {
-            return 38;
+            NSString *content = NSLocalizedString(@"checkresult_nolightlylack",@"无，请关注轻度缺乏的营养！");
+            CGSize descriptionSize = [content sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
+            return descriptionSize.height+20;
         }
     }
     else if(indexPath.section == 3)
@@ -551,7 +560,9 @@
         }
         else
         {
-            return 38;
+            NSString *content = NSLocalizedString(@"checkresult_noheavylylack",@"无，请关注严重缺乏的营养！");
+            CGSize descriptionSize = [content sizeWithFont:[UIFont systemFontOfSize:15]constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
+            return descriptionSize.height+20;
         }
     }
     else if (indexPath.section ==4)
