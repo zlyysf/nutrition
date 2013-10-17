@@ -240,7 +240,7 @@
     diseaseGroupInfoArray= [da getDiseaseGroupInfo_byType:DiseaseGroupType_DailyDiseaseDiagnose];
     groupAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_DiseaseGroup andDictionaryArray:diseaseGroupInfoArray];
     illnessGroup = groupAry[0];
-    NSString *text = [userSelectedDiseaseNames componentsJoinedByString:@";"];
+    NSString *text = [userSelectedDiseaseNames componentsJoinedByString:@"; "];
     NSDictionary * nutrientsByDiseaseDict = [da getDiseaseNutrientRows_ByDiseaseIds:userSelectedDiseaseIds andDiseaseGroup:illnessGroup];
     
     NSMutableSet *heavySet = [[NSMutableSet alloc]init];
