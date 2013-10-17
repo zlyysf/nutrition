@@ -10,7 +10,7 @@
 #import "BaiduMobAdDelegateProtocol.h"
 #import "GADBannerView.h"
 @interface GADMasterViewController : UIViewController <BaiduMobAdViewDelegate>{
-    //GADBannerView *adBanner_;
+    GADBannerView *adBanner_;
     BOOL didCloseWebsiteView_;
     BOOL isLoaded_;
     id currentDelegate_;

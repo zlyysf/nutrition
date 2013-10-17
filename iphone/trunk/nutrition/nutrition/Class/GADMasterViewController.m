@@ -10,12 +10,13 @@
 #import <AdSupport/ASIdentifierManager.h>
 #import "LZConstants.h"
 #import "BaiduMobAdView.h"
+#import "LZUtility.h"
 //#define MY_BANNER_UNIT_ID @"a14fb773a49c5c9"//a14f0800ac9dfad。a14fb76d4362e2a
 //#define MY_BANNER_UNIT_ID @"a151346bbb1e935"//zly quiz awesome
 //@"a15138373387ee2"//lingzhi.mobile Quiz Awesome
 //这里写你的id    admob上注册应用后获取自己的id
 //#define     IsEnvironmentProd 0
-@interface GADMasterViewController ()
+@interface GADMasterViewController ()<GADBannerViewDelegate>
 
 @end
 
@@ -33,10 +34,20 @@
 }
 -(id)init {
     if (self = [super init]) {
-        sharedAdView = [[BaiduMobAdView alloc] initWithFrame:CGRectMake(0.0,0.0,320,50)];
-        sharedAdView.AdType = BaiduMobAdViewTypeBanner;
-        
-        sharedAdView.delegate = self;
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            sharedAdView = [[BaiduMobAdView alloc] initWithFrame:CGRectMake(0.0,0.0,320,50)];
+            sharedAdView.AdType = BaiduMobAdViewTypeBanner;
+            
+            sharedAdView.delegate = self;
+        }
+        else
+        {
+            adBanner_ = [[GADBannerView alloc]
+                         initWithFrame:CGRectMake(0.0,0.0,
+                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+                                                  CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+        }
 //        adBanner_ = [[GADBannerView alloc]
 //                     initWithFrame:CGRectMake(0.0,0.0,
 //                                              CGSizeFromGADAdSize(kGADAdSizeBanner).width,
@@ -66,13 +77,35 @@
     currentDelegate_ = rootViewController;
     // Ad already requested, simply add it into the view
     if (isLoaded_) {
-        [superView addSubview:sharedAdView];
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            [superView addSubview:sharedAdView];
+        }
+        else
+        {
+            [superView addSubview:adBanner_];
+        }
 
     } else {
+        if ([LZUtility isCurrentLanguageChinese])
+        {
+            [superView addSubview:sharedAdView];
+            [self adBannerLoadRequest];
+            isLoaded_ = YES;
+        }
+        else
+        {
+            adBanner_.delegate = self;
+            adBanner_.rootViewController = rootViewController;
+            adBanner_.adUnitID = MY_BANNER_UNIT_ID;
+            
+            [self adBannerLoadRequest];
+            
+            [superView addSubview:adBanner_];
+            isLoaded_ = YES;
+        }
 
-        [superView addSubview:sharedAdView];
-        [self adBannerLoadRequest];
-        isLoaded_ = YES;
+        
         
 //        adBanner_.delegate = self;
 //        adBanner_.rootViewController = rootViewController;
@@ -102,9 +135,45 @@
 //}
 -(void)adBannerLoadRequest
 {
-    [sharedAdView start];
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        [sharedAdView start];
+    }
+    else
+    {
+        GADRequest *request = [GADRequest request];
+        [adBanner_ loadRequest:request];
+    }
 }
 
+- (void)adViewDidReceiveAd:(GADBannerView *)view {
+    if (adBanner_.hasAutoRefreshed)
+    {
+        //NSLog(@"hasAutoRefreshed YES");
+    }
+    else
+    {
+        //NSLog(@"hasAutoRefreshed NO");
+    }
+    if ([currentDelegate_ respondsToSelector:@selector(adViewDidReceiveAd:)]) {
+        [currentDelegate_ adViewDidReceiveAd:view];
+    }
+}
+- (void)adView:(GADBannerView *)view
+didFailToReceiveAdWithError:(GADRequestError *)error
+{
+    //NSLog(@"Admob Error %@",[error description]);
+    if (adBanner_.hasAutoRefreshed)
+    {
+        //NSLog(@"hasAutoRefreshed YES");
+    }
+    else
+    {
+        //NSLog(@"hasAutoRefreshed NO");
+    }
+    NSTimeInterval delaySec = 60.0;
+    [self performSelector:@selector(adBannerLoadRequest) withObject:self afterDelay:delaySec];
+}
 
 //-(void)removeAds
 //{
