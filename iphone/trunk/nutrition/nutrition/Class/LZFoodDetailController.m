@@ -458,6 +458,7 @@
 #pragma mark- LZValueSelectorViewDelegate
 - (void)selector:(LZValueSelectorView *)valueSelector didSelectRowAtIndex:(NSInteger)index
 {
+    NSString *gStr = NSLocalizedString(@"weightunit_g", @"克");
     if ( UseUnitDisplay)
     {
         NSNumber *singleUnitWeight = [self.foodAttr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
@@ -467,11 +468,11 @@
         {
             if ((value-(int)value)<Config_nearZero)
             {
-                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@(%d%@)",(index/2),unitName,(int)value,NSLocalizedString(@"weightunit_g", @"克")];
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@(%d%@)",(index/2),unitName,(int)value,gStr];
             }
             else
             {
-                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@(%.1f%@)",(index/2),unitName,value,NSLocalizedString(@"weightunit_g", @"克")];
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@(%.1f%@)",(index/2),unitName,value,gStr];
             }
             
         }
@@ -479,18 +480,18 @@
         {
             if ((value-(int)value)<Config_nearZero)
             {
-                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f%@(%d%@)",((float)index/2),unitName,(int)value,NSLocalizedString(@"weightunit_g", @"克")];
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f%@(%d%@)",((float)index/2),unitName,(int)value,gStr];
             }
             else
             {
-                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f%@(%.1f%@)",((float)index/2),unitName,value,NSLocalizedString(@"weightunit_g", @"克")];
+                self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%.1f%@(%.1f%@)",((float)index/2),unitName,value,gStr];
             }
         }
     }
     else
     {
         currentSelectValue = [NSNumber numberWithFloat:index];
-        self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@",index,NSLocalizedString(@"weightunit_g", @"克")];
+        self.foodAmountDisplayLabel.text = [NSString stringWithFormat:@"%d%@",index,gStr];
     }
     [self displayNutrientUI];
 }
