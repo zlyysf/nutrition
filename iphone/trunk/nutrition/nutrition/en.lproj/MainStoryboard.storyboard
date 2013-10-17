@@ -502,7 +502,7 @@
                                             <outlet property="recommendSignImageView" destination="PRt-fL-XJb" id="RLK-Os-s0l"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NutritionLackCell" id="zp6-Uu-VFl" customClass="LZEmptyClassCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NutritionLightLackCell" id="zp6-Uu-VFl" customClass="LZEmptyClassCell">
                                         <rect key="frame" x="0.0" y="126" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -555,26 +555,14 @@
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="LZHeavlyLackCell" rowHeight="104" id="czX-gs-HzQ" customClass="LZHeavlyLackCell">
-                                        <rect key="frame" x="0.0" y="256" width="320" height="104"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NutritionHeavyLackCell" id="9Fe-ly-Ykt" customClass="LZEmptyClassCell">
+                                        <rect key="frame" x="0.0" y="256" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="103"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="GfT-qg-x8t">
-                                                    <rect key="frame" x="114" y="10" width="196" height="94"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <color key="highlightedColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                </label>
-                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <connections>
-                                            <outlet property="lackDescriptionLabel" destination="GfT-qg-x8t" id="Jms-e7-8bC"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -2047,12 +2035,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
             <relationships>
                 <relationship kind="outlet" name="checkItemButton" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="listView" candidateClass="UITableView"/>
-            </relationships>
-        </class>
-        <class className="LZHeavlyLackCell" superclassName="UITableViewCell">
-            <source key="sourceIdentifier" type="project" relativePath="./Classes/LZHeavlyLackCell.h"/>
-            <relationships>
-                <relationship kind="outlet" name="lackDescriptionLabel" candidateClass="UILabel"/>
             </relationships>
         </class>
         <class className="LZMainPageViewController" superclassName="UIViewController">
