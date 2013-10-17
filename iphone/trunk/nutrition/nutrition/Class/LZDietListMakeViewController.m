@@ -34,12 +34,13 @@
 {
     MBProgressHUD *HUD;
     BOOL isCapturing;
+    BOOL isChinese;
 }
 
 @end
 
 @implementation LZDietListMakeViewController
-@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,recommendFoodDictForDisplay,dietId,allFoodUnitDict,backWithNoAnimation,useRecommendNutrient;
+@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,recommendFoodDictForDisplay,dietId,allFoodUnitDict,backWithNoAnimation,useRecommendNutrient,nutritionNameArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -64,6 +65,13 @@
     [self.view addSubview:HUD];
     HUD.hidden = YES;
     HUD.delegate = self;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        isChinese = YES;
+    }
+    else{
+        isChinese = NO;
+    }
     //self.currentEditFoodId = nil;
 	// Do any additional setup after loading the view.
     if (ViewControllerUseBackImage) {
@@ -319,6 +327,28 @@
     if (nutrientArray != nil && [nutrientArray count]!=0) {
         
         [nutrientInfoArray addObjectsFromArray:nutrientArray];
+    }
+    if (nutritionNameArray == nil || [nutritionNameArray count]==0)
+    {
+        nutritionNameArray = [[NSMutableArray alloc]init];
+        LZDataAccess *da = [LZDataAccess singleton];
+        
+        NSString *queryKey;
+        if (isChinese)
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+        for (NSDictionary *nutrient in nutrientInfoArray)
+        {
+            NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+            NSDictionary *dict = [da getNutrientInfo:nutrientId];
+            NSString *nutritionName = [dict objectForKey:queryKey];
+            [nutritionNameArray addObject:nutritionName];
+        }
     }
     if (needRefreshAll)
     {
@@ -731,7 +761,7 @@
                     }
                 }
                 NSString *foodNameKey;
-                if ([LZUtility isCurrentLanguageChinese])
+                if (isChinese)
                 {
                     foodNameKey = @"CnCaption";
                 }
@@ -757,18 +787,7 @@
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
         
         NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSDictionary *dict = [da getNutrientInfo:nutrientId];
-        NSString *queryKey;
-        if ([LZUtility isCurrentLanguageChinese])
-        {
-            queryKey = @"NutrientCnCaption";
-        }
-        else
-        {
-            queryKey = @"NutrientEnCaption";
-        }
-        NSString *nutritionName = [dict objectForKey:queryKey];
+        NSString *nutritionName = [self.nutritionNameArray objectAtIndex:indexPath.row];
         [cell.nutritionNameButton setTitle:nutritionName forState:UIControlStateNormal];
         cell.nutrientId = nutrientId;
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
@@ -887,7 +906,7 @@
             //NSArray *nutrientSupplyArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
             //NSArray *nutrientStandardArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
             NSString *foodNameKey;
-            if ([LZUtility isCurrentLanguageChinese])
+            if (isChinese)
             {
                 foodNameKey = @"CnCaption";
             }
@@ -974,19 +993,7 @@
         needRefresh = YES;
         
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
-        NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSDictionary *dict = [da getNutrientInfo:nutrientId];
-        NSString *queryKey;
-        if ([LZUtility isCurrentLanguageChinese])
-        {
-            queryKey = @"NutrientCnCaption";
-        }
-        else
-        {
-            queryKey = @"NutrientEnCaption";
-        }
-        NSString *nutritionName = [dict objectForKey:queryKey];
+        NSString *nutritionName = [self.nutritionNameArray objectAtIndex:indexPath.row];
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
         LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
         addByNutrientController.nutrientDict = nutrient;
@@ -1116,7 +1123,7 @@
             }
         }
         NSString *foodNameKey;
-        if ([LZUtility isCurrentLanguageChinese])
+        if (isChinese)
         {
             foodNameKey = @"CnCaption";
         }
@@ -1384,19 +1391,7 @@
     needRefresh = YES;
         
     NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:tag];
-    NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *dict = [da getNutrientInfo:nutrientId];
-    NSString *queryKey;
-    if ([LZUtility isCurrentLanguageChinese])
-    {
-        queryKey = @"NutrientCnCaption";
-    }
-    else
-    {
-        queryKey = @"NutrientEnCaption";
-    }
-    NSString *nutritionName = [dict objectForKey:queryKey];
+    NSString *nutritionName = [nutritionNameArray objectAtIndex:tag];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
     addByNutrientController.nutrientDict = nutrient;

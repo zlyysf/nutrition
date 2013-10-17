@@ -37,6 +37,7 @@
 @property (nonatomic, readwrite) int currentActivityLevelSelection;
 @property (strong, nonatomic) IBOutlet UILabel *ageUnitLabel;
 @property (strong,nonatomic)NSMutableArray *nutrientStandardArray;
+@property (strong,nonatomic)NSMutableArray *nutritionNameArray;
 @property (strong, nonatomic) IBOutlet UILabel *basicinfoLabel;
 @property (strong, nonatomic) IBOutlet UILabel *ageLabel;
 @property (strong, nonatomic) IBOutlet UILabel *heightLabel;

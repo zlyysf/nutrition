@@ -19,6 +19,7 @@
 @interface LZFoodSearchViewController ()<LZFoodDetailViewControllerDelegate>
 {
     BOOL isfirstLoad;
+    BOOL isChinese;
 }
 @end
 
@@ -43,6 +44,13 @@
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 
     }
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        isChinese = YES;
+    }
+    else{
+        isChinese = NO;
+    }
     self.title = NSLocalizedString(@"foodsearch_viewtitle",@"食物");
     UISearchBar *searchBar = self.searchResultVC.searchBar;
     UIView *barBack = [searchBar.subviews objectAtIndex:0];
@@ -60,7 +68,7 @@
         NSDictionary *afood = [allFood objectAtIndex:i];
         NSString *foodType = [afood objectForKey:@"CnType"];
         NSString *foodQueryKey;
-        if ([LZUtility isCurrentLanguageChinese])
+        if (isChinese)
         {
             foodQueryKey = @"CnCaption";
         }
@@ -124,7 +132,7 @@
         NSString *typeKey = [self.foodTypeArray objectAtIndex:i];
         NSDictionary *typeDict = [translationItemInfo2LevelDict objectForKey:typeKey];
         NSString *queryKey;
-        if ([LZUtility isCurrentLanguageChinese])
+        if (isChinese)
         {
             queryKey = @"ItemNameCn";
         }
@@ -169,7 +177,7 @@
     NSString *typeKey = [self.foodTypeArray objectAtIndex:tag];
     NSDictionary *typeDict = [translationItemInfo2LevelDict objectForKey:typeKey];
     NSString *queryKey;
-    if ([LZUtility isCurrentLanguageChinese])
+    if (isChinese)
     {
         queryKey = @"ItemNameCn";
     }
@@ -240,7 +248,7 @@
     int index = [self.allFoodNamesArray indexOfObject:resultName];
     NSDictionary *foodAtr = [self.allFood  objectAtIndex:index];
     NSString *foodQueryKey;
-    if ([LZUtility isCurrentLanguageChinese])
+    if (isChinese)
     {
         foodQueryKey = @"CnCaption";
     }

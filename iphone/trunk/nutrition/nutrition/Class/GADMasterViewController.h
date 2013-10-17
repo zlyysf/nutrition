@@ -13,6 +13,7 @@
     GADBannerView *adBanner_;
     BOOL didCloseWebsiteView_;
     BOOL isLoaded_;
+    BOOL isChinese_;
     id currentDelegate_;
     BaiduMobAdView* sharedAdView;
 }

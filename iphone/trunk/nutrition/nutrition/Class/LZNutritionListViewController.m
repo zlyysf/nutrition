@@ -14,6 +14,9 @@
 #import "GADMasterViewController.h"
 #import "LZNutritionButton.h"
 @interface LZNutritionListViewController ()
+{
+    BOOL isChinese;
+}
 @property (assign,nonatomic)BOOL isFirstLoad;
 @end
 
@@ -83,7 +86,7 @@
         UIColor *backColor = [LZUtility getNutrientColorForNutrientId:nutritionId];
         //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
         NSString *queryKey;
-        if ([LZUtility isCurrentLanguageChinese])
+        if (isChinese)
         {
             queryKey = @"IconTitleCn";
         }
@@ -111,7 +114,7 @@
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary *dict = [da getNutrientInfo:nutritionId];
     NSString *queryKey;
-    if ([LZUtility isCurrentLanguageChinese])
+    if (isChinese)
     {
         queryKey = @"NutrientCnCaption";
     }

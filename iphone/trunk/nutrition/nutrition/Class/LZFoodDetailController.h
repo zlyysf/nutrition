@@ -15,7 +15,7 @@
 @interface LZFoodDetailController : UIViewController<UITableViewDelegate,UITableViewDataSource,IZValueSelectorViewDataSource,IZValueSelectorViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic)NSArray *nutrientSupplyArray;
-@property (strong,nonatomic)NSArray *nutrientStandardArray;
+@property (strong,nonatomic)NSMutableArray *nutrientStandardArray;
 @property (strong,nonatomic)NSString *foodName;
 @property (strong, nonatomic) IBOutlet LZValueSelectorView *foodValuePicker;
 @property (strong, nonatomic) IBOutlet UILabel *foodAmountDisplayLabel;

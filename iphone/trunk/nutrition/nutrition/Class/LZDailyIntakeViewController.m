@@ -16,7 +16,9 @@
 #import "JWNavigationViewController.h"
 #import "LZDietListMakeViewController.h"
 @interface LZDailyIntakeViewController ()<LZFoodDetailViewControllerDelegate>
-
+{
+    BOOL isChinese;
+}
 @end
 
 @implementation LZDailyIntakeViewController
@@ -40,6 +42,14 @@
     }
 
     self.title = titleString;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        isChinese = YES;
+    }
+    else{
+        isChinese = NO;
+    }
+
 //    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
 //    
 //    UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -271,7 +281,7 @@
         [cell.foodPicView setImage:foodImage];
         cell.foodAmountLabel.hidden = YES;
         NSString *foodQueryKey;
-        if ([LZUtility isCurrentLanguageChinese])
+        if (isChinese)
         {
             foodQueryKey = @"CnCaption";
         }
@@ -325,7 +335,7 @@
     //NSArray *nutrientSupplyArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
     //NSArray *nutrientStandardArr = [[takenFoodNutrientInfoDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
     NSString *foodQueryKey;
-    if ([LZUtility isCurrentLanguageChinese])
+    if (isChinese)
     {
         foodQueryKey = @"CnCaption";
     }

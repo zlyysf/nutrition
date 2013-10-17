@@ -20,6 +20,7 @@
 {
     MBProgressHUD *HUD;
     BOOL isFirstLoad;
+    BOOL isChinese;
 }
 @end
 
@@ -63,6 +64,13 @@
 //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
 //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
 //    self.listView.tableFooterView = footerView;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        isChinese = YES;
+    }
+    else{
+        isChinese = NO;
+    }
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
     HUD.hidden = YES;
@@ -307,7 +315,7 @@
     UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
     [cell.foodPicView setImage:foodImage];
     NSString *foodQueryKey;
-    if ([LZUtility isCurrentLanguageChinese])
+    if (isChinese)
     {
         foodQueryKey = @"CnCaption";
     }
@@ -345,7 +353,7 @@
     NSDictionary *foodAtr = [self.foodArray objectAtIndex:indexPath.row];
     //NSString *NDB_No = [foodAtr objectForKey:@"NDB_No"];
     NSString *foodQueryKey;
-    if ([LZUtility isCurrentLanguageChinese])
+    if (isChinese)
     {
         foodQueryKey = @"CnCaption";
     }

@@ -25,6 +25,7 @@
 @interface LZFoodDetailController ()
 {
     BOOL isFirstLoad;
+    BOOL isChinese;
 }
 
 @end
@@ -49,6 +50,13 @@
         UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
 
+    }
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        isChinese = YES;
+    }
+    else{
+        isChinese = NO;
     }
     self.title = foodName;
     UIBarButtonItem *cancelItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"quxiaobutton", @"取消") style:UIBarButtonItemStyleBordered target:self action:@selector(cancelButtonTapped)];
@@ -158,6 +166,30 @@
         }
         self.nutrientSupplyArray = [rf calculateGiveFoodSupplyNutrientAndFormatForUI:self.inOutParam];
     }
+    if (self.nutrientStandardArray == nil || [self.nutrientStandardArray count]==0)
+    {
+        self.nutrientStandardArray = [[NSMutableArray alloc]init];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSString *queryKey;
+        if (isChinese)
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+        
+        for (NSDictionary *aNutrient in self.nutrientSupplyArray)
+        {
+            NSString *nutrientId = [aNutrient objectForKey:@"NutrientID"];
+            
+            NSDictionary *dict = [da getNutrientInfo:nutrientId];
+            NSString *nutritionName = [dict objectForKey:queryKey];
+            [self.nutrientStandardArray addObject:nutritionName];
+        }
+    }
+
     self.listView.hidden = NO;
     [self.listView reloadData];
 }
@@ -278,24 +310,24 @@
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    if (section == 0)
-    {
+//    if (section == 0)
+//    {
         if (nutrientSupplyArray != nil && [nutrientSupplyArray count]!=0)
         {
             return [nutrientSupplyArray count];
         }
         else
             return 0;
-    }
-    else
-    {
-        if (nutrientStandardArray != nil && [nutrientStandardArray count]!=0)
-        {
-            return [nutrientStandardArray count];
-        }
-        else
-            return 0;
-    }
+//    }
+//    else
+//    {
+//        if (nutrientStandardArray != nil && [nutrientStandardArray count]!=0)
+//        {
+//            return [nutrientStandardArray count];
+//        }
+//        else
+//            return 0;
+//    }
 
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -305,18 +337,19 @@
         LZNutritionSupplyCell *cell = (LZNutritionSupplyCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionSupplyCell"];
         NSDictionary *aNutrient = [nutrientSupplyArray objectAtIndex:indexPath.row];
         NSString *nutrientId = [aNutrient objectForKey:@"NutrientID"];
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSDictionary *dict = [da getNutrientInfo:nutrientId];
-        NSString *queryKey;
-        if ([LZUtility isCurrentLanguageChinese])
-        {
-            queryKey = @"NutrientCnCaption";
-        }
-        else
-        {
-            queryKey = @"NutrientEnCaption";
-        }
-        NSString *nutritionName = [dict objectForKey:queryKey];
+//        LZDataAccess *da = [LZDataAccess singleton];
+//        NSDictionary *dict = [da getNutrientInfo:nutrientId];
+//        NSString *queryKey;
+//        if ([LZUtility isCurrentLanguageChinese])
+//        {
+//            queryKey = @"NutrientCnCaption";
+//        }
+//        else
+//        {
+//            queryKey = @"NutrientEnCaption";
+//        }
+        NSString *nutritionName = [nutrientStandardArray objectAtIndex:indexPath.row];
+    
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
         cell.nutrientId = nutrientId;
         [cell.nameButton setTitle:nutritionName forState:UIControlStateNormal];
@@ -373,22 +406,22 @@
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0)
+    //if (indexPath.section == 0)
         return 42;
-    else
-        return 30;
+//    else
+//        return 30;
 }
 - (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
 {
-    if( section == 0)
+    //if( section == 0)
         return 5;
-    else
-        return 20;
+//    else
+//        return 20;
 }
 - (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 {
-    float height = (section == 0 ?5:20);
-    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, height)];
+    //float height = (section == 0 ?5:20);
+    UIView *sectionView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 5)];
     [sectionView setBackgroundColor:[UIColor clearColor]];
     return sectionView;
 }

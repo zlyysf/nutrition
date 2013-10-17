@@ -15,6 +15,7 @@ typedef enum listType
 @interface LZDietListMakeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic)NSMutableArray *takenFoodIdsArray;
+@property (strong,nonatomic)NSMutableArray *nutritionNameArray;
 @property (strong, nonatomic)NSMutableDictionary *takenFoodDict;
 @property (strong,nonatomic)NSMutableArray *nutrientInfoArray;
 @property (strong,nonatomic)NSMutableDictionary *takenFoodNutrientInfoDict;

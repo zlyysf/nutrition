@@ -20,6 +20,9 @@
 #import "LZCheckTypeSwitchView.h"
 #define DiagnosticLabelLength 245.f
 @interface LZHealthCheckViewController ()<LZCheckTypeSwitchViewDelegate>
+{
+    BOOL isChinese;
+}
 @property (nonatomic,strong)NSString *sectionTitle;
 @property (assign,nonatomic)BOOL isFirstLoad;
 @property (assign,nonatomic)BOOL pushToNextView;
@@ -82,12 +85,14 @@
     {
         indicatorX = 140;
         fontSize = 20;
+        isChinese = YES;
         [self.checkItemButton.titleLabel setFont:[UIFont boldSystemFontOfSize:20]];
     }
     else
     {
         indicatorX = 180;
         fontSize =  18;
+        isChinese = NO;
         [self.checkItemButton.titleLabel setFont:[UIFont boldSystemFontOfSize:18]];
     }
 
@@ -176,7 +181,7 @@
     NSArray *diseaseInfoAry = [da getDiseaseInfosOfGroup:illnessGroup andDepartment:nil andDiseaseType:nil andTimeType:nil];
     NSDictionary *diseaseInfo2LevelDict = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_Disease andDicArray:diseaseInfoAry];
     NSString *queryKey;
-    if ([LZUtility isCurrentLanguageChinese])
+    if (isChinese)
     {
         queryKey = @"Disease";
     }

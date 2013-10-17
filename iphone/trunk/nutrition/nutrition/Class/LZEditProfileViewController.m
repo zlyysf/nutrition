@@ -15,11 +15,15 @@
 #import "GADMasterViewController.h"
 #define kKGConvertLBRatio 2.2046
 @interface LZEditProfileViewController ()
+{
+    BOOL isChinese;
+}
 @property (assign,nonatomic)BOOL usePound;
+
 @end
 
 @implementation LZEditProfileViewController
-@synthesize currentTextField,firstEnterEditView,nutrientStandardArray,maxNutrientCount,admobView;
+@synthesize currentTextField,firstEnterEditView,nutrientStandardArray,maxNutrientCount,admobView,nutritionNameArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -92,11 +96,13 @@
     {
         self.usePound = NO;
         self.weightSymbol.text = @"kg";
+        isChinese = YES;
     }
     else
     {
         self.usePound = YES;
         self.weightSymbol.text = @"lb";
+        isChinese = NO;
     }
     self.ageTextField.tag= 200;
     self.heightTextField.tag = 201;
@@ -354,25 +360,13 @@
 }
 -(void)displayDRI:(NSDictionary *)info
 {
+    NSDictionary *userInfo;
     if(info)
     {
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+        userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                   [info objectForKey:LZUserSexKey],ParamKey_sex, [info objectForKey:LZUserAgeKey],ParamKey_age,
                                   [info objectForKey:LZUserWeightKey],ParamKey_weight, [info objectForKey:LZUserHeightKey],ParamKey_height,
                                   [info objectForKey:LZUserActivityLevelKey],ParamKey_activityLevel, nil];
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
-        
-        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       DRIsDict,Key_DRI,
-                                       nil];
-        NSMutableDictionary *driDict =  [rf formatDRIForUI:params];
-        NSArray *driArray = [driDict objectForKey:@"nutrientsInfoOfDRI"];
-        [self.nutrientStandardArray removeAllObjects];
-        [self.nutrientStandardArray  addObjectsFromArray:driArray];
-        [self.listView reloadData];
-
     }
     else
     {
@@ -381,23 +375,49 @@
         NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
         NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
         NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+        userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                                   userSex,ParamKey_sex, userAge,ParamKey_age,
                                   userWeight,ParamKey_weight, userHeight,ParamKey_height,
                                   userActivityLevel,ParamKey_activityLevel, nil];
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
-        
-        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-        NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       DRIsDict,Key_DRI,
-                                       nil];
-        NSMutableDictionary *driDict =  [rf formatDRIForUI:params];
-        NSArray *driArray = [driDict objectForKey:@"nutrientsInfoOfDRI"];
-        [self.nutrientStandardArray removeAllObjects];
-        [self.nutrientStandardArray  addObjectsFromArray:driArray];
-        [self.listView reloadData];
     }
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:nil];
+    
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   DRIsDict,Key_DRI,
+                                   nil];
+    NSMutableDictionary *driDict =  [rf formatDRIForUI:params];
+    NSArray *driArray = [driDict objectForKey:@"nutrientsInfoOfDRI"];
+    [self.nutrientStandardArray removeAllObjects];
+    [self.nutrientStandardArray  addObjectsFromArray:driArray];
+    if (self.nutritionNameArray == nil || [self.nutritionNameArray count]==0)
+    {
+        nutritionNameArray = [[NSMutableArray alloc]init];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSString *queryKey;
+        if (isChinese)
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+
+        for (NSDictionary *nutrientStandard in nutrientStandardArray)
+        {
+            NSString *nutritionId = [nutrientStandard objectForKey:@"NutrientID"];
+            
+            NSDictionary *dict = [da getNutrientInfo:nutritionId];
+            
+            NSString *nutritionName = [dict objectForKey:queryKey];
+            [nutritionNameArray addObject:nutritionName];
+        }
+    }
+    
+    [self.listView reloadData];
+
     self.emptyDRILabel.hidden = YES;
     self.listView.hidden = NO;
     self.listViewBGImage.hidden = NO;
@@ -742,21 +762,6 @@
     
     LZStandardContentCell *cell = (LZStandardContentCell *)[tableView dequeueReusableCellWithIdentifier:@"LZStandardContentCell"];
     NSDictionary *nutrientStandard = [nutrientStandardArray objectAtIndex:indexPath.row];
-    NSString *nutritionId = [nutrientStandard objectForKey:@"NutrientID"];
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *dict = [da getNutrientInfo:nutritionId];
-
-    NSString *queryKey;
-    if ([LZUtility isCurrentLanguageChinese])
-    {
-        queryKey = @"NutrientCnCaption";
-    }
-    else
-    {
-        queryKey = @"NutrientEnCaption";
-    }
-    NSString *nutritionName = [dict objectForKey:queryKey];
-
     NSNumber *foodNutrientContent = [nutrientStandard objectForKey:@"Amount"];
     NSString *unit = [nutrientStandard objectForKey:@"NutrientEnUnit"];
     if (indexPath.row == [nutrientStandardArray count]-1)
@@ -767,6 +772,7 @@
     {
         cell.sepratorLine.hidden = NO;
     }
+    NSString *nutritionName = [self.nutritionNameArray objectAtIndex:indexPath.row];
     cell.nutritionNameLabel.text = nutritionName;
     cell.nutritionSupplyLabel.text = [NSString stringWithFormat:@"%.2f%@",[foodNutrientContent floatValue],unit];
     

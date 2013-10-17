@@ -40,6 +40,7 @@
             sharedAdView.AdType = BaiduMobAdViewTypeBanner;
             
             sharedAdView.delegate = self;
+            isChinese_ = YES;
         }
         else
         {
@@ -47,6 +48,7 @@
                          initWithFrame:CGRectMake(0.0,0.0,
                                                   CGSizeFromGADAdSize(kGADAdSizeBanner).width,
                                                   CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+            isChinese_ = NO;
         }
 //        adBanner_ = [[GADBannerView alloc]
 //                     initWithFrame:CGRectMake(0.0,0.0,
@@ -77,7 +79,7 @@
     currentDelegate_ = rootViewController;
     // Ad already requested, simply add it into the view
     if (isLoaded_) {
-        if ([LZUtility isCurrentLanguageChinese])
+        if (isChinese_)
         {
             [superView addSubview:sharedAdView];
         }
@@ -87,7 +89,7 @@
         }
 
     } else {
-        if ([LZUtility isCurrentLanguageChinese])
+        if (isChinese_)
         {
             [superView addSubview:sharedAdView];
             [self adBannerLoadRequest];
@@ -135,7 +137,7 @@
 //}
 -(void)adBannerLoadRequest
 {
-    if ([LZUtility isCurrentLanguageChinese])
+    if (isChinese_)
     {
         [sharedAdView start];
     }
