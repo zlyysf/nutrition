@@ -150,12 +150,14 @@
 		    android:process=":DownloadingService" >
 		</service>
 		<meta-data android:value="52609e3a56240b493f099dfd" android:name="UMENG_APPKEY"></meta-data>
-		<meta-data android:value="@string/umengChannelGoogle" android:name="UMENG_CHANNEL"/>
+		<meta-data android:value="@string/umengChannelDev" android:name="UMENG_CHANNEL"/>
 		<!-- 
 		<meta-data android:value="@string/umengChannelGoogle" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannelAppchina" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannel91" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannelGfan" android:name="UMENG_CHANNEL"/>
+		<meta-data android:value="@string/umengChannelWebPortal" android:name="UMENG_CHANNEL"/>
+		<meta-data android:value="@string/umengChannelDev" android:name="UMENG_CHANNEL"/>
 		 -->
     </application>
 
