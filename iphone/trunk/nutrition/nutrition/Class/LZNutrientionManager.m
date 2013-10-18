@@ -11,6 +11,7 @@
 #import "LZAppDelegate.h"
 #import "LZDataAccess.h"
 @implementation LZNutrientionManager
+@synthesize allNutritionDict;
 +(LZNutrientionManager*)SharedInstance
 {
     static dispatch_once_t LZNMOnce;
@@ -20,12 +21,30 @@
     });
     return sharedInstance;
 }
+-(id)init
+{
+    if (self = [super init])
+    {
+        LZDataAccess *da = [LZDataAccess singleton];
+        allNutritionDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:nil];
+    }
+    return self;
+}
+-(NSDictionary *)getNutritionInfo:(NSString *)nutritionId
+{
+    NSDictionary *dict = [allNutritionDict objectForKey:nutritionId];
+    return dict;
+}
+-(NSDictionary *)getAllNutritionDict
+{
+    NSDictionary *dict = [[NSDictionary alloc]initWithDictionary:self.allNutritionDict];
+    return  dict;
+}
 - (void)showNutrientInfo:(NSString *)nutrientId
 {
     float duration = 0.5;
     CGSize screenSize = [[UIScreen mainScreen]bounds].size;
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *dict = [da getNutrientInfo:nutrientId];
+    NSDictionary *dict = [allNutritionDict objectForKey:nutrientId];
     //NSLog(@"nutrient dict %@",dict);
     LZNutritionInfoView *viewtoAnimate = [[LZNutritionInfoView alloc]initWithFrame:CGRectMake(0, 20, screenSize.width, screenSize.height-20) andColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5] andInfo:dict delegate:self];
 

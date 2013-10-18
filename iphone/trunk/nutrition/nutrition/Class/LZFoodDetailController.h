@@ -37,5 +37,4 @@
 @property (assign,nonatomic)int GUnitStartIndex;
 @property (assign,nonatomic)BOOL isForEdit;
 @property (assign,nonatomic)BOOL isPushToDietPicker;
-@property (nonatomic,strong)NSMutableDictionary *allNutritionDict;
 @end

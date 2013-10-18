@@ -13,6 +13,7 @@
 #import "GADMasterViewController.h"
 #import "MobClick.h"
 #import "LZDietPickerViewController.h"
+#import "LZNutrientionManager.h"
 #define LongLineHeight 20.f
 #define ShortLineHeight 10.f
 #define ValuePickerHeight 50.f
@@ -31,7 +32,7 @@
 @end
 
 @implementation LZFoodDetailController
-@synthesize nutrientSupplyArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName,isCalForAll,staticFoodAmountDict,GUnitStartIndex,isForEdit,isPushToDietPicker,allNutritionDict;
+@synthesize nutrientSupplyArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName,isCalForAll,staticFoodAmountDict,GUnitStartIndex,isForEdit,isPushToDietPicker;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -96,8 +97,6 @@
     {
         UseUnitDisplay = NO;
     }
-    LZDataAccess *da = [LZDataAccess singleton];
-    self.allNutritionDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:nil];
     isFirstLoad = YES;
     self.listView.hidden = YES;
     [self.GUnitButton setTitle:NSLocalizedString(@"weightunit_g", @"克") forState:UIControlStateNormal];
@@ -325,8 +324,8 @@
         {
             queryKey = @"NutrientEnCaption";
         }
-
-        NSDictionary *dict = [allNutritionDict objectForKey:nutrientId];
+        LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
+        NSDictionary *dict = [nm getNutritionInfo:nutrientId];
         NSString *nutritionName = [dict objectForKey:queryKey];
     
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];

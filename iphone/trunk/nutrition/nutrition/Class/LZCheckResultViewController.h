@@ -13,7 +13,6 @@
 @property (nonatomic,strong)NSArray *heavylyLackArray;
 @property (nonatomic,strong)NSArray *lightlyLackArray;
 @property (nonatomic,strong)NSString *userSelectedNames;
-@property (nonatomic,strong)NSMutableArray *nutritionNameArray;
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong,nonatomic)NSMutableDictionary *recommendFoodDictForDisplay;
 @property (strong,nonatomic)NSMutableArray *takenFoodIdsArray;

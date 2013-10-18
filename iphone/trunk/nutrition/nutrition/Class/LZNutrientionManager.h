@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 #import "LZNutritionInfoView.h"
 @interface LZNutrientionManager : NSObject<LZNutritionInfoViewDelegate>
+@property (strong,nonatomic)NSDictionary *allNutritionDict;
 +(LZNutrientionManager*)SharedInstance;
 - (void)showNutrientInfo:(NSString *)nutrientId;
+-(NSDictionary *)getNutritionInfo:(NSString *)nutritionId;
+-(NSDictionary *)getAllNutritionDict;
 @end

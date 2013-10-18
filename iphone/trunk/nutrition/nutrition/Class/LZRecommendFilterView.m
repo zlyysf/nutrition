@@ -11,6 +11,7 @@
 #import "LZDataAccess.h"
 #import "LZConstants.h"
 #import "LZUtility.h"
+#import "LZNutrientionManager.h"
 #define kSelectButtonSide 22.f
 #define kButtonAreaSide 40.f
 #define kTagAddNum 20
@@ -101,14 +102,13 @@
         [backView addSubview:listView];
         
         float newPointY =(kButtonAreaSide-kSelectButtonSide) -(kSelectButtonSide+20);
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSDictionary *allNutritionDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:nil];
+        LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
         for (int i=0; i<[self.filterArray count]; i++)
         {
             NSDictionary *nutrientState = [self.filterArray objectAtIndex:i];
             NSArray *keys = [nutrientState allKeys];
             NSString *key = [keys objectAtIndex:0];
-            NSDictionary *dict = [allNutritionDict objectForKey:key];
+            NSDictionary *dict = [nm getNutritionInfo:key];
             NSString *queryKey;
             if ([LZUtility isCurrentLanguageChinese])
             {

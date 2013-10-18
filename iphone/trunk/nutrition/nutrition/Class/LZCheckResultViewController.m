@@ -37,7 +37,7 @@
 
 @implementation LZCheckResultViewController
 @synthesize userPreferArray,userSelectedNames,diseaseCellHeight,lightCellHeight,heavyCellHeight,isFirstLoad,recommendFoodDictForDisplay,takenFoodIdsArray,takenFoodDict,nutrientInfoArray,takenFoodNutrientInfoDict,allFoodUnitDict;
-@synthesize heavylyLackArray,lightlyLackArray,userTotalScore,nutritionNameArray;
+@synthesize heavylyLackArray,lightlyLackArray,userTotalScore;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -276,8 +276,8 @@
                     }
                     startX = 10+(i-(floor-1)*perRowCount)*102;
                     NSString *nutritionId = [self.heavylyLackArray objectAtIndex:i];
-                    LZDataAccess *da = [LZDataAccess singleton];
-                    NSDictionary *dict = [da getNutrientInfo:nutritionId];
+                    LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
+                    NSDictionary *dict = [nm getNutritionInfo:nutritionId];
                     UIColor *backColor = [LZUtility getNutrientColorForNutrientId:nutritionId];
                     NSString *queryKey;
                     if (isChinese)
@@ -337,8 +337,8 @@
                     }
                     startX = 10+(i-(floor-1)*perRowCount)*102;
                     NSString *nutritionId = [self.lightlyLackArray objectAtIndex:i];
-                    LZDataAccess *da = [LZDataAccess singleton];
-                    NSDictionary *dict = [da getNutrientInfo:nutritionId];
+                    LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
+                    NSDictionary *dict = [nm getNutritionInfo:nutritionId];
                     UIColor *backColor = [LZUtility getNutrientColorForNutrientId:nutritionId];
                     NSString *queryKey;
                     if (isChinese)
@@ -473,18 +473,19 @@
         //NSSet *selectNutrient = [NSSet setWithArray:self.userPreferArray];
         NSSet *heavySet = [NSSet setWithArray:self.heavylyLackArray];
         NSSet *lightSet = [NSSet setWithArray:self.lightlyLackArray];
-//        LZDataAccess *da = [LZDataAccess singleton];
-//        NSDictionary *dict = [da getNutrientInfo:nutrientId];
-//        NSString *queryKey;
-//        if ([LZUtility isCurrentLanguageChinese])
-//        {
-//            queryKey = @"NutrientCnCaption";
-//        }
-//        else
-//        {
-//            queryKey = @"NutrientEnCaption";
-//        }
-        NSString *nutritionName = [self.nutritionNameArray objectAtIndex:indexPath.row];
+
+        NSString *queryKey;
+        if (isChinese)
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+        LZNutrientionManager *nm =[LZNutrientionManager SharedInstance];
+        NSDictionary *dict = [nm getNutritionInfo:nutrientId];
+        NSString *nutritionName = [dict objectForKey:queryKey];
         cell.nameLabel.text = nutritionName;
         if ([heavySet containsObject:nutrientId])
         {
@@ -899,28 +900,6 @@
         
         [nutrientInfoArray addObjectsFromArray:nutrientArray];
     }
-    if (nutritionNameArray == nil || [nutritionNameArray count]==0)
-    {
-        nutritionNameArray = [[NSMutableArray alloc]init];
-        LZDataAccess *da = [LZDataAccess singleton];
-        
-        NSString *queryKey;
-        if (isChinese)
-        {
-            queryKey = @"NutrientCnCaption";
-        }
-        else
-        {
-            queryKey = @"NutrientEnCaption";
-        }
-        for (NSDictionary *nutrient in nutrientInfoArray)
-        {
-            NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
-            NSDictionary *dict = [da getNutrientInfo:nutrientId];
-            NSString *nutritionName = [dict objectForKey:queryKey];
-            [nutritionNameArray addObject:nutritionName];
-        }
-    }
 
     if (needRefreshAll)
     {
@@ -941,8 +920,8 @@
     [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
     NSString *nutritionId = (NSString *)sender.customData;
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *dict = [da getNutrientInfo:nutritionId];
+    LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
+    NSDictionary *dict = [nm getNutritionInfo:nutritionId];
     NSString *queryKey;
     if (isChinese)
     {

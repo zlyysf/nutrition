@@ -13,6 +13,7 @@
 #import "LZRecommendFood.h"
 #import "LZStandardContentCell.h"
 #import "GADMasterViewController.h"
+#import "LZNutrientionManager.h"
 #define kKGConvertLBRatio 2.2046
 @interface LZEditProfileViewController ()
 {
@@ -23,7 +24,7 @@
 @end
 
 @implementation LZEditProfileViewController
-@synthesize currentTextField,firstEnterEditView,nutrientStandardArray,maxNutrientCount,admobView,nutritionNameArray;
+@synthesize currentTextField,firstEnterEditView,nutrientStandardArray,maxNutrientCount,admobView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -391,30 +392,6 @@
     NSArray *driArray = [driDict objectForKey:@"nutrientsInfoOfDRI"];
     [self.nutrientStandardArray removeAllObjects];
     [self.nutrientStandardArray  addObjectsFromArray:driArray];
-    if (self.nutritionNameArray == nil || [self.nutritionNameArray count]==0)
-    {
-        nutritionNameArray = [[NSMutableArray alloc]init];
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSString *queryKey;
-        if (isChinese)
-        {
-            queryKey = @"NutrientCnCaption";
-        }
-        else
-        {
-            queryKey = @"NutrientEnCaption";
-        }
-
-        for (NSDictionary *nutrientStandard in nutrientStandardArray)
-        {
-            NSString *nutritionId = [nutrientStandard objectForKey:@"NutrientID"];
-            
-            NSDictionary *dict = [da getNutrientInfo:nutritionId];
-            
-            NSString *nutritionName = [dict objectForKey:queryKey];
-            [nutritionNameArray addObject:nutritionName];
-        }
-    }
     
     [self.listView reloadData];
 
@@ -772,7 +749,19 @@
     {
         cell.sepratorLine.hidden = NO;
     }
-    NSString *nutritionName = [self.nutritionNameArray objectAtIndex:indexPath.row];
+    NSString *nutritionId = [nutrientStandard objectForKey:@"NutrientID"];
+    NSString *queryKey;
+    if (isChinese)
+    {
+        queryKey = @"NutrientCnCaption";
+    }
+    else
+    {
+        queryKey = @"NutrientEnCaption";
+    }
+    LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
+    NSDictionary *dict = [nm getNutritionInfo:nutritionId];
+    NSString *nutritionName = [dict objectForKey:queryKey];
     cell.nutritionNameLabel.text = nutritionName;
     cell.nutritionSupplyLabel.text = [NSString stringWithFormat:@"%.2f%@",[foodNutrientContent floatValue],unit];
     

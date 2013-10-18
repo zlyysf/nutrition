@@ -27,6 +27,7 @@
 #import "LZRecommendFilterView.h"
 #import "LZAppDelegate.h"
 #import "LZFoodSearchViewController.h"
+#import "LZNutrientionManager.h"
 #define KChangeFoodAmountAlertTag 101
 #define KSaveDietTitleAlertTag 102
 #define KInstallWechatAlertTag 103
@@ -40,7 +41,7 @@
 @end
 
 @implementation LZDietListMakeViewController
-@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,recommendFoodDictForDisplay,dietId,allFoodUnitDict,backWithNoAnimation,useRecommendNutrient,nutritionNameArray;
+@synthesize takenFoodIdsArray,takenFoodDict,nutrientInfoArray,needRefresh,listType,takenFoodNutrientInfoDict,recommendFoodDictForDisplay,dietId,allFoodUnitDict,backWithNoAnimation,useRecommendNutrient;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -337,28 +338,7 @@
         
         [nutrientInfoArray addObjectsFromArray:nutrientArray];
     }
-    if (nutritionNameArray == nil || [nutritionNameArray count]==0)
-    {
-        nutritionNameArray = [[NSMutableArray alloc]init];
-        LZDataAccess *da = [LZDataAccess singleton];
-        
-        NSString *queryKey;
-        if (isChinese)
-        {
-            queryKey = @"NutrientCnCaption";
-        }
-        else
-        {
-            queryKey = @"NutrientEnCaption";
-        }
-        for (NSDictionary *nutrient in nutrientInfoArray)
-        {
-            NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
-            NSDictionary *dict = [da getNutrientInfo:nutrientId];
-            NSString *nutritionName = [dict objectForKey:queryKey];
-            [nutritionNameArray addObject:nutritionName];
-        }
-    }
+
     if (needRefreshAll)
     {
          [self.listView reloadData];
@@ -796,7 +776,20 @@
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
         
         NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
-        NSString *nutritionName = [self.nutritionNameArray objectAtIndex:indexPath.row];
+    
+        NSString *queryKey;
+        if (isChinese)
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+        LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
+        NSDictionary *dict = [nm getNutritionInfo:nutrientId];
+        NSString *nutritionName = [dict objectForKey:queryKey];
+        
         [cell.nutritionNameButton setTitle:nutritionName forState:UIControlStateNormal];
         cell.nutrientId = nutrientId;
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
@@ -1002,7 +995,19 @@
         needRefresh = YES;
         
         NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
-        NSString *nutritionName = [self.nutritionNameArray objectAtIndex:indexPath.row];
+        NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+        NSString *queryKey;
+        if (isChinese)
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+        LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
+        NSDictionary *dict = [nm getNutritionInfo:nutrientId];
+        NSString *nutritionName = [dict objectForKey:queryKey];
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
         LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
         addByNutrientController.nutrientDict = nutrient;
@@ -1400,7 +1405,19 @@
     needRefresh = YES;
         
     NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:tag];
-    NSString *nutritionName = [nutritionNameArray objectAtIndex:tag];
+    NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+    NSString *queryKey;
+    if (isChinese)
+    {
+        queryKey = @"NutrientCnCaption";
+    }
+    else
+    {
+        queryKey = @"NutrientEnCaption";
+    }
+    LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
+    NSDictionary *dict = [nm getNutritionInfo:nutrientId];
+    NSString *nutritionName = [dict objectForKey:queryKey];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
     LZAddByNutrientController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZAddByNutrientController"];
     addByNutrientController.nutrientDict = nutrient;

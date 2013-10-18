@@ -20,6 +20,7 @@
 #import "JWNavigationViewController.h"
 #import "LZRecommendFilterView.h"
 #import "LZCheckTypeSwitchView.h"
+#import "LZNutrientionManager.h"
 @implementation LZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -68,6 +69,7 @@
                                appSecret:SinaWeiboAppSecret
                              redirectUri:@"http://www.lingzhimobile.com/"];
     [ShareSDK connectWeChatWithAppId:WeChatAppId wechatCls:[WXApi class]];
+    [LZNutrientionManager SharedInstance];
     NSNumber *checkReminderState = [[NSUserDefaults standardUserDefaults]objectForKey:KeyHealthCheckReminderState];
     if (checkReminderState == nil)
     {
