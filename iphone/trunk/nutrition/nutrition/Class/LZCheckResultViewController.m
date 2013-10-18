@@ -715,7 +715,16 @@
         //新建一个表单，用insert
         NSDate *now = [NSDate date];
         NSDateFormatter *formatter= [[NSDateFormatter alloc] init];
-        [formatter setLocale:[[NSLocale alloc] init]];
+        NSString *localeId;
+        if (isChinese)
+        {
+            localeId = @"zh";
+        }
+        else
+        {
+            localeId = @"en";
+        }
+        [formatter setLocale:[[NSLocale alloc] initWithLocaleIdentifier:localeId]];
         [formatter setDateFormat:NSLocalizedString(@"checkresult_savefoodalert_content1",@"MM月dd号")];
         NSString* time = [formatter stringFromDate:now];
         NSString *text = [NSString stringWithFormat:NSLocalizedString(@"checkresult_savefoodalert_content2",@"%@的饮食计划"),time];
