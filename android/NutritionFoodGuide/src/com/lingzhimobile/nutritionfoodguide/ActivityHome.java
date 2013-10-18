@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombinationList.FoodCombinationAdapter.OnClickListenerToDeleteRow;
 import com.umeng.analytics.MobclickAgent;
+import com.umeng.update.UmengUpdateAgent;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -63,7 +64,9 @@ public class ActivityHome extends Activity{
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
-		MobclickAgent.setDebugMode( true );
+//		MobclickAgent.setDebugMode( true );
+		UmengUpdateAgent.update(this);
+		
 		
 		Button btnReset = (Button) findViewById(R.id.btnTopRight);
 		btnReset.setVisibility(View.GONE);

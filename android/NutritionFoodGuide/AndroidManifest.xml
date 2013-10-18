@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lingzhimobile.nutritionfoodguide"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="2"
+    android:versionName="1.1" >
 
     <uses-sdk
         android:minSdkVersion="8"
@@ -145,8 +145,18 @@
 			android:authorities="FoodProviderT1gAuthority"
 			android:syncable="false" />
         
+		<service
+		    android:name="com.umeng.common.net.DownloadingService"
+		    android:process=":DownloadingService" >
+		</service>
 		<meta-data android:value="52609e3a56240b493f099dfd" android:name="UMENG_APPKEY"></meta-data>
 		<meta-data android:value="@string/umengChannelGoogle" android:name="UMENG_CHANNEL"/>
+		<!-- 
+		<meta-data android:value="@string/umengChannelGoogle" android:name="UMENG_CHANNEL"/>
+		<meta-data android:value="@string/umengChannelAppchina" android:name="UMENG_CHANNEL"/>
+		<meta-data android:value="@string/umengChannel91" android:name="UMENG_CHANNEL"/>
+		<meta-data android:value="@string/umengChannelGfan" android:name="UMENG_CHANNEL"/>
+		 -->
     </application>
 
 </manifest>
