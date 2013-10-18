@@ -208,6 +208,7 @@ public class ActivityRichFood extends Activity {
 			
 			@Override
 			public void onClick(View v) {
+				MobclickAgent.onEvent(ActivityRichFood.this,Constants.Umeng_Event_AddFoodByRich);
 //				HashMap<String, Object> foodData = m_foodsData.get(m_rowPos);
 				int iAmount = getIntAmount(m_foodAmount);
 				Intent intent = new Intent(ActivityRichFood.this,ActivityAddFoodChooseList.class);
