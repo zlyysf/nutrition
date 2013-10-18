@@ -21,7 +21,7 @@
 @end
 
 @implementation LZNutritionListViewController
-@synthesize nutritionArray,isFirstLoad,admobView;
+@synthesize nutritionArray,isFirstLoad,admobView,allNutritionDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -48,6 +48,8 @@
     self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, scrollHeight-50, 320, 50)];
     [self.listView addSubview:self.admobView];
     [self.listView setContentSize:CGSizeMake(320, scrollHeight)];
+    LZDataAccess *da = [LZDataAccess singleton];
+    self.allNutritionDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:nil];
 	// Do any additional setup after loading the view.
 }
 
@@ -81,8 +83,7 @@
         }
         startX = 10+(i-(floor-1)*perRowCount)*102;
         NSString *nutritionId = [self.nutritionArray objectAtIndex:i];
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSDictionary *dict = [da getNutrientInfo:nutritionId];
+        NSDictionary *dict = [allNutritionDict objectForKey:nutritionId];
         UIColor *backColor = [LZUtility getNutrientColorForNutrientId:nutritionId];
         //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
         NSString *queryKey;
@@ -111,8 +112,7 @@
     [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
     NSString *nutritionId = [self.nutritionArray objectAtIndex:tag];
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSDictionary *dict = [da getNutrientInfo:nutritionId];
+    NSDictionary *dict = [allNutritionDict objectForKey:nutritionId];
     NSString *queryKey;
     if (isChinese)
     {

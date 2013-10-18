@@ -13,4 +13,5 @@
 @property (strong,nonatomic)NSArray *nutritionArray;
 @property (strong, nonatomic) IBOutlet UIScrollView *listView;
 @property (strong,nonatomic)UIView *admobView;
+@property (strong,nonatomic)NSDictionary *allNutritionDict;
 @end

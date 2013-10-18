@@ -31,7 +31,7 @@
 @end
 
 @implementation LZFoodDetailController
-@synthesize nutrientSupplyArray,nutrientStandardArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName,isCalForAll,staticFoodAmountDict,GUnitStartIndex,isForEdit,isPushToDietPicker;
+@synthesize nutrientSupplyArray,foodName,UseUnitDisplay,sectionLabel,isUnitDisplayAvailable,gUnitMaxValue,unitMaxValue,currentSelectValue,isDefaultUnitDisplay,foodAttr,inOutParam,defaulSelectValue,delegate,unitName,isCalForAll,staticFoodAmountDict,GUnitStartIndex,isForEdit,isPushToDietPicker,allNutritionDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -96,6 +96,8 @@
     {
         UseUnitDisplay = NO;
     }
+    LZDataAccess *da = [LZDataAccess singleton];
+    self.allNutritionDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:nil];
     isFirstLoad = YES;
     self.listView.hidden = YES;
     [self.GUnitButton setTitle:NSLocalizedString(@"weightunit_g", @"克") forState:UIControlStateNormal];
@@ -166,30 +168,7 @@
         }
         self.nutrientSupplyArray = [rf calculateGiveFoodSupplyNutrientAndFormatForUI:self.inOutParam];
     }
-    if (self.nutrientStandardArray == nil || [self.nutrientStandardArray count]==0)
-    {
-        self.nutrientStandardArray = [[NSMutableArray alloc]init];
-        LZDataAccess *da = [LZDataAccess singleton];
-        NSString *queryKey;
-        if (isChinese)
-        {
-            queryKey = @"NutrientCnCaption";
-        }
-        else
-        {
-            queryKey = @"NutrientEnCaption";
-        }
-        
-        for (NSDictionary *aNutrient in self.nutrientSupplyArray)
-        {
-            NSString *nutrientId = [aNutrient objectForKey:@"NutrientID"];
-            
-            NSDictionary *dict = [da getNutrientInfo:nutrientId];
-            NSString *nutritionName = [dict objectForKey:queryKey];
-            [self.nutrientStandardArray addObject:nutritionName];
-        }
-    }
-
+    
     self.listView.hidden = NO;
     [self.listView reloadData];
 }
@@ -337,18 +316,18 @@
         LZNutritionSupplyCell *cell = (LZNutritionSupplyCell *)[tableView dequeueReusableCellWithIdentifier:@"LZNutritionSupplyCell"];
         NSDictionary *aNutrient = [nutrientSupplyArray objectAtIndex:indexPath.row];
         NSString *nutrientId = [aNutrient objectForKey:@"NutrientID"];
-//        LZDataAccess *da = [LZDataAccess singleton];
-//        NSDictionary *dict = [da getNutrientInfo:nutrientId];
-//        NSString *queryKey;
-//        if ([LZUtility isCurrentLanguageChinese])
-//        {
-//            queryKey = @"NutrientCnCaption";
-//        }
-//        else
-//        {
-//            queryKey = @"NutrientEnCaption";
-//        }
-        NSString *nutritionName = [nutrientStandardArray objectAtIndex:indexPath.row];
+        NSString *queryKey;
+        if (isChinese)
+        {
+            queryKey = @"NutrientCnCaption";
+        }
+        else
+        {
+            queryKey = @"NutrientEnCaption";
+        }
+
+        NSDictionary *dict = [allNutritionDict objectForKey:nutrientId];
+        NSString *nutritionName = [dict objectForKey:queryKey];
     
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
         cell.nutrientId = nutrientId;

@@ -102,12 +102,13 @@
         
         float newPointY =(kButtonAreaSide-kSelectButtonSide) -(kSelectButtonSide+20);
         LZDataAccess *da = [LZDataAccess singleton];
+        NSDictionary *allNutritionDict = [da getNutrientInfoAs2LevelDictionary_withNutrientIds:nil];
         for (int i=0; i<[self.filterArray count]; i++)
         {
             NSDictionary *nutrientState = [self.filterArray objectAtIndex:i];
             NSArray *keys = [nutrientState allKeys];
             NSString *key = [keys objectAtIndex:0];
-            NSDictionary *dict = [da getNutrientInfo:key];
+            NSDictionary *dict = [allNutritionDict objectForKey:key];
             NSString *queryKey;
             if ([LZUtility isCurrentLanguageChinese])
             {
