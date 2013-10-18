@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombinationList.FoodCombinationAdapter.OnClickListenerToDeleteRow;
+import com.umeng.analytics.MobclickAgent;
 
 import android.os.Bundle;
 import android.app.Activity;
@@ -49,6 +50,14 @@ public class ActivityNutrients extends Activity{
     HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level;
     String m_currentTitle;
 
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)

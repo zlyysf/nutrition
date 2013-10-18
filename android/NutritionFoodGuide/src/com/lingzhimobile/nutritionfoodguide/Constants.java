@@ -238,5 +238,17 @@ public class Constants {
 	public static final String InvokerType_FromFoodCombination = "FromFoodCombination";
 	
 	public static final int MessageID_OK = 1;
+	
+	
+	
+	public static final String Umeng_Event_AddFoodByRich ="AddFoodByRich" ;
+	public static final String Umeng_Event_AddFoodByClass ="AddFoodByClass" ;
+	public static final String Umeng_Event_SaveUserProfile ="SaveUserProfile" ;
+	public static final String Umeng_Event_SaveFoodCombination ="SaveFoodCombination" ;
+	public static final String Umeng_Event_ExplictUseRecommend ="ExplictUseRecommend" ;
+	
+	
+	
+	
 
 }

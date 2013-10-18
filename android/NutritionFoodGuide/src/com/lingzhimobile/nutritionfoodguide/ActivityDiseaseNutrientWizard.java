@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.umeng.analytics.MobclickAgent;
+
 
 import android.app.*;
 import android.content.*;
@@ -35,6 +37,15 @@ public class ActivityDiseaseNutrientWizard extends FragmentActivity {
 	ImageButton mImgBtnPrev;
 	ImageButton mImgBtnNext;
 	int mCurrentWizardItemIndex = 0;
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

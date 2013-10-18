@@ -5,6 +5,8 @@ package com.lingzhimobile.nutritionfoodguide;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import com.umeng.analytics.MobclickAgent;
+
 
 
 import android.app.Activity;
@@ -21,6 +23,16 @@ public class Activity_GroupList extends Activity
 implements OnItemSelectedListener,OnItemClickListener
 {
 	ArrayList<String> mGroups = null;
+	
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)

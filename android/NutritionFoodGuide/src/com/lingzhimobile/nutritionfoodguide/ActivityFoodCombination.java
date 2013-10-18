@@ -8,6 +8,7 @@ import java.util.*;
 
 import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
 import com.lingzhimobile.nutritionfoodguide.OnClickListenerInExpandListItem.Data2LevelPosition;
+import com.umeng.analytics.MobclickAgent;
 
 
 
@@ -65,6 +66,15 @@ public class ActivityFoodCombination extends Activity {
 	
 	myProgressDialog m_prgressDialog;
 	private AsyncTaskDoRecommend m_AsyncTaskDoRecommend;
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	public Handler myHandler = new Handler() {
 
@@ -174,6 +184,7 @@ public class ActivityFoodCombination extends Activity {
             @Override
             public void onClick(View v) {
             	if (m_foodAmountHm!=null && m_foodAmountHm.size()>0){
+            		MobclickAgent.onEvent(ActivityFoodCombination.this,Constants.Umeng_Event_SaveFoodCombination);
             		if (m_collocationId<0){//to new
             			Date dtNow = new Date();
             			SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
@@ -392,10 +403,11 @@ public class ActivityFoodCombination extends Activity {
 				}else{
 					StoredConfigTool.saveNutrientsToRecommend(getApplicationContext(), selNutrients);
 					
-					
 //					m_prgressDialog = myProgressDialog.show(ActivityFoodCombination.this, null, R.string.calculating);
 					doRecommend(selNutrients);
 //					m_prgressDialog.cancel();
+					
+					MobclickAgent.onEvent(ActivityFoodCombination.this,Constants.Umeng_Event_ExplictUseRecommend);
 				}
 				
 			}else if(which == DialogInterface.BUTTON_NEGATIVE){

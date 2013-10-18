@@ -2,6 +2,8 @@ package com.lingzhimobile.nutritionfoodguide;
 
 import java.util.*;
 
+import com.umeng.analytics.MobclickAgent;
+
 
 import android.app.Activity;
 import android.database.Cursor;
@@ -21,6 +23,15 @@ public class ActivityDiscomfort extends Activity {
 	HashMap mDiseasesByDepartmentHm = null;
 	HashMap<String,SparseBooleanArray> mFlagsForDiseaseByDepartmentHm = null ;
 	Button mBtnReset;
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
     @SuppressWarnings("rawtypes")
 	@Override

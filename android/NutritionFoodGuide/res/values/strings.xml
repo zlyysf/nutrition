@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    
+    <string name="umengChannelGoogle">google</string>
+    <string name="umengChannelAppchina">appchina</string>
+    <string name="umengChannel91">91</string>
+    <string name="umengChannelGfan">gfan</string>
 
     <string name="app_name">营养膳食指南</string>
     <string name="action_settings">Settings</string>

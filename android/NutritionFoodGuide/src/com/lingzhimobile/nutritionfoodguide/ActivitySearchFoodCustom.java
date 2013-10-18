@@ -3,6 +3,7 @@ package com.lingzhimobile.nutritionfoodguide;
 import java.util.*;
 
 import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
+import com.umeng.analytics.MobclickAgent;
 
 
 
@@ -46,6 +47,15 @@ public class ActivitySearchFoodCustom extends Activity {
 	FoodsByTypeExpandableListAdapter m_FoodsByTypeExpandableListAdapter;
 	Button mBtnFinish,m_btnCancel;
 	String m_currentTitle;
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -372,6 +382,8 @@ public class ActivitySearchFoodCustom extends Activity {
 							String sInput = input;
 							HashMap<String, Object> foodData = (HashMap<String, Object>)getChild(m_Data2LevelPosition.groupPos,m_Data2LevelPosition.childPos); 
 							String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
+							
+							MobclickAgent.onEvent(ActivitySearchFoodCustom.this,Constants.Umeng_Event_AddFoodByClass);
 							
 							if (Constants.InvokerType_FromSearchFood.equals(mInvokerType)){
 								Intent intent = new Intent(ActivitySearchFoodCustom.this,ActivityAddFoodChooseList.class);

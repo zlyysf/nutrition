@@ -8,6 +8,7 @@ import java.util.*;
 
 
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination.ExpandableListAdapter_FoodNutrition.OnClickListenerToAddFoodByNutrient;
+import com.umeng.analytics.MobclickAgent;
 
 
 
@@ -40,10 +41,17 @@ public class ActivityAllFoodExpandList extends Activity {
 //	HashMap<String,Object> m_foodsByCnTypeHm;//Object is ArrayList<Object2> and Object2 is HashMap<String, Object>
 	HashMap<String,ArrayList<HashMap<String, Object>>> m_foodsByCnTypeHm;
 	String[] m_foodCnTypes;
-
-
 	
 	Button mBtnFinish,m_btnCancel;
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
     @SuppressWarnings("rawtypes")
 	@Override

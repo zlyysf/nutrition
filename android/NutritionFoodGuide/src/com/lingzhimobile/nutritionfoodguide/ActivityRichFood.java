@@ -4,6 +4,7 @@ package com.lingzhimobile.nutritionfoodguide;
 import java.util.*;
 
 import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
+import com.umeng.analytics.MobclickAgent;
 
 
 import android.R.integer;
@@ -56,6 +57,14 @@ public class ActivityRichFood extends Activity {
 	Button btnTopRight;
 	Button m_btnCancel;
 	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -257,7 +266,9 @@ public class ActivityRichFood extends Activity {
 			            	intent.putExtra(Constants.Key_Amount, Integer.parseInt(sInput));
 			            	ActivityRichFood.this.setResult(IntentResultCode, intent);
 			            	
+			            	MobclickAgent.onEvent(ActivityRichFood.this,Constants.Umeng_Event_AddFoodByRich);
 			            	ActivityRichFood.this.finish();
+			            	
 						}
 					}
 				});

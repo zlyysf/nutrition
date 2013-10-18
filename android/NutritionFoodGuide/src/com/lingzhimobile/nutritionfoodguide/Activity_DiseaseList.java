@@ -3,6 +3,8 @@ package com.lingzhimobile.nutritionfoodguide;
 import java.io.*;
 import java.util.*;
 
+import com.umeng.analytics.MobclickAgent;
+
 
 import android.app.*;
 import android.content.*;
@@ -22,6 +24,15 @@ implements OnItemSelectedListener,OnItemClickListener
 
 	ArrayList<String> mDiseases = null;
 	ListView mlistview1 = null;
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)

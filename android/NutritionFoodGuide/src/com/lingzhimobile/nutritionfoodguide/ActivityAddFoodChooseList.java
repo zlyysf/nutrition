@@ -4,6 +4,7 @@ package com.lingzhimobile.nutritionfoodguide;
 import java.util.*;
 
 import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
+import com.umeng.analytics.MobclickAgent;
 
 
 import android.R.integer;
@@ -47,6 +48,15 @@ public class ActivityAddFoodChooseList extends Activity {
 	ListView m_listView1;
 	FoodCombinationAdapter mListAdapter;
 	String m_currentTitle;
+	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 	@Override
     protected void onCreate(Bundle savedInstanceState) {

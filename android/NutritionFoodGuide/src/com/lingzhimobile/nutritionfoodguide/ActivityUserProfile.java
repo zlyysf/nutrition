@@ -3,6 +3,8 @@ package com.lingzhimobile.nutritionfoodguide;
 
 import java.util.*;
 
+import com.umeng.analytics.MobclickAgent;
+
 
 import android.R.integer;
 import android.app.Activity;
@@ -45,7 +47,14 @@ public class ActivityUserProfile extends Activity {
 	EditText m_etAge, m_etHeight, m_etWeight;
 	
 
-	
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
 	
 
 	@Override
@@ -128,6 +137,7 @@ public class ActivityUserProfile extends Activity {
             @Override
             public void onClick(View v) {
             	saveViewsContent();
+            	MobclickAgent.onEvent(ActivityUserProfile.this,Constants.Umeng_Event_SaveUserProfile);
             	finish();
             }
         });
