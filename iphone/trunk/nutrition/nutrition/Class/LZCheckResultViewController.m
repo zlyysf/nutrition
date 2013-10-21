@@ -467,8 +467,8 @@
             radius = 2;
         }
         //CGRectMake(2,2,196,14)
-        [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,216,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
-        [cell adjustLabelAccordingToProgress:progress forLabelWidth:216];
+        [cell.nutritionProgressView drawProgressForRect:CGRectMake(2,2,206,14) backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:7.f fillRadius:radius];
+        [cell adjustLabelAccordingToProgress:progress forLabelWidth:206];
         cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%",(int)(floorf([percent floatValue] *100))];
         //NSSet *selectNutrient = [NSSet setWithArray:self.userPreferArray];
         NSSet *heavySet = [NSSet setWithArray:self.heavylyLackArray];
