@@ -14,7 +14,9 @@
 #import "LZStandardContentCell.h"
 #import "GADMasterViewController.h"
 #import "LZNutrientionManager.h"
+#import <math.h>
 #define kKGConvertLBRatio 2.2046
+
 @interface LZEditProfileViewController ()
 {
     BOOL isChinese;
@@ -162,7 +164,7 @@
     {
         if (self.usePound)
         {
-            self.weightTextField.text = [NSString stringWithFormat:@"%d",(int)([userWeight intValue]*kKGConvertLBRatio)];
+            self.weightTextField.text = [NSString stringWithFormat:@"%d",(int)(round([userWeight doubleValue]*kKGConvertLBRatio))];
         }
         else
         {
@@ -621,8 +623,8 @@
     {
         if (self.usePound)
         {
-            int convertedWeight = (int)(userWeight/kKGConvertLBRatio);
-            [dataToSave setObject:[NSNumber numberWithInt:convertedWeight] forKey:LZUserWeightKey];
+            double convertedWeight = (double)(userWeight/kKGConvertLBRatio);
+            [dataToSave setObject:[NSNumber numberWithDouble:convertedWeight] forKey:LZUserWeightKey];
         }
         else
         {
