@@ -11,6 +11,7 @@
 #import "LZRichNutritionViewController.h"
 #import "LZConstants.h"
 #import "MobClick.h"
+#import "LZUtility.h"
 #import "GADMasterViewController.h"
 #import "LZNutritionButton.h"
 #import "LZNutrientionManager.h"
@@ -41,7 +42,14 @@
         UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:backGroundImage]];
     }
-    
+    if([LZUtility isCurrentLanguageChinese])
+    {
+        isChinese = YES;
+    }
+    else
+    {
+        isChinese = NO;
+    }
     nutritionArray = [LZRecommendFood getCustomNutrients:nil];
     isFirstLoad = YES;
     int totalFloor = [nutritionArray count]/3+ (([nutritionArray count]%3 == 0)?0:1);
