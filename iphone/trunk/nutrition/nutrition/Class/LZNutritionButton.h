@@ -12,5 +12,6 @@
 @property (nonatomic,strong)id customData;
 - (id)initWithFrame:(CGRect)frame
                info:(NSDictionary *)info
-              image:(UIImage *)backImage;
+              image:(UIImage *)backImage
+          isChinese:(BOOL)isChinese;
 @end

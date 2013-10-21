@@ -106,7 +106,7 @@
         NSString *nutritionName = [dict objectForKey:queryKey];
         NSDictionary *info = [LZUtility getNutritionNameInfo:nutritionName];
         UIImage*backImage = [LZUtility createImageWithColor:backColor imageSize:CGSizeMake(94, 94)];
-        LZNutritionButton *button = [[LZNutritionButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94) info:info image:backImage];
+        LZNutritionButton *button = [[LZNutritionButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94) info:info image:backImage isChinese:isChinese];
         [self.listView addSubview:button];
         //[button setBackgroundImage:[UIImage imageNamed:[NSString stringWithFormat:@"%@_button.png",nutritionId]] forState:UIControlStateNormal];
         button.tag = i+100;

@@ -291,7 +291,7 @@
                     NSString *nutritionName = [dict objectForKey:queryKey];
                     NSDictionary *info = [LZUtility getNutritionNameInfo:nutritionName];
                     UIImage*backImage = [LZUtility createImageWithColor:backColor imageSize:CGSizeMake(94, 94)];
-                    LZNutritionButton *button = [[LZNutritionButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94) info:info image:backImage];
+                    LZNutritionButton *button = [[LZNutritionButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94) info:info image:backImage isChinese:isChinese];
                     button.customData = nutritionId;
                     [button addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     [cell.contentView addSubview:button];
@@ -352,7 +352,7 @@
                     NSString *nutritionName = [dict objectForKey:queryKey];
                     NSDictionary *info = [LZUtility getNutritionNameInfo:nutritionName];
                     UIImage*backImage = [LZUtility createImageWithColor:backColor imageSize:CGSizeMake(94, 94)];
-                    LZNutritionButton *button = [[LZNutritionButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94) info:info image:backImage];
+                    LZNutritionButton *button = [[LZNutritionButton alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*102, 94, 94) info:info image:backImage isChinese:isChinese];
                     button.customData = nutritionId;
                     [button addTarget:self action:@selector(typeButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
                     [cell.contentView addSubview:button];
@@ -643,6 +643,10 @@
         {
             sectionTitleLabel.text = NSLocalizedString(@"checkresult_section2_title1",@"您现在体内严重缺乏的营养");
         }
+        else if([self.heavylyLackArray count]==1)
+        {
+            sectionTitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"checkresult_section2_title3",@"您现在体内严重缺乏%d种营养 单数"),[self.heavylyLackArray count]];
+        }
         else
         {
             sectionTitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"checkresult_section2_title2",@"您现在体内严重缺乏%d种营养"),[self.heavylyLackArray count]];
@@ -653,6 +657,10 @@
         if([self.lightlyLackArray count]==0)
         {
             sectionTitleLabel.text = NSLocalizedString(@"checkresult_section3_title1",@"您现在体内轻度缺乏的营养");
+        }
+        else if([self.lightlyLackArray count]==1)
+        {
+            sectionTitleLabel.text = [NSString stringWithFormat:NSLocalizedString(@"checkresult_section3_title3",@"您现在体内轻度缺乏%d种营养 单数"),[self.lightlyLackArray count]];
         }
         else
         {

@@ -13,6 +13,7 @@
 - (id)initWithFrame:(CGRect)frame
                info:(NSDictionary *)info
               image:(UIImage *)backImage
+          isChinese:(BOOL)isChinese
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -70,9 +71,19 @@
         }
         else
         {
+            float fontSize;
+            if (isChinese)
+            {
+                fontSize = 30;
+            }
+            else
+            {
+                fontSize = 23;
+            }
             UILabel *label1 = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
             [label1 setTextColor:[UIColor whiteColor]];
-            [label1 setFont:[UIFont boldSystemFontOfSize:30]];
+            label1.numberOfLines = 0;
+            [label1 setFont:[UIFont boldSystemFontOfSize:fontSize]];
             [label1 setBackgroundColor:[UIColor clearColor]];
             [label1 setText:label1Content];
             [label1 setTextAlignment:UITextAlignmentCenter];
