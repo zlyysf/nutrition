@@ -231,6 +231,9 @@
 		5FD76DE717D5AB6200746418 /* LZCheckResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD76DE617D5AB6200746418 /* LZCheckResultViewController.m */; };
 		5FD76DE917D5B3EE00746418 /* close_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD76DE817D5B3EE00746418 /* close_button@2x.png */; };
 		5FD76DEC17D5B83600746418 /* LZEmptyClassCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD76DEB17D5B83600746418 /* LZEmptyClassCell.m */; };
+		5FDB08B318162C89004896FD /* Icon76x76.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDB08B018162C89004896FD /* Icon76x76.png */; };
+		5FDB08B418162C89004896FD /* Icon120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDB08B118162C89004896FD /* Icon120x120.png */; };
+		5FDB08B518162C89004896FD /* Icon152x152.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDB08B218162C89004896FD /* Icon152x152.png */; };
 		5FDD1CAA179CFCAE0046F752 /* add_by_nutrient_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_button@2x.png */; };
 		5FDD1CAE179D19150046F752 /* change_name_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CAC179D19150046F752 /* change_name_button@2x.png */; };
 		5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */; };
@@ -561,6 +564,9 @@
 		5FD76DE817D5B3EE00746418 /* close_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "close_button@2x.png"; path = "nutrition/Resource/close_button@2x.png"; sourceTree = "<group>"; };
 		5FD76DEA17D5B83600746418 /* LZEmptyClassCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZEmptyClassCell.h; path = Class/LZEmptyClassCell.h; sourceTree = "<group>"; };
 		5FD76DEB17D5B83600746418 /* LZEmptyClassCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZEmptyClassCell.m; path = Class/LZEmptyClassCell.m; sourceTree = "<group>"; };
+		5FDB08B018162C89004896FD /* Icon76x76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon76x76.png; path = nutrition/Icon76x76.png; sourceTree = "<group>"; };
+		5FDB08B118162C89004896FD /* Icon120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon120x120.png; path = nutrition/Icon120x120.png; sourceTree = "<group>"; };
+		5FDB08B218162C89004896FD /* Icon152x152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon152x152.png; path = nutrition/Icon152x152.png; sourceTree = "<group>"; };
 		5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_by_nutrient_button@2x.png"; path = "nutrition/Resource/add_by_nutrient_button@2x.png"; sourceTree = "<group>"; };
 		5FDD1CAC179D19150046F752 /* change_name_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_name_button@2x.png"; path = "nutrition/Resource/change_name_button@2x.png"; sourceTree = "<group>"; };
 		5FDED0FE176F1D8E0026BCA3 /* LZShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZShareViewController.h; path = Class/LZShareViewController.h; sourceTree = "<group>"; };
@@ -963,6 +969,9 @@
 				5F20149017BB600F0009B735 /* unit_button_normal@2x.png */,
 				5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */,
 				5FA3D1FC17B0F40F004F9D39 /* button_middle_clicked@2x.png */,
+				5FDB08B018162C89004896FD /* Icon76x76.png */,
+				5FDB08B118162C89004896FD /* Icon120x120.png */,
+				5FDB08B218162C89004896FD /* Icon152x152.png */,
 				5F03D34F174B924B008EFB60 /* defaulFoodPic@2x.png */,
 				5F20148D17BB40140009B735 /* valuepicker_cover@2x.png */,
 				5F8F9FAD17E6B00300F6B295 /* Icon-72.png */,
@@ -1567,6 +1576,9 @@
 				5F0A4159180E6C7F007B8715 /* addfood_icon@2x.png in Resources */,
 				5F0A415A180E6C7F007B8715 /* recommend_icon@2x.png in Resources */,
 				5F0A415B180E6C7F007B8715 /* share_icon@2x.png in Resources */,
+				5FDB08B318162C89004896FD /* Icon76x76.png in Resources */,
+				5FDB08B418162C89004896FD /* Icon120x120.png in Resources */,
+				5FDB08B518162C89004896FD /* Icon152x152.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
