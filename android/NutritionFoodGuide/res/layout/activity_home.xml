@@ -13,22 +13,26 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:layout_weight="1"
+        android:fadingEdge="none"
         android:horizontalSpacing="10dp"
-        android:verticalSpacing="10dp"
         android:listSelector="@null"
         android:numColumns="2"
         android:padding="0dp"
+        android:scrollbars="none"
         android:stretchMode="columnWidth"
-        >
+        android:verticalSpacing="10dp" >
 
     </GridView>
+    <!-- 
+    android:overScrollMode="never" 对于要去掉gridview滑到顶部或底部时的模糊边缘效果 没有作用 http://blog.csdn.net/fanmengke_im/article/details/8961522
+     -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:orientation="vertical"
-        android:visibility="invisible" >
+        android:visibility="gone" >
 
         <Button
             android:id="@+id/btnTempMain"

@@ -30,6 +30,7 @@
     <string name="title_nutrients">营养</string>
     <string name="title_searchfood">食物</string>
     <string name="title_userinfo">个人</string>
+    <string name="title_setting">设置</string>
     
     <string name="title_addfood_tolist_ornew">添加食物</string>
     <string name="title_food_combination">营养搭配</string>
@@ -82,6 +83,10 @@
     <string name="activeLevelStrong">强</string>
     <string name="activeLevelVeryStrong">很强</string>
     <string name="nutritionDRI">个人每日营养摄入推荐量</string>
+    
+    <string name="feedback">意见反馈</string>
+    <string name="feedbackEmailTitle">用户意见反馈</string>
+    <string name="feedbackEmailChooseSender">选择邮件发送程序：</string>
 
 
 </resources>

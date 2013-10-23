@@ -239,7 +239,7 @@ public class Constants {
 	
 	public static final int MessageID_OK = 1;
 	
-	
+	public static final String Email_feedback ="support@lingzhimobile.com" ;
 	
 	public static final String Umeng_Event_AddFoodByRich ="AddFoodByRich" ;
 	public static final String Umeng_Event_AddFoodByClass ="AddFoodByClass" ;

@@ -35,16 +35,17 @@ public class ActivityHome extends Activity{
     static final String Key_ItemText = "ItemText";
     
     static final int[] menuItemImageResIds = new int[]{R.drawable.menu_item_2x_searchfood, R.drawable.menu_item_2x_nutrient,
-    	R.drawable.menu_item_2x_foodlist, R.drawable.menu_item_2x_userinfo 
+    	R.drawable.menu_item_2x_foodlist, R.drawable.menu_item_2x_userinfo , R.drawable.menu_item_2x_setting 
     	 };
     //static final String[] menuItemTexts = new String[]{"膳食清单","个人信息","营养元素","食物查询"};
     static final int[] menuItemTextResIds = new int[]{R.string.title_searchfood, R.string.title_nutrients, 
-    	R.string.title_foodCombinationList, R.string.title_userinfo};
+    	R.string.title_foodCombinationList, R.string.title_userinfo, R.string.title_setting};
     
     static final int Position_searchfood = 0;
-    static final int Position_nutrient = 1;
-    static final int Position_foodlist = 2;
-    static final int Position_userinfo = 3;
+    static final int Position_nutrient = Position_searchfood + 1;
+    static final int Position_foodlist = Position_nutrient + 1;
+    static final int Position_userinfo = Position_foodlist + 1;
+    static final int Position_setting = Position_userinfo + 1;
     
     String m_currentTitle;
     
@@ -139,6 +140,11 @@ public class ActivityHome extends Activity{
 					intent = new Intent(ActivityHome.this, ActivitySearchFoodCustom.class);
 					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 					intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromSearchFood);
+					startActivity(intent);
+					break;
+				case Position_setting:
+					intent = new Intent(ActivityHome.this, ActivitySetting.class);
+					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 					startActivity(intent);
 					break;
 				default:
