@@ -23,11 +23,12 @@
     BOOL isFirstLoad;
     BOOL isChinese;
 }
-
+@property (strong,nonatomic)UIButton *infoButton;
+@property (strong,nonatomic)UIButton *foodButton;
 @end
 
 @implementation LZRichNutritionViewController
-@synthesize foodArray,nutrientTitle,nutrientDict;
+@synthesize foodArray,nutrientTitle,nutrientDict,nutritionDescription,infoButton,foodButton;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -60,9 +61,33 @@
     [headerView addSubview:tipsLabel];
     self.listView.tableHeaderView = headerView;
     self.title = nutrientTitle;
-    UIBarButtonItem *infoItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"jianjiebutton",@"简介") style:UIBarButtonItemStyleBordered target:self action:@selector(showNutritionInfo)];
-    self.navigationItem.rightBarButtonItem = infoItem;
-
+    UIView *rightItemView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 90, 30)];
+    rightItemView.backgroundColor = [UIColor clearColor];
+    self.infoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [infoButton setFrame:CGRectMake(0, 0, 45, 30)];
+    [infoButton addTarget:self action:@selector(switchButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [infoButton setImage:[UIImage imageNamed:@"nutrition_info_icon_clicked.png"] forState:UIControlStateNormal];
+    [infoButton setImage:[UIImage imageNamed:@"nutrition_info_icon_clicked.png"] forState:UIControlStateHighlighted];
+    [rightItemView addSubview:infoButton];
+    
+    self.foodButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [foodButton setFrame:CGRectMake(45, 0, 45, 30)];
+    [foodButton addTarget:self action:@selector(switchButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+    [foodButton setImage:[UIImage imageNamed:@"food_icon.png"] forState:UIControlStateNormal];
+    [foodButton setImage:[UIImage imageNamed:@"food_icon_clicked.png"] forState:UIControlStateHighlighted];
+    [rightItemView addSubview:foodButton];
+    
+//    UISegmentedControl *sgControl = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects:@"信息",@"食物", nil]];
+//    [sgControl setFrame:CGRectMake(0, 0, 90, 30)];
+//    [sgControl setSegmentedControlStyle:UISegmentedControlStyleBar];
+//    [sgControl setSelectedSegmentIndex:0];
+//    //sgControl.tintColor = [UIColor colorWithRed:61/255.f green:175/255.f blue:45/255.f alpha:1.0f];
+//    [sgControl addTarget:self action:@selector(sgControlValueChanged:) forControlEvents:UIControlEventValueChanged];
+//    [sgControl setImage:[UIImage imageNamed:@"nutrition_info_icon.png"] forSegmentAtIndex:0];
+//    [sgControl setImage:[UIImage imageNamed:@"food_icon.png"] forSegmentAtIndex:1];
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:rightItemView];
+    self.navigationItem.rightBarButtonItem = rightItem;
+    self.nutritionInfoTextView.text = self.nutritionDescription;
     //    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
     //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
     //                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
@@ -83,6 +108,37 @@
     }
 
 }
+-(void)switchButtonTapped:(UIButton *)sender
+{
+    if (sender == self.infoButton)
+    {
+        [infoButton setImage:[UIImage imageNamed:@"nutrition_info_icon_clicked.png"] forState:UIControlStateNormal];
+        [foodButton setImage:[UIImage imageNamed:@"food_icon.png"] forState:UIControlStateNormal];
+        self.listView.hidden = YES;
+        self.nutritionInfoTextView.hidden = NO;
+    }
+    else
+    {
+        [infoButton setImage:[UIImage imageNamed:@"nutrition_info_icon.png"] forState:UIControlStateNormal];
+        [foodButton setImage:[UIImage imageNamed:@"food_icon_clicked.png"] forState:UIControlStateNormal];
+
+        self.nutritionInfoTextView.hidden = YES;
+        if (isFirstLoad) {
+            HUD.hidden = NO;
+            [HUD show:YES];
+            //self.listView.hidden = YES;
+            
+            //HUD.labelText = @"智能推荐中...";
+            
+            [self performSelector:@selector(loadDataForDisplay) withObject:nil afterDelay:0.f];
+        }
+        else
+        {
+            self.listView.hidden = NO;
+        }
+
+    }
+}
 -(void)showNutritionInfo
 {
    [[LZNutrientionManager SharedInstance]showNutrientInfo:[self.nutrientDict objectForKey:@"NutrientID"]];
@@ -100,15 +156,6 @@
 }
 - (void)viewDidAppear:(BOOL)animated
 {
-    if (isFirstLoad) {
-        HUD.hidden = NO;
-        [HUD show:YES];
-        //self.listView.hidden = YES;
-        
-        //HUD.labelText = @"智能推荐中...";
-        
-        [self performSelector:@selector(loadDataForDisplay) withObject:nil afterDelay:0.f];
-    }
 }
 -(void)loadDataForDisplay
 {
@@ -169,6 +216,7 @@
 - (void)viewDidUnload {
     [self setListView:nil];
     //[self setNavItem:nil];
+    [self setNutritionInfoTextView:nil];
     [super viewDidUnload];
 }
 //- (IBAction)cancelButtonTapped:(id)sender

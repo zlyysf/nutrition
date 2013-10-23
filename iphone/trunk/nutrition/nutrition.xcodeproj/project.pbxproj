@@ -226,6 +226,10 @@
 		5FAB57A7180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5FAB578E180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.bundle */; };
 		5FAB57A8180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FAB578F180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.framework */; };
 		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
+		5FC81272181798CF009A3A2B /* food_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FC81270181798CC009A3A2B /* food_icon@2x.png */; };
+		5FC81273181798CF009A3A2B /* nutrition_info_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FC81271181798CD009A3A2B /* nutrition_info_icon@2x.png */; };
+		5FC8127618179DDE009A3A2B /* food_icon_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FC8127418179DDC009A3A2B /* food_icon_clicked@2x.png */; };
+		5FC8127718179DDE009A3A2B /* nutrition_info_icon_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FC8127518179DDD009A3A2B /* nutrition_info_icon_clicked@2x.png */; };
 		5FCC5BEB17AA30A600796B24 /* LZDebugSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC5BEA17AA30A600796B24 /* LZDebugSettingsViewController.m */; };
 		5FD4D36117EEE6CF007C5551 /* outer_line_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD4D36017EEE6CE007C5551 /* outer_line_bg@2x.png */; };
 		5FD76DE717D5AB6200746418 /* LZCheckResultViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD76DE617D5AB6200746418 /* LZCheckResultViewController.m */; };
@@ -556,6 +560,10 @@
 		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = nutrition/Class/LZUtility.h; sourceTree = "<group>"; };
 		5FB8C0B7172BC61D00E90387 /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = nutrition/Class/LZUtility.m; sourceTree = "<group>"; };
 		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
+		5FC81270181798CC009A3A2B /* food_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "food_icon@2x.png"; path = "nutrition/Resource/food_icon@2x.png"; sourceTree = "<group>"; };
+		5FC81271181798CD009A3A2B /* nutrition_info_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrition_info_icon@2x.png"; path = "nutrition/Resource/nutrition_info_icon@2x.png"; sourceTree = "<group>"; };
+		5FC8127418179DDC009A3A2B /* food_icon_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "food_icon_clicked@2x.png"; path = "nutrition/Resource/food_icon_clicked@2x.png"; sourceTree = "<group>"; };
+		5FC8127518179DDD009A3A2B /* nutrition_info_icon_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrition_info_icon_clicked@2x.png"; path = "nutrition/Resource/nutrition_info_icon_clicked@2x.png"; sourceTree = "<group>"; };
 		5FCC5BE917AA30A600796B24 /* LZDebugSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDebugSettingsViewController.h; path = Class/LZDebugSettingsViewController.h; sourceTree = "<group>"; };
 		5FCC5BEA17AA30A600796B24 /* LZDebugSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDebugSettingsViewController.m; path = Class/LZDebugSettingsViewController.m; sourceTree = "<group>"; };
 		5FD4D36017EEE6CE007C5551 /* outer_line_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "outer_line_bg@2x.png"; path = "nutrition/Resource/outer_line_bg@2x.png"; sourceTree = "<group>"; };
@@ -906,6 +914,10 @@
 				5F2E024317E019F400D26231 /* MainMenuItems */,
 				5F22A6C917CF580D0043D760 /* foodTypeButtonIcons */,
 				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
+				5FC81270181798CC009A3A2B /* food_icon@2x.png */,
+				5FC8127418179DDC009A3A2B /* food_icon_clicked@2x.png */,
+				5FC8127518179DDD009A3A2B /* nutrition_info_icon_clicked@2x.png */,
+				5FC81271181798CD009A3A2B /* nutrition_info_icon@2x.png */,
 				5F17888C1805202E0017F55D /* check_bottom_bar@2x.png */,
 				5FE3AC71180D0DDD00C5C611 /* diet_topbar_bg@2x.png */,
 				5F82A097180660A90000C9A1 /* heavy_lack_bar@2x.png */,
@@ -1579,6 +1591,10 @@
 				5FDB08B318162C89004896FD /* Icon76x76.png in Resources */,
 				5FDB08B418162C89004896FD /* Icon120x120.png in Resources */,
 				5FDB08B518162C89004896FD /* Icon152x152.png in Resources */,
+				5FC81272181798CF009A3A2B /* food_icon@2x.png in Resources */,
+				5FC81273181798CF009A3A2B /* nutrition_info_icon@2x.png in Resources */,
+				5FC8127618179DDE009A3A2B /* food_icon_clicked@2x.png in Resources */,
+				5FC8127718179DDE009A3A2B /* nutrition_info_icon_clicked@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
