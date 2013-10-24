@@ -128,5 +128,20 @@ public class StoredConfigTool {
 //		}
 		saveNutrientsToRecommend(ctx,Tool.convertFromArrayToList(nutrients));
 	}
+	
+	private static final String DBalreadyUpdatedKey = "DBalreadyUpdated_" + Constants.DBupdateTime;
+	
+	public static boolean getDBalreadyUpdated(Context ctx)
+	{
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		boolean dbUpdated = sharedPref.getBoolean(DBalreadyUpdatedKey, false);
+		return dbUpdated;
+	}
+	public static void setDBalreadyUpdated(Context ctx){
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putBoolean(DBalreadyUpdatedKey, true);
+		editor.commit();
+	}
 
 }

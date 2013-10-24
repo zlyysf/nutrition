@@ -5,6 +5,7 @@ import android.R.integer;
 public class Constants {
 	
 	public static final int KeyIsEnvironmentDebug = 0;
+	public static final String DBupdateTime = "201310241802";
 	
 	public static final boolean Config_needConsiderNutrientLoss = false;
 	public static final int Config_foodUpperLimit = 1000; // unit g

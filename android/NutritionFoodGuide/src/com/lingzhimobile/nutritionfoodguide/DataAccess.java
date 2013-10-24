@@ -72,12 +72,28 @@ public class DataAccess {
 	}
 	
 	private boolean prepareDB(Context ctx) {
+		Log.d(LogTag, "prepareDB enter");
 		String dbFilePath = getDBfilePath(ctx);
 		File dbFile = new File(dbFilePath);
 		if (!dbFile.exists()){
+			Log.d(LogTag, "prepareDB .if (!dbFile.exists()).");
 			//Tool.unzipRawFileToSDCardFile(ctx, RawResIdForDB, dbFilePath);
 //			Tool.copyRawFileToSDCardFile(ctx, RawResIdForNormalDB, dbFilePath);//ok
 			Tool.unzipRawFileToSDCardFile(ctx, RawResIdForZipDB, dbFilePath);
+			StoredConfigTool.setDBalreadyUpdated(ctx);
+		}else{
+			if (!StoredConfigTool.getDBalreadyUpdated(ctx)){
+				if (dbFile.delete()){
+					Log.d(LogTag, "prepareDB .else (!dbFile.exists()). if (!StoredConfigTool.getDBalreadyUpdated(ctx)). if (dbFile.delete()).");
+					Tool.unzipRawFileToSDCardFile(ctx, RawResIdForZipDB, dbFilePath);
+					StoredConfigTool.setDBalreadyUpdated(ctx);
+				}else{
+					Log.d(LogTag, "prepareDB .else (!dbFile.exists()). else (!StoredConfigTool.getDBalreadyUpdated(ctx)). else (dbFile.delete())--something WRONG.");
+				}
+				
+			}else{
+				Log.d(LogTag, "prepareDB .else (!dbFile.exists()). else (!StoredConfigTool.getDBalreadyUpdated(ctx)). do nothing.");
+			}
 		}
 		return true;
 	}
