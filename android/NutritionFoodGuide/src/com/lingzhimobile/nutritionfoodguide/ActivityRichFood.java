@@ -3,6 +3,7 @@ package com.lingzhimobile.nutritionfoodguide;
 
 import java.util.*;
 
+import com.lingzhimobile.nutritionfoodguide.ActivityFoodByClass.ListAdapterForFood;
 import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
 import com.umeng.analytics.MobclickAgent;
 
@@ -32,6 +33,7 @@ import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ExpandableListView.*;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 
 public class ActivityRichFood extends ActivityBase {
@@ -46,12 +48,16 @@ public class ActivityRichFood extends ActivityBase {
 	String mNutrientId;
 	String mNutrientCnCaption;
 	double mToSupplyNutrientAmount ;
+	HashMap<String, Object> m_nutrientInfo;
 
 	ArrayList<HashMap<String, Object>> m_foodsData;
 
-
-	ListView mListView1;
-	Button btnTopRight;
+	ListView m_listView1;
+//	Button btnTopRight;
+	RadioGroup m_radioGroupRightTab;
+	RadioButton m_rbNutrientInfo, m_rbRichFood;
+	LinearLayout m_llRightTab, m_llFoods, m_llNutrientDescription;
+	TextView m_tvNutrientDescription;
 	Button m_btnCancel;
 	
 	public void onResume() {
@@ -68,58 +74,100 @@ public class ActivityRichFood extends ActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_richfood);
         
-        Intent paramIntent = getIntent();
+        initViewHandles();
+        initViewsContent();
+        setViewEventHandlers();
+        setViewsContent();
+    }
+	
+	void initViewHandles(){
+		m_btnCancel = (Button) findViewById(R.id.btnCancel);
+		
+//      btnTopRight = (Button) findViewById(R.id.btnTopRight);
+//      btnTopRight.setVisibility(View.INVISIBLE);
+	  m_radioGroupRightTab = (RadioGroup)findViewById(R.id.radioGroupRightTab);
+	  m_rbNutrientInfo = (RadioButton)findViewById(R.id.rbNutrientInfo);
+	  m_rbRichFood = (RadioButton)findViewById(R.id.rbRichFood);
+      m_llRightTab = (LinearLayout)findViewById(R.id.llRightTab);
+      m_llFoods = (LinearLayout)findViewById(R.id.llFoods);
+      m_llNutrientDescription = (LinearLayout)findViewById(R.id.llNutrientDescription);
+      m_tvNutrientDescription = (TextView)findViewById(R.id.tvNutrientDescription);
+
+      m_listView1 = (ListView)this.findViewById(R.id.listView1);
+	}
+	void initViewsContent(){
+		Intent paramIntent = getIntent();
         
         mInvokerType = paramIntent.getStringExtra(Constants.IntentParamKey_InvokerType);
         mNutrientId =  paramIntent.getStringExtra(Constants.COLUMN_NAME_NutrientID);
         mToSupplyNutrientAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
         mNutrientCnCaption = paramIntent.getStringExtra(Constants.Key_Name);
         String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
-        m_btnCancel = (Button) findViewById(R.id.btnCancel);
+        
         if (prevActvTitle!=null)
         	m_btnCancel.setText(prevActvTitle);
-        
-        m_btnCancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            	finish();
-            }
-        });
-        
-        btnTopRight = (Button) findViewById(R.id.btnTopRight);
-        btnTopRight.setVisibility(View.INVISIBLE);
         
         m_currentTitle = mNutrientCnCaption;
         TextView tvTitle = (TextView)findViewById(R.id.tvTitle);
         tvTitle.setText(m_currentTitle);
         
-//        m_foodsData = new ArrayList<HashMap<String, Object>>();
         DataAccess da = DataAccess.getSingleton(this);
         m_foodsData = da.getRichNutritionFoodForNutrient(mNutrientId, mToSupplyNutrientAmount, false);
+        HashMap<String, HashMap<String, Object>> nutrientInfoHm = da.getNutrientInfoAs2LevelDictionary_withNutrientIds(new String[]{mNutrientId});
+        m_nutrientInfo = nutrientInfoHm.get(mNutrientId);
+        
+        m_tvNutrientDescription.setText((String)m_nutrientInfo.get(Constants.COLUMN_NAME_NutrientDescription));
         
         TextView textView1 = (TextView)this.findViewById(R.id.textView1);
         textView1.setText(Tool.getStringFromIdWithParams(getResources(), R.string.chooseRichFood,new String[]{mNutrientCnCaption}));
-		
-		ListView listView1 = (ListView)this.findViewById(R.id.listView1);
-		mListView1 = listView1;
+        
+	}
+	void setViewEventHandlers(){
+		m_btnCancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	finish();
+            }
+        });
+		m_radioGroupRightTab.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+//				int radioButtonId = group.getCheckedRadioButtonId();
+//				RadioButton rb = (RadioButton)ActivityUserProfile.this.findViewById(radioButtonId);
+				switchViews();
+			}
+		});
+	}
+	void setViewsContent(){
 		RichFoodAdapter adapter = new RichFoodAdapter();
-        listView1.setAdapter(adapter);
-//        ListViewEventListener lvEventListener = new ListViewEventListener();
-//        listView1.setOnItemClickListener(lvEventListener);
-        
-        
-      
+		m_listView1.setAdapter(adapter);
 		
-        
-    }
+		if (Constants.InvokerType_FromNutrients.equalsIgnoreCase(mInvokerType)){
+			m_rbNutrientInfo.setChecked(true);
+		}else{
+			m_rbRichFood.setChecked(true);
+			m_llRightTab.setVisibility(View.GONE);
+		}
+		switchViews();
+
+	}
+	
+	void switchViews(){
+		if (m_rbNutrientInfo.isChecked()){
+			m_llFoods.setVisibility(View.GONE);
+			m_llNutrientDescription.setVisibility(View.VISIBLE);
+		}else{
+			m_llFoods.setVisibility(View.VISIBLE);
+			m_llNutrientDescription.setVisibility(View.GONE);
+		}
+	}
+	
     
     int getIntAmount(double dAmount){
     	return (int)Math.ceil(dAmount);
     }
     
 	class RichFoodAdapter extends BaseAdapter{
-
-
 		@Override
 		public int getCount() {
 			return m_foodsData.size();

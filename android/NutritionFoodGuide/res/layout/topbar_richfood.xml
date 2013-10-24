@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topBarRLayout"
+    android:layout_weight="0"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:background="@drawable/nav_bar_720_104" >
+
+    
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:text="@string/nutritionDiagnose"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/btn_back_bg"
+        android:gravity="center_vertical|center_horizontal"
+        android:paddingBottom="7dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:paddingTop="7dp"
+        android:text="@string/cancel"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+    
+    <LinearLayout
+	    android:id="@+id/llRightTab"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:gravity="center_vertical|center_horizontal"
+        
+	    android:orientation="horizontal" >
+	    
+       	<RadioGroup
+	        android:id="@+id/radioGroupRightTab"
+		    android:layout_width="90dp"
+		    android:layout_height="30dp"
+		    android:fadingEdge="none"
+	    	android:orientation="horizontal"
+	        >
+
+		    <RadioButton
+		        android:id="@+id/rbNutrientInfo"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:layout_weight="1"
+		        android:background="@drawable/radio_astab_bg_left_nutrition_info_icon"
+		        android:button="@null"
+		        android:checked="true"
+		        android:gravity="center_vertical|center_horizontal"
+
+		        />
+
+		    <RadioButton
+		        android:id="@+id/rbRichFood"
+		        android:layout_width="match_parent"
+		        android:layout_height="match_parent"
+		        android:layout_weight="1"
+		        android:background="@drawable/radio_astab_bg_right_food_icon"
+		        android:button="@null"
+		        android:gravity="center_vertical|center_horizontal"
+
+		        />
+
+		</RadioGroup>
+	    
+	</LinearLayout>
+    
+
+</RelativeLayout>
+
+
