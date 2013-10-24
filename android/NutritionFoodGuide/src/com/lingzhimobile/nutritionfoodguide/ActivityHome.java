@@ -27,7 +27,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ActivityHome extends Activity{
+public class ActivityHome extends ActivityBase{
 
     static final String LogTag = "ActivityHome";
     
@@ -47,7 +47,7 @@ public class ActivityHome extends Activity{
     static final int Position_userinfo = Position_foodlist + 1;
     static final int Position_setting = Position_userinfo + 1;
     
-    String m_currentTitle;
+
     
 	public void onResume() {
 		super.onResume();
@@ -102,7 +102,7 @@ public class ActivityHome extends Activity{
 		    map.put(Key_ItemText, getResources().getString(menuItemTextResIds[i]) );
 		    meumList.add(map);
 		}
-		SimpleAdapter SimpleAdapter1 = new SimpleAdapter(this,meumList,R.layout.grid_cell_square_image_text, 
+		SimpleAdapter SimpleAdapter1 = new SimpleAdapter(this,meumList,R.layout.grid_cell_square_mainmenu, 
 		          new String[]{Key_ItemImage,Key_ItemText}, new int[]{R.id.imageView1,R.id.textView1}); 
 		gridView1.setAdapter(SimpleAdapter1);
 		gridView1.setOnItemClickListener(new OnItemClickListener(){
@@ -135,9 +135,10 @@ public class ActivityHome extends Activity{
 					break;
 				case Position_searchfood:
 //					intent = new Intent(ActivityHome.this, ActivitySearchFoodCustom.class);
+//					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
+//					intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromSearchFood);
 //					startActivity(intent);
-					
-					intent = new Intent(ActivityHome.this, ActivitySearchFoodCustom.class);
+					intent = new Intent(ActivityHome.this, ActivitySearchFoodWithClass.class);
 					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 					intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromSearchFood);
 					startActivity(intent);

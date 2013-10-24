@@ -34,16 +34,13 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ExpandableListView.*;
 
 
-public class ActivityRichFood extends Activity {
+public class ActivityRichFood extends ActivityBase {
 	public static final int IntentResultCode = 1000;
 	
 	public static final String IntentResultKey_foodIdCol = "foodIdList";
 	public static final String IntentResultKey_foodAmountCol = "foodAmountList";
 	
 	static final String LogTag = "ActivityRichFood";
-	
-
-	String m_currentTitle;
 	
 	String mInvokerType = null;
 	String mNutrientId;

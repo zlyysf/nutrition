@@ -26,7 +26,7 @@ import android.widget.SimpleAdapter;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
-public class ActivityNutrients extends Activity{
+public class ActivityNutrients extends ActivityBase{
 
     static final String LogTag = "ActivityHome";
     
@@ -48,7 +48,7 @@ public class ActivityNutrients extends Activity{
 
     HashMap<String, Double> m_DRIsDict ;
     HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level;
-    String m_currentTitle;
+
 
 	public void onResume() {
 		super.onResume();

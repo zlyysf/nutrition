@@ -433,6 +433,18 @@ public class Tool {
 	    }
 	    return dic2Level;
 	}
+	public static HashMap<Object, Object[]> array2DtoArrayHashMap_withKeyIndex(int keyIndex, Object[][] array2D)
+	{
+	    if (array2D == null)
+	        return null;
+	    HashMap<Object, Object[]> aryHm = new HashMap<Object, Object[]>();
+	    for(int i=0; i<array2D.length; i++){
+	    	Object[] ary1D = array2D[i];
+	    	Object keyVal = ary1D[keyIndex];
+	    	aryHm.put(keyVal, ary1D);
+	    }
+	    return aryHm;
+	}
 	
 	public static HashMap<String,ArrayList<HashMap<String, Object>>> groupBy(String propertyNameToGroup, ArrayList<HashMap<String, Object>> dataCol){
 		if (dataCol == null)

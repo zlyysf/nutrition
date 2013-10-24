@@ -18,7 +18,7 @@
         android:background="@drawable/btn_back_bg"
         android:gravity="center_vertical"
         android:paddingBottom="7dp"
-        android:paddingLeft="10dp"
+        android:paddingLeft="15dp"
         android:paddingRight="10dp"
         android:paddingTop="7dp"
         android:text="@string/cancel"

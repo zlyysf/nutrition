@@ -34,11 +34,12 @@ import android.widget.*;
 import android.widget.ExpandableListView.*;
 
 
-public class ActivityFoodCombination extends Activity {
+public class ActivityFoodCombination extends ActivityBase {
 	
 	public static final int IntentRequestCode_ActivityRichFood = 100;
 	public static final int IntentRequestCode_ActivityAllFoodExpandList = 101;
 	public static final int IntentRequestCode_ActivitySearchFoodCustom = 102;
+	public static final int IntentRequestCode_ActivitySearchFoodWithClass = 103;
 	
 	public static final int IntentResultCode = 1101;
 	
@@ -62,7 +63,7 @@ public class ActivityFoodCombination extends Activity {
 	ExpandableListView m_expandableListView1;
 	
 	ExpandableListAdapter_FoodNutrition mListAdapter;
-	String m_currentTitle;
+
 	
 	myProgressDialog m_prgressDialog;
 	private AsyncTaskDoRecommend m_AsyncTaskDoRecommend;
@@ -238,9 +239,12 @@ public class ActivityFoodCombination extends Activity {
         m_imgbtnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-            	Intent intent = new Intent(ActivityFoodCombination.this, ActivitySearchFoodCustom.class);
+//            	Intent intent = new Intent(ActivityFoodCombination.this, ActivitySearchFoodCustom.class);
+//            	intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
+//				startActivityForResult(intent,IntentRequestCode_ActivitySearchFoodCustom);
+            	Intent intent = new Intent(ActivityFoodCombination.this, ActivitySearchFoodWithClass.class);
             	intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
-				startActivityForResult(intent,IntentRequestCode_ActivitySearchFoodCustom);
+				startActivityForResult(intent,IntentRequestCode_ActivitySearchFoodWithClass);
             }
         });
         m_imgbtnShare.setOnClickListener(new View.OnClickListener() {
@@ -371,7 +375,6 @@ public class ActivityFoodCombination extends Activity {
 				}
 			});
 		}
-		
 		
 		//DialogInterface.OnClickListener
 		@Override
@@ -524,47 +527,73 @@ public class ActivityFoodCombination extends Activity {
 		switch (requestCode)
 		{
 			case IntentRequestCode_ActivityRichFood:
-			case IntentRequestCode_ActivityAllFoodExpandList:
-			case IntentRequestCode_ActivitySearchFoodCustom:
 				switch (resultCode)
 				{
 					case ActivityRichFood.IntentResultCode:
-					case ActivityAllFoodExpandList.IntentResultCode:
-					case ActivitySearchFoodCustom.IntentResultCode:
-						String foodId = data.getStringExtra(Constants.COLUMN_NAME_NDB_No);
-						int foodAmount = data.getIntExtra(Constants.Key_Amount, 0);
-						Log.d(LogTag, "onActivityResult foodId="+foodId+", foodAmount="+foodAmount);
-						
-//						m_foodIdList.add(foodId);//TODO check repeated food
-//						m_foodAmountList.add(Double.valueOf(foodAmount));
-						Tool.addDoubleToDictionaryItem(foodAmount, m_foodAmountHm, foodId);
-						
-						DataAccess da  = DataAccess.getSingleton(ActivityFoodCombination.this);
-						m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
-						
-						ArrayList<HashMap<String, Object>> foodInfoList = da.getFoodAttributesByIds(new String[]{foodId});
-
-						assert(foodInfoList.size()==1);
-//						m_foodsData.addAll(foodInfoList);
-						m_foods2LevelHm.put(foodId, foodInfoList.get(0));
-						reCalculateFoodSupplyNutrient();
-						
-						mListAdapter.notifyDataSetChanged();
-						
-//						ArrayList<String> foodIdList = data.getStringArrayListExtra(ActivityRichFood.IntentResultKey_foodIdCol);
-//						ArrayList<String> foodAmountList = data.getStringArrayListExtra(ActivityRichFood.IntentResultKey_foodAmountCol);
-//						Log.d(LogTag, "onActivityResult foodIdList="+foodIdList+", foodAmountList="+foodAmountList);
-						
+						addedSelectedFood_onActivityResult(data);
 						break;
-
 					default:
 						break;
 				}
 				break;
-
+			case IntentRequestCode_ActivityAllFoodExpandList:
+				switch (resultCode)
+				{
+					case ActivityAllFoodExpandList.IntentResultCode:
+						addedSelectedFood_onActivityResult(data);
+						break;
+					default:
+						break;
+				}
+				break;
+			case IntentRequestCode_ActivitySearchFoodCustom:
+				switch (resultCode)
+				{
+					case ActivitySearchFoodCustom.IntentResultCode:
+						addedSelectedFood_onActivityResult(data);
+						break;
+					default:
+						break;
+				}
+				break;
+			case IntentRequestCode_ActivitySearchFoodWithClass:
+				switch (resultCode)
+				{
+					case ActivitySearchFoodWithClass.IntentResultCode:
+						addedSelectedFood_onActivityResult(data);
+						break;
+					default:
+						break;
+				}
+				break;
 			default:
 				break;
 		}
+	}
+	private void addedSelectedFood_onActivityResult(Intent data){
+		String foodId = data.getStringExtra(Constants.COLUMN_NAME_NDB_No);
+		int foodAmount = data.getIntExtra(Constants.Key_Amount, 0);
+		Log.d(LogTag, "onActivityResult foodId="+foodId+", foodAmount="+foodAmount);
+		
+//		m_foodIdList.add(foodId);//TODO check repeated food
+//		m_foodAmountList.add(Double.valueOf(foodAmount));
+		Tool.addDoubleToDictionaryItem(foodAmount, m_foodAmountHm, foodId);
+		
+		DataAccess da  = DataAccess.getSingleton(ActivityFoodCombination.this);
+		m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
+		
+		ArrayList<HashMap<String, Object>> foodInfoList = da.getFoodAttributesByIds(new String[]{foodId});
+
+		assert(foodInfoList.size()==1);
+//		m_foodsData.addAll(foodInfoList);
+		m_foods2LevelHm.put(foodId, foodInfoList.get(0));
+		reCalculateFoodSupplyNutrient();
+		
+		mListAdapter.notifyDataSetChanged();
+		
+//		ArrayList<String> foodIdList = data.getStringArrayListExtra(ActivityRichFood.IntentResultKey_foodIdCol);
+//		ArrayList<String> foodAmountList = data.getStringArrayListExtra(ActivityRichFood.IntentResultKey_foodAmountCol);
+//		Log.d(LogTag, "onActivityResult foodIdList="+foodIdList+", foodAmountList="+foodAmountList);
 	}
     
     

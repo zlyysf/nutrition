@@ -34,7 +34,7 @@ import android.widget.ExpandableListView.*;
 
 
 public class ActivityAllFoodExpandList extends Activity {
-	public static final int IntentResultCode = 1001;
+	public static final int IntentResultCode = 1000;
 	
 	static final String LogTag = "ActivityAllFoodExpandList";
 	

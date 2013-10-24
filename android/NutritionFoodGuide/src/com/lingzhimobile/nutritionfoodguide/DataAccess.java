@@ -1,6 +1,7 @@
 package com.lingzhimobile.nutritionfoodguide;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
@@ -1009,49 +1010,65 @@ public class DataAccess {
 	    
 		return filters;
 	}
-	
-	public ArrayList<HashMap<String, Object>> getFoodsByLikeCnName(String cnNamePart)
+	public ArrayList<HashMap<String, Object>> getFoodsByShowingPart(String cnNamePart,String enNamePart, String cnType)
 	{
-		Log.d(LogTag, "getFoodsByLikeCnName enter, cnNamePart="+cnNamePart);
-	    if (cnNamePart == null || cnNamePart.length()==0)
-	        return null;
-		StringBuffer sbSql = new StringBuffer(1000*1);
-	    //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
-		sbSql.append("SELECT F.*,CnCaption,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit, FC.PicPath, SingleItemUnitName,SingleItemUnitWeight \n");
-		sbSql.append("  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No \n");
+		ArrayList<ArrayList<Object>> columnValuesPairs_like = new ArrayList<ArrayList<Object>>();
+		if (cnNamePart!=null && cnNamePart.length()>0){
+			ArrayList<Object> columnValuesPair = new ArrayList<Object>();
+			columnValuesPair.add(Constants.COLUMN_NAME_CnCaption);
+			columnValuesPair.add(cnNamePart);
+			columnValuesPairs_like.add(columnValuesPair);
+		}
+		if (enNamePart!=null && enNamePart.length()>0){
+			ArrayList<Object> columnValuesPair = new ArrayList<Object>();
+			columnValuesPair.add(Constants.COLUMN_NAME_FoodNameEn);
+			columnValuesPair.add(enNamePart);
+			columnValuesPairs_like.add(columnValuesPair);
+		}
 		
-		ArrayList<ArrayList<Object>> exprIncludeANDdata = new ArrayList<ArrayList<Object>>();
-
-        ArrayList<Object> expr = new ArrayList<Object>(3);
-        expr.add("CnCaption");
-        expr.add("LIKE");
-        ArrayList<Object> values = new ArrayList<Object>();
-        values.add("%"+cnNamePart);
-        expr.add(values);
-        exprIncludeANDdata.add(expr);
-        HashMap<String, Object> filters = new HashMap<String, Object>();
-	    filters.put("includeAND", exprIncludeANDdata);
+		ArrayList<ArrayList<Object>> columnValuesPairs_equal = new ArrayList<ArrayList<Object>>();
+		if (cnType!=null && cnType.length()>0){
+			ArrayList<Object> columnValuesPair = new ArrayList<Object>();
+			columnValuesPair.add(Constants.COLUMN_NAME_CnType);
+			columnValuesPair.add(cnType);
+			columnValuesPairs_equal.add(columnValuesPair);
+		}
 		
-	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
-	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
-	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, null, localOptions);
-	    Log.d(LogTag, "getFoodsByLikeCnName return");
-	    return dataAry;
+		return getFoodsByColumnValuePairFilter(null,columnValuesPairs_equal,null,columnValuesPairs_like);
 	}
-	public ArrayList<String> getFoodCnTypesByFilters_withIncludeFoodClass(String includeFoodClass,String excludeFoodClass,String equalClass,
-			String[] includeFoodIds,String[] excludeFoodIds)
+
+
+//	public ArrayList<String> getFoodCnTypesByFilters_withIncludeFoodClass(String includeFoodClass,String excludeFoodClass,String equalClass,
+//			String[] includeFoodIds,String[] excludeFoodIds)
+//	{
+//		StringBuffer sbSql = new StringBuffer(1000*1);
+//		sbSql.append("SELECT DISTINCT CnType \n");
+//		sbSql.append("  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No \n");
+//		HashMap<String, Object> filters = _generateFiltersForFood(includeFoodClass, excludeFoodClass, equalClass, includeFoodIds, excludeFoodIds);
+//	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
+//	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
+//	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, null, localOptions);
+//	    ArrayList<Object> propLst = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName("CnType", dataAry);
+//	    ArrayList<String> strPropLst = Tool.convertToStringArrayList(propLst);
+//	    Log.d(LogTag, "getFoodCnTypesByFilters_withIncludeFoodClass return");
+//	    return strPropLst;
+//	}
+	public ArrayList<String> getFoodCnTypes()
 	{
 		StringBuffer sbSql = new StringBuffer(1000*1);
-		sbSql.append("SELECT DISTINCT CnType \n");
-		sbSql.append("  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No \n");
-		HashMap<String, Object> filters = _generateFiltersForFood(includeFoodClass, excludeFoodClass, equalClass, includeFoodIds, excludeFoodIds);
-	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
-	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
-	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, null, localOptions);
-	    ArrayList<Object> propLst = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName("CnType", dataAry);
-	    ArrayList<String> strPropLst = Tool.convertToStringArrayList(propLst);
-	    Log.d(LogTag, "getFoodCnTypesByFilters_withIncludeFoodClass return");
-	    return strPropLst;
+		sbSql.append("SELECT distinct CnType FROM FoodCustom FC  ORDER BY CnType");
+		
+		Cursor cs = mDBcon.rawQuery(sbSql.toString(),null);
+	    ArrayList<String> cnTypes = Tool.getDataFromCursor(cs, 0);
+	    cs.close();
+	    
+	    Log.d(LogTag, "getFoodCnTypes ret:"+cnTypes);
+	    return cnTypes;
+//	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), null, false, null, null);
+//	    ArrayList<Object> propLst = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName("CnType", dataAry);
+//	    ArrayList<String> strPropLst = Tool.convertToStringArrayList(propLst);
+//	    Log.d(LogTag, "getFoodCnTypesByFilters_withIncludeFoodClass return");
+//	    return strPropLst;
 	}
 	
 	public ArrayList<HashMap<String, Object>> getFoodAttributesByIds(String[] idAry)
@@ -1111,6 +1128,115 @@ public class DataAccess {
 //	    int idx = Tool.getRandObj().nextInt(foods.size()) ;
 //	    return foods.get(idx);
 		return getOneFoodByFilters_withIncludeFoodClass(includeFoodClass,excludeFoodClass,null,includeFoodIds,excludeFoodIds);
+	}
+
+
+	/*
+	 * 这里的like是会给val前面加%，里层的函数默认会给val后面加%，这样val的前后都有%
+	 */
+	public ArrayList<HashMap<String, Object>> getFoodsByColumnValuePairFilter(String[][] columnValuePairs_equal,ArrayList<ArrayList<Object>> columnValuesPairs_equal, 
+			String[][] columnValuePairs_like,ArrayList<ArrayList<Object>> columnValuesPairs_like)
+	{
+		Log.d(LogTag, "getFoodsByColumnValuePairFilter enter");
+		StringBuffer sbSql = new StringBuffer(1000*1);
+		sbSql.append("SELECT F.*,CnCaption,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit, FC.PicPath, SingleItemUnitName,SingleItemUnitWeight \n");
+		sbSql.append("  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No \n");
+
+		ArrayList<ArrayList<Object>> exprIncludeANDdata = new ArrayList<ArrayList<Object>>();
+		
+		String strColumn, strOp;
+		ArrayList<Object> expr, values;
+	    if (columnValuePairs_equal!=null){
+	    	for(int i=0; i<columnValuePairs_equal.length; i++){
+	    		String[] columnValuePair = columnValuePairs_equal[i];
+	    		
+	    		strColumn = columnValuePair[0];
+		        strOp = "=";
+		        String val = columnValuePair[1];
+		        expr = new ArrayList<Object>(3);
+		        expr.add(strColumn);
+		        expr.add(strOp);
+		        values = new ArrayList<Object>();
+		        values.add(val);
+		        expr.add(values);
+		        exprIncludeANDdata.add(expr);
+	    	}
+	    }
+	    if (columnValuesPairs_equal!=null){
+	    	for(int i=0; i<columnValuesPairs_equal.size(); i++){
+	    		ArrayList<Object> columnValuesPair = columnValuesPairs_equal.get(i);
+	    		
+	    		strColumn = (String)columnValuesPair.get(0);
+	    		Object valOrValues = columnValuesPair.get(1);
+	    		if (valOrValues instanceof ArrayList){
+	    			strOp = "IN";
+	    			values = new ArrayList<Object>();
+	    			values.addAll((ArrayList)valOrValues);
+	    		}else{
+	    			strOp = "=";
+	    			values = new ArrayList<Object>();
+			        values.add(valOrValues);
+	    		}
+	    		
+		        expr = new ArrayList<Object>(3);
+		        expr.add(strColumn);
+		        expr.add(strOp);
+		        expr.add(values);
+		        exprIncludeANDdata.add(expr);
+	    	}
+	    }
+	    if (columnValuePairs_like !=null){
+	    	for(int i=0; i<columnValuePairs_like.length; i++){
+	    		String[] columnValuePair = columnValuePairs_like[i];
+	    		
+	    		strColumn = columnValuePair[0];
+		        strOp = "LIKE";
+		        String val = columnValuePair[1];
+		        expr = new ArrayList<Object>(3);
+		        expr.add(strColumn);
+		        expr.add(strOp);
+		        values = new ArrayList<Object>();
+		        values.add("%"+val);
+		        expr.add(values);
+		        exprIncludeANDdata.add(expr);
+	    	}
+	    }
+	    
+	    if (columnValuesPairs_like!=null){
+	    	for(int i=0; i<columnValuesPairs_like.size(); i++){
+	    		ArrayList<Object> columnValuesPair = columnValuesPairs_like.get(i);
+	    		strOp = "LIKE";
+	    		
+	    		strColumn = (String)columnValuesPair.get(0);
+	    		Object valOrValues = columnValuesPair.get(1);
+	    		values = new ArrayList<Object>();
+	    		if (valOrValues instanceof ArrayList){
+//	    			values.addAll((ArrayList)valOrValues);
+	    			ArrayList alVal = (ArrayList)valOrValues;
+	    			for(int j=0; j<alVal.size(); j++){
+	    				Object itemVal = alVal.get(i);
+	    				values.add("%"+itemVal);
+	    			}
+	    		}else{
+			        values.add("%"+valOrValues);
+	    		}
+	    		
+		        expr = new ArrayList<Object>(3);
+		        expr.add(strColumn);
+		        expr.add(strOp);
+		        expr.add(values);
+		        exprIncludeANDdata.add(expr);
+	    	}
+	    }
+	    
+	    HashMap<String, Object> filters = new HashMap<String, Object>();
+	    filters.put("includeAND", exprIncludeANDdata);
+
+	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
+	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
+	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, null, localOptions);
+	    Log.d(LogTag, "getFoodsByColumnValuePairFilter return");
+	    return dataAry;
 	}
 	
 	/*

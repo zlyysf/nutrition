@@ -85,29 +85,16 @@
 		    android:windowSoftInputMode="adjustUnspecified|stateHidden" 
 		    >
 		</activity>
-		
-		<activity android:name=".ActivitySearchFoodT1" 
+		<activity android:name=".ActivitySearchFoodWithClass" 
 		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
-            <intent-filter>
-				<action android:name="android.intent.action.SEARCH"  />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-			<meta-data android:name="android.app.searchable"
-				android:resource="@xml/searchable_food" />
+		</activity>
+		<activity android:name=".ActivityFoodByClass" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
+		    >
 		</activity>
 		
-		<activity android:name=".ActivitySearchFoodT1SingleTop" 
-		    android:theme="@android:style/Theme.NoTitleBar" 
-		    android:launchMode="singleTop"
-		    >
-            <intent-filter>
-				<action android:name="android.intent.action.SEARCH"  />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-			<meta-data android:name="android.app.searchable"
-				android:resource="@xml/searchable_food" />
-		</activity>
+		
 		<activity android:name=".ActivityUserProfile" 
 		    android:theme="@android:style/Theme.NoTitleBar" 
 		    android:windowSoftInputMode="adjustUnspecified|stateHidden" 
@@ -146,10 +133,7 @@
 		</activity>
 		
 
-		
-		<provider android:name="FoodProviderT1g"
-			android:authorities="FoodProviderT1gAuthority"
-			android:syncable="false" />
+	
         
 		<service
 		    android:name="com.umeng.common.net.DownloadingService"

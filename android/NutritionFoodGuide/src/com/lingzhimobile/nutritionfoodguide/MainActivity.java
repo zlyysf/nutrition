@@ -96,16 +96,16 @@ public class MainActivity extends Activity implements OnClickListener{
 				startActivity(intent);
 				break;
 			case R.id.btnSearchFood:	
-				intent = new Intent(this, ActivitySearchFoodT1.class);
-				intent.putExtra("from", "from Main");
-//				intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//no use here
-				startActivity(intent);
+//				intent = new Intent(this, ActivitySearchFoodT1.class);
+//				intent.putExtra("from", "from Main");
+////				intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);//no use here
+//				startActivity(intent);
 				break;
 			case R.id.btnSearchFoodSingleTop:	
-				//设置了 android:launchMode="singleTop" 也没成功
-				intent = new Intent(this, ActivitySearchFoodT1SingleTop.class);
-				intent.putExtra("from", "from Main2");
-				startActivity(intent);
+//				//设置了 android:launchMode="singleTop" 也没成功
+//				intent = new Intent(this, ActivitySearchFoodT1SingleTop.class);
+//				intent.putExtra("from", "from Main2");
+//				startActivity(intent);
 				break;
 			case R.id.btnUserProfile:	
 				intent = new Intent(this, ActivityUserProfile.class);

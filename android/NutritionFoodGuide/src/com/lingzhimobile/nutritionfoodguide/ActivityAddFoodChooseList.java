@@ -35,7 +35,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ExpandableListView.*;
 
 
-public class ActivityAddFoodChooseList extends Activity {
+public class ActivityAddFoodChooseList extends ActivityBase {
 	
 	static final String LogTag = "ActivityAddFoodChooseList";
 	
@@ -47,7 +47,7 @@ public class ActivityAddFoodChooseList extends Activity {
 	
 	ListView m_listView1;
 	FoodCombinationAdapter mListAdapter;
-	String m_currentTitle;
+
 	
 	public void onResume() {
 		super.onResume();

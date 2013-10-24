@@ -31,8 +31,8 @@ import android.widget.*;
 import android.widget.ExpandableListView.*;
 
 
-public class ActivitySearchFoodCustom extends Activity {
-	public static final int IntentResultCode = 1011;
+public class ActivitySearchFoodCustom extends ActivityBase {
+	public static final int IntentResultCode = 1000;
 	
 	static final String LogTag = "ActivitySearchFoodCustom";
 	
@@ -46,7 +46,7 @@ public class ActivitySearchFoodCustom extends Activity {
 	ExpandableListView m_expandableListView1;
 	FoodsByTypeExpandableListAdapter m_FoodsByTypeExpandableListAdapter;
 	Button mBtnFinish,m_btnCancel;
-	String m_currentTitle;
+
 	
 	public void onResume() {
 		super.onResume();

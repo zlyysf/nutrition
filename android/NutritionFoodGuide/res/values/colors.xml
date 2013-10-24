@@ -9,6 +9,7 @@
     <color name="radioAsTabBgColor">#3daf2c</color>
     <color name="radioAsTabBgColor2">#3daf2d</color>
     <color name="buttonsBarInFoodCombination">#5af4f2ec</color>  <!--65%透明度 --> 
+    <color name="halfTransparentBlack">#80000000</color>
 
     <color name="green">#7700ff00</color>
     <color name="gray">#eae9e4</color>

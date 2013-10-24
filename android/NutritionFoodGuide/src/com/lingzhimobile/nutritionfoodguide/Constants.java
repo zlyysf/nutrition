@@ -70,7 +70,8 @@ public class Constants {
 
 	//public static final String TABLE_NAME_FoodNutritionCustom ="FoodNutritionCustom" // TO be replaced by CustomFood join FoodNutrition OR same name view
 	public static final String VIEW_NAME_FoodNutritionCustom ="FoodNutritionCustom" ;
-	public static final String COLUMN_NAME_CnCaption ="CnCaption";
+	public static final String COLUMN_NAME_CnCaption ="CnCaption"; // 食物的中文名
+	public static final String COLUMN_NAME_FoodNameEn = "FoodNameEn"; //食物的英文名
 	public static final String COLUMN_NAME_CnType ="CnType";
 	public static final String COLUMN_NAME_classify ="classify";
 	public static final String TABLE_NAME_FoodCnDescription ="FoodCnDescription"; // TO BE changed to CustomFood
