@@ -166,6 +166,7 @@ public class ActivityAddFoodChooseList extends ActivityBase {
 			
 			TextView tvFoodCombinationName = (TextView)convertView.findViewById(R.id.tvFoodCombinationName);
 			tvFoodCombinationName.setText((String)foodCollocationInfo.get(Constants.COLUMN_NAME_CollocationName));
+			tvFoodCombinationName.setGravity(Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL);
 			
 			LinearLayout llFoodCollocation = (LinearLayout)convertView.findViewById(R.id.llFoodCollocation);
 			OnRowClickListener myOnRowClickListener = (OnRowClickListener)llFoodCollocation.getTag();
