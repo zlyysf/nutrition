@@ -206,6 +206,7 @@ public class ActivityRichFood extends ActivityBase {
 			ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)foodInfo.get(Constants.COLUMN_NAME_PicPath)));
 			
 			if (Constants.InvokerType_FromNutrients.equals(mInvokerType)){
+				LinearLayout llRowNutrient = (LinearLayout)convertView.findViewById(R.id.llRowNutrient);
 				ImageButton imgBtnAddFood = (ImageButton)convertView.findViewById(R.id.imgBtnAddFood);
 				OnClickListenerToAddFoodToList myOnClickListenerToAddFoodToList =  (OnClickListenerToAddFoodToList)imgBtnAddFood.getTag();
 				if (myOnClickListenerToAddFoodToList==null){
@@ -213,6 +214,7 @@ public class ActivityRichFood extends ActivityBase {
 					myOnClickListenerToAddFoodToList.initInputData(position,foodId,foodAmount);
 					imgBtnAddFood.setTag(myOnClickListenerToAddFoodToList);
 					imgBtnAddFood.setOnClickListener(myOnClickListenerToAddFoodToList);
+					llRowNutrient.setOnClickListener(myOnClickListenerToAddFoodToList);
 				}else{
 					myOnClickListenerToAddFoodToList.initInputData(position,foodId,foodAmount);
 				}
