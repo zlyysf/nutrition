@@ -69,7 +69,7 @@
 
 
 -(void)getDifferenceFromFoodCustomAndFoodCustomT2;
--(NSArray *)getFoodCnTypes;
+
 -(NSArray *)getFoodSingleItemUnitNames;
 
 @end

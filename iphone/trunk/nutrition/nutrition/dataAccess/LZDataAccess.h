@@ -67,6 +67,8 @@
 -(NSArray *)getFoodAttributesByIds:(NSArray *)idAry;
 -(NSArray *)getOrderedFoodIds:(NSArray *)idAry;
 
+-(NSArray *)getFoodCnTypes;
+
 -(NSMutableDictionary*)getNutrientInfoAs2LevelDictionary_withNutrientIds:(NSArray*)nutrientIds;
 -(NSDictionary*)getNutrientInfo:(NSString*)nutrientId;
 

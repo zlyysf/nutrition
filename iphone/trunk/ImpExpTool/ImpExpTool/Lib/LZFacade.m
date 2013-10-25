@@ -100,7 +100,7 @@
 //    [workRe checkExcelForUnSynchronizedFoodFullEnName];
     
     LZDBAccess *db = [LZDBAccess singletonCustomDB];
-    [db getFoodCnTypes];
+    [db.da getFoodCnTypes];
     [db getFoodSingleItemUnitNames];
     
 }

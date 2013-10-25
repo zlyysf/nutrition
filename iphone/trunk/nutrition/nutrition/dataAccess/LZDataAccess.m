@@ -1209,6 +1209,18 @@
 }
 
 
+-(NSArray *)getFoodCnTypes
+{
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+    [sqlStr appendString:@"SELECT distinct CnType FROM FoodCustom FC\n"];
+    NSString *orderByPart = @" ORDER BY CnType";
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:nil andWhereExistInQuery:false andAfterWherePart:orderByPart andOptions:nil];
+    NSArray * valAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:@"CnType" andDictionaryArray:dataAry];
+    NSLog(@"getFoodCnTypes ret: %@",[LZUtility getObjectDescription:valAry andIndent:0] );
+    return valAry;
+}
+
+
 /*
  用以支持得到nutrients的信息数据，并可以通过普通的nutrient的列名取到相应的nutrient信息。
  */
