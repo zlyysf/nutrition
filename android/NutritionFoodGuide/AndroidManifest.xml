@@ -145,6 +145,7 @@
 		<meta-data android:value="@string/umengChannelAppchina" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannel91" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannelGfan" android:name="UMENG_CHANNEL"/>
+		<meta-data android:value="@string/umengChannelCoolchuan" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannelWebPortal" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannelDev" android:name="UMENG_CHANNEL"/>
 		 -->
