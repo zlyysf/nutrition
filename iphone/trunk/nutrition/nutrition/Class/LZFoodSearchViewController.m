@@ -24,7 +24,7 @@
 @end
 
 @implementation LZFoodSearchViewController
-@synthesize allFood,foodNameArray,foodTypeArray,isFromOut,allFoodNamesArray,searchResultArray,admobView;
+@synthesize foodTypeArray,isFromOut,searchResultArray,admobView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -57,40 +57,39 @@
     UIImageView *bgImage = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"searchbar_bg.png"]];
     [barBack addSubview:bgImage];
     
-    allFood = [[LZDataAccess singleton]getAllFood];
-    NSMutableSet *foodTypeSet = [NSMutableSet set];
-    self.foodTypeArray = [[NSMutableArray alloc]init];
-    self.foodNameArray = [[NSMutableArray alloc]init];
-    self.allFoodNamesArray = [[NSMutableArray alloc]init];
+    //allFood = [[LZDataAccess singleton]getAllFood];
+//    NSMutableSet *foodTypeSet = [NSMutableSet set];
+    self.foodTypeArray = [[LZDataAccess singleton]getFoodCnTypes];//[[NSMutableArray alloc]init];
     self.searchResultArray = [[NSMutableArray alloc]init];
-    for (int i = 0; i< [allFood count]; i++)
-    {
-        NSDictionary *afood = [allFood objectAtIndex:i];
-        NSString *foodType = [afood objectForKey:@"CnType"];
-        NSString *foodQueryKey;
-        if (isChinese)
-        {
-            foodQueryKey = @"CnCaption";
-        }
-        else
-        {
-            foodQueryKey = @"FoodNameEn";
-        }
-        [allFoodNamesArray addObject:[afood objectForKey:foodQueryKey]];
-        if (![foodTypeSet containsObject:foodType])
-        {
-            NSMutableArray *foodName = [[NSMutableArray alloc]init];
-            [foodName addObject:afood];
-            [self.foodNameArray addObject:foodName];
-            [self.foodTypeArray addObject:foodType];
-            [foodTypeSet addObject:foodType];
-        }
-        else
-        {
-            int index = [self.foodTypeArray indexOfObject:foodType];
-            [[self.foodNameArray objectAtIndex:index]addObject:afood];
-        }
-    }
+    
+//    for (int i = 0; i< [allFood count]; i++)
+//    {
+//        NSDictionary *afood = [allFood objectAtIndex:i];
+//        NSString *foodType = [afood objectForKey:@"CnType"];
+//        NSString *foodQueryKey;
+//        if (isChinese)
+//        {
+//            foodQueryKey = @"CnCaption";
+//        }
+//        else
+//        {
+//            foodQueryKey = @"FoodNameEn";
+//        }
+//        [allFoodNamesArray addObject:[afood objectForKey:foodQueryKey]];
+//        if (![foodTypeSet containsObject:foodType])
+//        {
+//            NSMutableArray *foodName = [[NSMutableArray alloc]init];
+//            [foodName addObject:afood];
+//            [self.foodNameArray addObject:foodName];
+//            [self.foodTypeArray addObject:foodType];
+//            [foodTypeSet addObject:foodType];
+//        }
+//        else
+//        {
+//            int index = [self.foodTypeArray indexOfObject:foodType];
+//            [[self.foodNameArray objectAtIndex:index]addObject:afood];
+//        }
+//    }
     int totalFloor = [foodTypeArray count]/3+ (([foodTypeArray count]%3 == 0)?0:1);
     float scrollHeight = totalFloor *94 + 20+ (totalFloor-1)*8+50;
     self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, scrollHeight-50, 320, 50)];
@@ -188,7 +187,7 @@
     
     NSString *typeName = [typeDict objectForKey:queryKey];
 
-    dailyIntakeViewController.foodArray = [self.foodNameArray objectAtIndex:tag];
+    dailyIntakeViewController.foodArray = [da getFoodsByShowingPart:nil andEnNamePart:nil andCnType:typeKey];//[self.foodNameArray objectAtIndex:tag];
     //dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
     dailyIntakeViewController.titleString = typeName;
     dailyIntakeViewController.isFromOut = isFromOut;
@@ -229,8 +228,18 @@
     }
     UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
     [cell.imageView setImage:foodImage];
+    NSString *foodQueryKey;
+    if (isChinese)
+    {
+        foodQueryKey = @"CnCaption";
+    }
+    else
+    {
+        foodQueryKey = @"FoodNameEn";
+    }
 
-	cell.textLabel.text = [resultDict objectForKey:@"Name"];
+
+	cell.textLabel.text = [resultDict objectForKey:foodQueryKey];
 	return cell;
 }
 
@@ -240,13 +249,13 @@
     [self.searchResultVC setActive:NO];
     [self.searchResultVC.searchBar resignFirstResponder];
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    NSDictionary *resultDict = [self.searchResultArray objectAtIndex:indexPath.row];
+    NSDictionary *foodAtr = [self.searchResultArray objectAtIndex:indexPath.row];
 
 
-    NSString *resultName = [resultDict objectForKey:@"Name"];
+    //NSString *resultName = [resultDict objectForKey:@"Name"];
     
-    int index = [self.allFoodNamesArray indexOfObject:resultName];
-    NSDictionary *foodAtr = [self.allFood  objectAtIndex:index];
+    //int index = [self.allFoodNamesArray indexOfObject:resultName];
+    //NSDictionary *foodAtr = [self.allFood  objectAtIndex:index];
     NSString *foodQueryKey;
     if (isChinese)
     {
@@ -303,20 +312,36 @@
 - (BOOL)searchDisplayController:(UISearchDisplayController *)controller shouldReloadTableForSearchString:(NSString *)searchString
 {
     [self.searchResultArray removeAllObjects];
-//    NSLog(@"%@",searchString);
-    for (int i=0; i<[self.allFoodNamesArray count]; i++)
+    NSLog(@"%@",searchString);
+    if ([searchString length]== 0)
     {
-        NSString *cnName = [self.allFoodNamesArray objectAtIndex:i];
-        NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@",searchString];
-        if ([pre evaluateWithObject:cnName])
-        {
-            NSDictionary *afood = [allFood objectAtIndex:i];
-            NSString *picPath = [afood objectForKey:@"PicPath"];
-            NSDictionary *resultDict = [NSDictionary dictionaryWithObjectsAndKeys:cnName ,@"Name",picPath,@"PicPath", nil];
-            [self.searchResultArray addObject:resultDict];
-        }
-    
+        return YES;
     }
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSArray *result;
+    if (isChinese)
+    {
+        result = [da getFoodsByShowingPart:searchString andEnNamePart:nil andCnType:nil];
+    }
+    else
+    {
+        result = [da getFoodsByShowingPart:nil andEnNamePart:searchString andCnType:nil];
+    }
+    [self.searchResultArray addObjectsFromArray:result];
+    
+//    for (int i=0; i<[self.allFoodNamesArray count]; i++)
+//    {
+//        NSString *cnName = [self.allFoodNamesArray objectAtIndex:i];
+//        NSPredicate *pre = [NSPredicate predicateWithFormat:@"SELF CONTAINS[cd] %@",searchString];
+//        if ([pre evaluateWithObject:cnName])
+//        {
+//            NSDictionary *afood = [allFood objectAtIndex:i];
+//            NSString *picPath = [afood objectForKey:@"PicPath"];
+//            NSDictionary *resultDict = [NSDictionary dictionaryWithObjectsAndKeys:cnName ,@"Name",picPath,@"PicPath", nil];
+//            [self.searchResultArray addObject:resultDict];
+//        }
+//    
+//    }
     return YES;
 }
 
