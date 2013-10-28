@@ -6,40 +6,57 @@
     android:orientation="vertical" >
     
     <include android:id="@+id/topbarPart" layout="@layout/topbar" />
-    
-    <GridView
-        android:id="@+id/gridView1"
+
+    <ScrollView
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:layout_weight="1"
-        android:fadingEdge="none"
-        android:horizontalSpacing="10dp"
-        android:listSelector="@null"
-        android:numColumns="2"
-        android:padding="0dp"
+        android:layout_height="wrap_content" 
         android:scrollbars="none"
-        android:stretchMode="columnWidth"
-        android:verticalSpacing="10dp" >
+        >
 
-    </GridView>
-    <!-- 
-    android:overScrollMode="never" 对于要去掉gridview滑到顶部或底部时的模糊边缘效果 没有作用 http://blog.csdn.net/fanmengke_im/article/details/8961522
-     -->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <Button
-            android:id="@+id/btnTempMain"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="ActivityMain temp" />
-
-    </LinearLayout>
+            android:orientation="vertical" >
+            
+            <com.lingzhimobile.nutritionfoodguide.GridViewExpandHeight
+		        android:id="@+id/gridView1"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_margin="11dp"
+		        android:layout_weight="1"
+		        android:fadingEdge="none"
+		        android:horizontalSpacing="11dp"
+		        android:listSelector="@null"
+		        android:numColumns="2"
+		        android:scrollbars="none"
+		        android:stretchMode="columnWidth"
+		        android:verticalSpacing="10dp" >
+		
+		    </com.lingzhimobile.nutritionfoodguide.GridViewExpandHeight>
+	    <!-- 
+	    android:overScrollMode="never" 对于要去掉gridview滑到顶部或底部时的模糊边缘效果 没有作用 http://blog.csdn.net/fanmengke_im/article/details/8961522
+	     -->
+	
+		    <LinearLayout
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:layout_weight="0"
+		        android:orientation="vertical"
+		        android:visibility="invisible" >
+		
+		        <Button
+		            android:id="@+id/btnTempMain"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:text="ActivityMain temp" />
+		
+		    </LinearLayout>
+            
+            
+        </LinearLayout>
+    </ScrollView>
+    
+        
 
 </LinearLayout>
