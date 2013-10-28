@@ -1041,17 +1041,24 @@
 }
 
 //-----
+-(NSMutableString*) getSql_SelectFoodMainPart
+{
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+    //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
+    [sqlStr appendString:@"SELECT F.*,CnCaption,FoodNameEn,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit, FC.PicPath, SingleItemUnitName,SingleItemUnitWeight \n"];
+    //    [sqlStr appendString:@"  FROM FoodNutritionCustom F \n"];
+    [sqlStr appendString:@"  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No \n"];
+    //    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
+    //    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
+    
+    return sqlStr;
+}
+
 -(NSArray *) getFoodsByFilters_withIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andEqualClass:(NSString*)equalClass andIncludeFoodIds:(NSArray*)includeFoodIds andExcludeFoodIds:(NSArray*)excludeFoodIds
 {
 //    if (includeFoodClass == nil && excludeFoodClass == nil)
 //        return nil;
-    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
-    [sqlStr appendString:@"SELECT F.*,CnCaption,FoodNameEn,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit, FC.PicPath, SingleItemUnitName,SingleItemUnitWeight \n"];
-//    [sqlStr appendString:@"  FROM FoodNutritionCustom F \n"];
-    [sqlStr appendString:@"  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No \n"];
-//    [sqlStr appendString:@"    LEFT OUTER JOIN FoodLimit FL ON F.NDB_No=FL.NDB_No \n"];
-//    [sqlStr appendString:@"    LEFT OUTER JOIN FoodPicPath P ON F.NDB_No=P.NDB_No \n"];
+    NSMutableString *sqlStr = [self getSql_SelectFoodMainPart];
     
     NSMutableArray *exprIncludeORdata = [NSMutableArray array];
     NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
@@ -1134,45 +1141,45 @@
     return foods[idx];
 }
 
--(bool) existAnyGivenFoodsBeRichOfNutrition:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds
-{
-    if (givenFoodIds.count == 0)
-        return false;
-    
-    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
-    [sqlStr appendString:@"SELECT F.NDB_No \n"];
-//    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
-    [sqlStr appendString:@"  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
-    [sqlStr appendString:@" WHERE "];
-    [sqlStr appendString:@"D.["];
-    [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"]"];
-    [sqlStr appendString:@">0"];
-    
-    [sqlStr appendString:@" AND D.["];
-    [sqlStr appendString:nutrientAsColumnName];
-    [sqlStr appendString:@"]"];
-    [sqlStr appendString:@"<1000 \n"];
-    
-    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:givenFoodIds.count];
-    for(int i=0; i<givenFoodIds.count; i++){
-        [placeholderAry addObject:@"?"];
-    }
-    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-    [sqlStr appendString:@" AND F.NDB_No in ("];
-    [sqlStr appendString:placeholdersStr];
-    [sqlStr appendString:@") \n"];
-
-    [sqlStr appendString:@" LIMIT 1"];
-
-    NSLog(@"existAnyGivenFoodsBeRichOfNutrition sqlStr=%@",sqlStr);
-    
-    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:givenFoodIds];
-    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
-    bool retval = (dataAry.count > 0);
-    NSLog(@"existAnyGivenFoodsBeRichOfNutrition ret:%d",retval);
-    return retval;
-}
+//-(bool) existAnyGivenFoodsBeRichOfNutrition:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds
+//{
+//    if (givenFoodIds.count == 0)
+//        return false;
+//    
+//    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+//    [sqlStr appendString:@"SELECT F.NDB_No \n"];
+////    [sqlStr appendString:@"  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
+//    [sqlStr appendString:@"  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No \n"];
+//    [sqlStr appendString:@" WHERE "];
+//    [sqlStr appendString:@"D.["];
+//    [sqlStr appendString:nutrientAsColumnName];
+//    [sqlStr appendString:@"]"];
+//    [sqlStr appendString:@">0"];
+//    
+//    [sqlStr appendString:@" AND D.["];
+//    [sqlStr appendString:nutrientAsColumnName];
+//    [sqlStr appendString:@"]"];
+//    [sqlStr appendString:@"<1000 \n"];
+//    
+//    NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:givenFoodIds.count];
+//    for(int i=0; i<givenFoodIds.count; i++){
+//        [placeholderAry addObject:@"?"];
+//    }
+//    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
+//    [sqlStr appendString:@" AND F.NDB_No in ("];
+//    [sqlStr appendString:placeholdersStr];
+//    [sqlStr appendString:@") \n"];
+//
+//    [sqlStr appendString:@" LIMIT 1"];
+//
+//    NSLog(@"existAnyGivenFoodsBeRichOfNutrition sqlStr=%@",sqlStr);
+//    
+//    FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:givenFoodIds];
+//    NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
+//    bool retval = (dataAry.count > 0);
+//    NSLog(@"existAnyGivenFoodsBeRichOfNutrition ret:%d",retval);
+//    return retval;
+//}
 
 
 
@@ -1208,6 +1215,108 @@
     return [self getFoodsByFilters_withIncludeFoodClass:nil andExcludeFoodClass:nil andEqualClass:nil andIncludeFoodIds:idAry andExcludeFoodIds:nil];
 }
 
+
+
+
+-(NSArray *) getFoodsByColumnValuePairFilter_withColumnValuePairs_equal:(NSArray*)columnValuePairs_equal andColumnValuesPairs_equal:(NSArray*)columnValuesPairs_equal andColumnValuePairs_like:(NSArray*)columnValuePairs_like andColumnValuesPairs_like:(NSArray*)columnValuesPairs_like
+{
+    NSLog(@"getFoodsByColumnValuePairFilter_withColumnValuePairs_equal enter");
+    //    if (includeFoodClass == nil && excludeFoodClass == nil)
+    //        return nil;
+    NSMutableString *sqlStr = [self getSql_SelectFoodMainPart];
+    
+//    NSMutableArray *exprIncludeORdata = [NSMutableArray array];
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+//    NSMutableArray *exprExcludedata = [NSMutableArray array];
+    
+    if (columnValuePairs_equal.count > 0){
+        for (int i=0; i<columnValuePairs_equal.count; i++) {
+            NSArray* columnValuePair = columnValuePairs_equal[i];
+            NSString *strColumn = columnValuePair[0];
+            NSString *strOp = @"=";
+            id val = columnValuePair[1];
+            NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+            [expr addObject:strColumn];
+            [expr addObject:strOp];
+            [expr addObject:[NSArray arrayWithObjects:val, nil]];
+            [exprIncludeANDdata addObject:expr];
+        }
+    }
+    if (columnValuesPairs_equal.count > 0){
+        for (int i=0; i<columnValuesPairs_equal.count; i++) {
+            NSArray* columnValuesPair = columnValuesPairs_equal[i];
+            NSString *strColumn = columnValuesPair[0];
+            NSString *strOp = @"=";
+            NSArray *values = columnValuesPair[1];
+            NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+            [expr addObject:strColumn];
+            [expr addObject:strOp];
+            [expr addObject:values];
+            [exprIncludeANDdata addObject:expr];
+        }
+    }
+    
+    if (columnValuePairs_like.count > 0){
+        for (int i=0; i<columnValuePairs_like.count; i++) {
+            NSArray* columnValuePair = columnValuePairs_like[i];
+            NSString *strColumn = columnValuePair[0];
+            NSString *strOp = @"LIKE";
+            NSString *val = [NSString stringWithFormat:@"%%%@",columnValuePair[1]] ;
+            NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+            [expr addObject:strColumn];
+            [expr addObject:strOp];
+            [expr addObject:[NSArray arrayWithObjects:val, nil]];
+            [exprIncludeANDdata addObject:expr];
+        }
+    }
+    if (columnValuesPairs_like.count > 0){
+        for (int i=0; i<columnValuesPairs_like.count; i++) {
+            NSArray* columnValuesPair = columnValuesPairs_like[i];
+            NSString *strColumn = columnValuesPair[0];
+            NSString *strOp = @"LIKE";
+            NSArray *values = columnValuesPair[1];
+            NSMutableArray *valuesForLike = [NSMutableArray arrayWithCapacity:values.count];
+            for(int j=0; j<values.count; j++){
+                NSString *val = [NSString stringWithFormat:@"%%%@",values[j]] ;
+                [valuesForLike addObject:val];
+            }
+            NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+            [expr addObject:strColumn];
+            [expr addObject:strOp];
+            [expr addObject:valuesForLike];
+            [exprIncludeANDdata addObject:expr];
+        }
+    }
+
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+//                             exprIncludeORdata,@"includeOR",
+                             exprIncludeANDdata,@"includeAND",
+//                             exprExcludedata,@"exclude",
+                             nil];
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:nil andOptions:localOptions];
+    NSLog(@"getFoodsByColumnValuePairFilter_withColumnValuePairs_equal return:\n%@",[LZUtility getObjectDescription:dataAry andIndent:0]);
+    return dataAry;
+}
+
+
+-(NSArray *) getFoodsByShowingPart:(NSString*)cnNamePart andEnNamePart:(NSString*)enNamePart andCnType:(NSString*)cnType
+{
+    NSLog(@"getFoodsByShowingPart enter, cnNamePart=%@, enNamePart=%@, cnType=%@",cnNamePart,enNamePart,cnType);
+    NSMutableArray* columnValuePairs_like = [NSMutableArray arrayWithCapacity:2];
+    if (cnNamePart.length > 0){
+        [columnValuePairs_like addObject:[NSArray arrayWithObjects:COLUMN_NAME_CnCaption,cnNamePart, nil]];
+    }
+    if (enNamePart.length > 0){
+        [columnValuePairs_like addObject:[NSArray arrayWithObjects:COLUMN_NAME_FoodNameEn,enNamePart, nil]];
+    }
+    
+    NSMutableArray* columnValuePairs_equal = [NSMutableArray arrayWithCapacity:1];
+    if (cnType.length > 0){
+        [columnValuePairs_equal addObject:[NSArray arrayWithObjects:COLUMN_NAME_CnType,cnType, nil]];
+    }
+    return [self getFoodsByColumnValuePairFilter_withColumnValuePairs_equal:columnValuePairs_equal andColumnValuesPairs_equal:nil andColumnValuePairs_like:columnValuePairs_like andColumnValuesPairs_like:nil];
+}
 
 -(NSArray *)getFoodCnTypes
 {

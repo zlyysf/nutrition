@@ -33,9 +33,10 @@
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
 //    [self.class test_DiseaseNutrient1];
-    [self.class test_DiseaseNutrient2];
+//    [self.class test_DiseaseNutrient2];
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
 //    [self.class test_TranslationItem1];
+    [self.class test_getFoodsByShowingPart];
 
     
 //    [self.class testFormatResult1];
@@ -2377,6 +2378,20 @@ BOOL needLimitNutrients = FALSE;
     
     
 }
+
++(void)test_getFoodsByShowingPart
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    [da getFoodCnTypes];
+    
+    NSArray *foods = [da getFoodsByShowingPart:@"果" andEnNamePart:nil andCnType:nil];
+    
+    foods = [da getFoodsByShowingPart:nil andEnNamePart:@"beef" andCnType:nil];
+    
+    foods = [da getFoodsByShowingPart:nil andEnNamePart:nil andCnType:@"奶制品"];
+    
+}
+
 
 
 
