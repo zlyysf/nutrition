@@ -930,22 +930,27 @@
     NSString *nutritionId = (NSString *)sender.customData;
     LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
     NSDictionary *dict = [nm getNutritionInfo:nutritionId];
-    NSString *queryKey;
-    if (isChinese)
+    NSString *captionKey;
+    NSString *descriptionKey;
+    if ([LZUtility isCurrentLanguageChinese])
     {
-        queryKey = @"NutrientCnCaption";
+        captionKey = @"NutrientCnCaption";
+        descriptionKey = @"NutrientDescription";
     }
     else
     {
-        queryKey = @"NutrientEnCaption";
+        captionKey = @"NutrientEnCaption";
+        descriptionKey = @"NutrientDescriptionEn";
     }
 
-    NSString *nutritionName = [dict objectForKey:queryKey];
+    NSString *nutritionName = [dict objectForKey:captionKey];
+    NSString *description = [dict objectForKey:descriptionKey];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LZRichNutritionViewController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZRichNutritionViewController"];
-    addByNutrientController.nutrientDict = dict;
-    addByNutrientController.nutrientTitle = nutritionName;
-    [self.navigationController pushViewController:addByNutrientController animated:YES];
+    LZRichNutritionViewController *richNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"LZRichNutritionViewController"];
+    richNutrientController.nutrientDict = dict;
+    richNutrientController.nutrientTitle = nutritionName;
+    richNutrientController.nutritionDescription = description;
+    [self.navigationController pushViewController:richNutrientController animated:YES];
     
 }
 
