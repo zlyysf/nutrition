@@ -150,6 +150,11 @@
 -(void)setViewControllers:(NSArray *)viewControllers animated:(BOOL)animated
 {
     [_screenshotImages removeAllObjects];
+    for (int i=0; i< [viewControllers count]-1; i++)
+    {
+        UIImage *image = [[UIImage alloc]init];
+        [_screenshotImages addObject:image];
+    }
     [super setViewControllers:viewControllers animated:animated];
 }
 -(void)setViewControllers:(NSArray *)viewControllers
@@ -209,8 +214,16 @@
 
 // TODO
 - (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    NSUInteger idx = [self.viewControllers indexOfObject:viewController];
-    [_screenshotImages removeObjectsInRange:NSMakeRange(idx, _screenshotImages.count - idx)];
+    //if (animated)
+   // {
+        NSUInteger idx = [self.viewControllers indexOfObject:viewController];
+        int lenth = _screenshotImages.count - idx;
+        [_screenshotImages removeObjectsInRange:NSMakeRange(idx,lenth )];
+//    }
+//    else
+//    {
+//        [_screenshotImages removeAllObjects];
+//    }
     
     return [super popToViewController:viewController animated:animated];
 }
