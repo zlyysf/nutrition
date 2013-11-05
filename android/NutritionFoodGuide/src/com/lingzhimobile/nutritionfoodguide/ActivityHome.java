@@ -12,6 +12,7 @@ import com.umeng.update.UmengUpdateAgent;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
@@ -34,14 +35,15 @@ public class ActivityHome extends ActivityBase{
     static final String Key_ItemImage = "ItemImage";
     static final String Key_ItemText = "ItemText";
     
-    static final int[] menuItemImageResIds = new int[]{R.drawable.menu_item_2x_searchfood, R.drawable.menu_item_2x_nutrient,
+    static final int[] menuItemImageResIds = new int[]{R.drawable.menu_item_2x_diagnose, R.drawable.menu_item_2x_searchfood, R.drawable.menu_item_2x_nutrient,
     	R.drawable.menu_item_2x_foodlist, R.drawable.menu_item_2x_userinfo , R.drawable.menu_item_2x_setting 
     	 };
     //static final String[] menuItemTexts = new String[]{"膳食清单","个人信息","营养元素","食物查询"};
-    static final int[] menuItemTextResIds = new int[]{R.string.title_searchfood, R.string.title_nutrients, 
+    static final int[] menuItemTextResIds = new int[]{R.string.title_diagnose, R.string.title_searchfood, R.string.title_nutrients, 
     	R.string.title_foodCombinationList, R.string.title_userinfo, R.string.title_setting};
     
-    static final int Position_searchfood = 0;
+    static final int Position_diagnose = 0;
+    static final int Position_searchfood = Position_diagnose + 1;
     static final int Position_nutrient = Position_searchfood + 1;
     static final int Position_foodlist = Position_nutrient + 1;
     static final int Position_userinfo = Position_foodlist + 1;
@@ -118,6 +120,11 @@ public class ActivityHome extends ActivityBase{
 				
 				Intent intent = null;
 				switch (position) {
+				case Position_diagnose:
+					intent = new Intent(ActivityHome.this, ActivityDiagnose.class);
+					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
+					startActivity(intent);
+					break;
 				case Position_foodlist:
 					intent = new Intent(ActivityHome.this, ActivityFoodCombinationList.class);
 					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
@@ -153,9 +160,13 @@ public class ActivityHome extends ActivityBase{
 				}
 			}//onItemClick
 		});//setOnItemClickListener
+
+		if (!StoredConfigTool.getFlagAlertSettingAlreadyChecked_ofCurrentVersion(this)){//在第一次启动时保证设置提醒
+			ActivityDiagnoseAlertSetting.setAlarm(this);
+			StoredConfigTool.setFlagAlertSettingAlreadyChecked_ofCurrentVersion(this);
+		}
 		
 		dealParamIntent();
-
 	}
 
 
@@ -174,18 +185,30 @@ public class ActivityHome extends ActivityBase{
 		Intent paramIntent = getIntent();
 		Log.d(LogTag, "dealParamIntent paramIntent="+paramIntent);
 		if (paramIntent != null){
-			long collocationId = paramIntent.getLongExtra(Constants.COLUMN_NAME_CollocationId, -1);
-			String foodId = paramIntent.getStringExtra(Constants.COLUMN_NAME_NDB_No);
-			double foodAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
-			setIntent(null);
-			Log.d(LogTag, "dealParamIntent collocationId="+collocationId+", foodId="+foodId+", foodAmount="+foodAmount);
-			if (foodId != null && foodId.length()>0 ){
-				Intent intent2 = new Intent(ActivityHome.this, ActivityFoodCombinationList.class);
-				intent2.putExtra(ActivityFoodCombinationList.IntentKey_aim,ActivityFoodCombinationList.IntentValue_aim_EditItem);
-				intent2.putExtra(Constants.COLUMN_NAME_CollocationId, collocationId);
-				intent2.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
-		    	intent2.putExtra(Constants.Key_Amount, foodAmount);
+			boolean isFromDiagnoseAlert = paramIntent.getBooleanExtra(Constants.IntentParamKey_IsFromDiagnoseAlert,false);
+			if (isFromDiagnoseAlert){
+				NotificationManager nm=(NotificationManager) getSystemService(Activity.NOTIFICATION_SERVICE);
+				nm.cancel(Constants.NotificationId_diagnoseAlert_anyTime);
+				nm.cancel(Constants.NotificationId_diagnoseAlert_morning);
+				nm.cancel(Constants.NotificationId_diagnoseAlert_afternoon);
+				nm.cancel(Constants.NotificationId_diagnoseAlert_night);
+				Intent intent2 = new Intent(ActivityHome.this, ActivityDiagnose.class);
+				intent2.putExtra(Constants.IntentParamKey_IsFromDiagnoseAlert,isFromDiagnoseAlert);
 				startActivity(intent2);
+			}else{
+				long collocationId = paramIntent.getLongExtra(Constants.COLUMN_NAME_CollocationId, -1);
+				String foodId = paramIntent.getStringExtra(Constants.COLUMN_NAME_NDB_No);
+				double foodAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
+				setIntent(null);
+				Log.d(LogTag, "dealParamIntent collocationId="+collocationId+", foodId="+foodId+", foodAmount="+foodAmount);
+				if (foodId != null && foodId.length()>0 ){
+					Intent intent2 = new Intent(ActivityHome.this, ActivityFoodCombinationList.class);
+					intent2.putExtra(ActivityFoodCombinationList.IntentKey_aim,ActivityFoodCombinationList.IntentValue_aim_EditItem);
+					intent2.putExtra(Constants.COLUMN_NAME_CollocationId, collocationId);
+					intent2.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+			    	intent2.putExtra(Constants.Key_Amount, foodAmount);
+					startActivity(intent2);
+				}
 			}
 		}
 	}

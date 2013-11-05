@@ -1,6 +1,7 @@
 package com.lingzhimobile.nutritionfoodguide;
 
 import android.R.integer;
+import android.net.Uri;
 
 public class Constants {
 	
@@ -124,10 +125,14 @@ public class Constants {
 	public static final String TABLE_NAME_DiseaseGroup ="DiseaseGroup";
 	public static final String TABLE_NAME_DiseaseInGroup ="DiseaseInGroup";
 	public static final String COLUMN_NAME_Disease ="Disease";
+	public static final String COLUMN_NAME_DiseaseEn ="DiseaseEn";
 	public static final String COLUMN_NAME_DiseaseGroup ="DiseaseGroup";
 	public static final String COLUMN_NAME_dsGroupType ="dsGroupType";
-	public static final String COLUMN_NAME_dsGroupWizardOrder ="dsGroupWizardOrder";
+	public static final String COLUMN_NAME_dsGroupWizardOrder ="dsGroupWizardOrder";//TODO delete
 	public static final String COLUMN_NAME_DiseaseDepartment ="DiseaseDepartment";
+	public static final String COLUMN_NAME_DiseaseType ="DiseaseType";
+	public static final String COLUMN_NAME_DiseaseTimeType ="DiseaseTimeType";
+	public static final String COLUMN_NAME_LackLevelMark ="LackLevelMark";
 	
 	
 	public static final String DiseaseGroupType_wizard ="wizard";
@@ -135,6 +140,7 @@ public class Constants {
 	public static final String DiseaseGroupType_discomfort ="discomfort";
 	public static final String DiseaseGroupType_healthCare ="healthCare";
 	public static final String DiseaseGroupType_illness ="illness";
+	public static final String DiseaseGroupType_DailyDiseaseDiagnose ="DailyDiseaseDiagnose";
 
 	public static final String Key_Amount ="Amount";
 	public static final String Key_Name ="Name";
@@ -232,6 +238,7 @@ public class Constants {
 	public static final int Value_activityLevel_strong = 2;
 	public static final int Value_activityLevel_veryStrong = 3;
 	
+	public static final String IntentParamKey_IsFromDiagnoseAlert = "IsFromDiagnoseAlert";
 	public static final String IntentParamKey_BackButtonTitle = "BackButtonTitle";
 	
 	public static final String IntentParamKey_InvokerType = "InvokerType";
@@ -249,8 +256,56 @@ public class Constants {
 	public static final String Umeng_Event_SaveFoodCombination ="SaveFoodCombination" ;
 	public static final String Umeng_Event_ExplictUseRecommend ="ExplictUseRecommend" ;
 	
+	public static final String DiseaseTimeType_morning = "上午";
+	public static final String DiseaseTimeType_afternoon = "下午";
+	public static final String DiseaseTimeType_night = "睡前";
+	
+	public static final int DiseaseTimeType_BeginHour_morning = 6;
+	public static final int DiseaseTimeType_BeginHour_afternoon = 12;
+	public static final int DiseaseTimeType_BeginHour_night = 19;
+	
+	public static final Uri URIflag_morning = Uri.parse("lingzhi_alert://alerttime/morning");
+	public static final Uri URIflag_afternoon = Uri.parse("lingzhi_alert://alerttime/afternoon");
+	public static final Uri URIflag_night = Uri.parse("lingzhi_alert://alerttime/night");
+	
+	
+	public static final String PreferenceKey_AlertSetting_EnableFlag = "AlertSetting_EnableFlag";
+	public static final String PreferenceKey_AlertSetting_Morning_Hour = "AlertSetting_Morning_Hour";
+	public static final String PreferenceKey_AlertSetting_Morning_Minute = "AlertSetting_Morning_Minute";
+	public static final String PreferenceKey_AlertSetting_Afternoon_Hour = "AlertSetting_Afternoon_Hour";
+	public static final String PreferenceKey_AlertSetting_Afternoon_Minute = "AlertSetting_Afternoon_Minute";
+	public static final String PreferenceKey_AlertSetting_Night_Hour = "AlertSetting_Night_Hour";
+	public static final String PreferenceKey_AlertSetting_Night_Minute = "AlertSetting_Night_Minute";
+	public static final boolean Default_AlertSetting_EnableFlag = true;
+	public static final int Default_Morning_Hour = 9;
+	public static final int Default_Morning_Minute = 0;
+	public static final int Default_Afternoon_Hour = 16;
+	public static final int Default_Afternoon_Minute = 0;
+	public static final int Default_Night_Hour = 22;
+	public static final int Default_Night_Minute = 0;
+	
+	public static final int NotificationId_diagnoseAlert_anyTime = 1;
+	public static final int NotificationId_diagnoseAlert_morning = 2;
+	public static final int NotificationId_diagnoseAlert_afternoon = 3;
+	public static final int NotificationId_diagnoseAlert_night = 4;
 	
 	
 	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

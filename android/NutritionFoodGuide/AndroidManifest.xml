@@ -13,6 +13,7 @@
 	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
     
     <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <!--
     -->
 
@@ -119,12 +120,26 @@
 		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
+		<activity android:name=".ActivityDiagnose" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
+		    >
+		</activity>
+		<activity android:name=".ActivityDiagnoseResult" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
+		    >
+		</activity>
+		<activity android:name=".ActivityDiagnoseAlertSetting" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
+		    >
+		</activity>
 
 		
 		<activity android:name=".ActivityT1" 
 		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
+		
+
 		
 		<activity android:name=".ActivityTestCases" 
 		    android:theme="@android:style/Theme.NoTitleBar" 
@@ -133,7 +148,17 @@
 		
 
 	
-        
+		<receiver android:name=".BroadcastReceiverAlert">    
+		    <intent-filter>
+		        <action android:name= "com.lingzhimobile.nutritionfoodguide.BroadcastReceiverAlert" />
+		    </intent-filter>
+		</receiver> 
+        <receiver android:name=".BroadcastReceiverBootComplete" >
+		    <intent-filter>
+		        <action android:name="android.intent.action.BOOT_COMPLETED" />
+		    </intent-filter>
+		</receiver>
+
 		<service
 		    android:name="com.umeng.common.net.DownloadingService"
 		    android:process=":DownloadingService" >

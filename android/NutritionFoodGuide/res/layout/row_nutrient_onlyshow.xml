@@ -42,6 +42,7 @@
         android:layout_height="40dp"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
+        android:layout_marginRight="10dp"
         android:gravity="center_vertical"
         android:orientation="vertical" 
         android:background="@drawable/rowpart_clickable_bg"
@@ -89,17 +90,5 @@
         </LinearLayout>
     </LinearLayout>
 
-    <ImageButton
-        android:id="@+id/imgBtnAddByNutrient"
-        android:layout_width="40dp"
-        android:layout_height="fill_parent"
-        android:layout_gravity="center_vertical"
-        android:layout_marginRight="5dp"
-        android:layout_weight="0"
-        android:background="@null"
-        android:gravity="center_vertical"
-        android:paddingTop="18dp"
-        android:scaleType="centerInside"
-        android:src="@drawable/btn_add_icon" />
 
 </LinearLayout>

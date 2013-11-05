@@ -13,6 +13,7 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.database.*;
@@ -374,6 +375,19 @@ public class Tool {
 	        return dataVal.doubleValue();
 	    }
 	}
+	public static int getIntFromDictionaryItem_withDictionary(HashMap<String, Integer> data,String datakey)
+	{
+	    assert(data!=null);
+	    assert(datakey!=null);
+	    Integer dataVal = data.get(datakey);
+	    if (dataVal==null)
+	        return 0;
+	    else{
+	        
+	        return dataVal.intValue();
+	    }
+	}
+	
 	
 
 //	public static void addItemToListHash(Object item, String key, HashMap<String,Object> lstHm){
@@ -874,7 +888,42 @@ public class Tool {
 	
 	
 	
+	public static String getCurrentDiseaseTimeType()
+	{
+//		Date dtNow = new Date();
+		Calendar calendar1 = Calendar.getInstance();
+		int hour = calendar1.get(Calendar.HOUR_OF_DAY);       //获取当前小时
+		int minute = calendar1.get(Calendar.MINUTE);          //获取当前分钟
+		if (hour >= Constants.DiseaseTimeType_BeginHour_morning && hour<Constants.DiseaseTimeType_BeginHour_afternoon){
+			return "上午";
+		}else if (hour >= Constants.DiseaseTimeType_BeginHour_afternoon && hour<Constants.DiseaseTimeType_BeginHour_night){
+			return "下午";
+		}else{
+			return "睡前";
+		}
+	}
 	
+	public static String getVersionNameOfCurrentApp(Context ctx){
+		String versionName = null;
+		try {
+			versionName = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionName;
+		} catch (NameNotFoundException e) {
+			Log.d(LogTag, e.getMessage());
+		}
+	    return versionName;
+	}
+	public static int getVersionCodeOfCurrentApp(Context ctx){
+		int versionCode = -1;
+		try {
+			versionCode = ctx.getPackageManager().getPackageInfo(ctx.getPackageName(), 0).versionCode;
+		} catch (NameNotFoundException e) {
+			Log.d(LogTag, e.getMessage());
+		}
+	    return versionCode;
+	}
+	public static int getVersionOfAndroidSDK(){
+		return android.os.Build.VERSION.SDK_INT;
+	}
 	
 	
 	

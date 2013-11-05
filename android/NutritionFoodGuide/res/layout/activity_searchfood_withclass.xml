@@ -11,6 +11,7 @@
     <FrameLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_weight="0"
         android:focusable="true"
         android:focusableInTouchMode="true" >
@@ -18,15 +19,19 @@
 	    <TextView
 	        android:id="@+id/tvBackgroundCorner"
 	        android:layout_width="fill_parent"
-	        android:layout_height="50dp"
+	        android:layout_height="35dp"
 	        android:layout_gravity="center_horizontal"
 	        android:layout_marginLeft="5dp"
 	        android:layout_marginRight="5dp"
-	        android:background="@drawable/corners_search" />
+	        android:background="@drawable/border_corner_search"
+	        />
+	    <!-- 
+	    android:background="@drawable/corners_search" 
+	     -->
 
 	    <TextView
 	        android:layout_width="80dp"
-	        android:layout_height="50dp"
+	        android:layout_height="35dp"
 	        android:layout_gravity="left|center_vertical"
 	        android:drawableLeft="@drawable/search_glass_2x"
 	        android:paddingLeft="15dp" />
@@ -34,7 +39,7 @@
 	    <TextView
 	        android:id="@+id/tvSearchTextClear"
 	        android:layout_width="80dp"
-	        android:layout_height="50dp"
+	        android:layout_height="35dp"
 	        android:layout_gravity="right|center_vertical"
 	        android:drawableRight="@drawable/btn_delete_icon"
 	        android:paddingRight="15dp" />
@@ -42,7 +47,7 @@
 	    <EditText
 	        android:id="@+id/etSearch"
 	        android:layout_width="fill_parent"
-	        android:layout_height="46dp"
+	        android:layout_height="31dp"
 	        android:layout_gravity="center_vertical"
 	        android:layout_marginLeft="40dp"
 	        android:layout_marginRight="40dp"

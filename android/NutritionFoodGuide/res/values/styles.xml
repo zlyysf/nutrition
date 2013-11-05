@@ -26,5 +26,10 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:backgroundDimAmount">0.1</item>
     </style>
+    
+    <!-- spinner -->
+    <style name="spinner_diseaseTimeType">
+	    <item name="android:background">@drawable/spinner_bg</item>
+    </style>
 
 </resources>

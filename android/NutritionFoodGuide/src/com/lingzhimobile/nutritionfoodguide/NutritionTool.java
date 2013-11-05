@@ -500,7 +500,30 @@ public class NutritionTool {
 	    return DRIsDict;
 	}
 	
-	
+	static HashMap<String, Integer> m_NutrientColorMapping = null;
+	public static HashMap<String, Integer> getNutrientColorMapping(){
+		if (m_NutrientColorMapping==null){
+			m_NutrientColorMapping = new HashMap<String, Integer>();
+			m_NutrientColorMapping.put("Vit_A_RAE", R.color.nutrientVA);
+			m_NutrientColorMapping.put("Vit_C_(mg)", R.color.nutrientVC);
+			m_NutrientColorMapping.put("Vit_D_(µg)", R.color.nutrientVD);
+			m_NutrientColorMapping.put("Vit_E_(mg)", R.color.nutrientVE);
+//			m_NutrientColorMapping.put("Thiamin_(mg)", R.color.nutrientVB1);
+			m_NutrientColorMapping.put("Riboflavin_(mg)", R.color.nutrientVB2);
+//			m_NutrientColorMapping.put("Niacin_(mg)", R.color.nutrientVB3);
+			m_NutrientColorMapping.put("Vit_B6_(mg)", R.color.nutrientVB6);
+			m_NutrientColorMapping.put("Folate_Tot_(µg)", R.color.nutrientVB9);
+			m_NutrientColorMapping.put("Vit_B12_(µg)", R.color.nutrientVB12);
+			m_NutrientColorMapping.put("Calcium_(mg)", R.color.nutrientCalcium);
+			m_NutrientColorMapping.put("Iron_(mg)", R.color.nutrientIron);
+			m_NutrientColorMapping.put("Magnesium_(mg)", R.color.nutrientMagnesium);
+			m_NutrientColorMapping.put("Zinc_(mg)", R.color.nutrientZinc);
+			m_NutrientColorMapping.put("Fiber_TD_(g)", R.color.nutrientFiber);
+			m_NutrientColorMapping.put("Protein_(g)", R.color.nutrientProtein);
+			m_NutrientColorMapping.put("Energ_Kcal", R.color.black);
+		}
+		return m_NutrientColorMapping;
+	}
 	
 	
 	

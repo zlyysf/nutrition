@@ -1,6 +1,8 @@
 package com.lingzhimobile.nutritionfoodguide;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
@@ -21,6 +23,29 @@ public class StoredConfigTool {
 	
 	public static final String PreferenceKey_NutrientsToRecommend = "NutrientsToRecommend";
 	public static final String Seperator_NutrientsToRecommend = ",,";
+	
+	public static final String PreferenceKey_AppPart = "nutrientApp";
+	public static String getPreferenceKey_AppWithVersionPart(Context ctx){
+		int versionCode = Tool.getVersionCodeOfCurrentApp(ctx);
+		return PreferenceKey_AppPart + versionCode;
+	}
+	
+	public static String getPreferenceKey_AlertSettingAlreadyChecked_ofCurrentVersion(Context ctx){
+		return getPreferenceKey_AppWithVersionPart(ctx)+"_AlertSettingAlreadyChecked";
+	}
+	//主要是支持app初次安装打开时设置提醒
+	public static boolean getFlagAlertSettingAlreadyChecked_ofCurrentVersion(Context ctx){
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		boolean flag = sharedPref.getBoolean(getPreferenceKey_AlertSettingAlreadyChecked_ofCurrentVersion(ctx), false);
+		return flag;
+	}
+	public static void setFlagAlertSettingAlreadyChecked_ofCurrentVersion(Context ctx){
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putBoolean(getPreferenceKey_AlertSettingAlreadyChecked_ofCurrentVersion(ctx), true);
+		editor.commit();
+	}
+
 	
 	
 	public static HashMap<String, Object> getUserInfo()
@@ -142,6 +167,57 @@ public class StoredConfigTool {
 		SharedPreferences.Editor editor = sharedPref.edit();
 		editor.putBoolean(DBalreadyUpdatedKey, true);
 		editor.commit();
+	}
+	
+
+	
+	
+	
+	public static HashMap<String, Object> getAlertSetting(Context ctx)
+	{
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		boolean AlertSetting_EnableFlag = sharedPref.getBoolean(Constants.PreferenceKey_AlertSetting_EnableFlag, Constants.Default_AlertSetting_EnableFlag);
+		int Morning_Hour = sharedPref.getInt(Constants.PreferenceKey_AlertSetting_Morning_Hour, Constants.Default_Morning_Hour);
+		int Morning_Minute = sharedPref.getInt(Constants.PreferenceKey_AlertSetting_Morning_Minute, Constants.Default_Morning_Minute);
+		int Afternoon_Hour = sharedPref.getInt(Constants.PreferenceKey_AlertSetting_Afternoon_Hour, Constants.Default_Afternoon_Hour);
+		int Afternoon_Minute = sharedPref.getInt(Constants.PreferenceKey_AlertSetting_Afternoon_Minute, Constants.Default_Afternoon_Minute);
+		int Night_Hour = sharedPref.getInt(Constants.PreferenceKey_AlertSetting_Night_Hour, Constants.Default_Night_Hour);
+		int Night_Minute = sharedPref.getInt(Constants.PreferenceKey_AlertSetting_Night_Minute, Constants.Default_Night_Minute);
+		
+		HashMap<String, Object> hmAlertSetting = new HashMap<String, Object>();
+		hmAlertSetting.put(Constants.PreferenceKey_AlertSetting_EnableFlag, Boolean.valueOf(AlertSetting_EnableFlag));
+		hmAlertSetting.put(Constants.PreferenceKey_AlertSetting_Morning_Hour, Integer.valueOf(Morning_Hour));
+		hmAlertSetting.put(Constants.PreferenceKey_AlertSetting_Morning_Minute, Integer.valueOf(Morning_Minute));
+		hmAlertSetting.put(Constants.PreferenceKey_AlertSetting_Afternoon_Hour, Integer.valueOf(Afternoon_Hour));
+		hmAlertSetting.put(Constants.PreferenceKey_AlertSetting_Afternoon_Minute, Integer.valueOf(Afternoon_Minute));
+		hmAlertSetting.put(Constants.PreferenceKey_AlertSetting_Night_Hour, Integer.valueOf(Night_Hour));
+		hmAlertSetting.put(Constants.PreferenceKey_AlertSetting_Night_Minute, Integer.valueOf(Night_Minute));
+		return hmAlertSetting;
+	}
+	// value<0 means not set
+	public static void saveAlertSetting(Context ctx,Boolean enableAlertSetting, Integer Morning_Hour,Integer Morning_Minute, Integer Afternoon_Hour,Integer Afternoon_Minute, Integer Night_Hour,Integer Night_Minute){
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		if (enableAlertSetting!=null)  editor.putBoolean(Constants.PreferenceKey_AlertSetting_EnableFlag, enableAlertSetting);
+		if (Morning_Hour!=null)  editor.putInt(Constants.PreferenceKey_AlertSetting_Morning_Hour, Morning_Hour);
+		if (Morning_Minute!=null)  editor.putInt(Constants.PreferenceKey_AlertSetting_Morning_Minute, Morning_Minute);
+		if (Afternoon_Hour!=null)  editor.putInt(Constants.PreferenceKey_AlertSetting_Afternoon_Hour, Afternoon_Hour);
+		if (Afternoon_Minute!=null)  editor.putInt(Constants.PreferenceKey_AlertSetting_Afternoon_Minute, Afternoon_Minute);
+		if (Night_Hour!=null)  editor.putInt(Constants.PreferenceKey_AlertSetting_Night_Hour, Night_Hour);
+		if (Night_Minute!=null)  editor.putInt(Constants.PreferenceKey_AlertSetting_Night_Minute, Night_Minute);
+		editor.commit();
+	}
+	
+
+	public static void saveNutrientsToRecommendxx(Context ctx, ArrayList<String> nutrientsAl){
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		if (nutrientsAl != null && nutrientsAl.size() > 0){
+			String nutrientsStr = StringUtils.join(nutrientsAl, Seperator_NutrientsToRecommend);
+			SharedPreferences.Editor editor = sharedPref.edit();
+			editor.putString(PreferenceKey_NutrientsToRecommend, nutrientsStr);
+			
+			editor.commit();
+		}
 	}
 
 }

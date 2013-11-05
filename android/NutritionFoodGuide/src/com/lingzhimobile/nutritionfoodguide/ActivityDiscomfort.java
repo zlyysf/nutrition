@@ -43,7 +43,7 @@ public class ActivityDiscomfort extends Activity {
 
 		
 //			Cursor csGroups = da.getDiseaseGroupInfo_byType("discomfort");
-		Cursor csGroups = da.getDiseaseGroupInfo_byType("illness");
+		Cursor csGroups = da.getDiseaseGroupInfo_byType_old("illness");
 		ArrayList<String> alGroup = Tool.getDataFromCursor(csGroups, 0);
 		csGroups.close();
 		assert(alGroup.size()==1);

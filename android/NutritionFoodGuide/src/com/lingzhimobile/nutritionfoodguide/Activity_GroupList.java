@@ -43,7 +43,7 @@ implements OnItemSelectedListener,OnItemClickListener
 
 		DataAccess da = DataAccess.getSingleton(this);
 		
-		Cursor csGroups = da.getDiseaseGroupInfo_byType("wizard");
+		Cursor csGroups = da.getDiseaseGroupInfo_byType_old("wizard");
 		ArrayList<String> alGroup = Tool.getDataFromCursor(csGroups, 0);
 		csGroups.close();
 		mGroups = alGroup;

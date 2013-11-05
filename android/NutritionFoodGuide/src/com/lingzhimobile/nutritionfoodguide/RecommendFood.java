@@ -779,7 +779,8 @@ public class RecommendFood {
 	    HashMap<String, Double> recommendFoodAmountDict = new HashMap<String, Double>();//key is NDB_No
 //	    NSMutableDictionary *recommendFoodAttrDict = [NSMutableDictionary dictionaryWithCapacity:100];//key is NDB_No
 	    HashMap<String, Double> foodSupplyAmountDict = new HashMap<String, Double>();
-	    foodSupplyAmountDict.putAll(givenFoodAmountDict);//包括takenFoodAmountDict 和 recommendFoodAmountDict。与nutrientSupplyDict对应。
+	    if (givenFoodAmountDict != null)//putAll can not deal null param
+	    	foodSupplyAmountDict.putAll(givenFoodAmountDict);//包括takenFoodAmountDict 和 recommendFoodAmountDict。与nutrientSupplyDict对应。
 	    HashMap<String, Double> nutrientSupplyDict = Tool.generateDictionaryWithFillItem(Double.valueOf(0),DRIsDict.keySet().toArray(new String[DRIsDict.size()]));
 //	    NSMutableDictionary *nutrientSupplyDict = [NSMutableDictionary dictionaryWithDictionary:DRIsDict];
 //	    NSArray *nutrientNames1 = [nutrientSupplyDict allKeys];

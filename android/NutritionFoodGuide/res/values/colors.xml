@@ -10,6 +10,44 @@
     <color name="radioAsTabBgColor2">#3daf2d</color>
     <color name="buttonsBarInFoodCombination">#5af4f2ec</color>  <!--65%透明度 --> 
     <color name="halfTransparentBlack">#80000000</color>
+    
+    <color name="spinnerItemTimeTypeBg">#f366c13e</color> <!--不透明度95% f366c13e   -->
+    <color name="spinnerItemTimeTypeBgPressedAdd">#800f941a</color> <!--不透明度50% --> 
+    
+    <color name="progressbarBgOld">#c2c2c2</color>
+    <color name="progressbarFg1stOld">#3aaa2c</color>
+    
+    <color name="nutrientVA">#ff5c36</color>
+    <color name="nutrientVC">#3eab2f</color>
+    <color name="nutrientVD">#ff9056</color>
+    <color name="nutrientVE">#01a290</color>
+    <color name="nutrientVB2">#cc2f24</color>
+    <color name="nutrientVB6">#0099cc</color>
+    <color name="nutrientVB9">#d7842c</color>
+    <color name="nutrientVB12">#1ed8e2</color>
+    <color name="nutrientCalcium">#e64784</color>
+    <color name="nutrientIron">#426ca9</color>
+    <color name="nutrientZinc">#9264cd</color>
+    <color name="nutrientMagnesium">#d064ce</color>
+    <color name="nutrientFiber">#63c927</color>
+    <color name="nutrientProtein">#bbc204</color>
+    
+    <drawable name="nutrientVA">#ff5c36</drawable>
+    <drawable name="nutrientVC">#3eab2f</drawable>
+    <drawable name="nutrientVD">#ff9056</drawable>
+    <drawable name="nutrientVE">#01a290</drawable>
+    <drawable name="nutrientVB2">#cc2f24</drawable>
+    <drawable name="nutrientVB6">#0099cc</drawable>
+    <drawable name="nutrientVB9">#d7842c</drawable>
+    <drawable name="nutrientVB12">#1ed8e2</drawable>
+    <drawable name="nutrientCalcium">#e64784</drawable>
+    <drawable name="nutrientIron">#426ca9</drawable>
+    <drawable name="nutrientZinc">#9264cd</drawable>
+    <drawable name="nutrientMagnesium">#d064ce</drawable>
+    <drawable name="nutrientFiber">#63c927</drawable>
+    <drawable name="nutrientProtein">#bbc204</drawable>
+    <drawable name="pink">#fc7cb3</drawable>
+    <drawable name="progressBarBg">#c2c2c2</drawable>
 
     <color name="green">#7700ff00</color>
     <color name="gray">#eae9e4</color>

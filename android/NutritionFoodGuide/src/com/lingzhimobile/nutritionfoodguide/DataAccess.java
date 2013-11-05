@@ -6,6 +6,8 @@ import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.lingzhimobile.nutritionfoodguide.R.string;
+
 import android.R.bool;
 import android.content.*;
 import android.database.*;
@@ -704,6 +706,127 @@ public class DataAccess {
 	}
 
 	//------------------------------------------------------------------------------------------
+	
+	
+	
+
+	/*
+	 * 这里 orderByPart 不带 ORDER BY
+	 * 这里不对 _like 中的值做特殊处理。 getRowsByQuery 中会对_like的值的后面加上%。如果想在前面加%，需要自行在传入值中预先设置。
+	 * columnValue_sPairs_equal和columnValue_sPairs_like 中的item可以是Object[]，也可以是ArrayList. 而column所对应的value可以是Object,Object[],ArrayList。
+	 */
+	public ArrayList<HashMap<String, Object>> selectTableByEqualFilter_withTableName(String tableName,
+			ArrayList<Object> columnValue_sPairs_equal, ArrayList<Object> columnValue_sPairs_like, 
+			String[] selectColumns, String orderByPart, boolean needDistinct)
+	{
+		Log.d(LogTag, "selectTableByEqualFilter_withTableName enter");
+		
+		String columnsPart = "*";
+	    if (selectColumns!=null && selectColumns.length>0){
+	        columnsPart = StringUtils.join(selectColumns,",");
+	    }
+	    String distinctPart = "";
+	    if ( needDistinct )
+	        distinctPart = "DISTINCT";
+	    
+	    StringBuffer sbSql = new StringBuffer(1000*1);
+	    sbSql.append("SELECT "+distinctPart+" "+columnsPart+" FROM "+tableName+" ");
+	    
+	    String afterWherePart = "";
+	    if (orderByPart!=null && orderByPart.length()>0)
+	    	afterWherePart += " ORDER BY "+orderByPart;
+
+		ArrayList<ArrayList<Object>> exprIncludeANDdata = new ArrayList<ArrayList<Object>>();
+		
+		String strColumn, strOp;
+		Object valOrValues;
+		ArrayList<Object> expr, values;
+	    if (columnValue_sPairs_equal!=null){
+	    	for(int i=0; i<columnValue_sPairs_equal.size(); i++){
+	    		Object columnValue_sPair = columnValue_sPairs_equal.get(i);
+	    		if (columnValue_sPair instanceof ArrayList){
+	    			ArrayList<Object> columnValue_sPair_al = (ArrayList<Object>)columnValue_sPair;
+	    			strColumn = (String)columnValue_sPair_al.get(0);
+		    		valOrValues = columnValue_sPair_al.get(1);
+	    		}else{
+	    			Object[] columnValue_sPair_ary = (Object[])columnValue_sPair;
+	    			strColumn = (String)columnValue_sPair_ary[0];
+		    		valOrValues = columnValue_sPair_ary[1];
+	    		}
+	    		
+	    		if (valOrValues instanceof ArrayList){
+	    			strOp = "IN";
+	    			values = new ArrayList<Object>();
+	    			values.addAll((ArrayList)valOrValues);
+	    		}else if (valOrValues instanceof Object[]){
+	    			strOp = "IN";
+	    			values = new ArrayList<Object>();
+	    			Object[] vals = (Object[])valOrValues;
+	    			for(int j=0; j<vals.length; j++){
+	    				values.add(vals[j]);
+	    			}
+	    		}else{
+	    			strOp = "=";
+	    			values = new ArrayList<Object>();
+			        values.add(valOrValues);
+	    		}
+	    		
+		        expr = new ArrayList<Object>(3);
+		        expr.add(strColumn);
+		        expr.add(strOp);
+		        expr.add(values);
+		        exprIncludeANDdata.add(expr);
+	    	}
+	    }
+
+	    if (columnValue_sPairs_like!=null){
+	    	for(int i=0; i<columnValue_sPairs_like.size(); i++){
+	    		Object columnValue_sPair = columnValue_sPairs_like.get(i);
+	    		strOp = "LIKE";
+	    		
+	    		if (columnValue_sPair instanceof ArrayList){
+	    			ArrayList<Object> columnValue_sPair_al = (ArrayList<Object>)columnValue_sPair;
+	    			strColumn = (String)columnValue_sPair_al.get(0);
+		    		valOrValues = columnValue_sPair_al.get(1);
+	    		}else{
+	    			Object[] columnValue_sPair_ary = (Object[])columnValue_sPair;
+	    			strColumn = (String)columnValue_sPair_ary[0];
+		    		valOrValues = columnValue_sPair_ary[1];
+	    		}
+	    		
+	    		values = new ArrayList<Object>();
+	    		if (valOrValues instanceof ArrayList){
+	    			values.addAll((ArrayList)valOrValues);
+	    		}else if (valOrValues instanceof Object[]){
+	    			Object[] vals = (Object[])valOrValues;
+	    			for(int j=0; j<vals.length; j++){
+	    				values.add(vals[j]);
+	    			}
+	    		}else{
+			        values.add(valOrValues);
+	    		}
+	    		
+		        expr = new ArrayList<Object>(3);
+		        expr.add(strColumn);
+		        expr.add(strOp);
+		        expr.add(values);
+		        exprIncludeANDdata.add(expr);
+	    	}
+	    }
+	    
+	    HashMap<String, Object> filters = new HashMap<String, Object>();
+	    filters.put("includeAND", exprIncludeANDdata);
+
+	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
+	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
+	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, afterWherePart, localOptions);
+	    Log.d(LogTag, "selectTableByEqualFilter_withTableName return");
+	    return dataAry;
+	}
+	
+
+	
+	
 	public HashMap<String, Object> getOneRichNutritionFood(String nutrientAsColumnName,String includeFoodClass,String excludeFoodClass,String[] includeFoodIds,String[] excludeFoodIds,String getStrategy,boolean ifNeedCustomDefinedFoods)
 	{
 		ArrayList<HashMap<String, Object>> foodAry = getRichNutritionFood(nutrientAsColumnName,includeFoodClass,excludeFoodClass,includeFoodIds,excludeFoodIds,0 ,ifNeedCustomDefinedFoods);
@@ -1526,14 +1649,14 @@ public class DataAccess {
 	
 	
 	
-	
-	public Cursor getDiseaseGroupInfo_byType(String groupType){
+	//TODO delete it
+	public Cursor getDiseaseGroupInfo_byType_old(String groupType){
 		String query = "SELECT DISTINCT DiseaseGroup FROM DiseaseGroup WHERE dsGroupType=? ORDER BY dsGroupWizardOrder";
 		String[] args = new String[]{groupType}; 
 		Cursor cs = mDBcon.rawQuery(query,args);
 		return cs;
 	}
-	
+	//TODO delete it
 	public Cursor getDiseaseNamesOfGroup(String groupName){
 		String query = "SELECT Disease FROM DiseaseInGroup WHERE DiseaseGroup=?";
 		String[] args = new String[]{groupName}; 
@@ -1541,8 +1664,118 @@ public class DataAccess {
 		return cs;
 	}
 	
+	public ArrayList<HashMap<String, Object>> getDiseaseGroupInfo_byType(String groupType){
+		String query = "SELECT * FROM DiseaseGroup WHERE dsGroupType=?";
+		String[] args = new String[]{groupType}; 
+		Cursor cs = mDBcon.rawQuery(query,args);
+		ArrayList<HashMap<String, Object>> dataAry = Tool.getRowsWithTypeFromCursor(cs);
+	    cs.close();
+		return dataAry;
+	}
+	public String getDiseaseGroupId_byType(String groupType){
+		ArrayList<HashMap<String, Object>> diseaseGroupInfoAry = getDiseaseGroupInfo_byType(groupType);
+		String groupId = null;
+		if (diseaseGroupInfoAry != null && diseaseGroupInfoAry.size()>0){
+			HashMap<String, Object> diseaseGroupInfo = diseaseGroupInfoAry.get(0);
+			groupId = (String)diseaseGroupInfo.get(Constants.COLUMN_NAME_DiseaseGroup);
+		}
+		return groupId;
+	}
+	
+	
+	ArrayList<String> getDiseaseIdsOfGroup(String groupName, String department, String diseaseType, String timeType)
+	{
+	    Log.d(LogTag, "getDiseaseIdsOfGroup enter, groupName="+groupName+", department="+department+", diseaseType="+diseaseType+", timeType="+timeType );
+	    ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+	    if (groupName != null){
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseGroup,groupName};
+	    	columnValuePairs_equal.add(columnValuePair);
+	    }
+	    if (department != null){
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseDepartment,department};
+	    	columnValuePairs_equal.add(columnValuePair);
+	    }
+	    if (diseaseType != null){
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseType,diseaseType};
+	    	columnValuePairs_equal.add(columnValuePair);
+	    }
+	    if (timeType != null){
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseTimeType,timeType};
+	    	columnValuePairs_equal.add(columnValuePair);
+	    }
+	    
+	    String destColumn = Constants.COLUMN_NAME_Disease;
+	    String[] selectColumns = {destColumn};
+	    ArrayList<HashMap<String, Object>> diseaseInfoAry = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_DiseaseInGroup, 
+	    		columnValuePairs_equal, null, selectColumns, null, false);
+	    ArrayList<Object> diseaseIdObjAry = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(destColumn, diseaseInfoAry);
+	    ArrayList<String> diseaseIdAry = Tool.convertToStringArrayList(diseaseIdObjAry);
+
+	    Log.d(LogTag, "getDiseaseIdsOfGroup return="+diseaseIdAry);
+	    return diseaseIdAry;
+	}
+	
+	ArrayList<HashMap<String, Object>> getDiseaseInfosOfGroup(String groupName, String department, String diseaseType, String timeType)
+	{
+		Log.d(LogTag, "getDiseaseInfosOfGroup enter, groupName="+groupName+", department="+department+", diseaseType="+diseaseType+", timeType="+timeType );
+		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+	    if (groupName != null){
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseGroup,groupName};
+	    	columnValuePairs_equal.add(columnValuePair);
+	    }
+	    if (department != null){
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseDepartment,department};
+	    	columnValuePairs_equal.add(columnValuePair);
+	    }
+	    if (diseaseType != null){
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseType,diseaseType};
+	    	columnValuePairs_equal.add(columnValuePair);
+	    }
+	    if (timeType != null){
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseTimeType,timeType};
+	    	columnValuePairs_equal.add(columnValuePair);
+	    }
+	    
+	    ArrayList<HashMap<String, Object>> diseaseInfoAry = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_DiseaseInGroup, 
+	    		columnValuePairs_equal, null, null, null, false);
+	    Log.d(LogTag, "getDiseaseInfosOfGroup return="+Tool.getIndentFormatStringOfObject(diseaseInfoAry, 0));
+	    return diseaseInfoAry;
+	}
+	
+	HashMap<String, ArrayList<HashMap<String, Object>>> getDiseaseNutrientRows_ByDiseaseIds(ArrayList<String> diseaseIds, String groupName)
+	{
+		Log.d(LogTag, "getDiseaseNutrientRows_ByDiseaseIds enter, groupName="+groupName+", diseaseIds="+diseaseIds );
+		ArrayList<Object> columnValue_sPairs_equal = new ArrayList<Object>();
+	    if (groupName != null){
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseGroup,groupName};
+	    	columnValue_sPairs_equal.add(columnValuePair);
+	    }
+	    if (diseaseIds != null && diseaseIds.size()>0){
+	    	Object[] columnValuesPair = {Constants.COLUMN_NAME_Disease,diseaseIds};
+	    	columnValue_sPairs_equal.add(columnValuesPair);
+	    }
+	    
+	    String[] selectColumns = {Constants.COLUMN_NAME_Disease,Constants.COLUMN_NAME_NutrientID,Constants.COLUMN_NAME_LackLevelMark};
+	    ArrayList<HashMap<String, Object>> diseaseNutrientRows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_DiseaseNutrient, 
+	    		columnValue_sPairs_equal, null, selectColumns, null, true);
+	    Log.d(LogTag, "getDiseaseNutrientRows_ByDiseaseIds , diseaseNutrientRows="+Tool.getIndentFormatStringOfObject(diseaseNutrientRows, 0) );
+	    
+	    HashMap<String, ArrayList<HashMap<String, Object>>> diseaseNutrientInfosByDiseaseDict = new HashMap<String, ArrayList<HashMap<String, Object>>>();
+	    if (diseaseNutrientRows!=null){
+	    	for(int i=0; i<diseaseNutrientRows.size(); i++){
+	    		HashMap<String, Object> diseaseNutrientRow = diseaseNutrientRows.get(i);
+	    		String diseaseId = (String)diseaseNutrientRow.get(Constants.COLUMN_NAME_Disease);
+	    		Tool.addItemToListHash(diseaseNutrientRow, diseaseId, diseaseNutrientInfosByDiseaseDict);
+		    }
+	    }
+	    Log.d(LogTag, "getDiseaseNutrientRows_ByDiseaseIds ret="+Tool.getIndentFormatStringOfObject(diseaseNutrientInfosByDiseaseDict, 0));
+	    return diseaseNutrientInfosByDiseaseDict;
+	}
+	
+	
 	/*
 	 * 返回值是一个hashmap，key为diseaseName，value为一个ArrayList，其item为NutrientId。
+	 * to be deleted after ActivityDiseaseNutrientWizard be deleted
 	 */
 	@SuppressWarnings("rawtypes")
 	public HashMap getDiseaseNutrients_ByDiseaseNames(String[] diseaseNames){
@@ -1584,6 +1817,7 @@ public class DataAccess {
 		return lstHm;
 	}
 	
+	//to be deleted after ActivityDiseaseNutrientWizard be deleted
 	@SuppressWarnings("rawtypes")
 	public String[] getUniqueNutrients_ByDiseaseNames(String[] diseaseNames){
 		HashMap lstHm = getDiseaseNutrients_ByDiseaseNames(diseaseNames);

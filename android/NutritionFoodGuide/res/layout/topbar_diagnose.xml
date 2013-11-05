@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/topBarRLayout"
+    android:layout_weight="0"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:background="@drawable/nav_bar_720_99"
+     >
+    <!-- 
+    android:background="@color/blue"
+	-->
+
+    <Spinner
+        android:id="@+id/spinnerTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="28dp"
+        android:layout_centerInParent="true"
+        android:gravity="center_vertical|center_horizontal" 
+		style="@null"
+        android:background="@drawable/spinner_bg"
+        android:paddingBottom="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="22dp"
+        android:paddingTop="0dp"
+        />
+
+    <!-- 
+    style="@style/spinner_diseaseTimeType"
+		android:background="@drawable/spinner_bg"
+		android:background="@color/blue"
+	-->
+    <Button
+        android:id="@+id/btnCancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="10dp"
+        android:background="@drawable/btn_back_bg"
+        android:gravity="center_vertical|center_horizontal"
+		android:paddingBottom="7dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:paddingTop="7dp"
+        android:text="@string/cancel"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+    
+    <Button
+        android:id="@+id/btnTopRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="10dp"
+        android:background="@drawable/btn_topright_bg"
+        android:gravity="center_vertical|center_horizontal"
+		android:paddingBottom="7dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="10dp"
+        android:paddingTop="7dp"
+        android:text="@string/alertSetting"
+        android:textColor="@color/white"
+        android:textSize="12sp" />
+
+</RelativeLayout>
+
+
