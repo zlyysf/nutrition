@@ -90,6 +90,62 @@ public class ActivityDiagnoseResult extends ActivityBase {
 	ExpandableListView m_expandableListView1;
 	
 	BaseExpandableListAdapter m_ExpandableListAdapter;
+	
+	myProgressDialog m_prgressDialog;
+	private AsyncTaskDoRecommend m_AsyncTaskDoRecommend;
+	
+	public Handler myHandler = new Handler() {
+
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (m_prgressDialog!=null)
+            	m_prgressDialog.dismiss();
+            switch (msg.what) {
+            case Constants.MessageID_OK:
+//            	HashMap<String, Object> retDict =  (HashMap<String, Object>)msg.obj;
+//
+//            	HashMap<String, Double> recommendFoodAmountDict = (HashMap<String, Double>)retDict.get(Constants.Key_recommendFoodAmountDict);
+//        	    HashMap<String, HashMap<String, Object>> preChooseFoodInfoDict = (HashMap<String, HashMap<String, Object>>)retDict.get(Constants.Key_preChooseFoodInfoDict);
+//        	    if (recommendFoodAmountDict != null && recommendFoodAmountDict.size()>0 ){
+//        	    	m_foodAmountHm.putAll(recommendFoodAmountDict);
+//            	    m_foods2LevelHm.putAll(preChooseFoodInfoDict);
+//            	    DataAccess da  = DataAccess.getSingleton(ActivityFoodCombination.this);
+//            	    m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
+//
+//            	    reCalculateFoodSupplyNutrient();
+//            		mListAdapter.notifyDataSetChanged();
+//        	    }else{
+//        	    	Tool.ShowMessageByDialog(ActivityFoodCombination.this, R.string.alreadyChooseEnoughFoodAndNeedToDelete);
+//        	    }
+        	    
+            	HashMap<String, Object> retDict =  (HashMap<String, Object>)msg.obj;
+            	HashMap<String, Double> recommendFoodAmountDict = (HashMap<String, Double>)retDict.get(Constants.Key_recommendFoodAmountDict);
+        	    HashMap<String, HashMap<String, Object>> preChooseFoodInfoDict = (HashMap<String, HashMap<String, Object>>)retDict.get(Constants.Key_preChooseFoodInfoDict);
+        	    HashMap<String, Double> DRIsDict = (HashMap<String, Double>)retDict.get(Constants.Key_DRI);
+            	m_foodAmountHm = recommendFoodAmountDict;
+        	    m_foods2LevelHm = preChooseFoodInfoDict;
+        	    DataAccess da  = DataAccess.getSingleton(ActivityDiagnoseResult.this);
+        	    m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
+
+        	    HashMap<String, Object> params2 = new HashMap<String, Object>();
+//        	    params2.put(Constants.Key_userInfo, userInfo);
+        	    params2.put(Constants.Key_DRI, DRIsDict);
+        	    params2.put("staticFoodAttrsDict2Level", m_foods2LevelHm);
+        	    params2.put("staticFoodAmountDict", m_foodAmountHm);
+        	    RecommendFood rf = new RecommendFood(ActivityDiagnoseResult.this);
+        	    m_nutrientsData = rf.calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(params2);
+        	    
+        	    m_paramsForCalculateNutritionSupply = params2;
+        	    
+        	    m_ExpandableListAdapter.notifyDataSetChanged();
+        	    
+                break;
+            }
+        }
+    };
+    
+
 
 	
 	
@@ -198,7 +254,8 @@ public class ActivityDiagnoseResult extends ActivityBase {
         
         m_nutrientInfoDict2Level = da.getNutrientInfoAs2LevelDictionary_withNutrientIds(null);
         
-        doRecommend();
+//        doRecommend();
+        doRecommendAsync();
 	}
 	void setViewEventHandlers(){
         m_btnCancel.setOnClickListener(new View.OnClickListener() {
@@ -246,43 +303,50 @@ public class ActivityDiagnoseResult extends ActivityBase {
 
 	
 	
-	void doRecommend(){
-	    HashMap<String, Object> params = new HashMap<String, Object>();
+//	void doRecommend(){
+//	    HashMap<String, Object> params = new HashMap<String, Object>();
+//	    params.put(Constants.Key_givenNutrients, m_nutrientIds_all);
+//	    
+//	    HashMap<String, Object> userInfo = StoredConfigTool.getUserInfo(this);
+//	    RecommendFood rf = new RecommendFood(this);
+//	    HashMap<String, Object> retDict = rf.recommendFoodBySmallIncrementWithPreIntakeOut(null,userInfo,null,params);
+//	    
+//	    HashMap<String, Double> recommendFoodAmountDict = (HashMap<String, Double>)retDict.get(Constants.Key_recommendFoodAmountDict);
+//	    HashMap<String, HashMap<String, Object>> preChooseFoodInfoDict = (HashMap<String, HashMap<String, Object>>)retDict.get(Constants.Key_preChooseFoodInfoDict);
+//	    HashMap<String, Double> DRIsDict = (HashMap<String, Double>)retDict.get(Constants.Key_DRI);
+//    	m_foodAmountHm = recommendFoodAmountDict;
+//	    m_foods2LevelHm = preChooseFoodInfoDict;
+//	    DataAccess da  = DataAccess.getSingleton(this);
+//	    m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
+//
+//	    HashMap<String, Object> params2 = new HashMap<String, Object>();
+//	    params2.put(Constants.Key_userInfo, userInfo);
+//	    params2.put(Constants.Key_DRI, DRIsDict);
+//	    params2.put("staticFoodAttrsDict2Level", m_foods2LevelHm);
+//	    params2.put("staticFoodAmountDict", m_foodAmountHm);
+//	    m_nutrientsData = rf.calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(params2);
+//	    
+//	    
+//	    m_paramsForCalculateNutritionSupply = params2;
+//	}
+    
+	
+    void doRecommendAsync(){
+    	HashMap<String, Object> params = new HashMap<String, Object>();
 	    params.put(Constants.Key_givenNutrients, m_nutrientIds_all);
 	    
 	    HashMap<String, Object> userInfo = StoredConfigTool.getUserInfo(this);
+	    
 	    RecommendFood rf = new RecommendFood(this);
-	    HashMap<String, Object> retDict = rf.recommendFoodBySmallIncrementWithPreIntakeOut(null,userInfo,null,params);
+	    HashMap<String, Object> paramsRecommendForTask = new HashMap<String, Object>();
+	    paramsRecommendForTask.put("RecommendFood", rf);
+	    paramsRecommendForTask.put("userInfo", userInfo);
+	    paramsRecommendForTask.put("params", params);
 	    
-	    HashMap<String, Double> recommendFoodAmountDict = (HashMap<String, Double>)retDict.get(Constants.Key_recommendFoodAmountDict);
-	    HashMap<String, HashMap<String, Object>> preChooseFoodInfoDict = (HashMap<String, HashMap<String, Object>>)retDict.get(Constants.Key_preChooseFoodInfoDict);
-	    HashMap<String, Double> DRIsDict = (HashMap<String, Double>)retDict.get(Constants.Key_DRI);
-    	m_foodAmountHm = recommendFoodAmountDict;
-	    m_foods2LevelHm = preChooseFoodInfoDict;
-	    DataAccess da  = DataAccess.getSingleton(this);
-	    m_OrderedFoodIdList = da.getOrderedFoodIds(m_foodAmountHm);
-
-	    HashMap<String, Object> params2 = new HashMap<String, Object>();
-	    params2.put(Constants.Key_userInfo, userInfo);
-	    params2.put(Constants.Key_DRI, DRIsDict);
-	    params2.put("staticFoodAttrsDict2Level", m_foods2LevelHm);
-	    params2.put("staticFoodAmountDict", m_foodAmountHm);
-	    m_nutrientsData = rf.calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(params2);
-	    
-	    
-	    m_paramsForCalculateNutritionSupply = params2;
-        
-//	    HashMap<String, Object> params = new HashMap<String, Object>();
-//	    params.put(Constants.Key_userInfo, userInfo);
-//	    params.put(Constants.Key_DRI, m_paramsForCalculateNutritionSupply.get(Constants.Key_DRI));
-////	    params.put("dynamicFoodAttrs", dynamicFoodAttrs);
-////	    params.put("dynamicFoodAmount", dObj_dynamicFoodAmount);
-////	    params.put("staticFoodAttrsDict2Level", m_foods2LevelHm);
-////	    params.put("staticFoodAmountDict", m_foodAmountHm);
-//	    m_nutrientsData = rf.calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(params);
-//	    m_paramsForCalculateNutritionSupply = params;
+	    m_AsyncTaskDoRecommend = new AsyncTaskDoRecommend(paramsRecommendForTask, myHandler.obtainMessage());
+	    m_AsyncTaskDoRecommend.execute();
+	    m_prgressDialog = myProgressDialog.show(this, null, R.string.calculating);
 	}
-    
     
     void reCalculateFoodSupplyNutrient(){
 		
