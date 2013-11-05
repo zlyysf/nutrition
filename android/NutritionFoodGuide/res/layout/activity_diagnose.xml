@@ -82,6 +82,7 @@
     	    android:layout_weight="0"
     	    android:background="@drawable/bar_diagnose_button_bg_720_136"
     	    android:orientation="vertical" >
+
 	        <Button
 	            android:id="@+id/btnDiagnose"
 	            android:layout_width="150dp"
@@ -89,7 +90,11 @@
 	            android:layout_gravity="center_vertical|center_horizontal"
 	            android:layout_margin="5dp"
 	            android:background="@drawable/btn_topright_bg"
-	            android:text="@string/title_diagnose" />
+	            android:text="@string/title_diagnose"
+	            android:textColor="@color/white"
+	            android:textSize="20sp"
+	            android:textStyle="bold" />
+
 		</LinearLayout>
 		<!--  
     	<LinearLayout

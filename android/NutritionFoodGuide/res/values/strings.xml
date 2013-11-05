@@ -100,6 +100,8 @@
     <string name="diseaseMarkComment_normal">恭喜，您现在的身体比较健康！</string>
     <string name="diseaseMarkComment_bad">抱歉，您现在的身体比较糟糕！</string>
     
+    <string name="iKnow">知道了</string>
+    
     <string name="feedback">意见反馈</string>
     <string name="feedbackEmailTitle">用户意见反馈</string>
     <string name="feedbackEmailChooseSender">选择邮件发送程序：</string>

@@ -17,6 +17,10 @@
     <color name="progressbarBgOld">#c2c2c2</color>
     <color name="progressbarFg1stOld">#3aaa2c</color>
     
+    <color name="diseaseMark_good">#3daf2c</color>
+    <color name="diseaseMark_normal">#ffe621</color>
+    <color name="diseaseMark_bad">#ff2121</color>
+    
     <color name="nutrientVA">#ff5c36</color>
     <color name="nutrientVC">#3eab2f</color>
     <color name="nutrientVD">#ff9056</color>

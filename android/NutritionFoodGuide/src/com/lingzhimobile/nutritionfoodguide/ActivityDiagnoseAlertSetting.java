@@ -262,7 +262,8 @@ public class ActivityDiagnoseAlertSetting extends Activity {
 		intent_morning.setData(Constants.URIflag_morning);
 		PendingIntent pendingIntent_morning= PendingIntent.getBroadcast(ctx, 0, intent_morning, 0);  
 		alarmMng.cancel(pendingIntent_morning);
-		alarmMng.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar_morning.getTimeInMillis(), intervalForAlert , pendingIntent_morning);
+//		alarmMng.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar_morning.getTimeInMillis(), intervalForAlert , pendingIntent_morning);
+		alarmMng.setRepeating(AlarmManager.RTC_WAKEUP, calendar_morning.getTimeInMillis(), intervalForAlert , pendingIntent_morning);
           
 		calendar_afternoon.set(Calendar.HOUR_OF_DAY, hour_afternoon);
 		calendar_afternoon.set(Calendar.MINUTE, minute_afternoon);
@@ -273,7 +274,8 @@ public class ActivityDiagnoseAlertSetting extends Activity {
 		intent_afternoon.setData(Constants.URIflag_afternoon);
 		PendingIntent pendingIntent_afternoon= PendingIntent.getBroadcast(ctx, 0, intent_afternoon, 0);  
 		alarmMng.cancel(pendingIntent_afternoon);
-		alarmMng.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar_afternoon.getTimeInMillis(), intervalForAlert , pendingIntent_afternoon);
+//		alarmMng.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar_afternoon.getTimeInMillis(), intervalForAlert , pendingIntent_afternoon);
+		alarmMng.setRepeating(AlarmManager.RTC_WAKEUP, calendar_afternoon.getTimeInMillis(), intervalForAlert , pendingIntent_afternoon);
 		
 		calendar_night.set(Calendar.HOUR_OF_DAY, hour_night);
 		calendar_night.set(Calendar.MINUTE, minute_night);
@@ -284,7 +286,8 @@ public class ActivityDiagnoseAlertSetting extends Activity {
 		intent_night.setData(Constants.URIflag_night);
 		PendingIntent pendingIntent_night= PendingIntent.getBroadcast(ctx, 0, intent_night, 0);  
 		alarmMng.cancel(pendingIntent_night);
-		alarmMng.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar_night.getTimeInMillis(), intervalForAlert , pendingIntent_night);
+//		alarmMng.setInexactRepeating(AlarmManager.RTC_WAKEUP, calendar_night.getTimeInMillis(), intervalForAlert , pendingIntent_night);
+		alarmMng.setRepeating(AlarmManager.RTC_WAKEUP, calendar_night.getTimeInMillis(), intervalForAlert , pendingIntent_night);
 	}
 	public static void cancelAlerm(Context ctx){
 		AlarmManager alarmMng= (AlarmManager) ctx.getSystemService(ALARM_SERVICE);

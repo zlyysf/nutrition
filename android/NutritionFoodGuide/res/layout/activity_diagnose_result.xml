@@ -5,7 +5,7 @@
     android:background="@color/white"
     android:orientation="vertical" >
 
-	<include android:id="@+id/topbarPart" layout="@layout/topbar_linearlayout" /> 
+	<include android:id="@+id/topbarPart" layout="@layout/topbar" /> 
 	
 	
 

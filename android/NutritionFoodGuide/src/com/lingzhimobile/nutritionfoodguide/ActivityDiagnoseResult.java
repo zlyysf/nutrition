@@ -12,6 +12,7 @@ import com.lingzhimobile.nutritionfoodguide.ActivityFoodByClass.ListAdapterForFo
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination.ExpandableListAdapter_FoodNutrition.OnClickListenerToAddFoodByNutrient;
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination.ExpandableListAdapter_FoodNutrition.OnClickListenerToEditFoodAmount;
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination.ExpandableListAdapter_FoodNutrition.OnClickListenerToShowNutrientDescription;
+import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombinationList.FoodCombinationAdapter.OnClickListenerToDeleteRow;
 import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
 import com.lingzhimobile.nutritionfoodguide.OnClickListenerInExpandListItem.Data2LevelPosition;
 import com.umeng.analytics.MobclickAgent;
@@ -56,12 +57,11 @@ import android.widget.ExpandableListView.*;
 
 
 public class ActivityDiagnoseResult extends ActivityBase {
-	
-
-	
 	static final String LogTag = "ActivityDiagnoseResult";
 	
-	static final String[] GroupTitles = new String[]{"","您所选的症状","您体内严重缺乏的营养","您体内轻度缺乏的营养","您需要补充的食物","以上食物一天的营养比例"};
+	public static final int IntentResultCode = 1000;
+	
+	static final String[] GroupTitles = new String[]{"","您所选的症状","您体内严重缺乏的营养","您体内轻度缺乏的营养","您需要补充的食物","以上食物一天的营养比例",""};
 	static final int GroupPos_mark = 0;
 	static final int GroupPos_choose_disease = 1;
 	static final int GroupPos_nutrient_badly = 2;
@@ -285,20 +285,7 @@ public class ActivityDiagnoseResult extends ActivityBase {
         m_expandableListView1.setGroupIndicator(null);//去掉ExpandableListView 默认的组上的下拉箭头
 	}
 	
-	ArrayList<Object[]> convertFoodAmountHashmapToPairList(){
-		ArrayList<Object[]> foodAmount2LevelArray = null;
-		if (m_foodAmountHm!=null && m_foodAmountHm.size()>0){
-    		foodAmount2LevelArray = new ArrayList<Object[]>();
-        	String[] foodIds = m_foodAmountHm.keySet().toArray(new String[m_foodAmountHm.size()]);
-        	for(int i=0; i<foodIds.length; i++){
-        		String foodId = foodIds[i];
-        		Double foodAmount = m_foodAmountHm.get(foodId);
-        		Object[] foodAmountPair = new Object[]{foodId, foodAmount};
-        		foodAmount2LevelArray.add(foodAmountPair);
-        	}
-		}
-		return foodAmount2LevelArray;
-	}
+
 	
 
 	
@@ -401,8 +388,67 @@ public class ActivityDiagnoseResult extends ActivityBase {
 		public View getGroupView(int groupPos, boolean isExpanded,	View convertView, ViewGroup parent)
 		{
 			View vwItem;
-			if (groupPos==GroupPos_mark ){
+			if (groupPos==GroupPos_mark){
 				vwItem = m_actv.getLayoutInflater().inflate(R.layout.grouprow_diagnose_result_empty, null);
+			}else if (groupPos==GroupTitles.length-1){
+				vwItem = m_actv.getLayoutInflater().inflate(R.layout.grouprow_diagnose_result_empty_with_height, null);
+			}else if (groupPos==GroupPos_food){
+				vwItem = m_actv.getLayoutInflater().inflate(R.layout.grouprow_diagnose_result_food, null);
+				TextView textView = (TextView)vwItem.findViewById(R.id.textView1);
+				textView.setText(GroupTitles[groupPos]);
+				Button btnSave = (Button)vwItem.findViewById(R.id.btnSave);
+				btnSave.setOnClickListener(new View.OnClickListener(){
+
+					@Override
+					public void onClick(View v) {
+						
+						Date dtNow = new Date();
+            			SimpleDateFormat sdf = new SimpleDateFormat("MM月dd日");
+            			String datePart = sdf.format(dtNow);
+//            			DateFormat df = DateFormat.getDateInstance(DateFormat.SHORT);
+//            			String datePart = df.format(dtNow);
+            			
+            			String collocationName = Tool.getStringFromIdWithParams(getResources(), R.string.defaultFoodCollocationName,new String[]{datePart});
+            			
+            			DialogHelperSimpleInput myDialogHelperSimpleInput = new DialogHelperSimpleInput(ActivityDiagnoseResult.this);
+        				myDialogHelperSimpleInput.prepareDialogAttributes("保存食物清单", "给你的食物清单加个名称吧", collocationName);
+        				myDialogHelperSimpleInput.setInterfaceWhenConfirmInput(new InterfaceWhenConfirmInput() {
+        					@Override
+        					public void onConfirmInput(String input) {
+        						if (input==null || input.length()==0){
+        							Tool.ShowMessageByDialog(ActivityDiagnoseResult.this, "输入不能为空");
+        						}else{
+        							String collocationName2 = input;
+        							ArrayList<Object[]> foodAmount2LevelArray = ActivityFoodCombination.convertFoodAmountHashmapToPairList(m_foodAmountHm);
+        							DataAccess da = DataAccess.getSingleton();
+        							da.insertFoodCollocationData_withCollocationName(collocationName2, foodAmount2LevelArray);
+        							
+        							AlertDialog.Builder dlgBuilder =new AlertDialog.Builder(ActivityDiagnoseResult.this);
+        							dlgBuilder.setTitle("保存成功").setMessage("您可以进入清单页面查看你的保存结果");
+        							dlgBuilder.setPositiveButton("去看看", new DialogInterface.OnClickListener() {
+										
+										@Override
+										public void onClick(DialogInterface dialog, int which) {
+											Intent intent = new Intent(ActivityDiagnoseResult.this, ActivityHome.class);
+											intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+											intent.putExtra(Constants.IntentParamKey_DestinationActivity, ActivityFoodCombinationList.class.getName());
+											startActivity(intent);
+										}
+									});
+        							dlgBuilder.setNegativeButton("知道了", null);
+        							
+        							AlertDialog dlg = dlgBuilder.create();
+        							dlg.show();
+        							
+        						}
+        					}
+        				});
+        				myDialogHelperSimpleInput.show();
+            			return;
+					}
+					
+					
+				});
 			}else{
 				vwItem = m_actv.getLayoutInflater().inflate(R.layout.expandablelist_groupitem, null);
 				TextView textView = (TextView)vwItem.findViewById(R.id.textView1);
@@ -411,9 +457,9 @@ public class ActivityDiagnoseResult extends ActivityBase {
 			return vwItem;
 		}
 
-		public Object getChild(int groupPosition, int childPosition)
+		public Object getChild(int groupPos, int childPosition)
 		{
-			if (groupPosition==0){
+			if (groupPos==0){
 //				return m_foodsData.get(childPosition);
 				return m_OrderedFoodIdList.get(childPosition);
 			}else{
@@ -452,16 +498,16 @@ public class ActivityDiagnoseResult extends ActivityBase {
 				
 				TextView tvComment = (TextView)vw.findViewById(R.id.tvComment);
 				int commentStrResId = R.string.diseaseMarkComment_good;
-				int markColorResId = R.color.green;
+				int markColorResId = R.color.diseaseMark_good;
 				if (m_healthMark < 60){
 					commentStrResId = R.string.diseaseMarkComment_bad ;
-					markColorResId = R.color.red;
+					markColorResId = R.color.diseaseMark_bad;
 				}else if(m_healthMark < 90){
 					commentStrResId = R.string.diseaseMarkComment_normal;
-					markColorResId = R.color.yellow;
+					markColorResId = R.color.diseaseMark_normal;
 				}else{
 					commentStrResId = R.string.diseaseMarkComment_good;
-					markColorResId = R.color.green;
+					markColorResId = R.color.diseaseMark_good;
 				}
 				tvComment.setText(getResources().getText(commentStrResId));
 				tvMark.setTextColor(getResources().getColor(markColorResId));
@@ -675,17 +721,27 @@ public class ActivityDiagnoseResult extends ActivityBase {
 
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
-			View vw = convertView;
-			if (vw == null){
-				vw = getLayoutInflater().inflate(R.layout.grid_cell_square_nutrient, null);
-			}
-			ImageView imageView1 = (ImageView)vw.findViewById(R.id.imageView1);
-			TextView tvCenter = (TextView)vw.findViewById(R.id.tvCenter);
 			String nutrientId = m_nutrientIds[position];
-			
+			HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
+			String iconTitle = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
+			String[] titleCnEnParts = Tool.splitNutrientTitleToCnEn(iconTitle);
+			View vw;
+			ImageView imageView1;
+			if (titleCnEnParts.length == 1){
+				vw = getLayoutInflater().inflate(R.layout.grid_cell_square_nutrient, null);
+				imageView1 = (ImageView)vw.findViewById(R.id.imageView1);
+				TextView tvCenter = (TextView)vw.findViewById(R.id.tvCenter);
+				tvCenter.setText(titleCnEnParts[0]);
+			}else{
+				vw = getLayoutInflater().inflate(R.layout.grid_cell_square_nutrient2item, null);
+				imageView1 = (ImageView)vw.findViewById(R.id.imageView1);
+				TextView tvUp = (TextView)vw.findViewById(R.id.tvUp);
+				TextView tvDown = (TextView)vw.findViewById(R.id.tvDown);
+				tvUp.setText(titleCnEnParts[0]);
+				tvDown.setText(titleCnEnParts[1]);
+			}
 			HashMap<String, Integer> NutrientColorMapping1 = NutritionTool.getNutrientColorMapping();
 			Integer colorResId = NutrientColorMapping1.get(nutrientId);
-			
 			if (colorResId != null){
 				if (m_isBadlyLack){
 					imageView1.setImageResource(colorResId);
@@ -693,9 +749,6 @@ public class ActivityDiagnoseResult extends ActivityBase {
 					imageView1.setImageResource(colorResId);
 				}
 			}
-			
-			HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
-			tvCenter.setText((String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientCnCaption));
 			return vw;
 		}
 

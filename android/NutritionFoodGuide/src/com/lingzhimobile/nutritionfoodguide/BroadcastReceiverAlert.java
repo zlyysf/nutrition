@@ -21,9 +21,6 @@ public class BroadcastReceiverAlert extends BroadcastReceiver  {
 //		intent.setClass(context, ActivityAlarmTool.class);// ActivityHome.class);  
 //		context.startActivity(intent);  
 		
-		
-		
-		
 		NotificationManager nm=(NotificationManager) context.getSystemService(Activity.NOTIFICATION_SERVICE);  
 //		Uri uriData = intent.getData();
 //		if (Constants.URIflag_morning.equals(uriData)){
@@ -55,28 +52,24 @@ public class BroadcastReceiverAlert extends BroadcastReceiver  {
 //	        nm.notify(Constants.NotificationId_diagnoseAlert_night, notification1);  
 //		}
 		
+		String tickerText = context.getResources().getString(R.string.app_name);
 		String notifyTitle = context.getResources().getString(R.string.goToDiagnose);
 		String notifyContent = context.getResources().getString(R.string.diagnoseTimeIsUp);
-		Notification notification1=new Notification(R.drawable.ic_launcher, notifyTitle, System.currentTimeMillis());  
+		Notification notification1=new Notification(R.drawable.ic_launcher, tickerText, System.currentTimeMillis());  
 		Intent intent1 = new Intent(context,ActivityHome.class);
 		intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
-		intent1.putExtra(Constants.IntentParamKey_IsFromDiagnoseAlert, true);
+//		intent1.putExtra(Constants.IntentParamKey_IsFromDiagnoseAlert, true);
+		intent.putExtra(Constants.IntentParamKey_DestinationActivity, ActivityDiagnose.class.getName());
 		PendingIntent pendingIntent1 = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
 		
         notification1.setLatestEventInfo(context, notifyTitle, notifyContent, pendingIntent1);
         nm.notify(Constants.NotificationId_diagnoseAlert_anyTime, notification1);  
-		
-		
-		
 		
 //        Notification notification1 = new Notification.Builder(this)
 //        .setContentTitle("titleaaaaaaaaa")
 //        .setContentText("contentBBBBBBBBBBB")
 //        .setSmallIcon(R.drawable.ic_launcher)
 //        .build();
-		
-		
-		
 	}
 
 }

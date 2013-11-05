@@ -185,17 +185,16 @@ public class ActivityHome extends ActivityBase{
 		Intent paramIntent = getIntent();
 		Log.d(LogTag, "dealParamIntent paramIntent="+paramIntent);
 		if (paramIntent != null){
-			boolean isFromDiagnoseAlert = paramIntent.getBooleanExtra(Constants.IntentParamKey_IsFromDiagnoseAlert,false);
-			if (isFromDiagnoseAlert){
+			String sDestinationActivity = paramIntent.getStringExtra(Constants.IntentParamKey_DestinationActivity);
+			if (ActivityDiagnose.class.getName().equals(sDestinationActivity)){
 				NotificationManager nm=(NotificationManager) getSystemService(Activity.NOTIFICATION_SERVICE);
 				nm.cancel(Constants.NotificationId_diagnoseAlert_anyTime);
 				nm.cancel(Constants.NotificationId_diagnoseAlert_morning);
 				nm.cancel(Constants.NotificationId_diagnoseAlert_afternoon);
 				nm.cancel(Constants.NotificationId_diagnoseAlert_night);
 				Intent intent2 = new Intent(ActivityHome.this, ActivityDiagnose.class);
-				intent2.putExtra(Constants.IntentParamKey_IsFromDiagnoseAlert,isFromDiagnoseAlert);
 				startActivity(intent2);
-			}else{
+			}else if (ActivityFoodCombination.class.getName().equals(sDestinationActivity)){
 				long collocationId = paramIntent.getLongExtra(Constants.COLUMN_NAME_CollocationId, -1);
 				String foodId = paramIntent.getStringExtra(Constants.COLUMN_NAME_NDB_No);
 				double foodAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
@@ -209,6 +208,9 @@ public class ActivityHome extends ActivityBase{
 			    	intent2.putExtra(Constants.Key_Amount, foodAmount);
 					startActivity(intent2);
 				}
+			}else if(ActivityFoodCombinationList.class.getName().equals(sDestinationActivity)){
+				Intent intent2 = new Intent(ActivityHome.this, ActivityFoodCombinationList.class);
+				startActivity(intent2);
 			}
 		}
 	}

@@ -204,7 +204,7 @@ public class ActivityFoodCombination extends ActivityBase {
         							Tool.ShowMessageByDialog(ActivityFoodCombination.this, "输入不能为空");
         						}else{
         							String collocationName2 = input;
-        							ArrayList<Object[]> foodAmount2LevelArray = convertFoodAmountHashmapToPairList();
+        							ArrayList<Object[]> foodAmount2LevelArray = convertFoodAmountHashmapToPairList(m_foodAmountHm);
         							DataAccess da = DataAccess.getSingleton();
         							da.insertFoodCollocationData_withCollocationName(collocationName2, foodAmount2LevelArray);
         	                    	Intent intent = new Intent();
@@ -216,7 +216,7 @@ public class ActivityFoodCombination extends ActivityBase {
         				myDialogHelperSimpleInput.show();
             			return;
             		}else{//to edit
-            			ArrayList<Object[]> foodAmount2LevelArray = convertFoodAmountHashmapToPairList();
+            			ArrayList<Object[]> foodAmount2LevelArray = convertFoodAmountHashmapToPairList(m_foodAmountHm);
                     	DataAccess da = DataAccess.getSingleton();
             			da.updateFoodCollocationData_withCollocationId(m_collocationId, null, foodAmount2LevelArray);
             			Intent intent = new Intent();
@@ -332,14 +332,14 @@ public class ActivityFoodCombination extends ActivityBase {
         m_expandableListView1.setGroupIndicator(null);//去掉ExpandableListView 默认的组上的下拉箭头
 	}
 	
-	ArrayList<Object[]> convertFoodAmountHashmapToPairList(){
+	public static ArrayList<Object[]> convertFoodAmountHashmapToPairList(HashMap<String, Double> foodAmountHm){
 		ArrayList<Object[]> foodAmount2LevelArray = null;
-		if (m_foodAmountHm!=null && m_foodAmountHm.size()>0){
+		if (foodAmountHm!=null && foodAmountHm.size()>0){
     		foodAmount2LevelArray = new ArrayList<Object[]>();
-        	String[] foodIds = m_foodAmountHm.keySet().toArray(new String[m_foodAmountHm.size()]);
+        	String[] foodIds = foodAmountHm.keySet().toArray(new String[foodAmountHm.size()]);
         	for(int i=0; i<foodIds.length; i++){
         		String foodId = foodIds[i];
-        		Double foodAmount = m_foodAmountHm.get(foodId);
+        		Double foodAmount = foodAmountHm.get(foodId);
         		Object[] foodAmountPair = new Object[]{foodId, foodAmount};
         		foodAmount2LevelArray.add(foodAmountPair);
         	}

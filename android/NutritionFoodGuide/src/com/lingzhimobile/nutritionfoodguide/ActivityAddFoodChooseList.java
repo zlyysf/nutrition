@@ -108,6 +108,7 @@ public class ActivityAddFoodChooseList extends ActivityBase {
 		Intent intent = new Intent(ActivityAddFoodChooseList.this, ActivityHome.class);
 //		Intent intent = new Intent(ActivityAddFoodChooseList.this, ActivityT1.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);// (Intent.FLAG_ACTIVITY_CLEAR_TASK);// (Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		intent.putExtra(Constants.IntentParamKey_DestinationActivity, ActivityFoodCombination.class.getName());
 		intent.putExtra(Constants.COLUMN_NAME_CollocationId, collocationId);
 		intent.putExtra(Constants.COLUMN_NAME_NDB_No, m_foodId);
     	intent.putExtra(Constants.Key_Amount, m_foodAmount);

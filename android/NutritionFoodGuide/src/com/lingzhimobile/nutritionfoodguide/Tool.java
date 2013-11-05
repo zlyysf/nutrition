@@ -925,7 +925,38 @@ public class Tool {
 		return android.os.Build.VERSION.SDK_INT;
 	}
 	
-	
+	public static String[] splitNutrientTitleToCnEn(String nutrientTitle){
+		if (nutrientTitle == null || nutrientTitle.length()==0)
+			return null;
+		int cnStartIdx = -1, enStartIdx = -1;
+		for(int i=0; i<nutrientTitle.length(); i++){
+			char c = nutrientTitle.charAt(i);
+			int charCode = (int)c;
+			if (charCode <= 255){
+				if (enStartIdx == -1) enStartIdx = i;
+			}else{
+				if (cnStartIdx == -1) cnStartIdx = i;
+			}
+		}
+		if (cnStartIdx == -1 && enStartIdx == -1){
+			return null;//impossible
+		}else if(cnStartIdx == -1 || enStartIdx == -1){
+			//all be cn or all be en
+			return new String[]{nutrientTitle};
+		}else{
+			//cn and en both exist
+			String cnPart , enPart;
+			if (cnStartIdx == 0){
+				cnPart = nutrientTitle.substring(cnStartIdx, enStartIdx);
+				enPart = nutrientTitle.substring(enStartIdx);
+			}else{
+				assert(enStartIdx == 0);
+				enPart = nutrientTitle.substring(enStartIdx, cnStartIdx);
+				cnPart = nutrientTitle.substring(cnStartIdx);
+			}
+			return new String[]{cnPart,enPart};
+		}
+	}
 	
 	
 }

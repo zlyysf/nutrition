@@ -142,11 +142,15 @@ public class ActivityDiagnose extends ActivityBase {
             		}
             	}
             	Log.d(LogTag, "choosed diseaseIds="+StringUtils.join(diseaseIds));
-            	Intent intent = new Intent(ActivityDiagnose.this, ActivityDiagnoseResult.class);
-				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
-				intent.putExtra(Constants.COLUMN_NAME_DiseaseGroup, m_groupNameAsId);
-				intent.putExtra(IntentParamKey_DiseaseIds, diseaseIds.toArray(new String[diseaseIds.size()]));
-				startActivity(intent);
+            	if (diseaseIds.size() > 0){
+            		Intent intent = new Intent(ActivityDiagnose.this, ActivityDiagnoseResult.class);
+    				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
+    				intent.putExtra(Constants.COLUMN_NAME_DiseaseGroup, m_groupNameAsId);
+    				intent.putExtra(IntentParamKey_DiseaseIds, diseaseIds.toArray(new String[diseaseIds.size()]));
+    				startActivity(intent);
+            	}else{
+					new AlertDialog.Builder(ActivityDiagnose.this).setMessage("恭喜，你现在的身体状况还很健康，在以后的诊断中要继续保持哦！").setPositiveButton(R.string.iKnow, null).show();
+            	}
             }
         });
 //		m_listView1.setOnItemClickListener(new OnItemClickListenerInListItem());//没有收到事件?

@@ -100,6 +100,9 @@ public class Constants {
 	public static final String COLUMN_NAME_NutrientEnUnit ="NutrientEnUnit";
 	public static final String COLUMN_NAME_LossRate ="LossRate";
 	public static final String COLUMN_NAME_NutrientDescription ="NutrientDescription";
+	
+	public static final String COLUMN_NAME_IconTitleCn ="IconTitleCn";
+	public static final String COLUMN_NAME_IconTitleEn ="IconTitleEn";
 
 	//public static final String TABLE_NAME_FoodPicPath ="FoodPicPath"
 	public static final String COLUMN_NAME_PicPath ="PicPath";
@@ -238,13 +241,14 @@ public class Constants {
 	public static final int Value_activityLevel_strong = 2;
 	public static final int Value_activityLevel_veryStrong = 3;
 	
-	public static final String IntentParamKey_IsFromDiagnoseAlert = "IsFromDiagnoseAlert";
+	public static final String IntentParamKey_DestinationActivity = "DestinationActivity";
 	public static final String IntentParamKey_BackButtonTitle = "BackButtonTitle";
 	
 	public static final String IntentParamKey_InvokerType = "InvokerType";
 	public static final String InvokerType_FromNutrients = "FromNutrients";
 	public static final String InvokerType_FromSearchFood = "FromSearchFood";
 	public static final String InvokerType_FromFoodCombination = "FromFoodCombination";
+	public static final String InvokerType_FromDiagnoseResultNutrients = "FromDiagnoseResultNutrients";
 	
 	public static final int MessageID_OK = 1;
 	
