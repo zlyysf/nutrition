@@ -142,7 +142,7 @@ public class ActivityRichFood extends ActivityBase {
 		RichFoodAdapter adapter = new RichFoodAdapter();
 		m_listView1.setAdapter(adapter);
 		
-		if (Constants.InvokerType_FromNutrients.equalsIgnoreCase(mInvokerType)){
+		if (Constants.InvokerType_FromNutrients.equals(mInvokerType) || Constants.InvokerType_FromDiagnoseResultNutrients.equals(mInvokerType)){
 			m_rbNutrientInfo.setChecked(true);
 		}else{
 			m_rbRichFood.setChecked(true);
@@ -189,6 +189,8 @@ public class ActivityRichFood extends ActivityBase {
 			if (convertView == null){
 				if (Constants.InvokerType_FromNutrients.equals(mInvokerType)){
 					convertView = getLayoutInflater().inflate(R.layout.row_rich_food, null);
+				}else if (Constants.InvokerType_FromDiagnoseResultNutrients.equals(mInvokerType)){
+					convertView = getLayoutInflater().inflate(R.layout.row_rich_food_onlyshow, null);
 				}else{
 					convertView = getLayoutInflater().inflate(R.layout.row_rich_food_input, null);
 				}
@@ -218,7 +220,8 @@ public class ActivityRichFood extends ActivityBase {
 				}else{
 					myOnClickListenerToAddFoodToList.initInputData(position,foodId,foodAmount);
 				}
-				
+			}else if (Constants.InvokerType_FromDiagnoseResultNutrients.equals(mInvokerType)){
+				//do nothing
 			}else{
 				LinearLayout llRowNutrient = (LinearLayout)convertView.findViewById(R.id.llRowNutrient);
 				OnClickListenerForInputAmount myOnClickListenerForInputAmount = null;

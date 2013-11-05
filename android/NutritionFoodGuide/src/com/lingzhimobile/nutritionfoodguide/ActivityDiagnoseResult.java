@@ -84,6 +84,8 @@ public class ActivityDiagnoseResult extends ActivityBase {
 	ArrayList<HashMap<String, Object>> m_nutrientsData;
 	HashMap<String, Object> m_paramsForCalculateNutritionSupply;
 	HashMap<String, HashMap<String, Object>> m_nutrientInfoDict2Level;
+	HashMap<String, Double> m_DRIsDict;
+	
 	Button m_btnCancel;
 
 	
@@ -123,6 +125,7 @@ public class ActivityDiagnoseResult extends ActivityBase {
             	HashMap<String, Double> recommendFoodAmountDict = (HashMap<String, Double>)retDict.get(Constants.Key_recommendFoodAmountDict);
         	    HashMap<String, HashMap<String, Object>> preChooseFoodInfoDict = (HashMap<String, HashMap<String, Object>>)retDict.get(Constants.Key_preChooseFoodInfoDict);
         	    HashMap<String, Double> DRIsDict = (HashMap<String, Double>)retDict.get(Constants.Key_DRI);
+        	    m_DRIsDict = DRIsDict;
             	m_foodAmountHm = recommendFoodAmountDict;
         	    m_foods2LevelHm = preChooseFoodInfoDict;
         	    DataAccess da  = DataAccess.getSingleton(ActivityDiagnoseResult.this);
@@ -749,8 +752,36 @@ public class ActivityDiagnoseResult extends ActivityBase {
 					imageView1.setImageResource(colorResId);
 				}
 			}
+			
+			OnClickListenerInGrid OnClickListenerInGrid1 = new OnClickListenerInGrid();
+			OnClickListenerInGrid1.initInputData(nutrientId, nutrientInfo);
+			imageView1.setOnClickListener(OnClickListenerInGrid1);
+			
 			return vw;
 		}
+		
+		class OnClickListenerInGrid implements View.OnClickListener{
+			String m_nutrientId;
+			HashMap<String, Object> m_nutrientInfo;
+			
+			public void initInputData(String nutrientId, HashMap<String, Object> nutrientInfo){
+				m_nutrientId = nutrientId;
+				m_nutrientInfo = nutrientInfo;
+			}
+
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(ActivityDiagnoseResult.this, ActivityRichFood.class);
+				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
+				intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromDiagnoseResultNutrients);
+				intent.putExtra(Constants.COLUMN_NAME_NutrientID, m_nutrientId);
+				intent.putExtra(Constants.Key_Amount, m_DRIsDict.get(m_nutrientId).doubleValue());
+				intent.putExtra(Constants.Key_Name, (String)m_nutrientInfo.get(Constants.COLUMN_NAME_NutrientCnCaption));
+				startActivity(intent);
+				
+			}
+			
+		}//class OnClickListenerInGrid
 
 		
 	}//class GridAdapter_Nutrients
