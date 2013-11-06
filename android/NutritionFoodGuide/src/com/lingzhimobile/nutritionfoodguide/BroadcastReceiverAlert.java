@@ -59,7 +59,7 @@ public class BroadcastReceiverAlert extends BroadcastReceiver  {
 		Intent intent1 = new Intent(context,ActivityHome.class);
 		intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);  
 //		intent1.putExtra(Constants.IntentParamKey_IsFromDiagnoseAlert, true);
-		intent.putExtra(Constants.IntentParamKey_DestinationActivity, ActivityDiagnose.class.getName());
+		intent1.putExtra(Constants.IntentParamKey_DestinationActivity, ActivityDiagnose.class.getName());
 		PendingIntent pendingIntent1 = PendingIntent.getActivity(context, 0, intent1, PendingIntent.FLAG_UPDATE_CURRENT);
 		
         notification1.setLatestEventInfo(context, notifyTitle, notifyContent, pendingIntent1);
