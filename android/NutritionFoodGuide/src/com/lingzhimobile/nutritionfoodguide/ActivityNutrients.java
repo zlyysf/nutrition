@@ -33,18 +33,29 @@ public class ActivityNutrients extends ActivityBase{
     static final String Key_ItemImage = "ItemImage";
     static final String Key_ItemText = "ItemText";
     
-    static final int[] menuItemImageResIds = new int[]{
+    public static final int[] menuItemImageResIds = new int[]{
     	R.drawable.nutrient_vit_a_button_2x, R.drawable.nutrient_vit_c_button_2x, R.drawable.nutrient_vit_d_button_2x,
     	R.drawable.nutrient_vit_e_button_2x, R.drawable.nutrient_riboflavin_button_2x, R.drawable.nutrient_vit_b6_button_2x, 
     	R.drawable.nutrient_folate_button_2x, R.drawable.nutrient_vit_b12_button_2x, R.drawable.nutrient_calcium_button_2x, 
     	R.drawable.nutrient_iron_button_2x, R.drawable.nutrient_magnesium_button_2x, R.drawable.nutrient_zinc_button_2x, 
     	R.drawable.nutrient_fiber_button_2x, R.drawable.nutrient_protein_button_2x};
-    static final String[] NutrientIds = new String[]{
+    public static final String[] NutrientIds = new String[]{
     	"Vit_A_RAE","Vit_C_(mg)","Vit_D_(µg)",
     	"Vit_E_(mg)",  "Riboflavin_(mg)","Vit_B6_(mg)",
         "Folate_Tot_(µg)","Vit_B12_(µg)",  "Calcium_(mg)",
         "Iron_(mg)","Magnesium_(mg)","Zinc_(mg)",
         "Fiber_TD_(g)","Protein_(g)"};
+    static HashMap<String, Integer> m_hmNutrientToImageResId;
+    public static HashMap<String, Integer> getNutrientToImageResIdMap(){
+    	if (m_hmNutrientToImageResId == null){
+    		m_hmNutrientToImageResId = new HashMap<String, Integer>();
+    		for(int i=0; i<NutrientIds.length; i++){
+    			m_hmNutrientToImageResId.put(NutrientIds[i], menuItemImageResIds[i]);
+    		}
+    	}
+    	return m_hmNutrientToImageResId;
+    }
+    
 
     HashMap<String, Double> m_DRIsDict ;
     HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level;

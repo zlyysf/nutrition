@@ -726,32 +726,39 @@ public class ActivityDiagnoseResult extends ActivityBase {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			String nutrientId = m_nutrientIds[position];
 			HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
-			String iconTitle = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
-			String[] titleCnEnParts = Tool.splitNutrientTitleToCnEn(iconTitle);
+			
 			View vw;
-			ImageView imageView1;
-			if (titleCnEnParts.length == 1){
-				vw = getLayoutInflater().inflate(R.layout.grid_cell_square_nutrient, null);
-				imageView1 = (ImageView)vw.findViewById(R.id.imageView1);
-				TextView tvCenter = (TextView)vw.findViewById(R.id.tvCenter);
-				tvCenter.setText(titleCnEnParts[0]);
-			}else{
-				vw = getLayoutInflater().inflate(R.layout.grid_cell_square_nutrient2item, null);
-				imageView1 = (ImageView)vw.findViewById(R.id.imageView1);
-				TextView tvUp = (TextView)vw.findViewById(R.id.tvUp);
-				TextView tvDown = (TextView)vw.findViewById(R.id.tvDown);
-				tvUp.setText(titleCnEnParts[0]);
-				tvDown.setText(titleCnEnParts[1]);
-			}
-			HashMap<String, Integer> NutrientColorMapping1 = NutritionTool.getNutrientColorMapping();
-			Integer colorResId = NutrientColorMapping1.get(nutrientId);
-			if (colorResId != null){
-				if (m_isBadlyLack){
-					imageView1.setImageResource(colorResId);
-				}else{
-					imageView1.setImageResource(colorResId);
-				}
-			}
+//			String iconTitle = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
+//			String[] titleCnEnParts = Tool.splitNutrientTitleToCnEn(iconTitle);
+//			
+//			ImageView imageView1;
+//			if (titleCnEnParts.length == 1){
+//				vw = getLayoutInflater().inflate(R.layout.grid_cell_square_nutrient, null);
+//				imageView1 = (ImageView)vw.findViewById(R.id.imageView1);
+//				TextView tvCenter = (TextView)vw.findViewById(R.id.tvCenter);
+//				tvCenter.setText(titleCnEnParts[0]);
+//			}else{
+//				vw = getLayoutInflater().inflate(R.layout.grid_cell_square_nutrient2item, null);
+//				imageView1 = (ImageView)vw.findViewById(R.id.imageView1);
+//				TextView tvUp = (TextView)vw.findViewById(R.id.tvUp);
+//				TextView tvDown = (TextView)vw.findViewById(R.id.tvDown);
+//				tvUp.setText(titleCnEnParts[0]);
+//				tvDown.setText(titleCnEnParts[1]);
+//			}
+//			HashMap<String, Integer> NutrientColorMapping1 = NutritionTool.getNutrientColorMapping();
+//			Integer colorResId = NutrientColorMapping1.get(nutrientId);
+//			if (colorResId != null){
+//				if (m_isBadlyLack){
+//					imageView1.setImageResource(colorResId);
+//				}else{
+//					imageView1.setImageResource(colorResId);
+//				}
+//			}
+			
+			HashMap<String, Integer> hmNutrientToImageResId = ActivityNutrients.getNutrientToImageResIdMap();
+			vw = getLayoutInflater().inflate(R.layout.grid_cell_square_image, null);
+			ImageView imageView1 = (ImageView)vw.findViewById(R.id.imageView1);
+			imageView1.setImageResource(hmNutrientToImageResId.get(nutrientId));
 			
 			OnClickListenerInGrid OnClickListenerInGrid1 = new OnClickListenerInGrid();
 			OnClickListenerInGrid1.initInputData(nutrientId, nutrientInfo);

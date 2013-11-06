@@ -53,7 +53,7 @@ public class BroadcastReceiverAlert extends BroadcastReceiver  {
 //		}
 		
 		String tickerText = context.getResources().getString(R.string.app_name);
-		String notifyTitle = context.getResources().getString(R.string.goToDiagnose);
+		String notifyTitle = tickerText;
 		String notifyContent = context.getResources().getString(R.string.diagnoseTimeIsUp);
 		Notification notification1=new Notification(R.drawable.ic_launcher, tickerText, System.currentTimeMillis());  
 		Intent intent1 = new Intent(context,ActivityHome.class);
