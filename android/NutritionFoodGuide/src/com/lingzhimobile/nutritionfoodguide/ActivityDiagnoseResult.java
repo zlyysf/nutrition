@@ -636,41 +636,7 @@ public class ActivityDiagnoseResult extends ActivityBase {
 
 		}
 		
-		void changeProgressbarColors(Activity curActv, ProgressBar progBar, int progVal, int colorResIdFor1stProg){
-			final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
-			ShapeDrawable ShapeDrawable1 = new ShapeDrawable(new RoundRectShape(roundedCorners, null,null));
-//			ShapeDrawable1.getPaint().setColor(Color.parseColor("#FF0000"));
-			ShapeDrawable1.getPaint().setColor(curActv.getResources().getColor(colorResIdFor1stProg));
-			ClipDrawable ClipDrawable1 = new ClipDrawable(ShapeDrawable1, Gravity.LEFT, ClipDrawable.HORIZONTAL);
-			progBar.setProgressDrawable(ClipDrawable1);  
-//			progBar.setBackground(getResources().getDrawable( R.drawable.pink));//no round corner
-//			progBar.setBackground(getResources().getDrawable( android.R.drawable.progress_horizontal));//have round corner, should be because progress_horizontal have round corner
-			if (Tool.getVersionOfAndroidSDK() >= 16){//运行时获取Android API版本来判断
-				progBar.setBackground(getResources().getDrawable( R.drawable.progressbar_colors_solid_layers));//android 2.3 not have this method
-			}else{
-				progBar.setBackgroundDrawable(getResources().getDrawable( R.drawable.progressbar_colors_solid_layers));//deprecated in API level 16.
-			}
-//			
-			
-			
-//			//http://stackoverflow.com/questions/2020882/how-to-change-progress-bars-progress-color-in-android
-//			final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
-//			ShapeDrawable ShapeDrawable1 = new ShapeDrawable(new RoundRectShape(roundedCorners, null,null));
-//			ShapeDrawable1.getPaint().setColor(getResources().getColor(R.color.red));
-//			ClipDrawable ClipDrawable1 = new ClipDrawable(ShapeDrawable1, Gravity.LEFT, ClipDrawable.HORIZONTAL);
-////			GradientDrawable Drawable1 = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{0xff1e90ff,0xff006ab6,0xff367ba8});
-////			ClipDrawable ClipDrawable1 = new ClipDrawable(Drawable1, Gravity.LEFT, ClipDrawable.HORIZONTAL);
-////			Drawable[] progressDrawables = {new ColorDrawable(0xff0000ff), ClipDrawable1, ClipDrawable1};
-//			Drawable[] progressDrawables = {new ColorDrawable(getResources().getColor(R.color.gray)), ClipDrawable1, ClipDrawable1};
-//			LayerDrawable progressLayerDrawable = new LayerDrawable(progressDrawables);
-//			progressLayerDrawable.setId(0, android.R.id.background);
-//		    progressLayerDrawable.setId(1, android.R.id.secondaryProgress);
-//		    progressLayerDrawable.setId(2, android.R.id.progress);
-//		    progBar.setProgressDrawable(progressLayerDrawable);
-			
-			progBar.setProgress(0);//根据网上说法，在动态改变progressbar的颜色的时候，其本身有点小bug，这里是滚动页面后进度条的前景色就没了。需要改变progress值使其刷新
-			progBar.setProgress(progVal);
-		}
+
 		
 		class OnClickListenerToShowNutrientDescription implements View.OnClickListener{
 			String m_nutrientDescription;
@@ -692,6 +658,42 @@ public class ActivityDiagnoseResult extends ActivityBase {
 		
 	
 	}//class ExpandableListAdapter_DiagnoseResult
+	
+	public static void changeProgressbarColors(Activity curActv, ProgressBar progBar, int progVal, int colorResIdFor1stProg){
+		final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
+		ShapeDrawable ShapeDrawable1 = new ShapeDrawable(new RoundRectShape(roundedCorners, null,null));
+//		ShapeDrawable1.getPaint().setColor(Color.parseColor("#FF0000"));
+		ShapeDrawable1.getPaint().setColor(curActv.getResources().getColor(colorResIdFor1stProg));
+		ClipDrawable ClipDrawable1 = new ClipDrawable(ShapeDrawable1, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+		progBar.setProgressDrawable(ClipDrawable1);  
+//		progBar.setBackground(getResources().getDrawable( R.drawable.pink));//no round corner
+//		progBar.setBackground(getResources().getDrawable( android.R.drawable.progress_horizontal));//have round corner, should be because progress_horizontal have round corner
+		if (Tool.getVersionOfAndroidSDK() >= 16){//运行时获取Android API版本来判断
+			progBar.setBackground(curActv.getResources().getDrawable( R.drawable.progressbar_colors_solid_layers));//android 2.3 not have this method
+		}else{
+			progBar.setBackgroundDrawable(curActv.getResources().getDrawable( R.drawable.progressbar_colors_solid_layers));//deprecated in API level 16.
+		}
+//		
+		
+		
+//		//http://stackoverflow.com/questions/2020882/how-to-change-progress-bars-progress-color-in-android
+//		final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
+//		ShapeDrawable ShapeDrawable1 = new ShapeDrawable(new RoundRectShape(roundedCorners, null,null));
+//		ShapeDrawable1.getPaint().setColor(getResources().getColor(R.color.red));
+//		ClipDrawable ClipDrawable1 = new ClipDrawable(ShapeDrawable1, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+////		GradientDrawable Drawable1 = new GradientDrawable(GradientDrawable.Orientation.LEFT_RIGHT, new int[]{0xff1e90ff,0xff006ab6,0xff367ba8});
+////		ClipDrawable ClipDrawable1 = new ClipDrawable(Drawable1, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+////		Drawable[] progressDrawables = {new ColorDrawable(0xff0000ff), ClipDrawable1, ClipDrawable1};
+//		Drawable[] progressDrawables = {new ColorDrawable(getResources().getColor(R.color.gray)), ClipDrawable1, ClipDrawable1};
+//		LayerDrawable progressLayerDrawable = new LayerDrawable(progressDrawables);
+//		progressLayerDrawable.setId(0, android.R.id.background);
+//	    progressLayerDrawable.setId(1, android.R.id.secondaryProgress);
+//	    progressLayerDrawable.setId(2, android.R.id.progress);
+//	    progBar.setProgressDrawable(progressLayerDrawable);
+		
+		progBar.setProgress(0);//根据网上说法，在动态改变progressbar的颜色的时候，其本身有点小bug，这里是滚动页面后进度条的前景色就没了。需要改变progress值使其刷新
+		progBar.setProgress(progVal);
+	}
 	
 	class GridAdapter_Nutrients extends BaseAdapter{
 		

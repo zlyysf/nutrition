@@ -770,6 +770,15 @@ public class ActivityFoodCombination extends ActivityBase {
 //				pbSupplyPercent.setOnClickListener(onClickListenerToAddFoodByNutrient1);
 //				llProgress.setOnClickListener(onClickListenerToAddFoodByNutrient1);
 //				imgBtnAddByNutrient.setOnClickListener(onClickListenerToAddFoodByNutrient1);
+				
+				HashMap<String, Integer> NutrientColorMapping1 = NutritionTool.getNutrientColorMapping();
+				Integer colorResIdObj = NutrientColorMapping1.get(nutrientId);
+				int colorResId = R.color.progressbarFg1stOld;
+				if (colorResIdObj != null){
+					colorResId = colorResIdObj;
+				}
+				ActivityDiagnoseResult.changeProgressbarColors(ActivityFoodCombination.this,pbSupplyPercent,supplyPercent, colorResId);
+				
 			}
 			return convertView;
 		}
