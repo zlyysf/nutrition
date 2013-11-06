@@ -168,6 +168,9 @@
 		<!-- 
 		<meta-data android:value="@string/umengChannelGoogle" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannelAppchina" android:name="UMENG_CHANNEL"/>
+		<meta-data android:value="@string/umengChannelBaidu" android:name="UMENG_CHANNEL"/>
+		<meta-data android:value="@string/umengChannel360" android:name="UMENG_CHANNEL"/>
+		<meta-data android:value="@string/umengChannelWandoujia" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannel91" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannelGfan" android:name="UMENG_CHANNEL"/>
 		<meta-data android:value="@string/umengChannelCoolchuan" android:name="UMENG_CHANNEL"/>

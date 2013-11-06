@@ -3,6 +3,9 @@
     
     <string name="umengChannelGoogle">google</string>
     <string name="umengChannelAppchina">appchina</string>
+    <string name="umengChannelBaidu">baidu</string>
+    <string name="umengChannel360">360</string>
+    <string name="umengChannelWandoujia">wandoujia</string>
     <string name="umengChannel91">91</string>
     <string name="umengChannelGfan">gfan</string>
     <string name="umengChannelCoolchuan">coolchuan</string>

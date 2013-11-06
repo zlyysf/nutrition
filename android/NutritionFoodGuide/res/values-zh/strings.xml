@@ -3,6 +3,9 @@
     
     <string name="umengChannelGoogle">google</string>
     <string name="umengChannelAppchina">appchina</string>
+    <string name="umengChannelBaidu">baidu</string>
+    <string name="umengChannel360">360</string>
+    <string name="umengChannelWandoujia">wandoujia</string>
     <string name="umengChannel91">91</string>
     <string name="umengChannelGfan">gfan</string>
     <string name="umengChannelCoolchuan">coolchuan</string>
@@ -26,7 +29,7 @@
     <!-- 
     <string name="add">添加</string>
      -->
-    
+    <string name="title_diagnose">诊断</string>
     <string name="title_foodCombinationList">清单</string>
     <string name="title_nutrients">营养</string>
     <string name="title_searchfood">食物</string>
@@ -84,6 +87,23 @@
     <string name="activeLevelStrong">强</string>
     <string name="activeLevelVeryStrong">很强</string>
     <string name="nutritionDRI">个人每日营养摄入推荐量</string>
+    
+    <string name="alertSetting">提醒设置</string>
+    
+    <string name="DiseaseTimeTypeDescription_morning">上午诊断</string>
+    <string name="DiseaseTimeTypeDescription_afternoon">下午诊断</string>
+    <string name="DiseaseTimeTypeDescription_night">睡前诊断</string>
+    <string name="diagnoseResult">诊断结果</string>
+    <string name="goToDiagnose">去诊断</string>
+    <string name="diagnoseTimeIsUp">诊断时间到了</string>
+    <string name="timeDiagnoseTitle_morning">从早晨到现在，您有下列哪些状况？</string>
+    <string name="timeDiagnoseTitle_afternoon">午饭后到现在，您有下列哪些状况？</string>
+    <string name="timeDiagnoseTitle_night">晚饭后到现在，您有下列哪些状况？</string>
+    <string name="diseaseMarkComment_good">恭喜，您现在的身体很健康！</string>
+    <string name="diseaseMarkComment_normal">恭喜，您现在的身体比较健康！</string>
+    <string name="diseaseMarkComment_bad">抱歉，您现在的身体比较糟糕！</string>
+    
+    <string name="iKnow">知道了</string>
     
     <string name="feedback">意见反馈</string>
     <string name="feedbackEmailTitle">用户意见反馈</string>
