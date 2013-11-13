@@ -1,0 +1,453 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		B948352C1830704000FCBB8F /* detail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B948352B1830704000FCBB8F /* detail@2x.png */; };
+		B948352E1830780C00FCBB8F /* detail2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B948352D1830780C00FCBB8F /* detail2@2x.png */; };
+		B9770787182AA4FC006FD25E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9770786182AA4FC006FD25E /* Foundation.framework */; };
+		B9770789182AA4FC006FD25E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9770788182AA4FC006FD25E /* CoreGraphics.framework */; };
+		B977078B182AA4FC006FD25E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B977078A182AA4FC006FD25E /* UIKit.framework */; };
+		B9770791182AA4FC006FD25E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = B977078F182AA4FC006FD25E /* InfoPlist.strings */; };
+		B9770793182AA4FC006FD25E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B9770792182AA4FC006FD25E /* main.m */; };
+		B9770797182AA4FC006FD25E /* LZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B9770796182AA4FC006FD25E /* LZAppDelegate.m */; };
+		B977079A182AA4FC006FD25E /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B9770798182AA4FC006FD25E /* Main_iPhone.storyboard */; };
+		B977079D182AA4FC006FD25E /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B977079B182AA4FC006FD25E /* Main_iPad.storyboard */; };
+		B97707A0182AA4FC006FD25E /* LZFirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B977079F182AA4FC006FD25E /* LZFirstViewController.m */; };
+		B97707A3182AA4FC006FD25E /* LZSecondViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B97707A2182AA4FC006FD25E /* LZSecondViewController.m */; };
+		B97707A5182AA4FC006FD25E /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B97707A4182AA4FC006FD25E /* Images.xcassets */; };
+		B97761561833159F00B37B24 /* physics-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B97761551833159F00B37B24 /* physics-50@2x.png */; };
+		B97761581833185000B37B24 /* toolbox-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B97761571833185000B37B24 /* toolbox-50@2x.png */; };
+		B9815C8518304C0B000D6439 /* line_chart-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9815C8418304C0B000D6439 /* line_chart-50@2x.png */; };
+		B9815C8718304CAA000D6439 /* month_view-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9815C8618304CAA000D6439 /* month_view-50@2x.png */; };
+		B9A8777918329EC10057390F /* 体温计@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777018329EC10057390F /* 体温计@2x.png */; };
+		B9A8777A18329EC10057390F /* 体重@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777118329EC10057390F /* 体重@2x.png */; };
+		B9A8777B18329EC10057390F /* 嘴@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777218329EC10057390F /* 嘴@2x.png */; };
+		B9A8777C18329EC10057390F /* 心跳@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777318329EC10057390F /* 心跳@2x.png */; };
+		B9A8777D18329EC10057390F /* 耳朵@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777418329EC10057390F /* 耳朵@2x.png */; };
+		B9A8777E18329EC10057390F /* 胃@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777518329EC10057390F /* 胃@2x.png */; };
+		B9A8777F18329EC10057390F /* 脸@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777618329EC10057390F /* 脸@2x.png */; };
+		B9A8778018329EC10057390F /* 血压@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777718329EC10057390F /* 血压@2x.png */; };
+		B9A8778118329EC10057390F /* 鼻子@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777818329EC10057390F /* 鼻子@2x.png */; };
+		B9AAC059182FEAAE00810F8D /* rounded square@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AAC058182FEAAE00810F8D /* rounded square@2x.png */; };
+		B9AAC05B182FF14100810F8D /* rounded square 170x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AAC05A182FF14100810F8D /* rounded square 170x60@2x.png */; };
+		B9B8BD6C182EA050001C61CA /* document-75.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6B182EA050001C61CA /* document-75.png */; };
+		B9B8BD6E182EA922001C61CA /* egg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6D182EA922001C61CA /* egg@2x.png */; };
+		B9B8BD70182EAA1A001C61CA /* oyster@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6F182EAA1A001C61CA /* oyster@2x.png */; };
+		B9B8BD72182EAECF001C61CA /* 西兰花@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD71182EAECF001C61CA /* 西兰花@2x.jpg */; };
+		B9B8BD76182EB096001C61CA /* 开心果@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD75182EB096001C61CA /* 开心果@2x.png */; };
+		B9B8BD7A182EC8DA001C61CA /* clinic-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD79182EC8DA001C61CA /* clinic-50@2x.png */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		B948352B1830704000FCBB8F /* detail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail@2x.png"; sourceTree = "<group>"; };
+		B948352D1830780C00FCBB8F /* detail2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail2@2x.png"; sourceTree = "<group>"; };
+		B9770783182AA4FC006FD25E /* health.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = health.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9770786182AA4FC006FD25E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		B9770788182AA4FC006FD25E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		B977078A182AA4FC006FD25E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		B977078E182AA4FC006FD25E /* health-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "health-Info.plist"; sourceTree = "<group>"; };
+		B9770790182AA4FC006FD25E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		B9770792182AA4FC006FD25E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B9770794182AA4FC006FD25E /* health-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "health-Prefix.pch"; sourceTree = "<group>"; };
+		B9770795182AA4FC006FD25E /* LZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZAppDelegate.h; sourceTree = "<group>"; };
+		B9770796182AA4FC006FD25E /* LZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZAppDelegate.m; sourceTree = "<group>"; };
+		B9770799182AA4FC006FD25E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		B977079C182AA4FC006FD25E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		B977079E182AA4FC006FD25E /* LZFirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZFirstViewController.h; sourceTree = "<group>"; };
+		B977079F182AA4FC006FD25E /* LZFirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZFirstViewController.m; sourceTree = "<group>"; };
+		B97707A1182AA4FC006FD25E /* LZSecondViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LZSecondViewController.h; sourceTree = "<group>"; };
+		B97707A2182AA4FC006FD25E /* LZSecondViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZSecondViewController.m; sourceTree = "<group>"; };
+		B97707A4182AA4FC006FD25E /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		B97707AB182AA4FC006FD25E /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		B97761551833159F00B37B24 /* physics-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "physics-50@2x.png"; sourceTree = "<group>"; };
+		B97761571833185000B37B24 /* toolbox-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbox-50@2x.png"; sourceTree = "<group>"; };
+		B9815C8418304C0B000D6439 /* line_chart-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line_chart-50@2x.png"; sourceTree = "<group>"; };
+		B9815C8618304CAA000D6439 /* month_view-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "month_view-50@2x.png"; sourceTree = "<group>"; };
+		B9A8777018329EC10057390F /* 体温计@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体温计@2x.png"; sourceTree = "<group>"; };
+		B9A8777118329EC10057390F /* 体重@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体重@2x.png"; sourceTree = "<group>"; };
+		B9A8777218329EC10057390F /* 嘴@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "嘴@2x.png"; sourceTree = "<group>"; };
+		B9A8777318329EC10057390F /* 心跳@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "心跳@2x.png"; sourceTree = "<group>"; };
+		B9A8777418329EC10057390F /* 耳朵@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "耳朵@2x.png"; sourceTree = "<group>"; };
+		B9A8777518329EC10057390F /* 胃@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "胃@2x.png"; sourceTree = "<group>"; };
+		B9A8777618329EC10057390F /* 脸@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "脸@2x.png"; sourceTree = "<group>"; };
+		B9A8777718329EC10057390F /* 血压@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压@2x.png"; sourceTree = "<group>"; };
+		B9A8777818329EC10057390F /* 鼻子@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "鼻子@2x.png"; sourceTree = "<group>"; };
+		B9AAC058182FEAAE00810F8D /* rounded square@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rounded square@2x.png"; sourceTree = "<group>"; };
+		B9AAC05A182FF14100810F8D /* rounded square 170x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rounded square 170x60@2x.png"; sourceTree = "<group>"; };
+		B9B8BD6B182EA050001C61CA /* document-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "document-75.png"; sourceTree = "<group>"; };
+		B9B8BD6D182EA922001C61CA /* egg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "egg@2x.png"; sourceTree = "<group>"; };
+		B9B8BD6F182EAA1A001C61CA /* oyster@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oyster@2x.png"; sourceTree = "<group>"; };
+		B9B8BD71182EAECF001C61CA /* 西兰花@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "西兰花@2x.jpg"; sourceTree = "<group>"; };
+		B9B8BD75182EB096001C61CA /* 开心果@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "开心果@2x.png"; sourceTree = "<group>"; };
+		B9B8BD79182EC8DA001C61CA /* clinic-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clinic-50@2x.png"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		B9770780182AA4FC006FD25E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B9770789182AA4FC006FD25E /* CoreGraphics.framework in Frameworks */,
+				B977078B182AA4FC006FD25E /* UIKit.framework in Frameworks */,
+				B9770787182AA4FC006FD25E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		B977077A182AA4FC006FD25E = {
+			isa = PBXGroup;
+			children = (
+				B97B4097182D48F000F0333E /* icons */,
+				B977078C182AA4FC006FD25E /* health */,
+				B9770785182AA4FC006FD25E /* Frameworks */,
+				B9770784182AA4FC006FD25E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B9770784182AA4FC006FD25E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B9770783182AA4FC006FD25E /* health.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B9770785182AA4FC006FD25E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				B9770786182AA4FC006FD25E /* Foundation.framework */,
+				B9770788182AA4FC006FD25E /* CoreGraphics.framework */,
+				B977078A182AA4FC006FD25E /* UIKit.framework */,
+				B97707AB182AA4FC006FD25E /* XCTest.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B977078C182AA4FC006FD25E /* health */ = {
+			isa = PBXGroup;
+			children = (
+				B9770795182AA4FC006FD25E /* LZAppDelegate.h */,
+				B9770796182AA4FC006FD25E /* LZAppDelegate.m */,
+				B9770798182AA4FC006FD25E /* Main_iPhone.storyboard */,
+				B977079B182AA4FC006FD25E /* Main_iPad.storyboard */,
+				B977079E182AA4FC006FD25E /* LZFirstViewController.h */,
+				B977079F182AA4FC006FD25E /* LZFirstViewController.m */,
+				B97707A1182AA4FC006FD25E /* LZSecondViewController.h */,
+				B97707A2182AA4FC006FD25E /* LZSecondViewController.m */,
+				B97707A4182AA4FC006FD25E /* Images.xcassets */,
+				B977078D182AA4FC006FD25E /* Supporting Files */,
+			);
+			path = health;
+			sourceTree = "<group>";
+		};
+		B977078D182AA4FC006FD25E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				B977078E182AA4FC006FD25E /* health-Info.plist */,
+				B977078F182AA4FC006FD25E /* InfoPlist.strings */,
+				B9770792182AA4FC006FD25E /* main.m */,
+				B9770794182AA4FC006FD25E /* health-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		B97B4097182D48F000F0333E /* icons */ = {
+			isa = PBXGroup;
+			children = (
+				B97761571833185000B37B24 /* toolbox-50@2x.png */,
+				B97761551833159F00B37B24 /* physics-50@2x.png */,
+				B9A8777018329EC10057390F /* 体温计@2x.png */,
+				B9A8777118329EC10057390F /* 体重@2x.png */,
+				B9A8777218329EC10057390F /* 嘴@2x.png */,
+				B9A8777318329EC10057390F /* 心跳@2x.png */,
+				B9A8777418329EC10057390F /* 耳朵@2x.png */,
+				B9A8777518329EC10057390F /* 胃@2x.png */,
+				B9A8777618329EC10057390F /* 脸@2x.png */,
+				B9A8777718329EC10057390F /* 血压@2x.png */,
+				B9A8777818329EC10057390F /* 鼻子@2x.png */,
+				B948352D1830780C00FCBB8F /* detail2@2x.png */,
+				B948352B1830704000FCBB8F /* detail@2x.png */,
+				B9815C8618304CAA000D6439 /* month_view-50@2x.png */,
+				B9815C8418304C0B000D6439 /* line_chart-50@2x.png */,
+				B9AAC05A182FF14100810F8D /* rounded square 170x60@2x.png */,
+				B9AAC058182FEAAE00810F8D /* rounded square@2x.png */,
+				B9B8BD79182EC8DA001C61CA /* clinic-50@2x.png */,
+				B9B8BD75182EB096001C61CA /* 开心果@2x.png */,
+				B9B8BD71182EAECF001C61CA /* 西兰花@2x.jpg */,
+				B9B8BD6F182EAA1A001C61CA /* oyster@2x.png */,
+				B9B8BD6D182EA922001C61CA /* egg@2x.png */,
+				B9B8BD6B182EA050001C61CA /* document-75.png */,
+			);
+			path = icons;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B9770782182AA4FC006FD25E /* health */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B97707BB182AA4FC006FD25E /* Build configuration list for PBXNativeTarget "health" */;
+			buildPhases = (
+				B977077F182AA4FC006FD25E /* Sources */,
+				B9770780182AA4FC006FD25E /* Frameworks */,
+				B9770781182AA4FC006FD25E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = health;
+			productName = health;
+			productReference = B9770783182AA4FC006FD25E /* health.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		B977077B182AA4FC006FD25E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = LZ;
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = "Dalei Li";
+				TargetAttributes = {
+					B9770782182AA4FC006FD25E = {
+						DevelopmentTeam = 5F9UDRV872;
+					};
+				};
+			};
+			buildConfigurationList = B977077E182AA4FC006FD25E /* Build configuration list for PBXProject "health" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = B977077A182AA4FC006FD25E;
+			productRefGroup = B9770784182AA4FC006FD25E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				B9770782182AA4FC006FD25E /* health */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B9770781182AA4FC006FD25E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B948352E1830780C00FCBB8F /* detail2@2x.png in Resources */,
+				B977079D182AA4FC006FD25E /* Main_iPad.storyboard in Resources */,
+				B97761581833185000B37B24 /* toolbox-50@2x.png in Resources */,
+				B948352C1830704000FCBB8F /* detail@2x.png in Resources */,
+				B9B8BD72182EAECF001C61CA /* 西兰花@2x.jpg in Resources */,
+				B97707A5182AA4FC006FD25E /* Images.xcassets in Resources */,
+				B9A8778118329EC10057390F /* 鼻子@2x.png in Resources */,
+				B97761561833159F00B37B24 /* physics-50@2x.png in Resources */,
+				B9A8777B18329EC10057390F /* 嘴@2x.png in Resources */,
+				B9AAC05B182FF14100810F8D /* rounded square 170x60@2x.png in Resources */,
+				B9A8777918329EC10057390F /* 体温计@2x.png in Resources */,
+				B9B8BD6E182EA922001C61CA /* egg@2x.png in Resources */,
+				B9A8777D18329EC10057390F /* 耳朵@2x.png in Resources */,
+				B9B8BD70182EAA1A001C61CA /* oyster@2x.png in Resources */,
+				B9A8777E18329EC10057390F /* 胃@2x.png in Resources */,
+				B977079A182AA4FC006FD25E /* Main_iPhone.storyboard in Resources */,
+				B9B8BD6C182EA050001C61CA /* document-75.png in Resources */,
+				B9815C8518304C0B000D6439 /* line_chart-50@2x.png in Resources */,
+				B9B8BD76182EB096001C61CA /* 开心果@2x.png in Resources */,
+				B9A8777A18329EC10057390F /* 体重@2x.png in Resources */,
+				B9A8777F18329EC10057390F /* 脸@2x.png in Resources */,
+				B9A8777C18329EC10057390F /* 心跳@2x.png in Resources */,
+				B9770791182AA4FC006FD25E /* InfoPlist.strings in Resources */,
+				B9A8778018329EC10057390F /* 血压@2x.png in Resources */,
+				B9B8BD7A182EC8DA001C61CA /* clinic-50@2x.png in Resources */,
+				B9815C8718304CAA000D6439 /* month_view-50@2x.png in Resources */,
+				B9AAC059182FEAAE00810F8D /* rounded square@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		B977077F182AA4FC006FD25E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B97707A3182AA4FC006FD25E /* LZSecondViewController.m in Sources */,
+				B97707A0182AA4FC006FD25E /* LZFirstViewController.m in Sources */,
+				B9770797182AA4FC006FD25E /* LZAppDelegate.m in Sources */,
+				B9770793182AA4FC006FD25E /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		B977078F182AA4FC006FD25E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B9770790182AA4FC006FD25E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		B9770798182AA4FC006FD25E /* Main_iPhone.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B9770799182AA4FC006FD25E /* Base */,
+			);
+			name = Main_iPhone.storyboard;
+			sourceTree = "<group>";
+		};
+		B977079B182AA4FC006FD25E /* Main_iPad.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				B977079C182AA4FC006FD25E /* Base */,
+			);
+			name = Main_iPad.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		B97707B9182AA4FC006FD25E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B97707BA182AA4FC006FD25E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		B97707BC182AA4FC006FD25E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "health/health-Prefix.pch";
+				INFOPLIST_FILE = "health/health-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7841CC7A-765E-4767-9267-CA3EEED096EC";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		B97707BD182AA4FC006FD25E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "health/health-Prefix.pch";
+				INFOPLIST_FILE = "health/health-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "7841CC7A-765E-4767-9267-CA3EEED096EC";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		B977077E182AA4FC006FD25E /* Build configuration list for PBXProject "health" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B97707B9182AA4FC006FD25E /* Debug */,
+				B97707BA182AA4FC006FD25E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B97707BB182AA4FC006FD25E /* Build configuration list for PBXNativeTarget "health" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B97707BC182AA4FC006FD25E /* Debug */,
+				B97707BD182AA4FC006FD25E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = B977077B182AA4FC006FD25E /* Project object */;
+}
