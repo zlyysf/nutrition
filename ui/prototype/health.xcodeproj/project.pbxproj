@@ -24,15 +24,6 @@
 		B97761581833185000B37B24 /* toolbox-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B97761571833185000B37B24 /* toolbox-50@2x.png */; };
 		B9815C8518304C0B000D6439 /* line_chart-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9815C8418304C0B000D6439 /* line_chart-50@2x.png */; };
 		B9815C8718304CAA000D6439 /* month_view-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9815C8618304CAA000D6439 /* month_view-50@2x.png */; };
-		B9A8777918329EC10057390F /* 体温计@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777018329EC10057390F /* 体温计@2x.png */; };
-		B9A8777A18329EC10057390F /* 体重@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777118329EC10057390F /* 体重@2x.png */; };
-		B9A8777B18329EC10057390F /* 嘴@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777218329EC10057390F /* 嘴@2x.png */; };
-		B9A8777C18329EC10057390F /* 心跳@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777318329EC10057390F /* 心跳@2x.png */; };
-		B9A8777D18329EC10057390F /* 耳朵@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777418329EC10057390F /* 耳朵@2x.png */; };
-		B9A8777E18329EC10057390F /* 胃@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777518329EC10057390F /* 胃@2x.png */; };
-		B9A8777F18329EC10057390F /* 脸@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777618329EC10057390F /* 脸@2x.png */; };
-		B9A8778018329EC10057390F /* 血压@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777718329EC10057390F /* 血压@2x.png */; };
-		B9A8778118329EC10057390F /* 鼻子@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9A8777818329EC10057390F /* 鼻子@2x.png */; };
 		B9AAC059182FEAAE00810F8D /* rounded square@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AAC058182FEAAE00810F8D /* rounded square@2x.png */; };
 		B9AAC05B182FF14100810F8D /* rounded square 170x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AAC05A182FF14100810F8D /* rounded square 170x60@2x.png */; };
 		B9B8BD6C182EA050001C61CA /* document-75.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6B182EA050001C61CA /* document-75.png */; };
@@ -41,6 +32,25 @@
 		B9B8BD72182EAECF001C61CA /* 西兰花@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD71182EAECF001C61CA /* 西兰花@2x.jpg */; };
 		B9B8BD76182EB096001C61CA /* 开心果@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD75182EB096001C61CA /* 开心果@2x.png */; };
 		B9B8BD7A182EC8DA001C61CA /* clinic-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD79182EC8DA001C61CA /* clinic-50@2x.png */; };
+		B9FD73291833DEEE00D8051B /* 体温计@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73161833DEEE00D8051B /* 体温计@2x.png */; };
+		B9FD732A1833DEEE00D8051B /* 体重@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73171833DEEE00D8051B /* 体重@2x.png */; };
+		B9FD732B1833DEEE00D8051B /* 嘴@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73181833DEEE00D8051B /* 嘴@2x.png */; };
+		B9FD732C1833DEEE00D8051B /* 头发@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73191833DEEE00D8051B /* 头发@2x.png */; };
+		B9FD732D1833DEEE00D8051B /* 心跳@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD731A1833DEEE00D8051B /* 心跳@2x.png */; };
+		B9FD732E1833DEEE00D8051B /* 手@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD731B1833DEEE00D8051B /* 手@2x.png */; };
+		B9FD732F1833DEEE00D8051B /* 牙齿@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD731C1833DEEE00D8051B /* 牙齿@2x.png */; };
+		B9FD73301833DEEE00D8051B /* 眼睛@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD731D1833DEEE00D8051B /* 眼睛@2x.png */; };
+		B9FD73311833DEEE00D8051B /* 耳朵@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD731E1833DEEE00D8051B /* 耳朵@2x.png */; };
+		B9FD73321833DEEE00D8051B /* 肺@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD731F1833DEEE00D8051B /* 肺@2x.png */; };
+		B9FD73331833DEEE00D8051B /* 胃@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73201833DEEE00D8051B /* 胃@2x.png */; };
+		B9FD73341833DEEE00D8051B /* 胳膊@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73211833DEEE00D8051B /* 胳膊@2x.png */; };
+		B9FD73351833DEEE00D8051B /* 胸腔@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73221833DEEE00D8051B /* 胸腔@2x.png */; };
+		B9FD73361833DEEE00D8051B /* 脖子@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73231833DEEE00D8051B /* 脖子@2x.png */; };
+		B9FD73371833DEEE00D8051B /* 脚@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73241833DEEE00D8051B /* 脚@2x.png */; };
+		B9FD73381833DEEE00D8051B /* 脸@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73251833DEEE00D8051B /* 脸@2x.png */; };
+		B9FD73391833DEEE00D8051B /* 膝盖@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73261833DEEE00D8051B /* 膝盖@2x.png */; };
+		B9FD733A1833DEEE00D8051B /* 血压@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73271833DEEE00D8051B /* 血压@2x.png */; };
+		B9FD733B1833DEEE00D8051B /* 鼻子@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73281833DEEE00D8051B /* 鼻子@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -68,15 +78,6 @@
 		B97761571833185000B37B24 /* toolbox-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbox-50@2x.png"; sourceTree = "<group>"; };
 		B9815C8418304C0B000D6439 /* line_chart-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "line_chart-50@2x.png"; sourceTree = "<group>"; };
 		B9815C8618304CAA000D6439 /* month_view-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "month_view-50@2x.png"; sourceTree = "<group>"; };
-		B9A8777018329EC10057390F /* 体温计@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体温计@2x.png"; sourceTree = "<group>"; };
-		B9A8777118329EC10057390F /* 体重@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体重@2x.png"; sourceTree = "<group>"; };
-		B9A8777218329EC10057390F /* 嘴@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "嘴@2x.png"; sourceTree = "<group>"; };
-		B9A8777318329EC10057390F /* 心跳@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "心跳@2x.png"; sourceTree = "<group>"; };
-		B9A8777418329EC10057390F /* 耳朵@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "耳朵@2x.png"; sourceTree = "<group>"; };
-		B9A8777518329EC10057390F /* 胃@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "胃@2x.png"; sourceTree = "<group>"; };
-		B9A8777618329EC10057390F /* 脸@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "脸@2x.png"; sourceTree = "<group>"; };
-		B9A8777718329EC10057390F /* 血压@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压@2x.png"; sourceTree = "<group>"; };
-		B9A8777818329EC10057390F /* 鼻子@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "鼻子@2x.png"; sourceTree = "<group>"; };
 		B9AAC058182FEAAE00810F8D /* rounded square@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rounded square@2x.png"; sourceTree = "<group>"; };
 		B9AAC05A182FF14100810F8D /* rounded square 170x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rounded square 170x60@2x.png"; sourceTree = "<group>"; };
 		B9B8BD6B182EA050001C61CA /* document-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "document-75.png"; sourceTree = "<group>"; };
@@ -85,6 +86,25 @@
 		B9B8BD71182EAECF001C61CA /* 西兰花@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "西兰花@2x.jpg"; sourceTree = "<group>"; };
 		B9B8BD75182EB096001C61CA /* 开心果@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "开心果@2x.png"; sourceTree = "<group>"; };
 		B9B8BD79182EC8DA001C61CA /* clinic-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clinic-50@2x.png"; sourceTree = "<group>"; };
+		B9FD73161833DEEE00D8051B /* 体温计@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体温计@2x.png"; sourceTree = "<group>"; };
+		B9FD73171833DEEE00D8051B /* 体重@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体重@2x.png"; sourceTree = "<group>"; };
+		B9FD73181833DEEE00D8051B /* 嘴@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "嘴@2x.png"; sourceTree = "<group>"; };
+		B9FD73191833DEEE00D8051B /* 头发@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "头发@2x.png"; sourceTree = "<group>"; };
+		B9FD731A1833DEEE00D8051B /* 心跳@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "心跳@2x.png"; sourceTree = "<group>"; };
+		B9FD731B1833DEEE00D8051B /* 手@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "手@2x.png"; sourceTree = "<group>"; };
+		B9FD731C1833DEEE00D8051B /* 牙齿@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "牙齿@2x.png"; sourceTree = "<group>"; };
+		B9FD731D1833DEEE00D8051B /* 眼睛@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "眼睛@2x.png"; sourceTree = "<group>"; };
+		B9FD731E1833DEEE00D8051B /* 耳朵@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "耳朵@2x.png"; sourceTree = "<group>"; };
+		B9FD731F1833DEEE00D8051B /* 肺@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "肺@2x.png"; sourceTree = "<group>"; };
+		B9FD73201833DEEE00D8051B /* 胃@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "胃@2x.png"; sourceTree = "<group>"; };
+		B9FD73211833DEEE00D8051B /* 胳膊@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "胳膊@2x.png"; sourceTree = "<group>"; };
+		B9FD73221833DEEE00D8051B /* 胸腔@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "胸腔@2x.png"; sourceTree = "<group>"; };
+		B9FD73231833DEEE00D8051B /* 脖子@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "脖子@2x.png"; sourceTree = "<group>"; };
+		B9FD73241833DEEE00D8051B /* 脚@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "脚@2x.png"; sourceTree = "<group>"; };
+		B9FD73251833DEEE00D8051B /* 脸@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "脸@2x.png"; sourceTree = "<group>"; };
+		B9FD73261833DEEE00D8051B /* 膝盖@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "膝盖@2x.png"; sourceTree = "<group>"; };
+		B9FD73271833DEEE00D8051B /* 血压@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压@2x.png"; sourceTree = "<group>"; };
+		B9FD73281833DEEE00D8051B /* 鼻子@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "鼻子@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,17 +181,27 @@
 		B97B4097182D48F000F0333E /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				B9FD73161833DEEE00D8051B /* 体温计@2x.png */,
+				B9FD73171833DEEE00D8051B /* 体重@2x.png */,
+				B9FD73181833DEEE00D8051B /* 嘴@2x.png */,
+				B9FD73191833DEEE00D8051B /* 头发@2x.png */,
+				B9FD731A1833DEEE00D8051B /* 心跳@2x.png */,
+				B9FD731B1833DEEE00D8051B /* 手@2x.png */,
+				B9FD731C1833DEEE00D8051B /* 牙齿@2x.png */,
+				B9FD731D1833DEEE00D8051B /* 眼睛@2x.png */,
+				B9FD731E1833DEEE00D8051B /* 耳朵@2x.png */,
+				B9FD731F1833DEEE00D8051B /* 肺@2x.png */,
+				B9FD73201833DEEE00D8051B /* 胃@2x.png */,
+				B9FD73211833DEEE00D8051B /* 胳膊@2x.png */,
+				B9FD73221833DEEE00D8051B /* 胸腔@2x.png */,
+				B9FD73231833DEEE00D8051B /* 脖子@2x.png */,
+				B9FD73241833DEEE00D8051B /* 脚@2x.png */,
+				B9FD73251833DEEE00D8051B /* 脸@2x.png */,
+				B9FD73261833DEEE00D8051B /* 膝盖@2x.png */,
+				B9FD73271833DEEE00D8051B /* 血压@2x.png */,
+				B9FD73281833DEEE00D8051B /* 鼻子@2x.png */,
 				B97761571833185000B37B24 /* toolbox-50@2x.png */,
 				B97761551833159F00B37B24 /* physics-50@2x.png */,
-				B9A8777018329EC10057390F /* 体温计@2x.png */,
-				B9A8777118329EC10057390F /* 体重@2x.png */,
-				B9A8777218329EC10057390F /* 嘴@2x.png */,
-				B9A8777318329EC10057390F /* 心跳@2x.png */,
-				B9A8777418329EC10057390F /* 耳朵@2x.png */,
-				B9A8777518329EC10057390F /* 胃@2x.png */,
-				B9A8777618329EC10057390F /* 脸@2x.png */,
-				B9A8777718329EC10057390F /* 血压@2x.png */,
-				B9A8777818329EC10057390F /* 鼻子@2x.png */,
 				B948352D1830780C00FCBB8F /* detail2@2x.png */,
 				B948352B1830704000FCBB8F /* detail@2x.png */,
 				B9815C8618304CAA000D6439 /* month_view-50@2x.png */,
@@ -247,32 +277,42 @@
 			buildActionMask = 2147483647;
 			files = (
 				B948352E1830780C00FCBB8F /* detail2@2x.png in Resources */,
+				B9FD733A1833DEEE00D8051B /* 血压@2x.png in Resources */,
+				B9FD73351833DEEE00D8051B /* 胸腔@2x.png in Resources */,
 				B977079D182AA4FC006FD25E /* Main_iPad.storyboard in Resources */,
+				B9FD732A1833DEEE00D8051B /* 体重@2x.png in Resources */,
 				B97761581833185000B37B24 /* toolbox-50@2x.png in Resources */,
 				B948352C1830704000FCBB8F /* detail@2x.png in Resources */,
 				B9B8BD72182EAECF001C61CA /* 西兰花@2x.jpg in Resources */,
 				B97707A5182AA4FC006FD25E /* Images.xcassets in Resources */,
-				B9A8778118329EC10057390F /* 鼻子@2x.png in Resources */,
+				B9FD73341833DEEE00D8051B /* 胳膊@2x.png in Resources */,
+				B9FD73331833DEEE00D8051B /* 胃@2x.png in Resources */,
+				B9FD73371833DEEE00D8051B /* 脚@2x.png in Resources */,
 				B97761561833159F00B37B24 /* physics-50@2x.png in Resources */,
-				B9A8777B18329EC10057390F /* 嘴@2x.png in Resources */,
+				B9FD732E1833DEEE00D8051B /* 手@2x.png in Resources */,
+				B9FD73361833DEEE00D8051B /* 脖子@2x.png in Resources */,
+				B9FD73391833DEEE00D8051B /* 膝盖@2x.png in Resources */,
+				B9FD732D1833DEEE00D8051B /* 心跳@2x.png in Resources */,
 				B9AAC05B182FF14100810F8D /* rounded square 170x60@2x.png in Resources */,
-				B9A8777918329EC10057390F /* 体温计@2x.png in Resources */,
+				B9FD73301833DEEE00D8051B /* 眼睛@2x.png in Resources */,
 				B9B8BD6E182EA922001C61CA /* egg@2x.png in Resources */,
-				B9A8777D18329EC10057390F /* 耳朵@2x.png in Resources */,
+				B9FD73291833DEEE00D8051B /* 体温计@2x.png in Resources */,
 				B9B8BD70182EAA1A001C61CA /* oyster@2x.png in Resources */,
-				B9A8777E18329EC10057390F /* 胃@2x.png in Resources */,
+				B9FD732B1833DEEE00D8051B /* 嘴@2x.png in Resources */,
+				B9FD73311833DEEE00D8051B /* 耳朵@2x.png in Resources */,
+				B9FD733B1833DEEE00D8051B /* 鼻子@2x.png in Resources */,
 				B977079A182AA4FC006FD25E /* Main_iPhone.storyboard in Resources */,
 				B9B8BD6C182EA050001C61CA /* document-75.png in Resources */,
+				B9FD732F1833DEEE00D8051B /* 牙齿@2x.png in Resources */,
 				B9815C8518304C0B000D6439 /* line_chart-50@2x.png in Resources */,
 				B9B8BD76182EB096001C61CA /* 开心果@2x.png in Resources */,
-				B9A8777A18329EC10057390F /* 体重@2x.png in Resources */,
-				B9A8777F18329EC10057390F /* 脸@2x.png in Resources */,
-				B9A8777C18329EC10057390F /* 心跳@2x.png in Resources */,
 				B9770791182AA4FC006FD25E /* InfoPlist.strings in Resources */,
-				B9A8778018329EC10057390F /* 血压@2x.png in Resources */,
 				B9B8BD7A182EC8DA001C61CA /* clinic-50@2x.png in Resources */,
 				B9815C8718304CAA000D6439 /* month_view-50@2x.png in Resources */,
 				B9AAC059182FEAAE00810F8D /* rounded square@2x.png in Resources */,
+				B9FD732C1833DEEE00D8051B /* 头发@2x.png in Resources */,
+				B9FD73321833DEEE00D8051B /* 肺@2x.png in Resources */,
+				B9FD73381833DEEE00D8051B /* 脸@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
