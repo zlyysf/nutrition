@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B909100A183541A000B89A21 /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9091009183541A000B89A21 /* right@2x.png */; };
+		B909100C183541D500B89A21 /* left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B909100B183541D500B89A21 /* left@2x.png */; };
 		B948352C1830704000FCBB8F /* detail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B948352B1830704000FCBB8F /* detail@2x.png */; };
 		B948352E1830780C00FCBB8F /* detail2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B948352D1830780C00FCBB8F /* detail2@2x.png */; };
 		B9770787182AA4FC006FD25E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B9770786182AA4FC006FD25E /* Foundation.framework */; };
@@ -54,6 +56,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B9091009183541A000B89A21 /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
+		B909100B183541D500B89A21 /* left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left@2x.png"; sourceTree = "<group>"; };
 		B948352B1830704000FCBB8F /* detail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail@2x.png"; sourceTree = "<group>"; };
 		B948352D1830780C00FCBB8F /* detail2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail2@2x.png"; sourceTree = "<group>"; };
 		B9770783182AA4FC006FD25E /* health.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = health.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -181,6 +185,8 @@
 		B97B4097182D48F000F0333E /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				B909100B183541D500B89A21 /* left@2x.png */,
+				B9091009183541A000B89A21 /* right@2x.png */,
 				B9FD73161833DEEE00D8051B /* 体温计@2x.png */,
 				B9FD73171833DEEE00D8051B /* 体重@2x.png */,
 				B9FD73181833DEEE00D8051B /* 嘴@2x.png */,
@@ -293,12 +299,14 @@
 				B9FD73361833DEEE00D8051B /* 脖子@2x.png in Resources */,
 				B9FD73391833DEEE00D8051B /* 膝盖@2x.png in Resources */,
 				B9FD732D1833DEEE00D8051B /* 心跳@2x.png in Resources */,
+				B909100C183541D500B89A21 /* left@2x.png in Resources */,
 				B9AAC05B182FF14100810F8D /* rounded square 170x60@2x.png in Resources */,
 				B9FD73301833DEEE00D8051B /* 眼睛@2x.png in Resources */,
 				B9B8BD6E182EA922001C61CA /* egg@2x.png in Resources */,
 				B9FD73291833DEEE00D8051B /* 体温计@2x.png in Resources */,
 				B9B8BD70182EAA1A001C61CA /* oyster@2x.png in Resources */,
 				B9FD732B1833DEEE00D8051B /* 嘴@2x.png in Resources */,
+				B909100A183541A000B89A21 /* right@2x.png in Resources */,
 				B9FD73311833DEEE00D8051B /* 耳朵@2x.png in Resources */,
 				B9FD733B1833DEEE00D8051B /* 鼻子@2x.png in Resources */,
 				B977079A182AA4FC006FD25E /* Main_iPhone.storyboard in Resources */,
