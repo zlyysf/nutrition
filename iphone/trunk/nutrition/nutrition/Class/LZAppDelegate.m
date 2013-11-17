@@ -37,24 +37,28 @@
     {
         [self cleanDebugSettings];
     }
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
-    UIImage * navImage = [UIImage imageWithContentsOfFile:path];
-    UIImage *gradientImage44 = [navImage
-                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-    [[UINavigationBar appearance]setBackgroundImage:gradientImage44 forBarMetrics:UIBarMetricsDefault];
+//    NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
+//    UIImage * navImage = [UIImage imageWithContentsOfFile:path];
+//    UIImage *gradientImage44 = [navImage
+//                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+//    [[UINavigationBar appearance]setBackgroundImage:gradientImage44 forBarMetrics:UIBarMetricsDefault];
     [[UISearchBar appearance]setImage:[UIImage imageNamed:@"search_glass.png"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
     [[UISearchBar appearance]setPositionAdjustment:UIOffsetMake(0, 1) forSearchBarIcon:UISearchBarIconSearch];
-    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
-    [[UIBarButtonItem appearance] setBackgroundImage:button30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    UIImage *buttonBack30 = [[UIImage imageNamed:@"nav_back_button"]
-                             resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)];
-    
-    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack30
-                                                      forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    
-    [[UITabBar appearance]setBackgroundImage:[UIImage imageNamed:@"tabbar_back.png"]];
-    [[UITabBar appearance] setSelectedImageTintColor:[UIColor greenColor]];
-    [[UITabBar appearance]setTintColor:[UIColor lightGrayColor]];
+//    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
+//    [[UIBarButtonItem appearance] setBackgroundImage:button30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+//    UIImage *buttonBack30 = [[UIImage imageNamed:@"nav_back_button"]
+//                             resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)];
+//    
+//    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack30
+//                                                      forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
+    //[[UINavigationBar appearance]setBarTintColor:[UIColor whiteColor]];
+//    [[UITabBar appearance]setBackgroundImage:[UIImage imageNamed:@"tabbar_back.png"]];
+//    [[UITabBar appearance] setSelectedImageTintColor:[UIColor greenColor]];
+    if (IOS7_OR_LATER)
+    {
+        [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
+        [[UIBarButtonItem appearance]setTintColor:[UIColor colorWithRed:0.f green:122/255.f blue:1.f alpha:1.0f]];
+    }
     [LZUtility initializePreferNutrient];
     //友盟统计SDK启
     [LZDataAccess singleton];

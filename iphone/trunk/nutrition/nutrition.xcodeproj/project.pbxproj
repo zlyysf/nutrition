@@ -253,6 +253,14 @@
 		5FE436D5175F3EF5003947ED /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D1175F3EF5003947ED /* Icon.png */; };
 		5FE436D6175F3EF5003947ED /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D2175F3EF5003947ED /* Icon@2x.png */; };
 		5FEC69371795372C00E80BE6 /* nutrient_button_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */; };
+		5FECAD901838701100D72A8C /* NewMainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD8F1838701100D72A8C /* NewMainStoryboard.storyboard */; };
+		5FECAD971838777F00D72A8C /* clinic-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD921838777F00D72A8C /* clinic-50@2x.png */; };
+		5FECAD981838777F00D72A8C /* line_chart-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD931838777F00D72A8C /* line_chart-50@2x.png */; };
+		5FECAD991838777F00D72A8C /* month_view-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD941838777F00D72A8C /* month_view-50@2x.png */; };
+		5FECAD9A1838777F00D72A8C /* physics-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD951838777F00D72A8C /* physics-50@2x.png */; };
+		5FECAD9B1838777F00D72A8C /* toolbox-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD961838777F00D72A8C /* toolbox-50@2x.png */; };
+		5FECAD9E18387F4E00D72A8C /* LZGlobalService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECAD9D18387F4E00D72A8C /* LZGlobalService.m */; };
+		5FECADA21838912900D72A8C /* NGDiagnoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */; };
 		5FF352F617F5504400B29E6A /* dot_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF352F517F5504200B29E6A /* dot_indicator@2x.png */; };
 		5FF631D517702C690068CBFE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */; };
 		5FF631D617702C690068CBFE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5FF631D417702C690068CBFE /* README.txt */; };
@@ -379,8 +387,8 @@
 		5F3338B2172A407E0096E7AE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		5F3338B4172A407E0096E7AE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		5F3338B6172A407E0096E7AE /* nutrition-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "nutrition-Prefix.pch"; sourceTree = "<group>"; };
-		5F3338B7172A407E0096E7AE /* LZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LZAppDelegate.h; path = Class/LZAppDelegate.h; sourceTree = "<group>"; };
-		5F3338B8172A407E0096E7AE /* LZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LZAppDelegate.m; path = Class/LZAppDelegate.m; sourceTree = "<group>"; };
+		5F3338B7172A407E0096E7AE /* LZAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LZAppDelegate.h; path = nutrition/Class/LZAppDelegate.h; sourceTree = "<group>"; };
+		5F3338B8172A407E0096E7AE /* LZAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = LZAppDelegate.m; path = nutrition/Class/LZAppDelegate.m; sourceTree = "<group>"; };
 		5F3338C1172A407E0096E7AE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
 		5F3338CE172A59E20096E7AE /* LZDailyIntakeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDailyIntakeViewController.h; path = Class/LZDailyIntakeViewController.h; sourceTree = "<group>"; };
 		5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDailyIntakeViewController.m; path = Class/LZDailyIntakeViewController.m; sourceTree = "<group>"; };
@@ -594,6 +602,16 @@
 		5FE436D1175F3EF5003947ED /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = nutrition/Icon.png; sourceTree = "<group>"; };
 		5FE436D2175F3EF5003947ED /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "nutrition/Icon@2x.png"; sourceTree = "<group>"; };
 		5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_on@2x.png"; path = "nutrition/Resource/nutrient_button_on@2x.png"; sourceTree = "<group>"; };
+		5FECAD8F1838701100D72A8C /* NewMainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = NewMainStoryboard.storyboard; path = nutrition/NewMainStoryboard.storyboard; sourceTree = "<group>"; };
+		5FECAD921838777F00D72A8C /* clinic-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clinic-50@2x.png"; path = "nutrition/Resource/clinic-50@2x.png"; sourceTree = "<group>"; };
+		5FECAD931838777F00D72A8C /* line_chart-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "line_chart-50@2x.png"; path = "nutrition/Resource/line_chart-50@2x.png"; sourceTree = "<group>"; };
+		5FECAD941838777F00D72A8C /* month_view-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "month_view-50@2x.png"; path = "nutrition/Resource/month_view-50@2x.png"; sourceTree = "<group>"; };
+		5FECAD951838777F00D72A8C /* physics-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "physics-50@2x.png"; path = "nutrition/Resource/physics-50@2x.png"; sourceTree = "<group>"; };
+		5FECAD961838777F00D72A8C /* toolbox-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "toolbox-50@2x.png"; path = "nutrition/Resource/toolbox-50@2x.png"; sourceTree = "<group>"; };
+		5FECAD9C18387F4E00D72A8C /* LZGlobalService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZGlobalService.h; path = nutrition/Class/LZGlobalService.h; sourceTree = "<group>"; };
+		5FECAD9D18387F4E00D72A8C /* LZGlobalService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZGlobalService.m; path = nutrition/Class/LZGlobalService.m; sourceTree = "<group>"; };
+		5FECADA01838912900D72A8C /* NGDiagnoseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDiagnoseViewController.h; path = nutrition/Class/NGDiagnoseViewController.h; sourceTree = "<group>"; };
+		5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnoseViewController.m; path = nutrition/Class/NGDiagnoseViewController.m; sourceTree = "<group>"; };
 		5FF352F517F5504200B29E6A /* dot_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dot_indicator@2x.png"; path = "nutrition/Resource/dot_indicator@2x.png"; sourceTree = "<group>"; };
 		5FF631CA17702C690068CBFE /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
 		5FF631CB17702C690068CBFE /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
@@ -821,6 +839,7 @@
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				5FECAD9F183885CA00D72A8C /* Nutrition2.0 */,
 				5FAB5764180266C200657793 /* ShareSDK_v2.5.1 */,
 				5F0081E817C47E6F000938C2 /* JWNavigationViewController */,
 				085C8D4917336707001A1ABB /* Util */,
@@ -884,8 +903,6 @@
 				5F8DEE9617951DC200C6E9F5 /* Controllers */,
 				5F8DEE9717951E2B00C6E9F5 /* Cells */,
 				5F8DEE9817951E5D00C6E9F5 /* CustomViews */,
-				5F3338B7172A407E0096E7AE /* LZAppDelegate.h */,
-				5F3338B8172A407E0096E7AE /* LZAppDelegate.m */,
 				5F3338C0172A407E0096E7AE /* MainStoryboard.storyboard */,
 			);
 			name = Nutrition;
@@ -911,6 +928,7 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				5FECAD911838775700D72A8C /* New Group */,
 				5F2E024317E019F400D26231 /* MainMenuItems */,
 				5F22A6C917CF580D0043D760 /* foodTypeButtonIcons */,
 				5FA3D1FA17B0F0E0004F9D39 /* store_icon@2x.png */,
@@ -1363,6 +1381,32 @@
 			name = TestControllers;
 			sourceTree = "<group>";
 		};
+		5FECAD911838775700D72A8C /* New Group */ = {
+			isa = PBXGroup;
+			children = (
+				5FECAD921838777F00D72A8C /* clinic-50@2x.png */,
+				5FECAD931838777F00D72A8C /* line_chart-50@2x.png */,
+				5FECAD941838777F00D72A8C /* month_view-50@2x.png */,
+				5FECAD951838777F00D72A8C /* physics-50@2x.png */,
+				5FECAD961838777F00D72A8C /* toolbox-50@2x.png */,
+			);
+			name = "New Group";
+			sourceTree = "<group>";
+		};
+		5FECAD9F183885CA00D72A8C /* Nutrition2.0 */ = {
+			isa = PBXGroup;
+			children = (
+				5FECAD9C18387F4E00D72A8C /* LZGlobalService.h */,
+				5FECAD9D18387F4E00D72A8C /* LZGlobalService.m */,
+				5F3338B7172A407E0096E7AE /* LZAppDelegate.h */,
+				5F3338B8172A407E0096E7AE /* LZAppDelegate.m */,
+				5FECAD8F1838701100D72A8C /* NewMainStoryboard.storyboard */,
+				5FECADA01838912900D72A8C /* NGDiagnoseViewController.h */,
+				5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */,
+			);
+			name = Nutrition2.0;
+			sourceTree = "<group>";
+		};
 		5FF631C917702C690068CBFE /* AdMob */ = {
 			isa = PBXGroup;
 			children = (
@@ -1438,6 +1482,11 @@
 				CLASSPREFIX = LZ;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "lingzhi mobile";
+				TargetAttributes = {
+					5F3338A4172A407E0096E7AE = {
+						DevelopmentTeam = 5F9UDRV872;
+					};
+				};
 			};
 			buildConfigurationList = 5F3338A0172A407E0096E7AE /* Build configuration list for PBXProject "nutrition" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -1480,6 +1529,7 @@
 				5F3338B3172A407E0096E7AE /* InfoPlist.strings in Resources */,
 				5F82A0AC1807FA4D0000C9A1 /* Default.png in Resources */,
 				5F82A0B01807FA560000C9A1 /* Default@2x.png in Resources */,
+				5FECAD9A1838777F00D72A8C /* physics-50@2x.png in Resources */,
 				5F82A0B41807FA5E0000C9A1 /* Default-568h@2x.png in Resources */,
 				085C8D4E17336744001A1ABB /* CustomDB.dat in Resources */,
 				0882403E173A7E7400E71E6E /* readme.txt in Resources */,
@@ -1520,6 +1570,7 @@
 				5FDD1CAA179CFCAE0046F752 /* add_by_nutrient_button@2x.png in Resources */,
 				5FDD1CAE179D19150046F752 /* change_name_button@2x.png in Resources */,
 				5F90D80117AF8873000AEC06 /* baidumobadsdk.bundle in Resources */,
+				5FECAD901838701100D72A8C /* NewMainStoryboard.storyboard in Resources */,
 				5F90D82317AF8E43000AEC06 /* baidumobadwallsdk.bundle in Resources */,
 				5FA3D1FB17B0F0E0004F9D39 /* store_icon@2x.png in Resources */,
 				5FA3D1FD17B0F410004F9D39 /* button_middle_clicked@2x.png in Resources */,
@@ -1537,6 +1588,7 @@
 				5F943EFD17D721F400AFBF47 /* 干果@2x.png in Resources */,
 				5F943EFE17D721F400AFBF47 /* 水产@2x.png in Resources */,
 				5F943EFF17D721F400AFBF47 /* 水果@2x.png in Resources */,
+				5FECAD991838777F00D72A8C /* month_view-50@2x.png in Resources */,
 				5F943F0017D721F400AFBF47 /* 肉类@2x.png in Resources */,
 				5F943F0117D721F400AFBF47 /* 菌藻类@2x.png in Resources */,
 				5F943F0217D721F400AFBF47 /* 蔬菜@2x.png in Resources */,
@@ -1549,6 +1601,7 @@
 				5F84D1B217D8343800DF83A0 /* dri_icon@2x.png in Resources */,
 				5F2E024A17E01A0700D26231 /* menu_item_4@2x.png in Resources */,
 				5F2E024B17E01A0700D26231 /* menu_item_0@2x.png in Resources */,
+				5FECAD971838777F00D72A8C /* clinic-50@2x.png in Resources */,
 				5F2E024C17E01A0700D26231 /* menu_item_3@2x.png in Resources */,
 				5F2E024D17E01A0700D26231 /* menu_item_2@2x.png in Resources */,
 				5F2E024E17E01A0700D26231 /* menu_item_5@2x.png in Resources */,
@@ -1560,6 +1613,7 @@
 				5F537F2117F2BD3D00BDD014 /* health_bar@2x.png in Resources */,
 				5FE3AC32180CEB7100C5C611 /* health_point@2x.png in Resources */,
 				5FF352F617F5504400B29E6A /* dot_indicator@2x.png in Resources */,
+				5FECAD981838777F00D72A8C /* line_chart-50@2x.png in Resources */,
 				5FAB5793180266C300657793 /* ShareSDKLocalizable.strings in Resources */,
 				5FAB5794180266C300657793 /* Resource.bundle in Resources */,
 				5FAB5797180266C300657793 /* GooglePlus.bundle in Resources */,
@@ -1567,6 +1621,7 @@
 				5FAB579C180266C300657793 /* PinterestSDKResources.bundle in Resources */,
 				5FAB579D180266C300657793 /* RennSDK.bundle in Resources */,
 				5FAB57A1180266C300657793 /* TencentOpenApi_IOS_Bundle.bundle in Resources */,
+				5FECAD9B1838777F00D72A8C /* toolbox-50@2x.png in Resources */,
 				5FAB57A5180266C300657793 /* ShareSDKiPhoneDefaultShareViewUI.bundle in Resources */,
 				5FAB57A7180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.bundle in Resources */,
 				5F894A8C18028B5F00A122F4 /* MIT-LICENSE in Resources */,
@@ -1650,6 +1705,7 @@
 				085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */,
 				5F03D348174B9241008EFB60 /* LZProgressView.m in Sources */,
 				5F03D349174B9241008EFB60 /* LZRecommendFoodCell.m in Sources */,
+				5FECAD9E18387F4E00D72A8C /* LZGlobalService.m in Sources */,
 				5F03D34A174B9241008EFB60 /* LZCheckNutritionCell.m in Sources */,
 				5F03D34B174B9241008EFB60 /* LZFoodDetailController.m in Sources */,
 				5F03D34C174B9241008EFB60 /* LZNutritionSupplyCell.m in Sources */,
@@ -1701,6 +1757,7 @@
 				5F87498B17D0C2EE0061E36D /* LZRichNutritionViewController.m in Sources */,
 				5F65274A17D49DA50089CBB5 /* LZHealthCheckViewController.m in Sources */,
 				5F4FD72317D4B75900DBA25A /* LZDiseaseCell.m in Sources */,
+				5FECADA21838912900D72A8C /* NGDiagnoseViewController.m in Sources */,
 				5FD76DE717D5AB6200746418 /* LZCheckResultViewController.m in Sources */,
 				5FD76DEC17D5B83600746418 /* LZEmptyClassCell.m in Sources */,
 				5F2E025217E01D1C00D26231 /* LZMainMenuButton.m in Sources */,
@@ -1944,7 +2001,7 @@
 		5F3338CA172A407F0096E7AE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
