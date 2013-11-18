@@ -261,6 +261,7 @@
 		5FECAD9B1838777F00D72A8C /* toolbox-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD961838777F00D72A8C /* toolbox-50@2x.png */; };
 		5FECAD9E18387F4E00D72A8C /* LZGlobalService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECAD9D18387F4E00D72A8C /* LZGlobalService.m */; };
 		5FECADA21838912900D72A8C /* NGDiagnoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */; };
+		5FECADA51838B19D00D72A8C /* NGRecordHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */; };
 		5FF352F617F5504400B29E6A /* dot_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF352F517F5504200B29E6A /* dot_indicator@2x.png */; };
 		5FF631D517702C690068CBFE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */; };
 		5FF631D617702C690068CBFE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5FF631D417702C690068CBFE /* README.txt */; };
@@ -612,6 +613,8 @@
 		5FECAD9D18387F4E00D72A8C /* LZGlobalService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZGlobalService.m; path = nutrition/Class/LZGlobalService.m; sourceTree = "<group>"; };
 		5FECADA01838912900D72A8C /* NGDiagnoseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDiagnoseViewController.h; path = nutrition/Class/NGDiagnoseViewController.h; sourceTree = "<group>"; };
 		5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnoseViewController.m; path = nutrition/Class/NGDiagnoseViewController.m; sourceTree = "<group>"; };
+		5FECADA31838B19D00D72A8C /* NGRecordHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGRecordHistoryViewController.h; path = nutrition/Class/NGRecordHistoryViewController.h; sourceTree = "<group>"; };
+		5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGRecordHistoryViewController.m; path = nutrition/Class/NGRecordHistoryViewController.m; sourceTree = "<group>"; };
 		5FF352F517F5504200B29E6A /* dot_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dot_indicator@2x.png"; path = "nutrition/Resource/dot_indicator@2x.png"; sourceTree = "<group>"; };
 		5FF631CA17702C690068CBFE /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
 		5FF631CB17702C690068CBFE /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
@@ -1403,6 +1406,8 @@
 				5FECAD8F1838701100D72A8C /* NewMainStoryboard.storyboard */,
 				5FECADA01838912900D72A8C /* NGDiagnoseViewController.h */,
 				5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */,
+				5FECADA31838B19D00D72A8C /* NGRecordHistoryViewController.h */,
+				5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */,
 			);
 			name = Nutrition2.0;
 			sourceTree = "<group>";
@@ -1742,6 +1747,7 @@
 				5F90D80F17AF8873000AEC06 /* ioapi.c in Sources */,
 				5F90D81017AF8873000AEC06 /* mztools.c in Sources */,
 				5F90D81117AF8873000AEC06 /* unzip.c in Sources */,
+				5FECADA51838B19D00D72A8C /* NGRecordHistoryViewController.m in Sources */,
 				5F90D81217AF8873000AEC06 /* zip.c in Sources */,
 				5F90D81317AF8873000AEC06 /* ZipArchive.mm in Sources */,
 				5F20148A17BB2F7B0009B735 /* LZValueSelectorView.m in Sources */,
