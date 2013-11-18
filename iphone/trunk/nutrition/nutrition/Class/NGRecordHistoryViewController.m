@@ -33,6 +33,8 @@
     if (IOS7_OR_LATER)
     {
         [self.listView setSectionIndexBackgroundColor:[UIColor clearColor]];
+        [self.listView setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
+        [self.listView setSectionIndexColor:[UIColor blackColor]];
     }
 }
 - (void)didReceiveMemoryWarning
@@ -60,7 +62,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView              // Default is 1 if not implemented
 {
-    return 20;
+    return 15;
 }
 
 //- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section;    // fixed font style. use custom view (UILabel) if you want something different
@@ -73,7 +75,7 @@
 // return list of section titles to display in section index view (e.g. "ABCD...Z#")
 {
     NSMutableArray *titleArray = [NSMutableArray array];
-    for (int i =0 ; i<20; i++)
+    for (int i =0 ; i<15; i++)
     {
         [titleArray addObject:[NSString stringWithFormat:@"%d",i]];
     }

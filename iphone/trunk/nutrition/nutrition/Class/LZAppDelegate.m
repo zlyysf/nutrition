@@ -57,8 +57,14 @@
     if (IOS7_OR_LATER)
     {
         [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
-        [[UIBarButtonItem appearance]setTintColor:[UIColor colorWithRed:0.f green:122/255.f blue:1.f alpha:1.0f]];
+        [[UINavigationBar appearance]setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:25],UITextAttributeFont,[UIColor colorWithRed:0.f green:51/255.f blue:0.f alpha:1.0f],UITextAttributeTextColor, nil]];
     }
+    else
+    {
+        [[UINavigationBar appearance]setTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
+        [[UITabBar appearance]setSelectedImageTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
+    }
+    ;
     [LZUtility initializePreferNutrient];
     //友盟统计SDK启
     [LZDataAccess singleton];
