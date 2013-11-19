@@ -1494,8 +1494,15 @@
                             </segmentedControl>
                             <view contentMode="scaleToFill" id="REa-fC-i35">
                                 <rect key="frame" x="0.0" y="50" width="568" height="222"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="一直为横屏" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Dg8-by-sTI">
+                                        <rect key="frame" x="225" y="56" width="150" height="38"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="27"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <view contentMode="scaleToFill" id="3qq-ha-htx">
                                         <rect key="frame" x="0.0" y="50" width="568" height="1"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -1549,7 +1556,7 @@
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="zt1-JH-E5e">
                                 <rect key="frame" x="0.0" y="50" width="568" height="222"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <autoresizingMask key="autoresizingMask"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="z2X-4n-EsJ">
                                         <rect key="frame" x="0.0" y="190" width="1136" height="1"/>
