@@ -28,6 +28,21 @@
 		B9815C8718304CAA000D6439 /* month_view-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9815C8618304CAA000D6439 /* month_view-50@2x.png */; };
 		B9AAC059182FEAAE00810F8D /* rounded square@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AAC058182FEAAE00810F8D /* rounded square@2x.png */; };
 		B9AAC05B182FF14100810F8D /* rounded square 170x60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AAC05A182FF14100810F8D /* rounded square 170x60@2x.png */; };
+		B9AEA062183BD6A900E921A0 /* 主食@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA056183BD6A900E921A0 /* 主食@2x.png */; };
+		B9AEA063183BD6A900E921A0 /* 五谷@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA057183BD6A900E921A0 /* 五谷@2x.png */; };
+		B9AEA064183BD6A900E921A0 /* 奶制品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA058183BD6A900E921A0 /* 奶制品@2x.png */; };
+		B9AEA065183BD6A900E921A0 /* 干果@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA059183BD6A900E921A0 /* 干果@2x.png */; };
+		B9AEA066183BD6A900E921A0 /* 水产@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA05A183BD6A900E921A0 /* 水产@2x.png */; };
+		B9AEA067183BD6A900E921A0 /* 水果@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA05B183BD6A900E921A0 /* 水果@2x.png */; };
+		B9AEA068183BD6A900E921A0 /* 肉类@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA05C183BD6A900E921A0 /* 肉类@2x.png */; };
+		B9AEA069183BD6A900E921A0 /* 菌藻类@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA05D183BD6A900E921A0 /* 菌藻类@2x.png */; };
+		B9AEA06A183BD6A900E921A0 /* 蔬菜@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA05E183BD6A900E921A0 /* 蔬菜@2x.png */; };
+		B9AEA06B183BD6A900E921A0 /* 蛋类@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA05F183BD6A900E921A0 /* 蛋类@2x.png */; };
+		B9AEA06C183BD6A900E921A0 /* 调味品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA060183BD6A900E921A0 /* 调味品@2x.png */; };
+		B9AEA06D183BD6A900E921A0 /* 豆制品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA061183BD6A900E921A0 /* 豆制品@2x.png */; };
+		B9AEA06F183C146B00E921A0 /* gray line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA06E183C146B00E921A0 /* gray line@2x.png */; };
+		B9AEA071183C156A00E921A0 /* gray pixel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA070183C156A00E921A0 /* gray pixel@2x.png */; };
+		B9AEA073183C179C00E921A0 /* gray vertical line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */; };
 		B9B8BD6C182EA050001C61CA /* document-75.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6B182EA050001C61CA /* document-75.png */; };
 		B9B8BD6E182EA922001C61CA /* egg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6D182EA922001C61CA /* egg@2x.png */; };
 		B9B8BD70182EAA1A001C61CA /* oyster@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6F182EAA1A001C61CA /* oyster@2x.png */; };
@@ -84,6 +99,21 @@
 		B9815C8618304CAA000D6439 /* month_view-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "month_view-50@2x.png"; sourceTree = "<group>"; };
 		B9AAC058182FEAAE00810F8D /* rounded square@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rounded square@2x.png"; sourceTree = "<group>"; };
 		B9AAC05A182FF14100810F8D /* rounded square 170x60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "rounded square 170x60@2x.png"; sourceTree = "<group>"; };
+		B9AEA056183BD6A900E921A0 /* 主食@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "主食@2x.png"; sourceTree = "<group>"; };
+		B9AEA057183BD6A900E921A0 /* 五谷@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "五谷@2x.png"; sourceTree = "<group>"; };
+		B9AEA058183BD6A900E921A0 /* 奶制品@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "奶制品@2x.png"; sourceTree = "<group>"; };
+		B9AEA059183BD6A900E921A0 /* 干果@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "干果@2x.png"; sourceTree = "<group>"; };
+		B9AEA05A183BD6A900E921A0 /* 水产@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "水产@2x.png"; sourceTree = "<group>"; };
+		B9AEA05B183BD6A900E921A0 /* 水果@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "水果@2x.png"; sourceTree = "<group>"; };
+		B9AEA05C183BD6A900E921A0 /* 肉类@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "肉类@2x.png"; sourceTree = "<group>"; };
+		B9AEA05D183BD6A900E921A0 /* 菌藻类@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "菌藻类@2x.png"; sourceTree = "<group>"; };
+		B9AEA05E183BD6A900E921A0 /* 蔬菜@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蔬菜@2x.png"; sourceTree = "<group>"; };
+		B9AEA05F183BD6A900E921A0 /* 蛋类@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "蛋类@2x.png"; sourceTree = "<group>"; };
+		B9AEA060183BD6A900E921A0 /* 调味品@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "调味品@2x.png"; sourceTree = "<group>"; };
+		B9AEA061183BD6A900E921A0 /* 豆制品@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "豆制品@2x.png"; sourceTree = "<group>"; };
+		B9AEA06E183C146B00E921A0 /* gray line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray line@2x.png"; sourceTree = "<group>"; };
+		B9AEA070183C156A00E921A0 /* gray pixel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray pixel@2x.png"; sourceTree = "<group>"; };
+		B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray vertical line@2x.png"; sourceTree = "<group>"; };
 		B9B8BD6B182EA050001C61CA /* document-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "document-75.png"; sourceTree = "<group>"; };
 		B9B8BD6D182EA922001C61CA /* egg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "egg@2x.png"; sourceTree = "<group>"; };
 		B9B8BD6F182EAA1A001C61CA /* oyster@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oyster@2x.png"; sourceTree = "<group>"; };
@@ -185,6 +215,21 @@
 		B97B4097182D48F000F0333E /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */,
+				B9AEA070183C156A00E921A0 /* gray pixel@2x.png */,
+				B9AEA06E183C146B00E921A0 /* gray line@2x.png */,
+				B9AEA056183BD6A900E921A0 /* 主食@2x.png */,
+				B9AEA057183BD6A900E921A0 /* 五谷@2x.png */,
+				B9AEA058183BD6A900E921A0 /* 奶制品@2x.png */,
+				B9AEA059183BD6A900E921A0 /* 干果@2x.png */,
+				B9AEA05A183BD6A900E921A0 /* 水产@2x.png */,
+				B9AEA05B183BD6A900E921A0 /* 水果@2x.png */,
+				B9AEA05C183BD6A900E921A0 /* 肉类@2x.png */,
+				B9AEA05D183BD6A900E921A0 /* 菌藻类@2x.png */,
+				B9AEA05E183BD6A900E921A0 /* 蔬菜@2x.png */,
+				B9AEA05F183BD6A900E921A0 /* 蛋类@2x.png */,
+				B9AEA060183BD6A900E921A0 /* 调味品@2x.png */,
+				B9AEA061183BD6A900E921A0 /* 豆制品@2x.png */,
 				B909100B183541D500B89A21 /* left@2x.png */,
 				B9091009183541A000B89A21 /* right@2x.png */,
 				B9FD73161833DEEE00D8051B /* 体温计@2x.png */,
@@ -282,22 +327,30 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9AEA06C183BD6A900E921A0 /* 调味品@2x.png in Resources */,
+				B9AEA062183BD6A900E921A0 /* 主食@2x.png in Resources */,
 				B948352E1830780C00FCBB8F /* detail2@2x.png in Resources */,
+				B9AEA063183BD6A900E921A0 /* 五谷@2x.png in Resources */,
 				B9FD733A1833DEEE00D8051B /* 血压@2x.png in Resources */,
 				B9FD73351833DEEE00D8051B /* 胸腔@2x.png in Resources */,
 				B977079D182AA4FC006FD25E /* Main_iPad.storyboard in Resources */,
+				B9AEA069183BD6A900E921A0 /* 菌藻类@2x.png in Resources */,
 				B9FD732A1833DEEE00D8051B /* 体重@2x.png in Resources */,
 				B97761581833185000B37B24 /* toolbox-50@2x.png in Resources */,
 				B948352C1830704000FCBB8F /* detail@2x.png in Resources */,
 				B9B8BD72182EAECF001C61CA /* 西兰花@2x.jpg in Resources */,
 				B97707A5182AA4FC006FD25E /* Images.xcassets in Resources */,
+				B9AEA06B183BD6A900E921A0 /* 蛋类@2x.png in Resources */,
 				B9FD73341833DEEE00D8051B /* 胳膊@2x.png in Resources */,
 				B9FD73331833DEEE00D8051B /* 胃@2x.png in Resources */,
+				B9AEA06A183BD6A900E921A0 /* 蔬菜@2x.png in Resources */,
 				B9FD73371833DEEE00D8051B /* 脚@2x.png in Resources */,
 				B97761561833159F00B37B24 /* physics-50@2x.png in Resources */,
 				B9FD732E1833DEEE00D8051B /* 手@2x.png in Resources */,
 				B9FD73361833DEEE00D8051B /* 脖子@2x.png in Resources */,
+				B9AEA06D183BD6A900E921A0 /* 豆制品@2x.png in Resources */,
 				B9FD73391833DEEE00D8051B /* 膝盖@2x.png in Resources */,
+				B9AEA067183BD6A900E921A0 /* 水果@2x.png in Resources */,
 				B9FD732D1833DEEE00D8051B /* 心跳@2x.png in Resources */,
 				B909100C183541D500B89A21 /* left@2x.png in Resources */,
 				B9AAC05B182FF14100810F8D /* rounded square 170x60@2x.png in Resources */,
@@ -305,12 +358,16 @@
 				B9B8BD6E182EA922001C61CA /* egg@2x.png in Resources */,
 				B9FD73291833DEEE00D8051B /* 体温计@2x.png in Resources */,
 				B9B8BD70182EAA1A001C61CA /* oyster@2x.png in Resources */,
+				B9AEA065183BD6A900E921A0 /* 干果@2x.png in Resources */,
 				B9FD732B1833DEEE00D8051B /* 嘴@2x.png in Resources */,
 				B909100A183541A000B89A21 /* right@2x.png in Resources */,
 				B9FD73311833DEEE00D8051B /* 耳朵@2x.png in Resources */,
+				B9AEA066183BD6A900E921A0 /* 水产@2x.png in Resources */,
 				B9FD733B1833DEEE00D8051B /* 鼻子@2x.png in Resources */,
 				B977079A182AA4FC006FD25E /* Main_iPhone.storyboard in Resources */,
 				B9B8BD6C182EA050001C61CA /* document-75.png in Resources */,
+				B9AEA068183BD6A900E921A0 /* 肉类@2x.png in Resources */,
+				B9AEA06F183C146B00E921A0 /* gray line@2x.png in Resources */,
 				B9FD732F1833DEEE00D8051B /* 牙齿@2x.png in Resources */,
 				B9815C8518304C0B000D6439 /* line_chart-50@2x.png in Resources */,
 				B9B8BD76182EB096001C61CA /* 开心果@2x.png in Resources */,
@@ -318,6 +375,9 @@
 				B9B8BD7A182EC8DA001C61CA /* clinic-50@2x.png in Resources */,
 				B9815C8718304CAA000D6439 /* month_view-50@2x.png in Resources */,
 				B9AAC059182FEAAE00810F8D /* rounded square@2x.png in Resources */,
+				B9AEA071183C156A00E921A0 /* gray pixel@2x.png in Resources */,
+				B9AEA064183BD6A900E921A0 /* 奶制品@2x.png in Resources */,
+				B9AEA073183C179C00E921A0 /* gray vertical line@2x.png in Resources */,
 				B9FD732C1833DEEE00D8051B /* 头发@2x.png in Resources */,
 				B9FD73321833DEEE00D8051B /* 肺@2x.png in Resources */,
 				B9FD73381833DEEE00D8051B /* 脸@2x.png in Resources */,
