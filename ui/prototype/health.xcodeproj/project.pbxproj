@@ -41,7 +41,6 @@
 		B9AEA06C183BD6A900E921A0 /* 调味品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA060183BD6A900E921A0 /* 调味品@2x.png */; };
 		B9AEA06D183BD6A900E921A0 /* 豆制品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA061183BD6A900E921A0 /* 豆制品@2x.png */; };
 		B9AEA06F183C146B00E921A0 /* gray line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA06E183C146B00E921A0 /* gray line@2x.png */; };
-		B9AEA071183C156A00E921A0 /* gray pixel@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA070183C156A00E921A0 /* gray pixel@2x.png */; };
 		B9AEA073183C179C00E921A0 /* gray vertical line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */; };
 		B9B8BD6C182EA050001C61CA /* document-75.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6B182EA050001C61CA /* document-75.png */; };
 		B9B8BD6E182EA922001C61CA /* egg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6D182EA922001C61CA /* egg@2x.png */; };
@@ -112,7 +111,6 @@
 		B9AEA060183BD6A900E921A0 /* 调味品@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "调味品@2x.png"; sourceTree = "<group>"; };
 		B9AEA061183BD6A900E921A0 /* 豆制品@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "豆制品@2x.png"; sourceTree = "<group>"; };
 		B9AEA06E183C146B00E921A0 /* gray line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray line@2x.png"; sourceTree = "<group>"; };
-		B9AEA070183C156A00E921A0 /* gray pixel@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray pixel@2x.png"; sourceTree = "<group>"; };
 		B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray vertical line@2x.png"; sourceTree = "<group>"; };
 		B9B8BD6B182EA050001C61CA /* document-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "document-75.png"; sourceTree = "<group>"; };
 		B9B8BD6D182EA922001C61CA /* egg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "egg@2x.png"; sourceTree = "<group>"; };
@@ -216,7 +214,6 @@
 			isa = PBXGroup;
 			children = (
 				B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */,
-				B9AEA070183C156A00E921A0 /* gray pixel@2x.png */,
 				B9AEA06E183C146B00E921A0 /* gray line@2x.png */,
 				B9AEA056183BD6A900E921A0 /* 主食@2x.png */,
 				B9AEA057183BD6A900E921A0 /* 五谷@2x.png */,
@@ -375,7 +372,6 @@
 				B9B8BD7A182EC8DA001C61CA /* clinic-50@2x.png in Resources */,
 				B9815C8718304CAA000D6439 /* month_view-50@2x.png in Resources */,
 				B9AAC059182FEAAE00810F8D /* rounded square@2x.png in Resources */,
-				B9AEA071183C156A00E921A0 /* gray pixel@2x.png in Resources */,
 				B9AEA064183BD6A900E921A0 /* 奶制品@2x.png in Resources */,
 				B9AEA073183C179C00E921A0 /* gray vertical line@2x.png in Resources */,
 				B9FD732C1833DEEE00D8051B /* 头发@2x.png in Resources */,
