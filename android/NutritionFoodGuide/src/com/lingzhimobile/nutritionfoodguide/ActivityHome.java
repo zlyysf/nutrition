@@ -151,7 +151,8 @@ public class ActivityHome extends ActivityBase{
 					startActivity(intent);
 					break;
 				case Position_setting:
-					intent = new Intent(ActivityHome.this, ActivitySetting.class);
+//					intent = new Intent(ActivityHome.this, ActivitySetting.class);
+					intent = new Intent(ActivityHome.this, V2ActivityHome.class);
 					intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 					startActivity(intent);
 					break;

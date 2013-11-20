@@ -48,6 +48,14 @@
 		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
+		<activity android:name=".V2ActivityHome" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
+		    >
+		</activity>
+		<activity android:name=".V2ActivityDiagnose" 
+		    android:theme="@android:style/Theme.NoTitleBar" 
+		    >
+		</activity>
         
         
         <activity android:name=".Activity_GroupList"  

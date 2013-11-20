@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/pink"
+
+    >
+
+    <CheckBox
+        android:id="@+id/cbSymptom"
+        style="@null"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="5dp"
+        android:layout_weight="0"
+        android:background="@null"
+        android:button="@null"
+        android:gravity="center_vertical|center_horizontal"
+        android:minWidth="40dp"
+        android:text="aaaaaaaaaaa"
+        android:textColor="@color/black" />
+    
+    <!-- 
+    set background is very important!!! , such as, android:background="@null" , for else, will show left padding , maybe for the box
+    
+    
+    
+    android:background="@drawable/cb_colors_bg"
+    
+    android:background="@color/blue"
+    -->
+</LinearLayout>
