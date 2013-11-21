@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <com.lingzhimobile.nutritionfoodguide.v3.view.NoScrollViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/viewPager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/tab"
+        tools:context=".ProfileActivity" >
+    </com.lingzhimobile.nutritionfoodguide.v3.view.NoScrollViewPager>
+
+    <LinearLayout
+        android:id="@+id/tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal" >
+
+        <RadioGroup
+            android:id="@+id/radioGroupAsTab"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/lightgreen"
+            android:fadingEdge="none"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/rbDiagnose"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:drawableTop="@drawable/v2_clinic_50_2x"
+                android:button="@null"
+                android:checked="true"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="诊断"
+                android:textColor="@color/radio_astab_changecolor"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+            
+            <RadioButton
+                android:id="@+id/rbHistory"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:drawableTop="@drawable/v2_month_view_50_2x"
+                android:button="@null"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="历史"
+                android:textColor="@color/radio_astab_changecolor"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+            
+            <RadioButton
+                android:id="@+id/rbChart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:button="@null"
+                android:gravity="center_vertical|center_horizontal"
+                android:drawableTop="@drawable/v2_line_chart_50_2x"
+                android:text="图表"
+                android:textColor="@color/radio_astab_changecolor"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+            
+            <RadioButton
+                android:id="@+id/rbCyclopedia"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+
+                android:drawableTop="@drawable/v2_physics_50_2x"
+                android:button="@null"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="百科"
+                android:textColor="@color/radio_astab_changecolor"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/rbSetting"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                
+                android:drawableTop="@drawable/v2_toolbox_50_2x"
+                android:button="@null"
+                android:gravity="center_vertical|center_horizontal"
+                android:text="设置"
+                android:textColor="@color/radio_astab_changecolor"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+        </RadioGroup>
+    </LinearLayout>
+
+</RelativeLayout>

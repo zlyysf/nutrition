@@ -39,16 +39,21 @@
              android:name="com.lingzhimobile.nutritionfoodguide.ActivityHome"
              android:theme="@android:style/Theme.NoTitleBar"
             >
+        </activity>
+        <activity android:name=".MainActivity"
+		    android:theme="@android:style/Theme.NoTitleBar"
+		    >
+		</activity>
+        <activity android:name=".v3.activity.V3ActivityHome"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" 
-		    android:theme="@android:style/Theme.NoTitleBar" 
-		    >
-		</activity>
-		<activity android:name=".V2ActivityHome" 
+        <activity android:name=".V2ActivityHome"
 		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >
 		</activity>
