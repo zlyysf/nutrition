@@ -265,6 +265,10 @@
 		5FF352F617F5504400B29E6A /* dot_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF352F517F5504200B29E6A /* dot_indicator@2x.png */; };
 		5FF593D5183DBB970011CEA3 /* NGDiagnoseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */; };
 		5FF593D8183DBC210011CEA3 /* NGDiagnosesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */; };
+		5FF593DD183E01B60011CEA3 /* 体温计@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593D9183E01B60011CEA3 /* 体温计@2x.png */; };
+		5FF593DE183E01B60011CEA3 /* 体重@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593DA183E01B60011CEA3 /* 体重@2x.png */; };
+		5FF593DF183E01B60011CEA3 /* 心跳@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593DB183E01B60011CEA3 /* 心跳@2x.png */; };
+		5FF593E0183E01B60011CEA3 /* 血压@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593DC183E01B60011CEA3 /* 血压@2x.png */; };
 		5FF631D517702C690068CBFE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */; };
 		5FF631D617702C690068CBFE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5FF631D417702C690068CBFE /* README.txt */; };
 		5FF631D817702CD00068CBFE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D717702CD00068CBFE /* StoreKit.framework */; };
@@ -622,6 +626,10 @@
 		5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnoseCell.m; path = nutrition/Class/NGDiagnoseCell.m; sourceTree = "<group>"; };
 		5FF593D6183DBC210011CEA3 /* NGDiagnosesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDiagnosesView.h; path = nutrition/Class/NGDiagnosesView.h; sourceTree = "<group>"; };
 		5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnosesView.m; path = nutrition/Class/NGDiagnosesView.m; sourceTree = "<group>"; };
+		5FF593D9183E01B60011CEA3 /* 体温计@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "体温计@2x.png"; path = "nutrition/Resource/体温计@2x.png"; sourceTree = "<group>"; };
+		5FF593DA183E01B60011CEA3 /* 体重@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "体重@2x.png"; path = "nutrition/Resource/体重@2x.png"; sourceTree = "<group>"; };
+		5FF593DB183E01B60011CEA3 /* 心跳@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "心跳@2x.png"; path = "nutrition/Resource/心跳@2x.png"; sourceTree = "<group>"; };
+		5FF593DC183E01B60011CEA3 /* 血压@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "血压@2x.png"; path = "nutrition/Resource/血压@2x.png"; sourceTree = "<group>"; };
 		5FF631CA17702C690068CBFE /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
 		5FF631CB17702C690068CBFE /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
 		5FF631CC17702C690068CBFE /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
@@ -1398,6 +1406,10 @@
 				5FECAD941838777F00D72A8C /* month_view-50@2x.png */,
 				5FECAD951838777F00D72A8C /* physics-50@2x.png */,
 				5FECAD961838777F00D72A8C /* toolbox-50@2x.png */,
+				5FF593D9183E01B60011CEA3 /* 体温计@2x.png */,
+				5FF593DA183E01B60011CEA3 /* 体重@2x.png */,
+				5FF593DB183E01B60011CEA3 /* 心跳@2x.png */,
+				5FF593DC183E01B60011CEA3 /* 血压@2x.png */,
 			);
 			name = "New Group";
 			sourceTree = "<group>";
@@ -1555,6 +1567,7 @@
 				5F789B231755B1F3002FE365 /* foodCellBack@2x.png in Resources */,
 				0882419F175621DE00E71E6E /* foodDealed in Resources */,
 				5FF8473D1758546900DEA6DE /* README.mdown in Resources */,
+				5FF593DF183E01B60011CEA3 /* 心跳@2x.png in Resources */,
 				5FF8474117587F0100DEA6DE /* nav_back_button@2x.png in Resources */,
 				5F638030175C4969005E5517 /* cellSelectedBack@2x.png in Resources */,
 				5FE436D3175F3EF5003947ED /* Icon-Small.png in Resources */,
@@ -1589,10 +1602,12 @@
 				5F90D82317AF8E43000AEC06 /* baidumobadwallsdk.bundle in Resources */,
 				5FA3D1FB17B0F0E0004F9D39 /* store_icon@2x.png in Resources */,
 				5FA3D1FD17B0F410004F9D39 /* button_middle_clicked@2x.png in Resources */,
+				5FF593E0183E01B60011CEA3 /* 血压@2x.png in Resources */,
 				5F20148C17BB35A50009B735 /* valuepicker_bg@2x.png in Resources */,
 				5F20148E17BB40140009B735 /* valuepicker_cover@2x.png in Resources */,
 				5F20149117BB60100009B735 /* unit_button_clicked@2x.png in Resources */,
 				5F20149217BB60100009B735 /* unit_button_normal@2x.png in Resources */,
+				5FF593DE183E01B60011CEA3 /* 体重@2x.png in Resources */,
 				5F22A69017CF34170043D760 /* search_glass@2x.png in Resources */,
 				5F22A69217CF37940043D760 /* searchbar_bg@2x.png in Resources */,
 				5F4FD72017D4B04900DBA25A /* MainStoryboard.storyboard in Resources */,
@@ -1650,6 +1665,7 @@
 				5F894AA31803FDF200A122F4 /* arrow_up@2x.png in Resources */,
 				5F17888B180510BA0017F55D /* dietCellBack@2x.png in Resources */,
 				5F17888D1805202E0017F55D /* check_bottom_bar@2x.png in Resources */,
+				5FF593DD183E01B60011CEA3 /* 体温计@2x.png in Resources */,
 				5F82A099180660B00000C9A1 /* heavy_lack_bar@2x.png in Resources */,
 				5F82A09A180660B00000C9A1 /* light_lack_bar@2x.png in Resources */,
 				5F82A0A0180686170000C9A1 /* button_back_40@2x.png in Resources */,

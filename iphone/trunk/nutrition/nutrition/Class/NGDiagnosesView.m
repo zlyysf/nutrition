@@ -9,7 +9,7 @@
 #import "NGDiagnosesView.h"
 
 @implementation NGDiagnosesView
-
+@synthesize cellIndex,selectColor,delegate;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -23,6 +23,7 @@
     for (UIView *subview in [self subviews]) {
         [subview removeFromSuperview];
     }
+    self.selectColor = selectedColor;
     float totalHeight = 0;
     CGRect previousFrame = CGRectZero;
     BOOL gotPreviousFrame = NO;
@@ -38,7 +39,7 @@
         } else {
             CGRect newRect = CGRectZero;
             if (previousFrame.origin.x + previousFrame.size.width + textSize.width + imageMargin > maxWidth) {
-                newRect.origin = CGPointMake(0, previousFrame.origin.y + textSize.height + bottomMargin);
+                newRect.origin = CGPointMake(0, previousFrame.origin.y + previousFrame.size.height + bottomMargin);
                 totalHeight += textSize.height + bottomMargin;
             } else {
                 newRect.origin = CGPointMake(previousFrame.origin.x + previousFrame.size.width + imageMargin, previousFrame.origin.y);
@@ -49,7 +50,11 @@
         previousFrame = label.frame;
         gotPreviousFrame = YES;
         [label setFont:font];
-        [label setBackgroundColor:selectedColor];
+        label.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userTappedDiagnose:)];
+        [label addGestureRecognizer:tap];
+        label.numberOfLines = 0;
+        [label setBackgroundColor:[UIColor clearColor]];
         [label setTextColor:[UIColor blackColor]];
         [label setText:text];
         [label setTextAlignment:UITextAlignmentCenter];
@@ -62,7 +67,15 @@
     }
     return totalHeight;
 }
-
+-(void)userTappedDiagnose:(UITapGestureRecognizer*)sender
+{
+    UILabel *label = (UILabel *)sender.view;
+    [label setBackgroundColor:self.selectColor];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(userSelectedItem:forIndexPath:)])
+    {
+        [self.delegate userSelectedItem:label.text forIndexPath:self.cellIndex];
+    }
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

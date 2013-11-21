@@ -8,7 +8,7 @@
 
 #import "NGDiagnoseViewController.h"
 #import "NGDiagnoseCell.h"
-@interface NGDiagnoseViewController ()
+@interface NGDiagnoseViewController ()<NGDiagnosesViewDelegate>
 
 @end
 
@@ -26,7 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.diagnosesArray = [NSArray arrayWithObjects:@"症状1",@"症状2blalbalba",@"症状3lala",@"症状4bla",@"症状5blalblalbla",@"症状6lblalalallalala", nil];
+    self.diagnosesArray = [NSArray arrayWithObjects:@"头晕",@"头疼",@"头发干枯",@"头发脱落",@"脸色苍白",@"脸下垂", @"裂口",@"脸抽搐",@"老年斑",@"眉间出油",@"颜面水肿",nil];
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 22)];
     [headerView setBackgroundColor:[UIColor clearColor]];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 300, 22)];
@@ -64,7 +64,7 @@
         } else {
             CGRect newRect = CGRectZero;
             if (previousFrame.origin.x + previousFrame.size.width + textSize.width + imageMargin > maxWidth) {
-                newRect.origin = CGPointMake(0, previousFrame.origin.y + textSize.height + bottomMargin);
+                newRect.origin = CGPointMake(0, previousFrame.origin.y + previousFrame.size.height + bottomMargin);
                 totalHeight += textSize.height + bottomMargin;
             } else {
                 newRect.origin = CGPointMake(previousFrame.origin.x + previousFrame.size.width + imageMargin, previousFrame.origin.y);
@@ -97,7 +97,7 @@
 #pragma mark- UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 10;
+    return 12;
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -105,21 +105,46 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath;
 {
-    NGDiagnoseCell *cell = (NGDiagnoseCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGDiagnoseCell"];
-    cell.nameLabel.text = [NSString stringWithFormat:@"  项目%d ",indexPath.row+1];
-    cell.nameLabel.backgroundColor = [UIColor redColor];
-    float height = [cell.diagnosesView displayForFont:[UIFont systemFontOfSize:18] maxWidth:280 horizonPadding:2 verticalPadding:2 imageMargin:5 bottomMargin:8 textArray:self.diagnosesArray selectedColor:[UIColor redColor]];
-    cell.backView.frame =CGRectMake(10, 10, 300, height+50);
-    cell.diagnosesView.frame = CGRectMake(10, 40, 280, height);
-    cell.diagnosesView.backgroundColor = [UIColor blueColor];
-    cell.backView.layer.borderWidth = 0.5f;
-    cell.backView.layer.borderColor = [UIColor grayColor].CGColor;
-    return cell;
+    if (indexPath.row == 10)
+    {
+         UITableViewCell *cell = [self.listView dequeueReusableCellWithIdentifier:@"MeasurementCell"];
+        return cell;
+    }
+    else if (indexPath.row == 11)
+    {
+        UITableViewCell *cell = [self.listView dequeueReusableCellWithIdentifier:@"NoteCell"];
+        return cell;
+    }
+    else
+    {
+        NGDiagnoseCell *cell = (NGDiagnoseCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGDiagnoseCell"];
+        cell.nameLabel.text =@"  头面";
+        cell.nameLabel.backgroundColor = [UIColor redColor];
+        float height = [cell.diagnosesView displayForFont:[UIFont systemFontOfSize:18] maxWidth:280 horizonPadding:4 verticalPadding:4 imageMargin:8 bottomMargin:15 textArray:self.diagnosesArray selectedColor:[UIColor redColor]];
+        cell.backView.frame =CGRectMake(10, 10, 300, height+50);
+        cell.diagnosesView.frame = CGRectMake(10, 40, 280, height);
+        cell.diagnosesView.cellIndex = indexPath;
+        cell.diagnosesView.delegate = self;
+        //cell.diagnosesView.backgroundColor = [UIColor blueColor];
+        cell.backView.layer.borderWidth = 0.5f;
+        cell.backView.layer.borderColor = [UIColor grayColor].CGColor;
+        return cell;
+    }
 }
 #pragma mark- UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return [self calculateHeightForFont:[UIFont systemFontOfSize:18] maxWidth:280 horizonPadding:2 verticalPadding:2 imageMargin:5 bottomMargin:8 textArray:self.diagnosesArray]+60;
+    if (indexPath.row == 10 || indexPath.row == 11)
+    {
+        return 200;
+    }
+    return [self calculateHeightForFont:[UIFont systemFontOfSize:18] maxWidth:280 horizonPadding:4 verticalPadding:4 imageMargin:8 bottomMargin:15 textArray:self.diagnosesArray]+60;
 }
-
+#pragma mark- NGDiagnosesViewDelegate
+-(void)userSelectedItem:(NSString *)text forIndexPath:(NSIndexPath*)indexPath
+{
+    NSString *message = [NSString stringWithFormat:@"您点击的症状是 %@, cell index section: %d row :%d",text,indexPath.section,indexPath.row];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:Nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alert show];
+}
 @end
