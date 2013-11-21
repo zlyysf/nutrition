@@ -263,6 +263,8 @@
 		5FECADA21838912900D72A8C /* NGDiagnoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */; };
 		5FECADA51838B19D00D72A8C /* NGRecordHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */; };
 		5FF352F617F5504400B29E6A /* dot_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF352F517F5504200B29E6A /* dot_indicator@2x.png */; };
+		5FF593D5183DBB970011CEA3 /* NGDiagnoseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */; };
+		5FF593D8183DBC210011CEA3 /* NGDiagnosesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */; };
 		5FF631D517702C690068CBFE /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */; };
 		5FF631D617702C690068CBFE /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5FF631D417702C690068CBFE /* README.txt */; };
 		5FF631D817702CD00068CBFE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D717702CD00068CBFE /* StoreKit.framework */; };
@@ -616,6 +618,10 @@
 		5FECADA31838B19D00D72A8C /* NGRecordHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGRecordHistoryViewController.h; path = nutrition/Class/NGRecordHistoryViewController.h; sourceTree = "<group>"; };
 		5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGRecordHistoryViewController.m; path = nutrition/Class/NGRecordHistoryViewController.m; sourceTree = "<group>"; };
 		5FF352F517F5504200B29E6A /* dot_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dot_indicator@2x.png"; path = "nutrition/Resource/dot_indicator@2x.png"; sourceTree = "<group>"; };
+		5FF593D3183DBB970011CEA3 /* NGDiagnoseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDiagnoseCell.h; path = nutrition/Class/NGDiagnoseCell.h; sourceTree = "<group>"; };
+		5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnoseCell.m; path = nutrition/Class/NGDiagnoseCell.m; sourceTree = "<group>"; };
+		5FF593D6183DBC210011CEA3 /* NGDiagnosesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDiagnosesView.h; path = nutrition/Class/NGDiagnosesView.h; sourceTree = "<group>"; };
+		5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnosesView.m; path = nutrition/Class/NGDiagnosesView.m; sourceTree = "<group>"; };
 		5FF631CA17702C690068CBFE /* GADAdMobExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdMobExtras.h; sourceTree = "<group>"; };
 		5FF631CB17702C690068CBFE /* GADAdNetworkExtras.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdNetworkExtras.h; sourceTree = "<group>"; };
 		5FF631CC17702C690068CBFE /* GADAdSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GADAdSize.h; sourceTree = "<group>"; };
@@ -1408,6 +1414,10 @@
 				5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */,
 				5FECADA31838B19D00D72A8C /* NGRecordHistoryViewController.h */,
 				5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */,
+				5FF593D3183DBB970011CEA3 /* NGDiagnoseCell.h */,
+				5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */,
+				5FF593D6183DBC210011CEA3 /* NGDiagnosesView.h */,
+				5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */,
 			);
 			name = Nutrition2.0;
 			sourceTree = "<group>";
@@ -1725,7 +1735,9 @@
 				5F746C081769EB9A00E68D0E /* LZReviewAppManager.m in Sources */,
 				5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */,
 				5FF631DF17702D630068CBFE /* GADMasterViewController.m in Sources */,
+				5FF593D5183DBB970011CEA3 /* NGDiagnoseCell.m in Sources */,
 				5FF6320417718E100068CBFE /* LZNutrientionManager.m in Sources */,
+				5FF593D8183DBC210011CEA3 /* NGDiagnosesView.m in Sources */,
 				5FF6320517718E100068CBFE /* LZNutritionInfoView.m in Sources */,
 				5F25849F17829DDA00D99C16 /* LZEditProfileViewController.m in Sources */,
 				5F0971811793ABD3000030AA /* LZUserDietListViewController.m in Sources */,
