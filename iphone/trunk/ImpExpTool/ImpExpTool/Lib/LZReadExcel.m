@@ -1653,6 +1653,299 @@
 
 
 
+
+
+-(NSDictionary*)getNutrientDescInSymptomToNutrientIdDict
+{
+    NSDictionary *nutrientDescToIdDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          @"Vit_A_RAE",@"A",
+                                          @"Vit_C_(mg)",@"C",
+                                          @"Vit_D_(µg)",@"D",
+                                          @"Vit_E_(mg)",@"E",
+                                          @"Riboflavin_(mg)",@"B2",
+                                          @"Vit_B6_(mg)",@"B6",
+                                          @"Folate_Tot_(µg)",@"B9",
+                                          @"Folate_Tot_(µg)",@"叶酸",
+                                          @"Vit_B12_(µg)",@"B12",
+                                          
+                                          @"Calcium_(mg)",@"钙",
+                                          @"Iron_(mg)",@"铁",
+                                          @"Zinc_(mg)",@"锌",
+                                          @"Magnesium_(mg)",@"镁",
+                                          @"Potassium_(mg)",@"钾",
+                                          
+                                          @"Fiber_TD_(g)",@"纤维",
+                                          @"Protein_(g)",@"蛋白质",
+                                          nil];
+    return nutrientDescToIdDict;
+}
+
+
+
+
+
+
+
+//现在只导 SymptomSummary.xls 的汇总页的数据
+-(NSDictionary *)readSimptomNutrientIllnessSummarySheet
+{
+    int sheetIndex = 0;
+    NSString *fileName = @"SymptomSummary.xls";
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
+    NSLog(@"in readSimptomNutrientIllnessSummarySheet, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+    int ColumnIdx_SimptomType=1, ColumnIdx_SimptomStart=3,
+        RowOffset_Simptom=0, RowOffset_Nutrients=1, RowOffset_Illnesses=2;
+    DHcell *cell_SimptomType, *cell;
+
+    NSDictionary *nutrientDescToIdDict = [self getNutrientDescInSymptomToNutrientIdDict];
+    
+    NSMutableArray *symptomTypes = [NSMutableArray arrayWithCapacity:100];
+    NSMutableArray *symptomType_rowIdxAry = [NSMutableArray arrayWithCapacity:100];
+
+    NSMutableDictionary *symptomsByTypeDict = [NSMutableDictionary dictionaryWithCapacity:30];//type -> symptoms
+    NSMutableDictionary *nutrientIdAndIllnessDataBySymptomWithTypeDict = [NSMutableDictionary dictionaryWithCapacity:1000]; // type+"--"+symptom -> [nutrientIds, illnessAry]
+    
+    NSMutableSet *symptomSet = [NSMutableSet set];//用于检查症状的同名的情况
+    NSMutableSet *illnessSet = [NSMutableSet set];
+    
+    int idxRow,idxCol;
+    idxRow = 1;
+    idxCol = ColumnIdx_SimptomType;
+    int continueEmptyCellCount = 0;
+    bool cellNotEmpty;
+    do {
+        cell_SimptomType = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:idxCol];
+        cellNotEmpty = (cell_SimptomType.type!=cellBlank && cell_SimptomType.str.length>0);
+        if (cellNotEmpty){
+            NSString *simptomType = cell_SimptomType.str;
+            NSLog(@"simptomType: %@ [%d]",simptomType,idxRow);
+            [symptomTypes addObject:simptomType];
+            [symptomType_rowIdxAry addObject:[NSNumber numberWithInt:idxRow]];
+            continueEmptyCellCount = 0;
+        }else{
+            continueEmptyCellCount ++;
+        }
+        idxRow++;
+    } while (continueEmptyCellCount <= 10);
+    
+    NSCharacterSet * separateCharSet = [NSCharacterSet characterSetWithCharactersInString:@",，"];
+    for(int i=0; i<symptomTypes.count; i++){
+        NSString *symptomType = symptomTypes[i];
+        NSNumber *symptomType_rowIdx = symptomType_rowIdxAry[i];
+        idxRow = [symptomType_rowIdx intValue];
+        idxCol = ColumnIdx_SimptomStart;
+        
+        DHcell *cell_Simptom, *cell_Nutrients, *cell_Illnesses;
+        bool cellNotEmpty_Simptom;
+        NSMutableArray *simptomsDataOfType = [NSMutableArray arrayWithCapacity:2];
+        NSMutableArray *simptomsOfType = [NSMutableArray array];
+        do {
+            cell_Simptom = [reader cellInWorkSheetIndex:sheetIndex row:idxRow+RowOffset_Simptom col:idxCol];
+            cellNotEmpty_Simptom = (cell_Simptom.type!=cellBlank && cell_Simptom.str.length>0);
+            if(cellNotEmpty_Simptom){
+                NSString *symptomOfType = cell_Simptom.str;
+                [simptomsOfType addObject:symptomOfType];
+                cell_Nutrients = [reader cellInWorkSheetIndex:sheetIndex row:idxRow+RowOffset_Nutrients col:idxCol];
+                cell_Illnesses = [reader cellInWorkSheetIndex:sheetIndex row:idxRow+RowOffset_Illnesses col:idxCol];
+                NSMutableArray *ary2D = [NSMutableArray arrayWithCapacity:2];
+                NSMutableArray *nutrientIds = [NSMutableArray arrayWithCapacity:10];
+                NSMutableArray *illnessAry = [NSMutableArray arrayWithCapacity:10];
+                if (cell_Nutrients.type!=cellBlank && cell_Nutrients.str.length>0){
+                    NSString *strNutrients = cell_Nutrients.str;
+                    NSArray *nutrients = [strNutrients componentsSeparatedByCharactersInSet:separateCharSet];
+                    for(int j=0 ; j<nutrients.count; j++){
+                        NSString *nutrient = nutrients[j];
+                        nutrient = [nutrient stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                        NSString *nutrientId = nutrientDescToIdDict[nutrient];
+                        assert(nutrientId != nil);
+                        [nutrientIds addObject:nutrientId];
+                    }//for
+                }
+                [ary2D addObject:nutrientIds];//nutrientIds 必须占位置0
+                if (cell_Illnesses.type!=cellBlank && cell_Illnesses.str.length>0){
+                    NSString *strIllnesses = cell_Illnesses.str;
+                    NSArray *illnessAry2 = [strIllnesses componentsSeparatedByCharactersInSet:separateCharSet];
+                    for(int j=0 ; j<illnessAry2.count; j++){
+                        NSString *illness = illnessAry2[j];
+                        illness = [illness stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                        [illnessAry addObject:illness];
+                    }//for
+                    [ary2D addObject:illnessAry];
+                    [illnessSet addObjectsFromArray:illnessAry];
+                }
+                
+                NSString *keyTypeAndSymptom = [NSString stringWithFormat:@"%@--%@", symptomType,symptomOfType];
+                [nutrientIdAndIllnessDataBySymptomWithTypeDict setObject:ary2D forKey:keyTypeAndSymptom];
+                
+                if ([symptomSet containsObject:symptomOfType]){
+                    NSLog(@"Repeated simptom name: %@", symptomOfType);
+                }else{
+                    [symptomSet addObject:symptomOfType];
+                }
+            }
+            idxCol ++;
+        }while (cellNotEmpty_Simptom);
+        
+        [symptomsByTypeDict setObject:simptomsOfType forKey:symptomType];
+    }//for
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:5];
+    [retData setObject:symptomTypes forKey:@"symptomTypes"];
+    [retData setObject:symptomsByTypeDict forKey:@"symptomsByTypeDict"];
+    [retData setObject:nutrientIdAndIllnessDataBySymptomWithTypeDict forKey:@"nutrientIdAndIllnessDataBySymptomWithTypeDict"];
+    [retData setObject:illnessSet forKey:@"illnessSet"];
+    return retData;
+}
+
+
+-(NSMutableDictionary*)convertDataFromExcelToSqlite_SimptomNutrientIllnessSummarySheet:(NSDictionary*)dataOfSimptomNutrientIllnessSummarySheet
+{
+    NSMutableArray *symptomTypes = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"symptomTypes"];
+    NSMutableDictionary *symptomsByTypeDict = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"symptomsByTypeDict"];//type -> symptoms
+    NSMutableDictionary *nutrientIdAndIllnessDataBySymptomWithTypeDict = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"nutrientIdAndIllnessDataBySymptomWithTypeDict"]; // type+"--"+symptom -> [nutrientIds, illnessAry]
+    NSSet *illnessSet = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"illnessSet"];
+
+    NSMutableArray *symptomTypeRows = [NSMutableArray arrayWithCapacity:symptomTypes.count];
+    NSMutableArray *symptomRows = [NSMutableArray arrayWithCapacity:nutrientIdAndIllnessDataBySymptomWithTypeDict.count];
+    NSMutableArray *symptomNutrientRows = [NSMutableArray array];
+    NSMutableArray *symptomPossibleIllnessRows = [NSMutableArray array];
+    NSMutableArray *IllnessRows = [NSMutableArray arrayWithCapacity:illnessSet.count];
+    
+    for (int i=0; i<symptomTypes.count; i++) {
+        NSString *symptomType = symptomTypes[i];
+        NSMutableArray *symptomTypeRow = [NSMutableArray arrayWithCapacity:5];
+        NSString *forSex = @"both";
+        if ([symptomType isEqualToString:@"男性"]){
+            forSex = @"male";
+        }else if([symptomType isEqualToString:@"女性"]){
+            forSex = @"female";
+        }
+        [symptomTypeRow addObject:symptomType];
+        [symptomTypeRow addObject:[NSNumber numberWithInt:i]];
+        [symptomTypeRow addObject:symptomType];
+        [symptomTypeRow addObject:symptomType];
+        [symptomTypeRow addObject:forSex];
+        [symptomTypeRows addObject: symptomTypeRow];
+    }//for
+    
+    for (int i=0; i<symptomTypes.count; i++) {
+        NSString *symptomType = symptomTypes[i];
+        NSArray *symptoms = [symptomsByTypeDict objectForKey:symptomType];
+        for(int j=0; j<symptoms.count; j++){
+            NSString *symptom = symptoms[j];
+            NSMutableArray *symptomRow = [NSMutableArray arrayWithCapacity:5];
+            [symptomRow addObject:symptomType];
+            [symptomRow addObject:symptom];
+            [symptomRow addObject:[NSNumber numberWithInt:i*10000+j]];
+            [symptomRow addObject:symptom];
+            [symptomRow addObject:symptom];
+            [symptomRows addObject:symptomRow];
+        }//for j
+    }//for i
+    
+    for (int i=0; i<symptomTypes.count; i++) {
+        NSString *symptomType = symptomTypes[i];
+        NSArray *symptoms = [symptomsByTypeDict objectForKey:symptomType];
+        for(int j=0; j<symptoms.count; j++){
+            NSString *symptom = symptoms[j];
+            NSString *keyTypeAndSymptom = [NSString stringWithFormat:@"%@--%@", symptomType,symptom];
+            NSArray *ary2D = [nutrientIdAndIllnessDataBySymptomWithTypeDict objectForKey:keyTypeAndSymptom];
+            NSArray *nutrientIds = ary2D[0];
+            NSArray *illnessAry = nil;
+            if (ary2D.count>=2){
+                illnessAry = ary2D[1];
+            }
+            for(int k=0; k<nutrientIds.count; k++){
+                NSString *nutrientId = nutrientIds[k];
+                NSMutableArray *rowSymptomNutrient = [NSMutableArray arrayWithCapacity:5];
+                [rowSymptomNutrient addObject:symptomType];
+                [rowSymptomNutrient addObject:symptom];
+                [rowSymptomNutrient addObject:nutrientId];
+                [symptomNutrientRows addObject:rowSymptomNutrient];
+            }//for k
+            
+            for(int k=0; k<illnessAry.count; k++){
+                NSString *illness = illnessAry[k];
+                NSMutableArray *rowSymptomPossibleIllness = [NSMutableArray arrayWithCapacity:5];
+                [rowSymptomPossibleIllness addObject:symptomType];
+                [rowSymptomPossibleIllness addObject:symptom];
+                [rowSymptomPossibleIllness addObject:illness];
+                [symptomPossibleIllnessRows addObject:rowSymptomPossibleIllness];
+            }//for k
+            
+        }//for j
+    }//for i
+    
+    for (NSString *illness in illnessSet) {
+        NSMutableArray *illnessRow = [NSMutableArray arrayWithCapacity:5];
+        [illnessRow addObject:illness];
+        [illnessRow addObject:illness];
+        [illnessRow addObject:illness];
+        [IllnessRows addObject:illnessRow];
+    }
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:5];
+    [retData setObject:symptomTypeRows forKey:@"symptomTypeRows"];
+    [retData setObject:symptomRows forKey:@"symptomRows"];
+    [retData setObject:symptomNutrientRows forKey:@"symptomNutrientRows"];
+    [retData setObject:symptomPossibleIllnessRows forKey:@"symptomPossibleIllnessRows"];
+    [retData setObject:IllnessRows forKey:@"IllnessRows"];
+    return retData;
+}
+
+
+-(void)convertExcelToSqlite_SimptomNutrientIllnessSummarySheet
+{
+    NSDictionary * dataInSheet = [self readSimptomNutrientIllnessSummarySheet];
+    NSDictionary * rowsDict = [self convertDataFromExcelToSqlite_SimptomNutrientIllnessSummarySheet:dataInSheet];
+    
+    NSMutableArray *symptomTypeRows = [rowsDict objectForKey:@"symptomTypeRows"];
+    NSMutableArray *symptomRows = [rowsDict objectForKey:@"symptomRows"];
+    NSMutableArray *symptomNutrientRows = [rowsDict objectForKey:@"symptomNutrientRows"];
+    NSMutableArray *symptomPossibleIllnessRows = [rowsDict objectForKey:@"symptomPossibleIllnessRows"];
+    NSMutableArray *IllnessRows = [rowsDict objectForKey:@"IllnessRows"];
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    [db.da executeSql:@"CREATE TABLE SymptomType(SymptomTypeId TEXT PRIMARY KEY, DisplayOrder INTEGER, SymptomTypeNameCn TEXT, SymptomTypeNameEn TEXT, ForSex TEXT);"];
+    [db.da executeSql:@"CREATE TABLE Symptom(SymptomTypeId TEXT, SymptomId TEXT, DisplayOrder INTEGER, SymptomNameCn TEXT, SymptomNameEn TEXT, PRIMARY KEY(SymptomTypeId, SymptomId) );"];
+    [db.da executeSql:@"CREATE TABLE SymptomNutrient(SymptomTypeId TEXT, SymptomId TEXT, NutrientID TEXT);"];
+    [db.da executeSql:@"CREATE TABLE SymptomPossibleIllness(SymptomTypeId TEXT, SymptomId TEXT, IllnessId TEXT);"];
+    [db.da executeSql:@"CREATE TABLE Illness(IllnessId TEXT PRIMARY KEY, IllnessNameCn TEXT, IllnessNameEn TEXT);"];
+    [db.da executeSql:@"CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, Symptoms TEXT, Temperature REAL,Weight REAL,Heartbeat REAL,BloodPressure REAL,Note TEXT, BMI REAL, LackNutrientIDs TEXT, InferIllnesses TEXT, HealthMark INTEGER, RecommendFoodAndAmounts TEXT, MattersNeedAttention TEXT);"];
+    
+    NSMutableArray *columnNames_SymptomType = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomTypeNameCn, COLUMN_NAME_SymptomTypeNameEn, COLUMN_NAME_ForSex, nil];
+    NSMutableArray *columnNames_Symptom = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomNameCn, COLUMN_NAME_SymptomNameEn, nil];
+    NSMutableArray *columnNames_SymptomNutrient = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_NutrientID, nil];
+    NSMutableArray *columnNames_SymptomPossibleIllness = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_IllnessId, nil];
+    NSMutableArray *columnNames_Illness = [NSMutableArray arrayWithObjects: COLUMN_NAME_IllnessId, COLUMN_NAME_IllnessNameCn, COLUMN_NAME_IllnessNameEn, nil];
+
+    [db.da insertToTable_withTableName:TABLE_NAME_SymptomType withColumnNames:columnNames_SymptomType andRows2D:symptomTypeRows andIfNeedClearTable:true];
+    [db.da insertToTable_withTableName:TABLE_NAME_Symptom withColumnNames:columnNames_Symptom andRows2D:symptomRows andIfNeedClearTable:true];
+    [db.da insertToTable_withTableName:TABLE_NAME_SymptomNutrient withColumnNames:columnNames_SymptomNutrient andRows2D:symptomNutrientRows andIfNeedClearTable:true];
+    [db.da insertToTable_withTableName:TABLE_NAME_SymptomPossibleIllness withColumnNames:columnNames_SymptomPossibleIllness andRows2D:symptomPossibleIllnessRows andIfNeedClearTable:true];
+    [db.da insertToTable_withTableName:TABLE_NAME_Illness withColumnNames:columnNames_Illness andRows2D:IllnessRows andIfNeedClearTable:true];
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end
 
 

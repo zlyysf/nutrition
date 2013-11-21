@@ -92,6 +92,43 @@ CREATE TABLE UserCheckDiseaseRecord(Day INTEGER, TimeType INTEGER, UpdateTime IN
 CREATE TABLE TranslationItem (ItemType TEXT, ItemID TEXT, ItemNameCn TEXT, ItemNameEn TEXT);
 
 
+V2版的与症状，关联营养素，关联病症相关的支持表格.目前id同于中文名.
+    ForSex : male , female, both
+    Symptom 表的主键是 SymptomTypeId+SymptomId
+
+CREATE TABLE SymptomType(SymptomTypeId TEXT PRIMARY KEY, DisplayOrder INTEGER, SymptomTypeNameCn TEXT, SymptomTypeNameEn TEXT, ForSex TEXT);
+CREATE TABLE Symptom(SymptomTypeId TEXT, SymptomId TEXT, DisplayOrder INTEGER, SymptomNameCn TEXT, SymptomNameEn TEXT, PRIMARY KEY(SymptomTypeId, SymptomId) );
+CREATE TABLE SymptomNutrient(SymptomTypeId TEXT, SymptomId TEXT, NutrientID TEXT);
+CREATE TABLE SymptomPossibleIllness(SymptomTypeId TEXT, SymptomId TEXT, IllnessID TEXT);
+CREATE TABLE Illness(IllnessId TEXT PRIMARY KEY, IllnessNameCn TEXT, IllnessNameEn TEXT);
+
+CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, Symptoms TEXT, Temperature REAL,Weight REAL,Heartbeat REAL,BloodPressure REAL,Note TEXT, BMI REAL, LackNutrientIDs TEXT, InferIllnesses TEXT, HealthMark INTEGER, RecommendFoodAndAmounts TEXT, MattersNeedAttention TEXT);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

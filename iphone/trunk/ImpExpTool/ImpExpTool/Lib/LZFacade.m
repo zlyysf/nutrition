@@ -47,7 +47,8 @@
 //    [workRe convertExcelToSqlite_CustomRichFood];
 //    [workRe convertExcelToSqlite_NutrientDisease];
 ////    [workRe readNutrientDiseaseSheet_withDepartment:3];
-    [workRe convertExcelToSqlite_TranslationItem];
+//    [workRe convertExcelToSqlite_TranslationItem];
+    [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
     
 //    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];
 //    LZDBAccess *db = [workRe getDBconnection];
@@ -202,6 +203,8 @@
     
     [workRe convertExcelToSqlite_NutrientDisease];
     [workRe convertExcelToSqlite_TranslationItem];
+    
+    [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
     
     [db generateTableAndData_Food_Supply_DRI_Common_withIfNeedClearTable:true];
     [db generateTableAndData_Food_Supply_DRI_Amount_withIfNeedClearTable:true];

@@ -53,6 +53,7 @@
 		08CDEAD417A6865E00AFA47E /* CustomRichFood.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */; };
 		08ED42CF17D48BAD00917C78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ED42CD17D48BAD00917C78 /* MBProgressHUD.m */; };
 		08ED42D017D48BAD00917C78 /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 08ED42CE17D48BAD00917C78 /* README.mdown */; };
+		08F78D84183C9DFD000DC96B /* SymptomSummary.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08F78D83183C9DFD000DC96B /* SymptomSummary.xls */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -138,6 +139,7 @@
 		08ED42CC17D48BAD00917C78 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		08ED42CD17D48BAD00917C78 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		08ED42CE17D48BAD00917C78 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
+		08F78D83183C9DFD000DC96B /* SymptomSummary.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = SymptomSummary.xls; path = ../../../data/SymptomSummary.xls; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -301,6 +303,7 @@
 		0882411A1740E02D00E71E6E /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				08F78D83183C9DFD000DC96B /* SymptomSummary.xls */,
 				08559A9F180E3EEC00571FDD /* SomeItemCnEn.xls */,
 				088821C517B132FB0054FABD /* benefits_nutrition_mapping.xls */,
 				08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */,
@@ -403,6 +406,7 @@
 				088240971740924300E71E6E /* Default-568h@2x.png in Resources */,
 				0882409D1740924300E71E6E /* LZViewController_iPhone.xib in Resources */,
 				088240A01740924300E71E6E /* LZViewController_iPad.xib in Resources */,
+				08F78D84183C9DFD000DC96B /* SymptomSummary.xls in Resources */,
 				088240DD1740A88700E71E6E /* ABBREV.xls in Resources */,
 				088240E11740A88700E71E6E /* customUSDAdataV2.xls in Resources */,
 				0882411C1740E08300E71E6E /* USDAFullDataInSqlite.dat in Resources */,

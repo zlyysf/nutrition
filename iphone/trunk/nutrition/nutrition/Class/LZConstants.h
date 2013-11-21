@@ -186,6 +186,43 @@
 #define COLUMN_NAME_ItemNameCn @"ItemNameCn"
 #define COLUMN_NAME_ItemNameEn @"ItemNameEn"
 
+
+#define TABLE_NAME_SymptomType @"SymptomType"
+#define TABLE_NAME_Symptom @"Symptom"
+#define TABLE_NAME_SymptomNutrient @"SymptomNutrient"
+#define TABLE_NAME_SymptomPossibleIllness @"SymptomPossibleIllness"
+#define TABLE_NAME_Illness @"Illness"
+#define COLUMN_NAME_SymptomTypeId @"SymptomTypeId"
+#define COLUMN_NAME_DisplayOrder @"DisplayOrder"
+#define COLUMN_NAME_SymptomTypeNameCn @"SymptomTypeNameCn"
+#define COLUMN_NAME_SymptomTypeNameEn @"SymptomTypeNameEn"
+#define COLUMN_NAME_ForSex @"ForSex"
+#define COLUMN_NAME_SymptomId @"SymptomId"
+#define COLUMN_NAME_SymptomNameCn @"SymptomNameCn"
+#define COLUMN_NAME_SymptomNameEn @"SymptomNameEn"
+#define COLUMN_NAME_IllnessId @"IllnessId"
+#define COLUMN_NAME_IllnessNameCn @"IllnessNameCn"
+#define COLUMN_NAME_IllnessNameEn @"IllnessNameEn"
+
+#define TABLE_NAME_UserRecordSymptom @"UserRecordSymptom"
+#define COLUMN_NAME_DayLocal @"DayLocal"
+#define COLUMN_NAME_UpdateTimeUTC @"UpdateTimeUTC"
+#define COLUMN_NAME_Symptoms @"Symptoms"
+#define COLUMN_NAME_Temperature @"Temperature"
+#define COLUMN_NAME_Weight @"Weight"
+#define COLUMN_NAME_Heartbeat @"Heartbeat"
+#define COLUMN_NAME_BloodPressure @"BloodPressure"
+#define COLUMN_NAME_Note @"Note"
+#define COLUMN_NAME_BMI @"BMI"
+#define COLUMN_NAME_LackNutrientIDs @"LackNutrientIDs"
+#define COLUMN_NAME_InferIllnesses @"InferIllnesses"
+#define COLUMN_NAME_HealthMark @"HealthMark"
+#define COLUMN_NAME_RecommendFoodAndAmounts @"RecommendFoodAndAmounts"
+#define COLUMN_NAME_MattersNeedAttention @"MattersNeedAttention"
+
+
+
+
 #define TranslationItemType_FoodCnType @"FoodCnType"
 #define TranslationItemType_SingleItemUnitName @"SingleItemUnitName"
 

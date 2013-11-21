@@ -57,6 +57,10 @@
 
 -(void)convertExcelToSqlite_TranslationItem;
 
+-(void)convertExcelToSqlite_SimptomNutrientIllnessSummarySheet;
+
+
+
 @end
 
 
