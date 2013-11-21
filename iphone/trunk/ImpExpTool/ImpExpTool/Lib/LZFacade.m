@@ -125,6 +125,10 @@
     
     [db convertFood_Supply_DRIUL_AmountWithExtraInfoToCsv:@"Food_Supply_DRIUL_Amount_Extra.csv"];
     
+    [db convertSymptomTypeInfoToCsv:@"SymptomType.csv"];
+    [db convertSymptomInfoToCsv:@"Symptom.csv"];
+    [db convertIllnessInfoToCsv:@"Illness.csv"];
+    
     LZReadExcel *workRe = [[LZReadExcel alloc]init];
     [workRe myInitDBConnectionWithFilePath:dbFilePath1 andIfNeedClear:FALSE];
 //    LZDBAccess *db2 = [workRe getDBconnection];

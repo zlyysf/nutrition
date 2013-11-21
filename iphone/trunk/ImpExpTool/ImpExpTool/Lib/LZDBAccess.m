@@ -702,7 +702,32 @@
 }
 
 
-
+-(NSString*)convertSymptomTypeInfoToCsv:(NSString*)csvFileName
+{
+    NSString *sqlQuery = @""
+    "select SymptomTypeId, SymptomTypeNameEn"
+    "  from SymptomType"
+    "  order by DisplayOrder"
+    ;
+    return [_da convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
+}
+-(NSString*)convertSymptomInfoToCsv:(NSString*)csvFileName
+{
+    NSString *sqlQuery = @""
+    "select SymptomTypeId, SymptomId, SymptomNameEn"
+    "  from Symptom"
+    "  order by DisplayOrder"
+    ;
+    return [_da convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
+}
+-(NSString*)convertIllnessInfoToCsv:(NSString*)csvFileName
+{
+    NSString *sqlQuery = @""
+    "select IllnessId, IllnessNameEn"
+    "  from Illness"
+    ;
+    return [_da convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
+}
 
 -(NSArray *)getFoodOriginalAttributesByIds:(NSArray *)idAry
 {

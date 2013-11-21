@@ -63,6 +63,9 @@
 
 -(NSString*)convertFood_Supply_DRIUL_AmountWithExtraInfoToCsv:(NSString*)csvFileName;
 
+-(NSString*)convertSymptomTypeInfoToCsv:(NSString*)csvFileName;
+-(NSString*)convertSymptomInfoToCsv:(NSString*)csvFileName;
+-(NSString*)convertIllnessInfoToCsv:(NSString*)csvFileName;
 
 
 -(NSArray *)getFoodOriginalAttributesByIds:(NSArray *)idAry;
