@@ -547,7 +547,39 @@
         return nutrientColor;
     }
 }
++ (UIColor*)getSymptomTypeColorForId:(NSString *)typeId
+{
+    NSDictionary * colorDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                [UIColor colorWithRed:243/255.f green:213/255.f blue:223/255.f alpha:1.0f],@"头面",
+                                [UIColor colorWithRed:237/255.f green:225/255.f blue:211/255.f alpha:1.0f],@"眼睛",
+                                [UIColor colorWithRed:209/255.f green:195/255.f blue:168/255.f alpha:1.0f],@"耳鼻",
+                                [UIColor colorWithRed:236/255.f green:216/255.f blue:191/255.f alpha:1.0f],@"口腔",
+                                [UIColor colorWithRed:232/255.f green:232/255.f blue:220/255.f alpha:1.0f],@"牙齿",
+                                [UIColor colorWithRed:230/255.f green:197/255.f blue:224/255.f alpha:1.0f],@"咽喉",
+                                [UIColor colorWithRed:193/255.f green:227/255.f blue:229/255.f alpha:1.0f],@"呼吸",
+                                [UIColor colorWithRed:239/255.f green:230/255.f blue:184/255.f alpha:1.0f],@"心脏",
+                                [UIColor colorWithRed:201/255.f green:222/255.f blue:126/255.f alpha:1.0f],@"胸腹腔",
+                                [UIColor colorWithRed:200/255.f green:239/255.f blue:172/255.f alpha:1.0f],@"皮肤",
+                                [UIColor colorWithRed:171/255.f green:198/255.f blue:217/255.f alpha:1.0f],@"四肢",
+                                [UIColor colorWithRed:230/255.f green:197/255.f blue:224/255.f alpha:1.0f],@"周身",
+                                [UIColor colorWithRed:233/255.f green:242/255.f blue:239/255.f alpha:1.0f],@"饮食",
+                                [UIColor colorWithRed:193/255.f green:193/255.f blue:239/255.f alpha:1.0f],@"消化",
+                                [UIColor colorWithRed:229/255.f green:229/255.f blue:221/255.f alpha:1.0f],@"行动",
+                                [UIColor colorWithRed:235/255.f green:224/255.f blue:218/255.f alpha:1.0f],@"心理",
+                                [UIColor colorWithRed:181/255.f green:213/255.f blue:224/255.f alpha:1.0f],@"男性",
+                                [UIColor colorWithRed:243/255.f green:213/255.f blue:223/255.f alpha:1.0f],@"女性",
+                                nil];
+    UIColor *tintColor = [colorDict objectForKey:typeId];
+    if (tintColor == nil)
+    {
+        return [UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f];
+    }
+    else
+    {
+        return tintColor;
+    }
 
+}
 
 + (BOOL)isUserProfileComplete
 {

@@ -9,7 +9,7 @@
 #import "NGDiagnosesView.h"
 
 @implementation NGDiagnosesView
-@synthesize cellIndex,selectColor,delegate;
+@synthesize cellIndex,selectColor,delegate,itemStateArray;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -18,16 +18,20 @@
     }
     return self;
 }
--(float)displayForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray selectedColor:(UIColor *)selectedColor;
+-(float)displayForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray selectedColor:(UIColor *)color itemStateArray:(NSMutableArray *)stateArray
 {
-    for (UIView *subview in [self subviews]) {
+    for (UILabel *subview in [self subviews]) {
         [subview removeFromSuperview];
     }
-    self.selectColor = selectedColor;
+    self.selectColor = color;
+    self.itemStateArray = stateArray;
     float totalHeight = 0;
     CGRect previousFrame = CGRectZero;
     BOOL gotPreviousFrame = NO;
-    for (NSString *text in textArray) {
+    for (int i =0;i< [textArray count];i++)
+    {
+        NSDictionary *symptomDict = [textArray objectAtIndex:i];
+        NSString *text = [symptomDict objectForKey:@"SymptomNameCn"];
         CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
         textSize.width += horizonPadding*2;
         textSize.height += verticalPadding*2;
@@ -54,13 +58,25 @@
         UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userTappedDiagnose:)];
         [label addGestureRecognizer:tap];
         label.numberOfLines = 0;
-        [label setBackgroundColor:[UIColor clearColor]];
+        
+        NSNumber *state = [itemStateArray objectAtIndex:i];
+        if ([state boolValue])
+        {
+            [label setBackgroundColor:selectColor];
+            [label.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        }
+        else
+        {
+            [label setBackgroundColor:[UIColor clearColor]];
+            [label.layer setBorderColor:[UIColor clearColor].CGColor];
+        }
         [label setTextColor:[UIColor blackColor]];
         [label setText:text];
         [label setTextAlignment:UITextAlignmentCenter];
         [label.layer setMasksToBounds:YES];
         [label.layer setCornerRadius:3];
-        [label.layer setBorderColor:[UIColor grayColor].CGColor];
+        label.tag = i;
+        
         [label.layer setBorderWidth: 0.5f];
 
         [self addSubview:label];
@@ -70,10 +86,25 @@
 -(void)userTappedDiagnose:(UITapGestureRecognizer*)sender
 {
     UILabel *label = (UILabel *)sender.view;
-    [label setBackgroundColor:self.selectColor];
-    if (self.delegate && [self.delegate respondsToSelector:@selector(userSelectedItem:forIndexPath:)])
+    int tag = label.tag;
+    NSNumber *state = [itemStateArray objectAtIndex:tag];
+    NSNumber *newState;
+    if ([state boolValue])
     {
-        [self.delegate userSelectedItem:label.text forIndexPath:self.cellIndex];
+        newState = [NSNumber numberWithBool:NO];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label.layer setBorderColor:[UIColor clearColor].CGColor];
+    }
+    else
+    {
+        newState = [NSNumber numberWithBool:YES];
+        [label setBackgroundColor:selectColor];
+        [label.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    }
+    [itemStateArray replaceObjectAtIndex:tag withObject:newState];
+    if (self.delegate && [self.delegate respondsToSelector:@selector(ItemState:tag:forIndexPath:)])
+    {
+        [self.delegate ItemState:[newState boolValue] tag:tag forIndexPath:self.cellIndex];
     }
 }
 /*

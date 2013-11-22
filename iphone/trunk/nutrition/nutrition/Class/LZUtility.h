@@ -65,6 +65,7 @@
 
 +(UIColor*)getNutrientColorForNutrientId:(NSString *)nutrientId;
 
++ (UIColor*)getSymptomTypeColorForId:(NSString *)typeId;
 + (BOOL)isUserProfileComplete;
 
 + (NSDictionary *)getActivityLevelInfo;
