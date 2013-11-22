@@ -409,7 +409,7 @@ public class NutritionTool {
 	        }
 	    }
 	    //options param not have the flag, check other conditions
-	    if (Constants.KeyIsEnvironmentDebug == 0){
+	    if (!Constants.KeyIsEnvironmentDebug){
 	        //just use config value
 	    }else{
 //	        NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];

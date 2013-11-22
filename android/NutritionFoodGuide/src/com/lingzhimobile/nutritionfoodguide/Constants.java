@@ -5,7 +5,7 @@ import android.net.Uri;
 
 public class Constants {
 	
-	public static final int KeyIsEnvironmentDebug = 0;
+	public static final boolean KeyIsEnvironmentDebug = true;
 	public static final String DBupdateTime = "201311211600";
 	
 	public static final boolean Config_needConsiderNutrientLoss = false;

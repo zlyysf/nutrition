@@ -1892,7 +1892,9 @@ public class DataAccess {
 
 		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Symptom, 
 	    		columnValuePairs_equal, null, null, Constants.COLUMN_NAME_DisplayOrder, false);
-		Log.d(LogTag, "getSymptomRows_BySymptomTypeIds row count="+rows.size()+",\nrows="+Tool.getIndentFormatStringOfObject(rows,0));
+		String logMsg = "getSymptomRows_BySymptomTypeIds row count="+rows.size()+",\nrows="+Tool.getIndentFormatStringOfObject(rows,0);
+		Log.d(LogTag, logMsg);
+		Tool_microlog4android.logDebug(logMsg);
 	    return rows;
 	    
 	}
@@ -1902,7 +1904,9 @@ public class DataAccess {
 		Log.d(LogTag, "getSymptomRowsByTypeDict_BySymptomTypeIds enter");
 		ArrayList<HashMap<String, Object>> symptomRows = getSymptomRows_BySymptomTypeIds(symptomTypeIds);
 		HashMap<String, ArrayList<HashMap<String, Object>>> symptomsByTypeDict = Tool.groupBy(Constants.COLUMN_NAME_SymptomTypeId, symptomRows);
-		Log.d(LogTag, "getSymptomRowsByTypeDict_BySymptomTypeIds return=" + Tool.getIndentFormatStringOfObject(symptomsByTypeDict, 0));
+		String logMsg = "getSymptomRowsByTypeDict_BySymptomTypeIds return=" + Tool.getIndentFormatStringOfObject(symptomsByTypeDict, 0);
+		Log.d(LogTag, logMsg);
+		Tool_microlog4android.logDebug(logMsg);
 	    return symptomsByTypeDict;
 	}
 

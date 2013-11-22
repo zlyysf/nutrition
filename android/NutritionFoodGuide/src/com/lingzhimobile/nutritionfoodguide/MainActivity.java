@@ -20,6 +20,8 @@ public class MainActivity extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
+        Tool_microlog4android.init(this);
+        
         Button button1 = (Button)findViewById(R.id.btnButton1);
         button1.setOnClickListener(this);
         button1 = (Button)findViewById(R.id.buttonGroups);
