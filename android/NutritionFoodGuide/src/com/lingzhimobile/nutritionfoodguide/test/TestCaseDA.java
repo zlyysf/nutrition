@@ -20,7 +20,8 @@ public class TestCaseDA {
 	public static void testMain(Context ctx){
 //		test1(ctx);
 //		test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(ctx);
-		test_foodCollocationApis(ctx);
+//		test_foodCollocationApis(ctx);
+		test_Symptom1(ctx);
 	}
 	
 	static void test1(Context ctx){
@@ -119,5 +120,36 @@ public class TestCaseDA {
 		
 		
 	}
+	
+	static void test_Symptom1(Context ctx){
+		DataAccess da = DataAccess.getSingleton(ctx);
+		
+		ArrayList<HashMap<String, Object>> symptomTypeRows = da.getSymptomTypeRows_withForSex(Constants.ForSex_male);
+		ArrayList<Object> symptomTypeIdObjs = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_SymptomTypeId, symptomTypeRows);
+		ArrayList<String> symptomTypeIds = Tool.convertToStringArrayList(symptomTypeIdObjs);
+		Log.d(LogTag, "symptomTypeIds="+Tool.getIndentFormatStringOfObject(symptomTypeIds, 0));
+		da.getSymptomRowsByTypeDict_BySymptomTypeIds(symptomTypeIds);
+		
+		
+	}
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

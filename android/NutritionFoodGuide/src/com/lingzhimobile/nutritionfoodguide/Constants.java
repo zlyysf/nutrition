@@ -6,7 +6,7 @@ import android.net.Uri;
 public class Constants {
 	
 	public static final int KeyIsEnvironmentDebug = 0;
-	public static final String DBupdateTime = "201310241802";
+	public static final String DBupdateTime = "201311211600";
 	
 	public static final boolean Config_needConsiderNutrientLoss = false;
 	public static final int Config_foodUpperLimit = 1000; // unit g
@@ -136,6 +136,48 @@ public class Constants {
 	public static final String COLUMN_NAME_DiseaseType ="DiseaseType";
 	public static final String COLUMN_NAME_DiseaseTimeType ="DiseaseTimeType";
 	public static final String COLUMN_NAME_LackLevelMark ="LackLevelMark";
+	
+	
+
+	public static final String TABLE_NAME_SymptomType ="SymptomType";
+	public static final String TABLE_NAME_Symptom ="Symptom";
+	public static final String TABLE_NAME_SymptomNutrient ="SymptomNutrient";
+	public static final String TABLE_NAME_SymptomPossibleIllness ="SymptomPossibleIllness";
+	public static final String TABLE_NAME_Illness ="Illness";
+	public static final String COLUMN_NAME_SymptomTypeId ="SymptomTypeId";
+	public static final String COLUMN_NAME_DisplayOrder ="DisplayOrder";
+	public static final String COLUMN_NAME_SymptomTypeNameCn ="SymptomTypeNameCn";
+	public static final String COLUMN_NAME_SymptomTypeNameEn ="SymptomTypeNameEn";
+	public static final String COLUMN_NAME_ForSex ="ForSex";
+	public static final String COLUMN_NAME_SymptomId ="SymptomId";
+	public static final String COLUMN_NAME_SymptomNameCn ="SymptomNameCn";
+	public static final String COLUMN_NAME_SymptomNameEn ="SymptomNameEn";
+	public static final String COLUMN_NAME_IllnessId ="IllnessId";
+	public static final String COLUMN_NAME_IllnessNameCn ="IllnessNameCn";
+	public static final String COLUMN_NAME_IllnessNameEn ="IllnessNameEn";
+	
+	public static final String TABLE_NAME_UserRecordSymptom ="UserRecordSymptom";
+	public static final String COLUMN_NAME_DayLocal ="DayLocal";
+	public static final String COLUMN_NAME_UpdateTimeUTC ="UpdateTimeUTC";
+	public static final String COLUMN_NAME_Symptoms ="Symptoms";
+	public static final String COLUMN_NAME_Temperature ="Temperature";
+	public static final String COLUMN_NAME_Weight ="Weight";
+	public static final String COLUMN_NAME_Heartbeat ="Heartbeat";
+	public static final String COLUMN_NAME_BloodPressure ="BloodPressure";
+	public static final String COLUMN_NAME_Note ="Note";
+	public static final String COLUMN_NAME_BMI ="BMI";
+	public static final String COLUMN_NAME_LackNutrientIDs ="LackNutrientIDs";
+	public static final String COLUMN_NAME_InferIllnesses ="InferIllnesses";
+	public static final String COLUMN_NAME_HealthMark ="HealthMark";
+	public static final String COLUMN_NAME_RecommendFoodAndAmounts ="RecommendFoodAndAmounts";
+	public static final String COLUMN_NAME_MattersNeedAttention ="MattersNeedAttention";
+	
+	
+	public static final String ForSex_both ="both";
+	public static final String ForSex_male ="male";
+	public static final String ForSex_female ="female";
+
+
 	
 	
 	public static final String DiseaseGroupType_wizard ="wizard";

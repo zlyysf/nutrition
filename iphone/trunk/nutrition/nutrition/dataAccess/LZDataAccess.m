@@ -1980,7 +1980,7 @@
     NSLog(@"getSymptomTypeRows_withForSex enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (forSex==nil || [ForSex_both isEqualToString:forSex]){
-        [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_ForSex,ForSex_both, nil]];
+//        [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_ForSex,ForSex_both, nil]];
     }else{
         NSArray *values = [NSArray arrayWithObjects:ForSex_both,forSex, nil];
         [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_ForSex,values, nil]];

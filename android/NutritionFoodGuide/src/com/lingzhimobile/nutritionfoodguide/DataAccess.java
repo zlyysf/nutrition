@@ -1855,6 +1855,63 @@ public class DataAccess {
 //	}
 
 	//------------------------------------------------------------------------------------------
+	
+	
+	
+
+	public ArrayList<HashMap<String, Object>> getSymptomTypeRows_withForSex(String forSex)
+	{
+	    Log.d(LogTag, "getSymptomTypeRows_withForSex enter, forSex="+forSex);
+	    ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+	    if (forSex == null || Constants.ForSex_both.equalsIgnoreCase(forSex)){
+//	    	Object[] columnValuePair = {Constants.COLUMN_NAME_ForSex,Constants.ForSex_both};
+//	    	columnValuePairs_equal.add(columnValuePair);
+	    }else{
+	    	Object[] values = {Constants.ForSex_both,forSex};
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_ForSex,values};
+	    	columnValuePairs_equal.add(columnValuePair);
+	    }
+
+	    ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_SymptomType, 
+	    		columnValuePairs_equal, null, null, Constants.COLUMN_NAME_DisplayOrder, false);
+	    Log.d(LogTag, "getSymptomTypeRows_withForSex return="+Tool.getIndentFormatStringOfObject(rows,0));
+	    return rows;
+	}
+	
+	public ArrayList<HashMap<String, Object>> getSymptomRows_BySymptomTypeIds(ArrayList<String> symptomTypeIds)
+	{
+		Log.d(LogTag, "getSymptomRows_BySymptomTypeIds enter");
+		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+		if (symptomTypeIds != null){
+			if (symptomTypeIds.size() == 0){
+				return null;
+			}
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_SymptomTypeId,symptomTypeIds};
+	    	columnValuePairs_equal.add(columnValuePair);
+		}
+
+		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Symptom, 
+	    		columnValuePairs_equal, null, null, Constants.COLUMN_NAME_DisplayOrder, false);
+		Log.d(LogTag, "getSymptomRows_BySymptomTypeIds row count="+rows.size()+",\nrows="+Tool.getIndentFormatStringOfObject(rows,0));
+	    return rows;
+	    
+	}
+	
+	public HashMap<String,ArrayList<HashMap<String, Object>>> getSymptomRowsByTypeDict_BySymptomTypeIds(ArrayList<String> symptomTypeIds)
+	{
+		Log.d(LogTag, "getSymptomRowsByTypeDict_BySymptomTypeIds enter");
+		ArrayList<HashMap<String, Object>> symptomRows = getSymptomRows_BySymptomTypeIds(symptomTypeIds);
+		HashMap<String, ArrayList<HashMap<String, Object>>> symptomsByTypeDict = Tool.groupBy(Constants.COLUMN_NAME_SymptomTypeId, symptomRows);
+		Log.d(LogTag, "getSymptomRowsByTypeDict_BySymptomTypeIds return=" + Tool.getIndentFormatStringOfObject(symptomsByTypeDict, 0));
+	    return symptomsByTypeDict;
+	}
+
+	
+	
+	
+	
+	
+	
 }
 
 
