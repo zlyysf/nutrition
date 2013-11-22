@@ -33,10 +33,11 @@
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
 //    [self.class test_DiseaseNutrient1];
-//    [self.class test_DiseaseNutrient2];
+    [self.class test_DiseaseNutrient2];
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
 //    [self.class test_TranslationItem1];
-    [self.class test_getFoodsByShowingPart];
+//    [self.class test_getFoodsByShowingPart];
+//    [self.class test_getSymptom1];
 
     
 //    [self.class testFormatResult1];
@@ -2392,6 +2393,19 @@ BOOL needLimitNutrients = FALSE;
     
 }
 
+
+
++(void)test_getSymptom1
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSArray *symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_female];
+    NSArray *symptomTypeIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SymptomTypeId andDictionaryArray:symptomTypeRows];
+    NSLog(@"symptomTypeIds=%@",[LZUtility getObjectDescription:symptomTypeIds andIndent:0] );
+    
+    [da getSymptomRowsByTypeDict_BySymptomTypeIds:symptomTypeIds];
+    
+    
+}
 
 
 

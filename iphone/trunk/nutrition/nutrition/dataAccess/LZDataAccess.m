@@ -1975,6 +1975,43 @@
 }
 
 
+-(NSArray*)getSymptomTypeRows_withForSex:(NSString*)forSex
+{
+    NSLog(@"getSymptomTypeRows_withForSex enter");
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    if (forSex==nil || [ForSex_both isEqualToString:forSex]){
+        [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_ForSex,ForSex_both, nil]];
+    }else{
+        NSArray *values = [NSArray arrayWithObjects:ForSex_both,forSex, nil];
+        [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_ForSex,values, nil]];
+    }
+    
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_SymptomType andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:COLUMN_NAME_DisplayOrder andNeedDistinct:false];
+    NSLog(@"getSymptomTypeRows_withForSex rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    return rows;
+}
+
+-(NSArray*)getSymptomRows_BySymptomTypeIds:(NSArray*)symptomTypeIds
+{
+    NSLog(@"getSymptomRows_BySymptomTypeIds enter");
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SymptomTypeId,symptomTypeIds, nil]];
+    
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Symptom andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:COLUMN_NAME_DisplayOrder andNeedDistinct:false];
+    NSLog(@"getSymptomRows_BySymptomTypeIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    return rows;
+}
+
+-(NSMutableDictionary*)getSymptomRowsByTypeDict_BySymptomTypeIds:(NSArray*)symptomTypeIds
+{
+    NSLog(@"getSymptomRowsByTypeDict_BySymptomTypeIds enter");
+    NSArray *symptomRows = [self getSymptomRows_BySymptomTypeIds:symptomTypeIds];
+    
+    NSMutableDictionary * symptomsByTypeDict = [LZUtility groupbyDictionaryArrayToArrayDictionary:symptomRows andKeyName:COLUMN_NAME_SymptomTypeId];
+    
+    NSLog(@"getSymptomRowsByTypeDict_BySymptomTypeIds ret=%@", [LZUtility getObjectDescription:symptomsByTypeDict andIndent:0] );
+    return symptomsByTypeDict;
+}
 
 @end
 

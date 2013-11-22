@@ -221,6 +221,11 @@
 #define COLUMN_NAME_MattersNeedAttention @"MattersNeedAttention"
 
 
+#define ForSex_both @"both"
+#define ForSex_male @"male"
+#define ForSex_female @"female"
+
+
 
 
 #define TranslationItemType_FoodCnType @"FoodCnType"

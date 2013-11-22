@@ -102,6 +102,13 @@
 
 -(NSDictionary*)getTranslationItemsDictionaryByType:(NSString*)itemType;
 
+-(NSArray*)getSymptomTypeRows_withForSex:(NSString*)forSex;
+-(NSArray*)getSymptomRows_BySymptomTypeIds:(NSArray*)symptomTypeIds;
+-(NSMutableDictionary*)getSymptomRowsByTypeDict_BySymptomTypeIds:(NSArray*)symptomTypeIds;
+
+
+
+
 @end
 
 

@@ -309,6 +309,7 @@
     if (orderByPart.length>0)
         [query appendFormat:@" ORDER BY %@",orderByPart];
     NSDictionary *dictQueryParam = [NSDictionary dictionaryWithObjectsAndKeys:fieldValue, @"fieldValue", nil];
+
     NSLog(@"selectTableByEqualFilter_withTableName query=%@, dictQueryParam=%@",query,[LZUtility getObjectDescription:dictQueryParam andIndent:0]);
     FMResultSet *rs = [dbfm executeQuery:query withParameterDictionary:dictQueryParam];
     //    NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
@@ -317,6 +318,7 @@
 }
 /*
  这里 orderByPart 不带 ORDER BY
+ 这里的fieldValuePairs 中的value可以是数组
  */
 - (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andFieldValuePairs:(NSArray *)fieldValuePairs andSelectColumns:(NSArray*)selectColumns andOrderByPart:(NSString*)orderByPart andNeedDistinct:(BOOL)needDistinct
 {

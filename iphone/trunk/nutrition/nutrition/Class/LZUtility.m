@@ -120,7 +120,7 @@
 }
 
 
-+(NSMutableArray *)addUnitItemToArrayDictionary_withUnitItem:(NSObject*)unitItem withArrayDictionary:(NSMutableDictionary*)arrayDict andKey:(NSString *)keyForArray;
++(NSMutableArray *)addUnitItemToArrayDictionary_withUnitItem:(NSObject*)unitItem withArrayDictionary:(NSMutableDictionary*)arrayDict andKey:(NSString *)keyForArray
 {
     assert(unitItem!=nil);
     assert(arrayDict!=nil);
@@ -133,6 +133,18 @@
     [itemAsArray addObject:unitItem];
     return itemAsArray;
 }
+
++(NSMutableDictionary *)groupbyDictionaryArrayToArrayDictionary:(NSArray*)dictArray andKeyName:(NSString *)keyName
+{
+    NSMutableDictionary *arrayDict = [NSMutableDictionary dictionary];
+    for(int i=0; i<dictArray.count; i++){
+        NSDictionary *dict = dictArray[i];
+        NSString *keyValue = dict[keyName];
+        [self addUnitItemToArrayDictionary_withUnitItem:dict withArrayDictionary:arrayDict andKey:keyValue];
+    }
+    return arrayDict;
+}
+
 
 +(NSMutableDictionary*)generateDictionaryWithFillItem:(NSObject*)fillItem andKeys:(NSArray*)keys
 {
