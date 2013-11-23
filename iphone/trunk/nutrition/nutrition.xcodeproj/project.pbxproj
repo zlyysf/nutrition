@@ -127,6 +127,8 @@
 		5F7E5AA317965B47007CA18A /* recommend_sign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E5AA217965B47007CA18A /* recommend_sign@2x.png */; };
 		5F7E5AA917967A95007CA18A /* LZDietCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E5AA817967A95007CA18A /* LZDietCell.m */; };
 		5F7E5AAB17969463007CA18A /* diet_empty_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */; };
+		5F7F71F71840D82400724397 /* item_detail_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7F71F61840D82400724397 /* item_detail_arrow@2x.png */; };
+		5F7F71F91840D9F100724397 /* gray_horizon_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7F71F81840D9F100724397 /* gray_horizon_line@2x.png */; };
 		5F82A099180660B00000C9A1 /* heavy_lack_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F82A097180660A90000C9A1 /* heavy_lack_bar@2x.png */; };
 		5F82A09A180660B00000C9A1 /* light_lack_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F82A098180660AD0000C9A1 /* light_lack_bar@2x.png */; };
 		5F82A0A0180686170000C9A1 /* button_back_40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F82A09F180686170000C9A1 /* button_back_40@2x.png */; };
@@ -434,6 +436,8 @@
 		5F7E5AA717967A95007CA18A /* LZDietCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZDietCell.h; path = Class/LZDietCell.h; sourceTree = "<group>"; };
 		5F7E5AA817967A95007CA18A /* LZDietCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZDietCell.m; path = Class/LZDietCell.m; sourceTree = "<group>"; };
 		5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "diet_empty_icon@2x.png"; path = "nutrition/Resource/diet_empty_icon@2x.png"; sourceTree = "<group>"; };
+		5F7F71F61840D82400724397 /* item_detail_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "item_detail_arrow@2x.png"; path = "nutrition/Resource/item_detail_arrow@2x.png"; sourceTree = "<group>"; };
+		5F7F71F81840D9F100724397 /* gray_horizon_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gray_horizon_line@2x.png"; path = "nutrition/Resource/gray_horizon_line@2x.png"; sourceTree = "<group>"; };
 		5F82A097180660A90000C9A1 /* heavy_lack_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heavy_lack_bar@2x.png"; path = "nutrition/Resource/heavy_lack_bar@2x.png"; sourceTree = "<group>"; };
 		5F82A098180660AD0000C9A1 /* light_lack_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "light_lack_bar@2x.png"; path = "nutrition/Resource/light_lack_bar@2x.png"; sourceTree = "<group>"; };
 		5F82A09F180686170000C9A1 /* button_back_40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_back_40@2x.png"; path = "nutrition/Resource/button_back_40@2x.png"; sourceTree = "<group>"; };
@@ -1049,6 +1053,43 @@
 			name = YouMengSDK;
 			sourceTree = "<group>";
 		};
+		5F7F71F11840C8EF00724397 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				5FECADA01838912900D72A8C /* NGDiagnoseViewController.h */,
+				5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */,
+				5FECADA31838B19D00D72A8C /* NGRecordHistoryViewController.h */,
+				5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */,
+				5FDB86411840A2F90015FADD /* NGHealthReportViewController.h */,
+				5FDB86421840A2F90015FADD /* NGHealthReportViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		5F7F71F21840C90100724397 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				5FF593D3183DBB970011CEA3 /* NGDiagnoseCell.h */,
+				5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */,
+				5FDB8638184071F40015FADD /* NGNoteCell.h */,
+				5FDB8639184071F40015FADD /* NGNoteCell.m */,
+				5FDB863B1840722B0015FADD /* NGMeasurementCell.h */,
+				5FDB863C1840722B0015FADD /* NGMeasurementCell.m */,
+				5FDB863E18409D0B0015FADD /* NGRecordCell.h */,
+				5FDB863F18409D0B0015FADD /* NGRecordCell.m */,
+			);
+			name = Cells;
+			sourceTree = "<group>";
+		};
+		5F7F71F31840C91300724397 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5FF593D6183DBC210011CEA3 /* NGDiagnosesView.h */,
+				5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		5F8DEE9617951DC200C6E9F5 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -1413,6 +1454,8 @@
 		5FECAD911838775700D72A8C /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				5F7F71F81840D9F100724397 /* gray_horizon_line@2x.png */,
+				5F7F71F61840D82400724397 /* item_detail_arrow@2x.png */,
 				5FECAD921838777F00D72A8C /* clinic-50@2x.png */,
 				5FECAD931838777F00D72A8C /* line_chart-50@2x.png */,
 				5FECAD941838777F00D72A8C /* month_view-50@2x.png */,
@@ -1434,22 +1477,9 @@
 				5F3338B7172A407E0096E7AE /* LZAppDelegate.h */,
 				5F3338B8172A407E0096E7AE /* LZAppDelegate.m */,
 				5FECAD8F1838701100D72A8C /* NewMainStoryboard.storyboard */,
-				5FECADA01838912900D72A8C /* NGDiagnoseViewController.h */,
-				5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */,
-				5FECADA31838B19D00D72A8C /* NGRecordHistoryViewController.h */,
-				5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */,
-				5FDB86411840A2F90015FADD /* NGHealthReportViewController.h */,
-				5FDB86421840A2F90015FADD /* NGHealthReportViewController.m */,
-				5FF593D3183DBB970011CEA3 /* NGDiagnoseCell.h */,
-				5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */,
-				5FF593D6183DBC210011CEA3 /* NGDiagnosesView.h */,
-				5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */,
-				5FDB8638184071F40015FADD /* NGNoteCell.h */,
-				5FDB8639184071F40015FADD /* NGNoteCell.m */,
-				5FDB863B1840722B0015FADD /* NGMeasurementCell.h */,
-				5FDB863C1840722B0015FADD /* NGMeasurementCell.m */,
-				5FDB863E18409D0B0015FADD /* NGRecordCell.h */,
-				5FDB863F18409D0B0015FADD /* NGRecordCell.m */,
+				5F7F71F31840C91300724397 /* Views */,
+				5F7F71F21840C90100724397 /* Cells */,
+				5F7F71F11840C8EF00724397 /* Controllers */,
 			);
 			name = Nutrition2.0;
 			sourceTree = "<group>";
@@ -1633,6 +1663,7 @@
 				5F4FD72017D4B04900DBA25A /* MainStoryboard.storyboard in Resources */,
 				5FD76DE917D5B3EE00746418 /* close_button@2x.png in Resources */,
 				5F943EFA17D721F400AFBF47 /* 主食@2x.png in Resources */,
+				5F7F71F71840D82400724397 /* item_detail_arrow@2x.png in Resources */,
 				5F943EFB17D721F400AFBF47 /* 五谷@2x.png in Resources */,
 				5F943EFC17D721F400AFBF47 /* 奶制品@2x.png in Resources */,
 				5F943EFD17D721F400AFBF47 /* 干果@2x.png in Resources */,
@@ -1701,6 +1732,7 @@
 				5FC81273181798CF009A3A2B /* nutrition_info_icon@2x.png in Resources */,
 				5FC8127618179DDE009A3A2B /* food_icon_clicked@2x.png in Resources */,
 				5FC8127718179DDE009A3A2B /* nutrition_info_icon_clicked@2x.png in Resources */,
+				5F7F71F91840D9F100724397 /* gray_horizon_line@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
