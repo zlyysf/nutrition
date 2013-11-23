@@ -7,6 +7,7 @@
 //
 
 #import "NGHealthReportViewController.h"
+#import "NGRecommendFoodView.h"
 #define NutritionItemLabelHeight 36
 #define NutritionItemStartX 107
 #define NutritionItemStartY 95
@@ -19,6 +20,9 @@
 #define BottomViewBottomMargin 25
 #define ItemDetailArrowStartX 255
 #define AttentionLabelStartX 86
+#define RecommendScrollViewHeight 150
+#define RecommendFoodMargin 14
+#define RecommendFoodStartY 15
 #define BigLabelFont [UIFont systemFontOfSize:22.f]
 #define SmallLabelFont [UIFont systemFontOfSize:14.f]
 @interface NGHealthReportViewController ()
@@ -44,7 +48,27 @@
     self.lackNutritionArray = [NSArray arrayWithObjects:@"锌",@"铁",@"蛋白质",@"维生素B12",nil];
     self.potentialArray = [NSArray arrayWithObjects:@"急性咽炎",@"关节炎",@"流行性感冒",nil ];
     self.attentionArray = [NSArray arrayWithObjects:@"少吃熏制，腌制，富含硝酸盐的食品",@"避免大量饮酒，吸烟",@"充分睡眠",@"多饮水，保持室内空气流通",nil ];
-    self.recommendFoodArray = [NSArray arrayWithObjects:@"鸡蛋",@"开心果",@"生蚝",@"油菜",@"菠菜",nil];
+    NSDictionary *food1 = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                                                       @"鸡蛋",@"foodname",
+                                                                       @"干果.png",@"foodpic",
+                                                                       @"2个",@"foodamount", nil];
+    NSDictionary *food2 = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                                                       @"开心果",@"foodname",
+                                                                       @"干果.png",@"foodpic",
+                                                                       @"50克",@"foodamount", nil];
+    NSDictionary *food3 = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                                                       @"生蚝",@"foodname",
+                                                                       @"干果.png",@"foodpic",
+                                                                       @"2个",@"foodamount", nil];
+    NSDictionary *food4 = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                                                       @"西兰花",@"foodname",
+                                                                       @"干果.png",@"foodpic",
+                                                                       @"100g",@"foodamount", nil];
+    NSDictionary *food5 = [[NSDictionary alloc]initWithObjectsAndKeys:
+                                                                       @"菠菜",@"foodname",
+                                                                       @"干果.png",@"foodpic",
+                                                                       @"200克",@"foodamount", nil];
+    self.recommendFoodArray = [NSArray arrayWithObjects:food1,food2,food3,food4,food5,nil];
     
 	// Do any additional setup after loading the view.
 }
@@ -95,6 +119,15 @@
         arrowImage.center = arrowCenter;
         [arrowImage setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
     }
+    int foodCount =[self.recommendFoodArray count];
+    [self.recommendFoodScrollView setContentSize:CGSizeMake(2+foodCount*(80+RecommendFoodMargin)-RecommendFoodMargin, RecommendScrollViewHeight)];
+    for (int l=0; l< foodCount; l++)
+    {
+        NSDictionary *foodInfo = [self.recommendFoodArray objectAtIndex:l];
+        NGRecommendFoodView *foodView = [[NGRecommendFoodView alloc]initWithFrame:CGRectMake(1+l*(80+RecommendFoodMargin), 15, 80, 120) foodInfo:foodInfo];
+        [self.recommendFoodScrollView addSubview:foodView];
+    }
+    
     int potentialCount = [self.potentialArray count];
     float bottomPart1Height = ItemTopMargin+potentialCount*(NutritionItemLabelHeight+PotentialItemMargin)+BottomViewBottomMargin-PotentialItemMargin;
     [self.potentialLabel setFrame:CGRectMake(10, (bottomPart1Height-20-(BottomViewBottomMargin-ItemTopMargin))/2, 60, 20)];
@@ -141,7 +174,7 @@
     float bottomViewHeight = attentionStartY+BottomViewBottomMargin-AttentionItemMargin;
     bottomPart2Height = bottomViewHeight-bottomPart1Height;
     [self.attentionLabel setFrame:CGRectMake(10, bottomPart1Height+(bottomPart2Height-20-(BottomViewBottomMargin-ItemTopMargin))/2, 60, 20)];
-    [self.bottomView setFrame:CGRectMake(10, 120+middleViewHeight+40, 300, bottomViewHeight)];
+    [self.bottomView setFrame:CGRectMake(10, starty+middleViewHeight+40, 300, bottomViewHeight)];
     totalheight = 120+middleViewHeight+40+bottomViewHeight+20;
     [self.mainScrollView setContentSize:CGSizeMake(320, totalheight)];
     

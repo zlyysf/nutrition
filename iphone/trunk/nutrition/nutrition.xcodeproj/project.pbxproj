@@ -129,6 +129,7 @@
 		5F7E5AAB17969463007CA18A /* diet_empty_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */; };
 		5F7F71F71840D82400724397 /* item_detail_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7F71F61840D82400724397 /* item_detail_arrow@2x.png */; };
 		5F7F71F91840D9F100724397 /* gray_horizon_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7F71F81840D9F100724397 /* gray_horizon_line@2x.png */; };
+		5F7F71FC1840EAC000724397 /* NGRecommendFoodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F71FB1840EAC000724397 /* NGRecommendFoodView.m */; };
 		5F82A099180660B00000C9A1 /* heavy_lack_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F82A097180660A90000C9A1 /* heavy_lack_bar@2x.png */; };
 		5F82A09A180660B00000C9A1 /* light_lack_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F82A098180660AD0000C9A1 /* light_lack_bar@2x.png */; };
 		5F82A0A0180686170000C9A1 /* button_back_40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F82A09F180686170000C9A1 /* button_back_40@2x.png */; };
@@ -438,6 +439,8 @@
 		5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "diet_empty_icon@2x.png"; path = "nutrition/Resource/diet_empty_icon@2x.png"; sourceTree = "<group>"; };
 		5F7F71F61840D82400724397 /* item_detail_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "item_detail_arrow@2x.png"; path = "nutrition/Resource/item_detail_arrow@2x.png"; sourceTree = "<group>"; };
 		5F7F71F81840D9F100724397 /* gray_horizon_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gray_horizon_line@2x.png"; path = "nutrition/Resource/gray_horizon_line@2x.png"; sourceTree = "<group>"; };
+		5F7F71FA1840EAC000724397 /* NGRecommendFoodView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGRecommendFoodView.h; path = nutrition/Class/NGRecommendFoodView.h; sourceTree = "<group>"; };
+		5F7F71FB1840EAC000724397 /* NGRecommendFoodView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGRecommendFoodView.m; path = nutrition/Class/NGRecommendFoodView.m; sourceTree = "<group>"; };
 		5F82A097180660A90000C9A1 /* heavy_lack_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "heavy_lack_bar@2x.png"; path = "nutrition/Resource/heavy_lack_bar@2x.png"; sourceTree = "<group>"; };
 		5F82A098180660AD0000C9A1 /* light_lack_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "light_lack_bar@2x.png"; path = "nutrition/Resource/light_lack_bar@2x.png"; sourceTree = "<group>"; };
 		5F82A09F180686170000C9A1 /* button_back_40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_back_40@2x.png"; path = "nutrition/Resource/button_back_40@2x.png"; sourceTree = "<group>"; };
@@ -1086,6 +1089,8 @@
 			children = (
 				5FF593D6183DBC210011CEA3 /* NGDiagnosesView.h */,
 				5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */,
+				5F7F71FA1840EAC000724397 /* NGRecommendFoodView.h */,
+				5F7F71FB1840EAC000724397 /* NGRecommendFoodView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1801,6 +1806,7 @@
 				5F627440175CACAC006E46CA /* LZNutrientFoodAddCell.m in Sources */,
 				5FE436CE175F29D5003947ED /* LZKeyboardToolBar.m in Sources */,
 				5F746C081769EB9A00E68D0E /* LZReviewAppManager.m in Sources */,
+				5F7F71FC1840EAC000724397 /* NGRecommendFoodView.m in Sources */,
 				5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */,
 				5FF631DF17702D630068CBFE /* GADMasterViewController.m in Sources */,
 				5FF593D5183DBB970011CEA3 /* NGDiagnoseCell.m in Sources */,
