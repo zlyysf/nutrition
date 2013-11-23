@@ -7,7 +7,7 @@
 //
 
 #import "NGRecordHistoryViewController.h"
-
+#import "NGRecordCell.h"
 @interface NGRecordHistoryViewController ()
 
 
@@ -27,6 +27,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
 	// Do any additional setup after loading the view.
 }
 -(void)viewDidAppear:(BOOL)animated
@@ -35,7 +36,7 @@
     {
         [self.listView setSectionIndexBackgroundColor:[UIColor clearColor]];
         [self.listView setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
-        [self.listView setSectionIndexColor:[UIColor blackColor]];
+        //[self.listView setSectionIndexColor:[UIColor blackColor]];
     }
 }
 - (void)didReceiveMemoryWarning
@@ -55,8 +56,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [self.listView dequeueReusableCellWithIdentifier:@"RecordCell"];
-    cell.textLabel.text = [NSString stringWithFormat:@"section%d ",indexPath.section];
+    NGRecordCell *cell = (NGRecordCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGRecordCell"];
     
     return cell;
 }
@@ -89,7 +89,7 @@
 #pragma mark- UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    return 120;
+    return 465;
 }
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 //{
