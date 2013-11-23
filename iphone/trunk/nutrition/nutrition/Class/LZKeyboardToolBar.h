@@ -11,7 +11,7 @@
 -(void)toolbarKeyboardDone;
 @end
 @interface LZKeyboardToolBar : UIToolbar
-@property (assign,nonatomic)id<LZKeyboardToolBarDelegate>delegate;
+@property (assign,nonatomic)id<LZKeyboardToolBarDelegate>donedelegate;
 - (id)initWithFrame:(CGRect)frame
     doneButtonTitle:(NSString *)buttonTitle
            delegate:(id<LZKeyboardToolBarDelegate>)toolbarDelegate;

@@ -238,6 +238,8 @@
 		5FDB08B318162C89004896FD /* Icon76x76.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDB08B018162C89004896FD /* Icon76x76.png */; };
 		5FDB08B418162C89004896FD /* Icon120x120.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDB08B118162C89004896FD /* Icon120x120.png */; };
 		5FDB08B518162C89004896FD /* Icon152x152.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDB08B218162C89004896FD /* Icon152x152.png */; };
+		5FDB863A184071F40015FADD /* NGNoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB8639184071F40015FADD /* NGNoteCell.m */; };
+		5FDB863D1840722B0015FADD /* NGMeasurementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB863C1840722B0015FADD /* NGMeasurementCell.m */; };
 		5FDD1CAA179CFCAE0046F752 /* add_by_nutrient_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_button@2x.png */; };
 		5FDD1CAE179D19150046F752 /* change_name_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FDD1CAC179D19150046F752 /* change_name_button@2x.png */; };
 		5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDED0FF176F1D8F0026BCA3 /* LZShareViewController.m */; };
@@ -590,6 +592,10 @@
 		5FDB08B018162C89004896FD /* Icon76x76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon76x76.png; path = nutrition/Icon76x76.png; sourceTree = "<group>"; };
 		5FDB08B118162C89004896FD /* Icon120x120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon120x120.png; path = nutrition/Icon120x120.png; sourceTree = "<group>"; };
 		5FDB08B218162C89004896FD /* Icon152x152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon152x152.png; path = nutrition/Icon152x152.png; sourceTree = "<group>"; };
+		5FDB8638184071F40015FADD /* NGNoteCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGNoteCell.h; path = nutrition/Class/NGNoteCell.h; sourceTree = "<group>"; };
+		5FDB8639184071F40015FADD /* NGNoteCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGNoteCell.m; path = nutrition/Class/NGNoteCell.m; sourceTree = "<group>"; };
+		5FDB863B1840722B0015FADD /* NGMeasurementCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGMeasurementCell.h; path = nutrition/Class/NGMeasurementCell.h; sourceTree = "<group>"; };
+		5FDB863C1840722B0015FADD /* NGMeasurementCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGMeasurementCell.m; path = nutrition/Class/NGMeasurementCell.m; sourceTree = "<group>"; };
 		5FDD1CA9179CFCAE0046F752 /* add_by_nutrient_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_by_nutrient_button@2x.png"; path = "nutrition/Resource/add_by_nutrient_button@2x.png"; sourceTree = "<group>"; };
 		5FDD1CAC179D19150046F752 /* change_name_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_name_button@2x.png"; path = "nutrition/Resource/change_name_button@2x.png"; sourceTree = "<group>"; };
 		5FDED0FE176F1D8E0026BCA3 /* LZShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZShareViewController.h; path = Class/LZShareViewController.h; sourceTree = "<group>"; };
@@ -1430,6 +1436,10 @@
 				5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */,
 				5FF593D6183DBC210011CEA3 /* NGDiagnosesView.h */,
 				5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */,
+				5FDB8638184071F40015FADD /* NGNoteCell.h */,
+				5FDB8639184071F40015FADD /* NGNoteCell.m */,
+				5FDB863B1840722B0015FADD /* NGMeasurementCell.h */,
+				5FDB863C1840722B0015FADD /* NGMeasurementCell.m */,
 			);
 			name = Nutrition2.0;
 			sourceTree = "<group>";
@@ -1763,6 +1773,7 @@
 				5F90D80317AF8873000AEC06 /* mongoose.c in Sources */,
 				5F90D80417AF8873000AEC06 /* OpenUDID.m in Sources */,
 				5F90D80517AF8873000AEC06 /* CDataScanner.m in Sources */,
+				5FDB863D1840722B0015FADD /* NGMeasurementCell.m in Sources */,
 				5F90D80617AF8873000AEC06 /* CFilteringJSONSerializer.m in Sources */,
 				5F90D80717AF8873000AEC06 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				5F90D80817AF8873000AEC06 /* CJSONSerialization.m in Sources */,
@@ -1781,6 +1792,7 @@
 				5F20148A17BB2F7B0009B735 /* LZValueSelectorView.m in Sources */,
 				5F0081EB17C47E6F000938C2 /* JWNavigationViewController.m in Sources */,
 				5F145D8317C4987E00D6B615 /* LZMainPageViewController.m in Sources */,
+				5FDB863A184071F40015FADD /* NGNoteCell.m in Sources */,
 				088B768417C4B8F200206959 /* LZDataAccessUtil.m in Sources */,
 				5F86C85817CC4DF7001DDC34 /* LZDietPickerViewController.m in Sources */,
 				5F86C85B17CC51A0001DDC34 /* LZDietPickerCell.m in Sources */,

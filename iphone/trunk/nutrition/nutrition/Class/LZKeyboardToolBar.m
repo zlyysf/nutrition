@@ -9,7 +9,7 @@
 #import "LZKeyboardToolBar.h"
 
 @implementation LZKeyboardToolBar
-@synthesize delegate;
+@synthesize donedelegate;
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -25,7 +25,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         // Initialization code
-        self.delegate = toolbarDelegate;
+        self.donedelegate = toolbarDelegate;
         UIBarButtonItem *spaceBarItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFlexibleSpace
 																					  target:nil
 																					  action:nil];
@@ -40,9 +40,9 @@
 }
 - (void)textFieldDone
 {
-    if (self.delegate && [self.delegate respondsToSelector:@selector(toolbarKeyboardDone)])
+    if (self.donedelegate && [self.donedelegate respondsToSelector:@selector(toolbarKeyboardDone)])
     {
-        [self.delegate toolbarKeyboardDone];
+        [self.donedelegate toolbarKeyboardDone];
     }
 }
 /*

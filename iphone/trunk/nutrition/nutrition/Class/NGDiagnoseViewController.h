@@ -13,4 +13,5 @@
 @property (strong,nonatomic)NSArray *symptomTypeIdArray;
 @property (strong,nonatomic)NSMutableDictionary *symptomRowsDict;
 @property (strong,nonatomic)NSMutableDictionary *symptomStateDict;
+@property (strong, nonatomic) IBOutlet UITextField *heatTextField;
 @end

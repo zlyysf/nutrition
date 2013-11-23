@@ -11,12 +11,16 @@
 #import "LZDataAccess.h"
 #import "LZConstants.h"
 #import "LZUtility.h"
-@interface NGDiagnoseViewController ()<NGDiagnosesViewDelegate>
-
+#import "NGMeasurementCell.h"
+#import "NGNoteCell.h"
+#import "LZKeyboardToolBar.h"
+@interface NGDiagnoseViewController ()<NGDiagnosesViewDelegate,LZKeyboardToolBarDelegate,UITextViewDelegate,UITextFieldDelegate>
+@property (strong,nonatomic) UITextField *currentTextField;
+@property (strong,nonatomic) UITextView *currentTextView;
 @end
 
 @implementation NGDiagnoseViewController
-@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict;
+@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -29,6 +33,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = @"健康记录";
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
     [headerView setBackgroundColor:[UIColor clearColor]];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 4, 280, 21)];
@@ -59,6 +64,19 @@
 
     }
 	// Do any additional setup after loading the view.
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
+//    [MobClick endLogPageView:UmengPathGeRenXinXi];
 }
 
 - (void)didReceiveMemoryWarning
@@ -116,6 +134,49 @@
     }
     return totalHeight;
 }
+- (void)keyboardWillShow:(NSNotification *)notification {
+	
+    NSDictionary *userInfo = [notification userInfo];
+    
+    NSValue *boundsValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
+	CGRect keyboardRect = [boundsValue CGRectValue];
+    
+    CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height+49;
+    CGRect tableviewFrame = self.listView.frame;
+	tableviewFrame.size.height = keyboardTop;
+    
+	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    self.listView.frame = tableviewFrame;
+    [UIView commitAnimations];
+}
+
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+    
+    NSDictionary* userInfo = [notification userInfo];
+    /*
+     Restore the size of the text view (fill self's view).
+     Animate the resize so that it's in sync with the disappearance of the keyboard.
+     */
+	CGRect tableviewFrame = self.listView.frame;
+	tableviewFrame.size.height = self.view.frame.size.height;
+    
+	//bottomViewFrame.origin.y = keyboardTop - bottomViewFrame.size.height;
+    NSValue *animationDurationValue = [userInfo objectForKey:UIKeyboardAnimationDurationUserInfoKey];
+    NSTimeInterval animationDuration;
+    [animationDurationValue getValue:&animationDuration];
+    [UIView beginAnimations:nil context:NULL];
+    [UIView setAnimationDuration:animationDuration];
+    self.listView.frame = tableviewFrame;
+    [UIView commitAnimations];
+    
+}
+
 #pragma mark- UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
@@ -129,24 +190,46 @@
 {
     if (indexPath.row == [self.symptomTypeIdArray count])
     {
-        UITableViewCell *cell = [self.listView dequeueReusableCellWithIdentifier:@"MeasurementCell"];
-        UIView *titleView = [cell.contentView viewWithTag:1];
-        UIView *backView = [cell.contentView viewWithTag:2];
-        [titleView.layer setBorderWidth:0.5f];
-        [backView.layer setBorderWidth:0.5f];
-        [titleView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        [backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        NGMeasurementCell *cell =(NGMeasurementCell*) [self.listView dequeueReusableCellWithIdentifier:@"NGMeasurementCell"];
+        [cell.headerNameLabel setBackgroundColor:[UIColor colorWithRed:198/255.f green:212/255.f blue:239/255.f alpha:1.0f]];
+        [cell.headerNameLabel.layer setBorderWidth:0.5f];
+        [cell.backView.layer setBorderWidth:0.5f];
+        [cell.headerNameLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        cell.headerNameLabel.text = @"  测量";
+        cell.heatLabel.text = @"体温";
+        cell.weightLabel.text = @"体重";
+        cell.heartbeatLabel.text = @"心跳";
+        cell.highpressureLabel.text = @"高压";
+        cell.lowpressureLabel.text = @"低压";
+        cell.heatUnitLabel.text = @"摄氏度";
+        cell.weightUnitLabel.text = @"公斤";
+        cell.heartbeatUnitLabel.text = @"次/分钟";
+        cell.highpressureUnitLabel.text = @"毫米水银";
+        cell.lowpressureUnitLabel.text = @"毫米水银";
+        cell.heatTextField.delegate = self;
+        cell.weightTextField.delegate = self;
+        cell.heartbeatTextField.delegate = self;
+        cell.highpressureTextField.delegate = self;
+        cell.lowpressureTextField.delegate = self;
+        cell.heatTextField.tag = 101;
+        cell.weightTextField.tag = 102;
+        cell.heartbeatTextField.tag = 103;
+        cell.highpressureTextField.tag = 104;
+        cell.lowpressureTextField.tag = 105;
         return cell;
     }
     else if (indexPath.row == [self.symptomTypeIdArray count]+1)
     {
-        UITableViewCell *cell = [self.listView dequeueReusableCellWithIdentifier:@"NoteCell"];
-        UIView *titleView = [cell.contentView viewWithTag:1];
-        UIView *backView = [cell.contentView viewWithTag:2];
-        [titleView.layer setBorderWidth:0.5f];
-        [backView.layer setBorderWidth:0.5f];
-        [titleView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        [backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        NGNoteCell *cell = (NGNoteCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGNoteCell"];
+        [cell.headerNameLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:171/255.f blue:162/255.f alpha:1.0f]];
+        cell.noteTextView.tag = 106;
+        [cell.headerNameLabel.layer setBorderWidth:0.5f];
+        [cell.backView.layer setBorderWidth:0.5f];
+        [cell.headerNameLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        cell.headerNameLabel.text = @"  笔记";
+        cell.noteTextView.delegate = self;
         return cell;
     }
     else
@@ -190,18 +273,136 @@
 #pragma mark- NGDiagnosesViewDelegate
 -(void)ItemState:(BOOL )state tag:(int)tag forIndexPath:(NSIndexPath *)indexPath
 {
-    if (state)
+//    if (state)
+//    {
+//        NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
+//        NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
+//        NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:tag];
+//        NSString *text = [symptomDict objectForKey:@"SymptomNameCn"];
+//        NSString *message = [NSString stringWithFormat:@"您点击的症状是 %@, cell index section: %d row :%d",text,indexPath.section,indexPath.row];
+//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:Nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+//        [alert show];
+//    }
+    
+}
+#pragma mark- UITextFieldDelegate
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
+{
+    LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:NSLocalizedString(@"wanchengbutton",@"完成") delegate:self];
+    textField.inputAccessoryView = keyboardToolbar;
+    self.currentTextField = textField;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 50 * USEC_PER_SEC);
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        if (tag == 200)
+//        {
+//            [self.listView setContentOffset:CGPointMake(0, 55) animated:YES];
+//        }
+//        else if (tag == 201)
+//        {
+//            [self.listView setContentOffset:CGPointMake(0, 105) animated:YES];
+//        }
+//        else if (tag == 202)
+//        {
+//            [self.listView setContentOffset:CGPointMake(0, 155) animated:YES];
+//        }
+        
+//    });
+    
+    //[textField becomeFirstResponder];
+    return YES;
+}
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
+{
+        NSCharacterSet *cs;
+        cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
+        NSString *filtered =
+        [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
+        BOOL basic = [string isEqualToString:filtered];
+        if (basic)
+        {
+    if ([string length]+[textField.text length]>3)
     {
-        NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
-        NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
-        NSMutableArray *itemStateArray = [self.symptomStateDict objectForKey:symptomTypeId];
+        return NO;
+    }
+    else
+    {
+        return YES;
+    }
+        }
+        else {
+            return NO;
+        }
+    
+}
+-(void)textFieldDidEndEditing:(UITextField *)textField
+{
+    int tag = textField.tag;
+    NSNumber *number = [NSNumber numberWithInt:[textField.text intValue]];
+    NSString *message;
+    switch (tag) {
+        case 101:
+            message = @"体温";
+            break;
+        case 102:
+            message = @"体重";
+            break;
+        case 103:
+            message = @"心跳";
+            break;
+        case 104:
+            message = @"高压";
+            break;
+        case 105:
+            message = @"低压";
+            break;
+            
+        default:
+            break;
+    }
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"%@%d",message,[number intValue]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
+}
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    //记录用量
+    
+    //    if(delegate && [delegate respondsToSelector:@selector(textFieldDidReturnForIndex:)])
+    //    {
+    //        [delegate textFieldDidReturnForIndex:self.cellIndexPath];
+    //    }
+    [textField resignFirstResponder];
+    return YES;
+    
+}// called when 'return' key pressed. return NO to
+#pragma mark- UITextViewDelegate
+- (BOOL)textViewShouldBeginEditing:(UITextView *)textView
+{
+    LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:NSLocalizedString(@"wanchengbutton",@"完成") delegate:self];
+    textView.inputAccessoryView = keyboardToolbar;
+    self.currentTextView = textView;
+    return YES;
 
-        NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:tag];
-        NSString *text = [symptomDict objectForKey:@"SymptomNameCn"];
-        NSString *message = [NSString stringWithFormat:@"您点击的症状是 %@, cell index section: %d row :%d",text,indexPath.section,indexPath.row];
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:Nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+}
+- (void)textViewDidEndEditing:(UITextView *)textView
+{
+    int tag = textView.tag;
+    if (tag == 106)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:textView.text delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
         [alert show];
     }
-    
+}
+
+#pragma mark- LZKeyboardToolBarDelegate
+-(void)toolbarKeyboardDone
+{
+    if(self.currentTextField)
+    {
+        [self.currentTextField resignFirstResponder];
+    }
+    if (self.currentTextView)
+    {
+        [self.currentTextView resignFirstResponder];
+    }
 }
 @end

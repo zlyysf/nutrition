@@ -10,6 +10,7 @@
 
 @interface NGRecordHistoryViewController ()
 
+
 @end
 
 @implementation NGRecordHistoryViewController
