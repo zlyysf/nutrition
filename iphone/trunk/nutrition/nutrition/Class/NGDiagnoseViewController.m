@@ -180,15 +180,22 @@
 #pragma mark- UITableViewDataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [symptomTypeIdArray count]+2;
+    if (section == 0)
+    {
+        return [symptomTypeIdArray count];
+    }
+    return 1;
 }
-
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 3;
+}
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row == [self.symptomTypeIdArray count])
+    if (indexPath.section == 1)
     {
         NGMeasurementCell *cell =(NGMeasurementCell*) [self.listView dequeueReusableCellWithIdentifier:@"NGMeasurementCell"];
         [cell.headerNameLabel setBackgroundColor:[UIColor colorWithRed:198/255.f green:212/255.f blue:239/255.f alpha:1.0f]];
@@ -219,7 +226,7 @@
         cell.lowpressureTextField.tag = 105;
         return cell;
     }
-    else if (indexPath.row == [self.symptomTypeIdArray count]+1)
+    else if (indexPath.section == 2)
     {
         NGNoteCell *cell = (NGNoteCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGNoteCell"];
         [cell.headerNameLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:171/255.f blue:162/255.f alpha:1.0f]];
@@ -258,7 +265,7 @@
 #pragma mark- UITableViewDelegate
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.row >= [self.symptomTypeIdArray count])
+    if (indexPath.section ==1 || indexPath.section ==2)
     {
         return 350;
     }

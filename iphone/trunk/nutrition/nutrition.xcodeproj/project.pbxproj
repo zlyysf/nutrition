@@ -116,6 +116,7 @@
 		5F627440175CACAC006E46CA /* LZNutrientFoodAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743F175CACAB006E46CA /* LZNutrientFoodAddCell.m */; };
 		5F638030175C4969005E5517 /* cellSelectedBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */; };
 		5F65274A17D49DA50089CBB5 /* LZHealthCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F65274917D49DA50089CBB5 /* LZHealthCheckViewController.m */; };
+		5F729BBE1841DB29004FC428 /* NGCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F729BBD1841DB29004FC428 /* NGCycleScrollView.m */; };
 		5F746C011769A83E00E68D0E /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746BFF1769A83E00E68D0E /* libMobClickLibrary.a */; };
 		5F746C031769A9BD00E68D0E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C021769A9BD00E68D0E /* libz.dylib */; };
 		5F746C081769EB9A00E68D0E /* LZReviewAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F746C071769EB9A00E68D0E /* LZReviewAppManager.m */; };
@@ -423,6 +424,8 @@
 		5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "cellSelectedBack@2x.png"; path = "nutrition/Resource/cellSelectedBack@2x.png"; sourceTree = "<group>"; };
 		5F65274817D49DA50089CBB5 /* LZHealthCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZHealthCheckViewController.h; path = Class/LZHealthCheckViewController.h; sourceTree = "<group>"; };
 		5F65274917D49DA50089CBB5 /* LZHealthCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZHealthCheckViewController.m; path = Class/LZHealthCheckViewController.m; sourceTree = "<group>"; };
+		5F729BBC1841DB29004FC428 /* NGCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGCycleScrollView.h; path = nutrition/Class/NGCycleScrollView.h; sourceTree = "<group>"; };
+		5F729BBD1841DB29004FC428 /* NGCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGCycleScrollView.m; path = nutrition/Class/NGCycleScrollView.m; sourceTree = "<group>"; };
 		5F746BFF1769A83E00E68D0E /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = nutrition/YouMengSDK/libMobClickLibrary.a; sourceTree = "<group>"; };
 		5F746C001769A83E00E68D0E /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = nutrition/YouMengSDK/MobClick.h; sourceTree = "<group>"; };
 		5F746C021769A9BD00E68D0E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -1087,6 +1090,8 @@
 		5F7F71F31840C91300724397 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5F729BBC1841DB29004FC428 /* NGCycleScrollView.h */,
+				5F729BBD1841DB29004FC428 /* NGCycleScrollView.m */,
 				5FF593D6183DBC210011CEA3 /* NGDiagnosesView.h */,
 				5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */,
 				5F7F71FA1840EAC000724397 /* NGRecommendFoodView.h */,
@@ -1792,6 +1797,7 @@
 				085C8D4817336701001A1ABB /* LZDataAccess.m in Sources */,
 				085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */,
 				5F03D348174B9241008EFB60 /* LZProgressView.m in Sources */,
+				5F729BBE1841DB29004FC428 /* NGCycleScrollView.m in Sources */,
 				5F03D349174B9241008EFB60 /* LZRecommendFoodCell.m in Sources */,
 				5FECAD9E18387F4E00D72A8C /* LZGlobalService.m in Sources */,
 				5F03D34A174B9241008EFB60 /* LZCheckNutritionCell.m in Sources */,
