@@ -49,12 +49,11 @@
 ////    [workRe readNutrientDiseaseSheet_withDepartment:3];
 //    [workRe convertExcelToSqlite_TranslationItem];
     [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
+    [workRe checkIllnessInferenceTxtdoc];
     
 //    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];
 //    LZDBAccess *db = [workRe getDBconnection];
 //    [db generateDataTable_Food_Supply_DRI_Common_withIfNeedClearTable:true];
-    
-    
 
 }
 

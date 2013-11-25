@@ -813,6 +813,68 @@
     }
 
 }
+
+
+
+
+/*
+ when atLeastN<=0, it means at least ALL.
+ */
++(bool)existAtLeastN_withToBeCheckedCollection:(NSArray*)toBeCheckedAry andFullCollection:(id)fullCol andAtLeastN:(int)atLeastN
+{
+    if (fullCol == nil)
+        return true;
+    if (toBeCheckedAry == nil)
+        return false;
+    
+//    NSSet *toBeCheckedSet = nil;
+//    if ([toBeCheckedCol isKindOfClass:NSArray.class]){
+//        NSArray *toBeCheckedAry = toBeCheckedCol;
+//        toBeCheckedSet = [NSSet setWithArray:toBeCheckedAry];
+//    }else{
+//        toBeCheckedSet = toBeCheckedCol;
+//    }
+    
+    NSSet *fullSet = nil;
+    if ([fullCol isKindOfClass:NSArray.class]){
+        NSArray *fullAry = fullCol;
+        fullSet = [NSSet setWithArray:fullAry];
+    }else{
+        fullSet = fullCol;
+    }
+
+    if (fullSet.count==0)
+        return true;
+    if (toBeCheckedAry.count==0)
+        return false;
+    if (atLeastN <=0 )
+        atLeastN = toBeCheckedAry.count;
+    
+    int inCount = 0;
+    for(int i=0; i<toBeCheckedAry.count; i++){
+        id toBeCheckedItem = toBeCheckedAry[i];
+        if ([fullCol containsObject:toBeCheckedItem]){
+            inCount ++;
+        }
+    }
+    if (inCount >= atLeastN)
+        return true;
+    else
+        return false;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 +(void)setReviewFlagForNewVersion
 {
     NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
@@ -1090,6 +1152,24 @@
     NSString *name = [aItem objectForKey:queryKey];
     return name;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 @end
 
 

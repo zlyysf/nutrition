@@ -1995,7 +1995,11 @@
 {
     NSLog(@"getSymptomRows_BySymptomTypeIds enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
-    [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SymptomTypeId,symptomTypeIds, nil]];
+    if (symptomTypeIds.count > 0){
+        [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SymptomTypeId,symptomTypeIds, nil]];
+    }else{
+        //take as select all
+    }
     
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Symptom andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:COLUMN_NAME_DisplayOrder andNeedDistinct:false];
     NSLog(@"getSymptomRows_BySymptomTypeIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
@@ -2013,23 +2017,50 @@
     return symptomsByTypeDict;
 }
 
+/*
+ 这里认为SymptomNutrient的主键是SymptomId，而不是SymptomTypeId+SymptomId。
+ */
+-(NSArray*)getSymptomNutrientRows_BySymptomIds:(NSArray*)symptomIds
+{
+    NSLog(@"getSymptomNutrientRows_BySymptomIds enter");
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SymptomId,symptomIds, nil]];
+    
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_SymptomNutrient andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_SymptomId,COLUMN_NAME_NutrientID, nil] andOrderByPart: @"SymptomTypeId,SymptomId" andNeedDistinct:false];
+    NSLog(@"getSymptomNutrientRows_BySymptomIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    return rows;
+}
+-(NSArray*)getSymptomNutrientDistinctIds_BySymptomIds:(NSArray*)symptomIds
+{
+    NSLog(@"getSymptomNutrientDistinctIds_BySymptomIds enter");
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SymptomId,symptomIds, nil]];
+    
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_SymptomNutrient andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_NutrientID, nil] andOrderByPart: nil andNeedDistinct:true];
+    NSArray *nutrientIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_NutrientID andDictionaryArray:rows];
+    NSLog(@"getSymptomNutrientDistinctIds_BySymptomIds nutrientIds=%@", [LZUtility getObjectDescription:nutrientIds andIndent:0] );
+    return rows;
+}
+
+
+
+
+-(NSArray*)getIllnessIds
+{
+    NSLog(@"getIllnessIds enter");
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Illness andFieldValuePairs:nil andSelectColumns:nil andOrderByPart: nil andNeedDistinct:false];
+    NSArray *IllnessIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_IllnessId andDictionaryArray:rows];
+    NSLog(@"getIllnessIds IllnessIds=%@", [LZUtility getObjectDescription:IllnessIds andIndent:0] );
+    return IllnessIds;
+}
+
+
+
+
+
+
+
 @end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -106,6 +106,14 @@
 -(NSArray*)getSymptomRows_BySymptomTypeIds:(NSArray*)symptomTypeIds;
 -(NSMutableDictionary*)getSymptomRowsByTypeDict_BySymptomTypeIds:(NSArray*)symptomTypeIds;
 
+-(NSArray*)getSymptomNutrientRows_BySymptomIds:(NSArray*)symptomIds;
+-(NSArray*)getSymptomNutrientDistinctIds_BySymptomIds:(NSArray*)symptomIds;
+
+-(NSArray*)getIllnessIds;
+
+
+
+
 
 
 
