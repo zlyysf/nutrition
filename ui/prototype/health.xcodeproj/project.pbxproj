@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		344602861843211B0014BC8A /* info-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 344602851843211B0014BC8A /* info-50@2x.png */; };
 		B909100A183541A000B89A21 /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9091009183541A000B89A21 /* right@2x.png */; };
 		B909100C183541D500B89A21 /* left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B909100B183541D500B89A21 /* left@2x.png */; };
 		B948352C1830704000FCBB8F /* detail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B948352B1830704000FCBB8F /* detail@2x.png */; };
@@ -70,6 +71,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		344602851843211B0014BC8A /* info-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-50@2x.png"; sourceTree = "<group>"; };
 		B9091009183541A000B89A21 /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
 		B909100B183541D500B89A21 /* left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left@2x.png"; sourceTree = "<group>"; };
 		B948352B1830704000FCBB8F /* detail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail@2x.png"; sourceTree = "<group>"; };
@@ -246,6 +248,7 @@
 				B9FD73241833DEEE00D8051B /* 脚@2x.png */,
 				B9FD73251833DEEE00D8051B /* 脸@2x.png */,
 				B9FD73261833DEEE00D8051B /* 膝盖@2x.png */,
+				344602851843211B0014BC8A /* info-50@2x.png */,
 				B9FD73271833DEEE00D8051B /* 血压@2x.png */,
 				B9FD73281833DEEE00D8051B /* 鼻子@2x.png */,
 				B97761571833185000B37B24 /* toolbox-50@2x.png */,
@@ -331,6 +334,7 @@
 				B9FD733A1833DEEE00D8051B /* 血压@2x.png in Resources */,
 				B9FD73351833DEEE00D8051B /* 胸腔@2x.png in Resources */,
 				B977079D182AA4FC006FD25E /* Main_iPad.storyboard in Resources */,
+				344602861843211B0014BC8A /* info-50@2x.png in Resources */,
 				B9AEA069183BD6A900E921A0 /* 菌藻类@2x.png in Resources */,
 				B9FD732A1833DEEE00D8051B /* 体重@2x.png in Resources */,
 				B97761581833185000B37B24 /* toolbox-50@2x.png in Resources */,
