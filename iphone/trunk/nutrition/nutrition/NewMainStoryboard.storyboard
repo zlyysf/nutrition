@@ -629,22 +629,124 @@
             </objects>
             <point key="canvasLocation" x="666" y="447"/>
         </scene>
-        <!--View Controller - 百科-->
+        <!--Cyclopedia View Controller - 百科-->
         <scene sceneID="8Na-Fy-u2a">
             <objects>
-                <viewController id="z5M-Ld-fXZ" sceneMemberID="viewController">
+                <viewController id="z5M-Ld-fXZ" customClass="NGCyclopediaViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KMJ-UB-bJV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="d4z-ju-PrI">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NGCommonDiseaseCell" rowHeight="200" id="MEz-lS-DjN" customClass="NGCommonDiseaseCell">
+                                        <rect key="frame" x="0.0" y="86" width="320" height="200"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MEz-lS-DjN" id="4It-BD-pcl">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="PMW-wV-M1h">
+                                                    <rect key="frame" x="10" y="20" width="300" height="160"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="WUZ-cP-dh2">
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="backView" destination="PMW-wV-M1h" id="xIc-WG-AV8"/>
+                                            <outlet property="headerLabel" destination="WUZ-cP-dh2" id="RuX-NI-zG2"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NGNutritionCell" rowHeight="120" id="xHJ-dt-RGt" customClass="NGNutritionCell">
+                                        <rect key="frame" x="0.0" y="286" width="320" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xHJ-dt-RGt" id="QDX-Mo-5ed">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="Dm3-hD-rf8">
+                                                    <rect key="frame" x="10" y="0.0" width="300" height="95"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="lDl-oq-Hnx">
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="backView" destination="Dm3-hD-rf8" id="UBV-11-XGa"/>
+                                            <outlet property="headerLabel" destination="lDl-oq-Hnx" id="GPX-Sl-wvA"/>
+                                        </connections>
+                                    </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NGFoodsCell" rowHeight="120" id="TTx-3B-Mpk" customClass="NGFoodsCell">
+                                        <rect key="frame" x="0.0" y="406" width="320" height="120"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TTx-3B-Mpk" id="Knl-25-Wet">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="ayZ-w0-YIo">
+                                                    <rect key="frame" x="10" y="0.0" width="300" height="100"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
+                                                    <subviews>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="vLY-gm-T9Y">
+                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="30"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="backView" destination="ayZ-w0-YIo" id="kL7-q9-xoW"/>
+                                            <outlet property="headerLabel" destination="vLY-gm-T9Y" id="4V6-E7-QhA"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="z5M-Ld-fXZ" id="fh7-ua-gIg"/>
+                                    <outlet property="delegate" destination="z5M-Ld-fXZ" id="N7N-Eb-S89"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="百科" id="XuJ-d0-c06"/>
+                    <connections>
+                        <outlet property="listView" destination="d4z-ju-PrI" id="3uK-rn-YRG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="6fG-22-xHC" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="666" y="1097"/>
         </scene>
-        <!--View Controller - 设置-->
+        <!--View Controller - 信息-->
         <scene sceneID="6Ds-UU-Df4">
             <objects>
                 <viewController id="D4K-QU-mXC" sceneMemberID="viewController">
@@ -653,7 +755,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="设置" id="Gq6-nz-918"/>
+                    <navigationItem key="navigationItem" title="信息" id="Gq6-nz-918"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eG2-vK-QOL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -707,11 +809,11 @@
             </objects>
             <point key="canvasLocation" x="140" y="1097"/>
         </scene>
-        <!--Navigation Controller - 设置-->
+        <!--Navigation Controller - 信息-->
         <scene sceneID="rYV-3N-T6W">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Db7-Oh-NMS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="设置" image="toolbox-50.png" id="oEC-cN-4Nj"/>
+                    <tabBarItem key="tabBarItem" title="信息" image="toolbox-50.png" id="oEC-cN-4Nj"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NpU-oQ-OvP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

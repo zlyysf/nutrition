@@ -16,19 +16,21 @@
     if (self) {
         float fontSize;
         if ([LZUtility isCurrentLanguageChinese]) {
-            fontSize = 18;
+            fontSize = 14;
         }
         else
         {
-            fontSize = 16;
+            fontSize = 12;
         }
+        self.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        self.layer.borderWidth = 0.5f;
         // Initialization code
-        self.alphaView = [[UIView alloc]initWithFrame:CGRectMake(1, frame.size.height-28-1, frame.size.width-2, 28)];
+        self.alphaView = [[UIView alloc]initWithFrame:CGRectMake(0, frame.size.height-20, frame.size.width, 20)];
         [self.alphaView setBackgroundColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5f]];
         [self addSubview:alphaView];
-        self.typeLabel = [[UILabel alloc]initWithFrame:CGRectMake(1, frame.size.height-28-1, frame.size.width-2, 28)];
+        self.typeLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, frame.size.height-20, frame.size.width, 20)];
         [self.typeLabel setTextColor:[UIColor whiteColor]];
-        [self.typeLabel setFont:[UIFont boldSystemFontOfSize:fontSize]];
+        [self.typeLabel setFont:[UIFont systemFontOfSize:fontSize]];
         [self.typeLabel setTextAlignment:NSTextAlignmentCenter];
         [self.typeLabel setBackgroundColor:[UIColor clearColor]];
         [self addSubview:typeLabel];

@@ -117,6 +117,10 @@
 		5F638030175C4969005E5517 /* cellSelectedBack@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F63802F175C4969005E5517 /* cellSelectedBack@2x.png */; };
 		5F65274A17D49DA50089CBB5 /* LZHealthCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F65274917D49DA50089CBB5 /* LZHealthCheckViewController.m */; };
 		5F729BBE1841DB29004FC428 /* NGCycleScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F729BBD1841DB29004FC428 /* NGCycleScrollView.m */; };
+		5F729BC11842FFE8004FC428 /* NGCyclopediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F729BC01842FFE8004FC428 /* NGCyclopediaViewController.m */; };
+		5F729BC4184320ED004FC428 /* NGCommonDiseaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F729BC3184320ED004FC428 /* NGCommonDiseaseCell.m */; };
+		5F729BC718432105004FC428 /* NGNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F729BC618432105004FC428 /* NGNutritionCell.m */; };
+		5F729BCA1843211C004FC428 /* NGFoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F729BC91843211C004FC428 /* NGFoodsCell.m */; };
 		5F746C011769A83E00E68D0E /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746BFF1769A83E00E68D0E /* libMobClickLibrary.a */; };
 		5F746C031769A9BD00E68D0E /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C021769A9BD00E68D0E /* libz.dylib */; };
 		5F746C081769EB9A00E68D0E /* LZReviewAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F746C071769EB9A00E68D0E /* LZReviewAppManager.m */; };
@@ -426,6 +430,14 @@
 		5F65274917D49DA50089CBB5 /* LZHealthCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZHealthCheckViewController.m; path = Class/LZHealthCheckViewController.m; sourceTree = "<group>"; };
 		5F729BBC1841DB29004FC428 /* NGCycleScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGCycleScrollView.h; path = nutrition/Class/NGCycleScrollView.h; sourceTree = "<group>"; };
 		5F729BBD1841DB29004FC428 /* NGCycleScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGCycleScrollView.m; path = nutrition/Class/NGCycleScrollView.m; sourceTree = "<group>"; };
+		5F729BBF1842FFE8004FC428 /* NGCyclopediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGCyclopediaViewController.h; path = nutrition/Class/NGCyclopediaViewController.h; sourceTree = "<group>"; };
+		5F729BC01842FFE8004FC428 /* NGCyclopediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGCyclopediaViewController.m; path = nutrition/Class/NGCyclopediaViewController.m; sourceTree = "<group>"; };
+		5F729BC2184320ED004FC428 /* NGCommonDiseaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGCommonDiseaseCell.h; path = nutrition/Class/NGCommonDiseaseCell.h; sourceTree = "<group>"; };
+		5F729BC3184320ED004FC428 /* NGCommonDiseaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGCommonDiseaseCell.m; path = nutrition/Class/NGCommonDiseaseCell.m; sourceTree = "<group>"; };
+		5F729BC518432105004FC428 /* NGNutritionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGNutritionCell.h; path = nutrition/Class/NGNutritionCell.h; sourceTree = "<group>"; };
+		5F729BC618432105004FC428 /* NGNutritionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGNutritionCell.m; path = nutrition/Class/NGNutritionCell.m; sourceTree = "<group>"; };
+		5F729BC81843211C004FC428 /* NGFoodsCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodsCell.h; path = nutrition/Class/NGFoodsCell.h; sourceTree = "<group>"; };
+		5F729BC91843211C004FC428 /* NGFoodsCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodsCell.m; path = nutrition/Class/NGFoodsCell.m; sourceTree = "<group>"; };
 		5F746BFF1769A83E00E68D0E /* libMobClickLibrary.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMobClickLibrary.a; path = nutrition/YouMengSDK/libMobClickLibrary.a; sourceTree = "<group>"; };
 		5F746C001769A83E00E68D0E /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MobClick.h; path = nutrition/YouMengSDK/MobClick.h; sourceTree = "<group>"; };
 		5F746C021769A9BD00E68D0E /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -1068,6 +1080,8 @@
 				5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */,
 				5FDB86411840A2F90015FADD /* NGHealthReportViewController.h */,
 				5FDB86421840A2F90015FADD /* NGHealthReportViewController.m */,
+				5F729BBF1842FFE8004FC428 /* NGCyclopediaViewController.h */,
+				5F729BC01842FFE8004FC428 /* NGCyclopediaViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1083,6 +1097,12 @@
 				5FDB863C1840722B0015FADD /* NGMeasurementCell.m */,
 				5FDB863E18409D0B0015FADD /* NGRecordCell.h */,
 				5FDB863F18409D0B0015FADD /* NGRecordCell.m */,
+				5F729BC2184320ED004FC428 /* NGCommonDiseaseCell.h */,
+				5F729BC3184320ED004FC428 /* NGCommonDiseaseCell.m */,
+				5F729BC518432105004FC428 /* NGNutritionCell.h */,
+				5F729BC618432105004FC428 /* NGNutritionCell.m */,
+				5F729BC81843211C004FC428 /* NGFoodsCell.h */,
+				5F729BC91843211C004FC428 /* NGFoodsCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1785,6 +1805,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F3338B5172A407E0096E7AE /* main.m in Sources */,
+				5F729BC718432105004FC428 /* NGNutritionCell.m in Sources */,
 				5F3338B9172A407E0096E7AE /* LZAppDelegate.m in Sources */,
 				5F3338D0172A59E20096E7AE /* LZDailyIntakeViewController.m in Sources */,
 				5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */,
@@ -1827,6 +1848,7 @@
 				5F90D80317AF8873000AEC06 /* mongoose.c in Sources */,
 				5F90D80417AF8873000AEC06 /* OpenUDID.m in Sources */,
 				5F90D80517AF8873000AEC06 /* CDataScanner.m in Sources */,
+				5F729BCA1843211C004FC428 /* NGFoodsCell.m in Sources */,
 				5FDB863D1840722B0015FADD /* NGMeasurementCell.m in Sources */,
 				5F90D80617AF8873000AEC06 /* CFilteringJSONSerializer.m in Sources */,
 				5F90D80717AF8873000AEC06 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
@@ -1840,6 +1862,7 @@
 				5F90D80F17AF8873000AEC06 /* ioapi.c in Sources */,
 				5F90D81017AF8873000AEC06 /* mztools.c in Sources */,
 				5F90D81117AF8873000AEC06 /* unzip.c in Sources */,
+				5F729BC4184320ED004FC428 /* NGCommonDiseaseCell.m in Sources */,
 				5FECADA51838B19D00D72A8C /* NGRecordHistoryViewController.m in Sources */,
 				5F90D81217AF8873000AEC06 /* zip.c in Sources */,
 				5F90D81317AF8873000AEC06 /* ZipArchive.mm in Sources */,
@@ -1857,6 +1880,7 @@
 				5F87498517D09D050061E36D /* LZNutritionListViewController.m in Sources */,
 				5F87498B17D0C2EE0061E36D /* LZRichNutritionViewController.m in Sources */,
 				5F65274A17D49DA50089CBB5 /* LZHealthCheckViewController.m in Sources */,
+				5F729BC11842FFE8004FC428 /* NGCyclopediaViewController.m in Sources */,
 				5F4FD72317D4B75900DBA25A /* LZDiseaseCell.m in Sources */,
 				5FECADA21838912900D72A8C /* NGDiagnoseViewController.m in Sources */,
 				5FD76DE717D5AB6200746418 /* LZCheckResultViewController.m in Sources */,
