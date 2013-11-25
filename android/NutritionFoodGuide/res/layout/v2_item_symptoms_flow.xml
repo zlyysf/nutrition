@@ -24,7 +24,7 @@
 
 
 	
-    <com.lingzhimobile.nutritionfoodguide.FlowLayoutApmeM
+    <org.apmem.tools.layouts.FlowLayout
 	    android:id="@+id/ctrlFlowLayout"
 	    android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
 	    >
 	    
 
-	</com.lingzhimobile.nutritionfoodguide.FlowLayoutApmeM>
+	</org.apmem.tools.layouts.FlowLayout>
     
 		 
 </LinearLayout>

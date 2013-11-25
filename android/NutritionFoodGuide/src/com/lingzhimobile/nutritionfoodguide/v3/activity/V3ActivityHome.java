@@ -1,5 +1,6 @@
 package com.lingzhimobile.nutritionfoodguide.v3.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -7,9 +8,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
+import android.widget.Button;
 import android.widget.RadioButton;
 
 import com.lingzhimobile.nutritionfoodguide.R;
+import com.lingzhimobile.nutritionfoodguide.V2ActivityDiagnose;
 import com.lingzhimobile.nutritionfoodguide.v3.adapter.HomeTabAdapter;
 
 public class V3ActivityHome extends FragmentActivity {
@@ -18,6 +21,7 @@ public class V3ActivityHome extends FragmentActivity {
     private HomeTabAdapter mHomeTabAdapter;
     RadioButton tabButtonDiagnose, tabButtonHistory, tabButtonChart,
             tabButtonCyclopedia, tabButtonSetting;
+    Button testButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,5 +85,14 @@ public class V3ActivityHome extends FragmentActivity {
             }
         });
 
+        testButton = (Button) findViewById(R.id.testButton);
+        testButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View arg0) {
+                Intent intent = new Intent(V3ActivityHome.this, V2ActivityDiagnose.class);
+                V3ActivityHome.this.startActivity(intent);
+            }
+        });
     }
 }

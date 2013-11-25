@@ -12,6 +12,8 @@ import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,13 +26,11 @@ import com.umeng.analytics.MobclickAgent;
 
 
 @SuppressWarnings("unchecked")
-public class V2ActivityDiagnose extends ActivityBase {
+public class DiagnoseFragment extends Fragment {
 	static final String LogTag = "V2ActivityDiagnose";
 	
 	static final int[] checkboxColorCheckedResIds = {R.color.red, R.color.green, R.color.blue};
 	static final int checkboxColorNormalResId = R.color.gray;
-	
-	Activity m_this; 
 	
 //	HashMap<String,HashMap<String,ArrayList<String>>> m_symptomDataBy2LevelClass;
 	HashMap<String,Object> m_symptomDataBy2LevelClass;
@@ -57,32 +57,28 @@ public class V2ActivityDiagnose extends ActivityBase {
     };
     
 
-	public void onResume() {
-		super.onResume();
-		MobclickAgent.onResume(this);
-	}
-	public void onPause() {
-		super.onPause();
-		MobclickAgent.onPause(this);
-	}
-	
-
-
 	@Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.v2_activity_diagnose);
-        
-        m_this = this;
-      
-        initViewHandles();
+    }
+	
+	
+	
+	@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+            Bundle savedInstanceState) {
+	    View view = inflater.inflate(R.layout.v2_activity_diagnose, container, false);
+        initViewHandles(view);
         initViewsContent();
         setViewEventHandlers();
         setViewsContent();
+        return view;
     }
-	
-	void initViewHandles(){
-        m_listView1 = (ListView)this.findViewById(R.id.listView1);
+
+
+
+    void initViewHandles(View view){
+        m_listView1 = (ListView)view.findViewById(R.id.listView1);
 	}
 	void initViewsContent(){
 		ArrayList<String> level1classes = Tool.convertFromArrayToList(new String[]{"头和五官","消化"});
@@ -151,18 +147,18 @@ public class V2ActivityDiagnose extends ActivityBase {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View vw;
 			if (position == 0){
-				vw = getLayoutInflater().inflate(R.layout.v2_row_seperator, null);
+				vw = getActivity().getLayoutInflater().inflate(R.layout.v2_row_seperator, null);
 				TextView tv1 = (TextView)vw.findViewById(R.id.textView1);
 				tv1.setText("今天哪里不舒服吗？点击记录一下吧。");
 			}else if (position % 2 == 0){
-				vw = getLayoutInflater().inflate(R.layout.v2_row_seperator, null);
+				vw = getActivity().getLayoutInflater().inflate(R.layout.v2_row_seperator, null);
 			}else{
 				int sectionPos = (position-1)/2;
 				
 				String level2class = m_level2classes.get(sectionPos);
 				
 				
-				vw = getLayoutInflater().inflate(R.layout.v2_item_list, null);
+				vw = getActivity().getLayoutInflater().inflate(R.layout.v2_item_list, null);
 				ListView listView1 = (ListView)vw.findViewById(R.id.listView1);
 				
 				ListAdapter_OfLevel2Class ListAdapter_OfLevel2Class1 = new ListAdapter_OfLevel2Class(level2class);
@@ -242,12 +238,12 @@ public class V2ActivityDiagnose extends ActivityBase {
 		public View getView(int position, View convertView, ViewGroup parent) {
 			View vw;
 			if (position == 0){
-				vw = getLayoutInflater().inflate(R.layout.v2_row_seperator, null);
+				vw = getActivity().getLayoutInflater().inflate(R.layout.v2_row_seperator, null);
 				TextView tv1 = (TextView)vw.findViewById(R.id.textView1);
 				tv1.setText(m_level2class);
 			}else{
 //				vw = getLayoutInflater().inflate(R.layout.v2_item_symptoms_bylevel1class, null);
-				vw = getLayoutInflater().inflate(R.layout.v2_item_symptoms_flow, null);
+				vw = getActivity().getLayoutInflater().inflate(R.layout.v2_item_symptoms_flow, null);
 				
 				String level1class = m_orderedLevel1Classes.get(position-1) ;
 				
@@ -257,7 +253,7 @@ public class V2ActivityDiagnose extends ActivityBase {
 				
 				TextView tvSymptomClass = (TextView)vw.findViewById(R.id.tvSymptomClass);
 				tvSymptomClass.setText(level1class);
-				changeViewBackground(m_this, tvSymptomClass, checkboxColorCheckedResIds[position%checkboxColorCheckedResIds.length]);
+				changeViewBackground(getActivity(), tvSymptomClass, checkboxColorCheckedResIds[position%checkboxColorCheckedResIds.length]);
 				
 //				GridView gridView1_Symptoms = (GridView)vw.findViewById(R.id.gridView1);
 //				GridAdapter_Symptoms GridAdapter_Symptoms1 = new GridAdapter_Symptoms(m_symptomDataOfLevel2Class,level1class);
@@ -337,10 +333,10 @@ public class V2ActivityDiagnose extends ActivityBase {
 					String symptom = m_symptoms.get(i);
 //					View vwCell = getLayoutInflater().inflate(R.layout.v2_grid_cell_symptom_frame, null);
 //					View vwCell = getLayoutInflater().inflate(R.layout.v2_grid_cell_symptom_relative, null);
-					View vwCell = getLayoutInflater().inflate(R.layout.v2_grid_cell_symptom_cb, null);
+					View vwCell = getActivity().getLayoutInflater().inflate(R.layout.v2_grid_cell_symptom_cb, null);
 					
 					CheckBox cbSymptom = (CheckBox)vwCell.findViewById(R.id.cbSymptom);
-					changeCheckboxBackgroundWithSelector(m_this, cbSymptom, checkboxColorNormalResId, checkboxColorCheckedResIds[i%checkboxColorCheckedResIds.length]);
+					changeCheckboxBackgroundWithSelector(getActivity(), cbSymptom, checkboxColorNormalResId, checkboxColorCheckedResIds[i%checkboxColorCheckedResIds.length]);
 					m_CheckBoxs.add(cbSymptom);
 					
 					cbSymptom.setText(symptom);
@@ -354,6 +350,11 @@ public class V2ActivityDiagnose extends ActivityBase {
 		}
 		
 	}
+
+    public static Fragment newInstance(int arg0) {
+        Fragment diagnoseFragment = new DiagnoseFragment();
+        return diagnoseFragment;
+    }
 }
 
 
