@@ -746,10 +746,10 @@
             </objects>
             <point key="canvasLocation" x="666" y="1097"/>
         </scene>
-        <!--View Controller - 信息-->
+        <!--Uer Info View Controller - 信息-->
         <scene sceneID="6Ds-UU-Df4">
             <objects>
-                <viewController id="D4K-QU-mXC" sceneMemberID="viewController">
+                <viewController id="D4K-QU-mXC" customClass="NGUerInfoViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Md-KZ-jXt">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -813,7 +813,7 @@
         <scene sceneID="rYV-3N-T6W">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Db7-Oh-NMS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="信息" image="toolbox-50.png" id="oEC-cN-4Nj"/>
+                    <tabBarItem key="tabBarItem" title="信息" image="info-50.png" id="oEC-cN-4Nj"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NpU-oQ-OvP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -837,10 +837,10 @@
     <resources>
         <image name="clinic-50.png" width="25" height="25"/>
         <image name="gray_horizon_ line.png" width="1" height="1"/>
+        <image name="info-50.png" width="25" height="25"/>
         <image name="line_chart-50.png" width="25" height="25"/>
         <image name="month_view-50.png" width="25" height="25"/>
         <image name="physics-50.png" width="25" height="25"/>
-        <image name="toolbox-50.png" width="25" height="25"/>
         <image name="体温计.png" width="58" height="58"/>
         <image name="体重.png" width="58" height="58"/>
         <image name="心跳.png" width="58" height="58"/>

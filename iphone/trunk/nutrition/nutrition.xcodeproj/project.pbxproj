@@ -82,6 +82,8 @@
 		5F22A69017CF34170043D760 /* search_glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A68F17CF34170043D760 /* search_glass@2x.png */; };
 		5F22A69217CF37940043D760 /* searchbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A69117CF37940043D760 /* searchbar_bg@2x.png */; };
 		5F22A6C817CF4C6E0043D760 /* LZFoodTypeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A6C717CF4C6D0043D760 /* LZFoodTypeButton.m */; };
+		5F22E3D918435CD1001CCC89 /* info-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22E3D818435CD1001CCC89 /* info-50@2x.png */; };
+		5F22E3DC18435DB7001CCC89 /* NGUerInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22E3DB18435DB7001CCC89 /* NGUerInfoViewController.m */; };
 		5F241CA317E7FF0E00BC8529 /* nutrient_button_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F241CA217E7FF0E00BC8529 /* nutrient_button_off@2x.png */; };
 		5F241CA817E8749200BC8529 /* LZTimeSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F241CA717E8749200BC8529 /* LZTimeSettingsViewController.m */; };
 		5F25849F17829DDA00D99C16 /* LZEditProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F25849E17829DD900D99C16 /* LZEditProfileViewController.m */; };
@@ -378,6 +380,9 @@
 		5F22A69117CF37940043D760 /* searchbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "searchbar_bg@2x.png"; path = "nutrition/Resource/searchbar_bg@2x.png"; sourceTree = "<group>"; };
 		5F22A6C617CF4C6D0043D760 /* LZFoodTypeButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodTypeButton.h; path = Class/LZFoodTypeButton.h; sourceTree = "<group>"; };
 		5F22A6C717CF4C6D0043D760 /* LZFoodTypeButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodTypeButton.m; path = Class/LZFoodTypeButton.m; sourceTree = "<group>"; };
+		5F22E3D818435CD1001CCC89 /* info-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "info-50@2x.png"; path = "nutrition/Resource/info-50@2x.png"; sourceTree = "<group>"; };
+		5F22E3DA18435DB7001CCC89 /* NGUerInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGUerInfoViewController.h; path = nutrition/Class/NGUerInfoViewController.h; sourceTree = "<group>"; };
+		5F22E3DB18435DB7001CCC89 /* NGUerInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGUerInfoViewController.m; path = nutrition/Class/NGUerInfoViewController.m; sourceTree = "<group>"; };
 		5F241CA217E7FF0E00BC8529 /* nutrient_button_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_off@2x.png"; path = "nutrition/Resource/nutrient_button_off@2x.png"; sourceTree = "<group>"; };
 		5F241CA617E8749200BC8529 /* LZTimeSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZTimeSettingsViewController.h; path = Class/LZTimeSettingsViewController.h; sourceTree = "<group>"; };
 		5F241CA717E8749200BC8529 /* LZTimeSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZTimeSettingsViewController.m; path = Class/LZTimeSettingsViewController.m; sourceTree = "<group>"; };
@@ -1082,6 +1087,8 @@
 				5FDB86421840A2F90015FADD /* NGHealthReportViewController.m */,
 				5F729BBF1842FFE8004FC428 /* NGCyclopediaViewController.h */,
 				5F729BC01842FFE8004FC428 /* NGCyclopediaViewController.m */,
+				5F22E3DA18435DB7001CCC89 /* NGUerInfoViewController.h */,
+				5F22E3DB18435DB7001CCC89 /* NGUerInfoViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1484,6 +1491,7 @@
 		5FECAD911838775700D72A8C /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				5F22E3D818435CD1001CCC89 /* info-50@2x.png */,
 				5F7F71F81840D9F100724397 /* gray_horizon_line@2x.png */,
 				5F7F71F61840D82400724397 /* item_detail_arrow@2x.png */,
 				5FECAD921838777F00D72A8C /* clinic-50@2x.png */,
@@ -1704,6 +1712,7 @@
 				5F943F0117D721F400AFBF47 /* 菌藻类@2x.png in Resources */,
 				5F943F0217D721F400AFBF47 /* 蔬菜@2x.png in Resources */,
 				5F943F0317D721F400AFBF47 /* 蛋类@2x.png in Resources */,
+				5F22E3D918435CD1001CCC89 /* info-50@2x.png in Resources */,
 				5F943F0417D721F400AFBF47 /* 调味品@2x.png in Resources */,
 				5F943F0517D721F400AFBF47 /* 豆制品@2x.png in Resources */,
 				5F943F0617D721F400AFBF47 /* 零食@2x.png in Resources */,
@@ -1869,6 +1878,7 @@
 				5F20148A17BB2F7B0009B735 /* LZValueSelectorView.m in Sources */,
 				5F0081EB17C47E6F000938C2 /* JWNavigationViewController.m in Sources */,
 				5FDB86431840A2F90015FADD /* NGHealthReportViewController.m in Sources */,
+				5F22E3DC18435DB7001CCC89 /* NGUerInfoViewController.m in Sources */,
 				5F145D8317C4987E00D6B615 /* LZMainPageViewController.m in Sources */,
 				5FDB863A184071F40015FADD /* NGNoteCell.m in Sources */,
 				088B768417C4B8F200206959 /* LZDataAccessUtil.m in Sources */,
