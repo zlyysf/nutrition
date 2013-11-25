@@ -2,13 +2,18 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-
+    <Button
+        android:id="@+id/testButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Test" />
     <com.lingzhimobile.nutritionfoodguide.v3.view.NoScrollViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/testButton"
         android:layout_above="@+id/tab"
         tools:context=".ProfileActivity" >
     </com.lingzhimobile.nutritionfoodguide.v3.view.NoScrollViewPager>
