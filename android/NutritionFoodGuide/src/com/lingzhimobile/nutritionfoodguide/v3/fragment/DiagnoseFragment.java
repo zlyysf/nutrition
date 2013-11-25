@@ -1,4 +1,4 @@
-package com.lingzhimobile.nutritionfoodguide;
+package com.lingzhimobile.nutritionfoodguide.v3.fragment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,6 +22,14 @@ import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lingzhimobile.nutritionfoodguide.AsyncTaskDoRecommend;
+import com.lingzhimobile.nutritionfoodguide.Constants;
+import com.lingzhimobile.nutritionfoodguide.R;
+import com.lingzhimobile.nutritionfoodguide.Tool;
+import com.lingzhimobile.nutritionfoodguide.myProgressDialog;
+import com.lingzhimobile.nutritionfoodguide.R.color;
+import com.lingzhimobile.nutritionfoodguide.R.id;
+import com.lingzhimobile.nutritionfoodguide.R.layout;
 import com.umeng.analytics.MobclickAgent;
 
 
@@ -61,9 +69,7 @@ public class DiagnoseFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
-	
-	
-	
+
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
@@ -74,8 +80,6 @@ public class DiagnoseFragment extends Fragment {
         setViewsContent();
         return view;
     }
-
-
 
     void initViewHandles(View view){
         m_listView1 = (ListView)view.findViewById(R.id.listView1);
@@ -118,7 +122,6 @@ public class DiagnoseFragment extends Fragment {
         m_ListAdapter_LevelTop = new ListAdapter_LevelTop(m_symptomDataBy2LevelClass);
         m_listView1.setAdapter(m_ListAdapter_LevelTop);
 	}
-	
 
 	public class ListAdapter_LevelTop extends BaseAdapter
 	{
@@ -131,7 +134,6 @@ public class DiagnoseFragment extends Fragment {
 		
 		@Override
 		public int getCount() {
-//			return 1+m_level2classes.size()*2+4;
 			return 1+m_level2classes.size()*2;
 		}
 		@Override
@@ -179,7 +181,6 @@ public class DiagnoseFragment extends Fragment {
 		ShapeDrawable roundShape_bgColor = new ShapeDrawable(roundRectShape1);
 		roundShape_bgColor.getPaint().setColor(curActv.getResources().getColor(bgColorResId));
 		vw.setBackgroundDrawable(roundShape_bgColor);
-//		vw.setBackground(roundShape_bgColor);
 	}
 
 	
@@ -356,16 +357,3 @@ public class DiagnoseFragment extends Fragment {
         return diagnoseFragment;
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

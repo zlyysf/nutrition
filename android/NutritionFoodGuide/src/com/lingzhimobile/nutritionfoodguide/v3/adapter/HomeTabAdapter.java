@@ -1,6 +1,6 @@
 package com.lingzhimobile.nutritionfoodguide.v3.adapter;
 
-import com.lingzhimobile.nutritionfoodguide.DiagnoseFragment;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.DiagnoseFragment;
 import com.lingzhimobile.nutritionfoodguide.v3.fragment.TabContentFragment;
 
 import android.support.v4.app.Fragment;
@@ -18,7 +18,6 @@ public class HomeTabAdapter extends FragmentPagerAdapter{
 
     @Override
     public Fragment getItem(int arg0) {
-        // TODO Auto-generated method stub
         if (arg0 == 0){
          return DiagnoseFragment.newInstance(arg0);
         } else {
