@@ -11,6 +11,7 @@ import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.RadioButton;
 
+import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.V2ActivityDiagnose;
 import com.lingzhimobile.nutritionfoodguide.v3.adapter.HomeTabAdapter;
@@ -90,7 +91,7 @@ public class V3ActivityHome extends FragmentActivity {
 
             @Override
             public void onClick(View arg0) {
-                Intent intent = new Intent(V3ActivityHome.this, V2ActivityDiagnose.class);
+                Intent intent = new Intent(V3ActivityHome.this, ActivityTestCases.class);
                 V3ActivityHome.this.startActivity(intent);
             }
         });

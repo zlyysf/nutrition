@@ -130,7 +130,11 @@ public class TestCaseDA {
 		Log.d(LogTag, "symptomTypeIds="+Tool.getIndentFormatStringOfObject(symptomTypeIds, 0));
 		da.getSymptomRowsByTypeDict_BySymptomTypeIds(symptomTypeIds);
 		
+		ArrayList<String> symptomIdList = Tool.convertFromArrayToList(new String[]{"头晕", "头发脱落", "易疲劳", "易流泪"});
+		ArrayList<String> nutrientIdList = da.getSymptomNutrientDistinctIds_BySymptomIds(symptomIdList);
 		
+//		HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = da.getNutrientInfoAs2LevelDictionary_withNutrientIds(null);
+//		HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientIdList.get(0));
 	}
 
 }

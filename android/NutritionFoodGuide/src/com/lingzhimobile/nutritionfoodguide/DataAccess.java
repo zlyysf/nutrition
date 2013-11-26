@@ -1910,9 +1910,51 @@ public class DataAccess {
 	    return symptomsByTypeDict;
 	}
 
+	public ArrayList<HashMap<String, Object>> getSymptomNutrientRows_BySymptomIds(ArrayList<String> symptomIds)
+	{
+		Log.d(LogTag, "getSymptomNutrientRows_BySymptomIds enter");
+		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+		if (symptomIds != null){
+			if (symptomIds.size() == 0){
+				return null;
+			}
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_SymptomId,symptomIds};
+	    	columnValuePairs_equal.add(columnValuePair);
+		}
+
+		String[] selectColumns = {Constants.COLUMN_NAME_SymptomId,Constants.COLUMN_NAME_NutrientID};
+		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_SymptomNutrient, 
+	    		columnValuePairs_equal, null, selectColumns, "SymptomTypeId,SymptomId", false);
+		String logMsg = "getSymptomNutrientRows_BySymptomIds row count="+rows.size()+",\nrows="+Tool.getIndentFormatStringOfObject(rows,0);
+		Log.d(LogTag, logMsg);
+		Tool_microlog4android.logDebug(logMsg);
+	    return rows;
+	    
+	}
 	
-	
-	
+	public ArrayList<String> getSymptomNutrientDistinctIds_BySymptomIds(ArrayList<String> symptomIds)
+	{
+		Log.d(LogTag, "getSymptomNutrientDistinctIds_BySymptomIds enter");
+		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+		if (symptomIds != null){
+			if (symptomIds.size() == 0){
+				return null;
+			}
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_SymptomId,symptomIds};
+	    	columnValuePairs_equal.add(columnValuePair);
+		}
+
+		String[] selectColumns = {Constants.COLUMN_NAME_NutrientID};
+		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_SymptomNutrient, 
+	    		columnValuePairs_equal, null, selectColumns, null, true);
+		ArrayList<Object> nutrientIdObjs = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_NutrientID, rows);
+		ArrayList<String> nutrientIds = Tool.convertToStringArrayList(nutrientIdObjs);
+		
+		String logMsg = "getSymptomNutrientDistinctIds_BySymptomIds nutrientIds="+Tool.getIndentFormatStringOfObject(nutrientIds,0);
+		Log.d(LogTag, logMsg);
+		
+	    return nutrientIds;
+	}
 	
 	
 	
