@@ -37,8 +37,8 @@
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
 //    [self.class test_TranslationItem1];
 //    [self.class test_getFoodsByShowingPart];
-    [self.class test_getSymptom1];
-//    [self.class test_inferIllnesses_withSymptoms1];
+//    [self.class test_getSymptom1];
+    [self.class test_inferIllnesses_withSymptoms1];
 
     
 //    [self.class testFormatResult1];
@@ -2419,7 +2419,7 @@ BOOL needLimitNutrients = FALSE;
     NSMutableDictionary *measureData = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                    [NSNumber numberWithInt:101],Key_HeartRate,
                                    [NSNumber numberWithInt:150],Key_BloodPressureHigh,[NSNumber numberWithInt:130],Key_BloodPressureLow,
-                                   [NSNumber numberWithInt:38.4],Key_BodyTemperature,
+                                   [NSNumber numberWithDouble:38.4],Key_BodyTemperature,
                                    nil];
     NSArray *illnessAry = [LZUtility inferIllnesses_withSymptoms:symptomIds andMeasureData:measureData];
     NSLog(@"illnessAry=%@",[LZUtility getObjectDescription:illnessAry andIndent:0] );

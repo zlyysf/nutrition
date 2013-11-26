@@ -21,7 +21,8 @@ public class TestCaseDA {
 //		test1(ctx);
 //		test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(ctx);
 //		test_foodCollocationApis(ctx);
-		test_Symptom1(ctx);
+//		test_Symptom1(ctx);
+		test_inferIllnesses_withSymptoms1(ctx);
 	}
 	
 	static void test1(Context ctx){
@@ -135,6 +136,20 @@ public class TestCaseDA {
 		
 //		HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = da.getNutrientInfoAs2LevelDictionary_withNutrientIds(null);
 //		HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientIdList.get(0));
+	}
+	
+	static void test_inferIllnesses_withSymptoms1(Context ctx){
+		String[] symptomIds = {"咽喉发痒","咽喉灼热","咳嗽",
+            "咳痰","喘息",
+            "食欲不振","恶心","呕吐","上腹痛"};
+		HashMap<String, Object> measureData = new HashMap<String, Object>();
+		measureData.put(Constants.Key_HeartRate, Integer.valueOf(101));
+		measureData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(150));
+		measureData.put(Constants.Key_BloodPressureLow, Integer.valueOf(130));
+		measureData.put(Constants.Key_BodyTemperature, Double.valueOf(38.4));
+
+		ArrayList<String> illnessList = Tool.inferIllnesses_withSymptoms(Tool.convertFromArrayToList(symptomIds),measureData);
+		Log.d(LogTag, "illnessList=" + Tool.getIndentFormatStringOfObject(illnessList, 0));
 	}
 
 }

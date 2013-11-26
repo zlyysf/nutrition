@@ -958,6 +958,329 @@ public class Tool {
 		}
 	}
 	
+	/*
+	 when atLeastN<=0, it means at least ALL. item is of string type.
+	 toBeCheckedAry and fullCol can be String[] or ArrayList<String>
+	 
+	 */
+	public static boolean existAtLeastN_withToBeCheckedCollection(Object toBeCheckedCol,Object fullCol,int atLeastN)
+	{
+	    if (fullCol == null)
+	        return true;
+	    if (toBeCheckedCol == null)
+	        return false;
+	    
+	    HashSet<String> fullSet = new HashSet<String>();
+
+	    if (fullCol instanceof  String[]){
+	    	String[] fullAry = (String[])fullCol;
+	    	fullSet.addAll(Tool.convertFromArrayToList(fullAry));
+	    }else if(fullCol instanceof ArrayList<?>){
+	    	ArrayList<String> fullList = (ArrayList<String>)fullCol;
+	    	fullSet.addAll(fullList);
+	    }else{
+	    	fullSet = (HashSet<String>)fullCol;
+	    }
+	    
+	    String[] toBeCheckedAry = null;
+	    ArrayList<String> toBeCheckedList = null;
+	    if (toBeCheckedCol instanceof  String[]){
+	    	toBeCheckedAry = (String[])toBeCheckedCol;
+	    }else{
+	    	toBeCheckedList = (ArrayList<String>)toBeCheckedCol;
+	    }
+
+	    if (fullSet.size()==0)
+	        return true;
+	    if (toBeCheckedAry!=null && toBeCheckedAry.length==0 || toBeCheckedList!=null && toBeCheckedList.size()==0)
+	        return false;
+	    int toBeCheckedColSize = 0;
+	    toBeCheckedColSize = toBeCheckedAry==null? toBeCheckedColSize : toBeCheckedAry.length;
+	    toBeCheckedColSize = toBeCheckedList==null? toBeCheckedColSize : toBeCheckedList.size();
+	    if (atLeastN <=0 ){
+	        atLeastN = toBeCheckedColSize;
+	    }
+	    
+	    int inCount = 0;
+	    
+	    for(int i=0; i<toBeCheckedColSize; i++){
+	        String toBeCheckedItem = null;
+	        if (toBeCheckedAry!=null)
+	        	toBeCheckedItem = toBeCheckedAry[i];
+	        else if(toBeCheckedList!=null)
+	        	toBeCheckedItem = toBeCheckedList.get(i);
+	        if (fullSet.contains(toBeCheckedItem)){
+	        	inCount ++;
+	        }
+	    }
+	    if (inCount >= atLeastN)
+	        return true;
+	    else
+	        return false;
+
+	}
+	
+	/*
+	 symptomIds 是待分析的症状集合
+	 measureData 可能需要如下key： Key_HeartRate, Key_BloodPressureLow,Key_BloodPressureHigh, Key_BodyTemperature
+	 返回值 是一个可能的疾病Id的集合
+	 */
+	public static ArrayList<String> inferIllnesses_withSymptoms(ArrayList<String> symptomIds,HashMap<String, Object> measureData)
+	{
+		HashSet<String> symptomSet = new HashSet<String>();
+		symptomSet.addAll(symptomIds);
+
+		ArrayList<String> inferIllnessAry = new ArrayList<String>();
+	    
+	    if (measureData != null) {
+	    	Integer nmHeartRate = (Integer)measureData.get(Constants.Key_HeartRate);
+	        if (nmHeartRate != null){
+	            int heartRate = nmHeartRate.intValue();
+	            if (heartRate < 60){
+	                inferIllnessAry.add("窦性心动过缓");
+	            }else if(heartRate > 100){
+	                inferIllnessAry.add("窦性心动过速");
+	            }
+	        }
+	        
+	        Integer nmBloodPressureLow = (Integer)measureData.get(Constants.Key_BloodPressureLow);
+	        Integer nmBloodPressureHigh = (Integer)measureData.get(Constants.Key_BloodPressureHigh); 
+	        if (nmBloodPressureLow!=null && nmBloodPressureHigh!=null){
+	            int bloodPressureLow =  nmBloodPressureLow.intValue();
+	            int bloodPressureHigh =  nmBloodPressureHigh.intValue();
+	            if (bloodPressureHigh>=180 && bloodPressureLow>=110){
+	                inferIllnessAry.add("重度高血压");
+	            } else if (bloodPressureHigh>=160 && bloodPressureLow>=100){
+	                inferIllnessAry.add("中度高血压");
+	            } else if (bloodPressureHigh>=140 && bloodPressureLow>=90){
+	                inferIllnessAry.add("轻度高血压");
+	            }
+	        }
+	        
+	        Double nmBodyTemperature = (Double)measureData.get(Constants.Key_BodyTemperature);
+	        if (nmBodyTemperature != null){
+	            double bodyTemperature = nmBodyTemperature.doubleValue();
+	            if (bodyTemperature >= 40.0){
+	                inferIllnessAry.add("超高热");
+	            }else if (bodyTemperature >= 39.0){
+	                inferIllnessAry.add("高热");
+	            }else if (bodyTemperature >= 38.0){
+	                inferIllnessAry.add("中热");
+	            }else if (bodyTemperature >= 37.5){
+	                inferIllnessAry.add("低热");
+	            }
+	        }
+	    }
+	    
+	    String[] ganMao_SymptomsFull1 = {"鼻塞","清鼻涕","鼻后滴漏","喷嚏"};
+	    String[] ganMao_SymptomsFull4 = {"发热","畏寒","味觉迟钝","头痛","易流泪",
+	                                     "听力减退","咽喉发痒","咽喉灼热","咽喉疼痛","咽干",
+	                                     "呼吸不畅","咳嗽","声嘶"};
+	    HashSet<String> ganMao_SymptomSetFull1 = new HashSet<String>();
+	    ganMao_SymptomSetFull1.addAll(Tool.convertFromArrayToList(ganMao_SymptomsFull1));
+	    HashSet<String> ganMao_SymptomSetFull4 = new HashSet<String>();
+	    ganMao_SymptomSetFull4.addAll(Tool.convertFromArrayToList(ganMao_SymptomsFull4));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,ganMao_SymptomSetFull1,1)
+	        && existAtLeastN_withToBeCheckedCollection(symptomIds,ganMao_SymptomSetFull4,4))
+	    {
+	        inferIllnessAry.add("感冒");
+	    }
+	    
+	    String[] yanYan_SymptomsFull2 = {"咽喉发痒","咽喉灼热"};
+	    HashSet<String> yanYan_SymptomSetFull2 = new HashSet<String>();
+	    yanYan_SymptomSetFull2.addAll(Tool.convertFromArrayToList(yanYan_SymptomsFull2));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,yanYan_SymptomSetFull2,2)
+	        && !symptomSet.contains("咳嗽")){
+	        inferIllnessAry.add("急性病毒性咽炎");
+	    }
+	    
+	    String[] houYan_SymptomsFull2 = {"声嘶","讲话困难"};
+	    HashSet<String> houYan_SymptomSetFull2 = new HashSet<String>();
+	    houYan_SymptomSetFull2.addAll(Tool.convertFromArrayToList(houYan_SymptomsFull2));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,houYan_SymptomSetFull2,2)){
+	        inferIllnessAry.add("急性病毒性喉炎");
+	    }
+	    
+	    String[] bianTaoTi_SymptomsFull1 = {"扁桃体肿大"};
+	    HashSet<String> bianTaoTi_SymptomSetFull1 = new HashSet<String>();
+	    bianTaoTi_SymptomSetFull1.addAll(Tool.convertFromArrayToList(bianTaoTi_SymptomsFull1));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,bianTaoTi_SymptomSetFull1,1)){
+	        inferIllnessAry.add("急性扁桃体炎");
+	    }
+	    
+	    String[] biYan_SymptomsFull3 = {"鼻塞","鼻痒","清鼻涕","连续喷嚏"};
+	    HashSet<String> biYan_SymptomSetFull3 = new HashSet<String>();
+	    biYan_SymptomSetFull3.addAll(Tool.convertFromArrayToList(biYan_SymptomsFull3));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,biYan_SymptomSetFull3,3)
+	        && !symptomSet.contains("咳嗽") && !symptomSet.contains("发热") ){
+	        inferIllnessAry.add("过敏性鼻炎");
+	    }
+	    
+	    String[] zhiQiGuanYan_SymptomsFull1 = {"咳痰","痰中带血"};
+	    String[] zhiQiGuanYan_SymptomsFull2 = {"咳嗽","喘息"};
+	    HashSet<String> zhiQiGuanYan_SymptomSetFull1 = new HashSet<String>();
+	    zhiQiGuanYan_SymptomSetFull1.addAll(Tool.convertFromArrayToList(zhiQiGuanYan_SymptomsFull1));
+	    HashSet<String> zhiQiGuanYan_SymptomSetFull2 = new HashSet<String>();
+	    zhiQiGuanYan_SymptomSetFull2.addAll(Tool.convertFromArrayToList(zhiQiGuanYan_SymptomsFull2));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,zhiQiGuanYan_SymptomSetFull1,1)
+	        && existAtLeastN_withToBeCheckedCollection(symptomIds,zhiQiGuanYan_SymptomSetFull2,2) ){
+	        inferIllnessAry.add("慢性支气管炎");
+	    }
+	    
+	    String[] xiaoChuan_SymptomsFull2 = {"呼吸不畅","哮鸣音"};
+	    HashSet<String> xiaoChuan_SymptomSetFull2 = new HashSet<String>();
+	    xiaoChuan_SymptomSetFull2.addAll(Tool.convertFromArrayToList(xiaoChuan_SymptomsFull2));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,xiaoChuan_SymptomSetFull2,2) ){
+	        inferIllnessAry.add("支气管哮喘");
+	    }
+	    
+	    String[] feiJieHe_SymptomsFull2in2 = {"咳嗽","发热"};
+	    String[] feiJieHe_SymptomsFull1in2a = {"咳痰","痰中带血"};
+	    String[] feiJieHe_SymptomsFull1in2b = {"胸痛","呼吸不畅"};
+	    HashSet<String> feiJieHe_SymptomSetFull2in2 = new HashSet<String>();
+	    feiJieHe_SymptomSetFull2in2.addAll(Tool.convertFromArrayToList(feiJieHe_SymptomsFull2in2));
+	    HashSet<String> feiJieHe_SymptomSetFull1in2a = new HashSet<String>();
+	    feiJieHe_SymptomSetFull1in2a.addAll(Tool.convertFromArrayToList(feiJieHe_SymptomsFull1in2a));
+	    HashSet<String> feiJieHe_SymptomSetFull1in2b = new HashSet<String>();
+	    feiJieHe_SymptomSetFull1in2b.addAll(Tool.convertFromArrayToList(feiJieHe_SymptomsFull1in2b));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,feiJieHe_SymptomSetFull2in2,2)
+	        && existAtLeastN_withToBeCheckedCollection(symptomIds,feiJieHe_SymptomSetFull1in2a,1)
+	        && existAtLeastN_withToBeCheckedCollection(symptomIds,feiJieHe_SymptomSetFull1in2b,1)){
+	        inferIllnessAry.add("肺结核");
+	    }
+	    
+	    String[] jiXingWeiYan_SymptomsFull1in2 = {"食欲不振","恶心"};
+	    String[] jiXingWeiYan_SymptomsFullPart1in2 = {"腹胀满","上腹痛"};
+	    String[] jiXingWeiYan_SymptomsFullPart2in2 = {"呕血","黑便"};
+	    HashSet<String> jiXingWeiYan_SymptomSetFull1in2 = new HashSet<String>();
+	    jiXingWeiYan_SymptomSetFull1in2.addAll(Tool.convertFromArrayToList(jiXingWeiYan_SymptomsFull1in2));
+	    HashSet<String> jiXingWeiYan_SymptomSetFullPart1in2 = new HashSet<String>();
+	    jiXingWeiYan_SymptomSetFullPart1in2.addAll(Tool.convertFromArrayToList(jiXingWeiYan_SymptomsFullPart1in2));
+	    HashSet<String> jiXingWeiYan_SymptomSetFullPart2in2 = new HashSet<String>();
+	    jiXingWeiYan_SymptomSetFullPart2in2.addAll(Tool.convertFromArrayToList(jiXingWeiYan_SymptomsFullPart2in2));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,jiXingWeiYan_SymptomSetFull1in2,1)
+	        && symptomSet.contains("呕吐")
+	        &&
+	        (existAtLeastN_withToBeCheckedCollection(symptomIds,jiXingWeiYan_SymptomSetFullPart1in2,1)
+	          ||existAtLeastN_withToBeCheckedCollection(symptomIds,jiXingWeiYan_SymptomSetFullPart2in2,2))
+	    ){
+	        inferIllnessAry.add("急性胃炎");
+	    }
+	    
+	    String[] manXingWeiYan_SymptomsFull2in4 = {"食欲不振","恶心","打嗝","泛酸"};
+	    String[] manXingWeiYan_SymptomsFull1in2 = {"腹胀满","烧灼状腹痛"};
+	    HashSet<String> manXingWeiYan_SymptomSetFull2in4 = new HashSet<String>();
+	    manXingWeiYan_SymptomSetFull2in4.addAll(Tool.convertFromArrayToList(manXingWeiYan_SymptomsFull2in4));
+	    HashSet<String> manXingWeiYan_SymptomSetFull1in2 = new HashSet<String>();
+	    manXingWeiYan_SymptomSetFull1in2.addAll(Tool.convertFromArrayToList(manXingWeiYan_SymptomsFull1in2));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,manXingWeiYan_SymptomSetFull2in4,2)
+	        && existAtLeastN_withToBeCheckedCollection(symptomIds,manXingWeiYan_SymptomSetFull1in2,1) ){
+	        inferIllnessAry.add("慢性胃炎");
+	    }
+	    
+	    String[] xiaoHuaBuLiang_SymptomsFull1in2 = {"餐后腹胀","餐后腹痛"};
+	    String[] xiaoHuaBuLiang_SymptomsFull2in6 = {"食欲不振","恶心","打嗝","早饱感", "上腹痛","烧灼状腹痛"};
+	    HashSet<String> xiaoHuaBuLiang_SymptomSetFull1in2 = new HashSet<String>();
+	    xiaoHuaBuLiang_SymptomSetFull1in2.addAll(Tool.convertFromArrayToList(xiaoHuaBuLiang_SymptomsFull1in2));
+	    HashSet<String> xiaoHuaBuLiang_SymptomSetFull2in6 = new HashSet<String>();
+	    xiaoHuaBuLiang_SymptomSetFull2in6.addAll(Tool.convertFromArrayToList(xiaoHuaBuLiang_SymptomsFull2in6));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,xiaoHuaBuLiang_SymptomSetFull1in2,1)
+	        && existAtLeastN_withToBeCheckedCollection(symptomIds,xiaoHuaBuLiang_SymptomSetFull2in6,2) ){
+	        inferIllnessAry.add("功能性消化不良");
+	    }
+	    
+	    String[] changBing_SymptomsFull1in2 = {"腹泻","黏液脓血便"};
+	    String[] changBing_SymptomsFull1in5 = {"腹胀满","食欲不振","恶心","呕吐", "发热"};
+	    HashSet<String> changBing_SymptomSetFull1in2 = new HashSet<String>();
+	    changBing_SymptomSetFull1in2.addAll(Tool.convertFromArrayToList(changBing_SymptomsFull1in2));
+	    HashSet<String> changBing_SymptomSetFull1in5 = new HashSet<String>();
+	    changBing_SymptomSetFull1in5.addAll(Tool.convertFromArrayToList(changBing_SymptomsFull1in5));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,changBing_SymptomSetFull1in2,1)
+	        && existAtLeastN_withToBeCheckedCollection(symptomIds,changBing_SymptomSetFull1in5,1)
+	        && symptomSet.contains("左下或下腹痛")){
+	        inferIllnessAry.add("炎症性肠病");
+	    }
+
+	    String[] shenYan_SymptomsFull2in2 = {"眼睑水肿","下肢水肿"};
+	    HashSet<String> shenYan_SymptomSetFull2in2 = new HashSet<String>();
+	    shenYan_SymptomSetFull2in2.addAll(Tool.convertFromArrayToList(shenYan_SymptomsFull2in2));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,shenYan_SymptomSetFull2in2,2)
+	        || symptomSet.contains("血尿")){
+	        inferIllnessAry.add("急性肾小球肾炎");
+	    }
+	    
+	    String[] pinXue_SymptomsFull8 = {"乏力","倦怠萎靡","体力耐力下降","烦躁","易怒","注意力分散",
+	                                     "口唇干裂","口腔溃疡","舌发炎/红包","吞咽困难","气短","心慌",
+	                                     "皮肤干燥","皱纹","头晕","头痛","头发干枯","头发脱落","脸色苍白",
+	                                     "视觉模糊","耳鸣","指甲缺乏光泽","指甲脆薄易裂","指甲变平","指甲凹下呈勺状"};
+	    HashSet<String> pinXue_SymptomSetFull8 = new HashSet<String>();
+	    pinXue_SymptomSetFull8.addAll(Tool.convertFromArrayToList(pinXue_SymptomsFull8));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,pinXue_SymptomSetFull8,8) ){
+	        inferIllnessAry.add("缺铁性贫血");
+	    }
+	    
+	    String[] jiaKang_SymptomsFull2in2 = {"食欲亢进","甲状腺肿大"};
+	    HashSet<String> jiaKang_SymptomSetFull2in2 = new HashSet<String>();
+	    jiaKang_SymptomSetFull2in2.addAll(Tool.convertFromArrayToList(jiaKang_SymptomsFull2in2));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,jiaKang_SymptomSetFull2in2,2)
+	        || symptomSet.contains("突眼")){
+	        inferIllnessAry.add("甲状腺功能亢进");
+	    }
+	    
+	    String[] jiaJian_SymptomsFull7 = {"头发干枯","头发脱落","脸色苍白","乏力","皮肤干燥",
+	                                      "颜面水肿","表情呆滞","眼睑水肿","听力减退","舌肿胀/有齿痕",
+	                                      "声嘶","心跳过慢","脱皮屑","姜黄肤色","手脚冰凉",
+	                                      "四肢肿胀","关节疼痛","少汗","体重增加","畏寒",
+	                                      "便秘","反应迟钝","健忘","嗜睡","月经过多",
+	                                      "月经不调"};
+	    HashSet<String> jiaJian_SymptomSetFull7 = new HashSet<String>();
+	    jiaJian_SymptomSetFull7.addAll(Tool.convertFromArrayToList(jiaJian_SymptomsFull7));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,jiaJian_SymptomSetFull7,7) ){
+	        inferIllnessAry.add("甲状腺功能减退");
+	    }
+	    
+	    String[] tangNiaoBing_SymptomsFull3 = {"多饮","多尿","视觉模糊","食欲亢进","体重减少"};
+	    HashSet<String> tangNiaoBing_SymptomSetFull3 = new HashSet<String>();
+	    tangNiaoBing_SymptomSetFull3.addAll(Tool.convertFromArrayToList(tangNiaoBing_SymptomsFull3));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,tangNiaoBing_SymptomSetFull3,3)){
+	        inferIllnessAry.add("糖尿病");
+	    }
+	    
+	    String[] diXueTang_SymptomsFull6 = {"乏力","脸色苍白","烦躁","易怒","注意力分散",
+	                                      "心慌","头晕","视觉模糊","手脚冰凉","反应迟钝",
+	                                      "嗜睡","流口水","心跳过速","手脚震颤","多汗",
+	                                      "易饥饿","步态不稳","紧张焦虑"};
+	    HashSet<String> diXueTang_SymptomSetFull6 = new HashSet<String>();
+	    diXueTang_SymptomSetFull6.addAll(Tool.convertFromArrayToList(diXueTang_SymptomsFull6));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,diXueTang_SymptomSetFull6,6) ){
+	        inferIllnessAry.add("低血糖");
+	    }
+
+	    String[] guanJieYan_SymptomsFull2 = {"关节疼痛","关节肿胀","关节僵硬"};
+	    HashSet<String> guanJieYan_SymptomSetFull2 = new HashSet<String>();
+	    guanJieYan_SymptomSetFull2.addAll(Tool.convertFromArrayToList(guanJieYan_SymptomsFull2));
+	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,guanJieYan_SymptomSetFull2,2)
+	        || symptomSet.contains("晨僵")){
+	        inferIllnessAry.add("骨关节炎");
+	    }
+	    
+	    String[] guZhiShuSong_SymptomsFull1in2 = {"乏力","负重能力下降"};
+	    HashSet<String> guZhiShuSong_SymptomSetFull1in2 = new HashSet<String>();
+	    guZhiShuSong_SymptomSetFull1in2.addAll(Tool.convertFromArrayToList(guZhiShuSong_SymptomsFull1in2));
+	    if (symptomSet.contains("弥漫性骨痛")
+	        || (existAtLeastN_withToBeCheckedCollection(symptomIds,guZhiShuSong_SymptomSetFull1in2,1)
+	            && symptomSet.contains("腰背疼痛")) ){
+	        inferIllnessAry.add("骨质疏松症");
+	    }
+	    
+	    return inferIllnessAry;
+	}
+
+
+	
+	
+	
+	
 	
 }
 

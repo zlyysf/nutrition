@@ -853,7 +853,7 @@
     int inCount = 0;
     for(int i=0; i<toBeCheckedAry.count; i++){
         id toBeCheckedItem = toBeCheckedAry[i];
-        if ([fullCol containsObject:toBeCheckedItem]){
+        if ([fullSet containsObject:toBeCheckedItem]){
             inCount ++;
         }
     }

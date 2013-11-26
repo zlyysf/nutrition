@@ -177,6 +177,11 @@ public class Constants {
 	public static final String ForSex_male ="male";
 	public static final String ForSex_female ="female";
 
+	public static final String Key_HeartRate ="HeartRate";
+	public static final String Key_BloodPressureLow ="BloodPressureLow";
+	public static final String Key_BloodPressureHigh ="BloodPressureHigh";
+	public static final String Key_BodyTemperature ="BodyTemperature";
+	public static final String Key_Weight = "Weight";
 
 	
 	
