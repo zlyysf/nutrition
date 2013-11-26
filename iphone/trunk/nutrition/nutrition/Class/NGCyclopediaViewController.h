@@ -14,4 +14,7 @@
 @property (strong,nonatomic)NSArray *commonDiseaseArray;
 @property (strong,nonatomic)NSArray *nutritionArray;
 @property (strong,nonatomic)NSArray *foodArray;
+@property (strong,nonatomic)NSArray *nutritionVitaminArray;
+@property (strong,nonatomic)NSArray *nutritionMineralArray;
+@property (strong,nonatomic)NSArray *nutritionOtherArray;
 @end

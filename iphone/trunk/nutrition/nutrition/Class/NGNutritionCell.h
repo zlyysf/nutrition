@@ -12,4 +12,8 @@
 
 @property (strong, nonatomic) IBOutlet UILabel *headerLabel;
 @property (strong, nonatomic) IBOutlet UIView *backView;
+@property (strong, nonatomic) IBOutlet UIImageView *sepline1View;
+@property (strong, nonatomic) IBOutlet UIImageView *sepline2View;
+@property (strong, nonatomic) IBOutlet UILabel *vitaminLabel;
+@property (strong, nonatomic) IBOutlet UILabel *mineralLabel;
 @end

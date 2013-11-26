@@ -689,6 +689,29 @@
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray_horizon_ line.png" id="MvJ-ph-2vj">
+                                                            <rect key="frame" x="0.0" y="47" width="300" height="1"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray_horizon_ line.png" id="TcT-Og-g4E">
+                                                            <rect key="frame" x="0.0" y="47" width="300" height="1"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </imageView>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="why-Yv-WSj">
+                                                            <rect key="frame" x="20" y="56" width="42" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="d6z-Ng-AkE">
+                                                            <rect key="frame" x="20" y="74" width="42" height="21"/>
+                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 </view>
@@ -698,6 +721,10 @@
                                         <connections>
                                             <outlet property="backView" destination="Dm3-hD-rf8" id="UBV-11-XGa"/>
                                             <outlet property="headerLabel" destination="lDl-oq-Hnx" id="GPX-Sl-wvA"/>
+                                            <outlet property="mineralLabel" destination="d6z-Ng-AkE" id="NW4-HV-Gai"/>
+                                            <outlet property="sepline1View" destination="MvJ-ph-2vj" id="tgb-1Y-2zd"/>
+                                            <outlet property="sepline2View" destination="TcT-Og-g4E" id="VL5-xE-Vm0"/>
+                                            <outlet property="vitaminLabel" destination="why-Yv-WSj" id="vYZ-Vj-hac"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NGFoodsCell" rowHeight="120" id="TTx-3B-Mpk" customClass="NGFoodsCell">

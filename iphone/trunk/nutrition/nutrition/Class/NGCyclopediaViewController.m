@@ -56,7 +56,16 @@
     self.commonDiseaseArray = [NSArray arrayWithObjects:@"急性咽炎",@"关节炎",@"流行性感冒",@"急性胃炎",nil];
     self.nutritionArray = [LZRecommendFood getCustomNutrients:nil];
     self.foodArray = [[LZDataAccess singleton]getFoodCnTypes];
-    nutritionCellHeight = 370.f;
+    self.nutritionVitaminArray = [NSArray arrayWithObjects:@"A",@"B2",@"B6",@"B9",@"B12",@"C",@"D",@"E", nil];
+    self.nutritionMineralArray = [NSArray arrayWithObjects:@"铁",@"钙",@"镁",@"钾",@"锌", nil];
+    self.nutritionOtherArray = [NSArray arrayWithObjects:@"蛋白质",@"纤维", nil];
+    int count1 = [self.nutritionVitaminArray count];
+    int count2 = [self. nutritionMineralArray count];
+    int count3 = [self.nutritionOtherArray count];
+    int floor1 = count1/4+ ((count1%4 == 0)?0:1);
+    int floor2 = count2/4+ ((count2%4 == 0)?0:1);
+    int floor3 = count3/2+ ((count3%2 == 0)?0:1);
+    nutritionCellHeight = (floor1+floor2+floor3)*(50)+120;
     int diseaseCount = [commonDiseaseArray count];
     diseaseCellHeight = 40+30+DiseaseItemTopMargin+diseaseCount*(DiseaseItemLabelHeight+DiseaseItemMargin)-DiseaseItemMargin+DiseaseItemBottomMarigin;
     int foodCount = [foodArray count];
@@ -136,6 +145,93 @@
             [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.headerLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
             cell.headerLabel.text = @"  营养";
+            float startY = 50;
+            int floor = 1;
+            int perRowCount = 4;
+            float startX;
+            for (int i=0; i< [self.nutritionVitaminArray count]; i++)
+            {
+                
+                if (i>=floor *perRowCount)
+                {
+                    floor+=1;
+                    startY += 50;
+                }
+                startX = 80+(i-(floor-1)*perRowCount)*55;
+                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(startX,startY, 40, 30)];
+                [cell.backView addSubview:button];
+                //button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
+                [button setBackgroundColor:[UIColor lightGrayColor]];
+                [button setTitle:[self.nutritionVitaminArray objectAtIndex:i] forState:UIControlStateNormal];
+                [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+                [button.titleLabel setTextColor:[UIColor blackColor]];
+                [button.layer setMasksToBounds:YES];
+                [button.layer setCornerRadius:3];
+                
+            }
+            startY += 50;
+            float part1Height =startY-30;
+            float vitaminLabelY = (part1Height-20)/2+30;
+            [cell.vitaminLabel setFrame:CGRectMake(10, vitaminLabelY, 60, 20)];
+            
+            [cell.vitaminLabel setText:@"维生素"];
+            [cell.sepline1View setFrame:CGRectMake(0, startY, 300, 1)];
+            
+            startY += 20;
+            floor = 1;
+            for (int i=0; i< [self.nutritionMineralArray count]; i++)
+            {
+                
+                if (i>=floor *perRowCount)
+                {
+                    startY += 50;
+                    floor+=1;
+                }
+                startX = 80+(i-(floor-1)*perRowCount)*55;
+                
+                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(startX,startY, 40, 30)];
+                [cell.backView addSubview:button];
+                //button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
+                [button setBackgroundColor:[UIColor lightGrayColor]];
+                [button setTitle:[self.nutritionMineralArray objectAtIndex:i] forState:UIControlStateNormal];
+                [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+                [button.titleLabel setTextColor:[UIColor blackColor]];
+                [button.layer setMasksToBounds:YES];
+                [button.layer setCornerRadius:3];
+                
+            }
+            startY += 50;
+            float part2Height = startY-30-part1Height;
+            float mineralLabelY = (part2Height-20)/2+30+part1Height;
+            [cell.mineralLabel setFrame:CGRectMake(10, mineralLabelY, 60, 20)];
+            
+            [cell.mineralLabel setText:@"矿物质"];
+            [cell.sepline2View setFrame:CGRectMake(0, startY, 300, 1)];
+            startY += 20;
+            floor = 1;
+            perRowCount = 2;
+            for (int i=0; i< [self.nutritionOtherArray count]; i++)
+            {
+                
+                if (i>=floor *perRowCount)
+                {
+                    startY += 50;
+                    floor+=1;
+                }
+                startX = 80+(i-(floor-1)*perRowCount)*90;
+                
+                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(startX,startY, 60, 30)];
+                [cell.backView addSubview:button];
+                //button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
+                [button setBackgroundColor:[UIColor lightGrayColor]];
+                [button setTitle:[self.nutritionOtherArray objectAtIndex:i] forState:UIControlStateNormal];
+                [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
+                [button.titleLabel setTextColor:[UIColor blackColor]];
+                [button.layer setMasksToBounds:YES];
+                [button.layer setCornerRadius:3];
+                
+            }
+
             return cell;
         }
     }
