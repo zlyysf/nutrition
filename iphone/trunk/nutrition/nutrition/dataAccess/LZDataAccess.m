@@ -2039,7 +2039,7 @@
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_SymptomNutrient andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_NutrientID, nil] andOrderByPart: nil andNeedDistinct:true];
     NSArray *nutrientIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_NutrientID andDictionaryArray:rows];
     NSLog(@"getSymptomNutrientDistinctIds_BySymptomIds nutrientIds=%@", [LZUtility getObjectDescription:nutrientIds andIndent:0] );
-    return rows;
+    return nutrientIds;
 }
 
 
