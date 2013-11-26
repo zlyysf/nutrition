@@ -37,8 +37,8 @@
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
 //    [self.class test_TranslationItem1];
 //    [self.class test_getFoodsByShowingPart];
-//    [self.class test_getSymptom1];
-    [self.class test_inferIllnesses_withSymptoms1];
+    [self.class test_getSymptom1];
+//    [self.class test_inferIllnesses_withSymptoms1];
 
     
 //    [self.class testFormatResult1];
@@ -2405,6 +2405,8 @@ BOOL needLimitNutrients = FALSE;
     
     [da getSymptomRowsByTypeDict_BySymptomTypeIds:symptomTypeIds];
     
+    NSArray *symptomIds = [NSArray arrayWithObjects:@"头晕", @"头发脱落", @"易疲劳", @"易流泪", nil];
+    [da getSymptomNutrientDistinctIds_BySymptomIds:symptomIds];
     
 }
 
