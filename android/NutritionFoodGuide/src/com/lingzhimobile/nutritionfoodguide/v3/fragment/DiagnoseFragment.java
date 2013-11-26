@@ -69,15 +69,19 @@ public class DiagnoseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.v2_activity_diagnose, container, false);
-        initViewHandles(view);
+        initViewHandles(inflater, view);
         initViewsContent();
         setViewEventHandlers();
         setViewsContent();
         return view;
     }
 
-    void initViewHandles(View view){
+    void initViewHandles(LayoutInflater inflater, View view){
         m_listView1 = (ListView)view.findViewById(R.id.listView1);
+        View headerView = inflater.inflate(R.layout.v3_symptom_header, null, false);
+        View footerView = inflater.inflate(R.layout.v3_symptom_footer, null, false);
+        m_listView1.addHeaderView(headerView);
+        m_listView1.addFooterView(footerView);
 	}
     
 	void initViewsContent(){
@@ -130,7 +134,7 @@ public class DiagnoseFragment extends Fragment {
 		    ArrayList<HashMap<String, Object>> symptomList = symptomHashMap.get(diagnoseTitleStr);
 		    for (HashMap<String, Object> symptom: symptomList) {
 		        String symptomStr = (String) symptom.get("SymptomId");
-		        View cellView = getActivity().getLayoutInflater().inflate(R.layout.v3_grid_cell_symptom_cb, null);
+		        View cellView = getActivity().getLayoutInflater().inflate(R.layout.v3_grid_cell_symptom, null);
 		        CheckBox cb = (CheckBox) cellView.findViewById(R.id.cbSymptom);
 		        changeCheckboxBackgroundWithSelector(getActivity(), cb, checkboxColorNormalResId, checkboxColorCheckedResIds[position%checkboxColorCheckedResIds.length]);
 		        cb.setText(symptomStr);
