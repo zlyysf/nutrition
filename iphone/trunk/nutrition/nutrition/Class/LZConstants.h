@@ -225,7 +225,11 @@
 #define ForSex_male @"male"
 #define ForSex_female @"female"
 
-
+#define Key_HeartRate @"HeartRate"
+#define Key_BloodPressureLow @"BloodPressureLow"
+#define Key_BloodPressureHigh @"BloodPressureHigh"
+#define Key_BodyTemperature @"BodyTemperature"
+#define Key_Weight ParamKey_weight
 
 
 #define TranslationItemType_FoodCnType @"FoodCnType"
