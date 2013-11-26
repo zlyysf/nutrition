@@ -33,11 +33,12 @@
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
 //    [self.class test_DiseaseNutrient1];
-    [self.class test_DiseaseNutrient2];
+//    [self.class test_DiseaseNutrient2];
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
 //    [self.class test_TranslationItem1];
 //    [self.class test_getFoodsByShowingPart];
 //    [self.class test_getSymptom1];
+    [self.class test_inferIllnesses_withSymptoms1];
 
     
 //    [self.class testFormatResult1];
@@ -2407,6 +2408,20 @@ BOOL needLimitNutrients = FALSE;
     
 }
 
++(void)test_inferIllnesses_withSymptoms1
+{
+    NSMutableArray *symptomIds = [NSMutableArray arrayWithObjects:
+                                  @"咽喉发痒",@"咽喉灼热",@"咳嗽",
+                                  @"咳痰",@"喘息",
+                                  @"食欲不振",@"恶心",@"呕吐",@"上腹痛", nil];
+    NSMutableDictionary *measureData = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                   [NSNumber numberWithInt:101],Key_HeartRate,
+                                   [NSNumber numberWithInt:150],Key_BloodPressureHigh,[NSNumber numberWithInt:130],Key_BloodPressureLow,
+                                   [NSNumber numberWithInt:38.4],Key_BodyTemperature,
+                                   nil];
+    NSArray *illnessAry = [LZUtility inferIllnesses_withSymptoms:symptomIds andMeasureData:measureData];
+    NSLog(@"illnessAry=%@",[LZUtility getObjectDescription:illnessAry andIndent:0] );
+}
 
 
 @end
