@@ -130,7 +130,7 @@ public class DiagnoseFragment extends Fragment {
 		    ArrayList<HashMap<String, Object>> symptomList = symptomHashMap.get(diagnoseTitleStr);
 		    for (HashMap<String, Object> symptom: symptomList) {
 		        String symptomStr = (String) symptom.get("SymptomId");
-		        View cellView = getActivity().getLayoutInflater().inflate(R.layout.v2_grid_cell_symptom_cb, null);
+		        View cellView = getActivity().getLayoutInflater().inflate(R.layout.v3_grid_cell_symptom_cb, null);
 		        CheckBox cb = (CheckBox) cellView.findViewById(R.id.cbSymptom);
 		        changeCheckboxBackgroundWithSelector(getActivity(), cb, checkboxColorNormalResId, checkboxColorCheckedResIds[position%checkboxColorCheckedResIds.length]);
 		        cb.setText(symptomStr);
