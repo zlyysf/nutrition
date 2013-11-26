@@ -20,7 +20,8 @@ public class Tool_microlog4android {
 	
 	static public void logDebug(String msg){
 		if (Constants.KeyIsEnvironmentDebug){
-			getLogger().debug(msg);
+		    if (getLogger()!= null)
+		        getLogger().debug(msg);
 		}
 		
 	}
