@@ -1697,8 +1697,8 @@
     DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
 	assert(reader);
     
-    int ColumnIdx_SimptomType=1, ColumnIdx_SimptomStart=2,
-        RowOffset_Simptom=0, RowOffset_Nutrients=1, RowOffset_Illnesses=2;
+    int ColumnIdx_SimptomType=1, ColumnIdx_SimptomStart=3,
+        RowOffset_Simptom=0, RowOffset_healthMark=1, RowOffset_Nutrients=2, RowOffset_Illnesses=3;
     DHcell *cell_SimptomType;
 
     NSDictionary *nutrientDescToIdDict = [self getNutrientDescInSymptomToNutrientIdDict];
@@ -1708,7 +1708,7 @@
 
     NSMutableDictionary *symptomsByTypeDict = [NSMutableDictionary dictionaryWithCapacity:30];//type -> symptoms
     NSMutableDictionary *nutrientIdAndIllnessDataBySymptomWithTypeDict = [NSMutableDictionary dictionaryWithCapacity:1000]; // type+"--"+symptom -> [nutrientIds, illnessAry]
-    
+    NSMutableDictionary *symptomHealthmarkDict = [NSMutableDictionary dictionaryWithCapacity:200];//symptom --> healthmark
     NSMutableSet *symptomSet = [NSMutableSet set];//用于检查症状的同名的情况
     NSMutableSet *illnessSet = [NSMutableSet set];
     
@@ -1720,7 +1720,7 @@
     do {
         cell_SimptomType = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:idxCol];
         cellNotEmpty = (cell_SimptomType.type!=cellBlank && cell_SimptomType.str.length>0);
-        if (cellNotEmpty){
+        if (cellNotEmpty && ![@"症状总数" isEqualToString:cell_SimptomType.str] ){
             NSString *simptomType = cell_SimptomType.str;
             NSLog(@"simptomType: %@ [%d]",simptomType,idxRow);
             [symptomTypes addObject:simptomType];
@@ -1739,7 +1739,7 @@
         idxRow = [symptomType_rowIdx intValue];
         idxCol = ColumnIdx_SimptomStart;
         
-        DHcell *cell_Simptom, *cell_Nutrients, *cell_Illnesses;
+        DHcell *cell_Simptom, *cell_healthMark, *cell_Nutrients, *cell_Illnesses;
         bool cellNotEmpty_Simptom;
         NSMutableArray *simptomsOfType = [NSMutableArray array];
         do {
@@ -1748,8 +1748,11 @@
             if(cellNotEmpty_Simptom){
                 NSString *symptomOfType = cell_Simptom.str;
                 [simptomsOfType addObject:symptomOfType];
+                cell_healthMark = [reader cellInWorkSheetIndex:sheetIndex row:idxRow+RowOffset_healthMark col:idxCol];
                 cell_Nutrients = [reader cellInWorkSheetIndex:sheetIndex row:idxRow+RowOffset_Nutrients col:idxCol];
                 cell_Illnesses = [reader cellInWorkSheetIndex:sheetIndex row:idxRow+RowOffset_Illnesses col:idxCol];
+                
+                NSNumber *mnHealthMark = cell_healthMark.val;
                 NSMutableArray *ary2D = [NSMutableArray arrayWithCapacity:2];
                 NSMutableArray *nutrientIds = [NSMutableArray arrayWithCapacity:10];
                 NSMutableArray *illnessAry = [NSMutableArray arrayWithCapacity:10];
@@ -1779,6 +1782,7 @@
                 
                 NSString *keyTypeAndSymptom = [NSString stringWithFormat:@"%@--%@", symptomType,symptomOfType];
                 [nutrientIdAndIllnessDataBySymptomWithTypeDict setObject:ary2D forKey:keyTypeAndSymptom];
+                [symptomHealthmarkDict setObject:mnHealthMark forKey:symptomOfType];
                 
                 
                 if ([symptomSet containsObject:symptomOfType]){
@@ -1800,6 +1804,7 @@
     [retData setObject:symptomTypes forKey:@"symptomTypes"];
     [retData setObject:symptomsByTypeDict forKey:@"symptomsByTypeDict"];
     [retData setObject:nutrientIdAndIllnessDataBySymptomWithTypeDict forKey:@"nutrientIdAndIllnessDataBySymptomWithTypeDict"];
+    [retData setObject:symptomHealthmarkDict forKey:@"symptomHealthmarkDict"];
     [retData setObject:illnessSet forKey:@"illnessSet"];
     return retData;
 }
@@ -1810,6 +1815,7 @@
     NSMutableArray *symptomTypes = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"symptomTypes"];
     NSMutableDictionary *symptomsByTypeDict = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"symptomsByTypeDict"];//type -> symptoms
     NSMutableDictionary *nutrientIdAndIllnessDataBySymptomWithTypeDict = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"nutrientIdAndIllnessDataBySymptomWithTypeDict"]; // type+"--"+symptom -> [nutrientIds, illnessAry]
+    NSMutableDictionary *symptomHealthmarkDict= [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"symptomHealthmarkDict"];//symptom --> healthmark
     NSSet *illnessSet = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"illnessSet"];
 
     NSMutableArray *symptomTypeRows = [NSMutableArray arrayWithCapacity:symptomTypes.count];
@@ -1840,12 +1846,14 @@
         NSArray *symptoms = [symptomsByTypeDict objectForKey:symptomType];
         for(int j=0; j<symptoms.count; j++){
             NSString *symptom = symptoms[j];
+            NSNumber *nmHealthMark = [symptomHealthmarkDict objectForKey:symptom];
             NSMutableArray *symptomRow = [NSMutableArray arrayWithCapacity:5];
             [symptomRow addObject:symptomType];
             [symptomRow addObject:symptom];
             [symptomRow addObject:[NSNumber numberWithInt:i*10000+j]];
             [symptomRow addObject:symptom];
             [symptomRow addObject:symptom];
+            [symptomRow addObject:nmHealthMark];
             [symptomRows addObject:symptomRow];
         }//for j
     }//for i
@@ -1915,14 +1923,14 @@
     assert(dbCon!=nil);
     LZDBAccess *db = dbCon;
     [db.da executeSql:@"CREATE TABLE SymptomType(SymptomTypeId TEXT PRIMARY KEY, DisplayOrder INTEGER, SymptomTypeNameCn TEXT, SymptomTypeNameEn TEXT, ForSex TEXT);"];
-    [db.da executeSql:@"CREATE TABLE Symptom(SymptomTypeId TEXT, SymptomId TEXT, DisplayOrder INTEGER, SymptomNameCn TEXT, SymptomNameEn TEXT, PRIMARY KEY(SymptomId) );"];
+    [db.da executeSql:@"CREATE TABLE Symptom(SymptomTypeId TEXT, SymptomId TEXT, DisplayOrder INTEGER, SymptomNameCn TEXT, SymptomNameEn TEXT, healthMark REAL, PRIMARY KEY(SymptomId) );"];
     [db.da executeSql:@"CREATE TABLE SymptomNutrient(SymptomTypeId TEXT, SymptomId TEXT, NutrientID TEXT);"];
     [db.da executeSql:@"CREATE TABLE SymptomPossibleIllness(SymptomTypeId TEXT, SymptomId TEXT, IllnessId TEXT);"];
     [db.da executeSql:@"CREATE TABLE Illness(IllnessId TEXT PRIMARY KEY, IllnessNameCn TEXT, IllnessNameEn TEXT);"];
     [db.da executeSql:@"CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, Symptoms TEXT, Temperature REAL,Weight REAL,Heartbeat REAL,BloodPressure REAL,Note TEXT, BMI REAL, LackNutrientIDs TEXT, InferIllnesses TEXT, HealthMark INTEGER, RecommendFoodAndAmounts TEXT, MattersNeedAttention TEXT);"];
     
     NSMutableArray *columnNames_SymptomType = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomTypeNameCn, COLUMN_NAME_SymptomTypeNameEn, COLUMN_NAME_ForSex, nil];
-    NSMutableArray *columnNames_Symptom = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomNameCn, COLUMN_NAME_SymptomNameEn, nil];
+    NSMutableArray *columnNames_Symptom = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomNameCn, COLUMN_NAME_SymptomNameEn, COLUMN_NAME_healthMark, nil];
     NSMutableArray *columnNames_SymptomNutrient = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_NutrientID, nil];
     NSMutableArray *columnNames_SymptomPossibleIllness = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_IllnessId, nil];
     NSMutableArray *columnNames_Illness = [NSMutableArray arrayWithObjects: COLUMN_NAME_IllnessId, COLUMN_NAME_IllnessNameCn, COLUMN_NAME_IllnessNameEn, nil];

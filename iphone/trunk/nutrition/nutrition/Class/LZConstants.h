@@ -200,6 +200,7 @@
 #define COLUMN_NAME_SymptomId @"SymptomId"
 #define COLUMN_NAME_SymptomNameCn @"SymptomNameCn"
 #define COLUMN_NAME_SymptomNameEn @"SymptomNameEn"
+#define COLUMN_NAME_healthMark @"healthMark"
 #define COLUMN_NAME_IllnessId @"IllnessId"
 #define COLUMN_NAME_IllnessNameCn @"IllnessNameCn"
 #define COLUMN_NAME_IllnessNameEn @"IllnessNameEn"
