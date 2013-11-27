@@ -1968,7 +1968,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" id="YO3-Cu-aJu">
-                                <rect key="frame" x="10" y="15" width="300" height="340"/>
+                                <rect key="frame" x="10" y="15" width="300" height="340.00000000000006"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray vertical line.png" id="keL-x0-Xan">
@@ -2034,7 +2034,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray vertical line.png" id="nO5-7D-LkW">
-                                        <rect key="frame" x="0.0" y="0.0" width="1" height="340"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="1" height="340.00000000000006"/>
                                         <autoresizingMask key="autoresizingMask" heightSizable="YES" flexibleMaxY="YES"/>
                                     </imageView>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="生日" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Iui-Fo-vpK">
