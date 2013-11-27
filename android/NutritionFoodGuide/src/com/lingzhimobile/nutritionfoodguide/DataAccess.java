@@ -1956,7 +1956,62 @@ public class DataAccess {
 	    return nutrientIds;
 	}
 	
+	public ArrayList<String> getIllnessSuggestionDistinctIds_ByIllnessIds(ArrayList<String> illnessIds)
+	{
+		Log.d(LogTag, "getIllnessSuggestionDistinctIds_ByIllnessIds enter");
+		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+		if (illnessIds != null){
+			if (illnessIds.size() == 0){
+				return null;
+			}
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_IllnessId,illnessIds};
+	    	columnValuePairs_equal.add(columnValuePair);
+		}
+
+		String[] selectColumns = {Constants.COLUMN_NAME_SuggestionId};
+		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_IllnessToSuggestion, 
+	    		columnValuePairs_equal, null, selectColumns, null, true);
+		ArrayList<Object> suggestionIdObjs = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_SuggestionId, rows);
+		ArrayList<String> suggestionIds = Tool.convertToStringArrayList(suggestionIdObjs);
+		
+		String logMsg = "getIllnessSuggestionDistinctIds_ByIllnessIds suggestionIds="+Tool.getIndentFormatStringOfObject(suggestionIds,0);
+		Log.d(LogTag, logMsg);
+		
+	    return suggestionIds;
+	}
 	
+	public ArrayList<HashMap<String, Object>> getIllnessSuggestions_BySuggestionIds(ArrayList<String> suggestionIds)
+	{
+		Log.d(LogTag, "getIllnessSuggestions_BySuggestionIds enter");
+		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+		if (suggestionIds != null){
+			if (suggestionIds.size() == 0){
+				return null;
+			}
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_SuggestionId,suggestionIds};
+	    	columnValuePairs_equal.add(columnValuePair);
+		}
+
+		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_IllnessSuggestion, 
+	    		columnValuePairs_equal, null, null, null, false);
+		String logMsg = "getIllnessSuggestions_BySuggestionIds row count="+rows.size()+",\nrows="+Tool.getIndentFormatStringOfObject(rows,0);
+		Log.d(LogTag, logMsg);
+		Tool_microlog4android.logDebug(logMsg);
+	    return rows;
+	    
+	}
+	
+	public ArrayList<HashMap<String, Object>> getIllnessSuggestionsDistinct_ByIllnessIds(ArrayList<String> illnessIds)
+	{
+		Log.d(LogTag, "getIllnessSuggestionsDistinct_ByIllnessIds enter");
+		ArrayList<String> suggestionIds = getIllnessSuggestionDistinctIds_ByIllnessIds(illnessIds);
+	    if (suggestionIds == null || suggestionIds.size() == 0)
+	        return null;
+	    ArrayList<HashMap<String, Object>> rows = getIllnessSuggestions_BySuggestionIds(suggestionIds);
+	    Log.d(LogTag, "getIllnessSuggestionsDistinct_ByIllnessIds rows="+Tool.getIndentFormatStringOfObject(rows,0) );
+	    return rows;
+	}
+
 	
 }
 

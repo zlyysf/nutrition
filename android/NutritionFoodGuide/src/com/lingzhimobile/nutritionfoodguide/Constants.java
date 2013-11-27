@@ -144,6 +144,8 @@ public class Constants {
 	public static final String TABLE_NAME_SymptomNutrient ="SymptomNutrient";
 	public static final String TABLE_NAME_SymptomPossibleIllness ="SymptomPossibleIllness";
 	public static final String TABLE_NAME_Illness ="Illness";
+	public static final String TABLE_NAME_IllnessToSuggestion ="IllnessToSuggestion";
+	public static final String TABLE_NAME_IllnessSuggestion ="IllnessSuggestion";
 	public static final String COLUMN_NAME_SymptomTypeId ="SymptomTypeId";
 	public static final String COLUMN_NAME_DisplayOrder ="DisplayOrder";
 	public static final String COLUMN_NAME_SymptomTypeNameCn ="SymptomTypeNameCn";
@@ -159,20 +161,15 @@ public class Constants {
 	public static final String TABLE_NAME_UserRecordSymptom ="UserRecordSymptom";
 	public static final String COLUMN_NAME_DayLocal ="DayLocal";
 	public static final String COLUMN_NAME_UpdateTimeUTC ="UpdateTimeUTC";
-	public static final String COLUMN_NAME_Symptoms ="Symptoms";
-	public static final String COLUMN_NAME_Temperature ="Temperature";
-	public static final String COLUMN_NAME_Weight ="Weight";
-	public static final String COLUMN_NAME_Heartbeat ="Heartbeat";
-	public static final String COLUMN_NAME_BloodPressure ="BloodPressure";
+	
+	public static final String COLUMN_NAME_inputNameValuePairs ="inputNameValuePairs";
 	public static final String COLUMN_NAME_Note ="Note";
-	public static final String COLUMN_NAME_BMI ="BMI";
-	public static final String COLUMN_NAME_LackNutrientIDs ="LackNutrientIDs";
-	public static final String COLUMN_NAME_InferIllnesses ="InferIllnesses";
-	public static final String COLUMN_NAME_HealthMark ="HealthMark";
-	public static final String COLUMN_NAME_RecommendFoodAndAmounts ="RecommendFoodAndAmounts";
-	public static final String COLUMN_NAME_MattersNeedAttention ="MattersNeedAttention";
-	
-	
+	public static final String COLUMN_NAME_calculateNameValuePairs ="calculateNameValuePairs";
+	public static final String COLUMN_NAME_SuggestionId ="SuggestionId";
+	public static final String COLUMN_NAME_SuggestionCn ="SuggestionCn";
+	public static final String COLUMN_NAME_SuggestionEn ="SuggestionEn";
+
+
 	public static final String ForSex_both ="both";
 	public static final String ForSex_male ="male";
 	public static final String ForSex_female ="female";
@@ -182,6 +179,18 @@ public class Constants {
 	public static final String Key_BloodPressureHigh ="BloodPressureHigh";
 	public static final String Key_BodyTemperature ="BodyTemperature";
 	public static final String Key_Weight = "Weight";
+
+	public static final String Key_Symptoms ="Symptoms";
+	public static final String Key_Temperature ="Temperature";
+	public static final String Key_BMI ="BMI";
+	public static final String Key_LackNutrientIDs ="LackNutrientIDs";
+	public static final String Key_InferIllnesses ="InferIllnesses";
+	public static final String Key_HealthMark ="HealthMark";
+	public static final String Key_RecommendFoodAndAmounts ="RecommendFoodAndAmounts";
+	public static final String Key_Suggestion ="Suggestion";
+
+	
+
 
 	
 	

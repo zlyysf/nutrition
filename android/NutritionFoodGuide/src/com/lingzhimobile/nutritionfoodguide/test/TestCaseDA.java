@@ -22,7 +22,8 @@ public class TestCaseDA {
 //		test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(ctx);
 //		test_foodCollocationApis(ctx);
 //		test_Symptom1(ctx);
-		test_inferIllnesses_withSymptoms1(ctx);
+//		test_inferIllnesses_withSymptoms1(ctx);
+		test_getIllnessSuggestionsDistinct1(ctx);
 	}
 	
 	static void test1(Context ctx){
@@ -150,6 +151,13 @@ public class TestCaseDA {
 
 		ArrayList<String> illnessList = Tool.inferIllnesses_withSymptoms(Tool.convertFromArrayToList(symptomIds),measureData);
 		Log.d(LogTag, "illnessList=" + Tool.getIndentFormatStringOfObject(illnessList, 0));
+	}
+	
+	static void test_getIllnessSuggestionsDistinct1(Context ctx)
+	{
+		String[] illnessIds = {"感冒", "急性病毒性咽炎", "轻度高血压", "骨关节炎"};
+		DataAccess da = DataAccess.getSingleton(ctx);
+	    da.getIllnessSuggestionsDistinct_ByIllnessIds(Tool.convertFromArrayToList(illnessIds));
 	}
 
 }
