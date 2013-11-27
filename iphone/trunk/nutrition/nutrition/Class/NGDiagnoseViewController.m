@@ -321,13 +321,13 @@
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
 {
         NSCharacterSet *cs;
-        cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789"] invertedSet];
+        cs = [[NSCharacterSet characterSetWithCharactersInString:@"0123456789."] invertedSet];
         NSString *filtered =
         [[string componentsSeparatedByCharactersInSet:cs] componentsJoinedByString:@""];
         BOOL basic = [string isEqualToString:filtered];
         if (basic)
         {
-    if ([string length]+[textField.text length]>3)
+    if ([string length]+[textField.text length]>5)
     {
         return NO;
     }

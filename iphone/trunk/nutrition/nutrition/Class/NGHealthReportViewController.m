@@ -94,7 +94,7 @@
     self.BMIScoreLabel.text = @"25.1";
     self.BMIDescriptionLabel.text = @"超重了";
     [self.BMIProgressBar setProgress:0.5f];
-    self.nutritionLevelLabel.text = @"营养指数";
+    self.nutritionLevelLabel.text = @"健康指数";
     self.nutritionScoreLabel.text = @"89";
     self.lackNutritonLabel.text = @"缺乏营养";
     self.recommendFoodLabel.text = @"推荐食物";

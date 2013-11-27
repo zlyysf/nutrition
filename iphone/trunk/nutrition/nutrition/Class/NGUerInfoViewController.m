@@ -29,12 +29,10 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     [self.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.backView.layer setBorderWidth:0.5f];
-    [self.headerLabel.layer setBorderWidth:0.5f];
-    [self.headerLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    self.headerLabel.text = @"  基本信息";
     self.birthdayLabel.text = @"生日";
     self.heightLabel.text = @"身高";
     self.sexLabel.text = @"性别";
+    self.weightLabel.text = @"体重";
     self.activityLabel.text = @"活动强度";
 	// Do any additional setup after loading the view.
 }

@@ -32,7 +32,7 @@
         UIBarButtonItem *doneButtonItem = [[UIBarButtonItem alloc]initWithTitle:buttonTitle style:UIBarButtonItemStyleDone target:self action:@selector(textFieldDone)];
         NSArray *items = [[NSArray alloc]initWithObjects:spaceBarItem,doneButtonItem, nil];
         self.items = items;
-        self.barStyle = UIBarStyleBlack;
+        self.barStyle = UIBarStyleDefault;
         self.translucent = YES;
     }
     return self;
