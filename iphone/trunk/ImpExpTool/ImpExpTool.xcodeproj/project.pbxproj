@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0818C9BF18433C0B003DB33A /* DiseaseInference.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0818C9BE18433C0B003DB33A /* DiseaseInference.txt */; };
+		0818C9C41845C0D9003DB33A /* DiseaseTreatment.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0818C9C31845C0D9003DB33A /* DiseaseTreatment.txt */; };
 		08529CF1177C3672008E1397 /* Female_UL.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08529CEF177C3672008E1397 /* Female_UL.xls */; };
 		08529CF2177C3672008E1397 /* Male_UL.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08529CF0177C3672008E1397 /* Male_UL.xls */; };
 		0853BDD717957DD300B05122 /* LZRecommendFood.m in Sources */ = {isa = PBXBuildFile; fileRef = 0853BDD617957DD300B05122 /* LZRecommendFood.m */; };
@@ -76,6 +77,7 @@
 
 /* Begin PBXFileReference section */
 		0818C9BE18433C0B003DB33A /* DiseaseInference.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DiseaseInference.txt; path = ../../../data/DiseaseInference.txt; sourceTree = "<group>"; };
+		0818C9C31845C0D9003DB33A /* DiseaseTreatment.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DiseaseTreatment.txt; path = ../../../data/DiseaseTreatment.txt; sourceTree = "<group>"; };
 		08529CEF177C3672008E1397 /* Female_UL.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Female_UL.xls; path = ../../../data/Female_UL.xls; sourceTree = "<group>"; };
 		08529CF0177C3672008E1397 /* Male_UL.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = Male_UL.xls; path = ../../../data/Male_UL.xls; sourceTree = "<group>"; };
 		0853BDD517957DD300B05122 /* LZRecommendFood.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFood.h; path = ../nutrition/nutrition/Class/LZRecommendFood.h; sourceTree = "<group>"; };
@@ -305,6 +307,7 @@
 		0882411A1740E02D00E71E6E /* Res */ = {
 			isa = PBXGroup;
 			children = (
+				0818C9C31845C0D9003DB33A /* DiseaseTreatment.txt */,
 				0818C9BE18433C0B003DB33A /* DiseaseInference.txt */,
 				08F78D83183C9DFD000DC96B /* SymptomSummary.xls */,
 				08559A9F180E3EEC00571FDD /* SomeItemCnEn.xls */,
@@ -413,6 +416,7 @@
 				088240DD1740A88700E71E6E /* ABBREV.xls in Resources */,
 				088240E11740A88700E71E6E /* customUSDAdataV2.xls in Resources */,
 				0882411C1740E08300E71E6E /* USDAFullDataInSqlite.dat in Resources */,
+				0818C9C41845C0D9003DB33A /* DiseaseTreatment.txt in Resources */,
 				0882411F17410E6300E71E6E /* Female_DRI.xls in Resources */,
 				0882412017410E6300E71E6E /* Male_DRI.xls in Resources */,
 				0882412717422E7C00E71E6E /* Food.xls in Resources */,

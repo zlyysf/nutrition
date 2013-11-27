@@ -1927,7 +1927,8 @@
     [db.da executeSql:@"CREATE TABLE SymptomNutrient(SymptomTypeId TEXT, SymptomId TEXT, NutrientID TEXT);"];
     [db.da executeSql:@"CREATE TABLE SymptomPossibleIllness(SymptomTypeId TEXT, SymptomId TEXT, IllnessId TEXT);"];
     [db.da executeSql:@"CREATE TABLE Illness(IllnessId TEXT PRIMARY KEY, IllnessNameCn TEXT, IllnessNameEn TEXT);"];
-    [db.da executeSql:@"CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, Symptoms TEXT, Temperature REAL,Weight REAL,Heartbeat REAL,BloodPressure REAL,Note TEXT, BMI REAL, LackNutrientIDs TEXT, InferIllnesses TEXT, HealthMark INTEGER, RecommendFoodAndAmounts TEXT, MattersNeedAttention TEXT);"];
+    
+    [db.da executeSql:@"CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, inputNameValuePairs TEXT, Note TEXT, calculateNameValuePairs TEXT);"];
     
     NSMutableArray *columnNames_SymptomType = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomTypeNameCn, COLUMN_NAME_SymptomTypeNameEn, COLUMN_NAME_ForSex, nil];
     NSMutableArray *columnNames_Symptom = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomNameCn, COLUMN_NAME_SymptomNameEn, COLUMN_NAME_healthMark, nil];
@@ -2010,10 +2011,224 @@
 
 
 
+-(NSMutableDictionary*)readAndCheckIllnessSuggestionTxtdoc
+{
+    NSLog(@"readAndCheckIllnessSuggestionTxtdoc enter");
+    
+    LZDBAccess *db = dbCon;
+    NSArray *allIllnessIds =[db.da getIllnessIds];
+    NSSet *allIllnessIdSet = [NSSet setWithArray:allIllnessIds];
+    
+    NSString *filePath = [[NSBundle mainBundle] pathForResource:@"DiseaseTreatment" ofType:@"txt"];
+    NSError *err;
+    NSString *fileContent = [NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:&err];
+    NSArray *lines = [fileContent componentsSeparatedByCharactersInSet:[NSCharacterSet newlineCharacterSet]];
+    
+    NSMutableArray *illnessAllAry = [NSMutableArray array];
+    NSMutableArray *aryIllnessNotInCurDB = [NSMutableArray array];
+    NSMutableArray *suggestionAllAry = [NSMutableArray array];
+    NSMutableSet *suggestionAllSet = [NSMutableSet set];
+    NSMutableDictionary *illnessSuggestionsDict = [NSMutableDictionary dictionary];
+    
+    NSCharacterSet *sepIllnessCharSet = [NSCharacterSet characterSetWithCharactersInString:@",，"];
+    NSMutableArray *illnessAry1, *illnessSuggestionAry1;
+    illnessAry1 = [NSMutableArray array];
+    illnessSuggestionAry1 = [NSMutableArray array];
+    int lineIdx = 0;
+    while (lineIdx<lines.count) {
+        NSString *line = lines[lineIdx];
+        lineIdx ++;
+        line = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+        if (line.length == 0)
+            continue;
+        if ([line hasPrefix:@"@"]){
+            //first find illness
+            NSArray *tokensIllness = [line componentsSeparatedByCharactersInSet:sepIllnessCharSet];
+            for(int i=0; i<tokensIllness.count; i++){
+                NSString *tokenIllness = tokensIllness[i];
+                tokenIllness = [tokenIllness stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                tokenIllness = [tokenIllness substringFromIndex:1];
+                tokenIllness = [tokenIllness stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                if ( ! [allIllnessIdSet containsObject:tokenIllness]){
+//                    NSLog(@"ERROR, the illness not in DB:%@ at about line %d",tokenIllness,lineIdx);
+                    [aryIllnessNotInCurDB addObject:tokenIllness];
+                }
+                [illnessAry1 addObject: tokenIllness];
+                [illnessAllAry addObject:tokenIllness];
+            }//for i
+            
+            //向下先把有同样建议的疾病都找出来,直到末尾或遇到建议行的特征标志
+            bool beInTheRange_sameSuggestionsToIllnesses = true;
+            do{
+                if (lineIdx >= lines.count){
+                    beInTheRange_sameSuggestionsToIllnesses = false;
+                }else{//(lineIdx < lines.count)
+                    NSString *line = lines[lineIdx];
+                    lineIdx ++;
+                    line = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                    if (line.length == 0){
+                        //next loop
+                    }else{//line.length > 0
+                        if (![line hasPrefix:@"@"]){
+                            beInTheRange_sameSuggestionsToIllnesses = false;
+                            lineIdx --;
+                        }else{//[line hasPrefix:@"@"]
+                            NSArray *tokensIllness = [line componentsSeparatedByCharactersInSet:sepIllnessCharSet];
+                            for(int i=0; i<tokensIllness.count; i++){
+                                NSString *tokenIllness = tokensIllness[i];
+                                tokenIllness = [tokenIllness stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                                tokenIllness = [tokenIllness substringFromIndex:1];
+                                tokenIllness = [tokenIllness stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                                if ( ! [allIllnessIdSet containsObject:tokenIllness]){
+//                                    NSLog(@"ERROR, the illness not in DB:%@ at about line %d",tokenIllness,lineIdx);
+                                    [aryIllnessNotInCurDB addObject:tokenIllness];
+                                }
+                                [illnessAry1 addObject: tokenIllness];
+                                [illnessAllAry addObject:tokenIllness];
+                            }//for i
+                        }//[line hasPrefix:@"@"]
+                    }//line.length > 0
+                }//(lineIdx < lines.count)
+            }while (beInTheRange_sameSuggestionsToIllnesses) ;
+            NSLog(@"illnessAry1=%@",[LZUtility getObjectDescription:illnessAry1 andIndent:0]);
+            
+            assert(lineIdx < lines.count);
+            //再找对于这些疾病的建议
+            bool be_SameRangeSuggestions = true;
+            do{
+                NSString *line = lines[lineIdx];
+                lineIdx ++;
+                
+                if (lineIdx >= lines.count){
+                    be_SameRangeSuggestions = false;
+                }else{//lineIdx < lines.count
+                    line = [line stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                    if (line.length == 0){
+                        //next loop
+                    }else{//line.length > 0
+                        if ([line hasPrefix:@"无"]){
+                            be_SameRangeSuggestions = false;
+                        }else if ([line hasPrefix:@"＋）"]){
+                            NSString *suggestion = [line substringFromIndex: @"＋）".length ];
+                            suggestion = [suggestion stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                            [illnessSuggestionAry1 addObject:suggestion];
+                            
+                            if (![suggestionAllSet containsObject:suggestion]){
+                                [suggestionAllSet addObject:suggestion];
+                                [suggestionAllAry addObject:suggestion];
+                            }else{
+                                NSLog(@"INFO repeated suggestion:%@",suggestion);
+                            }
+                        }else{
+                            be_SameRangeSuggestions = false;
+                            lineIdx --;
+                        }
+                    }//line.length > 0
+                }//lineIdx < lines.count
+            }while (be_SameRangeSuggestions) ;
+            NSLog(@"illnessSuggestionAry1=%@",[LZUtility getObjectDescription:illnessSuggestionAry1 andIndent:0]);
+            
+            if (illnessAry1.count > 0 && illnessSuggestionAry1.count > 0){
+                for (int i=0; i<illnessAry1.count; i++) {
+                    NSString *illness = illnessAry1[i];
+                    [illnessSuggestionsDict setObject:illnessSuggestionAry1 forKey:illness];
+                }
+            }
+            illnessAry1 = [NSMutableArray array];
+            illnessSuggestionAry1 = [NSMutableArray array];
+        }//if ([@"@" isEqualToString:[line substringToIndex:1] ])
+    }//while
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionary];
+    [retData setObject:illnessSuggestionsDict forKey:@"illnessSuggestionsDict"];
+    [retData setObject:illnessAllAry forKey:@"illnessAllAry"];
+    [retData setObject:aryIllnessNotInCurDB forKey:@"aryIllnessNotInCurDB"];
+    [retData setObject:suggestionAllAry forKey:@"suggestionAllAry"];
+    
+    NSLog(@"readAndCheckIllnessSuggestionTxtdoc return:\n%@",[LZUtility getObjectDescription:retData andIndent:0]);
+    return retData;
+    
+}
 
 
 
+-(NSMutableDictionary*)convertDataFromReadToSqlite_readAndCheckIllnessSuggestionTxtdoc:(NSDictionary*)illnessSuggestionDataDict
+{
+    NSMutableArray *illnessAllAry = [illnessSuggestionDataDict objectForKey:@"illnessAllAry"];
+    NSMutableArray *aryIllnessNotInCurDB = [illnessSuggestionDataDict objectForKey:@"aryIllnessNotInCurDB"];
+    NSMutableArray *suggestionAllAry = [illnessSuggestionDataDict objectForKey:@"suggestionAllAry"];
+    NSMutableDictionary *illnessSuggestionsDict = [illnessSuggestionDataDict objectForKey:@"illnessSuggestionsDict"];
+    
+    NSMutableArray *rowsIllnessSuggestion = [NSMutableArray arrayWithCapacity:suggestionAllAry.count];
+    NSMutableArray *rowsIllnessToSuggestion = [NSMutableArray array];
+    NSMutableArray *rowsIllness = [NSMutableArray array];
 
+    
+    for (int i=0; i<suggestionAllAry.count; i++) {
+        NSString *suggestion = suggestionAllAry[i];
+        NSMutableArray *rowIllnessToSuggestion = [NSMutableArray arrayWithCapacity:3];
+        [rowIllnessToSuggestion addObject:suggestion];
+        [rowIllnessToSuggestion addObject:suggestion];
+        [rowIllnessToSuggestion addObject:suggestion];
+        [rowsIllnessSuggestion addObject: rowIllnessToSuggestion];
+    }//for
+    
+    for (int i=0; i<illnessAllAry.count; i++) {
+        NSString *illnessId = illnessAllAry[i];
+        NSArray * illnessSuggestions = [illnessSuggestionsDict objectForKey:illnessId];
+        for(int j=0; j<illnessSuggestions.count; j++){
+            NSString *suggestion = illnessSuggestions[j];
+            NSMutableArray *rowIllnessToSuggestion = [NSMutableArray arrayWithCapacity:2];
+            [rowIllnessToSuggestion addObject:illnessId];
+            [rowIllnessToSuggestion addObject:suggestion];
+            [rowsIllnessToSuggestion addObject:rowIllnessToSuggestion];
+        }//for j
+    }//for i
+    
+    for (int i=0; i<aryIllnessNotInCurDB.count; i++) {
+        NSString *illness = aryIllnessNotInCurDB[i];
+        NSMutableArray *illnessRow = [NSMutableArray arrayWithCapacity:5];
+        [illnessRow addObject:illness];
+        [illnessRow addObject:illness];
+        [illnessRow addObject:illness];
+        [rowsIllness addObject:illnessRow];
+    }
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:5];
+    [retData setObject:rowsIllnessSuggestion forKey:@"rowsIllnessSuggestion"];
+    [retData setObject:rowsIllnessToSuggestion forKey:@"rowsIllnessToSuggestion"];
+    [retData setObject:rowsIllness forKey:@"rowsIllness"];
+
+    return retData;
+}
+
+
+/*
+ 需要先存在 Illness 数据或至少是 Illness 表。这需要 convertExcelToSqlite_SimptomNutrientIllnessSummarySheet 先被调用。虽然目前没有前提条件也没有出现严重问题。
+ */
+-(void)convertExcelToSqlite_IllnessSuggestionTxtdoc
+{
+    NSDictionary * dataRead = [self readAndCheckIllnessSuggestionTxtdoc];
+    NSDictionary * rowsDict = [self convertDataFromReadToSqlite_readAndCheckIllnessSuggestionTxtdoc:dataRead];
+    NSMutableArray *rowsIllnessSuggestion = [rowsDict objectForKey:@"rowsIllnessSuggestion"];
+    NSMutableArray *rowsIllnessToSuggestion = [rowsDict objectForKey:@"rowsIllnessToSuggestion"];
+    NSMutableArray *rowsIllness = [rowsDict objectForKey:@"rowsIllness"];
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    [db.da executeSql:@"CREATE TABLE IllnessToSuggestion(IllnessId TEXT, SuggestionId TEXT);"];
+    [db.da executeSql:@"CREATE TABLE IllnessSuggestion(SuggestionId TEXT, SuggestionCn TEXT, SuggestionEn TEXT);"];
+    
+    NSMutableArray *columnNames_IllnessToSuggestion = [NSMutableArray arrayWithObjects: COLUMN_NAME_IllnessId, COLUMN_NAME_SuggestionId, nil];
+    NSMutableArray *columnNames_IllnessSuggestion = [NSMutableArray arrayWithObjects: COLUMN_NAME_SuggestionId, COLUMN_NAME_SuggestionCn, COLUMN_NAME_SuggestionEn, nil];
+    NSMutableArray *columnNames_Illness = [NSMutableArray arrayWithObjects: COLUMN_NAME_IllnessId, COLUMN_NAME_IllnessNameCn, COLUMN_NAME_IllnessNameEn, nil];
+    
+    [db.da insertToTable_withTableName:TABLE_NAME_Illness withColumnNames:columnNames_Illness andRows2D:rowsIllness andIfNeedClearTable:FALSE];
+    [db.da insertToTable_withTableName:TABLE_NAME_IllnessToSuggestion withColumnNames:columnNames_IllnessToSuggestion andRows2D:rowsIllnessToSuggestion andIfNeedClearTable:true];
+    [db.da insertToTable_withTableName:TABLE_NAME_IllnessSuggestion withColumnNames:columnNames_IllnessSuggestion andRows2D:rowsIllnessSuggestion andIfNeedClearTable:true];
+    
+    
+}
 
 
 

@@ -192,6 +192,8 @@
 #define TABLE_NAME_SymptomNutrient @"SymptomNutrient"
 #define TABLE_NAME_SymptomPossibleIllness @"SymptomPossibleIllness"
 #define TABLE_NAME_Illness @"Illness"
+#define TABLE_NAME_IllnessToSuggestion @"IllnessToSuggestion"
+#define TABLE_NAME_IllnessSuggestion @"IllnessSuggestion"
 #define COLUMN_NAME_SymptomTypeId @"SymptomTypeId"
 #define COLUMN_NAME_DisplayOrder @"DisplayOrder"
 #define COLUMN_NAME_SymptomTypeNameCn @"SymptomTypeNameCn"
@@ -208,18 +210,13 @@
 #define TABLE_NAME_UserRecordSymptom @"UserRecordSymptom"
 #define COLUMN_NAME_DayLocal @"DayLocal"
 #define COLUMN_NAME_UpdateTimeUTC @"UpdateTimeUTC"
-#define COLUMN_NAME_Symptoms @"Symptoms"
-#define COLUMN_NAME_Temperature @"Temperature"
-#define COLUMN_NAME_Weight @"Weight"
-#define COLUMN_NAME_Heartbeat @"Heartbeat"
-#define COLUMN_NAME_BloodPressure @"BloodPressure"
+
+#define COLUMN_NAME_inputNameValuePairs @"inputNameValuePairs"
 #define COLUMN_NAME_Note @"Note"
-#define COLUMN_NAME_BMI @"BMI"
-#define COLUMN_NAME_LackNutrientIDs @"LackNutrientIDs"
-#define COLUMN_NAME_InferIllnesses @"InferIllnesses"
-#define COLUMN_NAME_HealthMark @"HealthMark"
-#define COLUMN_NAME_RecommendFoodAndAmounts @"RecommendFoodAndAmounts"
-#define COLUMN_NAME_MattersNeedAttention @"MattersNeedAttention"
+#define COLUMN_NAME_calculateNameValuePairs @"calculateNameValuePairs"
+#define COLUMN_NAME_SuggestionId @"SuggestionId"
+#define COLUMN_NAME_SuggestionCn @"SuggestionCn"
+#define COLUMN_NAME_SuggestionEn @"SuggestionEn"
 
 
 #define ForSex_both @"both"
@@ -231,6 +228,16 @@
 #define Key_BloodPressureHigh @"BloodPressureHigh"
 #define Key_BodyTemperature @"BodyTemperature"
 #define Key_Weight ParamKey_weight
+
+#define Key_Symptoms @"Symptoms"
+#define Key_Temperature @"Temperature"
+#define Key_BMI @"BMI"
+#define Key_LackNutrientIDs @"LackNutrientIDs"
+#define Key_InferIllnesses @"InferIllnesses"
+#define Key_HealthMark @"HealthMark"
+#define Key_RecommendFoodAndAmounts @"RecommendFoodAndAmounts"
+#define Key_Suggestion @"Suggestion"
+
 
 
 #define TranslationItemType_FoodCnType @"FoodCnType"

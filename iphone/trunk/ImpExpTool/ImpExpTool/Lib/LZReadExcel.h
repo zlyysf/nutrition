@@ -60,6 +60,7 @@
 -(void)convertExcelToSqlite_SimptomNutrientIllnessSummarySheet;
 
 -(void)checkIllnessInferenceTxtdoc;
+-(void)convertExcelToSqlite_IllnessSuggestionTxtdoc;
 
 
 @end

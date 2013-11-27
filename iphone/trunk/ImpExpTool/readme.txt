@@ -102,10 +102,15 @@ CREATE TABLE SymptomNutrient(SymptomTypeId TEXT, SymptomId TEXT, NutrientID TEXT
 CREATE TABLE SymptomPossibleIllness(SymptomTypeId TEXT, SymptomId TEXT, IllnessId TEXT);
 CREATE TABLE Illness(IllnessId TEXT PRIMARY KEY, IllnessNameCn TEXT, IllnessNameEn TEXT);
 
-CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, Symptoms TEXT, Temperature REAL,Weight REAL,Heartbeat REAL,BloodPressure REAL,Note TEXT, BMI REAL, LackNutrientIDs TEXT, InferIllnesses TEXT, HealthMark INTEGER, RecommendFoodAndAmounts TEXT, MattersNeedAttention TEXT);
+CREATE TABLE IllnessToSuggestion(IllnessId TEXT, SuggestionId TEXT);
+CREATE TABLE IllnessSuggestion(SuggestionId TEXT, SuggestionCn TEXT, SuggestionEn TEXT);
 
-
-
+CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, inputNameValuePairs TEXT, Note TEXT, calculateNameValuePairs TEXT);
+    inputNameValuePairs contains :
+        Symptoms TEXT, Temperature REAL,Weight REAL,HeartRate REAL,BloodPressureLow REAL,BloodPressureHigh REAL, 
+    calculateNameValuePairs contains :
+        BMI REAL, HealthMark REAL, LackNutrientIDs TEXT, InferIllnesses TEXT, Suggestion TEXT, RecommendFoodAndAmounts TEXT
+    name1=value1;;;name2=value2;;;arrayName1=[item1,,,item2];;;name3=value3;;;nameValuePairArrayName1=[n1=v1,,,n2=v2]
 
 
 
