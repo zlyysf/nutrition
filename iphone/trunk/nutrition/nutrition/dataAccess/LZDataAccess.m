@@ -2042,8 +2042,44 @@
     return nutrientIds;
 }
 
+-(NSArray*)getIllnessSuggestionDistinctIds_ByIllnessIds:(NSArray*)illnessIds
+{
+    NSLog(@"getIllnessSuggestionDistinctIds_ByIllnessIdIds enter");
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    if (illnessIds.count > 0)
+        [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_IllnessId,illnessIds, nil]];
+    
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_IllnessToSuggestion andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_SuggestionId, nil] andOrderByPart: nil andNeedDistinct:true];
+    NSArray *suggestionIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SuggestionId andDictionaryArray:rows];
+    NSLog(@"getIllnessSuggestionDistinctIds_ByIllnessIdIds suggestionIds=%@", [LZUtility getObjectDescription:suggestionIds andIndent:0] );
+    return suggestionIds;
+}
+-(NSArray*)getIllnessSuggestions_BySuggestionIds:(NSArray*)suggestionIds
+{
+    NSLog(@"getIllnessSuggestions_BySuggestionIds enter");
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    if (suggestionIds != nil){
+        if (suggestionIds.count > 0)
+            [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SuggestionId,suggestionIds, nil]];
+        else
+            return nil;
+    }
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_IllnessSuggestion andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart: nil andNeedDistinct:false];
+    NSLog(@"getIllnessSuggestions_BySuggestionIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    return rows;
+}
 
-
+-(NSArray*)getIllnessSuggestionsDistinct_ByIllnessIds:(NSArray*)illnessIds
+{
+    NSLog(@"getIllnessSuggestionsDistinct_ByIllnessIds enter");
+    NSArray *suggestionIds = [self getIllnessSuggestionDistinctIds_ByIllnessIds:illnessIds];
+    if (suggestionIds.count == 0)
+        return nil;
+    NSArray *rows = [self getIllnessSuggestions_BySuggestionIds:suggestionIds];
+    
+    NSLog(@"getIllnessSuggestionsDistinct_ByIllnessIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    return rows;
+}
 
 -(NSArray*)getIllnessIds
 {
