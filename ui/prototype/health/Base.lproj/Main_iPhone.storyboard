@@ -1959,7 +1959,7 @@
             </objects>
             <point key="canvasLocation" x="663" y="2913"/>
         </scene>
-        <!--View Controller-->
+        <!--View Controller - 信息-->
         <scene sceneID="F34-ip-MgN">
             <objects>
                 <viewController id="Ae9-Ph-hfM" sceneMemberID="viewController">
@@ -2092,7 +2092,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" id="r3D-GI-6Rv"/>
+                    <navigationItem key="navigationItem" title="信息" id="r3D-GI-6Rv"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GDH-nE-evE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
