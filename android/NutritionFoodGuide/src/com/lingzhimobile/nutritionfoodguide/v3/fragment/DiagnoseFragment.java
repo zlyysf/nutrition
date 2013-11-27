@@ -68,7 +68,7 @@ public class DiagnoseFragment extends Fragment {
 	@Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-	    View view = inflater.inflate(R.layout.v2_activity_diagnose, container, false);
+	    View view = inflater.inflate(R.layout.v3_fragment_diagnose, container, false);
         initViewHandles(inflater, view);
         initViewsContent();
         setViewEventHandlers();

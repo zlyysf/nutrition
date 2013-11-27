@@ -2,19 +2,43 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
-    <Button
-        android:id="@+id/testButton"
+
+    <RelativeLayout
+        android:id="@+id/titleLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Test" />
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/leftButton"
+            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test" />
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_centerInParent="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title" />
+
+        <Button
+            android:layout_alignParentRight="true"
+            android:id="@+id/rightButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="提交" />
+    </RelativeLayout>
+
     <com.lingzhimobile.nutritionfoodguide.v3.view.NoScrollViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/viewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/testButton"
         android:layout_above="@+id/tab"
+        android:layout_below="@+id/titleLayout"
         tools:context=".ProfileActivity" >
     </com.lingzhimobile.nutritionfoodguide.v3.view.NoScrollViewPager>
 
@@ -38,52 +62,48 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-
-                android:drawableTop="@drawable/v2_clinic_50_2x"
                 android:button="@null"
                 android:checked="true"
+                android:drawableTop="@drawable/v2_clinic_50_2x"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="诊断"
                 android:textColor="@color/radio_astab_changecolor"
                 android:textSize="10sp"
                 android:textStyle="bold" />
-            
+
             <RadioButton
                 android:id="@+id/rbHistory"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-
-                android:drawableTop="@drawable/v2_month_view_50_2x"
                 android:button="@null"
+                android:drawableTop="@drawable/v2_month_view_50_2x"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="历史"
                 android:textColor="@color/radio_astab_changecolor"
                 android:textSize="10sp"
                 android:textStyle="bold" />
-            
+
             <RadioButton
                 android:id="@+id/rbChart"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-
                 android:button="@null"
-                android:gravity="center_vertical|center_horizontal"
                 android:drawableTop="@drawable/v2_line_chart_50_2x"
+                android:gravity="center_vertical|center_horizontal"
                 android:text="图表"
                 android:textColor="@color/radio_astab_changecolor"
                 android:textSize="10sp"
                 android:textStyle="bold" />
-            
+
             <RadioButton
                 android:id="@+id/rbCyclopedia"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-
-                android:drawableTop="@drawable/v2_physics_50_2x"
                 android:button="@null"
+                android:drawableTop="@drawable/v2_physics_50_2x"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="百科"
                 android:textColor="@color/radio_astab_changecolor"
@@ -95,15 +115,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                
-                android:drawableTop="@drawable/v2_toolbox_50_2x"
                 android:button="@null"
+                android:drawableTop="@drawable/v2_toolbox_50_2x"
                 android:gravity="center_vertical|center_horizontal"
                 android:text="设置"
                 android:textColor="@color/radio_astab_changecolor"
                 android:textSize="10sp"
                 android:textStyle="bold" />
-
         </RadioGroup>
     </LinearLayout>
 
