@@ -53,6 +53,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".v3.activity.V3ActivityReport"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar" />
         <activity android:name=".V2ActivityHome"
 		    android:theme="@android:style/Theme.NoTitleBar" 
 		    >

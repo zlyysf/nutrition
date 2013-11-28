@@ -2,7 +2,6 @@ package com.lingzhimobile.nutritionfoodguide.v3.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,14 +15,12 @@ import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.v3.adapter.HomeTabAdapter;
 
-public class V3ActivityHome extends FragmentActivity {
+public class V3ActivityHome extends V3BaseActivity {
 
     private ViewPager mViewPager;
     private HomeTabAdapter mHomeTabAdapter;
     RadioButton tabButtonDiagnose, tabButtonHistory, tabButtonChart,
             tabButtonCyclopedia, tabButtonSetting;
-    Button leftButton, rightButton;
-    TextView title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,6 +108,14 @@ public class V3ActivityHome extends FragmentActivity {
         switch (i) {
         case 0:
             title.setText("健康记录");
+            rightButton.setOnClickListener(new OnClickListener() {
+                
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(V3ActivityHome.this, V3ActivityReport.class);
+                    startActivity(intent);
+                }
+            });
             break;
         case 1:
             title.setText("11月");
