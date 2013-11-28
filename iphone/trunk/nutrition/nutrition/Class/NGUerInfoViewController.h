@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface NGUerInfoViewController : UIViewController
+@property (strong, nonatomic) IBOutlet UIScrollView *listView;
 @property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong, nonatomic) IBOutlet UILabel *birthdayLabel;
 @property (strong, nonatomic) IBOutlet UILabel *heightLabel;
@@ -19,5 +20,11 @@
 @property (strong, nonatomic) IBOutlet UITextField *birthdayTextField;
 @property (strong, nonatomic) IBOutlet UITextField *heightTextField;
 @property (strong, nonatomic) IBOutlet UITextField *weightTextField;
+@property (strong,nonatomic) UIPickerView *birthdayPicker;
+@property (strong,nonatomic) UIPickerView *heightPicker;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *sexSegmentControll;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *activitySegmentControll;
+@property (assign,nonatomic)BOOL isPresented;
+- (IBAction)sexValueChanged:(UISegmentedControl *)sender;
 
 @end
