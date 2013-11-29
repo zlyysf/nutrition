@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		344602861843211B0014BC8A /* info-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 344602851843211B0014BC8A /* info-50@2x.png */; };
+		347C06DF18485E93006953CC /* 血压@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 347C06DE18485E93006953CC /* 血压@2x.png */; };
+		347C06E718486C43006953CC /* Food@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 347C06E618486C43006953CC /* Food@2x.png */; };
 		B909100A183541A000B89A21 /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9091009183541A000B89A21 /* right@2x.png */; };
 		B909100C183541D500B89A21 /* left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B909100B183541D500B89A21 /* left@2x.png */; };
 		B948352C1830704000FCBB8F /* detail@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B948352B1830704000FCBB8F /* detail@2x.png */; };
@@ -67,12 +69,13 @@
 		B9FD73371833DEEE00D8051B /* 脚@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73241833DEEE00D8051B /* 脚@2x.png */; };
 		B9FD73381833DEEE00D8051B /* 脸@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73251833DEEE00D8051B /* 脸@2x.png */; };
 		B9FD73391833DEEE00D8051B /* 膝盖@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73261833DEEE00D8051B /* 膝盖@2x.png */; };
-		B9FD733A1833DEEE00D8051B /* 血压@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73271833DEEE00D8051B /* 血压@2x.png */; };
 		B9FD733B1833DEEE00D8051B /* 鼻子@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73281833DEEE00D8051B /* 鼻子@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		344602851843211B0014BC8A /* info-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "info-50@2x.png"; sourceTree = "<group>"; };
+		347C06DE18485E93006953CC /* 血压@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "血压@2x.png"; path = "../../../iphone/trunk/nutrition/nutrition/Resource/血压@2x.png"; sourceTree = "<group>"; };
+		347C06E618486C43006953CC /* Food@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Food@2x.png"; path = "../../../iphone/trunk/nutrition/nutrition/Resource/Food@2x.png"; sourceTree = "<group>"; };
 		B9091009183541A000B89A21 /* right@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "right@2x.png"; sourceTree = "<group>"; };
 		B909100B183541D500B89A21 /* left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left@2x.png"; sourceTree = "<group>"; };
 		B948352B1830704000FCBB8F /* detail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail@2x.png"; sourceTree = "<group>"; };
@@ -139,7 +142,6 @@
 		B9FD73241833DEEE00D8051B /* 脚@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "脚@2x.png"; sourceTree = "<group>"; };
 		B9FD73251833DEEE00D8051B /* 脸@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "脸@2x.png"; sourceTree = "<group>"; };
 		B9FD73261833DEEE00D8051B /* 膝盖@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "膝盖@2x.png"; sourceTree = "<group>"; };
-		B9FD73271833DEEE00D8051B /* 血压@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "血压@2x.png"; sourceTree = "<group>"; };
 		B9FD73281833DEEE00D8051B /* 鼻子@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "鼻子@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -235,6 +237,7 @@
 				B909100B183541D500B89A21 /* left@2x.png */,
 				B9091009183541A000B89A21 /* right@2x.png */,
 				B9FD73161833DEEE00D8051B /* 体温计@2x.png */,
+				347C06E618486C43006953CC /* Food@2x.png */,
 				B9FD73171833DEEE00D8051B /* 体重@2x.png */,
 				B9FD73181833DEEE00D8051B /* 嘴@2x.png */,
 				B9FD73191833DEEE00D8051B /* 头发@2x.png */,
@@ -252,7 +255,7 @@
 				B9FD73251833DEEE00D8051B /* 脸@2x.png */,
 				B9FD73261833DEEE00D8051B /* 膝盖@2x.png */,
 				344602851843211B0014BC8A /* info-50@2x.png */,
-				B9FD73271833DEEE00D8051B /* 血压@2x.png */,
+				347C06DE18485E93006953CC /* 血压@2x.png */,
 				B9FD73281833DEEE00D8051B /* 鼻子@2x.png */,
 				B97761571833185000B37B24 /* toolbox-50@2x.png */,
 				B97761551833159F00B37B24 /* physics-50@2x.png */,
@@ -331,10 +334,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9AEA06C183BD6A900E921A0 /* 调味品@2x.png in Resources */,
+				347C06DF18485E93006953CC /* 血压@2x.png in Resources */,
 				B9AEA062183BD6A900E921A0 /* 主食@2x.png in Resources */,
 				B948352E1830780C00FCBB8F /* detail2@2x.png in Resources */,
 				B9AEA063183BD6A900E921A0 /* 五谷@2x.png in Resources */,
-				B9FD733A1833DEEE00D8051B /* 血压@2x.png in Resources */,
 				B9FD73351833DEEE00D8051B /* 胸腔@2x.png in Resources */,
 				B977079D182AA4FC006FD25E /* Main_iPad.storyboard in Resources */,
 				344602861843211B0014BC8A /* info-50@2x.png in Resources */,
@@ -370,6 +373,7 @@
 				B9FD733B1833DEEE00D8051B /* 鼻子@2x.png in Resources */,
 				B977079A182AA4FC006FD25E /* Main_iPhone.storyboard in Resources */,
 				B9B8BD6C182EA050001C61CA /* document-75.png in Resources */,
+				347C06E718486C43006953CC /* Food@2x.png in Resources */,
 				B9AEA068183BD6A900E921A0 /* 肉类@2x.png in Resources */,
 				B9AEA06F183C146B00E921A0 /* gray line@2x.png in Resources */,
 				B9FD732F1833DEEE00D8051B /* 牙齿@2x.png in Resources */,
