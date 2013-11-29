@@ -49,6 +49,7 @@
 		B9B8BD72182EAECF001C61CA /* 西兰花@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD71182EAECF001C61CA /* 西兰花@2x.jpg */; };
 		B9B8BD76182EB096001C61CA /* 开心果@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD75182EB096001C61CA /* 开心果@2x.png */; };
 		B9B8BD7A182EC8DA001C61CA /* clinic-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD79182EC8DA001C61CA /* clinic-50@2x.png */; };
+		B9C235B118481B2C00D7ACCD /* red_triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C235B018481B2C00D7ACCD /* red_triangle@2x.png */; };
 		B9FD73291833DEEE00D8051B /* 体温计@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73161833DEEE00D8051B /* 体温计@2x.png */; };
 		B9FD732A1833DEEE00D8051B /* 体重@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73171833DEEE00D8051B /* 体重@2x.png */; };
 		B9FD732B1833DEEE00D8051B /* 嘴@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73181833DEEE00D8051B /* 嘴@2x.png */; };
@@ -120,6 +121,7 @@
 		B9B8BD71182EAECF001C61CA /* 西兰花@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "西兰花@2x.jpg"; sourceTree = "<group>"; };
 		B9B8BD75182EB096001C61CA /* 开心果@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "开心果@2x.png"; sourceTree = "<group>"; };
 		B9B8BD79182EC8DA001C61CA /* clinic-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clinic-50@2x.png"; sourceTree = "<group>"; };
+		B9C235B018481B2C00D7ACCD /* red_triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_triangle@2x.png"; sourceTree = "<group>"; };
 		B9FD73161833DEEE00D8051B /* 体温计@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体温计@2x.png"; sourceTree = "<group>"; };
 		B9FD73171833DEEE00D8051B /* 体重@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体重@2x.png"; sourceTree = "<group>"; };
 		B9FD73181833DEEE00D8051B /* 嘴@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "嘴@2x.png"; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 		B97B4097182D48F000F0333E /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				B9C235B018481B2C00D7ACCD /* red_triangle@2x.png */,
 				B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */,
 				B9AEA06E183C146B00E921A0 /* gray line@2x.png */,
 				B9AEA056183BD6A900E921A0 /* 主食@2x.png */,
@@ -372,6 +375,7 @@
 				B9FD732F1833DEEE00D8051B /* 牙齿@2x.png in Resources */,
 				B9815C8518304C0B000D6439 /* line_chart-50@2x.png in Resources */,
 				B9B8BD76182EB096001C61CA /* 开心果@2x.png in Resources */,
+				B9C235B118481B2C00D7ACCD /* red_triangle@2x.png in Resources */,
 				B9770791182AA4FC006FD25E /* InfoPlist.strings in Resources */,
 				B9B8BD7A182EC8DA001C61CA /* clinic-50@2x.png in Resources */,
 				B9815C8718304CAA000D6439 /* month_view-50@2x.png in Resources */,
