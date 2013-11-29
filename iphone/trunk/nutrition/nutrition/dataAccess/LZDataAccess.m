@@ -2131,35 +2131,17 @@
  */
 -(BOOL)insertUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairsData:(NSDictionary*)inputNameValuePairsData andNote:(NSString*)Note andCalculateNameValuePairsData:(NSDictionary*)calculateNameValuePairsData
 {
-    assert(inputNameValuePairsData[Key_Symptoms]!=nil);
-    assert(inputNameValuePairsData[Key_Temperature]!=nil);
-    assert(inputNameValuePairsData[Key_Weight]!=nil);
-    assert(inputNameValuePairsData[Key_HeartRate]!=nil);
-    assert(inputNameValuePairsData[Key_BloodPressureLow]!=nil);
-    assert(inputNameValuePairsData[Key_BloodPressureHigh]!=nil);
-    
-    assert(calculateNameValuePairsData[Key_BMI]!=nil);
-    assert(calculateNameValuePairsData[Key_HealthMark]!=nil);
-    assert(calculateNameValuePairsData[Key_LackNutrientIDs]!=nil);
-    assert(calculateNameValuePairsData[Key_InferIllnesses]!=nil);
-    assert(calculateNameValuePairsData[Key_Suggestions]!=nil);
-//    assert(calculateNameValuePairsData[Key_RecommendFoodAndAmounts]!=nil);
-    
-    //    NSArray* Symptoms = [dictData objectForKey: Key_Symptoms];
-    //    NSNumber *nmTemperature = [dictData objectForKey: Key_Temperature];
-    //    NSNumber *nmWeight = [dictData objectForKey: Key_Weight];
-    //    NSNumber *nmHeartRate = [dictData objectForKey: Key_HeartRate];
-    //    NSNumber *nmBloodPressureLow = [dictData objectForKey: Key_BloodPressureLow];
-    //    NSNumber *nmBloodPressureHigh = [dictData objectForKey: Key_BloodPressureHigh];
-    
-    //    NSString *nmNote = [dictData objectForKey:COLUMN_NAME_Note];
-    
-    //    NSNumber *nmBMI = [dictData objectForKey: Key_BMI];
-    //    NSNumber *nmHealthMark = [dictData objectForKey: Key_HealthMark];
-    //    NSArray* LackNutrientIDs = [dictData objectForKey: Key_LackNutrientIDs];
-    //    NSArray* InferIllnesses = [dictData objectForKey: Key_InferIllnesses];
-    //    NSArray* Suggestions = [dictData objectForKey: Key_Suggestions];
-    //    NSDictionary* RecommendFoodAndAmounts = [dictData objectForKey: Key_RecommendFoodAndAmounts];
+//    NSArray* Symptoms = [inputNameValuePairsData objectForKey: Key_Symptoms];
+//    NSNumber *nmTemperature = [inputNameValuePairsData objectForKey: Key_Temperature];
+//    NSNumber *nmWeight = [inputNameValuePairsData objectForKey: Key_Weight];
+//    NSNumber *nmHeartRate = [inputNameValuePairsData objectForKey: Key_HeartRate];
+//    NSNumber *nmBloodPressureLow = [inputNameValuePairsData objectForKey: Key_BloodPressureLow];
+//    NSNumber *nmBloodPressureHigh = [inputNameValuePairsData objectForKey: Key_BloodPressureHigh];
+//    NSNumber *nmBMI = [calculateNameValuePairsData objectForKey: Key_BMI];
+//    NSNumber *nmHealthMark = [calculateNameValuePairsData objectForKey: Key_HealthMark];
+//    NSArray* InferIllnesses = [calculateNameValuePairsData objectForKey: Key_InferIllnesses];
+//    NSArray* Suggestions = [calculateNameValuePairsData objectForKey: Key_Suggestions];
+//    NSDictionary* NutrientsWithFoodAndAmounts = [calculateNameValuePairsData objectForKey: Key_NutrientsWithFoodAndAmounts];//String -> Dictionary{String -> double}
     
     CJSONSerializer * CJSONSerializer1 = [CJSONSerializer serializer];
     

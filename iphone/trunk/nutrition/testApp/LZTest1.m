@@ -2453,10 +2453,10 @@ BOOL needLimitNutrients = FALSE;
     
     [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:23.4] forKey:Key_BMI];
     [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:87.5] forKey:Key_HealthMark];
-    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"B1",@"VC", nil] forKey:Key_LackNutrientIDs];
+    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"B1",@"VC", nil] forKey:@"LackNutrientIDs"];
     [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"ill11",@"ill12", nil] forKey:Key_InferIllnesses];
     [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"a11",@"a12", nil] forKey:Key_Suggestions];
-    [CalculateNameValuePairsData setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:100],@"10001", [NSNumber numberWithInt:150],@"10002", nil] forKey:Key_RecommendFoodAndAmounts];
+    [CalculateNameValuePairsData setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:100],@"10001", [NSNumber numberWithInt:150],@"10002", nil] forKey:@"RecommendFoodAndAmounts"];
     
     [da deleteUserRecordSymptomByByDayLocal:dayLocal];
     
@@ -2476,10 +2476,10 @@ BOOL needLimitNutrients = FALSE;
     CalculateNameValuePairsData = [NSMutableDictionary dictionary];
     [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:23.42] forKey:Key_BMI];
     [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:87.52] forKey:Key_HealthMark];
-    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"B2",@"VD", nil] forKey:Key_LackNutrientIDs];
+    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"B2",@"VD", nil] forKey:@"LackNutrientIDs"];
     [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"ill11b",@"ill12b", nil] forKey:Key_InferIllnesses];
     [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"a11b",@"a12b", nil] forKey:Key_Suggestions];
-    [CalculateNameValuePairsData setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1002],@"10001", [NSNumber numberWithInt:1502],@"10002", nil] forKey:Key_RecommendFoodAndAmounts];
+    [CalculateNameValuePairsData setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1002],@"10001", [NSNumber numberWithInt:1502],@"10002", nil] forKey:@"RecommendFoodAndAmounts"];
     [da updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
     [da getUserRecordSymptomDataByDayLocal:dayLocal];
     
@@ -2498,10 +2498,10 @@ BOOL needLimitNutrients = FALSE;
     CalculateNameValuePairsData = [NSMutableDictionary dictionary];
     [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:223.4] forKey:Key_BMI];
     [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:287.5] forKey:Key_HealthMark];
-    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"B3",@"VE", nil] forKey:Key_LackNutrientIDs];
+    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"B3",@"VE", nil] forKey:@"LackNutrientIDs"];
     [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"ill21",@"ill22", nil] forKey:Key_InferIllnesses];
     [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"a21",@"a22", nil] forKey:Key_Suggestions];
-    [CalculateNameValuePairsData setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2100],@"10001", [NSNumber numberWithInt:2150],@"10002", nil] forKey:Key_RecommendFoodAndAmounts];
+    [CalculateNameValuePairsData setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2100],@"10001", [NSNumber numberWithInt:2150],@"10002", nil] forKey:@"RecommendFoodAndAmounts"];
     
     [da deleteUserRecordSymptomByByDayLocal:dayLocal];
     

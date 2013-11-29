@@ -232,11 +232,12 @@
 #define Key_Symptoms @"Symptoms"
 #define Key_Temperature @"Temperature"
 #define Key_BMI @"BMI"
-#define Key_LackNutrientIDs @"LackNutrientIDs"
+//#define Key_LackNutrientIDs @"LackNutrientIDs"
 #define Key_InferIllnesses @"InferIllnesses"
 #define Key_HealthMark @"HealthMark"
-#define Key_RecommendFoodAndAmounts @"RecommendFoodAndAmounts"
+//#define Key_RecommendFoodAndAmounts @"RecommendFoodAndAmounts"
 #define Key_Suggestions @"Suggestions"
+#define Key_NutrientsWithFoodAndAmounts @"NutrientsWithFoodAndAmounts"
 
 
 
