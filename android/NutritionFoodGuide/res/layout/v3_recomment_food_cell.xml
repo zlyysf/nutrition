@@ -1,12 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="50dp"
-    android:layout_height="60dp"
+    android:layout_width="70dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:gravity="center"
         android:src="@drawable/place_holder" />
+
+    <TextView
+        android:id="@+id/foodNameTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="鸡蛋" />
+    <TextView
+        android:id="@+id/foodCountTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="2个" />
 
 </LinearLayout>
