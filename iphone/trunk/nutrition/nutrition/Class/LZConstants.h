@@ -236,7 +236,7 @@
 #define Key_InferIllnesses @"InferIllnesses"
 #define Key_HealthMark @"HealthMark"
 #define Key_RecommendFoodAndAmounts @"RecommendFoodAndAmounts"
-#define Key_Suggestion @"Suggestion"
+#define Key_Suggestions @"Suggestions"
 
 
 
@@ -372,6 +372,10 @@
 
 
 #define SeperatorForNames @",,"
+
+//#define Seperator_Level1 @";;;"
+//#define Seperator_Level2 @",,,"
+//#define Seperator_NameToValue @"="
 
 #define KeyNotifyTimeTypeShangWu @"1"
 #define KeyNotifyTimeTypeXiaWu @"2"

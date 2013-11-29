@@ -116,10 +116,12 @@
 -(NSArray*)getIllnessIds;
 
 
-
-
-
-
+-(BOOL)insertUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairsData:(NSDictionary*)inputNameValuePairsData andNote:(NSString*)Note andCalculateNameValuePairsData:(NSDictionary*)calculateNameValuePairsData;
+-(BOOL)updateUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairsData:(NSDictionary*)inputNameValuePairsData andNote:(NSString*)Note andCalculateNameValuePairsData:(NSDictionary*)calculateNameValuePairsData;
+-(BOOL)deleteUserRecordSymptomByByDayLocal:(int)dayLocal;
+-(NSDictionary*)getUserRecordSymptomDataByDayLocal:(int)dayLocal;
+-(NSArray*)getUserRecordSymptomDataByRange_withStartDayLocal:(int)StartDayLocal andEndDayLocal:(int)EndDayLocal andStartMonthLocal:(int)StartMonthLocal andEndMonthLocal:(int)EndMonthLocal;
+-(NSArray*)getUserRecordSymptom_DistinctMonth;
 
 @end
 

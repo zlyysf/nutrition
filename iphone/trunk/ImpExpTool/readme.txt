@@ -110,7 +110,7 @@ CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, inputNam
         Symptoms TEXT, Temperature REAL,Weight REAL,HeartRate REAL,BloodPressureLow REAL,BloodPressureHigh REAL, 
     calculateNameValuePairs contains :
         BMI REAL, HealthMark REAL, LackNutrientIDs TEXT, InferIllnesses TEXT, Suggestion TEXT, RecommendFoodAndAmounts TEXT
-    name1=value1;;;name2=value2;;;arrayName1=[item1,,,item2];;;name3=value3;;;nameValuePairArrayName1=[n1=v1,,,n2=v2]
+    name1=value1;;;name2=value2;;;arrayName1=[item1,,,item2];;;name3=value3;;;nameValuePairArrayName1={n1=v1,,,n2=v2}
 
 
 

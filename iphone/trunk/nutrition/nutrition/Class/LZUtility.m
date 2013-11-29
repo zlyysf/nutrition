@@ -611,6 +611,12 @@
     long long llms = (long long)round(ti*1000);
     return llms;
 }
++(NSDate *)getDateFromMillisecond:(long long) msSince1970
+{
+    NSTimeInterval ti = msSince1970 / 1000.0;
+    NSDate *dt = [NSDate dateWithTimeIntervalSince1970:ti];
+    return dt;
+}
 
 +(void)initializePreferNutrient
 {
@@ -1380,11 +1386,122 @@
     return name;
 }
 
-
-
-
-
-
+///*
+// value can be NSString , NSNumber , NSArray with simple data type, NSDictionary with string key and simple data type value.
+// level starts from 1. but only can be 1 or 2. eg. max 2 level
+// when name be nil, it means it is array value item.
+// */
+//+(NSMutableString*)buildNameValuePairsExpressionString_withStringBuffer:(NSMutableString*)strBuf andName:(NSString*)name andValue:(id)value andLevel:(int)level
+//{
+//    NSString *seperatorAtLevel = Seperator_Level1;
+//    if (level == 2)
+//        seperatorAtLevel = Seperator_Level2;
+//    
+//    if (strBuf == nil)
+//        strBuf = [NSMutableString string];
+//    if (value == nil)
+//        return strBuf;
+//    
+//    if ([value isKindOfClass:NSString.class]){
+//        NSString *sValue = value;
+//        if (name == nil){//just have value, it is array item
+//            [strBuf appendFormat:@"%@%@",sValue,seperatorAtLevel];
+//        }else{
+//            [strBuf appendFormat:@"%@=%@%@",name,sValue,seperatorAtLevel];
+//        }
+//    }else if ([value isKindOfClass:NSNumber.class]){
+//        NSNumber *nmValue = value;
+//        if (CFNumberIsFloatType((CFNumberRef)nmValue)){
+//            double dValue = [nmValue doubleValue];
+//            if (name == nil){//just have value, it is array item
+//                [strBuf appendFormat:@"%f%@",dValue,seperatorAtLevel];
+//            }else{
+//                [strBuf appendFormat:@"%@=%f%@",name,dValue,seperatorAtLevel];
+//            }
+//        }else{
+//            int iValue = [nmValue intValue];
+//            if (name == nil){//just have value, it is array item
+//                [strBuf appendFormat:@"%d%@",iValue,seperatorAtLevel];
+//            }else{
+//                [strBuf appendFormat:@"%@=%d%@",name,iValue,seperatorAtLevel];
+//            }
+//        }
+//    }else if ([value isKindOfClass:NSArray.class]){
+//        NSArray *aryValue = value;
+//        if (aryValue.count > 0){
+//            NSMutableString *strBuf2 = [NSMutableString stringWithCapacity:20*aryValue.count];
+//            for(int i=0; i<aryValue.count; i++){
+//                [self buildNameValuePairsExpressionString_withStringBuffer:strBuf2 andName:nil andValue:aryValue[i] andLevel:level+1];
+//            }
+//            assert(name != nil);
+//            [strBuf appendFormat:@"%@=[%@]%@",name,strBuf2,seperatorAtLevel];
+//        }
+//    }else if([value isKindOfClass:NSDictionary.class]){
+//        NSDictionary *dictValue = value;
+//        if (dictValue.count > 0){
+//            NSArray *keys = [dictValue allKeys];
+//            NSMutableString *strBuf2 = [NSMutableString stringWithCapacity:20*keys.count];
+//            for(int i=0; i<keys.count; i++){
+//                NSString *key = keys[i];
+//                [self buildNameValuePairsExpressionString_withStringBuffer:strBuf2 andName:key andValue:dictValue[key] andLevel:level+1];
+//            }
+//            assert(name != nil);
+//            [strBuf appendFormat:@"%@={%@}%@",name,strBuf2,seperatorAtLevel];
+//        }
+//    }
+//    return strBuf;
+//}
+//
+///*
+// item value can be string , number , 1 level array , 1 level dictionary
+// */
+//+(NSMutableString*)buildNameValuePairsExpressionString_withDictionaryData:(NSDictionary*)dictData
+//{
+//    int level = 1;
+//    NSMutableString *strBuf = [NSMutableString stringWithCapacity:1000];
+//    if (dictData.count > 0){
+//        NSArray *keys = dictData.allKeys;
+//        for(int i=0; i<keys.count; i++){
+//            NSString *key = keys[i];
+//            id val = dictData[val];
+//            [self buildNameValuePairsExpressionString_withStringBuffer:strBuf andName:key andValue:val andLevel:level];
+//        }
+//    }
+//    return strBuf;
+//}
+//
+//+(NSMutableDictionary*)parseNameValuePairs_withExpressionString:(NSString*)expressStr
+//{
+//    NSMutableDictionary *dictData = [NSMutableDictionary dictionary];
+//    if (expressStr.length > 0){
+//        NSArray *nameValuePairs = [expressStr componentsSeparatedByString:Seperator_Level1];
+//        for(int i=0; i<nameValuePairs.count; i++){
+//            NSString *nameValuePair = nameValuePairs[i];
+//            if (nameValuePair.length > 0){
+//                NSRange range1 = [nameValuePair rangeOfString:Seperator_NameToValue];
+//                assert(range1.location != NSNotFound);
+//                NSString *name = [nameValuePair substringToIndex:range1.location];
+//                NSString *valueExp = [nameValuePair substringFromIndex:range1.location+1];
+//                assert(name.length > 0);
+//                if (valueExp.length > 0){
+//                    NSRange range2;
+//                    range2.location = 1;
+//                    range2.length = valueExp.length -2;
+//                    if ([valueExp hasPrefix:@"["]){
+//                        NSString *arrayValueStr = [valueExp substringWithRange:range2];
+//                        NSArray *arrayValues = [arrayValueStr componentsSeparatedByString:Seperator_Level2];
+//                    }else if ([valueExp hasPrefix:@"{"]){
+//                        NSString *dictValueStr = [valueExp substringWithRange:range2];
+//                        NSArray *subNameValuePairs = [dictValueStr componentsSeparatedByString:Seperator_Level2];
+//                    }else{
+//                        [dictData setObject:valueExp forKey:name];//无类型信息,
+//                    }
+//                }
+//            }
+//        }//for
+//    }
+//    return dictData;
+//}
 
 
 

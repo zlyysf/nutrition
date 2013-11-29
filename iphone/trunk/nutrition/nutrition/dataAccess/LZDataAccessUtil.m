@@ -369,27 +369,55 @@
 
 }
 
+/*
+ fieldOpValuePairs 中的op可以是 = , IN , LIKE , 比较运算符; 其中的Value 可以是单个值也可以是数组。
+ orderByPart 不带 ORDER BY 部分。
+ 
+ */
+- (NSArray *)selectTable_byFieldOpValuePairs:(NSArray *)fieldOpValuePairs andTableName:(NSString *)tableName andSelectColumns:(NSArray*)selectColumns andOrderByPart:(NSString*)orderByPart andNeedDistinct:(BOOL)needDistinct
+{
+    NSString *columnsPart = @"*";
+    if (selectColumns.count>0){
+        columnsPart = [selectColumns componentsJoinedByString:@","];
+    }
+    NSMutableString *sqlStr = [NSMutableString stringWithFormat: @"SELECT %@ FROM %@ \n",columnsPart,tableName];
+    
+    NSMutableString *afterWherePart = [NSMutableString string ];
+    if (orderByPart.length>0)
+        [afterWherePart appendFormat:@"\n ORDER BY %@",orderByPart ];
+    
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+    for(int i=0; i<fieldOpValuePairs.count; i++){
+        NSArray *fieldOpValuePair = fieldOpValuePairs[i];
+        NSString *strColumn = fieldOpValuePair[0];
+        NSString *strOp = fieldOpValuePair[1];
+        id value = fieldOpValuePair[2];
+        if (value != nil){
+            if ([value isKindOfClass:NSArray.class]){
+                NSArray *expr = fieldOpValuePair;
+                [exprIncludeANDdata addObject:expr];
+            }else{
+                NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+                [expr addObject:strColumn];
+                [expr addObject:strOp];
+                [expr addObject:[NSArray arrayWithObjects:value, nil]];
+                [exprIncludeANDdata addObject:expr];
+            }
+        }
+    }
+    
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+                             exprIncludeANDdata,@"includeAND",
+                             nil];
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:true],@"varBeParamWay", nil];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:afterWherePart andOptions:localOptions];
+    return dataAry;
+}
+
 - (NSArray *)selectTableByInFilter_withTableName:(NSString *)tableName andField:(NSString *)fieldName andValues:(NSArray*)fieldValues andColumns:(NSArray*)columns andOrderByPart:(NSString*)orderByPart
 {
     if (fieldValues.count==0)
         return nil;
-    
-    //    NSString *columnsPart = @"*";
-    //    if (columns.count>0){
-    //        columnsPart = [columns componentsJoinedByString:@","];
-    //    }
-    //
-    //    NSArray *placeholderAry = [LZUtility generateArrayWithFillItem:@"?" andArrayLength:fieldValues.count];
-    //    NSString *placeholdersStr = [placeholderAry componentsJoinedByString:@","];
-    //
-    //    NSMutableString *query = [NSMutableString stringWithFormat: @"SELECT %@ FROM %@ WHERE %@ in (%@)",columnsPart,tableName,fieldName,placeholdersStr];
-    //    if (orderByPart.length>0)
-    //        [query appendFormat:@" ORDER BY %@",orderByPart];
-    //    NSLog(@"selectTableByInFilter_withTableName query=%@",query);
-    //
-    //    FMResultSet *rs = [dbfm executeQuery:query withArgumentsInArray:fieldValues];
-    //    NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
-    //    return ary;
     
     NSString *columnsPart = @"*";
     if (columns.count>0){

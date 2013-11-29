@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0818C9C818472682003DB33A /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7DD17AF8873000AEC06 /* CDataScanner.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0818CA0A18477AC6003DB33A /* CJSONDeserializer.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7ED17AF8873000AEC06 /* CJSONDeserializer.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0818CA0B18477AC6003DB33A /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7EE17AF8873000AEC06 /* CJSONDeserializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0818CA0C18477AC6003DB33A /* CJSONScanner.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7EF17AF8873000AEC06 /* CJSONScanner.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0818CA0D18477AC6003DB33A /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F017AF8873000AEC06 /* CJSONScanner.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0818CA0E18477AC6003DB33A /* CJSONSerializer.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F117AF8873000AEC06 /* CJSONSerializer.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0818CA0F18477AC6003DB33A /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F217AF8873000AEC06 /* CJSONSerializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0818CA1018477AC6003DB33A /* JSONRepresentation.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F317AF8873000AEC06 /* JSONRepresentation.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		0818CA1118477B16003DB33A /* CDataScanner.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7DC17AF8873000AEC06 /* CDataScanner.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		085C8D3F173366F2001A1ABB /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D35173366F2001A1ABB /* FMDatabase.m */; };
 		085C8D40173366F2001A1ABB /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D37173366F2001A1ABB /* FMDatabaseAdditions.m */; };
 		085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D39173366F2001A1ABB /* FMDatabasePool.m */; };
@@ -304,6 +313,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0818CA1218477B50003DB33A /* CDataScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CDataScanner.m; path = nutrition/BaiduSDK/TouchJSON/CDataScanner.m; sourceTree = "<group>"; };
 		085C8D34173366F2001A1ABB /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		085C8D35173366F2001A1ABB /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		085C8D36173366F2001A1ABB /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -895,6 +905,7 @@
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				0818CA1218477B50003DB33A /* CDataScanner.m */,
 				5FECAD9F183885CA00D72A8C /* Nutrition2.0 */,
 				5FAB5764180266C200657793 /* ShareSDK_v2.5.1 */,
 				5F0081E817C47E6F000938C2 /* JWNavigationViewController */,
@@ -1782,6 +1793,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0818C9C818472682003DB33A /* CDataScanner.m in Sources */,
+				0818CA1118477B16003DB33A /* CDataScanner.h in Sources */,
+				0818CA0A18477AC6003DB33A /* CJSONDeserializer.h in Sources */,
+				0818CA0B18477AC6003DB33A /* CJSONDeserializer.m in Sources */,
+				0818CA0C18477AC6003DB33A /* CJSONScanner.h in Sources */,
+				0818CA0D18477AC6003DB33A /* CJSONScanner.m in Sources */,
+				0818CA0E18477AC6003DB33A /* CJSONSerializer.h in Sources */,
+				0818CA0F18477AC6003DB33A /* CJSONSerializer.m in Sources */,
+				0818CA1018477AC6003DB33A /* JSONRepresentation.h in Sources */,
 				08ED42D317D4970A00917C78 /* MBProgressHUD.m in Sources */,
 				088B768517C4BADD00206959 /* LZDataAccessUtil.h in Sources */,
 				088B768617C4BADD00206959 /* LZDataAccessUtil.m in Sources */,

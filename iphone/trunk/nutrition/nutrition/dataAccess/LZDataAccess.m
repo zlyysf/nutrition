@@ -10,6 +10,8 @@
 #import "LZConstants.h"
 #import "LZUtility.h"
 #import "LZDataAccessUtil.h"
+#import "CJSONDeserializer.h"
+#import "CJSONSerializer.h"
 
 @implementation LZDataAccess
 
@@ -2089,6 +2091,248 @@
     NSLog(@"getIllnessIds IllnessIds=%@", [LZUtility getObjectDescription:IllnessIds andIndent:0] );
     return IllnessIds;
 }
+
+
+/*
+ dayLocal 是 8位整数,如  20120908
+ */
+-(BOOL)insertUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs
+{
+    NSLog(@"insertUserRecordSymptom_withDayLocal enter");
+    
+    long long llUpdateTimeUTC = [LZUtility getMillisecond:updateTimeUTC];
+    
+    NSString *insertSql = [NSString stringWithFormat:
+                           @"INSERT INTO UserRecordSymptom (DayLocal, UpdateTimeUTC, inputNameValuePairs, Note, calculateNameValuePairs) VALUES (?,?,?,?,?);"
+                           ];
+    NSArray *paramAry = [NSArray arrayWithObjects:[NSNumber numberWithInt:dayLocal], [NSNumber numberWithLongLong:llUpdateTimeUTC], inputNameValuePairs, Note, calculateNameValuePairs, nil];
+    BOOL dbopState = [dbfm executeUpdate:insertSql error:nil withArgumentsInArray:paramAry];
+    NSLog(@"insertUserRecordSymptom_withDayLocal ret:%d",dbopState);
+    return dbopState;
+}
+-(BOOL)updateUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs
+{
+    NSLog(@"updateUserRecordSymptom_withDayLocal enter");
+    
+    NSTimeInterval dUpdateTimeUTC = [updateTimeUTC timeIntervalSince1970];
+    long long llUpdateTimeUTC = (long long)round(dUpdateTimeUTC*1000);
+    
+    NSString *updateSql = [NSString stringWithFormat:
+                           @"UPDATE UserRecordSymptom SET UpdateTimeUTC=?, inputNameValuePairs=?, Note=?, calculateNameValuePairs=? WHERE DayLocal=? ;"
+                           ];
+    NSArray *paramAry = [NSArray arrayWithObjects:[NSNumber numberWithLongLong:llUpdateTimeUTC], inputNameValuePairs, Note, calculateNameValuePairs, [NSNumber numberWithInt:dayLocal], nil];
+    BOOL dbopState = [dbfm executeUpdate:updateSql error:nil withArgumentsInArray:paramAry];
+    NSLog(@"updateUserRecordSymptom_withDayLocal ret:%d",dbopState);
+    return dbopState;
+}
+
+/*
+ what are contained in inputNameValuePairsData and calculateNameValuePairsData: to see below those been commentted
+ */
+-(BOOL)insertUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairsData:(NSDictionary*)inputNameValuePairsData andNote:(NSString*)Note andCalculateNameValuePairsData:(NSDictionary*)calculateNameValuePairsData
+{
+    assert(inputNameValuePairsData[Key_Symptoms]!=nil);
+    assert(inputNameValuePairsData[Key_Temperature]!=nil);
+    assert(inputNameValuePairsData[Key_Weight]!=nil);
+    assert(inputNameValuePairsData[Key_HeartRate]!=nil);
+    assert(inputNameValuePairsData[Key_BloodPressureLow]!=nil);
+    assert(inputNameValuePairsData[Key_BloodPressureHigh]!=nil);
+    
+    assert(calculateNameValuePairsData[Key_BMI]!=nil);
+    assert(calculateNameValuePairsData[Key_HealthMark]!=nil);
+    assert(calculateNameValuePairsData[Key_LackNutrientIDs]!=nil);
+    assert(calculateNameValuePairsData[Key_InferIllnesses]!=nil);
+    assert(calculateNameValuePairsData[Key_Suggestions]!=nil);
+//    assert(calculateNameValuePairsData[Key_RecommendFoodAndAmounts]!=nil);
+    
+    //    NSArray* Symptoms = [dictData objectForKey: Key_Symptoms];
+    //    NSNumber *nmTemperature = [dictData objectForKey: Key_Temperature];
+    //    NSNumber *nmWeight = [dictData objectForKey: Key_Weight];
+    //    NSNumber *nmHeartRate = [dictData objectForKey: Key_HeartRate];
+    //    NSNumber *nmBloodPressureLow = [dictData objectForKey: Key_BloodPressureLow];
+    //    NSNumber *nmBloodPressureHigh = [dictData objectForKey: Key_BloodPressureHigh];
+    
+    //    NSString *nmNote = [dictData objectForKey:COLUMN_NAME_Note];
+    
+    //    NSNumber *nmBMI = [dictData objectForKey: Key_BMI];
+    //    NSNumber *nmHealthMark = [dictData objectForKey: Key_HealthMark];
+    //    NSArray* LackNutrientIDs = [dictData objectForKey: Key_LackNutrientIDs];
+    //    NSArray* InferIllnesses = [dictData objectForKey: Key_InferIllnesses];
+    //    NSArray* Suggestions = [dictData objectForKey: Key_Suggestions];
+    //    NSDictionary* RecommendFoodAndAmounts = [dictData objectForKey: Key_RecommendFoodAndAmounts];
+    
+    CJSONSerializer * CJSONSerializer1 = [CJSONSerializer serializer];
+    
+    NSError *error = NULL;
+    NSData *jsonData_inputNameValuePairs = [CJSONSerializer1 serializeObject:inputNameValuePairsData error:&error];
+    assert(error == NULL);
+    NSString *jsonString_inputNameValuePairs = [[NSString alloc] initWithData:jsonData_inputNameValuePairs encoding:NSUTF8StringEncoding];
+    NSLog(@"insertUserRecordSymptom_withDayLocal , jsonString_inputNameValuePairs=%@",jsonString_inputNameValuePairs);
+    
+    NSData *jsonData_calculateNameValuePairs = [CJSONSerializer1 serializeObject:calculateNameValuePairsData error:&error];
+    assert(error == NULL);
+    NSString *jsonString_calculateNameValuePairs = [[NSString alloc] initWithData:jsonData_calculateNameValuePairs encoding:NSUTF8StringEncoding];
+    NSLog(@"insertUserRecordSymptom_withDayLocal , jsonString_calculateNameValuePairs=%@",jsonString_calculateNameValuePairs);
+    
+    bool opStatus = [self insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTimeUTC andInputNameValuePairs:jsonString_inputNameValuePairs andNote:Note andCalculateNameValuePairs:jsonString_calculateNameValuePairs];
+//    NSLog(@"insertUserRecordSymptom_withDayLocal ret:%d",opStatus);
+    return opStatus;
+}
+-(BOOL)updateUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairsData:(NSDictionary*)inputNameValuePairsData andNote:(NSString*)Note andCalculateNameValuePairsData:(NSDictionary*)calculateNameValuePairsData
+{
+    NSError *error = NULL;
+    NSData *jsonData_inputNameValuePairs = [[CJSONSerializer serializer] serializeObject:inputNameValuePairsData error:&error];
+    assert(error == NULL);
+    NSString *jsonString_inputNameValuePairs = [[NSString alloc] initWithData:jsonData_inputNameValuePairs encoding:NSUTF8StringEncoding];
+    
+    NSData *jsonData_calculateNameValuePairs = [[CJSONSerializer serializer] serializeObject:calculateNameValuePairsData error:&error];
+    assert(error == NULL);
+    NSString *jsonString_calculateNameValuePairs = [[NSString alloc] initWithData:jsonData_calculateNameValuePairs encoding:NSUTF8StringEncoding];
+    NSLog(@"updateUserRecordSymptom_withDayLocal , jsonString_inputNameValuePairs=%@\njsonString_calculateNameValuePairs=%@",jsonString_inputNameValuePairs,jsonString_calculateNameValuePairs);
+    bool opStatus =  [self updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTimeUTC andInputNameValuePairs:jsonString_inputNameValuePairs andNote:Note andCalculateNameValuePairs:jsonString_calculateNameValuePairs];
+    return opStatus;
+}
+
+-(BOOL)deleteUserRecordSymptomByByDayLocal:(int)dayLocal
+{
+    bool opStatus =   [self deleteTableByEqualFilter_withTableName:TABLE_NAME_UserRecordSymptom andField:COLUMN_NAME_DayLocal andValue:[NSNumber numberWithInt:dayLocal]];
+    NSLog(@"deleteUserRecordSymptomByByDayLocal ret:%d",opStatus);
+    return opStatus;
+}
+
+/*
+ 单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
+ 注意这里的返回值里面的含有复杂对象的列的值是json string.
+ */
+-(NSDictionary*)getUserRecordSymptomRawRowByDayLocal:(int)dayLocal
+{
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_UserRecordSymptom andField:COLUMN_NAME_DayLocal andValue:[NSNumber numberWithInt:dayLocal]];
+    
+    NSDictionary *rowDict = nil;
+    if (rows.count > 0){
+        rowDict = rows[0];
+    }
+    NSLog(@"getUserRecordSymptomRawRowByDayLocal ret:%@",[LZUtility getObjectDescription:rowDict andIndent:0]);
+    return rowDict;
+}
+
+/*
+ xxxDayLocal 是 8位整数,如  20120908
+ the range is [StartDayLocal , EndDayLocal). if xxxDayLocal==0 , means not limited
+ 按DayLocal升序排序
+ */
+-(NSArray*)getUserRecordSymptomRawRowsByRange_withStartDayLocal:(int)StartDayLocal andEndDayLocal:(int)EndDayLocal andStartMonthLocal:(int)StartMonthLocal andEndMonthLocal:(int)EndMonthLocal
+{
+    NSMutableArray *FieldOpValuePairs = [NSMutableArray array];
+    if (StartDayLocal>0){
+        [FieldOpValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DayLocal,@">=",[NSNumber numberWithInt:StartDayLocal], nil]];
+    }
+    if (EndDayLocal>0){
+        [FieldOpValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DayLocal,@"<",[NSNumber numberWithInt:EndDayLocal], nil]];
+    }
+    if (StartMonthLocal>0){
+        [FieldOpValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DayLocal,@">=",[NSNumber numberWithInt:StartMonthLocal*100], nil]];
+    }
+    if (EndMonthLocal>0){
+        [FieldOpValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DayLocal,@"<",[NSNumber numberWithInt:EndMonthLocal*100], nil]];
+    }
+    NSArray *rows = [self selectTable_byFieldOpValuePairs:FieldOpValuePairs andTableName:TABLE_NAME_UserRecordSymptom andSelectColumns:nil andOrderByPart:COLUMN_NAME_DayLocal andNeedDistinct:false];
+    NSLog(@"getUserRecordSymptomRawRowsByRange_withStartDayLocal ret:%@",[LZUtility getObjectDescription:rows andIndent:0]);
+    return rows;
+}
+
++(NSDictionary*)parseUserRecordSymptomRawRow:(NSDictionary*)rowDict
+{
+    NSMutableDictionary *dataDict = [NSMutableDictionary dictionary];
+    
+    NSString *key;
+    id val;
+    key = COLUMN_NAME_DayLocal;
+    [dataDict setObject:rowDict[key] forKey:key];
+    
+    NSNumber *nmUpdateTimeUTC = rowDict[COLUMN_NAME_UpdateTimeUTC];
+    NSDate *UpdateTimeUTC = [LZUtility getDateFromMillisecond:[nmUpdateTimeUTC longLongValue]];
+    [dataDict setObject:UpdateTimeUTC forKey:COLUMN_NAME_UpdateTimeUTC];
+    
+    key = COLUMN_NAME_Note;
+    val = rowDict[key];
+    if (val != nil){
+        [dataDict setObject:val forKey:key];
+    }
+    
+    key = COLUMN_NAME_inputNameValuePairs;
+    val = rowDict[key];
+    if (val != nil){
+        NSString *jsonString = val;
+        NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *err = nil;
+        NSDictionary *dict = [[CJSONDeserializer deserializer] deserialize:jsonData error:&err];
+        [dataDict setObject:dict forKey:key];
+    }
+    
+    key = COLUMN_NAME_calculateNameValuePairs;
+    val = rowDict[key];
+    if (val != nil){
+        NSString *jsonString = val;
+        NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+        NSError *err = nil;
+        NSDictionary *dict = [[CJSONDeserializer deserializer] deserialize:jsonData error:&err];
+        [dataDict setObject:dict forKey:key];
+    }
+    
+    return dataDict;
+}
+
+/*
+ 与 getUserRecordSymptomRawRowByDayLocal 相比，json string的列已经被转换为 NSDictionary
+ */
+-(NSDictionary*)getUserRecordSymptomDataByDayLocal:(int)dayLocal
+{
+    NSDictionary *rowRaw = [self getUserRecordSymptomRawRowByDayLocal:dayLocal];
+    NSDictionary *rowData = [self.class parseUserRecordSymptomRawRow:rowRaw];
+    NSLog(@"getUserRecordSymptomDataByDayLocal ret:%@",[LZUtility getObjectDescription:rowData andIndent:0]);
+    return rowData;
+}
+
+/*
+ 按DayLocal升序排序
+ */
+-(NSArray*)getUserRecordSymptomDataByRange_withStartDayLocal:(int)StartDayLocal andEndDayLocal:(int)EndDayLocal andStartMonthLocal:(int)StartMonthLocal andEndMonthLocal:(int)EndMonthLocal
+{
+    NSArray *rowsRaw = [self getUserRecordSymptomRawRowsByRange_withStartDayLocal:StartDayLocal andEndDayLocal:EndDayLocal andStartMonthLocal:StartMonthLocal andEndMonthLocal:EndMonthLocal];
+    NSMutableArray *rows = [NSMutableArray arrayWithCapacity:rowsRaw.count];
+    for(int i=0; i<rowsRaw.count; i++){
+        NSDictionary *rowRaw = rowsRaw[i];
+        NSDictionary *rowData = [self.class parseUserRecordSymptomRawRow:rowRaw];
+        [rows addObject:rowData];
+    }
+    NSLog(@"getUserRecordSymptomDataByRange_withStartDayLocal ret:%@",[LZUtility getObjectDescription:rows andIndent:0]);
+    return rows;
+}
+
+/*
+ 按升序排序
+ */
+-(NSArray*)getUserRecordSymptom_DistinctMonth
+{
+    NSMutableString *sqlStr = [NSMutableString stringWithFormat: @"SELECT distinct (DayLocal/100) as MonthLocal FROM UserRecordSymptom ORDER BY DayLocal/100 ;"];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:nil andWhereExistInQuery:false andAfterWherePart:nil andOptions:nil];
+//    NSLog(@"getUserRecordSymptom_DistinctMonth dataAry=%@",dataAry);
+
+    NSArray * monthAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:@"MonthLocal" andDictionaryArray:dataAry];
+    NSLog(@"getUserRecordSymptom_DistinctMonth ret:%@",monthAry);
+    return monthAry;
+}
+
+
+
+
+
+
+
+
+
+
 
 
 

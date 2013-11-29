@@ -71,6 +71,7 @@
 + (NSDictionary *)getActivityLevelInfo;
 
 +(long long)getMillisecond:(NSDate*)datetime;
++(NSDate *)getDateFromMillisecond:(long long) msSince1970;
 
 +(void)initializePreferNutrient;
 
