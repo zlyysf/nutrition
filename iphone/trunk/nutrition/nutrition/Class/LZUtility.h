@@ -116,6 +116,7 @@
 +(bool)existAtLeastN_withToBeCheckedCollection:(NSArray*)toBeCheckedAry andFullCollection:(id)fullCol andAtLeastN:(int)atLeastN;
 +(NSArray*)inferIllnesses_withSymptoms:(NSArray*)symptomIds andMeasureData:(NSDictionary*)measureData;
 
++ (NSString *)convertIntToInch:(NSInteger)number;
 
 
 @end

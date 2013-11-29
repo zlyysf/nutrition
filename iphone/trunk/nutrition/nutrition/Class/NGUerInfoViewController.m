@@ -10,13 +10,20 @@
 #import "LZKeyboardToolBar.h"
 #import "LZConstants.h"
 #import "LZUtility.h"
+#import <math.h>
+#define kKGConvertLBRatio 2.2046
 @interface NGUerInfoViewController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate,LZKeyboardToolBarDelegate>
+{
+    BOOL isChinese;
+}
 @property (nonatomic,strong)UITextField *currentTextField;
-
+@property (strong,nonatomic) NSNumber *currentHeight;
+@property (strong,nonatomic) NSNumber *currentWeight;
+@property (strong,nonatomic) NSDate *currentDate;
 @end
 
 @implementation NGUerInfoViewController
-@synthesize birthdayPicker,heightPicker,currentTextField;
+@synthesize birthdayPicker,heightPicker,currentTextField,currentDate,currentHeight,currentWeight;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -37,12 +44,58 @@
     self.sexLabel.text = @"性别";
     self.weightLabel.text = @"体重";
     self.activityLabel.text = @"活动强度";
-    self.birthdayPicker = [[UIPickerView alloc]init];
-    self.birthdayPicker.delegate = self;
-    self.birthdayPicker.dataSource = self;
+    self.birthdayPicker = [[UIDatePicker alloc]init];
+    self.birthdayPicker.datePickerMode = UIDatePickerModeDate;
     self.heightPicker = [[UIPickerView alloc]init];
+    self.heightPicker.showsSelectionIndicator = YES;
     self.heightPicker.delegate = self;
     self.heightPicker.dataSource = self;
+    
+    if([LZUtility isCurrentLanguageChinese])
+    {
+        isChinese = YES;
+        self.weightUnitLabel.text = @"kg";
+        [self.birthdayPicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"zh"]];
+    }
+    else
+    {
+        isChinese = NO;
+        self.weightUnitLabel.text = @"lb";
+        [self.birthdayPicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en"]];
+    }
+    [self.birthdayPicker setMaximumDate:[NSDate date]];
+    [self.birthdayPicker addTarget:self action:@selector(datepickerChanged) forControlEvents:UIControlEventValueChanged];
+    UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"baocunbutton",@"保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
+    self.navigationItem.rightBarButtonItem = saveButtonItem;
+    [self.listView setContentSize:CGSizeMake(320, 455)];
+    [self displayUserInfo];
+    
+	// Do any additional setup after loading the view.
+}
+//-(void)viewWillAppear:(BOOL)animated
+//{
+//    [self.listView setContentSize:self.view.bounds.size];
+//}
+-(void)datepickerChanged
+{
+    NSLog(@"value changed");
+    self.currentDate = self.birthdayPicker.date;
+    if (currentDate == nil)
+    {
+        self.birthdayTextField.text = @"";
+    }
+    else
+    {
+        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+        [formatter setLocale:[[NSLocale alloc] init]];
+        [formatter setDateFormat:@"yyyy.MM.dd"];
+        self.birthdayTextField.text = [formatter stringFromDate:currentDate];
+    }
+
+    
+}
+-(void)displayUserInfo
+{
     NSArray *levelArray = [[LZUtility getActivityLevelInfo]objectForKey:@"levelArray"];
     [self.sexSegmentControll setTitle:NSLocalizedString(@"malebutton", @"男") forSegmentAtIndex:0];
     [self.sexSegmentControll setTitle:NSLocalizedString(@"femalebutton", @"女") forSegmentAtIndex:1];
@@ -50,28 +103,81 @@
     [self.activitySegmentControll setTitle:[levelArray objectAtIndex:1] forSegmentAtIndex:1];
     [self.activitySegmentControll setTitle:[levelArray objectAtIndex:2] forSegmentAtIndex:2];
     [self.activitySegmentControll setTitle:[levelArray objectAtIndex:3] forSegmentAtIndex:3];
-    
-    UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"baocunbutton",@"保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
-    self.navigationItem.rightBarButtonItem = saveButtonItem;
-    NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
+        NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
     [self.sexSegmentControll setSelectedSegmentIndex:[userSex intValue]];
+    [self displayActivityLevelDiscription];
     NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
+    currentDate = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserBirthdayKey];
     [self.activitySegmentControll setSelectedSegmentIndex:[userActivityLevel intValue]];
-    NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
-    if (userWeight == nil)
+    currentWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
+    if (currentWeight == nil)
     {
         self.weightTextField.text = @"";
     }
+    else
+    {
+        if (isChinese)
+        {
+            self.weightTextField.text = [NSString stringWithFormat:@"%.1f",[currentWeight doubleValue]];
+        }
+        else
+        {
+            self.weightTextField.text = [NSString stringWithFormat:@"%.1f",round([currentWeight doubleValue]*kKGConvertLBRatio)];
+        }
+    }
+    if (currentDate == nil)
+    {
+        self.birthdayTextField.text = @"";
+    }
+    else
+    {
+        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+        [formatter setLocale:[[NSLocale alloc] init]];
+        [formatter setDateFormat:@"yyyy.MM.dd"];
+        self.birthdayTextField.text = [formatter stringFromDate:currentDate];
+    }
+    
+    currentHeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserHeightKey];
+    if (currentHeight == nil)
+    {
+        self.heightTextField.text = @"";
+    }
+    else
+    {
+        if (isChinese)
+        {
+            self.heightTextField.text = [NSString stringWithFormat:@"%dcm",[currentHeight intValue]];
+        }
+        else
+        {
+            self.heightTextField.text = [LZUtility convertIntToInch:[currentHeight intValue]];
+        }
+    }
 
-	// Do any additional setup after loading the view.
 }
-//-(void)viewWillAppear:(BOOL)animated
-//{
-//    [self.listView setContentSize:self.view.bounds.size];
-//}
+-(void)saveButtonTapped
+{
+    if (self.currentDate != nil)
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:self.currentDate forKey:LZUserBirthdayKey];
+    }
+    if (currentHeight != nil)
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:currentHeight forKey:LZUserHeightKey];
+    }
+    if (currentWeight != nil)
+    {
+        [[NSUserDefaults standardUserDefaults]setObject:currentWeight forKey:LZUserWeightKey];
+    }
+    NSNumber *sexNumber = [NSNumber numberWithInt:[self.sexSegmentControll selectedSegmentIndex]];
+    [[NSUserDefaults standardUserDefaults]setObject:sexNumber forKey:LZUserSexKey];
+    NSNumber *activityNumber = [NSNumber numberWithInt:[self.activitySegmentControll selectedSegmentIndex]];
+    [[NSUserDefaults standardUserDefaults]setObject:activityNumber forKey:LZUserActivityLevelKey];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
 -(void)viewWillAppear:(BOOL)animated
 {
-    [self.listView setContentSize:self.view.bounds.size];
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
@@ -83,7 +189,36 @@
     //    [[NSNotificationCenter defaultCenter] removeObserver:self name:UITextFieldTextDidChangeNotification object:nil];
     //    [MobClick endLogPageView:UmengPathGeRenXinXi];
 }
+-(void)displayActivityLevelDiscription
+{
+    int selected = [self.activitySegmentControll selectedSegmentIndex];
+    NSArray *levelArray = [[LZUtility getActivityLevelInfo]objectForKey:@"levelArray"];
+    NSDictionary *levelDes = [[LZUtility getActivityLevelInfo]objectForKey:@"levelDescription"];
+    NSString *currentLevel = [levelArray objectAtIndex:selected];
+    NSString *currentDes = [levelDes objectForKey:currentLevel];
+    CGSize descriptionSize = [currentDes sizeWithFont:[UIFont systemFontOfSize:14]constrainedToSize:CGSizeMake(210, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    NSString *onlineStr = @"1";
+    CGSize onlineSize = [onlineStr sizeWithFont:[UIFont systemFontOfSize:14]constrainedToSize:CGSizeMake(210, 9999) lineBreakMode:UILineBreakModeWordWrap];
+    float onelineHeight = onlineSize.height;
+    float desHeight = descriptionSize.height;
+    if (desHeight > onelineHeight)
+    {
+        self.activityDescriptionLabel.textAlignment = UITextAlignmentLeft;
+    }
+    else
+    {
+        self.activityDescriptionLabel.textAlignment = UITextAlignmentCenter;
+    }
+    CGRect labelFrame = self.activityDescriptionLabel.frame;
+    labelFrame.size.height = descriptionSize.height;
+    self.activityDescriptionLabel.frame = labelFrame;
+    self.activityDescriptionLabel.text = currentDes;
 
+}
+- (IBAction)activityChanged:(id)sender
+{
+    [self displayActivityLevelDiscription];
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -131,62 +266,108 @@
     [UIView commitAnimations];
     
 }
-
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
+{
+    return 60;
+}
 - (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
 {
-    if (pickerView == self.birthdayPicker)
-    {
-        return 2;
-    }
-    else
-    {
-        return 1;
-    }
+    return 2;
 }
 
 // returns the # of rows in each component..
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    if (pickerView == self.birthdayPicker)
+    if (isChinese)
     {
         if (component == 0)
         {
-            return 80;
+            return 250;
         }
-        return 12;
+        return 1;
     }
     else
     {
-        return 100;
+        if (component == 0)
+        {
+            return 8;
+        }
+        else
+        {
+            return 12;
+        }
     }
     
 }
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    if (pickerView == self.birthdayPicker)
+    if (isChinese)
     {
         if (component == 0)
         {
-            return [NSString stringWithFormat:@"%d",1940+row];
+            return [NSString stringWithFormat:@"%d",row];
         }
-        return [NSString stringWithFormat:@"%d",row+1];
+        return @"cm";
     }
     else
     {
-        return [NSString stringWithFormat:@"%d",100+row];
+        if (component == 0)
+        {
+            return [NSString stringWithFormat:@"%d'",row];
+        }
+        return [NSString stringWithFormat:@"%d''",row];
     }
-
+}
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+{
+    if (isChinese)
+    {
+        if (component == 0)
+        {
+            self.currentHeight = [NSNumber numberWithInt:row];
+        }
+    }
+    else
+    {
+        int feet =[pickerView selectedRowInComponent:0];
+        int inch = [pickerView selectedRowInComponent:1];
+        self.heightTextField.text = [NSString stringWithFormat:@"%d' %d''",feet,inch];
+        self.currentHeight = [NSNumber numberWithInt:[self calculateHeightForFeet:feet inch:inch]];
+    }
+}
+-(int)calculateHeightForFeet:(int)feet inch:(int)inch
+{
+    int height = feet * 30.48+ inch*2.54;
+    return height;
 }
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
 {
     LZKeyboardToolBar *keyboardToolbar = [[LZKeyboardToolBar alloc]initWithFrame:kKeyBoardToolBarRect doneButtonTitle:NSLocalizedString(@"wanchengbutton",@"完成") delegate:self];
     if (textField == self.birthdayTextField)
     {
-        
+        if (currentDate)
+        {
+            [self.birthdayPicker setDate:currentDate];
+        }
         textField.inputView = self.birthdayPicker;
     }
     else if (textField == self.heightTextField)
     {
+        if (currentHeight)
+        {
+            if (isChinese)
+            {
+                [self.heightPicker selectRow:[currentHeight intValue] inComponent:0 animated:NO];
+            }
+            else
+            {
+                int total = ([currentHeight intValue]*100)/2.54;
+                int feet = total/1200;
+                int inch = ((total%1200))/100;
+                [self.heightPicker selectRow:feet inComponent:0 animated:NO];
+                [self.heightPicker selectRow:inch inComponent:1 animated:NO];
+            }
+        }
         textField.inputView = self.heightPicker;
         
     }
@@ -248,6 +429,5 @@
         [self.currentTextField resignFirstResponder];
     }
 }
-- (IBAction)sexValueChanged:(UISegmentedControl *)sender {
-}
+
 @end

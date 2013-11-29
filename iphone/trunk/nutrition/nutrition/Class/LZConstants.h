@@ -73,6 +73,7 @@
 #define LZUserDailyIntakeKey @"LZUserDailyIntakeKey" //a dictionary for user daily intake
 //#define LZPlanPersonsKey @"LZPersonAmountKey"//int
 //#define LZPlanDaysKey @"LZPlanDaysKey"//int
+#define LZUserBirthdayKey @"LZUserBirthdayKey" // NSDate object
 
 #define LZSettingKey_randomSelectFood @"randomSelectFood" //BOOL
 #define LZSettingKey_randomRangeSelectFood @"randomRangeSelectFood" //int

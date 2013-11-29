@@ -1505,6 +1505,13 @@
 
 
 
++ (NSString *)convertIntToInch:(NSInteger)number;
+{
+    int total = (number*100)/2.54;
+    int foot = total/1200;
+    int inch = ((total%1200))/100;
+    return [NSString stringWithFormat:@"%d' %d''",foot,inch];
+}
 
 
 
