@@ -1075,6 +1075,16 @@ public class Tool {
 	}
 	
 	/*
+	 weight unit is kg
+	 height unit is cm
+	 */
+	public static double getBMI_withWeight(double weight,double height)
+	{
+	    double BMI = weight / (height*height);
+	    return BMI;
+	}
+	
+	/*
 	 symptomIds 是待分析的症状集合
 	 measureData 可能需要如下key： Key_HeartRate, Key_BloodPressureLow,Key_BloodPressureHigh, Key_BodyTemperature
 	 返回值 是一个可能的疾病Id的集合

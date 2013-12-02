@@ -154,6 +154,7 @@ public class Constants {
 	public static final String COLUMN_NAME_SymptomId ="SymptomId";
 	public static final String COLUMN_NAME_SymptomNameCn ="SymptomNameCn";
 	public static final String COLUMN_NAME_SymptomNameEn ="SymptomNameEn";
+	public static final String COLUMN_NAME_HealthMark ="HealthMark";
 	public static final String COLUMN_NAME_IllnessId ="IllnessId";
 	public static final String COLUMN_NAME_IllnessNameCn ="IllnessNameCn";
 	public static final String COLUMN_NAME_IllnessNameEn ="IllnessNameEn";

@@ -540,6 +540,7 @@ public class DataAccess {
 	/*
 	 notFlag1 column1 op1 values1
 	 */
+	@SuppressWarnings("unchecked")
 	HashMap<String, Object> getMediumUnitCondition_withExpressionItems(ArrayList<Object> expressionItems,String joinBoolOp ,HashMap<String, Object> options)
 	{
 		Log.d(LogTag, "getMediumUnitCondition_withExpressionItems enter, expressionItems="+expressionItems+", joinBoolOp="+joinBoolOp);
@@ -555,8 +556,19 @@ public class DataAccess {
 	    Boolean objNotFlag = (Boolean)expressionItems.get(0);
 	    String strColumn = (String)expressionItems.get(1);
 	    String strOp = (String)expressionItems.get(2);
-	    @SuppressWarnings("unchecked")
-	    ArrayList<Object> values = (ArrayList<Object>) (expressionItems.get(3));
+	    Object valObj = expressionItems.get(3);
+	    ArrayList<Object> values = null;
+	    if (valObj instanceof Object[]){
+	    	Object[] valAry = (Object[])valObj;
+	    	values = Tool.convertFromArrayToList(valAry);
+	    }else if(valObj instanceof String[]){
+	    	String[] valStrAry = (String[])valObj;
+	    	ArrayList<String> valStrList = Tool.convertFromArrayToList(valStrAry);
+	    	values = new ArrayList<Object>();
+	    	values.addAll(valStrList);
+	    }else{
+	    	values = (ArrayList<Object>) valObj;
+	    }
 	    assert(objNotFlag!=null);
 	    assert(joinBoolOp!=null && joinBoolOp.length()>0);
 	    assert(strColumn!=null && strColumn.length()>0);
@@ -575,7 +587,7 @@ public class DataAccess {
 	    	sqlParams.addAll(localSqlParams);
 	    }else{
 	        for(int i=0 ; i<values.size(); i++){
-	            Object valObj = values.get(i);
+	            valObj = values.get(i);
 	            HashMap<String, Object> unitConditionData = getUnitCondition_withColumn(strColumn,strOp,valObj,objNotFlag.booleanValue(),options);
 		    	String unitCondition = (String) unitConditionData.get("strCondition");
 		    	@SuppressWarnings("unchecked")
@@ -2099,6 +2111,38 @@ public class DataAccess {
 		Log.d(LogTag, logMsg);
 		
 	    return nutrientIds;
+	}
+	
+	public double getSymptomHealthMarkSum_BySymptomIds(String[] symptomIds)
+	{
+		Log.d(LogTag, "getSymptomHealthMark_BySymptomIds enter");
+	    if (symptomIds==null || symptomIds.length==0)
+	        return 0;
+	    
+	    String sqlStr = "SELECT sum(HealthMark) as HealthMark FROM Symptom";
+	    
+
+	    ArrayList<ArrayList<Object>> exprIncludeANDdata = new ArrayList<ArrayList<Object>>();
+	    ArrayList<Object> expr = new ArrayList<Object>(3);
+        expr.add(Constants.COLUMN_NAME_SymptomId);
+        expr.add("IN");
+        expr.add(symptomIds);
+        exprIncludeANDdata.add(expr);
+		
+	    HashMap<String, Object> filters = new HashMap<String, Object>();
+	    filters.put("includeAND", exprIncludeANDdata);
+
+	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
+	    localOptions.put("varBeParamWay", Boolean.valueOf(true));
+	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sqlStr, filters, false, null, localOptions);
+
+
+	    HashMap<String, Object> row = dataAry.get(0);
+	    Double nmHealthMark = (Double)row.get(Constants.COLUMN_NAME_HealthMark);
+	    double dHealthMark = nmHealthMark.doubleValue();
+	    
+	    Log.d(LogTag, "getSymptomHealthMark_BySymptomIds ret="+ dHealthMark);
+	    return dHealthMark;
 	}
 	
 	public ArrayList<String> getIllnessSuggestionDistinctIds_ByIllnessIds(ArrayList<String> illnessIds)

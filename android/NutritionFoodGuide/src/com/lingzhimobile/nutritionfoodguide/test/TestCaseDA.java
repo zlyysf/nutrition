@@ -24,11 +24,11 @@ public class TestCaseDA {
 //		test1(ctx);
 //		test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(ctx);
 //		test_foodCollocationApis(ctx);
-//		test_Symptom1(ctx);
+		test_Symptom1(ctx);
 //		test_inferIllnesses_withSymptoms1(ctx);
 //		test_getIllnessSuggestionsDistinct1(ctx);
 //		test_JsonTool();
-		test_dalUserRecordSymptom1(ctx);
+//		test_dalUserRecordSymptom1(ctx);
 	}
 	
 	static void test1(Context ctx){
@@ -137,11 +137,14 @@ public class TestCaseDA {
 		Log.d(LogTag, "symptomTypeIds="+Tool.getIndentFormatStringOfObject(symptomTypeIds, 0));
 		da.getSymptomRowsByTypeDict_BySymptomTypeIds(symptomTypeIds);
 		
-		ArrayList<String> symptomIdList = Tool.convertFromArrayToList(new String[]{"头晕", "头发脱落", "易疲劳", "易流泪"});
+		String[] symptomIds = new String[]{"头晕", "头发脱落", "易疲劳", "易流泪"};
+		ArrayList<String> symptomIdList = Tool.convertFromArrayToList(symptomIds);
 		ArrayList<String> nutrientIdList = da.getSymptomNutrientDistinctIds_BySymptomIds(symptomIdList);
 		
 //		HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = da.getNutrientInfoAs2LevelDictionary_withNutrientIds(null);
 //		HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientIdList.get(0));
+		
+		da.getSymptomHealthMarkSum_BySymptomIds(symptomIds);
 	}
 	
 	static void test_inferIllnesses_withSymptoms1(Context ctx){
