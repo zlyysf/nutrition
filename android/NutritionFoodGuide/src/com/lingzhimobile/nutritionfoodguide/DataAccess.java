@@ -942,6 +942,73 @@ public class DataAccess {
 	    return foods;
 	}
 	
+	public ArrayList<HashMap<String, Object>> getRichNutritionFood2_withAmount_ForNutrient(String nutrientName,double nutrientAmount)
+	{
+		ArrayList<HashMap<String, Object>> foods = getRichNutritionFood2(nutrientName);
+	    
+	    for(int i=0; i<foods.size(); i++){
+	    	HashMap<String, Object> food = foods.get(i);
+	        Double dObj_foodNutrientStandard =  (Double)food.get(nutrientName);
+	        if (dObj_foodNutrientStandard.doubleValue()!=0.0){
+	            double dFoodAmount = nutrientAmount/ dObj_foodNutrientStandard.doubleValue() * 100.0;
+	            food.put(Constants.Key_Amount, Double.valueOf(dFoodAmount));
+	        }else{
+	            //do nothing, then get will obtain null, though should not
+	        }
+	    }
+//	    Log.d(LogTag, "getRichNutritionFood2_withAmount_ForNutrient return="+Tool.getIndentFormatStringOfObject(foods,0));
+	    return foods;
+	}
+	public ArrayList<HashMap<String, Object>> getRichNutritionFood2(String nutrientAsColumnName)
+	{
+		Log.d(LogTag, "getRichNutritionFood2 enter, nutrientAsColumnName="+nutrientAsColumnName);
+		StringBuffer sbSql = new StringBuffer(1000);
+		//看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
+		sbSql.append("SELECT F.*,CnCaption,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight");
+		sbSql.append("\n  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No ");
+		//TODO 
+//		sbSql.append("\n    JOIN CustomRichFood CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='"+nutrientAsColumnName+"' \n");
+		
+		ArrayList<ArrayList<Object>> exprIncludeORdata = new ArrayList<ArrayList<Object>>();
+		ArrayList<ArrayList<Object>> exprIncludeANDdata = new ArrayList<ArrayList<Object>>();
+		ArrayList<ArrayList<Object>> exprExcludedata = new ArrayList<ArrayList<Object>>();
+		String strColumn, strOp;
+		ArrayList<Object> expr, values;
+	    
+	    strColumn = "D.["+nutrientAsColumnName+"]";
+	    strOp = ">";
+	    expr = new ArrayList<Object>(3);
+	    expr.add(strColumn);
+	    expr.add(strOp);
+	    values = new ArrayList<Object>();
+	    values.add(Integer.valueOf(0));
+	    expr.add(values);
+	    exprIncludeANDdata.add(expr);
+
+	    strColumn = "D.["+nutrientAsColumnName+"]";
+	    strOp = "<";
+	    expr = new ArrayList<Object>(3);
+	    expr.add(strColumn);
+	    expr.add(strOp);
+	    values = new ArrayList<Object>();
+	    values.add(Integer.valueOf(1000));
+	    expr.add(values);
+	    exprIncludeANDdata.add(expr);
+
+	    StringBuffer sb_afterWherePart = new StringBuffer();
+	    sb_afterWherePart.append("\n ORDER BY D.["+nutrientAsColumnName+"] ASC");
+	    
+	    HashMap<String, Object> filters = new HashMap<String, Object>();
+	    filters.put("includeOR", exprIncludeORdata);
+	    filters.put("includeAND", exprIncludeANDdata);
+	    filters.put("exclude", exprExcludedata);
+	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
+	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
+	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, sb_afterWherePart.toString(), localOptions);
+	    Log.d(LogTag, "getRichNutritionFood return");
+	    return dataAry;
+	}
+	
 	/*
 	 取富含某种营养素的前n个食物的清单
 	 */

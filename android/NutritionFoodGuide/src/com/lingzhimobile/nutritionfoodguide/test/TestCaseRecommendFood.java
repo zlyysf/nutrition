@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
+import com.lingzhimobile.nutritionfoodguide.NutritionTool;
 import com.lingzhimobile.nutritionfoodguide.RecommendFood;
 import com.lingzhimobile.nutritionfoodguide.Tool;
 
@@ -18,7 +19,8 @@ public class TestCaseRecommendFood {
 	
 	public static void testMain(Context ctx){
 //		test1(ctx);
-		test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend(ctx);
+//		test_calculateGiveFoodsSupplyNutrientAndFormatForUI_withRecommend(ctx);
+		test_getSingleNutrientRichFoodWithAmount_forNutrients(ctx);
 	}
 	
 	static void test1(Context ctx){
@@ -88,6 +90,14 @@ public class TestCaseRecommendFood {
 		hmUserInfo.put(Constants.ParamKey_activityLevel, Integer.valueOf(activityLevel));
 		
 		return hmUserInfo;
+	}
+	
+	static void test_getSingleNutrientRichFoodWithAmount_forNutrients(Context ctx)
+	{
+		HashMap<String, Object> userInfo = getUserInfo();
+	    String[] nutrientIds = NutritionTool.getCustomNutrients(null);
+	    RecommendFood rf = new RecommendFood(ctx);
+	    rf.getSingleNutrientRichFoodWithAmount_forNutrients(nutrientIds,userInfo,null);
 	}
 	
 	

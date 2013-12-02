@@ -19,6 +19,8 @@ public class ActivityTestCases extends Activity implements OnClickListener{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_testcases);
         
+        Tool_microlog4android.init(this);
+        
         Button button1 = (Button)findViewById(R.id.btnTestDA1);
         button1.setOnClickListener(this);
         button1 = (Button)findViewById(R.id.btnTestRF1);

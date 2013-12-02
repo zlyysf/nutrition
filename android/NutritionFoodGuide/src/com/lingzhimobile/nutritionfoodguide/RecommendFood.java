@@ -1580,7 +1580,46 @@ public class RecommendFood {
 	
 	
 	
-	
+	public HashMap<String, ArrayList<HashMap<String, Object>>> getSingleNutrientRichFoodWithAmount_forNutrients(String[] nutrientIds, HashMap<String, Object> userInfo,HashMap<String, Object> options)
+	{
+		int count = 5;
+	    DataAccess da = getDataAccess();
+	    HashMap<String, Double> DRIsDict = da.getStandardDRIs_withUserInfo(userInfo,options);
+	    
+	    long randSeed = (new java.util.Date()).getTime();
+	    Tool.getRandObj(randSeed);
+	    
+	    HashMap<String, ArrayList<HashMap<String, Object>>> nutrientWithFoodAndAmountsDict = new HashMap<String, ArrayList<HashMap<String,Object>>>();
+	    if (nutrientIds != null){
+	    	for(int i=0; i<nutrientIds.length; i++){
+		        String nutrientId = nutrientIds[i];
+		        Double nutrientDRI = (Double)DRIsDict.get(nutrientId);
+		        ArrayList<HashMap<String, Object>> foodsWithAmount = da.getRichNutritionFood2_withAmount_ForNutrient(nutrientId,nutrientDRI.doubleValue());
+		        if (foodsWithAmount != null){
+		        	ArrayList<HashMap<String, Object>> foodsWithAmount2 = new ArrayList<HashMap<String, Object>>();
+			        foodsWithAmount2.addAll(foodsWithAmount);
+			        
+			        ArrayList<HashMap<String, Object>> gotFoods = new ArrayList<HashMap<String,Object>>(count);
+			        for(int j=0; j<count; j++){
+			            if (foodsWithAmount2.size() > 0){
+			                int idx = 0;
+			                idx = Tool.getRandObj(randSeed).nextInt(foodsWithAmount2.size())  ;//avoid index overflow
+			                HashMap<String, Object> food = foodsWithAmount2.get(idx);
+			                gotFoods.add(food);
+			                foodsWithAmount2.remove(idx);
+			            }
+			        }//for j
+			        nutrientWithFoodAndAmountsDict.put(nutrientId, gotFoods);
+		        }
+		    }//for i
+	    }
+	    
+	    String logMsg = "getSingleNutrientRichFoodWithAmount_forNutrients ret:"+Tool.getIndentFormatStringOfObject(nutrientWithFoodAndAmountsDict,0);
+		Log.d(LogTag, logMsg);
+		Tool_microlog4android.logDebug(logMsg);
+		
+	    return nutrientWithFoodAndAmountsDict;
+	}
 	
 	
 	
