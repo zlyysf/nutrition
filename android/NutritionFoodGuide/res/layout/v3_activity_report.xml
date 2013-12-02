@@ -23,9 +23,12 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/wheat"
-                android:orientation="horizontal" >
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
 
                 <TextView
+                    android:layout_gravity="center_vertical"
                     style="@style/v3_table_name_text"
                     android:text="体质指数" />
 
@@ -58,104 +61,42 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/wheat"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
+
+                <TextView
+                    style="@style/v3_table_name_text"
+                    android:text="健康指数" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="89"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/100" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/elementLinearLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/wheat"
                 android:orientation="vertical" >
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/v3_table_name_text"
-                        android:text="营养指数" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="89"
-                        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="/100" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/v3_table_name_text"
-                        android:text="缺乏营养" />
-
-                    <LinearLayout
-                        android:id="@+id/elementLinearLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical" >
-                    </LinearLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-
-                    <TextView
-                        style="@style/v3_table_name_text"
-                        android:text="推荐食物" />
-
-                    <HorizontalScrollView
-                        android:layout_width="match_parent"
-                        android:layout_height="100dp" >
-
-                        <LinearLayout
-                            android:id="@+id/recommendViewPager"
-                            android:layout_width="wrap_content"
-                            android:layout_height="100dp" >
-                        </LinearLayout>
-                    </HorizontalScrollView>
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/diseaseLinearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/wheat"
-                android:orientation="horizontal" >
-
-                <TextView
-                    style="@style/v3_table_name_text"
-                    android:text="潜在疾病" />
-
-                <LinearLayout
-                    android:id="@+id/diseaseLinearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/wheat"
-                android:orientation="horizontal" >
-
-                <TextView
-                    style="@style/v3_table_name_text"
-                    android:text="注意事项" />
-
-                <LinearLayout
-                    android:id="@+id/attentionLinearLayout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical" >
-                </LinearLayout>
+                android:orientation="vertical" >
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
