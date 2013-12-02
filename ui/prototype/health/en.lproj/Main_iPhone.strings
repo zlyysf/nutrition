@@ -1,0 +1,1458 @@
+
+/* Class = "IBUILabel"; text = "发痒，咳嗽，疼痛，下咽困难"; ObjectID = "0mo-v3-REq"; */
+"0mo-v3-REq.text" = "发痒，咳嗽，疼痛，下咽困难";
+
+/* Class = "IBUISegmentedControl"; 0nd-3f-ODT.segmentTitles[0] = "男"; ObjectID = "0nd-3f-ODT"; */
+"0nd-3f-ODT.segmentTitles[0]" = "男";
+
+/* Class = "IBUISegmentedControl"; 0nd-3f-ODT.segmentTitles[1] = "女"; ObjectID = "0nd-3f-ODT"; */
+"0nd-3f-ODT.segmentTitles[1]" = "女";
+
+/* Class = "IBUITabBarItem"; title = "图表"; ObjectID = "0qR-zU-IOa"; */
+"0qR-zU-IOa.title" = "图表";
+
+/* Class = "IBUILabel"; text = "活动强度"; ObjectID = "0rY-UQ-1nU"; */
+"0rY-UQ-1nU.text" = "活动强度";
+
+/* Class = "IBUITextField"; text = "眉间出油"; ObjectID = "10z-vy-wAM"; */
+"10z-vy-wAM.text" = "眉间出油";
+
+/* Class = "IBUILabel"; text = "9"; ObjectID = "18r-tQ-zM2"; */
+"18r-tQ-zM2.text" = "9";
+
+/* Class = "IBUILabel"; text = "37.3C"; ObjectID = "1By-b2-zdq"; */
+"1By-b2-zdq.text" = "37.3C";
+
+/* Class = "IBUILabel"; text = "体温"; ObjectID = "1E5-C0-BB5"; */
+"1E5-C0-BB5.text" = "体温";
+
+/* Class = "IBUILabel"; text = "关节炎，急性咽炎，消化性溃疡"; ObjectID = "1EP-xC-jbb"; */
+"1EP-xC-jbb.text" = "关节炎，急性咽炎，消化性溃疡";
+
+/* Class = "IBUILabel"; text = "倦怠萎靡"; ObjectID = "1Td-5b-zLY"; */
+"1Td-5b-zLY.text" = "倦怠萎靡";
+
+/* Class = "IBUILabel"; text = "肉类"; ObjectID = "1UU-3o-eW3"; */
+"1UU-3o-eW3.text" = "肉类";
+
+/* Class = "IBUILabel"; text = "17"; ObjectID = "1e9-r4-5fy"; */
+"1e9-r4-5fy.text" = "17";
+
+/* Class = "IBUITextField"; text = "心跳过速"; ObjectID = "1em-ma-1a2"; */
+"1em-ma-1a2.text" = "心跳过速";
+
+/* Class = "IBUILabel"; text = "2个"; ObjectID = "1gn-l8-Nfx"; */
+"1gn-l8-Nfx.text" = "2个";
+
+/* Class = "IBUITextField"; text = "体力耐力下降"; ObjectID = "1tr-Yx-Mwc"; */
+"1tr-Yx-Mwc.text" = "体力耐力下降";
+
+/* Class = "IBUILabel"; text = "缺乏营养"; ObjectID = "1yV-Ne-5ag"; */
+"1yV-Ne-5ag.text" = "缺乏营养";
+
+/* Class = "IBUILabel"; text = "手脚震颤"; ObjectID = "29u-v5-Afq"; */
+"29u-v5-Afq.text" = "手脚震颤";
+
+/* Class = "IBUILabel"; text = "蔬菜"; ObjectID = "2Ey-SV-rLA"; */
+"2Ey-SV-rLA.text" = "蔬菜";
+
+/* Class = "IBUILabel"; text = "灰尘太大，咳嗽了很久，晚上恒大夺冠，和朋友庆祝喝多了"; ObjectID = "2WO-dD-scC"; */
+"2WO-dD-scC.text" = "灰尘太大，咳嗽了很久，晚上恒大夺冠，和朋友庆祝喝多了";
+
+/* Class = "IBUILabel"; text = "60"; ObjectID = "2aD-uE-3wW"; */
+"2aD-uE-3wW.text" = "60";
+
+/* Class = "IBUILabel"; text = "菌类"; ObjectID = "2ic-hi-2JR"; */
+"2ic-hi-2JR.text" = "菌类";
+
+/* Class = "IBUILabel"; text = "瘙痒"; ObjectID = "2uz-GD-inV"; */
+"2uz-GD-inV.text" = "瘙痒";
+
+/* Class = "IBUILabel"; text = "胸痛"; ObjectID = "30x-Mt-o2F"; */
+"30x-Mt-o2F.text" = "胸痛";
+
+/* Class = "IBUILabel"; text = "5"; ObjectID = "38R-Ji-YNV"; */
+"38R-Ji-YNV.text" = "5";
+
+/* Class = "IBUITextField"; text = "舌肿胀/有齿痕"; ObjectID = "3BZ-Io-dLQ"; */
+"3BZ-Io-dLQ.text" = "舌肿胀/有齿痕";
+
+/* Class = "IBUILabel"; text = "鼻子"; ObjectID = "3IR-xc-lSB"; */
+"3IR-xc-lSB.text" = "鼻子";
+
+/* Class = "IBUILabel"; text = "50g"; ObjectID = "3VS-2S-GaN"; */
+"3VS-2S-GaN.text" = "50g";
+
+/* Class = "IBUITextField"; text = "精液减少"; ObjectID = "3Zk-mb-zOa"; */
+"3Zk-mb-zOa.text" = "精液减少";
+
+/* Class = "IBUILabel"; text = "疼痛"; ObjectID = "3u2-7A-w8S"; */
+"3u2-7A-w8S.text" = "疼痛";
+
+/* Class = "IBUILabel"; text = "110/80"; ObjectID = "3uG-xp-4V3"; */
+"3uG-xp-4V3.text" = "110/80";
+
+/* Class = "IBUITextField"; text = "灼热"; ObjectID = "41d-R2-bA5"; */
+"41d-R2-bA5.text" = "灼热";
+
+/* Class = "IBUILabel"; text = "体重"; ObjectID = "41d-aq-ffB"; */
+"41d-aq-ffB.text" = "体重";
+
+/* Class = "IBUILabel"; text = "推荐食物"; ObjectID = "42F-CU-wjs"; */
+"42F-CU-wjs.text" = "推荐食物";
+
+/* Class = "IBUILabel"; text = "开心果"; ObjectID = "4Aj-kg-TVX"; */
+"4Aj-kg-TVX.text" = "开心果";
+
+/* Class = "IBUILabel"; text = "鼻塞"; ObjectID = "4DD-fG-N8b"; */
+"4DD-fG-N8b.text" = "鼻塞";
+
+/* Class = "IBUILabel"; text = "心跳"; ObjectID = "4GJ-8g-Hhw"; */
+"4GJ-8g-Hhw.text" = "心跳";
+
+/* Class = "IBUILabel"; text = "颜面水肿"; ObjectID = "4MJ-R9-zf5"; */
+"4MJ-R9-zf5.text" = "颜面水肿";
+
+/* Class = "IBUILabel"; text = "体质指数"; ObjectID = "4Vf-ty-8If"; */
+"4Vf-ty-8If.text" = "体质指数";
+
+/* Class = "IBUILabel"; text = "口腔"; ObjectID = "4hF-jq-lA2"; */
+"4hF-jq-lA2.text" = "口腔";
+
+/* Class = "IBUILabel"; text = "2个"; ObjectID = "4rz-re-EMt"; */
+"4rz-re-EMt.text" = "2个";
+
+/* Class = "IBUILabel"; text = "今天哪里不舒服吗？点击记录一下吧。"; ObjectID = "4uE-jL-hZ0"; */
+"4uE-jL-hZ0.text" = "今天哪里不舒服吗？点击记录一下吧。";
+
+/* Class = "IBUITextField"; text = "铁"; ObjectID = "4vc-P1-137"; */
+"4vc-P1-137.text" = "铁";
+
+/* Class = "IBUILabel"; text = "鸡蛋"; ObjectID = "51F-ps-IjJ"; */
+"51F-ps-IjJ.text" = "鸡蛋";
+
+/* Class = "IBUITextField"; text = "铁"; ObjectID = "54E-fW-Ag4"; */
+"54E-fW-Ag4.text" = "铁";
+
+/* Class = "IBUILabel"; text = "注意事项"; ObjectID = "5EM-OQ-WwB"; */
+"5EM-OQ-WwB.text" = "注意事项";
+
+/* Class = "IBUILabel"; text = "夜尿"; ObjectID = "5Pr-nt-TZp"; */
+"5Pr-nt-TZp.text" = "夜尿";
+
+/* Class = "IBUILabel"; text = "维生素"; ObjectID = "5QZ-iS-F4A"; */
+"5QZ-iS-F4A.text" = "维生素";
+
+/* Class = "IBUILabel"; text = "上腹痛"; ObjectID = "5aP-UM-KiL"; */
+"5aP-UM-KiL.text" = "上腹痛";
+
+/* Class = "IBUITextField"; text = "C"; ObjectID = "5gP-2P-3PC"; */
+"5gP-2P-3PC.text" = "C";
+
+/* Class = "IBUILabel"; text = "潜在疾病"; ObjectID = "5r2-nE-lTS"; */
+"5r2-nE-lTS.text" = "潜在疾病";
+
+/* Class = "IBUILabel"; text = "负重能力下降"; ObjectID = "5rP-WL-3p5"; */
+"5rP-WL-3p5.text" = "负重能力下降";
+
+/* Class = "IBUILabel"; text = "打嗝"; ObjectID = "5us-YZ-ueu"; */
+"5us-YZ-ueu.text" = "打嗝";
+
+/* Class = "IBUITextField"; placeholder = "37"; ObjectID = "66I-H9-ZsR"; */
+"66I-H9-ZsR.placeholder" = "37";
+
+/* Class = "IBUILabel"; text = "65 bpm"; ObjectID = "6CM-Ir-T8Z"; */
+"6CM-Ir-T8Z.text" = "65 bpm";
+
+/* Class = "IBUILabel"; text = "头发脱落"; ObjectID = "6Ud-6v-WeG"; */
+"6Ud-6v-WeG.text" = "头发脱落";
+
+/* Class = "IBUILabel"; text = "鼻塞，干燥，流血，鼻涕，鼻屎多，嗅觉不好"; ObjectID = "6YM-Xr-KYn"; */
+"6YM-Xr-KYn.text" = "鼻塞，干燥，流血，鼻涕，鼻屎多，嗅觉不好";
+
+/* Class = "IBUILabel"; text = "睾丸萎缩"; ObjectID = "6Ya-FK-zbY"; */
+"6Ya-FK-zbY.text" = "睾丸萎缩";
+
+/* Class = "IBUILabel"; text = "多疑"; ObjectID = "6bU-1s-rd9"; */
+"6bU-1s-rd9.text" = "多疑";
+
+/* Class = "IBUITextField"; text = "易饥饿"; ObjectID = "6tN-ds-hq0"; */
+"6tN-ds-hq0.text" = "易饥饿";
+
+/* Class = "IBUILabel"; text = "西兰花"; ObjectID = "6wA-jd-zjg"; */
+"6wA-jd-zjg.text" = "西兰花";
+
+/* Class = "IBUILabel"; text = "视力模糊，累，发干，发红，疼痛，怕强光，"; ObjectID = "6yL-1y-rqI"; */
+"6yL-1y-rqI.text" = "视力模糊，累，发干，发红，疼痛，怕强光，";
+
+/* Class = "IBUILabel"; text = "西兰花"; ObjectID = "6yg-U5-yyX"; */
+"6yg-U5-yyX.text" = "西兰花";
+
+/* Class = "IBUILabel"; text = "健康指数"; ObjectID = "7An-z1-fJ6"; */
+"7An-z1-fJ6.text" = "健康指数";
+
+/* Class = "IBUINavigationItem"; title = "健康报告"; ObjectID = "7OP-lb-cfL"; */
+"7OP-lb-cfL.title" = "健康报告";
+
+/* Class = "IBUISegmentedControl"; 7Ou-b6-Qik.segmentTitles[0] = "轻"; ObjectID = "7Ou-b6-Qik"; */
+"7Ou-b6-Qik.segmentTitles[0]" = "轻";
+
+/* Class = "IBUISegmentedControl"; 7Ou-b6-Qik.segmentTitles[1] = "中等"; ObjectID = "7Ou-b6-Qik"; */
+"7Ou-b6-Qik.segmentTitles[1]" = "中等";
+
+/* Class = "IBUISegmentedControl"; 7Ou-b6-Qik.segmentTitles[2] = "强"; ObjectID = "7Ou-b6-Qik"; */
+"7Ou-b6-Qik.segmentTitles[2]" = "强";
+
+/* Class = "IBUISegmentedControl"; 7Ou-b6-Qik.segmentTitles[3] = "很强"; ObjectID = "7Ou-b6-Qik"; */
+"7Ou-b6-Qik.segmentTitles[3]" = "很强";
+
+/* Class = "IBUILabel"; text = "60"; ObjectID = "7TN-78-sXA"; */
+"7TN-78-sXA.text" = "60";
+
+/* Class = "IBUILabel"; text = "生蚝"; ObjectID = "7tg-Kr-Qgq"; */
+"7tg-Kr-Qgq.text" = "生蚝";
+
+/* Class = "IBUILabel"; text = "头发干枯"; ObjectID = "7uc-fM-mMD"; */
+"7uc-fM-mMD.text" = "头发干枯";
+
+/* Class = "IBUILabel"; text = "11"; ObjectID = "7w1-Mx-IYm"; */
+"7w1-Mx-IYm.text" = "11";
+
+/* Class = "IBUILabel"; text = "腰背疼痛"; ObjectID = "81a-Pb-Lue"; */
+"81a-Pb-Lue.text" = "腰背疼痛";
+
+/* Class = "IBUITextField"; text = "A"; ObjectID = "8AZ-H9-Zaq"; */
+"8AZ-H9-Zaq.text" = "A";
+
+/* Class = "IBUILabel"; text = "鼻塞，干燥，流血，鼻涕，鼻屎多，嗅觉不好"; ObjectID = "8Ha-Zh-8we"; */
+"8Ha-Zh-8we.text" = "鼻塞，干燥，流血，鼻涕，鼻屎多，嗅觉不好";
+
+/* Class = "IBUILabel"; text = "脊柱疼痛"; ObjectID = "8LQ-zA-Rxp"; */
+"8LQ-zA-Rxp.text" = "脊柱疼痛";
+
+/* Class = "IBUILabel"; text = "2. 避免大量饮酒，吸烟"; ObjectID = "8dZ-P3-YHk"; */
+"8dZ-P3-YHk.text" = "2. 避免大量饮酒，吸烟";
+
+/* Class = "IBUILabel"; text = "呼吸"; ObjectID = "8eb-3Z-HgK"; */
+"8eb-3Z-HgK.text" = "呼吸";
+
+/* Class = "IBUILabel"; text = "月经稀少"; ObjectID = "8i2-Jr-Lk5"; */
+"8i2-Jr-Lk5.text" = "月经稀少";
+
+/* Class = "IBUILabel"; text = "喘息"; ObjectID = "8kb-zY-TWK"; */
+"8kb-zY-TWK.text" = "喘息";
+
+/* Class = "IBUILabel"; text = "牙龈增生"; ObjectID = "8na-ez-c0Z"; */
+"8na-ez-c0Z.text" = "牙龈增生";
+
+/* Class = "IBUILabel"; text = "唇沟出油"; ObjectID = "8qg-Lg-ap7"; */
+"8qg-Lg-ap7.text" = "唇沟出油";
+
+/* Class = "IBUILabel"; text = "眼睛"; ObjectID = "8sD-OI-kha"; */
+"8sD-OI-kha.text" = "眼睛";
+
+/* Class = "IBUITextField"; text = "裂口"; ObjectID = "8sm-QL-z7Y"; */
+"8sm-QL-z7Y.text" = "裂口";
+
+/* Class = "IBUITextField"; text = "锌"; ObjectID = "8uK-bX-gBE"; */
+"8uK-bX-gBE.text" = "锌";
+
+/* Class = "IBUILabel"; text = "关于急性咽炎的简介"; ObjectID = "8yt-Qc-pWx"; */
+"8yt-Qc-pWx.text" = "关于急性咽炎的简介";
+
+/* Class = "IBUITextField"; text = "头痛"; ObjectID = "9e7-t1-jbH"; */
+"9e7-t1-jbH.text" = "头痛";
+
+/* Class = "IBUILabel"; text = "鸡蛋"; ObjectID = "9iN-Hz-rKb"; */
+"9iN-Hz-rKb.text" = "鸡蛋";
+
+/* Class = "IBUILabel"; text = "周身"; ObjectID = "9qh-2r-UJ7"; */
+"9qh-2r-UJ7.text" = "周身";
+
+/* Class = "IBUILabel"; text = "4"; ObjectID = "9sg-hn-8Vp"; */
+"9sg-hn-8Vp.text" = "4";
+
+/* Class = "IBUILabel"; text = "生蚝"; ObjectID = "ACB-YV-bC7"; */
+"ACB-YV-bC7.text" = "生蚝";
+
+/* Class = "IBUITextField"; text = "鼻痒"; ObjectID = "AKg-8t-L67"; */
+"AKg-8t-L67.text" = "鼻痒";
+
+/* Class = "IBUITextField"; text = "手脚冰凉"; ObjectID = "APh-zB-GhI"; */
+"APh-zB-GhI.text" = "手脚冰凉";
+
+/* Class = "IBUILabel"; text = "西兰花"; ObjectID = "Aak-3n-cso"; */
+"Aak-3n-cso.text" = "西兰花";
+
+/* Class = "IBUILabel"; text = "易流泪"; ObjectID = "AbS-cf-eqU"; */
+"AbS-cf-eqU.text" = "易流泪";
+
+/* Class = "IBUILabel"; text = "外阴瘙痒"; ObjectID = "AdN-Of-mRq"; */
+"AdN-Of-mRq.text" = "外阴瘙痒";
+
+/* Class = "IBUITextField"; placeholder = "65"; ObjectID = "Afh-2k-ng7"; */
+"Afh-2k-ng7.placeholder" = "65";
+
+/* Class = "IBUILabel"; text = "胸腹腔"; ObjectID = "And-Op-txI"; */
+"And-Op-txI.text" = "胸腹腔";
+
+/* Class = "IBUILabel"; text = "老年斑"; ObjectID = "AuS-d0-YaK"; */
+"AuS-d0-YaK.text" = "老年斑";
+
+/* Class = "IBUITextField"; text = "干燥"; ObjectID = "Ay2-7W-HeL"; */
+"Ay2-7W-HeL.text" = "干燥";
+
+/* Class = "IBUILabel"; text = "潜在疾病"; ObjectID = "Azo-OG-XDs"; */
+"Azo-OG-XDs.text" = "潜在疾病";
+
+/* Class = "IBUITextField"; text = "左下或下腹痛"; ObjectID = "B1G-CL-CQO"; */
+"B1G-CL-CQO.text" = "左下或下腹痛";
+
+/* Class = "IBUITextField"; placeholder = "80"; ObjectID = "B5j-FP-Hbo"; */
+"B5j-FP-Hbo.placeholder" = "80";
+
+/* Class = "IBUILabel"; text = "调味品"; ObjectID = "BLb-Ld-jvY"; */
+"BLb-Ld-jvY.text" = "调味品";
+
+/* Class = "IBUILabel"; text = "扁桃体肿大"; ObjectID = "BVn-2u-OCY"; */
+"BVn-2u-OCY.text" = "扁桃体肿大";
+
+/* Class = "IBUILabel"; text = "100克"; ObjectID = "Biv-9l-Xig"; */
+"Biv-9l-Xig.text" = "100克";
+
+/* Class = "IBUILabel"; text = "食欲不振"; ObjectID = "C4S-SH-LEd"; */
+"C4S-SH-LEd.text" = "食欲不振";
+
+/* Class = "IBUILabel"; text = "推荐食物"; ObjectID = "CHN-Ym-U29"; */
+"CHN-Ym-U29.text" = "推荐食物";
+
+/* Class = "IBUILabel"; text = "笔记"; ObjectID = "CKq-b1-RRF"; */
+"CKq-b1-RRF.text" = "笔记";
+
+/* Class = "IBUILabel"; text = "易疲劳"; ObjectID = "CPK-ey-dp6"; */
+"CPK-ey-dp6.text" = "易疲劳";
+
+/* Class = "IBUILabel"; text = "声嘶"; ObjectID = "CXk-rW-E6f"; */
+"CXk-rW-E6f.text" = "声嘶";
+
+/* Class = "IBUITextField"; text = "唇红肿"; ObjectID = "Ch0-rK-xRa"; */
+"Ch0-rK-xRa.text" = "唇红肿";
+
+/* Class = "IBUILabel"; text = "1988年11月20日"; ObjectID = "Cr2-ft-Wst"; */
+"Cr2-ft-Wst.text" = "1988年11月20日";
+
+/* Class = "IBUITextField"; placeholder = "76"; ObjectID = "CyE-Ia-m39"; */
+"CyE-Ia-m39.placeholder" = "76";
+
+/* Class = "IBUILabel"; text = "3. 充分睡眠"; ObjectID = "DBe-go-QzY"; */
+"DBe-go-QzY.text" = "3. 充分睡眠";
+
+/* Class = "IBUILabel"; text = "开心果"; ObjectID = "DU2-7p-aLs"; */
+"DU2-7p-aLs.text" = "开心果";
+
+/* Class = "IBUILabel"; text = "12"; ObjectID = "Dim-bF-MaS"; */
+"Dim-bF-MaS.text" = "12";
+
+/* Class = "IBUITabBarItem"; title = "百科"; ObjectID = "E7P-bx-t0C"; */
+"E7P-bx-t0C.title" = "百科";
+
+/* Class = "IBUILabel"; text = "毫米水银"; ObjectID = "EAq-WY-OjO"; */
+"EAq-WY-OjO.text" = "毫米水银";
+
+/* Class = "IBUILabel"; text = "2个"; ObjectID = "ECh-Kd-hZ2"; */
+"ECh-Kd-hZ2.text" = "2个";
+
+/* Class = "IBUILabel"; text = "张口疼痛"; ObjectID = "EQj-2M-0j4"; */
+"EQj-2M-0j4.text" = "张口疼痛";
+
+/* Class = "IBUILabel"; text = "血压"; ObjectID = "EWh-yU-wlU"; */
+"EWh-yU-wlU.text" = "血压";
+
+/* Class = "IBUITextField"; text = "步态不稳"; ObjectID = "EhK-3p-uie"; */
+"EhK-3p-uie.text" = "步态不稳";
+
+/* Class = "IBUILabel"; text = "生蚝"; ObjectID = "F1X-mQ-fsk"; */
+"F1X-mQ-fsk.text" = "生蚝";
+
+/* Class = "IBUILabel"; text = "2个鸡蛋，2个胡萝卜，200g牛肉"; ObjectID = "FAK-jf-1hl"; */
+"FAK-jf-1hl.text" = "2个鸡蛋，2个胡萝卜，200g牛肉";
+
+/* Class = "IBUILabel"; text = "周五"; ObjectID = "FWI-93-Wkg"; */
+"FWI-93-Wkg.text" = "周五";
+
+/* Class = "IBUITextField"; text = "74"; ObjectID = "Fdy-hP-bby"; */
+"Fdy-hP-bby.text" = "74";
+
+/* Class = "IBUILabel"; text = "眼睛"; ObjectID = "Ffc-7O-3mf"; */
+"Ffc-7O-3mf.text" = "眼睛";
+
+/* Class = "IBUILabel"; text = "鸡蛋"; ObjectID = "Ffy-iB-nFb"; */
+"Ffy-iB-nFb.text" = "鸡蛋";
+
+/* Class = "IBUISegmentedControl"; Fjl-Ky-NvL.segmentTitles[0] = "简介"; ObjectID = "Fjl-Ky-NvL"; */
+"Fjl-Ky-NvL.segmentTitles[0]" = "简介";
+
+/* Class = "IBUISegmentedControl"; Fjl-Ky-NvL.segmentTitles[1] = "食物"; ObjectID = "Fjl-Ky-NvL"; */
+"Fjl-Ky-NvL.segmentTitles[1]" = "食物";
+
+/* Class = "IBUILabel"; text = "女性"; ObjectID = "Fs9-nn-bmt"; */
+"Fs9-nn-bmt.text" = "女性";
+
+/* Class = "IBUILabel"; text = "／100"; ObjectID = "G7k-yl-a5A"; */
+"G7k-yl-a5A.text" = "／100";
+
+/* Class = "IBUILabel"; text = "激动"; ObjectID = "GFy-yL-DGh"; */
+"GFy-yL-DGh.text" = "激动";
+
+/* Class = "IBUILabel"; text = "地图舌"; ObjectID = "GjW-52-jb1"; */
+"GjW-52-jb1.text" = "地图舌";
+
+/* Class = "IBUILabel"; text = "1. 少吃熏制，腌制，富含硝酸盐     的食品"; ObjectID = "Gnk-9h-aVZ"; */
+"Gnk-9h-aVZ.text" = "1. 少吃熏制，腌制，富含硝酸盐     的食品";
+
+/* Class = "IBUILabel"; text = "毫米水银"; ObjectID = "HFn-lZ-rsE"; */
+"HFn-lZ-rsE.text" = "毫米水银";
+
+/* Class = "IBUILabel"; text = "鼻子"; ObjectID = "HGf-uE-kxs"; */
+"HGf-uE-kxs.text" = "鼻子";
+
+/* Class = "IBUILabel"; text = "牙齿"; ObjectID = "HRh-mM-fnK"; */
+"HRh-mM-fnK.text" = "牙齿";
+
+/* Class = "IBUILabel"; text = "笔记"; ObjectID = "HcW-CG-NM0"; */
+"HcW-CG-NM0.text" = "笔记";
+
+/* Class = "IBUILabel"; text = "鼻子"; ObjectID = "IDa-Ae-c0f"; */
+"IDa-Ae-c0f.text" = "鼻子";
+
+/* Class = "IBUILabel"; text = "16"; ObjectID = "IJF-Oh-Kqm"; */
+"IJF-Oh-Kqm.text" = "16";
+
+/* Class = "IBUILabel"; text = "皱纹"; ObjectID = "IKV-4Q-Xyc"; */
+"IKV-4Q-Xyc.text" = "皱纹";
+
+/* Class = "IBUILabel"; text = "76kg"; ObjectID = "INb-GZ-Ocx"; */
+"INb-GZ-Ocx.text" = "76kg";
+
+/* Class = "IBUILabel"; text = "11月2日"; ObjectID = "IOc-hE-hnu"; */
+"IOc-hE-hnu.text" = "11月2日";
+
+/* Class = "IBUILabel"; text = "维生素B12"; ObjectID = "IPN-qy-1jd"; */
+"IPN-qy-1jd.text" = "维生素B12";
+
+/* Class = "IBUILabel"; text = "弥漫性骨痛"; ObjectID = "IUP-MX-eID"; */
+"IUP-MX-eID.text" = "弥漫性骨痛";
+
+/* Class = "IBUILabel"; text = "50kg"; ObjectID = "IZ2-9b-hBA"; */
+"IZ2-9b-hBA.text" = "50kg";
+
+/* Class = "IBUILabel"; text = "26.1/超重"; ObjectID = "IcE-Np-yNy"; */
+"IcE-Np-yNy.text" = "26.1/超重";
+
+/* Class = "IBUILabel"; text = "31"; ObjectID = "Ii2-4F-mDB"; */
+"Ii2-4F-mDB.text" = "31";
+
+/* Class = "IBUILabel"; text = "生日"; ObjectID = "Iui-Fo-vpK"; */
+"Iui-Fo-vpK.text" = "生日";
+
+/* Class = "IBUILabel"; text = "关节疼痛"; ObjectID = "Iys-ZZ-19u"; */
+"Iys-ZZ-19u.text" = "关节疼痛";
+
+/* Class = "IBUILabel"; text = "开心果"; ObjectID = "JBh-TX-wOU"; */
+"JBh-TX-wOU.text" = "开心果";
+
+/* Class = "IBUILabel"; text = "体重"; ObjectID = "JC5-29-4hH"; */
+"JC5-29-4hH.text" = "体重";
+
+/* Class = "IBUILabel"; text = "血压"; ObjectID = "JRr-2g-859"; */
+"JRr-2g-859.text" = "血压";
+
+/* Class = "IBUILabel"; text = "蛋类"; ObjectID = "JfR-MI-Rth"; */
+"JfR-MI-Rth.text" = "蛋类";
+
+/* Class = "IBUILabel"; text = "耳鸣"; ObjectID = "Jiq-ph-Sxi"; */
+"Jiq-ph-Sxi.text" = "耳鸣";
+
+/* Class = "IBUILabel"; text = "100"; ObjectID = "JjE-MT-LHK"; */
+"JjE-MT-LHK.text" = "100";
+
+/* Class = "IBUILabel"; text = "40"; ObjectID = "Jyd-Cy-c5A"; */
+"Jyd-Cy-c5A.text" = "40";
+
+/* Class = "IBUILabel"; text = "眼睑水肿"; ObjectID = "JzD-dW-to9"; */
+"JzD-dW-to9.text" = "眼睑水肿";
+
+/* Class = "IBUILabel"; text = "注意事项"; ObjectID = "K4R-cP-OUg"; */
+"K4R-cP-OUg.text" = "注意事项";
+
+/* Class = "IBUILabel"; text = "脸抽搐"; ObjectID = "KCG-RG-2IF"; */
+"KCG-RG-2IF.text" = "脸抽搐";
+
+/* Class = "IBUILabel"; text = "1"; ObjectID = "KTk-V7-a48"; */
+"KTk-V7-a48.text" = "1";
+
+/* Class = "IBUILabel"; text = "50克"; ObjectID = "KqB-tA-fLq"; */
+"KqB-tA-fLq.text" = "50克";
+
+/* Class = "IBUILabel"; text = "脸下垂"; ObjectID = "KvM-Iu-8AL"; */
+"KvM-Iu-8AL.text" = "脸下垂";
+
+/* Class = "IBUILabel"; text = "阳痿"; ObjectID = "Kxt-MJ-IEJ"; */
+"Kxt-MJ-IEJ.text" = "阳痿";
+
+/* Class = "IBUILabel"; text = "15"; ObjectID = "LFn-RP-wK0"; */
+"LFn-RP-wK0.text" = "15";
+
+/* Class = "IBUILabel"; text = "潜在疾病"; ObjectID = "Ld4-iY-NhZ"; */
+"Ld4-iY-NhZ.text" = "潜在疾病";
+
+/* Class = "IBUILabel"; text = "37.3C"; ObjectID = "Lio-UL-sPu"; */
+"Lio-UL-sPu.text" = "37.3C";
+
+/* Class = "IBUITabBarItem"; title = "曲线"; ObjectID = "M52-ZZ-OMw"; */
+"M52-ZZ-OMw.title" = "曲线";
+
+/* Class = "IBUILabel"; text = "体重增加"; ObjectID = "M5D-yN-brt"; */
+"M5D-yN-brt.text" = "体重增加";
+
+/* Class = "IBUILabel"; text = "耳鼻"; ObjectID = "MBt-up-PBh"; */
+"MBt-up-PBh.text" = "耳鼻";
+
+/* Class = "IBUILabel"; text = "充血"; ObjectID = "MOS-Bu-euN"; */
+"MOS-Bu-euN.text" = "充血";
+
+/* Class = "IBUIButton"; normalTitle = "急性咽炎"; ObjectID = "Mbr-cV-4a1"; */
+"Mbr-cV-4a1.normalTitle" = "急性咽炎";
+
+/* Class = "IBUITextField"; text = "A"; ObjectID = "Mvp-6I-fcS"; */
+"Mvp-6I-fcS.text" = "A";
+
+/* Class = "IBUILabel"; text = "急性咽炎"; ObjectID = "NLn-zd-qEO"; */
+"NLn-zd-qEO.text" = "急性咽炎";
+
+/* Class = "IBUITextField"; text = "脱皮屑"; ObjectID = "NWL-vp-GMm"; */
+"NWL-vp-GMm.text" = "脱皮屑";
+
+/* Class = "IBUITextField"; text = "脱落"; ObjectID = "Nfx-Py-xxD"; */
+"Nfx-Py-xxD.text" = "脱落";
+
+/* Class = "IBUILabel"; text = "表情呆滞"; ObjectID = "NvH-NT-Ki3"; */
+"NvH-NT-Ki3.text" = "表情呆滞";
+
+/* Class = "IBUILabel"; text = "潜在疾病"; ObjectID = "O7T-e0-a0Q"; */
+"O7T-e0-a0Q.text" = "潜在疾病";
+
+/* Class = "IBUITextField"; text = "食欲亢进"; ObjectID = "OBU-Li-Uxq"; */
+"OBU-Li-Uxq.text" = "食欲亢进";
+
+/* Class = "IBUINavigationItem"; title = "11月"; ObjectID = "ODw-on-3Kd"; */
+"ODw-on-3Kd.title" = "11月";
+
+/* Class = "IBUINavigationItem"; title = "百科"; ObjectID = "OSU-ri-g6X"; */
+"OSU-ri-g6X.title" = "百科";
+
+/* Class = "IBUILabel"; text = "急性胃炎"; ObjectID = "OkL-ck-Wqg"; */
+"OkL-ck-Wqg.text" = "急性胃炎";
+
+/* Class = "IBUITextField"; text = "锌"; ObjectID = "PE0-Nj-DpK"; */
+"PE0-Nj-DpK.text" = "锌";
+
+/* Class = "IBUILabel"; text = "生蚝"; ObjectID = "PF0-HU-Cnh"; */
+"PF0-HU-Cnh.text" = "生蚝";
+
+/* Class = "IBUILabel"; text = "便秘"; ObjectID = "PGO-TO-0bW"; */
+"PGO-TO-0bW.text" = "便秘";
+
+/* Class = "IBUILabel"; text = "89"; ObjectID = "PM3-ms-bFB"; */
+"PM3-ms-bFB.text" = "89";
+
+/* Class = "IBUITextField"; text = "阴囊红斑"; ObjectID = "POc-eh-CEu"; */
+"POc-eh-CEu.text" = "阴囊红斑";
+
+/* Class = "IBUILabel"; text = "体重"; ObjectID = "Pm1-pV-eb4"; */
+"Pm1-pV-eb4.text" = "体重";
+
+/* Class = "IBUILabel"; text = "甲状腺肿大"; ObjectID = "Q8Y-dJ-9gc"; */
+"Q8Y-dJ-9gc.text" = "甲状腺肿大";
+
+/* Class = "IBUILabel"; text = "鼻出油"; ObjectID = "QGr-nN-GfB"; */
+"QGr-nN-GfB.text" = "鼻出油";
+
+/* Class = "IBUILabel"; text = "2个鸡蛋，2个胡萝卜，200g牛肉"; ObjectID = "QKd-06-cY8"; */
+"QKd-06-cY8.text" = "2个鸡蛋，2个胡萝卜，200g牛肉";
+
+/* Class = "IBUITextField"; text = "嗜睡"; ObjectID = "QMI-sZ-8kl"; */
+"QMI-sZ-8kl.text" = "嗜睡";
+
+/* Class = "IBUILabel"; text = "110/80"; ObjectID = "QwI-5I-m6u"; */
+"QwI-5I-m6u.text" = "110/80";
+
+/* Class = "IBUILabel"; text = "餐后腹痛"; ObjectID = "R1B-Ss-gDF"; */
+"R1B-Ss-gDF.text" = "餐后腹痛";
+
+/* Class = "IBUILabel"; text = "鼻后滴漏"; ObjectID = "RA1-b7-Pdy"; */
+"RA1-b7-Pdy.text" = "鼻后滴漏";
+
+/* Class = "IBUILabel"; text = "站立不稳"; ObjectID = "RH6-mI-xgL"; */
+"RH6-mI-xgL.text" = "站立不稳";
+
+/* Class = "IBUILabel"; text = "摄氏度"; ObjectID = "RXF-Md-yxA"; */
+"RXF-Md-yxA.text" = "摄氏度";
+
+/* Class = "IBUILabel"; text = "110/80"; ObjectID = "Rel-Za-PEl"; */
+"Rel-Za-PEl.text" = "110/80";
+
+/* Class = "IBUILabel"; text = "常见疾病"; ObjectID = "RgV-0i-gj1"; */
+"RgV-0i-gj1.text" = "常见疾病";
+
+/* Class = "IBUILabel"; text = "推荐食物"; ObjectID = "Rvm-cD-SKj"; */
+"Rvm-cD-SKj.text" = "推荐食物";
+
+/* Class = "IBUILabel"; text = "舌紫红色"; ObjectID = "Rw5-Qi-vOa"; */
+"Rw5-Qi-vOa.text" = "舌紫红色";
+
+/* Class = "IBUILabel"; text = "身高"; ObjectID = "SBL-PM-VxU"; */
+"SBL-PM-VxU.text" = "身高";
+
+/* Class = "IBUILabel"; text = "失眠"; ObjectID = "SF5-f1-e4A"; */
+"SF5-f1-e4A.text" = "失眠";
+
+/* Class = "IBUITextField"; text = "纤维"; ObjectID = "SMF-Lh-fFV"; */
+"SMF-Lh-fFV.text" = "纤维";
+
+/* Class = "IBUILabel"; text = "晨僵"; ObjectID = "SON-ih-3ux"; */
+"SON-ih-3ux.text" = "晨僵";
+
+/* Class = "IBUILabel"; text = "登楼困难"; ObjectID = "SRU-XY-bOJ"; */
+"SRU-XY-bOJ.text" = "登楼困难";
+
+/* Class = "IBUILabel"; text = "缺乏营养"; ObjectID = "Sc8-vO-89b"; */
+"Sc8-vO-89b.text" = "缺乏营养";
+
+/* Class = "IBUILabel"; text = "50g"; ObjectID = "Sex-nM-RuH"; */
+"Sex-nM-RuH.text" = "50g";
+
+/* Class = "IBUIBarButtonItem"; title = "保存"; ObjectID = "Si1-Ya-hWd"; */
+"Si1-Ya-hWd.title" = "保存";
+
+/* Class = "IBUILabel"; text = "2. 避免大量饮酒，吸烟"; ObjectID = "Sj5-Yg-L4v"; */
+"Sj5-Yg-L4v.text" = "2. 避免大量饮酒，吸烟";
+
+/* Class = "IBUILabel"; text = "周二"; ObjectID = "Sp4-kb-RyQ"; */
+"Sp4-kb-RyQ.text" = "周二";
+
+/* Class = "IBUITextField"; text = "干燥"; ObjectID = "SqI-W2-SKb"; */
+"SqI-W2-SKb.text" = "干燥";
+
+/* Class = "IBUILabel"; text = "4"; ObjectID = "T73-rv-Ygc"; */
+"T73-rv-Ygc.text" = "4";
+
+/* Class = "IBUILabel"; text = "视力模糊，累，发干，发红，疼痛，怕强光，"; ObjectID = "T7j-0y-C8U"; */
+"T7j-0y-C8U.text" = "视力模糊，累，发干，发红，疼痛，怕强光，";
+
+/* Class = "IBUILabel"; text = "每日仅做一些轻度运动，如散步，购物，做家务"; ObjectID = "T8o-vM-zJF"; */
+"T8o-vM-zJF.text" = "每日仅做一些轻度运动，如散步，购物，做家务";
+
+/* Class = "IBUILabel"; text = "伤口不愈合"; ObjectID = "Tbd-8K-1zq"; */
+"Tbd-8K-1zq.text" = "伤口不愈合";
+
+/* Class = "IBUILabel"; text = "恶心"; ObjectID = "Tc9-mP-Gby"; */
+"Tc9-mP-Gby.text" = "恶心";
+
+/* Class = "IBUILabel"; text = "50g"; ObjectID = "Tfx-1m-nN0"; */
+"Tfx-1m-nN0.text" = "50g";
+
+/* Class = "IBUITextField"; placeholder = "110"; ObjectID = "U1M-gT-Lq1"; */
+"U1M-gT-Lq1.placeholder" = "110";
+
+/* Class = "IBUILabel"; text = "4. 多饮水，保持室内空气流通"; ObjectID = "U6Q-vM-DN6"; */
+"U6Q-vM-DN6.text" = "4. 多饮水，保持室内空气流通";
+
+/* Class = "IBUITextField"; text = "胸闷"; ObjectID = "U6f-bf-nSb"; */
+"U6f-bf-nSb.text" = "胸闷";
+
+/* Class = "IBUITextField"; text = "手脚发痒"; ObjectID = "UCZ-BV-bGg"; */
+"UCZ-BV-bGg.text" = "手脚发痒";
+
+/* Class = "IBUITextField"; text = "蛋白质"; ObjectID = "UWb-zn-zq2"; */
+"UWb-zn-zq2.text" = "蛋白质";
+
+/* Class = "IBUILabel"; text = "突眼"; ObjectID = "Ud4-Xq-XWt"; */
+"Ud4-Xq-XWt.text" = "突眼";
+
+/* Class = "IBUIButton"; normalTitle = "A"; ObjectID = "Ue4-BC-pHu"; */
+"Ue4-BC-pHu.normalTitle" = "A";
+
+/* Class = "IBUILabel"; text = "脸色苍白"; ObjectID = "Uf4-FZ-OEg"; */
+"Uf4-FZ-OEg.text" = "脸色苍白";
+
+/* Class = "IBUILabel"; text = "次／分钟"; ObjectID = "UkZ-05-Q7G"; */
+"UkZ-05-Q7G.text" = "次／分钟";
+
+/* Class = "IBUITextField"; text = "稀疏"; ObjectID = "Unc-ug-m01"; */
+"Unc-ug-m01.text" = "稀疏";
+
+/* Class = "IBUILabel"; text = "1. 少吃熏制，腌制，富含硝酸盐     的食品"; ObjectID = "Uun-pm-NVl"; */
+"Uun-pm-NVl.text" = "1. 少吃熏制，腌制，富含硝酸盐     的食品";
+
+/* Class = "IBUINavigationItem"; title = "急性咽炎"; ObjectID = "V4J-94-Lqx"; */
+"V4J-94-Lqx.title" = "急性咽炎";
+
+/* Class = "IBUITextView"; text = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda."; ObjectID = "Vbt-1y-E4A"; */
+"Vbt-1y-E4A.text" = "Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.";
+
+/* Class = "IBUILabel"; text = "口渴"; ObjectID = "VcO-W2-dU0"; */
+"VcO-W2-dU0.text" = "口渴";
+
+/* Class = "IBUILabel"; text = "呼吸不畅"; ObjectID = "VdC-yL-FUO"; */
+"VdC-yL-FUO.text" = "呼吸不畅";
+
+/* Class = "IBUILabel"; text = "20"; ObjectID = "Vjo-x5-o0I"; */
+"Vjo-x5-o0I.text" = "20";
+
+/* Class = "IBUILabel"; text = "乏力"; ObjectID = "Vog-gp-VJo"; */
+"Vog-gp-VJo.text" = "乏力";
+
+/* Class = "IBUITextField"; text = "发红发痒"; ObjectID = "W78-Iq-B1I"; */
+"W78-Iq-B1I.text" = "发红发痒";
+
+/* Class = "IBUITextField"; text = "B9"; ObjectID = "WLG-Rw-z31"; */
+"WLG-Rw-z31.text" = "B9";
+
+/* Class = "IBUILabel"; text = "西兰花"; ObjectID = "WNi-fA-WXG"; */
+"WNi-fA-WXG.text" = "西兰花";
+
+/* Class = "IBUINavigationItem"; title = "维生素A"; ObjectID = "WZi-vz-d8m"; */
+"WZi-vz-d8m.title" = "维生素A";
+
+/* Class = "IBUILabel"; text = "麻木"; ObjectID = "Wmy-gd-utb"; */
+"Wmy-gd-utb.text" = "麻木";
+
+/* Class = "IBUITextField"; text = "肋骨疼痛"; ObjectID = "Wue-Sf-FLG"; */
+"Wue-Sf-FLG.text" = "肋骨疼痛";
+
+/* Class = "IBUILabel"; text = "2个"; ObjectID = "XaI-WU-35F"; */
+"XaI-WU-35F.text" = "2个";
+
+/* Class = "IBUILabel"; text = "100克"; ObjectID = "Y7V-r1-dpA"; */
+"Y7V-r1-dpA.text" = "100克";
+
+/* Class = "IBUINavigationItem"; title = "11月"; ObjectID = "Y9v-bz-Oh3"; */
+"Y9v-bz-Oh3.title" = "11月";
+
+/* Class = "IBUILabel"; text = "3. 充分睡眠"; ObjectID = "YK0-sm-i0r"; */
+"YK0-sm-i0r.text" = "3. 充分睡眠";
+
+/* Class = "IBUITabBarItem"; title = "信息"; ObjectID = "YQa-ap-KJg"; */
+"YQa-ap-KJg.title" = "信息";
+
+/* Class = "IBUITextField"; text = "抽搐"; ObjectID = "YQz-Bo-wFc"; */
+"YQz-Bo-wFc.text" = "抽搐";
+
+/* Class = "IBUITextField"; text = "钙"; ObjectID = "YYm-FN-2eE"; */
+"YYm-FN-2eE.text" = "钙";
+
+/* Class = "IBUILabel"; text = "清鼻涕"; ObjectID = "Yai-iV-j8K"; */
+"Yai-iV-j8K.text" = "清鼻涕";
+
+/* Class = "IBUITabBarItem"; title = "历史"; ObjectID = "Yih-25-o6o"; */
+"Yih-25-o6o.title" = "历史";
+
+/* Class = "IBUILabel"; text = "抑郁"; ObjectID = "YvM-s1-JNn"; */
+"YvM-s1-JNn.text" = "抑郁";
+
+/* Class = "IBUILabel"; text = "味觉迟钝"; ObjectID = "Yx5-K4-hG1"; */
+"Yx5-K4-hG1.text" = "味觉迟钝";
+
+/* Class = "IBUILabel"; text = "推荐食物"; ObjectID = "Yyt-sC-Q8U"; */
+"Yyt-sC-Q8U.text" = "推荐食物";
+
+/* Class = "IBUILabel"; text = "嗓子"; ObjectID = "Z0b-D7-pfX"; */
+"Z0b-D7-pfX.text" = "嗓子";
+
+/* Class = "IBUILabel"; text = "早饱感"; ObjectID = "Z1W-Kx-bk2"; */
+"Z1W-Kx-bk2.text" = "早饱感";
+
+/* Class = "IBUILabel"; text = "消瘦"; ObjectID = "Z4g-MJ-ra8"; */
+"Z4g-MJ-ra8.text" = "消瘦";
+
+/* Class = "IBUITextField"; text = "B12"; ObjectID = "Z6i-oV-RI1"; */
+"Z6i-oV-RI1.text" = "B12";
+
+/* Class = "IBUILabel"; text = "口腔溃疡"; ObjectID = "ZES-MA-ppK"; */
+"ZES-MA-ppK.text" = "口腔溃疡";
+
+/* Class = "IBUILabel"; text = "笔记"; ObjectID = "ZN4-eV-WNl"; */
+"ZN4-eV-WNl.text" = "笔记";
+
+/* Class = "IBUILabel"; text = "30"; ObjectID = "ZW1-cC-Ahd"; */
+"ZW1-cC-Ahd.text" = "30";
+
+/* Class = "IBUILabel"; text = "嗓子"; ObjectID = "Zdr-Fm-RQB"; */
+"Zdr-Fm-RQB.text" = "嗓子";
+
+/* Class = "IBUILabel"; text = "发痒，咳嗽，疼痛，下咽困难"; ObjectID = "ZgA-oR-6Es"; */
+"ZgA-oR-6Es.text" = "发痒，咳嗽，疼痛，下咽困难";
+
+/* Class = "IBUILabel"; text = "呕血"; ObjectID = "ZrK-y1-3ET"; */
+"ZrK-y1-3ET.text" = "呕血";
+
+/* Class = "IBUILabel"; text = "松弛"; ObjectID = "ZwV-pk-VB0"; */
+"ZwV-pk-VB0.text" = "松弛";
+
+/* Class = "IBUILabel"; text = "1. 少吃熏制，腌制，富含硝酸盐     的食品"; ObjectID = "ZwY-Kp-O5S"; */
+"ZwY-Kp-O5S.text" = "1. 少吃熏制，腌制，富含硝酸盐     的食品";
+
+/* Class = "IBUILabel"; text = "消化"; ObjectID = "Zyi-lR-fNU"; */
+"Zyi-lR-fNU.text" = "消化";
+
+/* Class = "IBUILabel"; text = "腹胀满"; ObjectID = "a4i-Wm-lnr"; */
+"a4i-Wm-lnr.text" = "腹胀满";
+
+/* Class = "IBUILabel"; text = "心跳"; ObjectID = "aOF-Cc-eLQ"; */
+"aOF-Cc-eLQ.text" = "心跳";
+
+/* Class = "IBUILabel"; text = "发热"; ObjectID = "aPn-6h-sIB"; */
+"aPn-6h-sIB.text" = "发热";
+
+/* Class = "IBUILabel"; text = "关节僵硬"; ObjectID = "aQP-UL-bgQ"; */
+"aQP-UL-bgQ.text" = "关节僵硬";
+
+/* Class = "IBUILabel"; text = "3. 充分睡眠"; ObjectID = "ae1-bP-o7y"; */
+"ae1-bP-o7y.text" = "3. 充分睡眠";
+
+/* Class = "IBUILabel"; text = "咳痰"; ObjectID = "afK-qY-Seq"; */
+"afK-qY-Seq.text" = "咳痰";
+
+/* Class = "IBUILabel"; text = "X或O型腿"; ObjectID = "aqs-hU-Bc1"; */
+"aqs-hU-Bc1.text" = "X或O型腿";
+
+/* Class = "IBUILabel"; text = "奶制品"; ObjectID = "arv-eY-TbV"; */
+"arv-eY-TbV.text" = "奶制品";
+
+/* Class = "IBUILabel"; text = "2. 避免大量饮酒，吸烟"; ObjectID = "auK-Eu-Oel"; */
+"auK-Eu-Oel.text" = "2. 避免大量饮酒，吸烟";
+
+/* Class = "IBUITextField"; text = "锌"; ObjectID = "auO-zu-aoo"; */
+"auO-zu-aoo.text" = "锌";
+
+/* Class = "IBUITextField"; text = "锌"; ObjectID = "bHd-s0-kMM"; */
+"bHd-s0-kMM.text" = "锌";
+
+/* Class = "IBUILabel"; text = "头面"; ObjectID = "bLK-Sj-oD7"; */
+"bLK-Sj-oD7.text" = "头面";
+
+/* Class = "IBUILabel"; text = "讲话困难"; ObjectID = "blf-IU-cVi"; */
+"blf-IU-cVi.text" = "讲话困难";
+
+/* Class = "IBUILabel"; text = "姜黄肤色"; ObjectID = "cJs-dP-CxI"; */
+"cJs-dP-CxI.text" = "姜黄肤色";
+
+/* Class = "IBUITextField"; text = "多尿"; ObjectID = "cKY-dd-9o2"; */
+"cKY-dd-9o2.text" = "多尿";
+
+/* Class = "IBUILabel"; text = "饮食"; ObjectID = "cMR-5p-l2y"; */
+"cMR-5p-l2y.text" = "饮食";
+
+/* Class = "IBUILabel"; text = "四肢无力"; ObjectID = "cUE-1k-6DQ"; */
+"cUE-1k-6DQ.text" = "四肢无力";
+
+/* Class = "IBUILabel"; text = "眼睛"; ObjectID = "cVf-3Q-t0f"; */
+"cVf-3Q-t0f.text" = "眼睛";
+
+/* Class = "IBUILabel"; text = "豆制品"; ObjectID = "cVr-Pa-l3B"; */
+"cVr-Pa-l3B.text" = "豆制品";
+
+/* Class = "IBUITextField"; text = "哮鸣音"; ObjectID = "cWh-uu-kAE"; */
+"cWh-uu-kAE.text" = "哮鸣音";
+
+/* Class = "IBUIBarButtonItem"; title = "提交"; ObjectID = "cYW-it-OkM"; */
+"cYW-it-OkM.title" = "提交";
+
+/* Class = "IBUILabel"; text = "阴囊瘙痒"; ObjectID = "cbt-RU-kxJ"; */
+"cbt-RU-kxJ.text" = "阴囊瘙痒";
+
+/* Class = "IBUILabel"; text = "冷漠"; ObjectID = "cdi-PD-nEQ"; */
+"cdi-PD-nEQ.text" = "冷漠";
+
+/* Class = "IBUILabel"; text = "体质指数"; ObjectID = "cdy-hp-xQJ"; */
+"cdy-hp-xQJ.text" = "体质指数";
+
+/* Class = "IBUILabel"; text = "脊柱弯曲"; ObjectID = "cgF-Ll-K29"; */
+"cgF-Ll-K29.text" = "脊柱弯曲";
+
+/* Class = "IBUITextField"; text = "瘀点"; ObjectID = "cgy-5E-XxP"; */
+"cgy-5E-XxP.text" = "瘀点";
+
+/* Class = "IBUILabel"; text = "灰尘太大，咳嗽了很久，晚上恒大夺冠，和朋友庆祝喝多了"; ObjectID = "chS-Xk-KIe"; */
+"chS-Xk-KIe.text" = "灰尘太大，咳嗽了很久，晚上恒大夺冠，和朋友庆祝喝多了";
+
+/* Class = "IBUILabel"; text = "注意事项"; ObjectID = "cxj-Y7-I61"; */
+"cxj-Y7-I61.text" = "注意事项";
+
+/* Class = "IBUITextField"; text = "B6"; ObjectID = "cz4-HK-K8J"; */
+"cz4-HK-K8J.text" = "B6";
+
+/* Class = "IBUILabel"; text = "呕吐"; ObjectID = "d40-XU-TT1"; */
+"d40-XU-TT1.text" = "呕吐";
+
+/* Class = "IBUITextField"; text = "D"; ObjectID = "d4K-so-wg6"; */
+"d4K-so-wg6.text" = "D";
+
+/* Class = "IBUILabel"; text = "25.1, 偏重"; ObjectID = "dF8-Ne-QVh"; */
+"dF8-Ne-QVh.text" = "25.1, 偏重";
+
+/* Class = "IBUILabel"; text = "50克"; ObjectID = "dGI-Xi-UHz"; */
+"dGI-Xi-UHz.text" = "50克";
+
+/* Class = "IBUILabel"; text = "14"; ObjectID = "dhR-FE-agI"; */
+"dhR-FE-agI.text" = "14";
+
+/* Class = "IBUILabel"; text = "发紫"; ObjectID = "dkr-uK-bW0"; */
+"dkr-uK-bW0.text" = "发紫";
+
+/* Class = "IBUILabel"; text = "压痛"; ObjectID = "drE-Lg-RIW"; */
+"drE-Lg-RIW.text" = "压痛";
+
+/* Class = "IBUILabel"; text = "心跳"; ObjectID = "dty-v8-JOu"; */
+"dty-v8-JOu.text" = "心跳";
+
+/* Class = "IBUILabel"; text = "2个"; ObjectID = "dvq-0L-jhc"; */
+"dvq-0L-jhc.text" = "2个";
+
+/* Class = "IBUILabel"; text = "11"; ObjectID = "e2L-cV-SjV"; */
+"e2L-cV-SjV.text" = "11";
+
+/* Class = "IBUILabel"; text = "18"; ObjectID = "eEE-KX-quG"; */
+"eEE-KX-quG.text" = "18";
+
+/* Class = "IBUILabel"; text = "体温"; ObjectID = "eHl-hx-ocT"; */
+"eHl-hx-ocT.text" = "体温";
+
+/* Class = "IBUITextField"; text = "牙龈肿胀"; ObjectID = "eYY-1b-zmN"; */
+"eYY-1b-zmN.text" = "牙龈肿胀";
+
+/* Class = "IBUILabel"; text = "铁"; ObjectID = "egh-jY-5L6"; */
+"egh-jY-5L6.text" = "铁";
+
+/* Class = "IBUILabel"; text = "11月4日"; ObjectID = "f3p-wA-bFQ"; */
+"f3p-wA-bFQ.text" = "11月4日";
+
+/* Class = "IBUITextField"; text = "紧张焦虑"; ObjectID = "fVc-SF-Oay"; */
+"fVc-SF-Oay.text" = "紧张焦虑";
+
+/* Class = "IBUILabel"; text = "五谷"; ObjectID = "fav-s2-hFz"; */
+"fav-s2-hFz.text" = "五谷";
+
+/* Class = "IBUILabel"; text = "水果"; ObjectID = "fcJ-hr-JTq"; */
+"fcJ-hr-JTq.text" = "水果";
+
+/* Class = "IBUILabel"; text = "37.3C"; ObjectID = "fho-dC-cUC"; */
+"fho-dC-cUC.text" = "37.3C";
+
+/* Class = "IBUILabel"; text = "水肿"; ObjectID = "fs3-ey-b1i"; */
+"fs3-ey-b1i.text" = "水肿";
+
+/* Class = "IBUITextField"; text = "E"; ObjectID = "fx4-df-c0a"; */
+"fx4-df-c0a.text" = "E";
+
+/* Class = "IBUITextField"; text = "黑便"; ObjectID = "fxs-LW-Vzy"; */
+"fxs-LW-Vzy.text" = "黑便";
+
+/* Class = "IBUILabel"; text = "牙龈出血"; ObjectID = "g4Y-qj-oZ6"; */
+"g4Y-qj-oZ6.text" = "牙龈出血";
+
+/* Class = "IBUILabel"; text = "心跳过慢"; ObjectID = "gDW-gL-GaS"; */
+"gDW-gL-GaS.text" = "心跳过慢";
+
+/* Class = "IBUILabel"; text = "下肢水肿"; ObjectID = "gU9-hh-e34"; */
+"gU9-hh-e34.text" = "下肢水肿";
+
+/* Class = "IBUILabel"; text = "2"; ObjectID = "gX0-wa-8oa"; */
+"gX0-wa-8oa.text" = "2";
+
+/* Class = "IBUITextField"; text = "月经过多"; ObjectID = "geF-6Q-Ij7"; */
+"geF-6Q-Ij7.text" = "月经过多";
+
+/* Class = "IBUILabel"; text = "6"; ObjectID = "ghe-UF-JiU"; */
+"ghe-UF-JiU.text" = "6";
+
+/* Class = "IBUILabel"; text = "头晕"; ObjectID = "giO-qo-tw1"; */
+"giO-qo-tw1.text" = "头晕";
+
+/* Class = "IBUILabel"; text = "瘀斑"; ObjectID = "gnX-9o-j0r"; */
+"gnX-9o-j0r.text" = "瘀斑";
+
+/* Class = "IBUILabel"; text = "76kg"; ObjectID = "gps-6s-CCn"; */
+"gps-6s-CCn.text" = "76kg";
+
+/* Class = "IBUILabel"; text = "视力模糊，累，发干，发红，疼痛，怕强光，"; ObjectID = "gwH-hS-liK"; */
+"gwH-hS-liK.text" = "视力模糊，累，发干，发红，疼痛，怕强光，";
+
+/* Class = "IBUITextField"; text = "喷嚏"; ObjectID = "h1p-5X-fau"; */
+"h1p-5X-fau.text" = "喷嚏";
+
+/* Class = "IBUILabel"; text = "易怒"; ObjectID = "h1w-Z0-Ujl"; */
+"h1w-Z0-Ujl.text" = "易怒";
+
+/* Class = "IBUILabel"; text = "月经不调"; ObjectID = "h7d-P5-ibN"; */
+"h7d-P5-ibN.text" = "月经不调";
+
+/* Class = "IBUILabel"; text = "连续喷嚏"; ObjectID = "hDy-lI-OAi"; */
+"hDy-lI-OAi.text" = "连续喷嚏";
+
+/* Class = "IBUILabel"; text = "80"; ObjectID = "hXH-A7-Nl4"; */
+"hXH-A7-Nl4.text" = "80";
+
+/* Class = "IBUILabel"; text = "烧灼状腹痛"; ObjectID = "hb4-CZ-Nur"; */
+"hb4-CZ-Nur.text" = "烧灼状腹痛";
+
+/* Class = "IBUILabel"; text = "关节炎，急性咽炎，消化性溃疡"; ObjectID = "hbw-Yy-Gcd"; */
+"hbw-Yy-Gcd.text" = "关节炎，急性咽炎，消化性溃疡";
+
+/* Class = "IBUILabel"; text = "老年斑"; ObjectID = "iA6-AO-5l2"; */
+"iA6-AO-5l2.text" = "老年斑";
+
+/* Class = "IBUILabel"; text = "多便"; ObjectID = "iB5-VN-BXO"; */
+"iB5-VN-BXO.text" = "多便";
+
+/* Class = "IBUILabel"; text = "嗓子"; ObjectID = "iQZ-ky-xFh"; */
+"iQZ-ky-xFh.text" = "嗓子";
+
+/* Class = "IBUILabel"; text = "四肢肿胀"; ObjectID = "iU7-o0-U0L"; */
+"iU7-o0-U0L.text" = "四肢肿胀";
+
+/* Class = "IBUILabel"; text = "早泄"; ObjectID = "iUD-Pb-Bke"; */
+"iUD-Pb-Bke.text" = "早泄";
+
+/* Class = "IBUILabel"; text = "潜在疾病"; ObjectID = "iUG-DD-jAR"; */
+"iUG-DD-jAR.text" = "潜在疾病";
+
+/* Class = "IBUITextField"; text = "耳后出油"; ObjectID = "iV2-hz-QWb"; */
+"iV2-hz-QWb.text" = "耳后出油";
+
+/* Class = "IBUISegmentedControl"; iyZ-4H-nVa.segmentTitles[0] = "营养"; ObjectID = "iyZ-4H-nVa"; */
+"iyZ-4H-nVa.segmentTitles[0]" = "营养";
+
+/* Class = "IBUISegmentedControl"; iyZ-4H-nVa.segmentTitles[1] = "体质"; ObjectID = "iyZ-4H-nVa"; */
+"iyZ-4H-nVa.segmentTitles[1]" = "体质";
+
+/* Class = "IBUISegmentedControl"; iyZ-4H-nVa.segmentTitles[2] = "体重"; ObjectID = "iyZ-4H-nVa"; */
+"iyZ-4H-nVa.segmentTitles[2]" = "体重";
+
+/* Class = "IBUISegmentedControl"; iyZ-4H-nVa.segmentTitles[3] = "体温"; ObjectID = "iyZ-4H-nVa"; */
+"iyZ-4H-nVa.segmentTitles[3]" = "体温";
+
+/* Class = "IBUISegmentedControl"; iyZ-4H-nVa.segmentTitles[4] = "血压"; ObjectID = "iyZ-4H-nVa"; */
+"iyZ-4H-nVa.segmentTitles[4]" = "血压";
+
+/* Class = "IBUISegmentedControl"; iyZ-4H-nVa.segmentTitles[5] = "心跳"; ObjectID = "iyZ-4H-nVa"; */
+"iyZ-4H-nVa.segmentTitles[5]" = "心跳";
+
+/* Class = "IBUITextField"; text = "铁"; ObjectID = "izJ-Fx-NAu"; */
+"izJ-Fx-NAu.text" = "铁";
+
+/* Class = "IBUILabel"; text = "鸡皮"; ObjectID = "j37-h8-zeS"; */
+"j37-h8-zeS.text" = "鸡皮";
+
+/* Class = "IBUILabel"; text = "50g"; ObjectID = "jGl-43-PRG"; */
+"jGl-43-PRG.text" = "50g";
+
+/* Class = "IBUILabel"; text = "毛囊出血"; ObjectID = "jOO-6G-Eh4"; */
+"jOO-6G-Eh4.text" = "毛囊出血";
+
+/* Class = "IBUILabel"; text = "鸡胸"; ObjectID = "jWZ-QC-pO7"; */
+"jWZ-QC-pO7.text" = "鸡胸";
+
+/* Class = "IBUILabel"; text = "缺乏营养"; ObjectID = "joL-k5-UmD"; */
+"joL-k5-UmD.text" = "缺乏营养";
+
+/* Class = "IBUILabel"; text = "维生素A"; ObjectID = "k2P-FF-63j"; */
+"k2P-FF-63j.text" = "维生素A";
+
+/* Class = "IBUITextField"; text = "多饮"; ObjectID = "kGq-zD-ERM"; */
+"kGq-zD-ERM.text" = "多饮";
+
+/* Class = "IBUITextField"; text = "木讷"; ObjectID = "kNo-uv-0n2"; */
+"kNo-uv-0n2.text" = "木讷";
+
+/* Class = "IBUILabel"; text = "健忘"; ObjectID = "kOz-lJ-GsC"; */
+"kOz-lJ-GsC.text" = "健忘";
+
+/* Class = "IBUILabel"; text = "泛酸"; ObjectID = "knj-W7-132"; */
+"knj-W7-132.text" = "泛酸";
+
+/* Class = "IBUILabel"; text = "25.1, 偏重"; ObjectID = "ksA-Cn-pbU"; */
+"ksA-Cn-pbU.text" = "25.1, 偏重";
+
+/* Class = "IBUILabel"; text = "中度高血压"; ObjectID = "kwf-Ct-8Tn"; */
+"kwf-Ct-8Tn.text" = "中度高血压";
+
+/* Class = "IBUILabel"; text = "营养"; ObjectID = "l1W-9g-XjI"; */
+"l1W-9g-XjI.text" = "营养";
+
+/* Class = "IBUILabel"; text = "体质指数"; ObjectID = "l3v-Fp-X3k"; */
+"l3v-Fp-X3k.text" = "体质指数";
+
+/* Class = "IBUITextField"; text = "咳嗽"; ObjectID = "l6h-aX-72W"; */
+"l6h-aX-72W.text" = "咳嗽";
+
+/* Class = "IBUILabel"; text = "视觉模糊"; ObjectID = "lBO-Gd-mDI"; */
+"lBO-Gd-mDI.text" = "视觉模糊";
+
+/* Class = "IBUILabel"; text = "怕光"; ObjectID = "lYD-C9-c8Y"; */
+"lYD-C9-c8Y.text" = "怕光";
+
+/* Class = "IBUILabel"; text = "13"; ObjectID = "lYr-I8-Typ"; */
+"lYr-I8-Typ.text" = "13";
+
+/* Class = "IBUILabel"; text = "周四"; ObjectID = "la9-Ax-9Q6"; */
+"la9-Ax-9Q6.text" = "周四";
+
+/* Class = "IBUILabel"; text = "咽干"; ObjectID = "les-4L-2bw"; */
+"les-4L-2bw.text" = "咽干";
+
+/* Class = "IBUILabel"; text = "160cm"; ObjectID = "liQ-me-7AO"; */
+"liQ-me-7AO.text" = "160cm";
+
+/* Class = "IBUILabel"; text = "推荐食物"; ObjectID = "lpp-ro-5VY"; */
+"lpp-ro-5VY.text" = "推荐食物";
+
+/* Class = "IBUITextField"; text = "流口水"; ObjectID = "lr5-yE-BlV"; */
+"lr5-yE-BlV.text" = "流口水";
+
+/* Class = "IBUILabel"; text = "25"; ObjectID = "lrH-wO-x3d"; */
+"lrH-wO-x3d.text" = "25";
+
+/* Class = "IBUISegmentedControl"; lsc-5K-Nft.segmentTitles[0] = "营养"; ObjectID = "lsc-5K-Nft"; */
+"lsc-5K-Nft.segmentTitles[0]" = "营养";
+
+/* Class = "IBUISegmentedControl"; lsc-5K-Nft.segmentTitles[1] = "体质"; ObjectID = "lsc-5K-Nft"; */
+"lsc-5K-Nft.segmentTitles[1]" = "体质";
+
+/* Class = "IBUISegmentedControl"; lsc-5K-Nft.segmentTitles[2] = "体重"; ObjectID = "lsc-5K-Nft"; */
+"lsc-5K-Nft.segmentTitles[2]" = "体重";
+
+/* Class = "IBUISegmentedControl"; lsc-5K-Nft.segmentTitles[3] = "体温"; ObjectID = "lsc-5K-Nft"; */
+"lsc-5K-Nft.segmentTitles[3]" = "体温";
+
+/* Class = "IBUISegmentedControl"; lsc-5K-Nft.segmentTitles[4] = "血压"; ObjectID = "lsc-5K-Nft"; */
+"lsc-5K-Nft.segmentTitles[4]" = "血压";
+
+/* Class = "IBUISegmentedControl"; lsc-5K-Nft.segmentTitles[5] = "心跳"; ObjectID = "lsc-5K-Nft"; */
+"lsc-5K-Nft.segmentTitles[5]" = "心跳";
+
+/* Class = "IBUILabel"; text = "腹泻"; ObjectID = "lsu-ZC-E30"; */
+"lsu-ZC-E30.text" = "腹泻";
+
+/* Class = "IBUITextField"; text = "74"; ObjectID = "m5k-im-ZpR"; */
+"m5k-im-ZpR.text" = "74";
+
+/* Class = "IBUILabel"; text = "水产"; ObjectID = "m8K-DX-RVX"; */
+"m8K-DX-RVX.text" = "水产";
+
+/* Class = "IBUIBarButtonItem"; title = "已保存"; ObjectID = "mBF-zI-hOu"; */
+"mBF-zI-hOu.title" = "已保存";
+
+/* Class = "IBUILabel"; text = "餐后腹胀"; ObjectID = "mew-6W-ZP6"; */
+"mew-6W-ZP6.text" = "餐后腹胀";
+
+/* Class = "IBUILabel"; text = "心律失常"; ObjectID = "mo2-KX-fe8"; */
+"mo2-KX-fe8.text" = "心律失常";
+
+/* Class = "IBUILabel"; text = "少汗"; ObjectID = "mzA-Kk-NMq"; */
+"mzA-Kk-NMq.text" = "少汗";
+
+/* Class = "IBUILabel"; text = "鼻塞，干燥，流血，鼻涕，鼻屎多，嗅觉不好"; ObjectID = "nDr-XB-M9R"; */
+"nDr-XB-M9R.text" = "鼻塞，干燥，流血，鼻涕，鼻屎多，嗅觉不好";
+
+/* Class = "IBUITextField"; text = "疼痛"; ObjectID = "nQN-nv-dFg"; */
+"nQN-nv-dFg.text" = "疼痛";
+
+/* Class = "IBUILabel"; text = "低压"; ObjectID = "nmB-qR-3mb"; */
+"nmB-qR-3mb.text" = "低压";
+
+/* Class = "IBUILabel"; text = "急性胃炎"; ObjectID = "nns-o2-NJ5"; */
+"nns-o2-NJ5.text" = "急性胃炎";
+
+/* Class = "IBUILabel"; text = "鸡蛋"; ObjectID = "nsj-kP-tnb"; */
+"nsj-kP-tnb.text" = "鸡蛋";
+
+/* Class = "IBUITextField"; text = "吞咽困难"; ObjectID = "o0c-vR-nV2"; */
+"o0c-vR-nV2.text" = "吞咽困难";
+
+/* Class = "IBUILabel"; text = "2"; ObjectID = "oBX-V3-bq9"; */
+"oBX-V3-bq9.text" = "2";
+
+/* Class = "IBUILabel"; text = "公斤"; ObjectID = "oCe-HP-yih"; */
+"oCe-HP-yih.text" = "公斤";
+
+/* Class = "IBUILabel"; text = "4. 多饮水，保持室内空气流通"; ObjectID = "oT7-ke-ZkR"; */
+"oT7-ke-ZkR.text" = "4. 多饮水，保持室内空气流通";
+
+/* Class = "IBUILabel"; text = "关节炎，急性咽炎，消化性溃疡"; ObjectID = "oXv-NT-tKO"; */
+"oXv-NT-tKO.text" = "关节炎，急性咽炎，消化性溃疡";
+
+/* Class = "IBUILabel"; text = "开心果"; ObjectID = "oag-Pp-1Nm"; */
+"oag-Pp-1Nm.text" = "开心果";
+
+/* Class = "IBUILabel"; text = "30"; ObjectID = "ojB-2v-dBZ"; */
+"ojB-2v-dBZ.text" = "30";
+
+/* Class = "IBUILabel"; text = "体温"; ObjectID = "ojV-R9-mi1"; */
+"ojV-R9-mi1.text" = "体温";
+
+/* Class = "IBUILabel"; text = "黏液脓血便"; ObjectID = "osQ-YC-npw"; */
+"osQ-YC-npw.text" = "黏液脓血便";
+
+/* Class = "IBUILabel"; text = "矿物质"; ObjectID = "owB-Ee-WNr"; */
+"owB-Ee-WNr.text" = "矿物质";
+
+/* Class = "IBUILabel"; text = "生理指标"; ObjectID = "oz0-bP-xpi"; */
+"oz0-bP-xpi.text" = "生理指标";
+
+/* Class = "IBUILabel"; text = "100克"; ObjectID = "pIN-15-pOS"; */
+"pIN-15-pOS.text" = "100克";
+
+/* Class = "IBUILabel"; text = "76kg"; ObjectID = "pKC-62-RNb"; */
+"pKC-62-RNb.text" = "76kg";
+
+/* Class = "IBUILabel"; text = "血压"; ObjectID = "pdj-Y3-EVy"; */
+"pdj-Y3-EVy.text" = "血压";
+
+/* Class = "IBUILabel"; text = "11月12日"; ObjectID = "phD-hR-9fI"; */
+"phD-hR-9fI.text" = "11月12日";
+
+/* Class = "IBUILabel"; text = "松动"; ObjectID = "php-N1-VRg"; */
+"php-N1-VRg.text" = "松动";
+
+/* Class = "IBUILabel"; text = "3"; ObjectID = "pi9-dY-xQG"; */
+"pi9-dY-xQG.text" = "3";
+
+/* Class = "IBUILabel"; text = "体重"; ObjectID = "q0c-k5-xpM"; */
+"q0c-k5-xpM.text" = "体重";
+
+/* Class = "IBUITextField"; text = "阴部发炎"; ObjectID = "q2R-Eg-BtY"; */
+"q2R-Eg-BtY.text" = "阴部发炎";
+
+/* Class = "IBUITextField"; text = "镁"; ObjectID = "q60-PL-bBZ"; */
+"q60-PL-bBZ.text" = "镁";
+
+/* Class = "IBUILabel"; text = "12"; ObjectID = "qCw-jz-LH3"; */
+"qCw-jz-LH3.text" = "12";
+
+/* Class = "IBUILabel"; text = "咽喉"; ObjectID = "qgi-pz-nGo"; */
+"qgi-pz-nGo.text" = "咽喉";
+
+/* Class = "IBUILabel"; text = "眼睛"; ObjectID = "qlj-B2-qTQ"; */
+"qlj-B2-qTQ.text" = "眼睛";
+
+/* Class = "IBUILabel"; text = "20"; ObjectID = "qqD-70-BNe"; */
+"qqD-70-BNe.text" = "20";
+
+/* Class = "IBUINavigationItem"; title = "信息"; ObjectID = "r3D-GI-6Rv"; */
+"r3D-GI-6Rv.title" = "信息";
+
+/* Class = "IBUITextField"; text = "畏寒"; ObjectID = "rIf-Rp-u8Z"; */
+"rIf-Rp-u8Z.text" = "畏寒";
+
+/* Class = "IBUILabel"; text = "11月"; ObjectID = "rLS-np-tYl"; */
+"rLS-np-tYl.text" = "11月";
+
+/* Class = "IBUITextField"; text = "体重减少"; ObjectID = "rcL-ob-qbW"; */
+"rcL-ob-qbW.text" = "体重减少";
+
+/* Class = "IBUILabel"; text = "8"; ObjectID = "rdB-6S-D1f"; */
+"rdB-6S-D1f.text" = "8";
+
+/* Class = "IBUILabel"; text = "牙龈发炎"; ObjectID = "rho-Er-drh"; */
+"rho-Er-drh.text" = "牙龈发炎";
+
+/* Class = "IBUILabel"; text = "关节炎"; ObjectID = "rhx-ye-TKa"; */
+"rhx-ye-TKa.text" = "关节炎";
+
+/* Class = "IBUILabel"; text = "4. 多饮水，保持室内空气流通"; ObjectID = "rjo-tr-pPG"; */
+"rjo-tr-pPG.text" = "4. 多饮水，保持室内空气流通";
+
+/* Class = "IBUILabel"; text = "50克"; ObjectID = "rmI-Cs-jAQ"; */
+"rmI-Cs-jAQ.text" = "50克";
+
+/* Class = "IBUITextField"; text = "口唇干裂"; ObjectID = "rvt-dv-HmQ"; */
+"rvt-dv-HmQ.text" = "口唇干裂";
+
+/* Class = "IBUILabel"; text = "40"; ObjectID = "ryh-dV-7FT"; */
+"ryh-dV-7FT.text" = "40";
+
+/* Class = "IBUILabel"; text = "丘疹"; ObjectID = "s5W-bo-uNW"; */
+"s5W-bo-uNW.text" = "丘疹";
+
+/* Class = "IBUILabel"; text = "关于维生素A的简介"; ObjectID = "s8g-zE-XMy"; */
+"s8g-zE-XMy.text" = "关于维生素A的简介";
+
+/* Class = "IBUITextField"; text = "74"; ObjectID = "sFz-PI-Gf0"; */
+"sFz-PI-Gf0.text" = "74";
+
+/* Class = "IBUILabel"; text = "发痒"; ObjectID = "seC-SS-z5d"; */
+"seC-SS-z5d.text" = "发痒";
+
+/* Class = "IBUITextField"; text = "多汗"; ObjectID = "szO-zl-69o"; */
+"szO-zl-69o.text" = "多汗";
+
+/* Class = "IBUILabel"; text = "男性"; ObjectID = "tGr-Dt-5aB"; */
+"tGr-Dt-5aB.text" = "男性";
+
+/* Class = "IBUILabel"; text = "白带增多"; ObjectID = "tLZ-6p-eQZ"; */
+"tLZ-6p-eQZ.text" = "白带增多";
+
+/* Class = "IBUILabel"; text = "反应迟钝"; ObjectID = "tLj-IV-11K"; */
+"tLj-IV-11K.text" = "反应迟钝";
+
+/* Class = "IBUILabel"; text = "笔记"; ObjectID = "tkb-ku-8or"; */
+"tkb-ku-8or.text" = "笔记";
+
+/* Class = "IBUILabel"; text = "2个鸡蛋，2个胡萝卜，200g牛肉"; ObjectID = "twg-hb-6IC"; */
+"twg-hb-6IC.text" = "2个鸡蛋，2个胡萝卜，200g牛肉";
+
+/* Class = "IBUILabel"; text = "行动"; ObjectID = "tx1-3p-e8h"; */
+"tx1-3p-e8h.text" = "行动";
+
+/* Class = "IBUILabel"; text = "2个"; ObjectID = "u7h-a6-NZy"; */
+"u7h-a6-NZy.text" = "2个";
+
+/* Class = "IBUILabel"; text = "心跳"; ObjectID = "uOF-bz-xEa"; */
+"uOF-bz-xEa.text" = "心跳";
+
+/* Class = "IBUILabel"; text = "皮肤"; ObjectID = "uOk-yz-YXV"; */
+"uOk-yz-YXV.text" = "皮肤";
+
+/* Class = "IBUILabel"; text = "10"; ObjectID = "ujg-Ee-hKT"; */
+"ujg-Ee-hKT.text" = "10";
+
+/* Class = "IBUINavigationItem"; title = "健康记录"; ObjectID = "ukj-6f-G4o"; */
+"ukj-6f-G4o.title" = "健康记录";
+
+/* Class = "IBUILabel"; text = "干果"; ObjectID = "uxb-xf-6EN"; */
+"uxb-xf-6EN.text" = "干果";
+
+/* Class = "IBUILabel"; text = "体质指数"; ObjectID = "v4o-dm-AMQ"; */
+"v4o-dm-AMQ.text" = "体质指数";
+
+/* Class = "IBUILabel"; text = "畏热"; ObjectID = "v80-L9-DuS"; */
+"v80-L9-DuS.text" = "畏热";
+
+/* Class = "IBUITextField"; text = "听力减退"; ObjectID = "v85-df-K8d"; */
+"v85-df-K8d.text" = "听力减退";
+
+/* Class = "IBUILabel"; text = "扁桃体压痛"; ObjectID = "vEd-ED-nJw"; */
+"vEd-ED-nJw.text" = "扁桃体压痛";
+
+/* Class = "IBUITextField"; text = "A"; ObjectID = "vb8-95-xb5"; */
+"vb8-95-xb5.text" = "A";
+
+/* Class = "IBUITextField"; text = "气短"; ObjectID = "vdb-az-aeX"; */
+"vdb-az-aeX.text" = "气短";
+
+/* Class = "IBUILabel"; text = "7"; ObjectID = "vgH-tO-T4Y"; */
+"vgH-tO-T4Y.text" = "7";
+
+/* Class = "IBUITextField"; text = "舌发炎/红包"; ObjectID = "vjf-tL-FFZ"; */
+"vjf-tL-FFZ.text" = "舌发炎/红包";
+
+/* Class = "IBUILabel"; text = "食物"; ObjectID = "vsf-N8-suJ"; */
+"vsf-N8-suJ.text" = "食物";
+
+/* Class = "IBUILabel"; text = "心脏"; ObjectID = "w8h-Gl-4Ue"; */
+"w8h-Gl-4Ue.text" = "心脏";
+
+/* Class = "IBUILabel"; text = "发痒，咳嗽，疼痛，下咽困难"; ObjectID = "w9n-c1-9bC"; */
+"w9n-c1-9bC.text" = "发痒，咳嗽，疼痛，下咽困难";
+
+/* Class = "IBUILabel"; text = "25.1, 偏重"; ObjectID = "wFw-bc-wAq"; */
+"wFw-bc-wAq.text" = "25.1, 偏重";
+
+/* Class = "IBUILabel"; text = "65 bpm"; ObjectID = "wO9-qD-SIk"; */
+"wO9-qD-SIk.text" = "65 bpm";
+
+/* Class = "IBUILabel"; text = "体重"; ObjectID = "wXi-uA-knV"; */
+"wXi-uA-knV.text" = "体重";
+
+/* Class = "IBUILabel"; text = "注意力分散"; ObjectID = "wzD-c0-rt6"; */
+"wzD-c0-rt6.text" = "注意力分散";
+
+/* Class = "IBUILabel"; text = "心理"; ObjectID = "xDh-Aq-QMJ"; */
+"xDh-Aq-QMJ.text" = "心理";
+
+/* Class = "IBUILabel"; text = "主食"; ObjectID = "xFa-v1-0Ac"; */
+"xFa-v1-0Ac.text" = "主食";
+
+/* Class = "IBUILabel"; text = "抽筋"; ObjectID = "xGw-KY-Q3i"; */
+"xGw-KY-Q3i.text" = "抽筋";
+
+/* Class = "IBUILabel"; text = "龋齿"; ObjectID = "xf3-GT-i4t"; */
+"xf3-GT-i4t.text" = "龋齿";
+
+/* Class = "IBUITextField"; text = "铁"; ObjectID = "xwk-eJ-UNK"; */
+"xwk-eJ-UNK.text" = "铁";
+
+/* Class = "IBUILabel"; text = "性别"; ObjectID = "y3B-6e-Ujm"; */
+"y3B-6e-Ujm.text" = "性别";
+
+/* Class = "IBUILabel"; text = "80"; ObjectID = "yEL-Vq-zIN"; */
+"yEL-Vq-zIN.text" = "80";
+
+/* Class = "IBUILabel"; text = "痰中带血"; ObjectID = "yFF-vy-PiR"; */
+"yFF-vy-PiR.text" = "痰中带血";
+
+/* Class = "IBUILabel"; text = "四肢"; ObjectID = "yFK-Uw-8YW"; */
+"yFK-Uw-8YW.text" = "四肢";
+
+/* Class = "IBUITextField"; text = "B2"; ObjectID = "ydK-R7-t0v"; */
+"ydK-R7-t0v.text" = "B2";
+
+/* Class = "IBUILabel"; text = "推荐食物"; ObjectID = "ye1-Z3-mLz"; */
+"ye1-Z3-mLz.text" = "推荐食物";
+
+/* Class = "IBUILabel"; text = "烦躁"; ObjectID = "yg4-8w-DL8"; */
+"yg4-8w-DL8.text" = "烦躁";
+
+/* Class = "IBUILabel"; text = "潜在疾病"; ObjectID = "ysT-gq-ml6"; */
+"ysT-gq-ml6.text" = "潜在疾病";
+
+/* Class = "IBUILabel"; text = "20"; ObjectID = "ysq-CQ-ZZy"; */
+"ysq-CQ-ZZy.text" = "20";
+
+/* Class = "IBUILabel"; text = "灰尘太大，咳嗽了很久，晚上恒大夺冠，和朋友庆祝喝多了"; ObjectID = "z3S-Ac-Gen"; */
+"z3S-Ac-Gen.text" = "灰尘太大，咳嗽了很久，晚上恒大夺冠，和朋友庆祝喝多了";
+
+/* Class = "IBUITextField"; text = "钾"; ObjectID = "z3g-pI-4hl"; */
+"z3g-pI-4hl.text" = "钾";
+
+/* Class = "IBUILabel"; text = "舌疼痛"; ObjectID = "z7y-at-PpS"; */
+"z7y-at-PpS.text" = "舌疼痛";
+
+/* Class = "IBUITextField"; text = "心慌"; ObjectID = "z9p-dS-k0Q"; */
+"z9p-dS-k0Q.text" = "心慌";
+
+/* Class = "IBUILabel"; text = "流行性感冒"; ObjectID = "zBR-dg-V6C"; */
+"zBR-dg-V6C.text" = "流行性感冒";
+
+/* Class = "IBUITextField"; text = "暗光看不清"; ObjectID = "zMn-x1-HeD"; */
+"zMn-x1-HeD.text" = "暗光看不清";
+
+/* Class = "IBUILabel"; text = "体温"; ObjectID = "zbo-Bi-8VC"; */
+"zbo-Bi-8VC.text" = "体温";
+
+/* Class = "IBUILabel"; text = "高压"; ObjectID = "znT-pT-mRt"; */
+"znT-pT-mRt.text" = "高压";
+
+/* Class = "IBUILabel"; text = "血尿"; ObjectID = "znf-Ww-Y5S"; */
+"znf-Ww-Y5S.text" = "血尿";
+
+/* Class = "IBUILabel"; text = "65 bpm"; ObjectID = "zq1-h6-bfV"; */
+"zq1-h6-bfV.text" = "65 bpm";
+
+/* Class = "IBUILabel"; text = "浑浊"; ObjectID = "zsP-iM-pC2"; */
+"zsP-iM-pC2.text" = "浑浊";
+
+/* Class = "IBUITabBarItem"; title = "诊断"; ObjectID = "zzD-R7-guP"; */
+"zzD-R7-guP.title" = "诊断";
