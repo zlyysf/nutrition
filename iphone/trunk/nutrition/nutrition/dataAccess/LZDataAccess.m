@@ -2113,9 +2113,9 @@
     return nutrientIds;
 }
 
--(double)getSymptomHealthMark_BySymptomIds:(NSArray*)symptomIds
+-(double)getSymptomHealthMarkSum_BySymptomIds:(NSArray*)symptomIds
 {
-    NSLog(@"getSymptomHealthMark_BySymptomIds enter");
+    NSLog(@"getSymptomHealthMarkSum_BySymptomIds enter");
     if (symptomIds.count == 0)
         return 0;
     

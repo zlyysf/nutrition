@@ -112,7 +112,7 @@
 -(NSArray*)getSymptomNutrientRows_BySymptomIds:(NSArray*)symptomIds;
 -(NSArray*)getSymptomNutrientDistinctIds_BySymptomIds:(NSArray*)symptomIds;
 
--(double)getSymptomHealthMark_BySymptomIds:(NSArray*)symptomIds;
+-(double)getSymptomHealthMarkSum_BySymptomIds:(NSArray*)symptomIds;
 
 -(NSArray*)getIllnessSuggestionDistinctIds_ByIllnessIds:(NSArray*)illnessIds;
 -(NSArray*)getIllnessSuggestions_BySuggestionIds:(NSArray*)suggestionIds;
