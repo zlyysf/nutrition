@@ -45,6 +45,8 @@
 		B9AEA06D183BD6A900E921A0 /* 豆制品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA061183BD6A900E921A0 /* 豆制品@2x.png */; };
 		B9AEA06F183C146B00E921A0 /* gray line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA06E183C146B00E921A0 /* gray line@2x.png */; };
 		B9AEA073183C179C00E921A0 /* gray vertical line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */; };
+		B9B7AEC9184C124F002951BB /* fork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B7AEC8184C124F002951BB /* fork@2x.png */; };
+		B9B7AECB184C13D0002951BB /* history@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B7AECA184C13D0002951BB /* history@2x.png */; };
 		B9B8BD6C182EA050001C61CA /* document-75.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6B182EA050001C61CA /* document-75.png */; };
 		B9B8BD6E182EA922001C61CA /* egg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6D182EA922001C61CA /* egg@2x.png */; };
 		B9B8BD70182EAA1A001C61CA /* oyster@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD6F182EAA1A001C61CA /* oyster@2x.png */; };
@@ -118,6 +120,9 @@
 		B9AEA061183BD6A900E921A0 /* 豆制品@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "豆制品@2x.png"; sourceTree = "<group>"; };
 		B9AEA06E183C146B00E921A0 /* gray line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray line@2x.png"; sourceTree = "<group>"; };
 		B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray vertical line@2x.png"; sourceTree = "<group>"; };
+		B9B7AEC5184C08F1002951BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
+		B9B7AEC8184C124F002951BB /* fork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fork@2x.png"; sourceTree = "<group>"; };
+		B9B7AECA184C13D0002951BB /* history@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "history@2x.png"; sourceTree = "<group>"; };
 		B9B8BD6B182EA050001C61CA /* document-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "document-75.png"; sourceTree = "<group>"; };
 		B9B8BD6D182EA922001C61CA /* egg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "egg@2x.png"; sourceTree = "<group>"; };
 		B9B8BD6F182EAA1A001C61CA /* oyster@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "oyster@2x.png"; sourceTree = "<group>"; };
@@ -219,6 +224,8 @@
 		B97B4097182D48F000F0333E /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				B9B7AECA184C13D0002951BB /* history@2x.png */,
+				B9B7AEC8184C124F002951BB /* fork@2x.png */,
 				B9C235B018481B2C00D7ACCD /* red_triangle@2x.png */,
 				B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */,
 				B9AEA06E183C146B00E921A0 /* gray line@2x.png */,
@@ -344,6 +351,7 @@
 				B9AEA069183BD6A900E921A0 /* 菌藻类@2x.png in Resources */,
 				B9FD732A1833DEEE00D8051B /* 体重@2x.png in Resources */,
 				B97761581833185000B37B24 /* toolbox-50@2x.png in Resources */,
+				B9B7AECB184C13D0002951BB /* history@2x.png in Resources */,
 				B948352C1830704000FCBB8F /* detail@2x.png in Resources */,
 				B9B8BD72182EAECF001C61CA /* 西兰花@2x.jpg in Resources */,
 				B97707A5182AA4FC006FD25E /* Images.xcassets in Resources */,
@@ -377,6 +385,7 @@
 				B9AEA068183BD6A900E921A0 /* 肉类@2x.png in Resources */,
 				B9AEA06F183C146B00E921A0 /* gray line@2x.png in Resources */,
 				B9FD732F1833DEEE00D8051B /* 牙齿@2x.png in Resources */,
+				B9B7AEC9184C124F002951BB /* fork@2x.png in Resources */,
 				B9815C8518304C0B000D6439 /* line_chart-50@2x.png in Resources */,
 				B9B8BD76182EB096001C61CA /* 开心果@2x.png in Resources */,
 				B9C235B118481B2C00D7ACCD /* red_triangle@2x.png in Resources */,
@@ -421,6 +430,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				B9770799182AA4FC006FD25E /* Base */,
+				B9B7AEC5184C08F1002951BB /* en */,
 			);
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
