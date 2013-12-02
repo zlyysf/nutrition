@@ -2113,6 +2113,36 @@
     return nutrientIds;
 }
 
+-(double)getSymptomHealthMark_BySymptomIds:(NSArray*)symptomIds
+{
+    NSLog(@"getSymptomHealthMark_BySymptomIds enter");
+    if (symptomIds.count == 0)
+        return 0;
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithFormat: @"SELECT sum(HealthMark) as HealthMark FROM Symptom"];
+    
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+    
+    NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+    [expr addObject:COLUMN_NAME_SymptomId];
+    [expr addObject:@"IN"];
+    [expr addObject:symptomIds ];
+    [exprIncludeANDdata addObject:expr];
+    
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+                             exprIncludeANDdata,@"includeAND",
+                             nil];
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:true],@"varBeParamWay", nil];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:nil andOptions:localOptions];
+    NSDictionary *row = dataAry[0];
+    NSNumber *nmHealthMark = row[COLUMN_NAME_HealthMark];
+    double dHealthMark = [nmHealthMark doubleValue];
+    
+    NSLog(@"getSymptomHealthMark_BySymptomIds ret=%f", dHealthMark);
+    return dHealthMark;
+}
+
+
 -(NSArray*)getIllnessSuggestionDistinctIds_ByIllnessIds:(NSArray*)illnessIds
 {
     NSLog(@"getIllnessSuggestionDistinctIds_ByIllnessIdIds enter");

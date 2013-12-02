@@ -871,6 +871,16 @@
 
 }
 
+/*
+ weight unit is kg
+ height unit is cm
+ */
++(double)getBMI_withWeight:(double)weight andHeight:(double)height
+{
+    double BMI = weight / (height*height);
+    return BMI;
+}
+
 
 /*
  symptomIds 是待分析的症状集合

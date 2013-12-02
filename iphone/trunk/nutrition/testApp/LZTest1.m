@@ -37,11 +37,11 @@
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
 //    [self.class test_TranslationItem1];
 //    [self.class test_getFoodsByShowingPart];
-//    [self.class test_getSymptom1];
+    [self.class test_getSymptom1];
 //    [self.class test_inferIllnesses_withSymptoms1];
 //    [self.class test_getIllnessSuggestionsDistinct1];
 //    [self.class test_dalUserRecordSymptom1];
-    [self.class test_getSingleNutrientRichFoodWithAmount_forNutrients];
+//    [self.class test_getSingleNutrientRichFoodWithAmount_forNutrients];
 
     
 //    [self.class testFormatResult1];
@@ -2402,15 +2402,16 @@ BOOL needLimitNutrients = FALSE;
 +(void)test_getSymptom1
 {
     LZDataAccess *da = [LZDataAccess singleton];
-    NSArray *symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_female];
-    NSArray *symptomTypeIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SymptomTypeId andDictionaryArray:symptomTypeRows];
-    NSLog(@"symptomTypeIds=%@",[LZUtility getObjectDescription:symptomTypeIds andIndent:0] );
-    
-    [da getSymptomRowsByTypeDict_BySymptomTypeIds:symptomTypeIds];
+//    NSArray *symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_female];
+//    NSArray *symptomTypeIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SymptomTypeId andDictionaryArray:symptomTypeRows];
+//    NSLog(@"symptomTypeIds=%@",[LZUtility getObjectDescription:symptomTypeIds andIndent:0] );
+//    
+//    [da getSymptomRowsByTypeDict_BySymptomTypeIds:symptomTypeIds];
     
     NSArray *symptomIds = [NSArray arrayWithObjects:@"头晕", @"头发脱落", @"易疲劳", @"易流泪", nil];
-    [da getSymptomNutrientDistinctIds_BySymptomIds:symptomIds];
+//    [da getSymptomNutrientDistinctIds_BySymptomIds:symptomIds];
     
+    [da getSymptomHealthMark_BySymptomIds:symptomIds];
 }
 
 +(void)test_inferIllnesses_withSymptoms1
