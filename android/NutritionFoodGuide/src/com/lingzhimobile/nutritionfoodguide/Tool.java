@@ -6,6 +6,7 @@ import java.util.*;
 import java.util.zip.*;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.*;
 
 
 import android.R.bool;
@@ -472,6 +473,59 @@ public class Tool {
 		return dataColGroupedHm;
 	}
 	
+	public static Long convertToLong(Object item){
+		if (item == null)
+			return null;
+		Long lObj = null;
+		
+		if (item instanceof Long){
+			lObj = (Long)item;
+		}else if (item instanceof Double){
+			Double dblObj = (Double)item;
+			long lVal = dblObj.longValue();
+			lObj = Long.valueOf(lVal);
+		}else{
+			String sVal = item.toString();
+			long lVal = Long.parseLong(sVal);
+			lObj = Long.valueOf(lVal);
+		}
+		return lObj;
+	}
+	public static Integer convertToInteger(Object item){
+		if (item == null)
+			return null;
+		Integer iObj = null;
+		
+		if (item instanceof Integer){
+			iObj = (Integer)item;
+		}else if (item instanceof Long){
+			Long lObj = (Long)item;
+			int iVal = lObj.intValue();
+			iObj = Integer.valueOf(iVal);
+		}else if (item instanceof Double){
+			Double dblObj = (Double)item;
+			int iVal = dblObj.intValue();
+			iObj = Integer.valueOf(iVal);
+		}else{
+			String sVal = item.toString();
+			int iVal = Integer.parseInt(sVal);
+			iObj = Integer.valueOf(iVal);
+		}
+		return iObj;
+	}
+	public static ArrayList<Integer> convertFromArrayList(ArrayList<Object> numberAL){
+		if (numberAL == null)
+			return null;
+		
+	    ArrayList<Integer> intAL = new ArrayList<Integer>();
+	    for(int i=0; i<numberAL.size(); i++){
+	    	Object item = numberAL.get(i);
+	    	Integer iObj = convertToInteger(item);
+	    	intAL.add(iObj); 
+	    }
+	    
+	    return intAL;
+	}
 	
 	
 	public static HashSet<String> convertToStringHashSet(String[] ary){
@@ -1275,12 +1329,121 @@ public class Tool {
 	    
 	    return inferIllnessAry;
 	}
+	
+	
+	
+	public static JSONObject HashMapToJsonObject(HashMap<String, Object> hmObj){
+		if (hmObj == null)
+			return null;
+		HashMap<String, Object> hmObj2 = new HashMap<String, Object>();
+		hmObj2.putAll(hmObj);
+		
+		Iterator<Map.Entry<String,Object>> iter = hmObj.entrySet().iterator();
+		while (iter.hasNext()) {
+			Map.Entry<String,Object> entry = iter.next();
+			String key = entry.getKey();
+			Object val = entry.getValue();
+			if (val instanceof Object[] || val instanceof ArrayList<?>){
+				JSONArray jsonAry = CollectionToJSONArray(val);
+				hmObj2.put(key, jsonAry);
+			}else if (val instanceof HashMap<?, ?>){
+				JSONObject jsonObjItem = HashMapToJsonObject((HashMap<String, Object>)val);
+				hmObj2.put(key, jsonObjItem);
+			}else{
+				//do nothing
+			}
+		}
+		JSONObject jsonObj = new JSONObject(hmObj2);
+		return jsonObj;
+	}
+	public static JSONArray CollectionToJSONArray(Object col){
+		if (col == null)
+			return null;
+		ArrayList<Object> list = null;
+		if (col instanceof Object[]){
+			Object[] ary= (Object[])col;
+			list = convertFromArrayToList(ary);
+		}else if (col instanceof ArrayList<?>){
+			list = (ArrayList<Object>)col;
+		}
+		for(int i=0; i<list.size(); i++){
+			Object item = list.get(i);
+			if (item instanceof Object[] || item instanceof ArrayList<?>){
+				JSONArray jsonArySub1 = CollectionToJSONArray(item);
+				list.set(i, jsonArySub1);
+			}else if (item instanceof HashMap<?, ?>){
+				JSONObject jsonObjSub1 = HashMapToJsonObject((HashMap<String, Object>) item);
+				list.set(i, jsonObjSub1);
+			}else{
+				//do nothing
+			}
+		}
+		JSONArray jsonAry = new JSONArray(list);
+		return jsonAry;
+	}
 
 
-	
-	
-	
-	
+	public static HashMap<String, Object> JsonToHashMap(JSONObject jsonData)
+	{
+		if (jsonData == null){
+			return null;
+		}
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		
+		Iterator<String> IteratorJson = jsonData.keys();
+		while (IteratorJson.hasNext()){
+			String key = IteratorJson.next();
+			Object valObj = null;
+			try {
+				valObj = jsonData.get(key);
+			} catch (JSONException e) {
+				Log.e(LogTag, "JsonToHashMap jsonData.get Err"+e.getMessage(),e);
+				throw new RuntimeException(e);
+			}
+			if (valObj != null){
+				if (valObj instanceof JSONObject){
+					HashMap<String, Object> hmSub = JsonToHashMap((JSONObject)valObj);
+					hm.put(key, hmSub);
+				}else if (valObj instanceof JSONArray){
+					ArrayList<Object> alSub = JsonToArrayList((JSONArray)valObj);
+					hm.put(key, alSub);
+				}else{
+					hm.put(key, valObj);
+				}
+			}
+		}//while
+		
+        return hm;
+  
+    }  
+  
+    public static ArrayList<Object> JsonToArrayList(JSONArray jsonAry) {
+    	if (jsonAry == null)
+    		return null;
+    	ArrayList<Object> al = new ArrayList<Object>();
+    	for(int i=0; i<jsonAry.length(); i++){
+    		Object item = null;
+			try {
+				item = jsonAry.get(i);
+			} catch (JSONException e) {
+				Log.e(LogTag, "JsonToArrayList jsonAry.get Err"+e.getMessage(),e);
+				throw new RuntimeException(e);
+			}
+			if (item!=null){
+				if (item instanceof JSONObject){
+	    			HashMap<String, Object> itemHm = JsonToHashMap((JSONObject)item);
+	    			al.add(itemHm);
+	    		}else if (item instanceof JSONArray){
+	    			ArrayList<Object> itemAl = JsonToArrayList((JSONArray)item);
+	    			al.add(itemAl);
+	    		}else{
+	    			al.add(item);
+	    		}
+			}
+    	}//for
+    	return al;
+    }  
+  
 	
 }
 

@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
@@ -23,7 +26,9 @@ public class TestCaseDA {
 //		test_foodCollocationApis(ctx);
 //		test_Symptom1(ctx);
 //		test_inferIllnesses_withSymptoms1(ctx);
-		test_getIllnessSuggestionsDistinct1(ctx);
+//		test_getIllnessSuggestionsDistinct1(ctx);
+//		test_JsonTool();
+		test_dalUserRecordSymptom1(ctx);
 	}
 	
 	static void test1(Context ctx){
@@ -158,6 +163,142 @@ public class TestCaseDA {
 		String[] illnessIds = {"感冒", "急性病毒性咽炎", "轻度高血压", "骨关节炎"};
 		DataAccess da = DataAccess.getSingleton(ctx);
 	    da.getIllnessSuggestionsDistinct_ByIllnessIds(Tool.convertFromArrayToList(illnessIds));
+	}
+	
+	static void test_JsonTool(){
+		HashMap<String, Object> hm1 = new HashMap<String, Object>();
+		hm1.put("key1", "aaa");
+		hm1.put("key2", 1.23);
+		ArrayList<Object> list1 = new ArrayList<Object>();
+		list1.add("www");
+		list1.add(2.34);
+		hm1.put("key3", list1);
+		
+		HashMap<String, Object> hm11 = new HashMap<String, Object>();
+		hm11.put("key11", "bbb");
+		hm11.put("key12", 34.56);
+		hm1.put("key4", hm11);
+		
+		ArrayList<Object> list2 = new ArrayList<Object>();
+		list2.add("list2");
+		list2.add(hm11);
+		hm1.put("key5", list2);
+		
+		HashMap<String, Object> hm12 = new HashMap<String, Object>();
+		hm12.put("key21", "bbb");
+		hm12.put("key22", list1);
+		hm1.put("key6", hm12);
+		
+		JSONObject jsonObj = Tool.HashMapToJsonObject(hm1);
+		String jsonStr = jsonObj.toString();
+		Log.d(LogTag, "jsonObj toStr=" + jsonStr);
+		
+		JSONObject jsonObj2;
+		try {
+			jsonObj2 = new JSONObject(jsonStr);
+		} catch (JSONException e) {
+			throw new RuntimeException(e);
+		}
+		HashMap<String, Object> hm2 = Tool.JsonToHashMap(jsonObj2);
+		Log.d(LogTag, "hm2=" + Tool.getIndentFormatStringOfObject(hm2, 0));
+	}
+	
+	static void test_dalUserRecordSymptom1(Context ctx)
+	{
+		DataAccess da = DataAccess.getSingleton(ctx);
+		
+		int dayLocal = 20120304;
+	    Date updateTime = new Date();
+	    HashMap<String, Object> InputNameValuePairsData;
+	    HashMap<String, Object> CalculateNameValuePairsData;
+	    HashMap<String, Object> RecommendFoodAndAmounts;
+	    
+	    String note = "note1";
+	    
+	    
+	    Object[] Symptoms = new Object[]{"s11",1.23};
+	    InputNameValuePairsData = new HashMap<String, Object>();
+	    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+	    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+	    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
+	    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
+	    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
+	    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
+
+	    CalculateNameValuePairsData = new HashMap<String, Object>();
+	    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.4));
+	    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(87.5));
+	    CalculateNameValuePairsData.put("LackNutrientIDs", new String[]{"B1","VC"});
+	    CalculateNameValuePairsData.put(Constants.Key_InferIllnesses, new String[]{"ill11","ill12"});
+	    CalculateNameValuePairsData.put("Suggestions", new String[]{"a11","a12"});
+	    RecommendFoodAndAmounts = new HashMap<String, Object>();
+	    RecommendFoodAndAmounts.put("10001", Integer.valueOf(100));
+	    RecommendFoodAndAmounts.put("10002", Integer.valueOf(150));
+	    CalculateNameValuePairsData.put("RecommendFoodAndAmounts", RecommendFoodAndAmounts);
+
+	    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
+	    
+	    da.insertUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,note,CalculateNameValuePairsData);
+	    da.getUserRecordSymptomDataByDayLocal(dayLocal);
+	    
+	    
+	    updateTime = new Date();
+	    note = "note1b";
+	    InputNameValuePairsData = new HashMap<String, Object>();
+	    InputNameValuePairsData.put(Constants.Key_Symptoms, new String[]{"s11b","s12b"});
+	    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.72));
+	    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.82));
+	    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(612));
+	    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(802));
+	    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(1402));
+
+	    CalculateNameValuePairsData = new HashMap<String, Object>();
+	    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.42));
+	    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(87.52));
+	    CalculateNameValuePairsData.put("LackNutrientIDs", new String[]{"B2","VD"});
+	    CalculateNameValuePairsData.put(Constants.Key_InferIllnesses, new String[]{"ill11b","ill12b"});
+	    CalculateNameValuePairsData.put("Suggestions", new String[]{"a11b","a12b"});
+	    RecommendFoodAndAmounts = new HashMap<String, Object>();
+	    RecommendFoodAndAmounts.put("10001", Integer.valueOf(1002));
+	    RecommendFoodAndAmounts.put("10002", Integer.valueOf(1502));
+	    CalculateNameValuePairsData.put("RecommendFoodAndAmounts", RecommendFoodAndAmounts);
+
+	    da.updateUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,note,CalculateNameValuePairsData);
+	    da.getUserRecordSymptomDataByDayLocal(dayLocal);
+	    
+	    
+	    
+	    dayLocal = 20120404;
+	    updateTime = new Date();
+	    note = "note1b";
+	    
+	    InputNameValuePairsData = new HashMap<String, Object>();
+	    InputNameValuePairsData.put(Constants.Key_Symptoms, new String[]{"s21","s22"});
+	    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(236.7));
+	    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(267.8));
+	    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(261));
+	    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(280));
+	    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(2140));
+
+	    CalculateNameValuePairsData = new HashMap<String, Object>();
+	    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(223.4));
+	    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(287.5));
+	    CalculateNameValuePairsData.put("LackNutrientIDs", new String[]{"B3","VE"});
+	    CalculateNameValuePairsData.put(Constants.Key_InferIllnesses, new String[]{"ill21","ill22"});
+	    CalculateNameValuePairsData.put("Suggestions", new String[]{"a21","a22"});
+	    RecommendFoodAndAmounts = new HashMap<String, Object>();
+	    RecommendFoodAndAmounts.put("10001", Integer.valueOf(2100));
+	    RecommendFoodAndAmounts.put("10002", Integer.valueOf(2150));
+	    CalculateNameValuePairsData.put("RecommendFoodAndAmounts", RecommendFoodAndAmounts);
+	    	    
+	    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
+	    
+	    da.insertUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,note,CalculateNameValuePairsData);
+	    
+	    da.getUserRecordSymptomDataByRange_withStartDayLocal(0,0,0,0);
+	    
+	    da.getUserRecordSymptom_DistinctMonth();
+
 	}
 
 }

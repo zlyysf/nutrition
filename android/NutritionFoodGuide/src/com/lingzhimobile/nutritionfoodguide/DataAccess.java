@@ -5,6 +5,8 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import com.lingzhimobile.nutritionfoodguide.R.string;
 
@@ -824,6 +826,82 @@ public class DataAccess {
 	    return dataAry;
 	}
 	
+	/*
+	 fieldOpValuePairs 中的op可以是 = , IN , LIKE , 比较运算符; 其中的Value 可以是单个值也可以是数组。
+	 orderByPart 不带 ORDER BY 部分。
+	 */
+	public ArrayList<HashMap<String, Object>> selectTable_byFieldOpValuePairs(ArrayList<Object> fieldOpValuePairs, String tableName,
+			String[] selectColumns, String orderByPart, boolean needDistinct)
+	{
+		Log.d(LogTag, "selectTable_byFieldOpValuePairs enter");
+		
+		String columnsPart = "*";
+	    if (selectColumns!=null && selectColumns.length>0){
+	        columnsPart = StringUtils.join(selectColumns,",");
+	    }
+	    String distinctPart = "";
+	    if ( needDistinct )
+	        distinctPart = "DISTINCT";
+	    
+	    StringBuffer sbSql = new StringBuffer(1000*1);
+	    sbSql.append("SELECT "+distinctPart+" "+columnsPart+" FROM "+tableName+" ");
+	    
+	    String afterWherePart = "";
+	    if (orderByPart!=null && orderByPart.length()>0)
+	    	afterWherePart += " ORDER BY "+orderByPart;
+
+		ArrayList<ArrayList<Object>> exprIncludeANDdata = new ArrayList<ArrayList<Object>>();
+		
+		String strColumn, strOp;
+		Object valOrValues;
+		ArrayList<Object> expr, values;
+	    if (fieldOpValuePairs!=null){
+	    	for(int i=0; i<fieldOpValuePairs.size(); i++){
+	    		Object fieldOpValuePair = fieldOpValuePairs.get(i);
+	    		if (fieldOpValuePair instanceof ArrayList){
+	    			ArrayList<Object> fieldOpValuePair_al = (ArrayList<Object>)fieldOpValuePair;
+	    			strColumn = (String)fieldOpValuePair_al.get(0);
+	    			strOp = (String)fieldOpValuePair_al.get(1);
+		    		valOrValues = fieldOpValuePair_al.get(2);
+	    		}else{
+	    			Object[] fieldOpValuePair_ary = (Object[])fieldOpValuePair;
+	    			strColumn = (String)fieldOpValuePair_ary[0];
+	    			strOp = (String)fieldOpValuePair_ary[1];
+		    		valOrValues = fieldOpValuePair_ary[2];
+	    		}
+	    		
+	    		if (valOrValues instanceof ArrayList){
+	    			values = new ArrayList<Object>();
+	    			values.addAll((ArrayList)valOrValues);
+	    		}else if (valOrValues instanceof Object[]){
+	    			values = new ArrayList<Object>();
+	    			Object[] vals = (Object[])valOrValues;
+	    			for(int j=0; j<vals.length; j++){
+	    				values.add(vals[j]);
+	    			}
+	    		}else{
+	    			values = new ArrayList<Object>();
+			        values.add(valOrValues);
+	    		}
+	    		
+		        expr = new ArrayList<Object>(3);
+		        expr.add(strColumn);
+		        expr.add(strOp);
+		        expr.add(values);
+		        exprIncludeANDdata.add(expr);
+	    	}
+	    }
+	    
+	    HashMap<String, Object> filters = new HashMap<String, Object>();
+	    filters.put("includeAND", exprIncludeANDdata);
+
+	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
+	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
+	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, afterWherePart, localOptions);
+	    Log.d(LogTag, "selectTable_byFieldOpValuePairs return");
+	    return dataAry;
+	}
+
 
 	
 	
@@ -858,7 +936,7 @@ public class DataAccess {
 	            double dFoodAmount = nutrientAmount/ dObj_foodNutrientStandard.doubleValue() * 100.0;
 	            food.put(Constants.Key_Amount, Double.valueOf(dFoodAmount));
 	        }else{
-	            //do nothing, then get will obtain nil, though should not
+	            //do nothing, then get will obtain null, though should not
 	        }
 	    }
 	    return foods;
@@ -1231,8 +1309,8 @@ public class DataAccess {
 	public ArrayList<HashMap<String, Object>> getFoodsByFilters_withIncludeFoodClass(String includeFoodClass,String excludeFoodClass,String equalClass,
 			String[] includeFoodIds,String[] excludeFoodIds)
 	{
-//	    if (includeFoodClass == nil && excludeFoodClass == nil)
-//	        return nil;
+//	    if (includeFoodClass == null && excludeFoodClass == null)
+//	        return null;
 		StringBuffer sbSql = new StringBuffer(1000*1);
 	    //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
 		sbSql.append("SELECT F.*,CnCaption,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit, FC.PicPath, SingleItemUnitName,SingleItemUnitWeight \n");
@@ -2012,6 +2090,227 @@ public class DataAccess {
 	    return rows;
 	}
 
+	
+	/*
+	 dayLocal 是 8位整数,如  20120908
+	 */
+	public void insertUserRecordSymptom_withDayLocal(int dayLocal,Date updateTimeUTC,String inputNameValuePairs,String Note,String calculateNameValuePairs)
+	{
+		Log.d(LogTag, "insertUserRecordSymptom_withDayLocal enter");
+		long lUpdateTimeUTC = updateTimeUTC.getTime();
+		String insertSql = "INSERT INTO UserRecordSymptom (DayLocal, UpdateTimeUTC, inputNameValuePairs, Note, calculateNameValuePairs) VALUES (?,?,?,?,?);";
+		Object[] bindArgs = new Object[]{dayLocal,lUpdateTimeUTC,inputNameValuePairs,Note,calculateNameValuePairs};
+		mDBcon.execSQL(insertSql, bindArgs);
+	}
+	public void updateUserRecordSymptom_withDayLocal(int dayLocal,Date updateTimeUTC,String inputNameValuePairs,String Note,String calculateNameValuePairs)
+	{
+		Log.d(LogTag, "updateUserRecordSymptom_withDayLocal enter");
+		long lUpdateTimeUTC = updateTimeUTC.getTime();
+		String updateSql = "UPDATE UserRecordSymptom SET UpdateTimeUTC=?, inputNameValuePairs=?, Note=?, calculateNameValuePairs=? WHERE DayLocal=? ;";
+		Object[] bindArgs = new Object[]{lUpdateTimeUTC, inputNameValuePairs, Note, calculateNameValuePairs, dayLocal};
+		mDBcon.execSQL(updateSql, bindArgs);
+	}
+	
+	/*
+	 what are contained in inputNameValuePairsData and calculateNameValuePairsData: to see below those been commentted
+	 */
+	public void insertUserRecordSymptom_withDayLocal(int dayLocal,Date updateTimeUTC,HashMap<String, Object> inputNameValuePairsData,String Note, HashMap<String, Object> calculateNameValuePairsData)
+	{
+//	    NSArray* Symptoms = [inputNameValuePairsData objectForKey: Key_Symptoms];
+//	    NSNumber *nmTemperature = [inputNameValuePairsData objectForKey: Key_Temperature];
+//	    NSNumber *nmWeight = [inputNameValuePairsData objectForKey: Key_Weight];
+//	    NSNumber *nmHeartRate = [inputNameValuePairsData objectForKey: Key_HeartRate];
+//	    NSNumber *nmBloodPressureLow = [inputNameValuePairsData objectForKey: Key_BloodPressureLow];
+//	    NSNumber *nmBloodPressureHigh = [inputNameValuePairsData objectForKey: Key_BloodPressureHigh];
+//	    NSNumber *nmBMI = [calculateNameValuePairsData objectForKey: Key_BMI];
+//	    NSNumber *nmHealthMark = [calculateNameValuePairsData objectForKey: Key_HealthMark];
+//	    NSArray* InferIllnesses = [calculateNameValuePairsData objectForKey: Key_InferIllnesses];
+//	    NSArray* Suggestions = [calculateNameValuePairsData objectForKey: Key_Suggestions];
+//	    NSDictionary* NutrientsWithFoodAndAmounts = [calculateNameValuePairsData objectForKey: Key_NutrientsWithFoodAndAmounts];//String -> Dictionary{String -> double}
+		
+		JSONObject jsonObj_inputNameValuePairsData = Tool.HashMapToJsonObject(inputNameValuePairsData);
+		String jsonString_inputNameValuePairs = jsonObj_inputNameValuePairsData.toString();
+		
+		JSONObject jsonObj_calculateNameValuePairsData = Tool.HashMapToJsonObject(calculateNameValuePairsData);
+		String jsonString_calculateNameValuePairs = jsonObj_calculateNameValuePairsData.toString();
+		
+		Log.d(LogTag, "insertUserRecordSymptom_withDayLocal , jsonString_inputNameValuePairs="+jsonString_inputNameValuePairs);
+		Log.d(LogTag, "insertUserRecordSymptom_withDayLocal , jsonString_calculateNameValuePairs="+jsonString_calculateNameValuePairs);
+	    
+		insertUserRecordSymptom_withDayLocal(dayLocal, updateTimeUTC, jsonString_inputNameValuePairs, Note, jsonString_calculateNameValuePairs);
+	}
+	public void updateUserRecordSymptom_withDayLocal(int dayLocal,Date updateTimeUTC,HashMap<String, Object> inputNameValuePairsData,String Note, HashMap<String, Object> calculateNameValuePairsData)
+	{
+		JSONObject jsonObj_inputNameValuePairsData = Tool.HashMapToJsonObject(inputNameValuePairsData);
+		String jsonString_inputNameValuePairs = jsonObj_inputNameValuePairsData.toString();
+		
+		JSONObject jsonObj_calculateNameValuePairsData = Tool.HashMapToJsonObject(calculateNameValuePairsData);
+		String jsonString_calculateNameValuePairs = jsonObj_calculateNameValuePairsData.toString();
+		
+	    updateUserRecordSymptom_withDayLocal(dayLocal, updateTimeUTC, jsonString_inputNameValuePairs, Note, jsonString_calculateNameValuePairs);
+	}
+	
+	public int deleteUserRecordSymptomByByDayLocal(int dayLocal)
+	{
+		String whereClause = Constants.COLUMN_NAME_DayLocal+"=?";
+		String[] whereArgs = new String[]{""+dayLocal};
+		return mDBcon.delete(Constants.TABLE_NAME_UserRecordSymptom, whereClause, whereArgs);
+	}
+	
+
+	/*
+	 单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
+	 注意这里的返回值里面的含有复杂对象的列的值是json string.
+	 */
+	public HashMap<String, Object> getUserRecordSymptomRawRowByDayLocal(int dayLocal)
+	{
+		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+    	Object[] columnValuePair = {Constants.COLUMN_NAME_DayLocal,dayLocal};
+    	columnValuePairs_equal.add(columnValuePair);
+	    
+    	ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_UserRecordSymptom,columnValuePairs_equal,null,null,null,false);
+    	HashMap<String, Object> rowDict = null;
+    	if (rows!=null && rows.size()>0){
+    		rowDict = rows.get(0);
+    	}
+    	Log.d(LogTag, "getUserRecordSymptomRawRowByDayLocal ret="+Tool.getIndentFormatStringOfObject(rowDict,0) );
+	    return rowDict;
+	}
+
+	/*
+	 xxxDayLocal 是 8位整数,如  20120908
+	 the range is [StartDayLocal , EndDayLocal). if xxxDayLocal==0 , means not limited
+	 按DayLocal升序排序
+	 */
+	public ArrayList<HashMap<String, Object>> getUserRecordSymptomRawRowsByRange_withStartDayLocal(int StartDayLocal,int EndDayLocal,int StartMonthLocal,int EndMonthLocal)
+	{
+		ArrayList<Object> FieldOpValuePairs = new ArrayList<Object>();
+		Object[] FieldOpValuePair = null;
+
+	    if (StartDayLocal>0){
+	    	FieldOpValuePair = new Object[] {Constants.COLUMN_NAME_DayLocal,">=",StartDayLocal};
+	    	FieldOpValuePairs.add(FieldOpValuePair);
+	    }
+	    if (EndDayLocal>0){
+	    	FieldOpValuePair = new Object[] {Constants.COLUMN_NAME_DayLocal,"<",EndDayLocal};
+	    	FieldOpValuePairs.add(FieldOpValuePair);
+	    }
+	    if (StartMonthLocal>0){
+	    	FieldOpValuePair = new Object[] {Constants.COLUMN_NAME_DayLocal,">=",StartMonthLocal*100};
+	    	FieldOpValuePairs.add(FieldOpValuePair);
+	    }
+	    if (EndMonthLocal>0){
+	    	FieldOpValuePair = new Object[] {Constants.COLUMN_NAME_DayLocal,"<",EndMonthLocal*100};
+	    	FieldOpValuePairs.add(FieldOpValuePair);
+	    }
+	    ArrayList<HashMap<String, Object>> rows = selectTable_byFieldOpValuePairs(FieldOpValuePairs,Constants.TABLE_NAME_UserRecordSymptom,null,Constants.COLUMN_NAME_DayLocal,false);
+	    Log.d(LogTag, "getUserRecordSymptomRawRowsByRange_withStartDayLocal ret="+Tool.getIndentFormatStringOfObject(rows,0) );
+	    return rows;
+	}
+
+	static HashMap<String, Object> parseUserRecordSymptomRawRow(HashMap<String, Object> rawRowDict)
+	{
+		HashMap<String, Object> dataDict = new HashMap<String, Object>();
+	    
+	    String key;
+	    Object val;
+	    key = Constants.COLUMN_NAME_DayLocal;
+	    dataDict.put(key, rawRowDict.get(key));
+	    
+	    key = Constants.COLUMN_NAME_UpdateTimeUTC;
+	    Long nmUpdateTimeUTC = Tool.convertToLong(rawRowDict.get(key));//Double
+	    Date UpdateTimeUTC = new Date(nmUpdateTimeUTC.longValue());
+	    dataDict.put(key, UpdateTimeUTC);
+	    
+	    key = Constants.COLUMN_NAME_Note;
+	    val = rawRowDict.get(key);
+	    if (val != null){
+	    	dataDict.put(key, val);
+	    }
+	    
+	    key = Constants.COLUMN_NAME_inputNameValuePairs;
+	    val = rawRowDict.get(key);
+	    if (val != null){
+	        String jsonString = (String)val;
+	        JSONObject jsonObj = null;
+	        try {
+				jsonObj = new JSONObject(jsonString);
+				HashMap<String, Object> hmObj = Tool.JsonToHashMap(jsonObj);
+				dataDict.put(key, hmObj);
+			} catch (JSONException e) {
+				Log.e(LogTag, "new JSONObject(string) err:"+e.getMessage(),e);
+			}
+	    }
+	    
+	    key = Constants.COLUMN_NAME_calculateNameValuePairs;
+	    val = rawRowDict.get(key);
+	    if (val != null){
+	        String jsonString = (String)val;
+	        JSONObject jsonObj = null;
+	        try {
+				jsonObj = new JSONObject(jsonString);
+				HashMap<String, Object> hmObj = Tool.JsonToHashMap(jsonObj);
+				dataDict.put(key, hmObj);
+			} catch (JSONException e) {
+				Log.e(LogTag, "new JSONObject(string) err:"+e.getMessage(),e);
+			}
+	    }
+	    	    
+	    return dataDict;
+	}
+
+	
+
+	/*
+	 与 getUserRecordSymptomRawRowByDayLocal 相比，json string的列已经被转换为 HashMap
+	 */
+	public HashMap<String, Object> getUserRecordSymptomDataByDayLocal(int dayLocal)
+	{
+		HashMap<String, Object> rowRaw = getUserRecordSymptomRawRowByDayLocal(dayLocal);
+		HashMap<String, Object> rowData = parseUserRecordSymptomRawRow(rowRaw);
+		Log.d(LogTag, "getUserRecordSymptomDataByDayLocal ret:"+Tool.getIndentFormatStringOfObject(rowData,0) );
+	    return rowData;
+	}
+	
+	/*
+	 按DayLocal升序排序
+	 */
+	public ArrayList<HashMap<String, Object>> getUserRecordSymptomDataByRange_withStartDayLocal(int StartDayLocal,int EndDayLocal,int StartMonthLocal,int EndMonthLocal)
+	{
+		ArrayList<HashMap<String, Object>> rowsRaw = getUserRecordSymptomRawRowsByRange_withStartDayLocal(StartDayLocal,EndDayLocal,StartMonthLocal,EndMonthLocal);
+		if (rowsRaw == null) return null;
+		ArrayList<HashMap<String, Object>> rows = new ArrayList<HashMap<String,Object>>();
+	    for(int i=0; i<rowsRaw.size(); i++){
+	    	HashMap<String, Object> rowRaw = rowsRaw.get(i);
+	    	HashMap<String, Object> rowData = parseUserRecordSymptomRawRow(rowRaw);
+	        rows.add(rowData);
+	    }
+	    Log.d(LogTag, "getUserRecordSymptomDataByRange_withStartDayLocal ret:"+Tool.getIndentFormatStringOfObject(rows,0) );
+	    return rows;
+	}
+	
+	/*
+	 按升序排序
+	 */
+	public ArrayList<Integer> getUserRecordSymptom_DistinctMonth()
+	{
+		StringBuffer sbQuery = new StringBuffer();
+		sbQuery.append("SELECT distinct (DayLocal/100) as MonthLocal FROM UserRecordSymptom ORDER BY DayLocal/100 ;");
+	   
+		Cursor cs = mDBcon.rawQuery(sbQuery.toString(),null);
+	    ArrayList<HashMap<String, Object>> rows = Tool.getRowsWithTypeFromCursor(cs);
+	    cs.close();
+	    
+	    ArrayList<Object> monthDblAry = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName("MonthLocal", rows);
+	    ArrayList<Integer> monthIntAry = Tool.convertFromArrayList(monthDblAry);
+	    
+	    Log.d(LogTag, "getUserRecordSymptom_DistinctMonth ret:"+Tool.getIndentFormatStringOfObject(monthIntAry,0) );
+	    return monthIntAry;
+	}
+
+
+	
+	
 	
 }
 
