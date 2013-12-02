@@ -59,6 +59,8 @@
 -(NSMutableArray*)calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI:(NSMutableDictionary *)inOutParamsDict;
 -(NSMutableArray*)calculateGiveFoodSupplyNutrientAndFormatForUI:(NSMutableDictionary *)inOutParamsDict;
 
+-(NSMutableDictionary*)getSingleNutrientRichFoodWithAmount_forNutrients:(NSArray*)nutrientIds withUserInfo:userInfo andOptions:(NSDictionary*)options;
+
 @end
 
 

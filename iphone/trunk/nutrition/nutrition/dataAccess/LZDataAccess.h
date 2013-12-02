@@ -78,6 +78,9 @@
 //-(bool) existAnyGivenFoodsBeRichOfNutrition:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds;
 
 
+-(NSArray *) getRichNutritionFood2_withAmount_ForNutrient:(NSString *)nutrientName andNutrientAmount:(NSNumber*)nutrientAmount;
+
+
 -(BOOL)updateFoodCollocationName:(NSString*)collationName byId:(NSNumber*)nmCollocationId;
 -(NSArray*)getAllFoodCollocation;
 -(NSArray*)getCollocationFoodData_withCollocationId:(NSNumber*)nmCollocationId;

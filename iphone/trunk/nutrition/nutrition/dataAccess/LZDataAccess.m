@@ -782,7 +782,7 @@
  */
 -(NSArray *)getRichFoodForNutrientAmount_withNutrient:(NSString *)nutrientAsColumnName andNutrientSupplyAmount:(double)nutrientSupplyAmount andTopN:(int)topN andIfNeedCustomDefinedFoods:(BOOL)ifNeedCustomDefinedFoods andUpperLimitType:(NSString*)upperLimitType
 {
-    NSLog(@"getRichNutritionFood enter");
+    NSLog(@"getRichFoodForNutrientAmount_withNutrient enter");
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
     //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
     [sqlStr appendString:@"SELECT F.*,CnCaption,FoodNameEn,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight, "];
@@ -809,6 +809,75 @@
 
     NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
     NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:nil andWhereExistInQuery:true andAfterWherePart:afterWherePart andOptions:localOptions];
+    return dataAry;
+}
+
+
+-(NSArray *) getRichNutritionFood2_withAmount_ForNutrient:(NSString *)nutrientName andNutrientAmount:(NSNumber*)nutrientAmount
+{
+    NSArray * foods = [self getRichNutritionFood2:nutrientName];
+    
+    for(int i=0; i<foods.count; i++){
+        NSMutableDictionary *food = foods[i];
+        NSNumber * foodNutrientStandard = [food objectForKey:nutrientName];
+        if ([foodNutrientStandard doubleValue]!=0.0){
+            double dFoodAmount = [nutrientAmount doubleValue]/ [foodNutrientStandard doubleValue] * 100.0;
+            [food setObject:[NSNumber numberWithDouble:dFoodAmount] forKey:Key_FoodAmount];
+        }else{
+            //do nothing, then get will obtain nil, though should not
+        }
+    }
+    NSLog(@"getRichNutritionFood2_withAmount_ForNutrient ret:\n%@",foods);
+    return foods;
+}
+
+-(NSArray *) getRichNutritionFood2:(NSString *)nutrientAsColumnName
+{
+    NSLog(@"getRichNutritionFood2 enter");
+    NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
+    //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
+    [sqlStr appendString:@"SELECT F.*,CnCaption,FoodNameEn,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight "];
+    [sqlStr appendString:@"\n  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
+//TODO
+//    [sqlStr appendFormat:@"\n    JOIN CustomRichFood CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='%@' \n",nutrientAsColumnName];
+    
+    
+    NSMutableArray *exprIncludeORdata = [NSMutableArray array];
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+    NSMutableArray *exprExcludedata = [NSMutableArray array];
+    
+    NSString *strColumn;
+    NSString *strOp;
+    NSMutableArray *expr;
+    strColumn = [NSString stringWithFormat:@"D.[%@]",nutrientAsColumnName];
+    strOp = @">";
+    expr = [NSMutableArray arrayWithCapacity:3];
+    [expr addObject:strColumn];
+    [expr addObject:strOp];
+    [expr addObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:0], nil]];
+    [exprIncludeANDdata addObject:expr];
+    
+    strColumn = [NSString stringWithFormat:@"D.[%@]",nutrientAsColumnName];
+    strOp = @"<";
+    expr = [NSMutableArray arrayWithCapacity:3];
+    [expr addObject:strColumn];
+    [expr addObject:strOp];
+    [expr addObject:[NSArray arrayWithObjects:[NSNumber numberWithInt:1000], nil]];
+    [exprIncludeANDdata addObject:expr];
+    
+    NSMutableString *afterWherePart = [NSMutableString string ];
+    [afterWherePart appendString:@"\n ORDER BY "];
+    [afterWherePart appendString:@"D.["];
+    [afterWherePart appendString:nutrientAsColumnName];
+    [afterWherePart appendString:@"] ASC"];
+    
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+                             exprIncludeORdata,@"includeOR",
+                             exprIncludeANDdata,@"includeAND",
+                             exprExcludedata,@"exclude",
+                             nil];
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
+    NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:afterWherePart andOptions:localOptions];
     return dataAry;
 }
 

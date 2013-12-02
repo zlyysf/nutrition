@@ -55,8 +55,8 @@
         limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
                                     @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",
                                     @"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",@"Vit_B12_(µg)",
-                                    @"Calcium_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Zinc_(mg)",@"Fiber_TD_(g)",
-                                    @"Protein_(g)", //@"Energ_Kcal",
+                                    @"Calcium_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Zinc_(mg)",@"Potassium_(mg)",
+                                    @"Fiber_TD_(g)",@"Protein_(g)", //@"Energ_Kcal",
                                     nil];
     }else{
 //        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
@@ -6362,6 +6362,45 @@
     NSLog(@"generateHtml_RecommendFood4SupplyAsPossible enter");
     return [self generateHtml_RecommendFoodBySmallIncrement:recmdDict];
 }
+
+-(NSMutableDictionary*)getSingleNutrientRichFoodWithAmount_forNutrients:(NSArray*)nutrientIds withUserInfo:userInfo andOptions:(NSDictionary*)options
+{
+    int count = 5;
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSDictionary *DRIsDict = [da getStandardDRIs_withUserInfo:userInfo andOptions:options];
+    
+    uint randSeed = arc4random();
+    srandom(randSeed);
+    
+    NSMutableDictionary *nutrientWithFoodAndAmountsDict = [NSMutableDictionary dictionary];
+    for(int i=0; i<nutrientIds.count; i++){
+        NSString *nutrientId = nutrientIds[i];
+        NSNumber *nutrientDRI = DRIsDict[nutrientId];
+        NSArray *foodsWithAmount = [da getRichNutritionFood2_withAmount_ForNutrient:nutrientId andNutrientAmount:nutrientDRI];
+        NSMutableArray *foodsWithAmount2 = [NSMutableArray arrayWithArray:foodsWithAmount];
+        NSMutableArray *gotFoods = [NSMutableArray arrayWithCapacity:count];
+        for(int j=0; j<count; j++){
+            if (foodsWithAmount2.count > 0){
+                int idx = 0;
+                idx = random() % foodsWithAmount2.count;//avoid index overflow
+                NSDictionary *food = foodsWithAmount2[idx];
+                [gotFoods addObject:food];
+                [foodsWithAmount2 removeObjectAtIndex:idx];
+            }
+        }//for j
+        [nutrientWithFoodAndAmountsDict setObject:gotFoods forKey:nutrientId];
+    }//for i
+    NSLog(@"getSingleNutrientRichFoodWithAmount_forNutrients ret:\n%@",[LZUtility getObjectDescription:nutrientWithFoodAndAmountsDict andIndent:0]);
+    return nutrientWithFoodAndAmountsDict;
+}
+
+
+
+
+
+
+
+
 
 
 

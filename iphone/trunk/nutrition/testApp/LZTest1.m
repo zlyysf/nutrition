@@ -40,7 +40,8 @@
 //    [self.class test_getSymptom1];
 //    [self.class test_inferIllnesses_withSymptoms1];
 //    [self.class test_getIllnessSuggestionsDistinct1];
-    [self.class test_dalUserRecordSymptom1];
+//    [self.class test_dalUserRecordSymptom1];
+    [self.class test_getSingleNutrientRichFoodWithAmount_forNutrients];
 
     
 //    [self.class testFormatResult1];
@@ -2474,52 +2475,70 @@ BOOL needLimitNutrients = FALSE;
     [da getUserRecordSymptomDataByDayLocal:dayLocal];
     
     
-//    updateTime = [NSDate date];
-//    note = @"note1b";
-//    InputNameValuePairsData = [NSMutableDictionary dictionary];
-//    [InputNameValuePairsData setObject:[NSArray arrayWithObjects:@"s11b",@"s12b", nil] forKey:Key_Symptoms];
-//    [InputNameValuePairsData setObject:[NSNumber numberWithDouble:36.72] forKey:Key_Temperature];
-//    [InputNameValuePairsData setObject:[NSNumber numberWithDouble:67.82] forKey:Key_Weight];
-//    [InputNameValuePairsData setObject:[NSNumber numberWithInt:612] forKey:Key_HeartRate];
-//    [InputNameValuePairsData setObject:[NSNumber numberWithInt:802] forKey:Key_BloodPressureLow];
-//    [InputNameValuePairsData setObject:[NSNumber numberWithInt:1402] forKey:Key_BloodPressureHigh];
-//    CalculateNameValuePairsData = [NSMutableDictionary dictionary];
-//    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:23.42] forKey:Key_BMI];
-//    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:87.52] forKey:Key_HealthMark];
-//    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"B2",@"VD", nil] forKey:@"LackNutrientIDs"];
-//    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"ill11b",@"ill12b", nil] forKey:@"InferIllnesses"];
-//    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"a11b",@"a12b", nil] forKey:@"Suggestions"];
-//    [CalculateNameValuePairsData setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1002],@"10001", [NSNumber numberWithInt:1502],@"10002", nil] forKey:@"RecommendFoodAndAmounts"];
-//    [da updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
-//    [da getUserRecordSymptomDataByDayLocal:dayLocal];
-//    
-//    
-//    
-//    dayLocal = 20120404;
-//    updateTime = [NSDate date];
-//    note = @"note1b";
-//    InputNameValuePairsData = [NSMutableDictionary dictionary];
-//    [InputNameValuePairsData setObject:[NSArray arrayWithObjects:@"s21",@"s22", nil] forKey:Key_Symptoms];
-//    [InputNameValuePairsData setObject:[NSNumber numberWithDouble:236.7] forKey:Key_Temperature];
-//    [InputNameValuePairsData setObject:[NSNumber numberWithDouble:267.8] forKey:Key_Weight];
-//    [InputNameValuePairsData setObject:[NSNumber numberWithInt:261] forKey:Key_HeartRate];
-//    [InputNameValuePairsData setObject:[NSNumber numberWithInt:280] forKey:Key_BloodPressureLow];
-//    [InputNameValuePairsData setObject:[NSNumber numberWithInt:2140] forKey:Key_BloodPressureHigh];
-//    CalculateNameValuePairsData = [NSMutableDictionary dictionary];
-//    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:223.4] forKey:Key_BMI];
-//    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:287.5] forKey:Key_HealthMark];
-//    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"B3",@"VE", nil] forKey:@"LackNutrientIDs"];
-//    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"ill21",@"ill22", nil] forKey:@"InferIllnesses"];
-//    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"a21",@"a22", nil] forKey:@"Suggestions"];
-//    [CalculateNameValuePairsData setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2100],@"10001", [NSNumber numberWithInt:2150],@"10002", nil] forKey:@"RecommendFoodAndAmounts"];
-//    
-//    [da deleteUserRecordSymptomByByDayLocal:dayLocal];
-//    
-//    [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
-//    [da getUserRecordSymptomDataByRange_withStartDayLocal:0 andEndDayLocal:0 andStartMonthLocal:0 andEndMonthLocal:0];
-//    
-//    [da getUserRecordSymptom_DistinctMonth];
+    updateTime = [NSDate date];
+    note = @"note1b";
+    InputNameValuePairsData = [NSMutableDictionary dictionary];
+    [InputNameValuePairsData setObject:[NSArray arrayWithObjects:@"s11b",@"s12b", nil] forKey:Key_Symptoms];
+    [InputNameValuePairsData setObject:[NSNumber numberWithDouble:36.72] forKey:Key_Temperature];
+    [InputNameValuePairsData setObject:[NSNumber numberWithDouble:67.82] forKey:Key_Weight];
+    [InputNameValuePairsData setObject:[NSNumber numberWithInt:612] forKey:Key_HeartRate];
+    [InputNameValuePairsData setObject:[NSNumber numberWithInt:802] forKey:Key_BloodPressureLow];
+    [InputNameValuePairsData setObject:[NSNumber numberWithInt:1402] forKey:Key_BloodPressureHigh];
+    CalculateNameValuePairsData = [NSMutableDictionary dictionary];
+    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:23.42] forKey:Key_BMI];
+    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:87.52] forKey:Key_HealthMark];
+    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"B2",@"VD", nil] forKey:@"LackNutrientIDs"];
+    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"ill11b",@"ill12b", nil] forKey:@"InferIllnesses"];
+    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"a11b",@"a12b", nil] forKey:@"Suggestions"];
+    [CalculateNameValuePairsData setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:1002],@"10001", [NSNumber numberWithInt:1502],@"10002", nil] forKey:@"RecommendFoodAndAmounts"];
+    [da updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+    [da getUserRecordSymptomDataByDayLocal:dayLocal];
+    
+    
+    
+    dayLocal = 20120404;
+    updateTime = [NSDate date];
+    note = @"note1b";
+    InputNameValuePairsData = [NSMutableDictionary dictionary];
+    [InputNameValuePairsData setObject:[NSArray arrayWithObjects:@"s21",@"s22", nil] forKey:Key_Symptoms];
+    [InputNameValuePairsData setObject:[NSNumber numberWithDouble:236.7] forKey:Key_Temperature];
+    [InputNameValuePairsData setObject:[NSNumber numberWithDouble:267.8] forKey:Key_Weight];
+    [InputNameValuePairsData setObject:[NSNumber numberWithInt:261] forKey:Key_HeartRate];
+    [InputNameValuePairsData setObject:[NSNumber numberWithInt:280] forKey:Key_BloodPressureLow];
+    [InputNameValuePairsData setObject:[NSNumber numberWithInt:2140] forKey:Key_BloodPressureHigh];
+    CalculateNameValuePairsData = [NSMutableDictionary dictionary];
+    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:223.4] forKey:Key_BMI];
+    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:287.5] forKey:Key_HealthMark];
+    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"B3",@"VE", nil] forKey:@"LackNutrientIDs"];
+    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"ill21",@"ill22", nil] forKey:@"InferIllnesses"];
+    [CalculateNameValuePairsData setObject:[NSArray arrayWithObjects:@"a21",@"a22", nil] forKey:@"Suggestions"];
+    [CalculateNameValuePairsData setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:2100],@"10001", [NSNumber numberWithInt:2150],@"10002", nil] forKey:@"RecommendFoodAndAmounts"];
+    
+    [da deleteUserRecordSymptomByByDayLocal:dayLocal];
+    
+    [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+    [da getUserRecordSymptomDataByRange_withStartDayLocal:0 andEndDayLocal:0 andStartMonthLocal:0 andEndMonthLocal:0];
+    
+    [da getUserRecordSymptom_DistinctMonth];
 
+}
+
++(void)test_getSingleNutrientRichFoodWithAmount_forNutrients
+{
+    int sex = 0;//Male
+    int age = 25;
+    float weight=75;//kg
+    float height = 172;//cm
+    int activityLevel = 0;//0--3
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              [NSNumber numberWithInt:sex],ParamKey_sex, [NSNumber numberWithInt:age],ParamKey_age,
+                              [NSNumber numberWithFloat:weight],ParamKey_weight, [NSNumber numberWithFloat:height],ParamKey_height,
+                              [NSNumber numberWithInt:activityLevel],ParamKey_activityLevel, nil];
+    
+    NSArray *nutrientIds = [LZRecommendFood getCustomNutrients:nil];
+
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    [rf getSingleNutrientRichFoodWithAmount_forNutrients:nutrientIds withUserInfo:userInfo andOptions:nil];
 }
 
 @end
