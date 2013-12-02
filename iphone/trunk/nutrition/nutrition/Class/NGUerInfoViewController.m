@@ -23,7 +23,7 @@
 @end
 
 @implementation NGUerInfoViewController
-@synthesize birthdayPicker,heightPicker,currentTextField,currentDate,currentHeight,currentWeight;
+@synthesize birthdayPicker,heightPicker,currentTextField,currentDate,currentHeight,currentWeight,isPresented;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -44,6 +44,7 @@
     self.sexLabel.text = @"性别";
     self.weightLabel.text = @"体重";
     self.activityLabel.text = @"活动强度";
+    self.title = @"信息";
     self.birthdayPicker = [[UIDatePicker alloc]init];
     self.birthdayPicker.datePickerMode = UIDatePickerModeDate;
     self.heightPicker = [[UIPickerView alloc]init];
@@ -63,12 +64,12 @@
         self.weightUnitLabel.text = @"lb";
         [self.birthdayPicker setLocale:[[NSLocale alloc]initWithLocaleIdentifier:@"en"]];
     }
-    [self.birthdayPicker setMaximumDate:[NSDate date]];
+    [self.birthdayPicker setMaximumDate:[LZUtility dateBeforeTodayForYears:1]];
     [self.birthdayPicker addTarget:self action:@selector(datepickerChanged) forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"baocunbutton",@"保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;
     [self.listView setContentSize:CGSizeMake(320, 455)];
-    [self displayUserInfo];
+    //[self displayUserInfo];
     
 	// Do any additional setup after loading the view.
 }
@@ -88,7 +89,7 @@
     {
         NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
         [formatter setLocale:[[NSLocale alloc] init]];
-        [formatter setDateFormat:@"yyyy.MM.dd"];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
         self.birthdayTextField.text = [formatter stringFromDate:currentDate];
     }
 
@@ -133,7 +134,7 @@
     {
         NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
         [formatter setLocale:[[NSLocale alloc] init]];
-        [formatter setDateFormat:@"yyyy.MM.dd"];
+        [formatter setDateFormat:@"yyyy-MM-dd"];
         self.birthdayTextField.text = [formatter stringFromDate:currentDate];
     }
     
@@ -157,27 +158,62 @@
 }
 -(void)saveButtonTapped
 {
+    if (self.currentTextField != nil)
+    {
+        [self.currentTextField resignFirstResponder];
+    }
     if (self.currentDate != nil)
     {
+        int userAge = [LZUtility calculateAgeAccordingToTheBirthdate:self.currentDate];
+        NSLog(@"%d",userAge);
+        [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:userAge] forKey:LZUserAgeKey];
         [[NSUserDefaults standardUserDefaults]setObject:self.currentDate forKey:LZUserBirthdayKey];
+    }
+    else
+    {
+        [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:@"生日填写错误，请重新填写"];
+        return;
     }
     if (currentHeight != nil)
     {
         [[NSUserDefaults standardUserDefaults]setObject:currentHeight forKey:LZUserHeightKey];
     }
-    if (currentWeight != nil)
+    else
     {
-        [[NSUserDefaults standardUserDefaults]setObject:currentWeight forKey:LZUserWeightKey];
+        [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:@"身高填写错误，请重新填写"];
+        return;
+    }
+    if ([self.weightTextField.text length]!= 0 && [self.weightTextField.text intValue]>0)
+    {
+        double userWeight = [self.weightTextField.text doubleValue];
+        if (isChinese)
+        {
+            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithDouble:userWeight] forKey:LZUserWeightKey];
+        }
+        else
+        {
+            double convertedWeight = (double)(userWeight/kKGConvertLBRatio);
+            [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithDouble:convertedWeight] forKey:LZUserWeightKey];
+        }
+    }
+    else
+    {
+        [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:@"体重填写错误，请重新填写"];
+        return;
     }
     NSNumber *sexNumber = [NSNumber numberWithInt:[self.sexSegmentControll selectedSegmentIndex]];
     [[NSUserDefaults standardUserDefaults]setObject:sexNumber forKey:LZUserSexKey];
     NSNumber *activityNumber = [NSNumber numberWithInt:[self.activitySegmentControll selectedSegmentIndex]];
     [[NSUserDefaults standardUserDefaults]setObject:activityNumber forKey:LZUserActivityLevelKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
+    if (isPresented)
+    {
+        [self dismissModalViewControllerAnimated:YES];
+    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+    [self displayUserInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
@@ -230,8 +266,13 @@
     
     NSValue *boundsValue = [userInfo objectForKey:UIKeyboardFrameEndUserInfoKey];
 	CGRect keyboardRect = [boundsValue CGRectValue];
-    
-    CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height+49;
+    float tabbarHeight = 49;
+    if (isPresented)
+    {
+        tabbarHeight = 0;
+    }
+
+    CGFloat keyboardTop = self.view.frame.size.height - keyboardRect.size.height+tabbarHeight;
     CGRect tableviewFrame = self.listView.frame;
 	tableviewFrame.size.height = keyboardTop;
     
@@ -266,6 +307,16 @@
     [UIView commitAnimations];
     
 }
+- (void) alertWithTitle: (NSString *)_title_ msg: (NSString *)msg
+{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_title_
+                                                    message:msg
+                                                   delegate:nil
+                                          cancelButtonTitle:NSLocalizedString(@"quedingbutton",@"确定")
+                                          otherButtonTitles:nil];
+    [alert show];
+}
+
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
     return 60;
@@ -325,6 +376,7 @@
         if (component == 0)
         {
             self.currentHeight = [NSNumber numberWithInt:row];
+            self.heightTextField.text = [NSString stringWithFormat:@"%dcm",[currentHeight intValue]];
         }
     }
     else
@@ -349,6 +401,15 @@
         {
             [self.birthdayPicker setDate:currentDate];
         }
+        else
+        {
+            self.currentDate =[LZUtility dateBeforeTodayForYears:25];
+            NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+            [formatter setLocale:[[NSLocale alloc] init]];
+            [formatter setDateFormat:@"yyyy-MM-dd"];
+            self.birthdayTextField.text = [formatter stringFromDate:currentDate];
+            [self.birthdayPicker setDate:[LZUtility dateBeforeTodayForYears:25]];
+        }
         textField.inputView = self.birthdayPicker;
     }
     else if (textField == self.heightTextField)
@@ -367,6 +428,26 @@
                 [self.heightPicker selectRow:feet inComponent:0 animated:NO];
                 [self.heightPicker selectRow:inch inComponent:1 animated:NO];
             }
+        }
+        else
+        {
+            if (isChinese)
+            {
+                self.currentHeight = [NSNumber numberWithInt:170];
+                self.heightTextField.text = [NSString stringWithFormat:@"%dcm",170];
+                [self.heightPicker selectRow:170 inComponent:0 animated:NO];
+            }
+            else
+            {
+                self.currentHeight = [NSNumber numberWithInt:170];
+                int total = ([currentHeight intValue]*100)/2.54;
+                int feet = total/1200;
+                int inch = ((total%1200))/100;
+                [self.heightPicker selectRow:feet inComponent:0 animated:NO];
+                [self.heightPicker selectRow:inch inComponent:1 animated:NO];
+                self.heightTextField.text = [LZUtility convertIntToInch:[currentHeight intValue] ];
+            }
+
         }
         textField.inputView = self.heightPicker;
         

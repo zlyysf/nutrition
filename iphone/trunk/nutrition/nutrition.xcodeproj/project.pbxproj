@@ -245,6 +245,7 @@
 		5FAB57A7180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5FAB578E180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.bundle */; };
 		5FAB57A8180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FAB578F180266C300657793 /* ShareSDKiPhoneSimpleShareViewUI.framework */; };
 		5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
+		5FBD42E7184C6D8200759A3C /* NGMainTabbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBD42E6184C6D8200759A3C /* NGMainTabbarViewController.m */; };
 		5FC81272181798CF009A3A2B /* food_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FC81270181798CC009A3A2B /* food_icon@2x.png */; };
 		5FC81273181798CF009A3A2B /* nutrition_info_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FC81271181798CD009A3A2B /* nutrition_info_icon@2x.png */; };
 		5FC8127618179DDE009A3A2B /* food_icon_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FC8127418179DDC009A3A2B /* food_icon_clicked@2x.png */; };
@@ -616,6 +617,8 @@
 		5FB8C0B6172BC61D00E90387 /* LZUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtility.h; path = nutrition/Class/LZUtility.h; sourceTree = "<group>"; };
 		5FB8C0B7172BC61D00E90387 /* LZUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtility.m; path = nutrition/Class/LZUtility.m; sourceTree = "<group>"; };
 		5FB8C0B9172BCA9F00E90387 /* LZConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConstants.h; path = nutrition/Class/LZConstants.h; sourceTree = "<group>"; };
+		5FBD42E5184C6D8200759A3C /* NGMainTabbarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGMainTabbarViewController.h; path = nutrition/Class/NGMainTabbarViewController.h; sourceTree = "<group>"; };
+		5FBD42E6184C6D8200759A3C /* NGMainTabbarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGMainTabbarViewController.m; path = nutrition/Class/NGMainTabbarViewController.m; sourceTree = "<group>"; };
 		5FC81270181798CC009A3A2B /* food_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "food_icon@2x.png"; path = "nutrition/Resource/food_icon@2x.png"; sourceTree = "<group>"; };
 		5FC81271181798CD009A3A2B /* nutrition_info_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrition_info_icon@2x.png"; path = "nutrition/Resource/nutrition_info_icon@2x.png"; sourceTree = "<group>"; };
 		5FC8127418179DDC009A3A2B /* food_icon_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "food_icon_clicked@2x.png"; path = "nutrition/Resource/food_icon_clicked@2x.png"; sourceTree = "<group>"; };
@@ -1100,6 +1103,8 @@
 				5F729BC01842FFE8004FC428 /* NGCyclopediaViewController.m */,
 				5F22E3DA18435DB7001CCC89 /* NGUerInfoViewController.h */,
 				5F22E3DB18435DB7001CCC89 /* NGUerInfoViewController.m */,
+				5FBD42E5184C6D8200759A3C /* NGMainTabbarViewController.h */,
+				5FBD42E6184C6D8200759A3C /* NGMainTabbarViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1841,6 +1846,7 @@
 				5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */,
 				085C8D3F173366F2001A1ABB /* FMDatabase.m in Sources */,
 				085C8D40173366F2001A1ABB /* FMDatabaseAdditions.m in Sources */,
+				5FBD42E7184C6D8200759A3C /* NGMainTabbarViewController.m in Sources */,
 				085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */,
 				085C8D42173366F2001A1ABB /* FMDatabaseQueue.m in Sources */,
 				085C8D44173366F2001A1ABB /* FMResultSet.m in Sources */,

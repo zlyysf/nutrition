@@ -589,8 +589,9 @@
     NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
     NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
     NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
+    NSDate *birthday = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserBirthdayKey];
     
-    return (userSex && userAge && userHeight && userWeight && userActivityLevel);
+    return (userSex && userAge && userHeight && userWeight && userActivityLevel && birthday);
 }
 
 + (NSDictionary *)getActivityLevelInfo
@@ -1513,9 +1514,21 @@
     return [NSString stringWithFormat:@"%d' %d''",foot,inch];
 }
 
++(int)calculateAgeAccordingToTheBirthdate:(NSDate *)birthdate
+{
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDate *todayDate = [NSDate date];
+    unsigned unitFlags = NSYearCalendarUnit ;
+    NSDateComponents* comp1 = [calendar components:unitFlags fromDate:birthdate];
+    NSDateComponents* comp2 = [calendar components:unitFlags fromDate:todayDate];
+    return [comp2 year] - [comp1 year];
+}
 
-
-
++(NSDate *)dateBeforeTodayForYears:(int)years
+{
+    NSDate *date = [NSDate date];
+    return [date dateByAddingTimeInterval:-years*365*24*60*60];
+}
 
 
 

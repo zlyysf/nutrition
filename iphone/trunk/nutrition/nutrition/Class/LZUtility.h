@@ -117,8 +117,8 @@
 +(NSArray*)inferIllnesses_withSymptoms:(NSArray*)symptomIds andMeasureData:(NSDictionary*)measureData;
 
 + (NSString *)convertIntToInch:(NSInteger)number;
-
-
++(int)calculateAgeAccordingToTheBirthdate:(NSDate *)birthdate;
++(NSDate *)dateBeforeTodayForYears:(int)years;
 @end
 
 

@@ -65,7 +65,7 @@
     int floor1 = count1/4+ ((count1%4 == 0)?0:1);
     int floor2 = count2/4+ ((count2%4 == 0)?0:1);
     int floor3 = count3/2+ ((count3%2 == 0)?0:1);
-    nutritionCellHeight = (floor1+floor2+floor3)*(50)+120;
+    nutritionCellHeight = (floor1+floor2+floor3)*(50)+110;
     int diseaseCount = [commonDiseaseArray count];
     diseaseCellHeight = 40+30+DiseaseItemTopMargin+diseaseCount*(DiseaseItemLabelHeight+DiseaseItemMargin)-DiseaseItemMargin+DiseaseItemBottomMarigin;
     int foodCount = [foodArray count];
@@ -93,7 +93,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (indexPath.section == 0)
+    if (indexPath.section == 2)
     {
         NGCommonDiseaseCell *cell =(NGCommonDiseaseCell*) [self.listView dequeueReusableCellWithIdentifier:@"NGCommonDiseaseCell"];
         if (cell.hasLoaded)
@@ -128,7 +128,7 @@
             return cell;
         }
     }
-    else if (indexPath.section == 1)
+    else if (indexPath.section == 0)
     {
         NGNutritionCell *cell = (NGNutritionCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGNutritionCell"];
         if (cell.hasLoaded)
@@ -324,15 +324,15 @@
 {
     if (indexPath.section == 0)
     {
-        return diseaseCellHeight;
+        return nutritionCellHeight;
     }
     else if (indexPath.section == 1)
     {
-        return nutritionCellHeight;
+        return foodCellHeight;
     }
     else
     {
-        return foodCellHeight;
+        return diseaseCellHeight;
     }
 }
 

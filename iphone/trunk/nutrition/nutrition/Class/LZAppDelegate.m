@@ -42,8 +42,8 @@
 //    UIImage *gradientImage44 = [navImage
 //                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
 //    [[UINavigationBar appearance]setBackgroundImage:gradientImage44 forBarMetrics:UIBarMetricsDefault];
-    [[UISearchBar appearance]setImage:[UIImage imageNamed:@"search_glass.png"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
-    [[UISearchBar appearance]setPositionAdjustment:UIOffsetMake(0, 1) forSearchBarIcon:UISearchBarIconSearch];
+//    [[UISearchBar appearance]setImage:[UIImage imageNamed:@"search_glass.png"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
+//    [[UISearchBar appearance]setPositionAdjustment:UIOffsetMake(0, 1) forSearchBarIcon:UISearchBarIconSearch];
 //    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
 //    [[UIBarButtonItem appearance] setBackgroundImage:button30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
 //    UIImage *buttonBack30 = [[UIImage imageNamed:@"nav_back_button"]
@@ -65,8 +65,9 @@
 //        [[UITabBar appearance]setSelectedImageTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
 //    }
 //    ;
-    [LZUtility initializePreferNutrient];
+//    [LZUtility initializePreferNutrient];
     //友盟统计SDK启
+    [[UIApplication sharedApplication]cancelAllLocalNotifications];
     [LZDataAccess singleton];
     [LZUtility setReviewFlagForNewVersion];
     [MobClick startWithAppkey:UMSDKAPPKey];
@@ -80,108 +81,109 @@
                              redirectUri:@"http://www.lingzhimobile.com/"];
     [ShareSDK connectWeChatWithAppId:WeChatAppId wechatCls:[WXApi class]];
     [LZNutrientionManager SharedInstance];
-    NSNumber *checkReminderState = [[NSUserDefaults standardUserDefaults]objectForKey:KeyHealthCheckReminderState];
-    if (checkReminderState == nil)
-    {
-        NSNumber *stateOn = [NSNumber numberWithBool:YES];
-        [[NSUserDefaults standardUserDefaults]setObject:stateOn forKey:KeyHealthCheckReminderState];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-    }
-    [[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:58/255.f green:170/255.f blue:44/255.f alpha:1.f]];
-    UILocalNotification *localNotify = [launchOptions objectForKey: UIApplicationLaunchOptionsLocalNotificationKey];
-    if (localNotify != nil)
-    {
-        if ([LZUtility isUserProfileComplete])
-        {
-            NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
-            NSDictionary *info = [localNotify userInfo];
-            if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
-            {
-                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:KeyAppLauchedForHealthCheck];
-                [[NSUserDefaults standardUserDefaults]synchronize];
-            }
-        }
-    }
+
+//    NSNumber *checkReminderState = [[NSUserDefaults standardUserDefaults]objectForKey:KeyHealthCheckReminderState];
+//    if (checkReminderState == nil)
+//    {
+//        NSNumber *stateOn = [NSNumber numberWithBool:YES];
+//        [[NSUserDefaults standardUserDefaults]setObject:stateOn forKey:KeyHealthCheckReminderState];
+//        [[NSUserDefaults standardUserDefaults]synchronize];
+//    }
+//    [[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:58/255.f green:170/255.f blue:44/255.f alpha:1.f]];
+//    UILocalNotification *localNotify = [launchOptions objectForKey: UIApplicationLaunchOptionsLocalNotificationKey];
+//    if (localNotify != nil)
+//    {
+//        if ([LZUtility isUserProfileComplete])
+//        {
+//            NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
+//            NSDictionary *info = [localNotify userInfo];
+//            if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
+//            {
+//                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:KeyAppLauchedForHealthCheck];
+//                [[NSUserDefaults standardUserDefaults]synchronize];
+//            }
+//        }
+//    }
     return YES;
 }
--(void)handleLocalNotify:(UILocalNotification*)localNotify
-{
-    if(localNotify == nil)
-    {
-        return;
-    }
-    else if ([LZUtility isUserProfileComplete])
-    {
-        NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
-        NSDictionary *info = [localNotify userInfo];
-        if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
-        {
-            UIViewController *rootvc =[UIApplication sharedApplication].keyWindow.rootViewController;
-            if ([rootvc isKindOfClass:[JWNavigationViewController class]] || rootvc == nil)
-            {
-                
-                for (UIWindow* w in [UIApplication sharedApplication].windows)
-                {
-                    [self closeActionSheet:w];
-//                    for (NSObject* o in w.subviews)
-//                    {
-//                        if ([o isKindOfClass:[UIAlertView class]])
-//                        {
-//                            [(UIAlertView*)o dismissWithClickedButtonIndex:[(UIAlertView*)o cancelButtonIndex] animated:NO];
-//                        }
-//                        else if ([o isKindOfClass:[LZNutritionInfoView class]])
-//                        {
-//                            [(LZNutritionInfoView*)o removeFromSuperview];
-//                        }
-//                    }
-                }
-                UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
-                [mainNav.visibleViewController dismissModalViewControllerAnimated:NO];
-                
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                LZHealthCheckViewController *healthCheckViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZHealthCheckViewController"];
-                healthCheckViewController.backWithNoAnimation = YES;
-                LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
-                NSDictionary *emptyIntake = [[NSDictionary alloc]init];
-                [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
-                [[NSUserDefaults standardUserDefaults]synchronize];
-                
-                NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,healthCheckViewController, nil];
-                
-                [mainNav setViewControllers:vcs animated:YES];
-            }
-        }
-    }
-}
--(void)closeActionSheet:(UIView *)aView
-{
-    if (aView) {
-        if ([aView isKindOfClass:[UIActionSheet class]]) {
-            [(UIActionSheet *)aView dismissWithClickedButtonIndex:[(UIActionSheet*)aView cancelButtonIndex] animated:NO];
-        }
-        else if ([aView isKindOfClass:[UIAlertView class]])
-        {
-            [(UIAlertView*)aView dismissWithClickedButtonIndex:[(UIAlertView*)aView cancelButtonIndex] animated:NO];
-        }
-        else if ([aView isKindOfClass:[LZNutritionInfoView class]])
-        {
-            [(LZNutritionInfoView*)aView removeFromSuperview];
-        }
-        else if ([aView isKindOfClass:[LZRecommendFilterView class]])
-        {
-            [(LZRecommendFilterView*)aView removeFromSuperview];
-        }
-        else if ([aView isKindOfClass:[LZCheckTypeSwitchView class]])
-        {
-            [(LZCheckTypeSwitchView*)aView removeFromSuperview];
-        }
-        else if (aView.subviews.count > 0) {
-            for (UIView* aSubview in aView.subviews) {
-                [self closeActionSheet:aSubview];
-            }
-        }
-    }
-}
+//-(void)handleLocalNotify:(UILocalNotification*)localNotify
+//{
+//    if(localNotify == nil)
+//    {
+//        return;
+//    }
+//    else if ([LZUtility isUserProfileComplete])
+//    {
+//        NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
+//        NSDictionary *info = [localNotify userInfo];
+//        if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
+//        {
+//            UIViewController *rootvc =[UIApplication sharedApplication].keyWindow.rootViewController;
+//            if ([rootvc isKindOfClass:[JWNavigationViewController class]] || rootvc == nil)
+//            {
+//                
+//                for (UIWindow* w in [UIApplication sharedApplication].windows)
+//                {
+//                    [self closeActionSheet:w];
+////                    for (NSObject* o in w.subviews)
+////                    {
+////                        if ([o isKindOfClass:[UIAlertView class]])
+////                        {
+////                            [(UIAlertView*)o dismissWithClickedButtonIndex:[(UIAlertView*)o cancelButtonIndex] animated:NO];
+////                        }
+////                        else if ([o isKindOfClass:[LZNutritionInfoView class]])
+////                        {
+////                            [(LZNutritionInfoView*)o removeFromSuperview];
+////                        }
+////                    }
+//                }
+//                UINavigationController *mainNav = (UINavigationController *)[UIApplication sharedApplication].keyWindow.rootViewController;
+//                [mainNav.visibleViewController dismissModalViewControllerAnimated:NO];
+//                
+//                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//                LZHealthCheckViewController *healthCheckViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZHealthCheckViewController"];
+//                healthCheckViewController.backWithNoAnimation = YES;
+//                LZMainPageViewController *mainPageViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZMainPageViewController"];
+//                NSDictionary *emptyIntake = [[NSDictionary alloc]init];
+//                [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
+//                [[NSUserDefaults standardUserDefaults]synchronize];
+//                
+//                NSArray *vcs = [NSArray arrayWithObjects:mainPageViewController,healthCheckViewController, nil];
+//                
+//                [mainNav setViewControllers:vcs animated:YES];
+//            }
+//        }
+//    }
+//}
+//-(void)closeActionSheet:(UIView *)aView
+//{
+//    if (aView) {
+//        if ([aView isKindOfClass:[UIActionSheet class]]) {
+//            [(UIActionSheet *)aView dismissWithClickedButtonIndex:[(UIActionSheet*)aView cancelButtonIndex] animated:NO];
+//        }
+//        else if ([aView isKindOfClass:[UIAlertView class]])
+//        {
+//            [(UIAlertView*)aView dismissWithClickedButtonIndex:[(UIAlertView*)aView cancelButtonIndex] animated:NO];
+//        }
+//        else if ([aView isKindOfClass:[LZNutritionInfoView class]])
+//        {
+//            [(LZNutritionInfoView*)aView removeFromSuperview];
+//        }
+//        else if ([aView isKindOfClass:[LZRecommendFilterView class]])
+//        {
+//            [(LZRecommendFilterView*)aView removeFromSuperview];
+//        }
+//        else if ([aView isKindOfClass:[LZCheckTypeSwitchView class]])
+//        {
+//            [(LZCheckTypeSwitchView*)aView removeFromSuperview];
+//        }
+//        else if (aView.subviews.count > 0) {
+//            for (UIView* aSubview in aView.subviews) {
+//                [self closeActionSheet:aSubview];
+//            }
+//        }
+//    }
+//}
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -190,18 +192,18 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {
-    NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
-    NSArray *oldScheduledNotify = [[UIApplication sharedApplication]scheduledLocalNotifications];
-    NSMutableArray *newScheduled = [[NSMutableArray alloc]init];
-
-    for (UILocalNotification * localNotify in oldScheduledNotify)
-    {
-        NSDictionary *info = [localNotify userInfo];
-        if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
-        {
-            [newScheduled addObject:localNotify];
-        }
-    }
+//    NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
+//    NSArray *oldScheduledNotify = [[UIApplication sharedApplication]scheduledLocalNotifications];
+//    NSMutableArray *newScheduled = [[NSMutableArray alloc]init];
+//
+//    for (UILocalNotification * localNotify in oldScheduledNotify)
+//    {
+//        NSDictionary *info = [localNotify userInfo];
+//        if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
+//        {
+//            [newScheduled addObject:localNotify];
+//        }
+//    }
     
     UILocalNotification *local = [[UILocalNotification alloc]init];
     [local setAlertAction:NSLocalizedString(@"localnotify_3dayreminder_action",@"打开")];
@@ -213,9 +215,9 @@
     [local setSoundName:UILocalNotificationDefaultSoundName];
     NSDictionary *infoDict = [NSDictionary dictionaryWithObject:KeyNotifyTimeTypeReminder forKey:@"notifyType"];
     [local setUserInfo:infoDict];
-    [newScheduled addObject:local];
+//    [newScheduled addObject:local];
     
-    [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
+    [[UIApplication sharedApplication] scheduleLocalNotification:local];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -226,31 +228,31 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
-    NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
-    NSArray *oldScheduledNotify = [[UIApplication sharedApplication]scheduledLocalNotifications];
-    NSMutableArray *newScheduled = [[NSMutableArray alloc]init];
-    
-    for (UILocalNotification * localNotify in oldScheduledNotify)
-    {
-        NSDictionary *info = [localNotify userInfo];
-        if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
-        {
-            [newScheduled addObject:localNotify];
-        }
-    }
-    [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
+//    NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
+//    NSArray *oldScheduledNotify = [[UIApplication sharedApplication]scheduledLocalNotifications];
+//    NSMutableArray *newScheduled = [[NSMutableArray alloc]init];
+//    
+//    for (UILocalNotification * localNotify in oldScheduledNotify)
+//    {
+//        NSDictionary *info = [localNotify userInfo];
+//        if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
+//        {
+//            [newScheduled addObject:localNotify];
+//        }
+//    }
+//    [[UIApplication sharedApplication] setScheduledLocalNotifications:newScheduled];
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
 }
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
-    if ([application respondsToSelector:@selector(applicationState)] && application.applicationState != UIApplicationStateActive)
-    {
-        [self handleLocalNotify:notification];
-    }
-    else
-    {
+//    if ([application respondsToSelector:@selector(applicationState)] && application.applicationState != UIApplicationStateActive)
+//    {
+//        [self handleLocalNotify:notification];
+//    }
+//    else
+//    {
         [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
-    }
+//    }
 }
 - (void)applicationWillTerminate:(UIApplication *)application
 {
