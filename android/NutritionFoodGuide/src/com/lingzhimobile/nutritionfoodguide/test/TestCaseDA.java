@@ -24,11 +24,12 @@ public class TestCaseDA {
 //		test1(ctx);
 //		test_calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI(ctx);
 //		test_foodCollocationApis(ctx);
-		test_Symptom1(ctx);
+//		test_Symptom1(ctx);
 //		test_inferIllnesses_withSymptoms1(ctx);
 //		test_getIllnessSuggestionsDistinct1(ctx);
 //		test_JsonTool();
 //		test_dalUserRecordSymptom1(ctx);
+		test_getIllness2(ctx);
 	}
 	
 	static void test1(Context ctx){
@@ -317,6 +318,16 @@ public class TestCaseDA {
 //	    
 //	    da.getUserRecordSymptom_DistinctMonth();
 
+	}
+	
+	static void test_getIllness2(Context ctx)
+	{
+	    
+		DataAccess da = DataAccess.getSingleton(ctx);
+	    da.getAllIllness();
+	    
+	    da.getFoodCnTypes();
+	    
 	}
 
 }

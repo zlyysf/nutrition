@@ -2201,6 +2201,15 @@ public class DataAccess {
 	    return rows;
 	}
 
+	public ArrayList<HashMap<String, Object>> getAllIllness()
+	{
+		Log.d(LogTag, "getAllIllness enter");
+		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Illness,null,null,null,null,false);
+		Log.d(LogTag, "getAllIllness ret="+Tool.getIndentFormatStringOfObject(rows,0) );
+	    return rows;
+	}
+	
+	
 	
 	/*
 	 dayLocal 是 8位整数,如  20120908
