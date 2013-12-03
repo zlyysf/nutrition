@@ -30,8 +30,8 @@ import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.Tool;
 import com.lingzhimobile.nutritionfoodguide.myProgressDialog;
 
-public class DiagnoseFragment extends Fragment {
-	static final String LogTag = DiagnoseFragment.class.getSimpleName();
+public class V3DiagnoseFragment extends Fragment {
+	static final String LogTag = V3DiagnoseFragment.class.getSimpleName();
 	
 	static final int[] checkboxColorCheckedResIds = {R.color.red, R.color.green, R.color.blue};
 	static final int checkboxColorNormalResId = R.color.gray;
@@ -185,7 +185,7 @@ public class DiagnoseFragment extends Fragment {
 	}
 	
     public static Fragment newInstance(int arg0) {
-        Fragment diagnoseFragment = new DiagnoseFragment();
+        Fragment diagnoseFragment = new V3DiagnoseFragment();
         return diagnoseFragment;
     }
 }

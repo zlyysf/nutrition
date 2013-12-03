@@ -4,7 +4,7 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 
-public class NoScrollViewPager extends ViewPager {
+public class V3NoScrollViewPager extends ViewPager {
 
     private boolean isCanScroll = false; 
     
@@ -12,11 +12,11 @@ public class NoScrollViewPager extends ViewPager {
         this.isCanScroll = isCanScroll;  
     }  
   
-    public NoScrollViewPager(Context context) {
+    public V3NoScrollViewPager(Context context) {
         super(context);
     }
 
-    public NoScrollViewPager(Context context, AttributeSet attrs) {
+    public V3NoScrollViewPager(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 

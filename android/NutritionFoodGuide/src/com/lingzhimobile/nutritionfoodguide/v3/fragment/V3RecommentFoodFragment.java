@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import com.lingzhimobile.nutritionfoodguide.R;
 
-public class RecommentFoodFragment extends Fragment {
+public class V3RecommentFoodFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -23,8 +23,8 @@ public class RecommentFoodFragment extends Fragment {
         return view;
     }
 
-    public static RecommentFoodFragment newInstance() {
-        RecommentFoodFragment fragment = new RecommentFoodFragment();
+    public static V3RecommentFoodFragment newInstance() {
+        V3RecommentFoodFragment fragment = new V3RecommentFoodFragment();
         return fragment;
     }
 }

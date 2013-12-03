@@ -11,7 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class TabContentFragment extends Fragment {
+public class V3TabContentFragment extends Fragment {
 
     int tabId;
     String[] sectionTitles;
@@ -35,8 +35,8 @@ public class TabContentFragment extends Fragment {
         return view;
     }
 
-    public static TabContentFragment newInstance(int tabId) {
-        TabContentFragment fragment = new TabContentFragment();
+    public static V3TabContentFragment newInstance(int tabId) {
+        V3TabContentFragment fragment = new V3TabContentFragment();
         Bundle args = new Bundle();
         args.putInt("tab_id", tabId);
         fragment.setArguments(args);

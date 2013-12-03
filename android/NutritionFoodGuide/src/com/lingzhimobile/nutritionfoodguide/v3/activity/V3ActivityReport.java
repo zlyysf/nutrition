@@ -13,7 +13,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.lingzhimobile.nutritionfoodguide.R;
-import com.lingzhimobile.nutritionfoodguide.v3.fragment.RecommentFoodFragment;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3RecommentFoodFragment;
 
 public class V3ActivityReport extends V3BaseActivity {
 
@@ -101,8 +101,8 @@ public class V3ActivityReport extends V3BaseActivity {
         }
 
         @Override
-        public RecommentFoodFragment getItem(int arg0) {
-            return RecommentFoodFragment.newInstance();
+        public V3RecommentFoodFragment getItem(int arg0) {
+            return V3RecommentFoodFragment.newInstance();
         }
 
         @Override

@@ -13,12 +13,12 @@ import android.widget.TextView;
 
 import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
 import com.lingzhimobile.nutritionfoodguide.R;
-import com.lingzhimobile.nutritionfoodguide.v3.adapter.HomeTabAdapter;
+import com.lingzhimobile.nutritionfoodguide.v3.adapter.V3HomeTabAdapter;
 
 public class V3ActivityHome extends V3BaseActivity {
 
     private ViewPager mViewPager;
-    private HomeTabAdapter mHomeTabAdapter;
+    private V3HomeTabAdapter mHomeTabAdapter;
     RadioButton tabButtonDiagnose, tabButtonHistory, tabButtonChart,
             tabButtonCyclopedia, tabButtonSetting;
 
@@ -43,7 +43,7 @@ public class V3ActivityHome extends V3BaseActivity {
 
         final String[] sectionTitles = getResources().getStringArray(
                 R.array.home_tab_selections);
-        mHomeTabAdapter = new HomeTabAdapter(getSupportFragmentManager(),
+        mHomeTabAdapter = new V3HomeTabAdapter(getSupportFragmentManager(),
                 sectionTitles);
         mViewPager.setAdapter(mHomeTabAdapter);
         mViewPager.setOnTouchListener(new OnTouchListener() {
@@ -108,6 +108,8 @@ public class V3ActivityHome extends V3BaseActivity {
         switch (i) {
         case 0:
             title.setText("健康记录");
+            leftButton.setVisibility(View.VISIBLE);
+            rightButton.setVisibility(View.VISIBLE);
             rightButton.setOnClickListener(new OnClickListener() {
                 
                 @Override
@@ -125,6 +127,8 @@ public class V3ActivityHome extends V3BaseActivity {
             break;
         case 3:
             title.setText("百科");
+            leftButton.setVisibility(View.INVISIBLE);
+            rightButton.setVisibility(View.INVISIBLE);
             break;
         case 4:
             title.setText("设置");
