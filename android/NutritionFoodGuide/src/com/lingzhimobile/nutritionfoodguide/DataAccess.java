@@ -977,9 +977,9 @@ public class DataAccess {
 		StringBuffer sbSql = new StringBuffer(1000);
 		//看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
 		sbSql.append("SELECT F.*,CnCaption,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight");
-		sbSql.append("\n  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No ");
-		//TODO 
-//		sbSql.append("\n    JOIN CustomRichFood CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='"+nutrientAsColumnName+"' \n");
+		sbSql.append("\n  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No ");
+//		sbSql.append("\n    JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No ");
+		sbSql.append("\n    JOIN CustomRichFood2 CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='"+nutrientAsColumnName+"' \n");
 		
 		ArrayList<ArrayList<Object>> exprIncludeORdata = new ArrayList<ArrayList<Object>>();
 		ArrayList<ArrayList<Object>> exprIncludeANDdata = new ArrayList<ArrayList<Object>>();
@@ -987,28 +987,28 @@ public class DataAccess {
 		String strColumn, strOp;
 		ArrayList<Object> expr, values;
 	    
-	    strColumn = "D.["+nutrientAsColumnName+"]";
-	    strOp = ">";
-	    expr = new ArrayList<Object>(3);
-	    expr.add(strColumn);
-	    expr.add(strOp);
-	    values = new ArrayList<Object>();
-	    values.add(Integer.valueOf(0));
-	    expr.add(values);
-	    exprIncludeANDdata.add(expr);
-
-	    strColumn = "D.["+nutrientAsColumnName+"]";
-	    strOp = "<";
-	    expr = new ArrayList<Object>(3);
-	    expr.add(strColumn);
-	    expr.add(strOp);
-	    values = new ArrayList<Object>();
-	    values.add(Integer.valueOf(1000));
-	    expr.add(values);
-	    exprIncludeANDdata.add(expr);
+//	    strColumn = "D.["+nutrientAsColumnName+"]";
+//	    strOp = ">";
+//	    expr = new ArrayList<Object>(3);
+//	    expr.add(strColumn);
+//	    expr.add(strOp);
+//	    values = new ArrayList<Object>();
+//	    values.add(Integer.valueOf(0));
+//	    expr.add(values);
+//	    exprIncludeANDdata.add(expr);
+//
+//	    strColumn = "D.["+nutrientAsColumnName+"]";
+//	    strOp = "<";
+//	    expr = new ArrayList<Object>(3);
+//	    expr.add(strColumn);
+//	    expr.add(strOp);
+//	    values = new ArrayList<Object>();
+//	    values.add(Integer.valueOf(1000));
+//	    expr.add(values);
+//	    exprIncludeANDdata.add(expr);
 
 	    StringBuffer sb_afterWherePart = new StringBuffer();
-	    sb_afterWherePart.append("\n ORDER BY D.["+nutrientAsColumnName+"] ASC");
+//	    sb_afterWherePart.append("\n ORDER BY D.["+nutrientAsColumnName+"] ASC");
 	    
 	    HashMap<String, Object> filters = new HashMap<String, Object>();
 	    filters.put("includeOR", exprIncludeORdata);
