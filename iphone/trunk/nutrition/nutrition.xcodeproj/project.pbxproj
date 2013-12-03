@@ -276,6 +276,10 @@
 		5FE436D4175F3EF5003947ED /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D0175F3EF5003947ED /* Icon-Small@2x.png */; };
 		5FE436D5175F3EF5003947ED /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D1175F3EF5003947ED /* Icon.png */; };
 		5FE436D6175F3EF5003947ED /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FE436D2175F3EF5003947ED /* Icon@2x.png */; };
+		5FEA3887184DA53300EC1C96 /* NGReportBMICell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA3886184DA53300EC1C96 /* NGReportBMICell.m */; };
+		5FEA388A184DA79300EC1C96 /* NGReportHealthScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA3889184DA79300EC1C96 /* NGReportHealthScoreCell.m */; };
+		5FEA388D184DA7B900EC1C96 /* NGReportNutritonFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA388C184DA7B900EC1C96 /* NGReportNutritonFoodCell.m */; };
+		5FEA3890184DA89C00EC1C96 /* NGReportDiseaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA388F184DA89C00EC1C96 /* NGReportDiseaseCell.m */; };
 		5FEC69371795372C00E80BE6 /* nutrient_button_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */; };
 		5FECAD901838701100D72A8C /* NewMainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD8F1838701100D72A8C /* NewMainStoryboard.storyboard */; };
 		5FECAD971838777F00D72A8C /* clinic-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD921838777F00D72A8C /* clinic-50@2x.png */; };
@@ -660,6 +664,14 @@
 		5FE436D0175F3EF5003947ED /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small@2x.png"; path = "nutrition/Icon-Small@2x.png"; sourceTree = "<group>"; };
 		5FE436D1175F3EF5003947ED /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Icon.png; path = nutrition/Icon.png; sourceTree = "<group>"; };
 		5FE436D2175F3EF5003947ED /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon@2x.png"; path = "nutrition/Icon@2x.png"; sourceTree = "<group>"; };
+		5FEA3885184DA53300EC1C96 /* NGReportBMICell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGReportBMICell.h; path = nutrition/Class/NGReportBMICell.h; sourceTree = "<group>"; };
+		5FEA3886184DA53300EC1C96 /* NGReportBMICell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGReportBMICell.m; path = nutrition/Class/NGReportBMICell.m; sourceTree = "<group>"; };
+		5FEA3888184DA79300EC1C96 /* NGReportHealthScoreCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGReportHealthScoreCell.h; path = nutrition/Class/NGReportHealthScoreCell.h; sourceTree = "<group>"; };
+		5FEA3889184DA79300EC1C96 /* NGReportHealthScoreCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGReportHealthScoreCell.m; path = nutrition/Class/NGReportHealthScoreCell.m; sourceTree = "<group>"; };
+		5FEA388B184DA7B900EC1C96 /* NGReportNutritonFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGReportNutritonFoodCell.h; path = nutrition/Class/NGReportNutritonFoodCell.h; sourceTree = "<group>"; };
+		5FEA388C184DA7B900EC1C96 /* NGReportNutritonFoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGReportNutritonFoodCell.m; path = nutrition/Class/NGReportNutritonFoodCell.m; sourceTree = "<group>"; };
+		5FEA388E184DA89C00EC1C96 /* NGReportDiseaseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGReportDiseaseCell.h; path = nutrition/Class/NGReportDiseaseCell.h; sourceTree = "<group>"; };
+		5FEA388F184DA89C00EC1C96 /* NGReportDiseaseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGReportDiseaseCell.m; path = nutrition/Class/NGReportDiseaseCell.m; sourceTree = "<group>"; };
 		5FEC69351795372C00E80BE6 /* nutrient_button_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_on@2x.png"; path = "nutrition/Resource/nutrient_button_on@2x.png"; sourceTree = "<group>"; };
 		5FECAD8F1838701100D72A8C /* NewMainStoryboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = NewMainStoryboard.storyboard; path = nutrition/NewMainStoryboard.storyboard; sourceTree = "<group>"; };
 		5FECAD921838777F00D72A8C /* clinic-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clinic-50@2x.png"; path = "nutrition/Resource/clinic-50@2x.png"; sourceTree = "<group>"; };
@@ -1126,6 +1138,14 @@
 				5F729BC618432105004FC428 /* NGNutritionCell.m */,
 				5F729BC81843211C004FC428 /* NGFoodsCell.h */,
 				5F729BC91843211C004FC428 /* NGFoodsCell.m */,
+				5FEA3885184DA53300EC1C96 /* NGReportBMICell.h */,
+				5FEA3886184DA53300EC1C96 /* NGReportBMICell.m */,
+				5FEA3888184DA79300EC1C96 /* NGReportHealthScoreCell.h */,
+				5FEA3889184DA79300EC1C96 /* NGReportHealthScoreCell.m */,
+				5FEA388B184DA7B900EC1C96 /* NGReportNutritonFoodCell.h */,
+				5FEA388C184DA7B900EC1C96 /* NGReportNutritonFoodCell.m */,
+				5FEA388E184DA89C00EC1C96 /* NGReportDiseaseCell.h */,
+				5FEA388F184DA89C00EC1C96 /* NGReportDiseaseCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1849,6 +1869,7 @@
 				5FBD42E7184C6D8200759A3C /* NGMainTabbarViewController.m in Sources */,
 				085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */,
 				085C8D42173366F2001A1ABB /* FMDatabaseQueue.m in Sources */,
+				5FEA3890184DA89C00EC1C96 /* NGReportDiseaseCell.m in Sources */,
 				085C8D44173366F2001A1ABB /* FMResultSet.m in Sources */,
 				085C8D4817336701001A1ABB /* LZDataAccess.m in Sources */,
 				085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */,
@@ -1871,6 +1892,7 @@
 				5F7F71FC1840EAC000724397 /* NGRecommendFoodView.m in Sources */,
 				5FDED100176F1D900026BCA3 /* LZShareViewController.m in Sources */,
 				5FF631DF17702D630068CBFE /* GADMasterViewController.m in Sources */,
+				5FEA388D184DA7B900EC1C96 /* NGReportNutritonFoodCell.m in Sources */,
 				5FF593D5183DBB970011CEA3 /* NGDiagnoseCell.m in Sources */,
 				5FF6320417718E100068CBFE /* LZNutrientionManager.m in Sources */,
 				5FF593D8183DBC210011CEA3 /* NGDiagnosesView.m in Sources */,
@@ -1909,6 +1931,7 @@
 				5FDB863A184071F40015FADD /* NGNoteCell.m in Sources */,
 				088B768417C4B8F200206959 /* LZDataAccessUtil.m in Sources */,
 				5F86C85817CC4DF7001DDC34 /* LZDietPickerViewController.m in Sources */,
+				5FEA388A184DA79300EC1C96 /* NGReportHealthScoreCell.m in Sources */,
 				5F86C85B17CC51A0001DDC34 /* LZDietPickerCell.m in Sources */,
 				5F22A68B17CEFC400043D760 /* LZFoodSearchViewController.m in Sources */,
 				5F22A68E17CF11930043D760 /* LZSearchBar.m in Sources */,
@@ -1917,6 +1940,7 @@
 				5F87498B17D0C2EE0061E36D /* LZRichNutritionViewController.m in Sources */,
 				5F65274A17D49DA50089CBB5 /* LZHealthCheckViewController.m in Sources */,
 				5F729BC11842FFE8004FC428 /* NGCyclopediaViewController.m in Sources */,
+				5FEA3887184DA53300EC1C96 /* NGReportBMICell.m in Sources */,
 				5F4FD72317D4B75900DBA25A /* LZDiseaseCell.m in Sources */,
 				5FECADA21838912900D72A8C /* NGDiagnoseViewController.m in Sources */,
 				5FD76DE717D5AB6200746418 /* LZCheckResultViewController.m in Sources */,
