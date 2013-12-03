@@ -2370,6 +2370,9 @@
 -(NSDictionary*)getUserRecordSymptomDataByDayLocal:(int)dayLocal
 {
     NSDictionary *rowRaw = [self getUserRecordSymptomRawRowByDayLocal:dayLocal];
+    if (rowRaw==Nil) {
+        return nil;
+    }
     NSDictionary *rowData = [self.class parseUserRecordSymptomRawRow:rowRaw];
     NSLog(@"getUserRecordSymptomDataByDayLocal ret:%@",[LZUtility getObjectDescription:rowData andIndent:0]);
     return rowData;

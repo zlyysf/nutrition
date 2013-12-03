@@ -119,6 +119,7 @@
 + (NSString *)convertIntToInch:(NSInteger)number;
 +(int)calculateAgeAccordingToTheBirthdate:(NSDate *)birthdate;
 +(NSDate *)dateBeforeTodayForYears:(int)years;
++(double)getBMI_withWeight:(double)weight andHeight:(double)height;
 @end
 
 

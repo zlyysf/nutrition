@@ -14,7 +14,12 @@
 #import "NGMeasurementCell.h"
 #import "NGNoteCell.h"
 #import "LZKeyboardToolBar.h"
+#import "NGHealthReportViewController.h"
+#import "LZRecommendFood.h"
 @interface NGDiagnoseViewController ()<NGDiagnosesViewDelegate,LZKeyboardToolBarDelegate,UITextViewDelegate,UITextFieldDelegate>
+{
+    BOOL isChinese;
+}
 @property (strong,nonatomic) UITextField *currentTextField;
 @property (strong,nonatomic) UITextView *currentTextView;
 @end
@@ -44,9 +49,212 @@
     [headerView addSubview:label];
     self.listView.tableHeaderView = headerView;
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
+    UIBarButtonItem *submitItem = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(getHealthReport)];
+    self.navigationItem.rightBarButtonItem = submitItem;
+
+    isChinese =[LZUtility isCurrentLanguageChinese];
     
+    	// Do any additional setup after loading the view.
+}
+-(void)getHealthReport
+{
+    //根据状态dict 得到用户选的症状
+    NSMutableArray *userSelectedSymptom = [[NSMutableArray alloc]init];//需保存数据
+    for (NSString *symptomId in [symptomStateDict allKeys])
+    {
+        NSArray *stateArray = [symptomStateDict objectForKey:symptomId];
+        for (int i=0 ;i< [stateArray count];i++)
+        {
+            NSNumber *state = [stateArray objectAtIndex:i];
+            if ([state boolValue])
+            {
+                NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomId];
+                NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:i];
+                NSString *symptomName = [symptomDict objectForKey:@"SymptomId"];
+                [userSelectedSymptom addObject:symptomName];
+            }
+        }
+    }
+    if ([userSelectedSymptom count]==0)
+    {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请至少选择一个症状" delegate:nil cancelButtonTitle:@"我知道了" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    
+    //笔记
+    NGNoteCell *notecell = (NGNoteCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGNoteCell"];
+    NSString *note = notecell.noteTextView.text;//需保存数据
+    
+    //根据症状获得症状健康分值
     LZDataAccess *da = [LZDataAccess singleton];
-    NSArray *symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_female];
+    double symptomScore = [da getSymptomHealthMarkSum_BySymptomIds:userSelectedSymptom];
+    double healthScore = 100 - symptomScore;//需保存数据
+
+    
+    //根据症状和测量数据得到用户的潜在疾病和BMI值
+        //1.计算BMI
+    NGMeasurementCell *cell =(NGMeasurementCell*) [self.listView dequeueReusableCellWithIdentifier:@"NGMeasurementCell"];
+    NSString *heat =cell.heatTextField.text;
+    NSString *heartbeat = cell.heartbeatTextField.text;
+    NSString *weight = cell.weightTextField.text;
+    NSString *lowpress = cell.lowpressureTextField.text;
+    NSString *highpress = cell.highpressureTextField.text;
+    NSNumber *userWeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserWeightKey];
+    NSNumber *paramHeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserHeightKey];
+    double userBMI;//需保存数据
+    NSMutableDictionary *measureData = [[NSMutableDictionary alloc]init];
+    if ([weight length] == 0 || [weight doubleValue]<=0)
+    {
+        userBMI = [LZUtility getBMI_withWeight:[userWeight doubleValue] andHeight:[paramHeight doubleValue]];
+    }
+    else
+    {
+        NSNumber *newWeight;
+        if (isChinese)
+        {
+            newWeight = [NSNumber numberWithDouble:[weight doubleValue]];
+        }
+        else
+        {
+            double convertedWeight = (double)([weight doubleValue]/kKGConvertLBRatio);
+            newWeight = [NSNumber numberWithDouble:convertedWeight];
+        }
+        [[NSUserDefaults standardUserDefaults]setObject:newWeight forKey:LZUserWeightKey];
+        [measureData setObject:newWeight forKey:Key_Weight];
+        [[NSUserDefaults standardUserDefaults]synchronize];
+        userBMI = [LZUtility getBMI_withWeight:[newWeight doubleValue] andHeight:[paramHeight doubleValue]];
+    }
+        //2.计算潜在疾病
+    
+    if ([heat length] != 0 && [heat doubleValue]>0)
+    {
+        [measureData setObject:[NSNumber numberWithDouble:[heat doubleValue]] forKey:Key_BodyTemperature];
+    }
+    if ([heartbeat length] != 0 && [heartbeat intValue]>0)
+    {
+        [measureData setObject:[NSNumber numberWithInt:[heartbeat intValue]] forKey:Key_HeartRate];
+    }
+    if ([lowpress length] != 0 && [lowpress intValue]>0)
+    {
+        [measureData setObject:[NSNumber numberWithInt:[lowpress intValue]] forKey:Key_BloodPressureLow];
+    }
+    if ([highpress length] != 0 && [highpress intValue]>0)
+    {
+        [measureData setObject:[NSNumber numberWithInt:[highpress intValue]] forKey:Key_BloodPressureHigh];
+    }
+    NSArray *illnessAry = [LZUtility inferIllnesses_withSymptoms:userSelectedSymptom andMeasureData:measureData];//需保存数据
+    
+    //根据潜在疾病得到注意事项
+    NSMutableDictionary *illnessAttentionDict = [[NSMutableDictionary alloc]init];//需保存数据
+    for (NSString *illnessId in illnessAry)
+    {
+        NSArray *illnessIds = [NSArray arrayWithObject:illnessId];
+        NSArray *attentionItem = [da getIllnessSuggestionsDistinct_ByIllnessIds:illnessIds];
+        if (attentionItem)
+        {
+            [illnessAttentionDict setObject:attentionItem forKey:illnessId];
+        }
+    }
+    
+    //根据症状获得用户缺少的营养元素
+    NSArray *lackNutritionArray =  [da getSymptomNutrientDistinctIds_BySymptomIds:userSelectedSymptom];//需保存数据
+    
+    //根据缺少元素得到推荐的食物
+    NSNumber *paramSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];
+    NSNumber *paramAge = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserAgeKey];
+    NSNumber *paramWeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserWeightKey];
+    NSNumber *paramActivity = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserActivityLevelKey];
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              paramSex,ParamKey_sex, paramAge,ParamKey_age,
+                              paramWeight,ParamKey_weight, paramHeight,ParamKey_height,
+                              paramActivity,ParamKey_activityLevel, nil];
+    NSArray *nutrientIds = [LZRecommendFood getCustomNutrients:nil];
+    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    NSMutableDictionary * recommendedFoods = [rf getSingleNutrientRichFoodWithAmount_forNutrients:nutrientIds withUserInfo:userInfo andOptions:nil];//需保存数据
+    
+    //把保存数据封装，判断今天是否保存过了，如果还没有，则自动保存，如果保存过了，传递给reportcontroller，由用户选择是否再次保存
+        //1. 封装数据
+    
+    NSDate *today = [NSDate date];
+    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+    [formatter setLocale:[[NSLocale alloc] init]];
+    [formatter setDateFormat:@"yyyyMMdd"];
+    NSString *dayStr = [formatter stringFromDate:today];
+    int dayLocal = [dayStr intValue];
+    NSMutableDictionary * InputNameValuePairsData = [NSMutableDictionary dictionary];
+    [InputNameValuePairsData setObject:userSelectedSymptom forKey:Key_Symptoms];
+    if ([measureData objectForKey:Key_BodyTemperature]) {
+        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BodyTemperature] forKey:Key_Temperature];
+    }
+    if ([measureData objectForKey:Key_Weight]) {
+        [InputNameValuePairsData setObject:[measureData objectForKey:Key_Weight] forKey:Key_Weight];
+    }
+    if ([measureData objectForKey:Key_HeartRate]) {
+        [InputNameValuePairsData setObject:[measureData objectForKey:Key_HeartRate] forKey:Key_HeartRate];
+    }
+    if ([measureData objectForKey:Key_BloodPressureLow]) {
+        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BloodPressureLow] forKey:Key_BloodPressureLow];
+    }
+    if ([measureData objectForKey:Key_BloodPressureHigh]) {
+        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BloodPressureHigh] forKey:Key_BloodPressureHigh];
+    }
+    
+    NSMutableDictionary * CalculateNameValuePairsData = [NSMutableDictionary dictionary];
+    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:userBMI] forKey:Key_BMI];
+    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:healthScore] forKey:Key_HealthMark];
+    NSMutableDictionary *LackNutrientsAndFoods = [NSMutableDictionary dictionary];
+    for (NSString *nutritionId in lackNutritionArray)
+    {
+        NSArray *recFood = [recommendedFoods objectForKey:nutritionId];
+        NSMutableDictionary *relatedFood = [[NSMutableDictionary alloc]init];
+        for (NSDictionary * aFood in recFood)
+        {
+#warning lack key here
+            NSNumber *amount = [aFood objectForKey:@"FoodAmount"];
+            NSString *foodId = [aFood objectForKey:@"NDB_No"];
+            [relatedFood setObject:amount forKey:foodId];
+        }
+        [LackNutrientsAndFoods setObject:relatedFood forKey:nutritionId];
+    }
+    [CalculateNameValuePairsData setObject:LackNutrientsAndFoods forKey:Key_LackNutrientsAndFoods];
+    [CalculateNameValuePairsData setObject:illnessAttentionDict forKey:Key_InferIllnessesAndSuggestions];
+
+
+        //2.判断
+    NSDictionary *recordData = [da getUserRecordSymptomDataByDayLocal:dayLocal];
+    BOOL isUserFirstSave;
+    if (recordData == nil || [[recordData allKeys]count]==0)
+    {
+        isUserFirstSave = YES;
+        //没保存过
+        [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+    }
+    else
+    {
+        isUserFirstSave = NO;
+    }
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGHealthReportViewController *healthReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGHealthReportViewController"];
+    [self.navigationController pushViewController:healthReportViewController animated:YES];
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSNumber *userSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];
+    NSArray *symptomTypeRows;
+    if ([userSex intValue]==0)
+    {
+        symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_male];
+    }
+    else
+    {
+        symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_female];
+    }
+    
     symptomTypeIdArray = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SymptomTypeId andDictionaryArray:symptomTypeRows];
     NSLog(@"symptomTypeIds=%@",[LZUtility getObjectDescription:symptomTypeIdArray andIndent:0] );
     symptomRowsDict = [da getSymptomRowsByTypeDict_BySymptomTypeIds:symptomTypeIdArray];
@@ -61,14 +269,8 @@
             [symptomState addObject:[NSNumber numberWithBool:NO]];
         }
         [symptomStateDict setObject:symptomState forKey:key];
-
     }
-	// Do any additional setup after loading the view.
-}
--(void)viewWillAppear:(BOOL)animated
-{
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    [self.listView reloadData];
     //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 -(void)viewWillDisappear:(BOOL)animated
@@ -210,7 +412,14 @@
         cell.highpressureLabel.text = @"高压";
         cell.lowpressureLabel.text = @"低压";
         cell.heatUnitLabel.text = @"摄氏度";
-        cell.weightUnitLabel.text = @"公斤";
+        if (isChinese) {
+            cell.weightUnitLabel.text = @"公斤";
+        }
+        else
+        {
+            cell.weightUnitLabel.text = @"磅";
+        }
+        
         cell.heartbeatUnitLabel.text = @"次/分钟";
         cell.highpressureUnitLabel.text = @"毫米水银";
         cell.lowpressureUnitLabel.text = @"毫米水银";

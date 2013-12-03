@@ -11,7 +11,7 @@
 #import "LZConstants.h"
 #import "LZUtility.h"
 #import <math.h>
-#define kKGConvertLBRatio 2.2046
+
 @interface NGUerInfoViewController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate,LZKeyboardToolBarDelegate>
 {
     BOOL isChinese;

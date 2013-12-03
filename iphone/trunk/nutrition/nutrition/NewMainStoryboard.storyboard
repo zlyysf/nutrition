@@ -260,13 +260,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="健康诊断" id="IEA-0g-DUx">
-                        <barButtonItem key="rightBarButtonItem" title="提交" id="jUn-ml-HqJ">
-                            <connections>
-                                <segue destination="wrE-Jb-V0v" kind="push" id="cTh-vH-sPS"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="健康诊断" id="IEA-0g-DUx"/>
                     <connections>
                         <outlet property="listView" destination="WmL-we-Jkd" id="zij-06-9TM"/>
                     </connections>
@@ -280,11 +274,11 @@
             <objects>
                 <viewController storyboardIdentifier="NGHealthReportViewController" id="wrE-Jb-V0v" customClass="NGHealthReportViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="vLh-49-BcA">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="gau-8z-zad">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>

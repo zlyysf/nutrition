@@ -349,7 +349,7 @@
 //#define SinaWeiboAppSecret @"9d17e75a675323f5b719cb058c5b9d0d"
 
 #define WeChatAppId @"wxe7284abf139401f5"
-
+#define kKGConvertLBRatio 2.2046
 
 //百度广告APP SID 和计费名
 #define BaiduAdsAppSID @"f06ac562"
