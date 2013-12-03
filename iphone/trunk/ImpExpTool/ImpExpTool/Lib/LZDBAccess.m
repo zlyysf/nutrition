@@ -724,7 +724,7 @@
 {
     NSString *sqlQuery = @""
     "select IllnessId, IllnessNameEn"
-    "  from Illness"
+    "  from Illness order by IllnessId"
     ;
     return [_da convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
 }
