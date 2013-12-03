@@ -27,7 +27,7 @@
 -(BOOL)checkExcelForUnSynchronizedFoodFullEnName;
 -(BOOL)checkExcelForFoodPicPath;
 -(void)convertExcelToSqlite_CustomRichFood;
-
+-(void)convertExcelToSqlite_CustomRichFood2;
 
 -(void)convertDRIFemaleDataFromExcelToSqlite;
 -(void)convertDRIMaleDataFromExcelToSqlite;

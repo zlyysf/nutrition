@@ -157,6 +157,7 @@
 #define COLUMN_NAME_FoodAmount @"FoodAmount"
 
 #define TABLE_NAME_CustomRichFood @"CustomRichFood"
+#define TABLE_NAME_CustomRichFood2 @"CustomRichFood2"
 
 #define COLUMN_NAME_MinUpperAmount @"MinUpperAmount"
 #define COLUMN_NAME_MinAdequateAmount @"MinAdequateAmount"

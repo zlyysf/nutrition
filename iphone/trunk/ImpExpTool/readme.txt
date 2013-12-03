@@ -68,7 +68,7 @@ CREATE TABLE FoodCustomOld AS SELECT * FROM FoodCustom;
 
 
 CREATE TABLE CustomRichFood ('NutrientID' TEXT,'NDB_No' TEXT);
-
+CREATE TABLE CustomRichFood2 ('NutrientID' TEXT,'NDB_No' TEXT); 对应CustomRichFood.xls中的筛选页
 
 
 

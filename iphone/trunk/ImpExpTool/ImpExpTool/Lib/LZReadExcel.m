@@ -1099,8 +1099,114 @@
     [db.da insertToTable_withTableName:tableName withColumnNames:columns andRows2D:rows2D andIfNeedClearTable:true];
 }
 
+-(NSDictionary*)getNutrientDescInCustomRichFood2ToNutrientIdDict
+{
+    NSDictionary *nutrientDescToIdDict = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          @"Vit_A_RAE",@"维生素A",
+                                          @"Vit_C_(mg)",@"维生素C",
+                                          @"Vit_D_(µg)",@"维生素D",
+                                          @"Vit_E_(mg)",@"维生素E",
+                                          @"Riboflavin_(mg)",@"B2",
+                                          @"Vit_B6_(mg)",@"B6",
+                                          @"Folate_Tot_(µg)",@"B9",
+                                          @"Vit_B12_(µg)",@"B12",
+                                          
+                                          @"Calcium_(mg)",@"钙",
+                                          @"Iron_(mg)",@"铁",
+                                          @"Zinc_(mg)",@"锌",
+                                          @"Magnesium_(mg)",@"镁",
+                                          @"Potassium_(mg)",@"钾",
+                                          
+                                          @"Fiber_TD_(g)",@"纤维",
+                                          @"Protein_(g)",@"蛋白质",
+                                          nil];
+    return nutrientDescToIdDict;
+}
 
+//对应CustomRichFood.xls中的筛选页
+-(NSDictionary *)readCustomRichFood2
+{
+    NSString *fileName = @"CustomRichFood.xls";
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
+    NSLog(@"in readCustomRichFood, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    int sheetIndex = 2;
+    
+    int ColumnIdx_Start = 2, RowIdx_Start = 3;
+    int ColumnIdx_FoodId=ColumnIdx_Start, RowIdx_foodIdStart=RowIdx_Start+1,
+        ColumnIdx_NutrientStart=ColumnIdx_Start+2, RowIdx_Nutrient=RowIdx_Start;
+    DHcell *cell,*cell_nutrient;
+    NSDictionary *nutrientDescToIdDict = [self getNutrientDescInCustomRichFood2ToNutrientIdDict];
+    NSMutableArray *foodIds = [NSMutableArray arrayWithCapacity:100];
+//    NSMutableDictionary *nutrientsByFoodDict = [NSMutableDictionary dictionaryWithCapacity:100];//foodId -> nutrientIds
+    NSMutableArray *nutrientIdAndFoodIdPairs = [NSMutableArray arrayWithCapacity:1000];
+    
+    if (true){
+        int idxRow,idxCol;
+        bool cellNotEmpty;
+        idxRow = RowIdx_foodIdStart;
+        idxCol = ColumnIdx_FoodId;
+        do {
+            cell = [reader cellInWorkSheetIndex:sheetIndex row:idxRow col:idxCol];
+            idxRow++;
+            cellNotEmpty = (cell.type!=cellBlank && cell.str.length>0);
+            if (cellNotEmpty){
+                NSNumber *nmFoodId = cell.val;
+                NSString *foodId = [LZUtility convertNumberToFoodIdStr:nmFoodId];
+                [foodIds addObject:foodId];
+            }
+        } while (cellNotEmpty);
+    }
 
+    if (true){
+        int idxRow_nutrient , idxCol_nutrient;
+        bool cellNotEmpty_nutrient;
+        idxRow_nutrient = RowIdx_Nutrient;
+        idxCol_nutrient = ColumnIdx_NutrientStart;
+        do{
+            cell_nutrient = [reader cellInWorkSheetIndex:sheetIndex row:idxRow_nutrient col:idxCol_nutrient];
+            cellNotEmpty_nutrient = (cell_nutrient.type!=cellBlank && cell_nutrient.str.length>0);
+            if (cellNotEmpty_nutrient){
+                NSString *nutrientDesc = cell_nutrient.str;
+                [nutrientDesc stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                NSString *nutrientId = nutrientDescToIdDict[nutrientDesc];
+                assert(nutrientId!=nil);
+                
+                int idxCol_flag = idxCol_nutrient+1;
+                for(int i=0; i<foodIds.count; i++){
+                    NSString *foodId = foodIds[i];
+                    cell = [reader cellInWorkSheetIndex:sheetIndex row:RowIdx_foodIdStart+i col:idxCol_flag];
+                    if (cell.type!=cellBlank && [cell.val intValue]==1){
+                        NSMutableArray *nutrientIdAndFoodIdPair = [NSMutableArray arrayWithCapacity:2];
+                        [nutrientIdAndFoodIdPair addObject:nutrientId];
+                        [nutrientIdAndFoodIdPair addObject:foodId];
+                        [nutrientIdAndFoodIdPairs addObject:nutrientIdAndFoodIdPair];
+                    }
+                }//for i
+            }
+            idxCol_nutrient+=2;
+        }while (cellNotEmpty_nutrient);
+    }
+    
+    NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:5];
+    [retData setObject:foodIds forKey:@"foodIds"];
+    [retData setObject:nutrientIdAndFoodIdPairs forKey:@"nutrientIdAndFoodIdPairs"];
+    return retData;
+
+}
+-(void)convertExcelToSqlite_CustomRichFood2
+{
+    NSDictionary *data = [self readCustomRichFood2];
+    NSArray *rows2D = [data objectForKey:@"nutrientIdAndFoodIdPairs"];
+    NSArray *columnNames = [NSArray arrayWithObjects: COLUMN_NAME_NutrientID, COLUMN_NAME_NDB_No, nil];
+    NSString *tableName = TABLE_NAME_CustomRichFood2;
+    
+    assert(dbCon!=nil);
+    LZDBAccess *db = dbCon;
+    [db.da createTable_withTableName:tableName withColumnNames:columnNames withRows2D:rows2D withPrimaryKey:nil andIfNeedDropTable:false];
+    [db.da insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:false];
+}
 
 
 -(void)convertExcelToSqlite_NutrientDisease
@@ -1931,7 +2037,7 @@
     [db.da executeSql:@"CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, inputNameValuePairs TEXT, Note TEXT, calculateNameValuePairs TEXT);"];
     
     NSMutableArray *columnNames_SymptomType = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomTypeNameCn, COLUMN_NAME_SymptomTypeNameEn, COLUMN_NAME_ForSex, nil];
-    NSMutableArray *columnNames_Symptom = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomNameCn, COLUMN_NAME_SymptomNameEn, COLUMN_NAME_healthMark, nil];
+    NSMutableArray *columnNames_Symptom = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomNameCn, COLUMN_NAME_SymptomNameEn, COLUMN_NAME_HealthMark, nil];
     NSMutableArray *columnNames_SymptomNutrient = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_NutrientID, nil];
     NSMutableArray *columnNames_SymptomPossibleIllness = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_IllnessId, nil];
     NSMutableArray *columnNames_Illness = [NSMutableArray arrayWithObjects: COLUMN_NAME_IllnessId, COLUMN_NAME_IllnessNameCn, COLUMN_NAME_IllnessNameEn, nil];
