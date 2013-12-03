@@ -41,7 +41,8 @@
 //    [self.class test_inferIllnesses_withSymptoms1];
 //    [self.class test_getIllnessSuggestionsDistinct1];
 //    [self.class test_dalUserRecordSymptom1];
-    [self.class test_getSingleNutrientRichFoodWithAmount_forNutrients];
+//    [self.class test_getSingleNutrientRichFoodWithAmount_forNutrients];
+    [self.class test_getIllness2];
 
     
 //    [self.class testFormatResult1];
@@ -2541,6 +2542,18 @@ BOOL needLimitNutrients = FALSE;
     LZRecommendFood *rf = [[LZRecommendFood alloc]init];
     [rf getSingleNutrientRichFoodWithAmount_forNutrients:nutrientIds withUserInfo:userInfo andOptions:nil];
 }
+
+
++(void)test_getIllness2
+{
+    
+    LZDataAccess *da = [LZDataAccess singleton];
+    [da getAllIllness];
+    
+    [da getFoodCnTypes];
+    
+}
+
 
 @end
 

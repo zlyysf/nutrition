@@ -119,6 +119,7 @@
 -(NSArray*)getIllnessSuggestionsDistinct_ByIllnessIds:(NSArray*)illnessIds;
 
 -(NSArray*)getIllnessIds;
+-(NSArray*)getAllIllness;
 
 
 -(BOOL)insertUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairsData:(NSDictionary*)inputNameValuePairsData andNote:(NSString*)Note andCalculateNameValuePairsData:(NSDictionary*)calculateNameValuePairsData;

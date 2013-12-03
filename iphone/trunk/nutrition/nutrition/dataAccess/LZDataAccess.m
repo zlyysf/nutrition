@@ -2191,6 +2191,15 @@
     return IllnessIds;
 }
 
+-(NSArray*)getAllIllness
+{
+    NSLog(@"getAllIllness enter");
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Illness andFieldValuePairs:nil andSelectColumns:nil andOrderByPart: nil andNeedDistinct:false];
+    
+    NSLog(@"getAllIllness ret=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    return rows;
+}
+
 
 /*
  dayLocal 是 8位整数,如  20120908
@@ -2324,6 +2333,8 @@
 
 +(NSDictionary*)parseUserRecordSymptomRawRow:(NSDictionary*)rowDict
 {
+    if (rowDict==nil)
+        return nil;
     NSMutableDictionary *dataDict = [NSMutableDictionary dictionary];
     
     NSString *key;
