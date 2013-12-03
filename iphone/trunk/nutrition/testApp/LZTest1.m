@@ -37,11 +37,11 @@
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
 //    [self.class test_TranslationItem1];
 //    [self.class test_getFoodsByShowingPart];
-    [self.class test_getSymptom1];
+//    [self.class test_getSymptom1];
 //    [self.class test_inferIllnesses_withSymptoms1];
 //    [self.class test_getIllnessSuggestionsDistinct1];
 //    [self.class test_dalUserRecordSymptom1];
-//    [self.class test_getSingleNutrientRichFoodWithAmount_forNutrients];
+    [self.class test_getSingleNutrientRichFoodWithAmount_forNutrients];
 
     
 //    [self.class testFormatResult1];
