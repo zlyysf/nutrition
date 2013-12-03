@@ -1,31 +1,47 @@
 package com.lingzhimobile.nutritionfoodguide.v3.activity;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lingzhimobile.nutritionfoodguide.Constants;
+import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.R;
+import com.lingzhimobile.nutritionfoodguide.Tool;
 import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3RecommentFoodFragment;
 
 public class V3ActivityReport extends V3BaseActivity {
 
     LinearLayout elementLinearLayout;
     LinearLayout recommendViewPager;
-    LinearLayout diseaseLinearLayout;
+    ListView diseaseAttentionListView;
     LinearLayout attentionLinearLayout;
+
+    int heartRate;
+    int bloodPressureHigh, bloodPressureLow;
+    double bodyTemperature;
 
     String[] elements;
     List<Pair<String, String>> recommentFoods;
-    String[] diseases;
-    String[] attentions;
+
+    List<String> diseaseList = new ArrayList<String>();
+    List<List<String>> attentionList = new ArrayList<List<String>>();
+
+    DiseaseAttentionAdapter diseaseAttentionAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,24 +52,38 @@ public class V3ActivityReport extends V3BaseActivity {
         title.setText("健康报告");
         rightButton.setVisibility(View.GONE);
 
-        elements = new String[]{"维生素A","锌","维生素B12"};
+        // get data from intent
+        Intent intent = getIntent();
+        heartRate = intent.getIntExtra(Constants.Key_HeartRate, 101);
+        bloodPressureHigh = intent.getIntExtra(Constants.Key_BloodPressureHigh,
+                150);
+        bloodPressureLow = intent.getIntExtra(Constants.Key_BloodPressureLow,
+                130);
+        bodyTemperature = intent.getDoubleExtra(Constants.Key_BodyTemperature,
+                38.4);
+
+        // TODO
+        elements = new String[] { "维生素A", "锌", "维生素B12" };
         recommentFoods = new ArrayList<Pair<String, String>>();
-        recommentFoods.add(new Pair<String, String>("鸡蛋","2个"));
-        recommentFoods.add(new Pair<String, String>("开心果","50克"));
-        recommentFoods.add(new Pair<String, String>("生蚝","2个"));
-        recommentFoods.add(new Pair<String, String>("西兰花","100克"));
-        recommentFoods.add(new Pair<String, String>("鸡蛋","2个"));
-        recommentFoods.add(new Pair<String, String>("开心果","50克"));
-        recommentFoods.add(new Pair<String, String>("生蚝","2个"));
-        recommentFoods.add(new Pair<String, String>("西兰花","100克"));
+        recommentFoods.add(new Pair<String, String>("鸡蛋", "2个"));
+        recommentFoods.add(new Pair<String, String>("开心果", "50克"));
+        recommentFoods.add(new Pair<String, String>("生蚝", "2个"));
+        recommentFoods.add(new Pair<String, String>("西兰花", "100克"));
+        recommentFoods.add(new Pair<String, String>("鸡蛋", "2个"));
+        recommentFoods.add(new Pair<String, String>("开心果", "50克"));
+        recommentFoods.add(new Pair<String, String>("生蚝", "2个"));
+        recommentFoods.add(new Pair<String, String>("西兰花", "100克"));
 
         elementLinearLayout = (LinearLayout) findViewById(R.id.elementLinearLayout);
-        for (String element : elements){
-            View view = LayoutInflater.from(this).inflate(R.layout.v3_element_cell, null);
-            TextView elementTextView = (TextView)view.findViewById(R.id.elementTextView);
+        for (String element : elements) {
+            View view = LayoutInflater.from(this).inflate(
+                    R.layout.v3_element_cell, null);
+            TextView elementTextView = (TextView) view
+                    .findViewById(R.id.elementTextView);
             elementTextView.setText(element);
 
-            recommendViewPager = (LinearLayout) view.findViewById(R.id.recommendViewPager);
+            recommendViewPager = (LinearLayout) view
+                    .findViewById(R.id.recommendViewPager);
             for (Pair<String, String> recommentFood : recommentFoods) {
                 View viewPager = LayoutInflater.from(this).inflate(
                         R.layout.v3_recomment_food_cell, null);
@@ -69,25 +99,101 @@ public class V3ActivityReport extends V3BaseActivity {
             elementLinearLayout.addView(view);
         }
 
-        diseases = new String[] { "急性咽炎", "关节炎", "流行性感冒" };
-        attentions = new String[] { "1. 少吃熏制，腌制，富含硝酸盐的食品", "2. 避免大量饮酒，吸烟",
-                "3. 充分睡眠", "4. 多饮水，保持室内空气流通" };
+        diseaseAttentionListView = (ListView) findViewById(R.id.diseaseAttentionListView);
+        diseaseAttentionAdapter = new DiseaseAttentionAdapter();
+        diseaseAttentionListView.setAdapter(diseaseAttentionAdapter);
 
-        diseaseLinearLayout = (LinearLayout) findViewById(R.id.diseaseLinearLayout);
-        for (String disease : diseases){
-            View diseaseCell = LayoutInflater.from(this).inflate(R.layout.v3_disease_cell, null);
-            TextView diseaseTextView = (TextView)diseaseCell.findViewById(R.id.diseaseTextView);
-            diseaseTextView.setText(disease);
-            
-            attentionLinearLayout = (LinearLayout) diseaseCell.findViewById(R.id.attentionLinearLayout);
-            for (String attention : attentions){
-                View view = LayoutInflater.from(this).inflate(R.layout.v3_attention_cell, null);
-                TextView attentionTextView = (TextView)view.findViewById(R.id.attentionTextView);
+        GetDiseaseAttentionTask getDiseaseAttentionTask = new GetDiseaseAttentionTask();
+        getDiseaseAttentionTask.execute();
+    }
+
+    class GetDiseaseAttentionTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... arg0) {
+            //TODO
+            String[] symptomIds = { "咽喉发痒", "咽喉灼热", "咳嗽", "咳痰", "喘息", "食欲不振",
+                    "恶心", "呕吐", "上腹痛" };
+            HashMap<String, Object> measureData = new HashMap<String, Object>();
+            measureData.put(Constants.Key_HeartRate, heartRate);
+            measureData.put(Constants.Key_BloodPressureHigh,
+                    bloodPressureHigh);
+            measureData.put(Constants.Key_BloodPressureLow,
+                    bloodPressureLow);
+            measureData
+                    .put(Constants.Key_BodyTemperature, bodyTemperature);
+
+            diseaseList = Tool.inferIllnesses_withSymptoms(
+                    Tool.convertFromArrayToList(symptomIds), measureData);
+
+            DataAccess da = DataAccess.getSingleton(V3ActivityReport.this);
+
+            for (String disease : diseaseList) {
+                ArrayList<String> tempList = new ArrayList<String>();
+                tempList.add(disease);
+                ArrayList<HashMap<String, Object>> result = da
+                        .getIllnessSuggestionsDistinct_ByIllnessIds(tempList);
+                List<String> attention = new ArrayList<String>();
+                if (result != null) {
+                    for (HashMap<String, Object> map : result) {
+                        attention.add(map.get("SuggestionId").toString());
+                    }
+                }
+                attentionList.add(attention);
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void result) {
+            super.onPostExecute(result);
+            diseaseAttentionAdapter.notifyDataSetChanged();
+        }
+
+    }
+
+    class DiseaseAttentionAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return diseaseList.size();
+        }
+
+        @Override
+        public Object getItem(int arg0) {
+            return diseaseList.get(arg0);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(
+                        R.layout.v3_disease_cell, null);
+            }
+            TextView diseaseTextView = (TextView) convertView
+                    .findViewById(R.id.diseaseTextView);
+            diseaseTextView.setText(diseaseList.get(position));
+
+            attentionLinearLayout = (LinearLayout) convertView
+                    .findViewById(R.id.attentionLinearLayout);
+            attentionLinearLayout.removeAllViews();
+
+            for (String attention : attentionList.get(position)) {
+                View view = getLayoutInflater().inflate(
+                        R.layout.v3_attention_cell, null);
+                TextView attentionTextView = (TextView) view
+                        .findViewById(R.id.attentionTextView);
                 attentionTextView.setText(attention);
                 attentionLinearLayout.addView(view);
             }
 
-            diseaseLinearLayout.addView(diseaseCell);
+            return convertView;
         }
 
     }
@@ -95,6 +201,7 @@ public class V3ActivityReport extends V3BaseActivity {
     class RecommentFoodAdapter extends FragmentPagerAdapter {
 
         String[] mRecommentFoods;
+
         public RecommentFoodAdapter(FragmentManager fm, String[] recommentFoods) {
             super(fm);
             mRecommentFoods = recommentFoods;
@@ -109,6 +216,6 @@ public class V3ActivityReport extends V3BaseActivity {
         public int getCount() {
             return mRecommentFoods.length;
         }
-        
+
     }
 }

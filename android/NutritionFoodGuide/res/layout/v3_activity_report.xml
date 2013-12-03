@@ -90,14 +90,14 @@
                 android:orientation="vertical" >
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/diseaseLinearLayout"
+            <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
+                android:id="@+id/diseaseAttentionListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/wheat"
                 android:orientation="vertical" >
-            </LinearLayout>
+            </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
         </LinearLayout>
     </ScrollView>
 
