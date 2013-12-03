@@ -2321,6 +2321,8 @@ public class DataAccess {
 
 	static HashMap<String, Object> parseUserRecordSymptomRawRow(HashMap<String, Object> rawRowDict)
 	{
+		if (rawRowDict == null)
+			return null;
 		HashMap<String, Object> dataDict = new HashMap<String, Object>();
 	    
 	    String key;
