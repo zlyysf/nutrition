@@ -293,22 +293,6 @@
                                                     <rect key="frame" x="10" y="15" width="300" height="100"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray line.png" id="dSz-XN-w3A">
-                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="1"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray line.png" id="WSr-yS-EpD">
-                                                            <rect key="frame" x="0.0" y="100" width="300" height="1"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                        </imageView>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray vertical line.png" id="9Gq-fP-a64">
-                                                            <rect key="frame" x="0.0" y="0.0" width="1" height="100"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" heightSizable="YES"/>
-                                                        </imageView>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray vertical line.png" id="Zw0-jd-vro">
-                                                            <rect key="frame" x="300" y="0.0" width="1" height="100"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMinX="YES" heightSizable="YES"/>
-                                                        </imageView>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="eB0-uh-YIN">
                                                             <rect key="frame" x="140" y="51" width="1" height="8"/>
                                                             <autoresizingMask key="autoresizingMask"/>
@@ -381,22 +365,6 @@
                                                     <rect key="frame" x="10" y="0.0" width="300" height="80"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray line.png" id="4lj-gB-WOn">
-                                                            <rect key="frame" x="0.0" y="0.0" width="300" height="1"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray line.png" id="HVC-Or-agQ">
-                                                            <rect key="frame" x="0.0" y="80" width="300" height="1"/>
-                                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        </imageView>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray vertical line.png" id="YxO-sE-OJc">
-                                                            <rect key="frame" x="0.0" y="0.0" width="1" height="80"/>
-                                                            <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
-                                                        </imageView>
-                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray vertical line.png" id="pWk-O2-D76">
-                                                            <rect key="frame" x="300" y="0.0" width="1" height="80"/>
-                                                            <autoresizingMask key="autoresizingMask" heightSizable="YES"/>
-                                                        </imageView>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="NtL-Rl-WDx">
                                                             <rect key="frame" x="10" y="30" width="60" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -424,6 +392,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="backView" destination="SzN-AS-oNE" id="wqI-WC-Luj"/>
+                                            <outlet property="fullPercentLabel" destination="2IL-ZJ-7Po" id="Meu-ju-JZ0"/>
                                             <outlet property="headerLabel" destination="NtL-Rl-WDx" id="xWM-2p-FiL"/>
                                             <outlet property="healthScoreLabel" destination="BRK-je-z4D" id="dcx-2k-cIf"/>
                                         </connections>
@@ -484,14 +453,24 @@
                                             <outlet property="nutritionNameButton" destination="eZ4-sM-CKI" id="dOc-zN-REM"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NGReportDiseaseCell" id="35d-w5-e6q" customClass="NGReportDiseaseCell">
-                                        <rect key="frame" x="0.0" y="467" width="320" height="44"/>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NGReportDiseaseCell" rowHeight="60" id="35d-w5-e6q" customClass="NGReportDiseaseCell">
+                                        <rect key="frame" x="0.0" y="467" width="320" height="60"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="35d-w5-e6q" id="OIa-md-RLt">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <view contentMode="scaleToFill" id="6VE-dS-NrJ">
+                                                    <rect key="frame" x="10" y="0.0" width="300" height="60"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="backView" destination="6VE-dS-NrJ" id="eoO-JC-Vuq"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -1092,8 +1071,6 @@
     </scenes>
     <resources>
         <image name="clinic-50.png" width="25" height="25"/>
-        <image name="gray line.png" width="58" height="58"/>
-        <image name="gray vertical line.png" width="58" height="58"/>
         <image name="gray_horizon_ line.png" width="1" height="1"/>
         <image name="info-50.png" width="25" height="25"/>
         <image name="item_detail_arrow.png" width="50" height="50"/>

@@ -15,6 +15,13 @@
 #import "LZUtility.h"
 #import "LZNutrientionManager.h"
 #define BorderColor [UIColor lightGrayColor].CGColor
+
+#define AttentionItemLabelWidth 188
+#define AttentionItemOrderlabelWidth 12
+#define AttentionItemMargin 8
+#define AttentionLabelStartX 86
+#define BigLabelFont [UIFont systemFontOfSize:22.f]
+#define SmallLabelFont [UIFont systemFontOfSize:14.f]
 @interface NGHealthReportViewController ()<NGReportNutritonFoodCellDelegate>
 {
     BOOL isChinese;
@@ -178,10 +185,51 @@
 //    [self.mainScrollView setContentSize:CGSizeMake(320, totalheight)];
 //    
 //}
+-(float)calculateHeightForAttentionPart:(NSArray *)attentionArray
+{
+    int attentionCount = [attentionArray count];
+//    float onelineHeight = [@"o" sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap].height;
+    float height = 0;
+    for (int k = 0; k<attentionCount; k++)
+    {
+        NSDictionary *anItem = [attentionArray objectAtIndex:k];
+        NSString *text;
+        if (isChinese)
+        {
+            text = [anItem objectForKey:@"SuggestionCn"];
+        }
+        else
+        {
+            text = [anItem objectForKey:@"SuggestionEn"];
+        }
+        CGSize textSize = [text sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        height+= (textSize.height+AttentionItemMargin);
+//        UILabel *orderLabel = [[UILabel alloc]initWithFrame:CGRectMake(AttentionLabelStartX, attentionStartY, AttentionItemOrderlabelWidth, onelineHeight)];
+//        [orderLabel setFont:SmallLabelFont];
+//        [orderLabel setText:[NSString stringWithFormat:@"%d.",k+1]];
+//        [orderLabel setTextColor:[UIColor blackColor]];
+//        UILabel *attentionItemLabel = [[UILabel  alloc]initWithFrame:CGRectMake(AttentionLabelStartX+AttentionItemOrderlabelWidth,attentionStartY, textSize.width, textSize.height)];
+//        [attentionItemLabel setBackgroundColor:[UIColor clearColor]];
+//        [attentionItemLabel setFont:SmallLabelFont];
+//        [attentionItemLabel setNumberOfLines:0];
+//        [attentionItemLabel setText:text];
+//        [attentionItemLabel setTextColor:[UIColor blackColor]];
+//        [self.bottomView addSubview:attentionItemLabel];
+//        attentionStartY += (textSize.height+AttentionItemMargin);
+    }
+    height -=AttentionItemMargin;
+    return height;
+
+}
 -(void)nutritionButtonClicked:(LZCustomDataButton*)sender
 {
     NSString *nutritionId = (NSString *)sender.customData;
     NSLog(@"%@",nutritionId);
+}
+-(void)illnessButtonClicked:(LZCustomDataButton*)sender
+{
+    NSString *illnessId = (NSString *)sender.customData;
+    NSLog(@"%@",illnessId);
 }
 - (void)didReceiveMemoryWarning
 {
@@ -219,7 +267,12 @@
         [cell.backView.layer setBorderColor:BorderColor];
         [cell.backView.layer setBorderWidth:0.5f];
         cell.headerLabel.text = @"健康指数";
-        cell.healthScoreLabel.text = [LZUtility getAccurateStringWithDecimal:self.HealthValue];
+        //12,56,78 3,42,40,20
+        NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.HealthValue];
+        CGSize textSize = [scoreText sizeWithFont:[UIFont boldSystemFontOfSize:55.f] constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        [cell.healthScoreLabel setFrame:CGRectMake(78, 12, textSize.width, 56)];
+        [cell.fullPercentLabel setFrame:CGRectMake(78+textSize.width+3, 42, 40, 20)];
+        cell.healthScoreLabel.text = scoreText;
         return cell;
     }
     else if (indexPath.section == 2)
@@ -256,7 +309,96 @@
     else
     {
         NGReportDiseaseCell *cell = (NGReportDiseaseCell*)[tableView dequeueReusableCellWithIdentifier:@"NGReportDiseaseCell"];
-        
+        [cell.backView.layer setBorderColor:BorderColor];
+        [cell.backView.layer setBorderWidth:0.5f];
+        for (UIView *subv in cell.backView.subviews)
+        {
+            [subv removeFromSuperview];
+        }
+        NSString *illnessId = [self.potentialArray objectAtIndex:indexPath.row];
+        NSArray *attentionArray = [self.attentionDict objectForKey:illnessId];
+        float part2Height = 0;
+        BOOL needAddMore;
+        if (attentionArray == nil || [attentionArray count]==0)
+        {
+            if (indexPath.row == [self.potentialArray count]-1)
+            {
+                [cell.backView setFrame:CGRectMake(10, 0, 300, 60)];
+            }
+            else
+            {
+                [cell.backView setFrame:CGRectMake(10, 0, 300, 61)];
+            }
+            needAddMore = NO;
+        }
+        else
+        {
+            part2Height =[self calculateHeightForAttentionPart:attentionArray];
+            if (indexPath.row == [self.potentialArray count]-1)
+            {
+                [cell.backView setFrame:CGRectMake(10, 0, 300, part2Height+60+10+1)];
+            }
+            else
+            {
+                [cell.backView setFrame:CGRectMake(10, 0, 300, part2Height+60+10)];
+            }
+            needAddMore = YES;
+        }
+        UILabel *illnessLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 60, 20)];
+        [cell.backView addSubview:illnessLabel];
+        [illnessLabel setText:@"潜在疾病"];
+        [illnessLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0]];
+        [illnessLabel setFont:SmallLabelFont];
+        LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(AttentionLabelStartX, 12, 172, 36)];
+        illnessButton.customData =illnessId;
+        [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [illnessButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+        [illnessButton.titleLabel setFont:BigLabelFont];
+        [illnessButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [illnessButton setTitle:illnessId forState:UIControlStateNormal];
+        [cell.backView addSubview:illnessButton];
+        UIImageView *detailArrow = [[UIImageView alloc]initWithFrame:CGRectMake(265, 20, 20, 20)];
+        [detailArrow setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
+        [cell.backView addSubview:detailArrow];
+        if (needAddMore)
+        {
+            UILabel *attenLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 60+(part2Height-20)/2, 60, 20)];
+            [cell.backView addSubview:attenLabel];
+            [attenLabel setText:@"注意事项"];
+            [attenLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0]];
+            [attenLabel setFont:SmallLabelFont];
+            float onelineHeight = [@"o" sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap].height;
+            float startY = 60;
+            int attentionCount = [attentionArray count];
+            for (int k = 0; k<attentionCount; k++)
+            {
+                NSDictionary *anItem = [attentionArray objectAtIndex:k];
+                NSString *text;
+                if (isChinese)
+                {
+                    text = [anItem objectForKey:@"SuggestionCn"];
+                }
+                else
+                {
+                    text = [anItem objectForKey:@"SuggestionEn"];
+                }
+                CGSize textSize = [text sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
+                UILabel *orderLabel = [[UILabel alloc]initWithFrame:CGRectMake(AttentionLabelStartX, startY, AttentionItemOrderlabelWidth, onelineHeight)];
+                [orderLabel setFont:SmallLabelFont];
+                [orderLabel setText:[NSString stringWithFormat:@"%d.",k+1]];
+                [orderLabel setTextColor:[UIColor blackColor]];
+                [cell.backView addSubview:orderLabel];
+                UILabel *attentionItemLabel = [[UILabel  alloc]initWithFrame:CGRectMake(AttentionLabelStartX+AttentionItemOrderlabelWidth,startY, textSize.width, textSize.height)];
+                [attentionItemLabel setBackgroundColor:[UIColor clearColor]];
+                [attentionItemLabel setFont:SmallLabelFont];
+                [attentionItemLabel setNumberOfLines:0];
+                [attentionItemLabel setText:text];
+                [attentionItemLabel setTextColor:[UIColor blackColor]];
+                [cell.backView addSubview:attentionItemLabel];
+                startY+= (textSize.height+AttentionItemMargin);
+            }
+
+        }
         return cell;
     }
     
@@ -285,7 +427,16 @@
     }
     else
     {
-        return 44;
+        NSString *illness = [self.potentialArray objectAtIndex:indexPath.row];
+        NSArray *attentionArray = [self.attentionDict objectForKey:illness];
+        if (attentionArray == nil || [attentionArray count]==0)
+        {
+            return 60;
+        }
+        else
+        {
+            return 60+ [self calculateHeightForAttentionPart:attentionArray]+10;
+        }
     }
 
 }

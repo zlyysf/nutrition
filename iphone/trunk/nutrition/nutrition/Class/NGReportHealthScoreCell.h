@@ -13,4 +13,5 @@
 @property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong, nonatomic) IBOutlet UILabel *headerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *healthScoreLabel;
+@property (strong, nonatomic) IBOutlet UILabel *fullPercentLabel;
 @end

@@ -217,7 +217,24 @@
         [LackNutrientsAndFoods setObject:relatedFood forKey:nutritionId];
     }
     [CalculateNameValuePairsData setObject:LackNutrientsAndFoods forKey:Key_LackNutrientsAndFoods];
-    [CalculateNameValuePairsData setObject:illnessAttentionDict forKey:Key_InferIllnessesAndSuggestions];
+    NSMutableDictionary *illnessAttention = [[NSMutableDictionary alloc]init];
+    
+    for (NSString *illnessId in illnessAry)
+    {
+        NSArray *attentionArray = [illnessAttentionDict objectForKey:illnessId];
+        NSMutableArray *attentionIdArray = [[NSMutableArray alloc]init];
+        if (attentionArray != nil && [attentionArray count]!= 0)
+        {
+            for (NSDictionary *anAttention in attentionArray)
+            {
+                NSString *attentionId = [anAttention objectForKey:@"SuggestionId"];
+                [attentionIdArray addObject:attentionId];
+            }
+            [illnessAttention setObject:attentionIdArray forKey:illnessId];
+        }
+    }
+
+    [CalculateNameValuePairsData setObject:illnessAttention forKey:Key_InferIllnessesAndSuggestions];
 
 
         //2.判断

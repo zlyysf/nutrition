@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface NGReportDiseaseCell : UITableViewCell
+@property (strong, nonatomic) IBOutlet UIView *backView;
 
 @end
