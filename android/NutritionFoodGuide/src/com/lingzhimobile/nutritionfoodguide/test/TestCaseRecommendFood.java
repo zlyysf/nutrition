@@ -72,8 +72,8 @@ public class TestCaseRecommendFood {
 //	    Object formatResult = rf.calculateGiveFoodsSupplyNutrientAndFormatForUI(params);
 	}
 
-	
-	static HashMap<String, Object> getUserInfo()
+	// TODO
+	public static HashMap<String, Object> getUserInfo()
 	{
 		HashMap<String, Object> hmUserInfo = new HashMap<String, Object>();
 		int sex = 0;//Male

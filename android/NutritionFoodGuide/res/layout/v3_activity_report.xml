@@ -81,14 +81,14 @@
                     android:text="/100" />
             </LinearLayout>
 
-            <LinearLayout
-                android:id="@+id/elementLinearLayout"
+            <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
+                android:id="@+id/elementFoodListView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
                 android:background="@color/wheat"
                 android:orientation="vertical" >
-            </LinearLayout>
+            </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
 
             <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
                 android:id="@+id/diseaseAttentionListView"
