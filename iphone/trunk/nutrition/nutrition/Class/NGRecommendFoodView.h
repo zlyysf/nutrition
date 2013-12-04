@@ -10,5 +10,7 @@
 
 @interface NGRecommendFoodView : UIView
 - (id)initWithFrame:(CGRect)frame
-           foodInfo:(NSDictionary *)foodInfo;
+           foodName:(NSString *)foodName
+            foodPic:(NSString *)foodPic
+         foodAmount:(NSString *)foodAmount;
 @end

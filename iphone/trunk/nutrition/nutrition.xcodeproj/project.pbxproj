@@ -1207,8 +1207,6 @@
 		5F8DEE9717951E2B00C6E9F5 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				5F0A4153180E685F007B8715 /* LZCustomDataButton.h */,
-				5F0A4154180E685F007B8715 /* LZCustomDataButton.m */,
 				5F03D33D174B923F008EFB60 /* LZRecommendFoodCell.h */,
 				5F03D33E174B923F008EFB60 /* LZRecommendFoodCell.m */,
 				5F03D33F174B9240008EFB60 /* LZCheckNutritionCell.h */,
@@ -1240,6 +1238,8 @@
 		5F8DEE9817951E5D00C6E9F5 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				5F0A4153180E685F007B8715 /* LZCustomDataButton.h */,
+				5F0A4154180E685F007B8715 /* LZCustomDataButton.m */,
 				5F8DEE9317951DB000C6E9F5 /* LZRecommendFilterView.h */,
 				5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */,
 				5F5096191754777300461964 /* LZValueSelectorView.h */,

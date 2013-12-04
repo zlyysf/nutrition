@@ -404,8 +404,8 @@
                                                             <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BRK-je-z4D">
-                                                            <rect key="frame" x="108" y="12" width="65" height="56"/>
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="BRK-je-z4D">
+                                                            <rect key="frame" x="78" y="12" width="95" height="56"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="boldSystem" pointSize="55"/>
                                                             <nil key="highlightedColor"/>
@@ -461,12 +461,15 @@
                                                             <color key="textColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4l0-Ub-mZU">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eZ4-sM-CKI" customClass="LZCustomDataButton">
                                                             <rect key="frame" x="105" y="12" width="152" height="36"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                                            <nil key="highlightedColor"/>
-                                                        </label>
+                                                            <state key="normal">
+                                                                <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                            </state>
+                                                        </button>
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                                 </view>
@@ -478,7 +481,7 @@
                                             <outlet property="foodHeaderLabel" destination="WaL-2a-mSz" id="e9v-uA-PyH"/>
                                             <outlet property="foodScrollView" destination="8DT-Gt-Bga" id="LeN-Jt-sEx"/>
                                             <outlet property="nutritionHeaderlabel" destination="Ku7-vg-Wci" id="aSU-5Q-KKS"/>
-                                            <outlet property="nutritonLabel" destination="4l0-Ub-mZU" id="Q37-I1-Ec4"/>
+                                            <outlet property="nutritionNameButton" destination="eZ4-sM-CKI" id="dOc-zN-REM"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="NGReportDiseaseCell" id="35d-w5-e6q" customClass="NGReportDiseaseCell">

@@ -1540,7 +1540,18 @@
     return [date dateByAddingTimeInterval:-years*365*24*60*60];
 }
 
-
++(NSString*)getAccurateStringWithDecimal:(float)num
+{
+    int numInt = (int)num;
+    if (num-numInt>Config_nearZero)
+    {
+        return [NSString stringWithFormat:@"%.1f",num];
+    }
+    else
+    {
+        return [NSString stringWithFormat:@"%d",numInt];
+    }
+}
 
 
 

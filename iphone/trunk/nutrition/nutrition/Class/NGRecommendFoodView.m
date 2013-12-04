@@ -11,7 +11,9 @@
 @implementation NGRecommendFoodView
 
 - (id)initWithFrame:(CGRect)frame
-           foodInfo:(NSDictionary *)foodInfo
+           foodName:(NSString *)foodName
+            foodPic:(NSString *)foodPic
+         foodAmount:(NSString *)foodAmount
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -19,20 +21,18 @@
         self.layer.borderColor = [UIColor lightGrayColor].CGColor;
         self.layer.borderWidth = 0.5f;
         self.backgroundColor = [UIColor blackColor];
-        NSString *foodPic = [foodInfo objectForKey:@"foodpic"];
         UIImageView *foodImageView = [[UIImageView alloc]initWithFrame:CGRectMake(0, 0, FoodPicSideWidth, FoodPicSideWidth)];
-        [foodImageView setImage:[UIImage imageNamed:foodPic]];
+        UIImage *foodImage = [UIImage imageWithContentsOfFile:foodPic];
+        [foodImageView setImage:foodImage];
         [self addSubview:foodImageView];
-        NSString *foodName = [foodInfo objectForKey:@"foodname"];
-        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 80, 80, 20)];
+        UILabel *nameLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 82, 80, 20)];
         [nameLabel setFont:[UIFont systemFontOfSize:14]];
         [nameLabel setTextAlignment:UITextAlignmentCenter];
         [nameLabel  setBackgroundColor:[UIColor clearColor]];
         [nameLabel setTextColor:[UIColor whiteColor]];
         nameLabel.text = foodName;
         [self addSubview:nameLabel];
-        NSString *foodAmount = [foodInfo objectForKey:@"foodamount"];
-        UILabel *amountLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 100, 80, 20)];
+        UILabel *amountLabel = [[UILabel alloc]initWithFrame:CGRectMake(0, 98, 80, 20)];
         [amountLabel setFont:[UIFont systemFontOfSize:14]];
         [amountLabel setTextAlignment:UITextAlignmentCenter];
         [amountLabel  setBackgroundColor:[UIColor clearColor]];

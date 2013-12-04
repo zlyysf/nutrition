@@ -210,7 +210,6 @@
         NSMutableDictionary *relatedFood = [[NSMutableDictionary alloc]init];
         for (NSDictionary * aFood in recFood)
         {
-#warning lack key here
             NSNumber *amount = [aFood objectForKey:@"FoodAmount"];
             NSString *foodId = [aFood objectForKey:@"NDB_No"];
             [relatedFood setObject:amount forKey:foodId];
@@ -234,9 +233,17 @@
     {
         isUserFirstSave = NO;
     }
-
+    NSDictionary *dataToSave = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:dayLocal],@"dayLocal" ,today,@"date",InputNameValuePairsData,@"InputNameValuePairsData",note,@"note",CalculateNameValuePairsData,@"CalculateNameValuePairsData",nil];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
     NGHealthReportViewController *healthReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGHealthReportViewController"];
+    healthReportViewController.isFirstSave = isUserFirstSave;
+    healthReportViewController.BMIValue = userBMI;
+    healthReportViewController.HealthValue = healthScore;
+    healthReportViewController.lackNutritionArray = lackNutritionArray;
+    healthReportViewController.potentialArray = illnessAry;
+    healthReportViewController.attentionDict = illnessAttentionDict;
+    healthReportViewController.recommendFoodDict = recommendedFoods;
+    healthReportViewController.dataToSave = dataToSave;
     [self.navigationController pushViewController:healthReportViewController animated:YES];
 }
 -(void)viewWillAppear:(BOOL)animated
