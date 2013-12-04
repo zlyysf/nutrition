@@ -2,6 +2,7 @@ package com.lingzhimobile.nutritionfoodguide;
 
 import java.io.*;
 import java.lang.reflect.Array;
+import java.nio.charset.Charset;
 import java.util.*;
 import java.util.zip.*;
 
@@ -14,6 +15,8 @@ import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.ActivityManager.RunningTaskInfo;
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
@@ -23,6 +26,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Path;
 import android.graphics.drawable.Drawable;
 import android.os.DropBoxManager.Entry;
+import android.provider.Settings.Secure;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 
 public class Tool {
@@ -1454,7 +1459,29 @@ public class Tool {
     	return al;
     }  
   
-	
+    public static String getAndroidUniqueID(Context context) {
+        TelephonyManager tm = (TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE);
+        String deviceId = tm.getDeviceId();
+        if (deviceId == null)//pad has no deviceId
+            deviceId = Secure.getString(context.getContentResolver(),Secure.ANDROID_ID);
+        Log.d(LogTag, "getAndroidUniqueID ret:"+deviceId);
+        return deviceId;
+    }
+    
+    public static byte[] getUtf8Byte(String dataString){
+    	if (dataString == null)
+    		return null;
+    	Charset utf8charset = Charset.forName("UTF-8");
+		byte[] dataByte = dataString.getBytes(utf8charset);
+		return dataByte;
+    }
+	public static String getStringFromUtf8Byte(byte[] dataByte){
+		if (dataByte==null)
+			return null;
+		Charset utf8charset = Charset.forName("UTF-8");
+		String dataString = new String(dataByte, utf8charset);
+		return dataString;
+	}
 }
 
 

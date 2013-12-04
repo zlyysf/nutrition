@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.v3.adapter.V3HomeTabAdapter;
+import com.parse.ParseAnalytics;
 
 public class V3ActivityHome extends V3BaseActivity {
 
@@ -25,6 +26,8 @@ public class V3ActivityHome extends V3BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        ParseAnalytics.trackAppOpened(getIntent());
 
         setContentView(R.layout.tab_activity);
         title = (TextView) findViewById(R.id.titleText);

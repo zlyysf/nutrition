@@ -5,6 +5,15 @@ import android.net.Uri;
 
 public class Constants {
 	
+	public static final String ParseApp_ApplicationID = "fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1";//zlyysf nutrition1 app
+	public static final String ParseApp_ClientKey = "TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex";//zlyysf nutrition1 app
+	
+	public static final String ParseObject_UserRecord = "UserRecord";
+	public static final String ParseObjectKey_objectId = "objectId";
+	public static final String ParseObjectKey_UserRecord_deviceId = "deviceId";
+	public static final String ParseObjectKey_UserRecord_attachFile = "attachFile";
+
+	
 	public static final boolean KeyIsEnvironmentDebug = true;
 	public static final String DBupdateTime = "201311211600";
 	
