@@ -21,3 +21,11 @@ dist/
 build/
 
 UserInterfaceState.xcuserstate
+
+android/NutritionFoodGuide/bin
+android/NutritionFoodGuide/gen
+android/library/FlowLayout/bin
+android/library/FlowLayout/gen
+
+webPortal/.settings
+webPortal/.project
