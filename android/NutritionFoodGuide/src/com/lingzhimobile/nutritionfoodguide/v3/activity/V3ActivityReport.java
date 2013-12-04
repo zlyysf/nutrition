@@ -29,7 +29,6 @@ import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3RecommentFoodFragment;
 public class V3ActivityReport extends V3BaseActivity {
 
     ListView elementFoodListView;
-    LinearLayout recommendViewPager;
     ListView diseaseAttentionListView;
     LinearLayout attentionLinearLayout;
 
@@ -69,7 +68,6 @@ public class V3ActivityReport extends V3BaseActivity {
                 38.4);
 
         // TODO
-        elements = new String[] { "维生素A", "锌", "维生素B12" };
         recommentFoods = new ArrayList<Pair<String, String>>();
         recommentFoods.add(new Pair<String, String>("鸡蛋", "2个"));
         recommentFoods.add(new Pair<String, String>("开心果", "50克"));
@@ -191,13 +189,13 @@ public class V3ActivityReport extends V3BaseActivity {
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
                 convertView = getLayoutInflater().inflate(
-                        R.layout.v3_element_cell, null);
+                        R.layout.v3_nutrient_cell, null);
             }
             TextView elementTextView = (TextView) convertView
-                    .findViewById(R.id.elementTextView);
+                    .findViewById(R.id.nutrientTextView);
             elementTextView.setText(nutrientList.get(position));
 
-            recommendViewPager = (LinearLayout) convertView
+            LinearLayout recommendViewPager = (LinearLayout) convertView
                     .findViewById(R.id.recommendViewPager);
             recommendViewPager.removeAllViews();
             for (Pair<String, String> recommentFood : recommentFoods) {
