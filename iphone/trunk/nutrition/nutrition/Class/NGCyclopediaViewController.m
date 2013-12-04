@@ -14,11 +14,14 @@
 #import "LZConstants.h"
 #import "LZFoodTypeButton.h"
 #import "LZDailyIntakeViewController.h"
+#import "LZCustomDataButton.h"
+#import "LZNutrientionManager.h"
+#import "LZUtility.h"
 #define DiseaseItemTopMargin 10
 #define DiseaseItemMargin 9
 #define DiseaseItemBottomMarigin 40
 #define DiseaseItemLabelHeight 36
-#define DiseaseItemLabelStartX 90
+#define DiseaseItemLabelStartX 70
 #define DiseaseDetailArrowStartX 261
 #define FoodItemMargin 20
 @interface NGCyclopediaViewController ()
@@ -52,13 +55,17 @@
     else{
         isChinese = NO;
     }
-
-    self.commonDiseaseArray = [NSArray arrayWithObjects:@"急性咽炎",@"关节炎",@"流行性感冒",@"急性胃炎",nil];
+    LZDataAccess *da = [LZDataAccess singleton];
+    self.commonDiseaseArray = [da getAllIllness];
     self.nutritionArray = [LZRecommendFood getCustomNutrients:nil];
-    self.foodArray = [[LZDataAccess singleton]getFoodCnTypes];
-    self.nutritionVitaminArray = [NSArray arrayWithObjects:@"A",@"B2",@"B6",@"B9",@"B12",@"C",@"D",@"E", nil];
-    self.nutritionMineralArray = [NSArray arrayWithObjects:@"铁",@"钙",@"镁",@"钾",@"锌", nil];
-    self.nutritionOtherArray = [NSArray arrayWithObjects:@"蛋白质",@"纤维", nil];
+    self.foodArray = [da getFoodCnTypes];
+    //@"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",
+    //@"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",@"Vit_B12_(µg)",
+    //@"Calcium_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Zinc_(mg)",@"Potassium_(mg)",
+    //@"Fiber_TD_(g)",@"Protein_(g)"
+    self.nutritionVitaminArray = [NSArray arrayWithObjects:@"Vit_A_RAE",@"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",@"Vit_B12_(µg)",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)", nil];
+    self.nutritionMineralArray = [NSArray arrayWithObjects:@"Iron_(mg)",@"Calcium_(mg)",@"Magnesium_(mg)",@"Potassium_(mg)",@"Zinc_(mg)", nil];
+    self.nutritionOtherArray = [NSArray arrayWithObjects:@"Protein_(g)",@"Fiber_TD_(g)", nil];
     int count1 = [self.nutritionVitaminArray count];
     int count2 = [self. nutritionMineralArray count];
     int count3 = [self.nutritionOtherArray count];
@@ -73,7 +80,25 @@
     foodCellHeight = 20+30+ totalFloor*(80+FoodItemMargin)+FoodItemMargin;
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
 }
+-(NSString *)getNutritionName:(NSString *)nutritionId
+{
+    LZNutrientionManager*nm = [LZNutrientionManager SharedInstance];
+    NSDictionary *dict = [nm getNutritionInfo:nutritionId];
+    //UIColor *backColor = [LZUtility getNutrientColorForNutrientId:nutritionId];
+    //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
+    NSString *queryKey;
+    if (isChinese)
+    {
+        queryKey = @"IconTitleCn";
+    }
+    else
+    {
+        queryKey = @"IconTitleEn";
+    }
+    NSString *nutritionName = [dict objectForKey:queryKey];
+    return nutritionName;
 
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -111,15 +136,28 @@
             cell.headerLabel.text = @"  常见疾病";
             for (int i =0 ; i< [self.commonDiseaseArray count]; i++)
             {
-                UILabel *diseaseItemLabel = [[UILabel  alloc]initWithFrame:CGRectMake(DiseaseItemLabelStartX, 30+DiseaseItemTopMargin+i*(DiseaseItemLabelHeight+DiseaseItemMargin), 140, DiseaseItemLabelHeight)];
-                [cell.backView addSubview:diseaseItemLabel];
-                diseaseItemLabel.text = [self.commonDiseaseArray objectAtIndex:i];
-                [diseaseItemLabel setFont:[UIFont systemFontOfSize:22]];
-                [diseaseItemLabel setTextColor:[UIColor blackColor]];
-                [diseaseItemLabel setBackgroundColor:[UIColor clearColor]];
+                NSDictionary *illnessDict = [self.commonDiseaseArray objectAtIndex:i];
+                NSString *illnessId = [illnessDict objectForKey:@"IllnessId"];
+                NSString *illnessName;
+                if (isChinese) {
+                    illnessName =[illnessDict objectForKey:@"IllnessNameCn"];
+                }
+                else
+                {
+                    illnessName =[illnessDict objectForKey:@"IllnessNameEn"];
+                }
+                LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(DiseaseItemLabelStartX, 30+DiseaseItemTopMargin+i*(DiseaseItemLabelHeight+DiseaseItemMargin), 160, DiseaseItemLabelHeight)];
+                [cell.backView addSubview:illnessButton];
+                illnessButton.customData = illnessId;
+                [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [illnessButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+                [illnessButton.titleLabel setFont:[UIFont systemFontOfSize:22]];
+                [illnessButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+                [illnessButton setTitle:illnessName forState:UIControlStateNormal];
+            
                 UIImageView *arrowImage = [[UIImageView alloc]initWithFrame:CGRectMake(DiseaseDetailArrowStartX, 0, 20, 20)];
                 [cell.backView addSubview:arrowImage];
-                CGPoint potentialLabelCenter = diseaseItemLabel.center;
+                CGPoint potentialLabelCenter = illnessButton.center;
                 CGPoint arrowCenter = CGPointMake(arrowImage.center.x, potentialLabelCenter.y);
                 arrowImage.center = arrowCenter;
                 [arrowImage setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
@@ -158,13 +196,17 @@
                     startY += 50;
                 }
                 startX = 80+(i-(floor-1)*perRowCount)*55;
-                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(startX,startY, 40, 30)];
+                LZCustomDataButton *button = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(startX,startY, 40, 30)];
                 [cell.backView addSubview:button];
                 //button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
-                [button setBackgroundColor:[UIColor lightGrayColor]];
-                [button setTitle:[self.nutritionVitaminArray objectAtIndex:i] forState:UIControlStateNormal];
+                NSString *nutritionId =[self.nutritionVitaminArray objectAtIndex:i];
+                [button setBackgroundColor:[LZUtility getNutrientColorForNutrientId:nutritionId]];
+                button.customData = nutritionId;
+                [button addTarget:self action:@selector(nutritionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                NSString *nutritionName = [self getNutritionName:nutritionId];
+                [button setTitle:nutritionName forState:UIControlStateNormal];
                 [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
-                [button.titleLabel setTextColor:[UIColor blackColor]];
+                [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [button.layer setMasksToBounds:YES];
                 [button.layer setCornerRadius:3];
                 
@@ -189,13 +231,17 @@
                 }
                 startX = 80+(i-(floor-1)*perRowCount)*55;
                 
-                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(startX,startY, 40, 30)];
+                LZCustomDataButton *button = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(startX,startY, 40, 30)];
                 [cell.backView addSubview:button];
                 //button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
-                [button setBackgroundColor:[UIColor lightGrayColor]];
-                [button setTitle:[self.nutritionMineralArray objectAtIndex:i] forState:UIControlStateNormal];
+                NSString *nutritionId =[self.nutritionMineralArray objectAtIndex:i];
+                [button setBackgroundColor:[LZUtility getNutrientColorForNutrientId:nutritionId]];
+                button.customData = nutritionId;
+                [button addTarget:self action:@selector(nutritionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                NSString *nutritionName = [self getNutritionName:nutritionId];
+                [button setTitle:nutritionName forState:UIControlStateNormal];
                 [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
-                [button.titleLabel setTextColor:[UIColor blackColor]];
+                [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [button.layer setMasksToBounds:YES];
                 [button.layer setCornerRadius:3];
                 
@@ -220,13 +266,18 @@
                 }
                 startX = 80+(i-(floor-1)*perRowCount)*90;
                 
-                UIButton *button = [[UIButton alloc]initWithFrame:CGRectMake(startX,startY, 60, 30)];
+                LZCustomDataButton *button = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(startX,startY, 60, 30)];
                 [cell.backView addSubview:button];
                 //button.typeIcon.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@_small.png",typeName]];
-                [button setBackgroundColor:[UIColor lightGrayColor]];
-                [button setTitle:[self.nutritionOtherArray objectAtIndex:i] forState:UIControlStateNormal];
+                
+                NSString *nutritionId =[self.nutritionOtherArray objectAtIndex:i];
+                [button setBackgroundColor:[LZUtility getNutrientColorForNutrientId:nutritionId]];
+                button.customData = nutritionId;
+                [button addTarget:self action:@selector(nutritionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                NSString *nutritionName = [self getNutritionName:nutritionId];
+                [button setTitle:nutritionName forState:UIControlStateNormal];
                 [button.titleLabel setFont:[UIFont systemFontOfSize:14]];
-                [button.titleLabel setTextColor:[UIColor blackColor]];
+                [button setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
                 [button.layer setMasksToBounds:YES];
                 [button.layer setCornerRadius:3];
                 
@@ -290,6 +341,16 @@
             return cell;
         }
     }
+}
+-(void)nutritionButtonClicked:(LZCustomDataButton *)sender
+{
+    NSString *nutritionId = (NSString *)sender.customData;
+    NSLog(@"%@",nutritionId);
+}
+-(void)illnessButtonClicked:(LZCustomDataButton *)sender
+{
+    NSString *illnessId = (NSString *)sender.customData;
+    NSLog(@"%@",illnessId);
 }
 -(void)typeButtonTapped:(UIButton *)sender
 {

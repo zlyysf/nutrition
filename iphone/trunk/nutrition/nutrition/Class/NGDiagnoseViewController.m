@@ -22,10 +22,11 @@
 }
 @property (strong,nonatomic) UITextField *currentTextField;
 @property (strong,nonatomic) UITextView *currentTextView;
+@property (strong,nonatomic) NSMutableDictionary *userInputValueDict;
 @end
 
 @implementation NGDiagnoseViewController
-@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField;
+@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField,userInputValueDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -51,13 +52,22 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     UIBarButtonItem *submitItem = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(getHealthReport)];
     self.navigationItem.rightBarButtonItem = submitItem;
-
+    userInputValueDict = [[NSMutableDictionary alloc]init];
     isChinese =[LZUtility isCurrentLanguageChinese];
     
     	// Do any additional setup after loading the view.
 }
 -(void)getHealthReport
 {
+    if(self.currentTextField)
+    {
+        [self.currentTextField resignFirstResponder];
+    }
+    if (self.currentTextView)
+    {
+        [self.currentTextView resignFirstResponder];
+    }
+
     //根据状态dict 得到用户选的症状
     NSMutableArray *userSelectedSymptom = [[NSMutableArray alloc]init];//需保存数据
     for (NSString *symptomId in [symptomStateDict allKeys])
@@ -429,7 +439,7 @@
         [cell.backView.layer setBorderWidth:0.5f];
         [cell.headerNameLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
         [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        cell.headerNameLabel.text = @"  测量";
+        cell.headerNameLabel.text = @"  生理指标";
         cell.heatLabel.text = @"体温";
         cell.weightLabel.text = @"体重";
         cell.heartbeatLabel.text = @"心跳";
