@@ -121,6 +121,13 @@
 +(NSDate *)dateBeforeTodayForYears:(int)years;
 +(double)getBMI_withWeight:(double)weight andHeight:(double)height;
 +(NSString*)getAccurateStringWithDecimal:(float)num;
+
+
+
++(NSString *)getUniqueDeviceId;
+
+
+
 @end
 
 

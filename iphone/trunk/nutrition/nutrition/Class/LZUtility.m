@@ -11,6 +11,10 @@
 #import "LZRecommendFood.h"
 #import <math.h>
 #import "MBProgressHUD.h"
+#import "SSKeychain.h"
+#import <Security/Security.h>
+
+
 @implementation LZUtility
 
 +(NSDecimalNumber*)getDecimalFromDouble:(double)dval withScale:(NSInteger)scale
@@ -1552,6 +1556,36 @@
         return [NSString stringWithFormat:@"%d",numInt];
     }
 }
+
+#define UniqueDeviceId_Related_SSKeychain_ServiceName @"SSKeychain_ServiceName"
+#define UniqueDeviceId_Related_SSKeychain_Account @"SSKeychain_Account"
+
+// http://stackoverflow.com/questions/6993325/uidevice-uniqueidentifier-deprecated-what-to-do-now
++(NSString *)createNewUUID
+{
+    CFUUIDRef theUUID = CFUUIDCreate(NULL);
+    CFStringRef string = CFUUIDCreateString(NULL, theUUID);
+    CFRelease(theUUID);
+    return ( NSString *)CFBridgingRelease(string);
+}
++(NSString *)getUniqueDeviceId
+{
+    // getting the unique key (if present ) from keychain , assuming "your app identifier" as a key
+    NSString *retrieveuuid = [SSKeychain passwordForService:UniqueDeviceId_Related_SSKeychain_ServiceName account:UniqueDeviceId_Related_SSKeychain_Account];
+    if (retrieveuuid == nil) {
+        NSString *uuid  = [self createNewUUID];
+        [SSKeychain setPassword:uuid forService:UniqueDeviceId_Related_SSKeychain_ServiceName account:UniqueDeviceId_Related_SSKeychain_Account];
+    }
+    return retrieveuuid;
+}
+
+
+
+
+
+
+
+
 
 
 

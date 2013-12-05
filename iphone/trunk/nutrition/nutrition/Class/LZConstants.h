@@ -11,6 +11,14 @@
 
 #define KeyIsEnvironmentDebug 0
 
+#define ParseApp_ApplicationID @"fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1" //zlyysf nutrition1 app
+#define ParseApp_ClientKey @"TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex" //zlyysf nutrition1 app
+
+#define ParseObject_UserRecord @"UserRecord"
+#define ParseObjectKey_objectId @"objectId"
+#define ParseObjectKey_UserRecord_deviceId @"deviceId"
+#define ParseObjectKey_UserRecord_attachFile @"attachFile"
+
 #define KeyDebugSettingsDict @"KeyDebugSettingsDict"
 #define AppVersionCheckName @"NutritionFoodGuide"
 #define Config_needConsiderNutrientLoss FALSE

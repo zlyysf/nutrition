@@ -59,6 +59,14 @@
 		0882403E173A7E7400E71E6E /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882403D173A7E7400E71E6E /* readme.txt */; };
 		088241441744DE8000E71E6E /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
 		0882419F175621DE00E71E6E /* foodDealed in Resources */ = {isa = PBXBuildFile; fileRef = 0882419E175621DE00E71E6E /* foodDealed */; };
+		08859A0A18504BEC0063553D /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A0918504BEC0063553D /* SSKeychain.m */; };
+		08859A0B18504C690063553D /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A0918504BEC0063553D /* SSKeychain.m */; };
+		08859A0C18504C8C0063553D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D82517AF8E69000AEC06 /* Security.framework */; };
+		08859A0E18504CD90063553D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0D18504CD90063553D /* CFNetwork.framework */; };
+		08859A1018504CF80063553D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0F18504CF80063553D /* MobileCoreServices.framework */; };
+		08859A1218504D2C0063553D /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A1118504D2C0063553D /* libz.1.1.3.dylib */; };
+		08859A18185054030063553D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A17185054030063553D /* Parse.framework */; };
+		08859A1B185058390063553D /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
 		088B768417C4B8F200206959 /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768317C4B8F200206959 /* LZDataAccessUtil.m */; };
 		088B768517C4BADD00206959 /* LZDataAccessUtil.h in Sources */ = {isa = PBXBuildFile; fileRef = 088B768217C4B8F200206959 /* LZDataAccessUtil.h */; };
 		088B768617C4BADD00206959 /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768317C4B8F200206959 /* LZDataAccessUtil.m */; };
@@ -353,6 +361,13 @@
 		088241421744DE8000E71E6E /* LZTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZTest1.h; sourceTree = "<group>"; };
 		088241431744DE8000E71E6E /* LZTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZTest1.m; sourceTree = "<group>"; };
 		0882419E175621DE00E71E6E /* foodDealed */ = {isa = PBXFileReference; lastKnownFileType = folder; name = foodDealed; path = ../../../ui/pictures/foodDealed; sourceTree = "<group>"; };
+		08859A0818504BEC0063553D /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
+		08859A0918504BEC0063553D /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
+		08859A0D18504CD90063553D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		08859A0F18504CF80063553D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		08859A1118504D2C0063553D /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
+		08859A17185054030063553D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = nutrition/Parse.framework; sourceTree = "<group>"; };
+		08859A1A185058390063553D /* FBMissingSymbols.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBMissingSymbols.m; path = nutrition/Class/FBMissingSymbols.m; sourceTree = "<group>"; };
 		088B768217C4B8F200206959 /* LZDataAccessUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZDataAccessUtil.h; sourceTree = "<group>"; };
 		088B768317C4B8F200206959 /* LZDataAccessUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZDataAccessUtil.m; sourceTree = "<group>"; };
 		5F0081E917C47E6F000938C2 /* JWNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JWNavigationViewController.h; sourceTree = "<group>"; };
@@ -732,6 +747,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08859A0C18504C8C0063553D /* Security.framework in Frameworks */,
 				085C8D7917336A3D001A1ABB /* libsqlite3.dylib in Frameworks */,
 				085C8D5817336A29001A1ABB /* UIKit.framework in Frameworks */,
 				085C8D5917336A29001A1ABB /* Foundation.framework in Frameworks */,
@@ -743,24 +759,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08859A18185054030063553D /* Parse.framework in Frameworks */,
+				08859A1218504D2C0063553D /* libz.1.1.3.dylib in Frameworks */,
+				5F746C3A176B1E8600E68D0E /* SystemConfiguration.framework in Frameworks */,
+				5FF631D817702CD00068CBFE /* StoreKit.framework in Frameworks */,
 				5F90D82617AF8E69000AEC06 /* Security.framework in Frameworks */,
+				5F746C3C176B1E9000E68D0E /* QuartzCore.framework in Frameworks */,
+				08859A1018504CF80063553D /* MobileCoreServices.framework in Frameworks */,
 				5F90D81D17AF8921000AEC06 /* CoreLocation.framework in Frameworks */,
+				5F3338AD172A407E0096E7AE /* CoreGraphics.framework in Frameworks */,
+				08859A0E18504CD90063553D /* CFNetwork.framework in Frameworks */,
+				5FF631DC17702CDF0068CBFE /* AudioToolbox.framework in Frameworks */,
 				5F90D81B17AF8916000AEC06 /* MediaPlayer.framework in Frameworks */,
 				5F90D81917AF88F0000AEC06 /* AVFoundation.framework in Frameworks */,
 				5F90D81717AF88E1000AEC06 /* CoreMotion.framework in Frameworks */,
 				5F90D81517AF88C1000AEC06 /* CoreTelephony.framework in Frameworks */,
-				5FF631DC17702CDF0068CBFE /* AudioToolbox.framework in Frameworks */,
 				5FF631DA17702CD70068CBFE /* AdSupport.framework in Frameworks */,
-				5FF631D817702CD00068CBFE /* StoreKit.framework in Frameworks */,
 				5F746C40176B1EA900E68D0E /* libz.1.2.5.dylib in Frameworks */,
 				5F746C3E176B1E9F00E68D0E /* libicucore.dylib in Frameworks */,
-				5F746C3C176B1E9000E68D0E /* QuartzCore.framework in Frameworks */,
-				5F746C3A176B1E8600E68D0E /* SystemConfiguration.framework in Frameworks */,
 				5F746C031769A9BD00E68D0E /* libz.dylib in Frameworks */,
 				085C8D50173367AC001A1ABB /* libsqlite3.dylib in Frameworks */,
 				5F3338A9172A407E0096E7AE /* UIKit.framework in Frameworks */,
 				5F3338AB172A407E0096E7AE /* Foundation.framework in Frameworks */,
-				5F3338AD172A407E0096E7AE /* CoreGraphics.framework in Frameworks */,
 				5F9C128D17321935000E08E5 /* MessageUI.framework in Frameworks */,
 				5F746C011769A83E00E68D0E /* libMobClickLibrary.a in Frameworks */,
 				5FF631D517702C690068CBFE /* libGoogleAdMobAds.a in Frameworks */,
@@ -830,6 +850,7 @@
 				5F746C071769EB9A00E68D0E /* LZReviewAppManager.m */,
 				5FF6320017718E0E0068CBFE /* LZNutrientionManager.h */,
 				5FF6320117718E0F0068CBFE /* LZNutrientionManager.m */,
+				08859A1A185058390063553D /* FBMissingSymbols.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -870,6 +891,16 @@
 				0882419E175621DE00E71E6E /* foodDealed */,
 			);
 			name = ResExternal;
+			sourceTree = "<group>";
+		};
+		08859A0718504BEC0063553D /* sskeychain */ = {
+			isa = PBXGroup;
+			children = (
+				08859A0818504BEC0063553D /* SSKeychain.h */,
+				08859A0918504BEC0063553D /* SSKeychain.m */,
+			);
+			name = sskeychain;
+			path = nutrition/sskeychain;
 			sourceTree = "<group>";
 		};
 		5F0081E817C47E6F000938C2 /* JWNavigationViewController */ = {
@@ -920,6 +951,7 @@
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				08859A0718504BEC0063553D /* sskeychain */,
 				0818CA1218477B50003DB33A /* CDataScanner.m */,
 				5FECAD9F183885CA00D72A8C /* Nutrition2.0 */,
 				5FAB5764180266C200657793 /* ShareSDK_v2.5.1 */,
@@ -955,6 +987,10 @@
 		5F3338A7172A407E0096E7AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				08859A17185054030063553D /* Parse.framework */,
+				08859A1118504D2C0063553D /* libz.1.1.3.dylib */,
+				08859A0F18504CF80063553D /* MobileCoreServices.framework */,
+				08859A0D18504CD90063553D /* CFNetwork.framework */,
 				5F90D82517AF8E69000AEC06 /* Security.framework */,
 				5F90D81C17AF8921000AEC06 /* CoreLocation.framework */,
 				5F90D81A17AF8916000AEC06 /* MediaPlayer.framework */,
@@ -1849,6 +1885,7 @@
 				085C8D8817336B82001A1ABB /* CustomDB.dat in Sources */,
 				085C8D6217336A29001A1ABB /* main.m in Sources */,
 				085C8D6617336A29001A1ABB /* LZAppDelegate.m in Sources */,
+				08859A0B18504C690063553D /* SSKeychain.m in Sources */,
 				085C8D6F17336A29001A1ABB /* LZViewController.m in Sources */,
 				088241441744DE8000E71E6E /* LZTest1.m in Sources */,
 			);
@@ -1882,6 +1919,7 @@
 				5F03D34C174B9241008EFB60 /* LZNutritionSupplyCell.m in Sources */,
 				5F03D34D174B9241008EFB60 /* LZStandardContentCell.m in Sources */,
 				5F94A86517531CC100664B57 /* LZDietListMakeViewController.m in Sources */,
+				08859A1B185058390063553D /* FBMissingSymbols.m in Sources */,
 				5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */,
 				5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */,
 				5F62743A175C93F3006E46CA /* LZFoodNutritionCell.m in Sources */,
@@ -1917,6 +1955,7 @@
 				5F90D80D17AF8873000AEC06 /* CJSONScanner.m in Sources */,
 				5F90D80E17AF8873000AEC06 /* CJSONSerializer.m in Sources */,
 				5F90D80F17AF8873000AEC06 /* ioapi.c in Sources */,
+				08859A0A18504BEC0063553D /* SSKeychain.m in Sources */,
 				5F90D81017AF8873000AEC06 /* mztools.c in Sources */,
 				5F90D81117AF8873000AEC06 /* unzip.c in Sources */,
 				5F729BC4184320ED004FC428 /* NGCommonDiseaseCell.m in Sources */,
@@ -2152,14 +2191,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Connection\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Core\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend/GooglePlusSDK\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend/Pinterest.embeddedframework\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend/RenRenSDK\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/UI\"",
+					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1\"/**",
+					"\"$(SRCROOT)/nutrition/\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
@@ -2174,6 +2207,7 @@
 					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend/libWeiboSDK\"",
 					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend/SDKExport\"",
 					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend/TencentWeiboSSO\"",
+					"\"$(SRCROOT)/nutrition/Parse.framework\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "营养膳食指南";
@@ -2191,14 +2225,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Connection\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Core\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend/GooglePlusSDK\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend/Pinterest.embeddedframework\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend/RenRenSDK\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/Extend\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1\"",
-					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1/UI\"",
+					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1\"/**",
+					"\"$(SRCROOT)/nutrition/\"/**",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
