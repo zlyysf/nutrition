@@ -17,6 +17,7 @@
 #import "LZCustomDataButton.h"
 #import "LZNutrientionManager.h"
 #import "LZUtility.h"
+#import "NGIllnessInfoViewController.h"
 #define DiseaseItemTopMargin 10
 #define DiseaseItemMargin 9
 #define DiseaseItemBottomMarigin 40
@@ -351,6 +352,13 @@
 {
     NSString *illnessId = (NSString *)sender.customData;
     NSLog(@"%@",illnessId);
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGIllnessInfoViewController *illnessInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGIllnessInfoViewController"];
+    illnessInfoViewController.illnessURL = @"http://www.baidu.com";
+    illnessInfoViewController.title = illnessId;
+    [self.navigationController pushViewController:illnessInfoViewController animated:YES];
+
+    
 }
 -(void)typeButtonTapped:(UIButton *)sender
 {

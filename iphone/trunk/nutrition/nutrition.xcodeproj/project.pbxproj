@@ -298,6 +298,7 @@
 		5FECAD9E18387F4E00D72A8C /* LZGlobalService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECAD9D18387F4E00D72A8C /* LZGlobalService.m */; };
 		5FECADA21838912900D72A8C /* NGDiagnoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */; };
 		5FECADA51838B19D00D72A8C /* NGRecordHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */; };
+		5FF08A941850526C00A954C8 /* NGIllnessInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF08A931850526C00A954C8 /* NGIllnessInfoViewController.m */; };
 		5FF352F617F5504400B29E6A /* dot_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF352F517F5504200B29E6A /* dot_indicator@2x.png */; };
 		5FF593D5183DBB970011CEA3 /* NGDiagnoseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */; };
 		5FF593D8183DBC210011CEA3 /* NGDiagnosesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */; };
@@ -700,6 +701,8 @@
 		5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnoseViewController.m; path = nutrition/Class/NGDiagnoseViewController.m; sourceTree = "<group>"; };
 		5FECADA31838B19D00D72A8C /* NGRecordHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGRecordHistoryViewController.h; path = nutrition/Class/NGRecordHistoryViewController.h; sourceTree = "<group>"; };
 		5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGRecordHistoryViewController.m; path = nutrition/Class/NGRecordHistoryViewController.m; sourceTree = "<group>"; };
+		5FF08A921850526C00A954C8 /* NGIllnessInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGIllnessInfoViewController.h; path = nutrition/Class/NGIllnessInfoViewController.h; sourceTree = "<group>"; };
+		5FF08A931850526C00A954C8 /* NGIllnessInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGIllnessInfoViewController.m; path = nutrition/Class/NGIllnessInfoViewController.m; sourceTree = "<group>"; };
 		5FF352F517F5504200B29E6A /* dot_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dot_indicator@2x.png"; path = "nutrition/Resource/dot_indicator@2x.png"; sourceTree = "<group>"; };
 		5FF593D3183DBB970011CEA3 /* NGDiagnoseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDiagnoseCell.h; path = nutrition/Class/NGDiagnoseCell.h; sourceTree = "<group>"; };
 		5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnoseCell.m; path = nutrition/Class/NGDiagnoseCell.m; sourceTree = "<group>"; };
@@ -1153,6 +1156,8 @@
 				5F22E3DB18435DB7001CCC89 /* NGUerInfoViewController.m */,
 				5FBD42E5184C6D8200759A3C /* NGMainTabbarViewController.h */,
 				5FBD42E6184C6D8200759A3C /* NGMainTabbarViewController.m */,
+				5FF08A921850526C00A954C8 /* NGIllnessInfoViewController.h */,
+				5FF08A931850526C00A954C8 /* NGIllnessInfoViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1914,6 +1919,7 @@
 				5F729BBE1841DB29004FC428 /* NGCycleScrollView.m in Sources */,
 				5F03D349174B9241008EFB60 /* LZRecommendFoodCell.m in Sources */,
 				5FECAD9E18387F4E00D72A8C /* LZGlobalService.m in Sources */,
+				5FF08A941850526C00A954C8 /* NGIllnessInfoViewController.m in Sources */,
 				5F03D34A174B9241008EFB60 /* LZCheckNutritionCell.m in Sources */,
 				5F03D34B174B9241008EFB60 /* LZFoodDetailController.m in Sources */,
 				5F03D34C174B9241008EFB60 /* LZNutritionSupplyCell.m in Sources */,

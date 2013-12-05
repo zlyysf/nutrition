@@ -93,8 +93,8 @@
     }
     
     //笔记
-    NGNoteCell *notecell = (NGNoteCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGNoteCell"];
-    NSString *note = notecell.noteTextView.text;//需保存数据
+    
+    NSString *note = [self.userInputValueDict objectForKey:@"note"];//需保存数据
     
     //根据症状获得症状健康分值
     LZDataAccess *da = [LZDataAccess singleton];
@@ -104,12 +104,11 @@
     
     //根据症状和测量数据得到用户的潜在疾病和BMI值
         //1.计算BMI
-    NGMeasurementCell *cell =(NGMeasurementCell*) [self.listView dequeueReusableCellWithIdentifier:@"NGMeasurementCell"];
-    NSString *heat =cell.heatTextField.text;
-    NSString *heartbeat = cell.heartbeatTextField.text;
-    NSString *weight = cell.weightTextField.text;
-    NSString *lowpress = cell.lowpressureTextField.text;
-    NSString *highpress = cell.highpressureTextField.text;
+    NSString *weight = [self.userInputValueDict objectForKey:@"weight"];
+    NSString *heat = [self.userInputValueDict objectForKey:@"heat"];
+    NSString *heartbeat = [self.userInputValueDict objectForKey:@"heartbeat"];
+    NSString *highpress = [self.userInputValueDict objectForKey:@"highpressure"];
+    NSString *lowpress = [self.userInputValueDict objectForKey:@"lowpressure"];
     NSNumber *userWeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserWeightKey];
     NSNumber *paramHeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserHeightKey];
     double userBMI;//需保存数据
@@ -457,6 +456,16 @@
         cell.heartbeatUnitLabel.text = @"次/分钟";
         cell.highpressureUnitLabel.text = @"毫米水银";
         cell.lowpressureUnitLabel.text = @"毫米水银";
+        NSString *weight = [self.userInputValueDict objectForKey:@"weight"];
+        NSString *heat = [self.userInputValueDict objectForKey:@"heat"];
+        NSString *heartbeat = [self.userInputValueDict objectForKey:@"heartbeat"];
+        NSString *highpressure = [self.userInputValueDict objectForKey:@"highpressure"];
+        NSString *lowpressure = [self.userInputValueDict objectForKey:@"lowpressure"];
+        cell.weightTextField.text = weight;
+        cell.heatTextField.text = heat;
+        cell.heartbeatTextField.text = heartbeat;
+        cell.highpressureTextField.text = highpressure;
+        cell.lowpressureTextField.text = lowpressure;
         cell.heatTextField.delegate = self;
         cell.weightTextField.delegate = self;
         cell.heartbeatTextField.delegate = self;
@@ -478,6 +487,8 @@
         [cell.backView.layer setBorderWidth:0.5f];
         [cell.headerNameLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
         [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        NSString *note = [self.userInputValueDict objectForKey:@"note"];
+        cell.noteTextView.text = note;
         cell.headerNameLabel.text = @"  笔记";
         cell.noteTextView.delegate = self;
         return cell;
@@ -587,30 +598,26 @@
 -(void)textFieldDidEndEditing:(UITextField *)textField
 {
     int tag = textField.tag;
-    NSNumber *number = [NSNumber numberWithInt:[textField.text intValue]];
-    NSString *message;
+    NSString *content = textField.text;
     switch (tag) {
         case 101:
-            message = @"体温";
+            [self.userInputValueDict setObject:content forKey:@"heat"];
             break;
         case 102:
-            message = @"体重";
+            [self.userInputValueDict setObject:content forKey:@"weight"];
             break;
         case 103:
-            message = @"心跳";
+            [self.userInputValueDict setObject:content forKey:@"heartbeat"];
             break;
         case 104:
-            message = @"高压";
+            [self.userInputValueDict setObject:content forKey:@"highpressure"];
             break;
         case 105:
-            message = @"低压";
+            [self.userInputValueDict setObject:content forKey:@"lowpressure"];
             break;
-            
         default:
             break;
     }
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:[NSString stringWithFormat:@"%@%d",message,[number intValue]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alert show];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -636,10 +643,11 @@
 - (void)textViewDidEndEditing:(UITextView *)textView
 {
     int tag = textView.tag;
+    NSString *content = textView.text;
+    
     if (tag == 106)
     {
-        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:textView.text delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-        [alert show];
+        [self.userInputValueDict setObject:content forKey:@"note"];
     }
 }
 

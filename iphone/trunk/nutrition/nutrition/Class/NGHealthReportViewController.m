@@ -14,6 +14,7 @@
 #import "LZDataAccess.h"
 #import "LZUtility.h"
 #import "LZNutrientionManager.h"
+#import "NGIllnessInfoViewController.h"
 #define BorderColor [UIColor lightGrayColor].CGColor
 
 #define AttentionItemLabelWidth 188
@@ -230,6 +231,11 @@
 {
     NSString *illnessId = (NSString *)sender.customData;
     NSLog(@"%@",illnessId);
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGIllnessInfoViewController *illnessInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGIllnessInfoViewController"];
+    illnessInfoViewController.illnessURL = @"http://www.baidu.com";
+    illnessInfoViewController.title = illnessId;
+    [self.navigationController pushViewController:illnessInfoViewController animated:YES];
 }
 - (void)didReceiveMemoryWarning
 {
