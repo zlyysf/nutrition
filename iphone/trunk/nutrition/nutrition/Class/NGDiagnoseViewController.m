@@ -52,7 +52,7 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     UIBarButtonItem *submitItem = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(getHealthReport)];
     self.navigationItem.rightBarButtonItem = submitItem;
-    userInputValueDict = [[NSMutableDictionary alloc]init];
+    userInputValueDict = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"",@"note",@"",@"weight",@"",@"heat",@"",@"heartbeat",@"",@"highpressure",@"",@"lowpressure", nil];
     isChinese =[LZUtility isCurrentLanguageChinese];
     
     	// Do any additional setup after loading the view.
@@ -100,6 +100,10 @@
     LZDataAccess *da = [LZDataAccess singleton];
     double symptomScore = [da getSymptomHealthMarkSum_BySymptomIds:userSelectedSymptom];
     double healthScore = 100 - symptomScore;//需保存数据
+    if (healthScore<Config_nearZero)
+    {
+        healthScore = 0;
+    }
 
     
     //根据症状和测量数据得到用户的潜在疾病和BMI值
@@ -115,7 +119,7 @@
     NSMutableDictionary *measureData = [[NSMutableDictionary alloc]init];
     if ([weight length] == 0 || [weight doubleValue]<=0)
     {
-        userBMI = [LZUtility getBMI_withWeight:[userWeight doubleValue] andHeight:[paramHeight doubleValue]];
+        userBMI = [LZUtility getBMI_withWeight:[userWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
     }
     else
     {
@@ -132,7 +136,7 @@
         [[NSUserDefaults standardUserDefaults]setObject:newWeight forKey:LZUserWeightKey];
         [measureData setObject:newWeight forKey:Key_Weight];
         [[NSUserDefaults standardUserDefaults]synchronize];
-        userBMI = [LZUtility getBMI_withWeight:[newWeight doubleValue] andHeight:[paramHeight doubleValue]];
+        userBMI = [LZUtility getBMI_withWeight:[newWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
     }
         //2.计算潜在疾病
     

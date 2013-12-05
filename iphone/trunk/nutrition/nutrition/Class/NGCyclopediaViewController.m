@@ -13,11 +13,12 @@
 #import "LZRecommendFood.h"
 #import "LZConstants.h"
 #import "LZFoodTypeButton.h"
-#import "LZDailyIntakeViewController.h"
+#import "NGFoodListViewController.h"
 #import "LZCustomDataButton.h"
 #import "LZNutrientionManager.h"
 #import "LZUtility.h"
 #import "NGIllnessInfoViewController.h"
+#import "NGNutritionInfoViewController.h"
 #define DiseaseItemTopMargin 10
 #define DiseaseItemMargin 9
 #define DiseaseItemBottomMarigin 40
@@ -347,6 +348,31 @@
 {
     NSString *nutritionId = (NSString *)sender.customData;
     NSLog(@"%@",nutritionId);
+    LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
+    NSDictionary *dict = [nm getNutritionInfo:nutritionId];
+    NSString *captionKey;
+//    NSString *descriptionKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        captionKey = @"NutrientCnCaption";
+//        descriptionKey = @"NutrientDescription";
+    }
+    else
+    {
+        captionKey = @"NutrientEnCaption";
+//        descriptionKey = @"NutrientDescriptionEn";
+    }
+//    NSString *description = [dict objectForKey:descriptionKey];
+    NSString *nutritionName = [dict objectForKey:captionKey];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGNutritionInfoViewController *nutritionInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGNutritionInfoViewController"];
+    nutritionInfoViewController.title =nutritionName;
+    nutritionInfoViewController.nutrientDict = dict;
+ //   nutritionInfoViewController.nutritionDescription = description;
+//    richNutrientController.nutrientDict = dict;
+//    richNutrientController.nutrientTitle = nutritionName;
+//    richNutrientController.nutritionDescription = description;
+    [self.navigationController pushViewController:nutritionInfoViewController animated:YES];
 }
 -(void)illnessButtonClicked:(LZCustomDataButton *)sender
 {
@@ -360,11 +386,11 @@
 
     
 }
--(void)typeButtonTapped:(UIButton *)sender
+-(void)typeButtonTapped:(LZFoodTypeButton *)sender
 {
     int tag = sender.tag -100;
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LZDailyIntakeViewController *dailyIntakeViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZDailyIntakeViewController"];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGFoodListViewController *foodListViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGFoodListViewController"];
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary *translationItemInfo2LevelDict = [da getTranslationItemsDictionaryByType:TranslationItemType_FoodCnType];
     NSString *typeKey = [self.foodArray objectAtIndex:tag];
@@ -381,11 +407,10 @@
     
     NSString *typeName = [typeDict objectForKey:queryKey];
     
-    dailyIntakeViewController.foodArray = [da getFoodsByShowingPart:nil andEnNamePart:nil andCnType:typeKey];//[self.foodNameArray objectAtIndex:tag];
+    foodListViewController.foodArray = [da getFoodsByShowingPart:nil andEnNamePart:nil andCnType:typeKey];//[self.foodNameArray objectAtIndex:tag];
     //dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
-    dailyIntakeViewController.titleString = typeName;
-    dailyIntakeViewController.isFromOut = NO;
-    [self.navigationController pushViewController:dailyIntakeViewController animated:YES];
+    foodListViewController.title = typeName;
+    [self.navigationController pushViewController:foodListViewController animated:YES];
 }
 
 #pragma mark- UITableViewDelegate

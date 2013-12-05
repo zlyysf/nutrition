@@ -31,9 +31,14 @@
 }
 -(void)setFoods:(NSArray*)foodArray isChinese:(BOOL)isChinese
 {
-    for (UIView * subv in self.foodScrollView.subviews)
+//    for (UIView * subv in self.foodScrollView.subviews)
+//    {
+//        [subv removeFromSuperview];
+//    }
+    BOOL isFirstLoad = YES;
+    if ([self.foodScrollView.subviews count]!=0)
     {
-        [subv removeFromSuperview];
+        isFirstLoad = NO;
     }
     int foodCount =[foodArray count];
     [self.foodScrollView setContentSize:CGSizeMake(2+foodCount*(80+RecommendFoodMargin)-RecommendFoodMargin, RecommendScrollViewHeight)];
@@ -93,18 +98,30 @@
                 
             }
         }
+        if (isFirstLoad)
+        {
+            NGRecommendFoodView *foodView = [[NGRecommendFoodView alloc]initWithFrame:CGRectMake(1+l*(80+RecommendFoodMargin), 0, 80, 120) foodName:foodName foodPic:picturePath foodAmount:foodTotalUnit];
+            foodView.tag = 10+l;
+            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(foodClicked:)];
+            [foodView addGestureRecognizer:tap];
+            [self.foodScrollView addSubview:foodView];
+        }
+        else
+        {
+            //NSLog(@"%@",[self.foodScrollView.subviews description]);
+            NGRecommendFoodView *foodView = (NGRecommendFoodView*)[self.foodScrollView viewWithTag:10+l];
+            foodView.foodNameLabel.text = foodName;
+            foodView.foodAmountLabel.text = foodTotalUnit;
+            UIImage *foodImage = [UIImage imageWithContentsOfFile:picturePath];
+            [foodView.foodImageView setImage:foodImage];
+        }
         
-        NGRecommendFoodView *foodView = [[NGRecommendFoodView alloc]initWithFrame:CGRectMake(1+l*(80+RecommendFoodMargin), 0, 80, 120) foodName:foodName foodPic:picturePath foodAmount:foodTotalUnit];
-        foodView.tag = l;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(foodClicked:)];
-        [foodView addGestureRecognizer:tap];
-        [self.foodScrollView addSubview:foodView];
     }
 }
 -(void)foodClicked:(UITapGestureRecognizer*)sender
 {
     NGRecommendFoodView *view = (NGRecommendFoodView*)sender.view;
-    int tag = view.tag;
+    int tag = view.tag-10;
     if (self.delegate && [self.delegate respondsToSelector:@selector(foodClickedForIndex:andTag:)])
     {
         [self.delegate foodClickedForIndex:cellIndex andTag:tag];

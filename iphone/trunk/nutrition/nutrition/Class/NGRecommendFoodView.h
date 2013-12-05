@@ -13,4 +13,7 @@
            foodName:(NSString *)foodName
             foodPic:(NSString *)foodPic
          foodAmount:(NSString *)foodAmount;
+@property (strong,nonatomic)UIImageView *foodImageView;
+@property (strong,nonatomic)UILabel *foodNameLabel;
+@property (strong,nonatomic)UILabel *foodAmountLabel;
 @end

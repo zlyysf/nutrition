@@ -299,6 +299,10 @@
 		5FECADA21838912900D72A8C /* NGDiagnoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */; };
 		5FECADA51838B19D00D72A8C /* NGRecordHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */; };
 		5FF08A941850526C00A954C8 /* NGIllnessInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF08A931850526C00A954C8 /* NGIllnessInfoViewController.m */; };
+		5FF08A9718506A9800A954C8 /* NGFoodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF08A9618506A9800A954C8 /* NGFoodListViewController.m */; };
+		5FF08A9A18506AB200A954C8 /* NGNutritionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF08A9918506AB200A954C8 /* NGNutritionInfoViewController.m */; };
+		5FF08A9D1850A5AD00A954C8 /* fork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF08A9B1850A5AD00A954C8 /* fork@2x.png */; };
+		5FF08A9E1850A5AD00A954C8 /* history@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF08A9C1850A5AD00A954C8 /* history@2x.png */; };
 		5FF352F617F5504400B29E6A /* dot_indicator@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF352F517F5504200B29E6A /* dot_indicator@2x.png */; };
 		5FF593D5183DBB970011CEA3 /* NGDiagnoseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */; };
 		5FF593D8183DBC210011CEA3 /* NGDiagnosesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */; };
@@ -703,6 +707,12 @@
 		5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGRecordHistoryViewController.m; path = nutrition/Class/NGRecordHistoryViewController.m; sourceTree = "<group>"; };
 		5FF08A921850526C00A954C8 /* NGIllnessInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGIllnessInfoViewController.h; path = nutrition/Class/NGIllnessInfoViewController.h; sourceTree = "<group>"; };
 		5FF08A931850526C00A954C8 /* NGIllnessInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGIllnessInfoViewController.m; path = nutrition/Class/NGIllnessInfoViewController.m; sourceTree = "<group>"; };
+		5FF08A9518506A9800A954C8 /* NGFoodListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodListViewController.h; path = nutrition/Class/NGFoodListViewController.h; sourceTree = "<group>"; };
+		5FF08A9618506A9800A954C8 /* NGFoodListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodListViewController.m; path = nutrition/Class/NGFoodListViewController.m; sourceTree = "<group>"; };
+		5FF08A9818506AB200A954C8 /* NGNutritionInfoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGNutritionInfoViewController.h; path = nutrition/Class/NGNutritionInfoViewController.h; sourceTree = "<group>"; };
+		5FF08A9918506AB200A954C8 /* NGNutritionInfoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGNutritionInfoViewController.m; path = nutrition/Class/NGNutritionInfoViewController.m; sourceTree = "<group>"; };
+		5FF08A9B1850A5AD00A954C8 /* fork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fork@2x.png"; path = "nutrition/Resource/fork@2x.png"; sourceTree = "<group>"; };
+		5FF08A9C1850A5AD00A954C8 /* history@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "history@2x.png"; path = "nutrition/Resource/history@2x.png"; sourceTree = "<group>"; };
 		5FF352F517F5504200B29E6A /* dot_indicator@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "dot_indicator@2x.png"; path = "nutrition/Resource/dot_indicator@2x.png"; sourceTree = "<group>"; };
 		5FF593D3183DBB970011CEA3 /* NGDiagnoseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDiagnoseCell.h; path = nutrition/Class/NGDiagnoseCell.h; sourceTree = "<group>"; };
 		5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnoseCell.m; path = nutrition/Class/NGDiagnoseCell.m; sourceTree = "<group>"; };
@@ -1158,6 +1168,10 @@
 				5FBD42E6184C6D8200759A3C /* NGMainTabbarViewController.m */,
 				5FF08A921850526C00A954C8 /* NGIllnessInfoViewController.h */,
 				5FF08A931850526C00A954C8 /* NGIllnessInfoViewController.m */,
+				5FF08A9518506A9800A954C8 /* NGFoodListViewController.h */,
+				5FF08A9618506A9800A954C8 /* NGFoodListViewController.m */,
+				5FF08A9818506AB200A954C8 /* NGNutritionInfoViewController.h */,
+				5FF08A9918506AB200A954C8 /* NGNutritionInfoViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1568,6 +1582,8 @@
 		5FECAD911838775700D72A8C /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				5FF08A9B1850A5AD00A954C8 /* fork@2x.png */,
+				5FF08A9C1850A5AD00A954C8 /* history@2x.png */,
 				5F22E3D818435CD1001CCC89 /* info-50@2x.png */,
 				5F7F71F81840D9F100724397 /* gray_horizon_line@2x.png */,
 				5F7F71F61840D82400724397 /* item_detail_arrow@2x.png */,
@@ -1742,6 +1758,7 @@
 				5FDED102176F2E2D0026BCA3 /* text_clear@2x.png in Resources */,
 				5FF631D617702C690068CBFE /* README.txt in Resources */,
 				5FF631EF17715F0D0068CBFE /* big_arrow@2x.png in Resources */,
+				5FF08A9E1850A5AD00A954C8 /* history@2x.png in Resources */,
 				5FF631F017715F0D0068CBFE /* button_bottom_normal@2x.png in Resources */,
 				5FF631F117715F0D0068CBFE /* button_top_normal@2x.png in Resources */,
 				5FF631F317715F0D0068CBFE /* weibo_icon@2x.png in Resources */,
@@ -1756,6 +1773,7 @@
 				5F2584AE1782F9AB00D99C16 /* edit_right_normal@2x.png in Resources */,
 				5F2584B01782FA2100D99C16 /* edit_left_normal@2x.png in Resources */,
 				5FE210541784058100F45253 /* feedback_icon@2x.png in Resources */,
+				5FF08A9D1850A5AD00A954C8 /* fork@2x.png in Resources */,
 				5FE210551784058100F45253 /* review_icon@2x.png in Resources */,
 				5FEC69371795372C00E80BE6 /* nutrient_button_on@2x.png in Resources */,
 				5F7E5AA317965B47007CA18A /* recommend_sign@2x.png in Resources */,
@@ -1943,6 +1961,7 @@
 				5FF6320517718E100068CBFE /* LZNutritionInfoView.m in Sources */,
 				5F25849F17829DDA00D99C16 /* LZEditProfileViewController.m in Sources */,
 				5F0971811793ABD3000030AA /* LZUserDietListViewController.m in Sources */,
+				5FF08A9718506A9800A954C8 /* NGFoodListViewController.m in Sources */,
 				5F8DEE9517951DB000C6E9F5 /* LZRecommendFilterView.m in Sources */,
 				5F7E5AA917967A95007CA18A /* LZDietCell.m in Sources */,
 				5FCC5BEB17AA30A600796B24 /* LZDebugSettingsViewController.m in Sources */,
@@ -1953,6 +1972,7 @@
 				5FDB863D1840722B0015FADD /* NGMeasurementCell.m in Sources */,
 				5F90D80617AF8873000AEC06 /* CFilteringJSONSerializer.m in Sources */,
 				5F90D80717AF8873000AEC06 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
+				5FF08A9A18506AB200A954C8 /* NGNutritionInfoViewController.m in Sources */,
 				5F90D80817AF8873000AEC06 /* CJSONSerialization.m in Sources */,
 				5F90D80917AF8873000AEC06 /* CJSONSerializedData.m in Sources */,
 				5F90D80A17AF8873000AEC06 /* CDataScanner_Extensions.m in Sources */,

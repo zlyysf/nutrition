@@ -15,6 +15,7 @@
 #import "LZUtility.h"
 #import "LZNutrientionManager.h"
 #import "NGIllnessInfoViewController.h"
+#import "NGNutritionInfoViewController.h"
 #define BorderColor [UIColor lightGrayColor].CGColor
 
 #define AttentionItemLabelWidth 188
@@ -226,6 +227,31 @@
 {
     NSString *nutritionId = (NSString *)sender.customData;
     NSLog(@"%@",nutritionId);
+    LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
+    NSDictionary *dict = [nm getNutritionInfo:nutritionId];
+    NSString *captionKey;
+    //    NSString *descriptionKey;
+    if ([LZUtility isCurrentLanguageChinese])
+    {
+        captionKey = @"NutrientCnCaption";
+        //        descriptionKey = @"NutrientDescription";
+    }
+    else
+    {
+        captionKey = @"NutrientEnCaption";
+        //        descriptionKey = @"NutrientDescriptionEn";
+    }
+    //    NSString *description = [dict objectForKey:descriptionKey];
+    NSString *nutritionName = [dict objectForKey:captionKey];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGNutritionInfoViewController *nutritionInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGNutritionInfoViewController"];
+    nutritionInfoViewController.title =nutritionName;
+    nutritionInfoViewController.nutrientDict = dict;
+    //   nutritionInfoViewController.nutritionDescription = description;
+    //    richNutrientController.nutrientDict = dict;
+    //    richNutrientController.nutrientTitle = nutritionName;
+    //    richNutrientController.nutritionDescription = description;
+    [self.navigationController pushViewController:nutritionInfoViewController animated:YES];
 }
 -(void)illnessButtonClicked:(LZCustomDataButton*)sender
 {
@@ -339,14 +365,15 @@
         }
         else
         {
-            part2Height =[self calculateHeightForAttentionPart:attentionArray];
+            part2Height =(int)[self calculateHeightForAttentionPart:attentionArray];
+            NSLog(@"cell for cell %d %d %f",indexPath.section,indexPath.row,part2Height);
             if (indexPath.row == [self.potentialArray count]-1)
             {
-                [cell.backView setFrame:CGRectMake(10, 0, 300, part2Height+60+10+1)];
+                [cell.backView setFrame:CGRectMake(10, 0, 300, part2Height+60+10)];
             }
             else
             {
-                [cell.backView setFrame:CGRectMake(10, 0, 300, part2Height+60+10)];
+                [cell.backView setFrame:CGRectMake(10, 0, 300, part2Height+60+10+1)];
             }
             needAddMore = YES;
         }
@@ -441,7 +468,9 @@
         }
         else
         {
-            return 60+ [self calculateHeightForAttentionPart:attentionArray]+10;
+            float part2Height =(int)[self calculateHeightForAttentionPart:attentionArray];
+            NSLog(@"height for cell %d %d %f",indexPath.section,indexPath.row,part2Height);
+            return 60+part2Height +10;
         }
     }
 
