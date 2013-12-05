@@ -13,6 +13,7 @@
 #import "MBProgressHUD.h"
 #import "SSKeychain.h"
 #import <Security/Security.h>
+#import <Parse/Parse.h>
 
 
 @implementation LZUtility
@@ -1581,12 +1582,110 @@
 
 
 
++(PFObject*) newParseObjectByCurrentDeviceForUserRecord_withFileContent:(NSString*) fileContent
+{
+    NSString *uniqueDeviceId = [self getUniqueDeviceId];
+
+    NSData * fileData = [fileContent dataUsingEncoding:NSUTF8StringEncoding];
+    PFFile *pFile = [PFFile fileWithName:@"UserRecord.txt" data:fileData];
+    
+	// Stitch together a postObject and send this async to Parse
+	PFObject *newPFObj = [PFObject objectWithClassName:ParseObject_UserRecord];
+	[newPFObj setObject:uniqueDeviceId forKey:ParseObjectKey_UserRecord_deviceId];
+    [newPFObj setObject:pFile forKey:ParseObjectKey_UserRecord_attachFile];
+    
+    return newPFObj;
+}
+
++(void) updateParseObject_UserRecord_WithParseObject:(PFObject*) parseObjUserRecord andFileContent:(NSString*) fileContent
+{
+    NSData * fileData = [fileContent dataUsingEncoding:NSUTF8StringEncoding];
+    PFFile *pFile = [PFFile fileWithName:@"UserRecord.txt" data:fileData];
+    [parseObjUserRecord setObject:pFile forKey:ParseObjectKey_UserRecord_attachFile];
+}
 
 
++(PFQuery*) getParseQueryByCurrentDeviceForUserRecord
+{
+    NSString *uniqueDeviceId = [self getUniqueDeviceId];
+    PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_UserRecord];
+    [pQuery whereKey:ParseObjectKey_UserRecord_deviceId equalTo:uniqueDeviceId];
+    return pQuery;
+}
 
++(void)Test_saveParseObj
+{
+    NSString *s1 = @"333中共中央关于全面深化改革若干重大问题的决定》明确考试招生制度改革的顶层设计，是我国教育考试招生制度系统性综合性最强的一次改革，将显著扭转应试教育倾向，为亿万学生提供多样化的学习选择和成长途径，构建衔接沟通各级各类教育、认可多种学习成果的人才成长“立交桥”。";
+    PFObject* parseObjUserRecord = [self newParseObjectByCurrentDeviceForUserRecord_withFileContent:s1];
+    [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSMutableString *msg = [NSMutableString string];
+        if (succeeded){
+            [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
+        }else{
+            [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
+        }
+        NSLog(@"Test_saveParseObj %@",msg);
+	}];
+}
 
+PFObject *g_parseObjUserRecord=nil;
++(void)Test_getParseObj
+{
+    PFQuery *pQuery = [self getParseQueryByCurrentDeviceForUserRecord];
+    
+    [pQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        NSMutableString *msg = [NSMutableString string];
+        if (!error) {
+            [msg appendFormat:@"PFQuery.findObjectsInBackgroundWithBlock OK, objects cnt=%d",objects.count];
+            if (objects.count > 0){
+                PFObject *parseObjUserRecord = objects[0];
+                g_parseObjUserRecord = parseObjUserRecord;
+                [msg appendFormat:@" item0.objectId=%@",parseObjUserRecord.objectId];
+                PFFile *pFile = [parseObjUserRecord objectForKey:ParseObjectKey_UserRecord_attachFile];
+                if (pFile != nil){
+                    [msg appendFormat:@" and have file"];
+                    
+                    [pFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+                        NSMutableString *msg = [NSMutableString string];
+                        if (error){
+                            [msg appendFormat:@"PFFile.getDataInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
+                        }else{
+                            NSString* strData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+                            [msg appendFormat:@"PFFile.getDataInBackgroundWithBlock OK. data=%@",strData];
+                        }
+                        NSLog(@"Test_getParseObj fileGet %@",msg);
+                    }];
+                }else{
+                    [msg appendFormat:@" but file is null"];
+                }
+            }
+        }else{
+            [msg appendFormat:@"pQuery findObjectsInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
+        }
+        NSLog(@"Test_getParseObj query:%@",msg);
+    }];
+}
 
-
++(void)Test_updateParseObj
+{
+    PFObject *parseObjUserRecord = g_parseObjUserRecord;
+    if (parseObjUserRecord==nil){
+        NSLog(@"Test_updateParseObj global var== nil");
+        return;
+    }
+    NSString *s1 = @"333汇集国内外重大时事、热点聚焦、包括国内、国际、军事、财经各类重大突发新闻，超大资讯量二十四小时滚动更新（150-180条/月），让您第一时间得到最新消息。";
+    [self updateParseObject_UserRecord_WithParseObject:parseObjUserRecord andFileContent:s1];
+    
+    [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+        NSMutableString *msg = [NSMutableString string];
+        if (succeeded){
+            [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
+        }else{
+            [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
+        }
+        NSLog(@"Test_updateParseObj %@",msg);
+	}];
+}
 
 
 @end

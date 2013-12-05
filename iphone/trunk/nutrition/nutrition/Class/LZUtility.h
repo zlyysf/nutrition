@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 #import "LZDataAccess.h"
+#import "LZUtility.h"
 
 
 @interface LZUtility : NSObject
@@ -127,6 +128,9 @@
 +(NSString *)getUniqueDeviceId;
 
 
++(void)Test_saveParseObj;
++(void)Test_getParseObj;
++(void)Test_updateParseObj;
 
 @end
 

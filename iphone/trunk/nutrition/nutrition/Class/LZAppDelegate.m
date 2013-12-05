@@ -21,6 +21,8 @@
 #import "LZRecommendFilterView.h"
 #import "LZCheckTypeSwitchView.h"
 #import "LZNutrientionManager.h"
+#import <Parse/Parse.h>
+
 @implementation LZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -105,6 +107,30 @@
 //            }
 //        }
 //    }
+    
+    [Parse setApplicationId:ParseApp_ApplicationID clientKey:ParseApp_ClientKey];
+    [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+    [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge| UIRemoteNotificationTypeAlert| UIRemoteNotificationTypeSound];
+    
+    //To ensure accurate "Push Opens" statistics
+    if (application.applicationState != UIApplicationStateBackground) {
+        // Track an app open here if we launch with a push, unless
+        // "content_available" was used to trigger a background push (introduced
+        // in iOS 7). In that case, we skip tracking here to avoid double counting
+        // the app-open.
+        BOOL preBackgroundPush = ![application respondsToSelector:@selector(backgroundRefreshStatus)];
+        BOOL oldPushHandlerOnly = ![self respondsToSelector:@selector(application:didReceiveRemoteNotification:fetchCompletionHandler:)];
+        BOOL noPushPayload = ![launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+        if (preBackgroundPush || oldPushHandlerOnly || noPushPayload) {
+            [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+        }
+    }
+    
+    PFACL *defaultACL = [PFACL ACL];
+    [defaultACL setPublicReadAccess:true];
+    [defaultACL setPublicWriteAccess:true];
+    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:true];
+    
     return YES;
 }
 //-(void)handleLocalNotify:(UILocalNotification*)localNotify
