@@ -29,11 +29,15 @@ public class V3ActivityReport extends V3BaseActivity {
     ListView elementFoodListView;
     ListView diseaseAttentionListView;
     LinearLayout attentionLinearLayout;
+    
+    TextView bmiTextView, healthTextView;
 
     // data from intent
     int heartRate;
     int bloodPressureHigh, bloodPressureLow;
     double bodyTemperature;
+    double weight = 80, height = 172;
+    String[] symptomIds;
 
     List<String> nutrientList = new ArrayList<String>();
     List<List<Pair<String, Double>>> recommendFoodList = new ArrayList<List<Pair<String, Double>>>();
@@ -67,6 +71,18 @@ public class V3ActivityReport extends V3BaseActivity {
                 130);
         bodyTemperature = intent.getDoubleExtra(Constants.Key_BodyTemperature,
                 38.4);
+        
+        symptomIds = new String[]{ "咽喉发痒", "咽喉灼热", "咳嗽", "咳痰", "喘息", "食欲不振",
+                "恶心", "呕吐", "上腹痛" };
+
+        bmiTextView = (TextView) findViewById(R.id.bmiTextView);
+        double bmi = Tool.getBMI_withWeight(weight, height) * 10000;
+        String bmiStr = String.format("%3.1f", bmi);
+        bmiTextView.setText(bmiStr);
+        healthTextView = (TextView) findViewById(R.id.healthTextView);
+        double healthSum = da.getSymptomHealthMarkSum_BySymptomIds(symptomIds);
+        healthSum = Math.max(0, 1 - healthSum);
+        healthTextView.setText(String.valueOf(healthSum));
 
         elementFoodListView = (ListView) findViewById(R.id.elementFoodListView);
         nutrientFoodAdapter = new NutrientFoodAdapter();
@@ -88,9 +104,6 @@ public class V3ActivityReport extends V3BaseActivity {
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            // TODO
-            String[] symptomIds = { "咽喉发痒", "咽喉灼热", "咳嗽", "咳痰", "喘息", "食欲不振",
-                    "恶心", "呕吐", "上腹痛" };
             HashMap<String, Object> measureData = new HashMap<String, Object>();
             measureData.put(Constants.Key_HeartRate, heartRate);
             measureData.put(Constants.Key_BloodPressureHigh, bloodPressureHigh);
@@ -129,10 +142,7 @@ public class V3ActivityReport extends V3BaseActivity {
 
         @Override
         protected Void doInBackground(Void... arg0) {
-            
 
-            String[] symptomIds = { "咽喉发痒", "咽喉灼热", "咳嗽", "咳痰", "喘息", "食欲不振",
-                    "恶心", "呕吐", "上腹痛" };
             ArrayList<String> symptomIdList = Tool
                     .convertFromArrayToList(symptomIds);
             ArrayList<String> nutrientIdList = da
