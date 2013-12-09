@@ -10,6 +10,7 @@
 #import "LZConstants.h"
 #import "LZRecommendFood.h"
 #import "NGRecommendFoodView.h"
+#import "NGSingleFoodViewController.h"
 @interface NGNutritionInfoViewController ()
 {
     BOOL isFirstLoad;
@@ -207,6 +208,21 @@
     int tag = foodView.tag-10;
     NSDictionary *foodInfo = [foodArray objectAtIndex:tag];
     NSLog(@"%@",foodInfo);
+    NSString *foodQueryKey;
+    if (isChinese)
+    {
+        foodQueryKey = @"CnCaption";
+    }
+    else
+    {
+        foodQueryKey = @"FoodNameEn";
+    }
+    NSString *foodName = [foodInfo objectForKey:foodQueryKey];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGSingleFoodViewController *singleFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGSingleFoodViewController"];
+    singleFoodViewController.title = foodName;
+    singleFoodViewController.foodInfoDict = foodInfo;
+    [self.navigationController pushViewController:singleFoodViewController animated:YES];
 }
 - (void)didReceiveMemoryWarning
 {

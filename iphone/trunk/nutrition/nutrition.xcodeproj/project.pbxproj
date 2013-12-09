@@ -95,6 +95,7 @@
 		5F20149117BB60100009B735 /* unit_button_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20148F17BB600F0009B735 /* unit_button_clicked@2x.png */; };
 		5F20149217BB60100009B735 /* unit_button_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20149017BB600F0009B735 /* unit_button_normal@2x.png */; };
 		5F206DE41855AE1200E8D094 /* gray_vertical_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F206DE31855AE1200E8D094 /* gray_vertical_line@2x.png */; };
+		5F206DE71855E63000E8D094 /* NGSingleFoodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F206DE61855E63000E8D094 /* NGSingleFoodViewController.m */; };
 		5F22A68B17CEFC400043D760 /* LZFoodSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */; };
 		5F22A68E17CF11930043D760 /* LZSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68D17CF11930043D760 /* LZSearchBar.m */; };
 		5F22A69017CF34170043D760 /* search_glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A68F17CF34170043D760 /* search_glass@2x.png */; };
@@ -411,6 +412,8 @@
 		5F20148F17BB600F0009B735 /* unit_button_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unit_button_clicked@2x.png"; path = "nutrition/Resource/unit_button_clicked@2x.png"; sourceTree = "<group>"; };
 		5F20149017BB600F0009B735 /* unit_button_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unit_button_normal@2x.png"; path = "nutrition/Resource/unit_button_normal@2x.png"; sourceTree = "<group>"; };
 		5F206DE31855AE1200E8D094 /* gray_vertical_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gray_vertical_line@2x.png"; path = "nutrition/Resource/gray_vertical_line@2x.png"; sourceTree = "<group>"; };
+		5F206DE51855E63000E8D094 /* NGSingleFoodViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGSingleFoodViewController.h; path = nutrition/Class/NGSingleFoodViewController.h; sourceTree = "<group>"; };
+		5F206DE61855E63000E8D094 /* NGSingleFoodViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGSingleFoodViewController.m; path = nutrition/Class/NGSingleFoodViewController.m; sourceTree = "<group>"; };
 		5F22A68917CEFC400043D760 /* LZFoodSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodSearchViewController.h; path = Class/LZFoodSearchViewController.h; sourceTree = "<group>"; };
 		5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodSearchViewController.m; path = Class/LZFoodSearchViewController.m; sourceTree = "<group>"; };
 		5F22A68C17CF11930043D760 /* LZSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSearchBar.h; path = Class/LZSearchBar.h; sourceTree = "<group>"; };
@@ -1257,6 +1260,8 @@
 				5FF08A9618506A9800A954C8 /* NGFoodListViewController.m */,
 				5FF08A9818506AB200A954C8 /* NGNutritionInfoViewController.h */,
 				5FF08A9918506AB200A954C8 /* NGNutritionInfoViewController.m */,
+				5F206DE51855E63000E8D094 /* NGSingleFoodViewController.h */,
+				5F206DE61855E63000E8D094 /* NGSingleFoodViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2104,6 +2109,7 @@
 				5F9995F6172BDBE400A36B4F /* LZFoodCell.m in Sources */,
 				085C8D3F173366F2001A1ABB /* FMDatabase.m in Sources */,
 				085C8D40173366F2001A1ABB /* FMDatabaseAdditions.m in Sources */,
+				5F206DE71855E63000E8D094 /* NGSingleFoodViewController.m in Sources */,
 				5FBD42E7184C6D8200759A3C /* NGMainTabbarViewController.m in Sources */,
 				085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */,
 				085C8D42173366F2001A1ABB /* FMDatabaseQueue.m in Sources */,

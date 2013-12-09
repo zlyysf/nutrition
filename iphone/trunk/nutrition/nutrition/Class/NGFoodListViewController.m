@@ -10,6 +10,7 @@
 #import "LZDataAccess.h"
 #import "LZUtility.h"
 #import "LZFoodTypeButton.h"
+#import "NGSingleFoodViewController.h"
 #define FoodItemMargin 15
 @interface NGFoodListViewController ()
 {
@@ -106,6 +107,21 @@
 {
     int tag = foodButton.tag -100;
     NSDictionary *foodAtr = [self.foodArray  objectAtIndex:tag];
+    NSString *foodQueryKey;
+    if (isChinese)
+    {
+        foodQueryKey = @"CnCaption";
+    }
+    else
+    {
+        foodQueryKey = @"FoodNameEn";
+    }
+    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGSingleFoodViewController *singleFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGSingleFoodViewController"];
+    singleFoodViewController.title = foodName;
+    singleFoodViewController.foodInfoDict = foodAtr;
+    [self.navigationController pushViewController:singleFoodViewController animated:YES];
     NSLog(@"%@",foodAtr);
 }
 - (void)didReceiveMemoryWarning

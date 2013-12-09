@@ -16,6 +16,7 @@
 #import "LZNutrientionManager.h"
 #import "NGIllnessInfoViewController.h"
 #import "NGNutritionInfoViewController.h"
+#import "NGSingleFoodViewController.h"
 #define BorderColor [UIColor lightGrayColor].CGColor
 
 #define AttentionItemLabelWidth 188
@@ -546,5 +547,24 @@
 -(void)foodClickedForIndex:(NSIndexPath*)index andTag:(int)tag
 {
     NSLog(@"section %d  row %d  tag %d",index.section,index.row,tag);
+    
+    NSString *nutritionId = [self.lackNutritionArray objectAtIndex:index.row];
+    NSArray *recommendFood = [self.recommendFoodDict objectForKey:nutritionId];
+    NSDictionary *foodAtr = [recommendFood objectAtIndex:tag];
+    NSString *foodQueryKey;
+    if (isChinese)
+    {
+        foodQueryKey = @"CnCaption";
+    }
+    else
+    {
+        foodQueryKey = @"FoodNameEn";
+    }
+    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGSingleFoodViewController *singleFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGSingleFoodViewController"];
+    singleFoodViewController.title = foodName;
+    singleFoodViewController.foodInfoDict = foodAtr;
+    [self.navigationController pushViewController:singleFoodViewController animated:YES];
 }
 @end
