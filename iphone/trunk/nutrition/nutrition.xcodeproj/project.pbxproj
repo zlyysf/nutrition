@@ -2393,7 +2393,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1\"/**",
-					"\"$(SRCROOT)/nutrition/\"/**",
+					"\"$(SRCROOT)/nutrition/\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
@@ -2428,7 +2428,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/nutrition/ShareSDK_v2.5.1\"/**",
-					"\"$(SRCROOT)/nutrition/\"/**",
+					"\"$(SRCROOT)/nutrition/\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
