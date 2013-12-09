@@ -94,6 +94,7 @@
 		5F20148E17BB40140009B735 /* valuepicker_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20148D17BB40140009B735 /* valuepicker_cover@2x.png */; };
 		5F20149117BB60100009B735 /* unit_button_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20148F17BB600F0009B735 /* unit_button_clicked@2x.png */; };
 		5F20149217BB60100009B735 /* unit_button_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F20149017BB600F0009B735 /* unit_button_normal@2x.png */; };
+		5F206DE41855AE1200E8D094 /* gray_vertical_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F206DE31855AE1200E8D094 /* gray_vertical_line@2x.png */; };
 		5F22A68B17CEFC400043D760 /* LZFoodSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */; };
 		5F22A68E17CF11930043D760 /* LZSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68D17CF11930043D760 /* LZSearchBar.m */; };
 		5F22A69017CF34170043D760 /* search_glass@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22A68F17CF34170043D760 /* search_glass@2x.png */; };
@@ -409,6 +410,7 @@
 		5F20148D17BB40140009B735 /* valuepicker_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "valuepicker_cover@2x.png"; path = "nutrition/Resource/valuepicker_cover@2x.png"; sourceTree = "<group>"; };
 		5F20148F17BB600F0009B735 /* unit_button_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unit_button_clicked@2x.png"; path = "nutrition/Resource/unit_button_clicked@2x.png"; sourceTree = "<group>"; };
 		5F20149017BB600F0009B735 /* unit_button_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "unit_button_normal@2x.png"; path = "nutrition/Resource/unit_button_normal@2x.png"; sourceTree = "<group>"; };
+		5F206DE31855AE1200E8D094 /* gray_vertical_line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "gray_vertical_line@2x.png"; path = "nutrition/Resource/gray_vertical_line@2x.png"; sourceTree = "<group>"; };
 		5F22A68917CEFC400043D760 /* LZFoodSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZFoodSearchViewController.h; path = Class/LZFoodSearchViewController.h; sourceTree = "<group>"; };
 		5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZFoodSearchViewController.m; path = Class/LZFoodSearchViewController.m; sourceTree = "<group>"; };
 		5F22A68C17CF11930043D760 /* LZSearchBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSearchBar.h; path = Class/LZSearchBar.h; sourceTree = "<group>"; };
@@ -1665,6 +1667,7 @@
 		5FECAD911838775700D72A8C /* New Group */ = {
 			isa = PBXGroup;
 			children = (
+				5F206DE31855AE1200E8D094 /* gray_vertical_line@2x.png */,
 				5FF08A9B1850A5AD00A954C8 /* fork@2x.png */,
 				5FF08A9C1850A5AD00A954C8 /* history@2x.png */,
 				5F22E3D818435CD1001CCC89 /* info-50@2x.png */,
@@ -1937,6 +1940,7 @@
 				5FF631F117715F0D0068CBFE /* button_top_normal@2x.png in Resources */,
 				5FF631F317715F0D0068CBFE /* weibo_icon@2x.png in Resources */,
 				5FF631F6177165C20068CBFE /* button_bottom_clicked@2x.png in Resources */,
+				5F206DE41855AE1200E8D094 /* gray_vertical_line@2x.png in Resources */,
 				5FF631F7177165C20068CBFE /* button_top_clicked@2x.png in Resources */,
 				5FF632281772DA8E0068CBFE /* big_arrow_clicked@2x.png in Resources */,
 				5F2584A41782BD0D00D99C16 /* button_middle@2x.png in Resources */,

@@ -290,7 +290,12 @@
         NGReportBMICell *cell = (NGReportBMICell*)[tableView dequeueReusableCellWithIdentifier:@"NGReportBMICell"];
         [cell.backView.layer setBorderColor:BorderColor];
         [cell.backView.layer setBorderWidth:0.5f];
+        [cell.levelView.layer setBorderColor:BorderColor];
+        [cell.levelView.layer setBorderWidth:0.5f];
         cell.headerLabel.text = @"体质指数";
+        NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.BMIValue];
+        cell.bmiValueLabel.text = scoreText;
+        [cell setBMIValue:self.BMIValue];
         return cell;
     }
     else if (indexPath.section == 1)
@@ -444,7 +449,7 @@
 {
     if (indexPath.section == 0)
     {
-        return 135;
+        return 150;
     }
     else if (indexPath.section == 1)
     {
