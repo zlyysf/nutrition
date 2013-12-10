@@ -134,7 +134,10 @@ public class V3ActivityHome extends V3BaseActivity {
             rightButton.setVisibility(View.INVISIBLE);
             break;
         case 4:
-            title.setText("设置");
+            title.setText("信息");
+            leftButton.setVisibility(View.INVISIBLE);
+            rightButton.setVisibility(View.VISIBLE);
+            rightButton.setText("保存");
             break;
         }
     }

@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/v3_table_name_text"
+            android:text="生日" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/birthdayTextView"
+            style="@style/v3_table_name_text"
+            android:text="1988年11月20日" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/v3_table_name_text"
+            android:text="身高" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/heightTextView"
+            style="@style/v3_table_name_text"
+            android:text="160cm" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/v3_table_name_text"
+            android:text="体重" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/weightTextView"
+            style="@style/v3_table_name_text"
+            android:text="50kg" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/v3_table_name_text"
+            android:text="性别" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/genderTextView"
+            style="@style/v3_table_name_text"
+            android:text="男/女" >
+        </EditText>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <TextView
+            style="@style/v3_table_name_text"
+            android:text="活动强度" >
+        </TextView>
+
+        <EditText
+            android:id="@+id/intensityTextView"
+            style="@style/v3_table_name_text"
+            android:text="中等" >
+        </EditText>
+    </LinearLayout>
+
+</LinearLayout>

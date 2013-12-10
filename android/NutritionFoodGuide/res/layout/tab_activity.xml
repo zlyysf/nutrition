@@ -94,7 +94,7 @@
                 android:button="@null"
                 android:drawableTop="@drawable/v2_toolbox_50_2x"
                 android:gravity="center_vertical|center_horizontal"
-                android:text="设置"
+                android:text="信息"
                 android:textColor="@color/radio_astab_changecolor"
                 android:textSize="10sp"
                 android:textStyle="bold" />
