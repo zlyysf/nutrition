@@ -113,6 +113,7 @@
 		5F2584AD1782F9AB00D99C16 /* edit_right_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A81782F9A900D99C16 /* edit_right_clicked@2x.png */; };
 		5F2584AE1782F9AB00D99C16 /* edit_right_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A91782F9AA00D99C16 /* edit_right_normal@2x.png */; };
 		5F2584B01782FA2100D99C16 /* edit_left_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */; };
+		5F2938B01856E69B00FAE2E2 /* NGFoodNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2938AF1856E69B00FAE2E2 /* NGFoodNutritionCell.m */; };
 		5F2E024A17E01A0700D26231 /* menu_item_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2E024417E01A0700D26231 /* menu_item_4@2x.png */; };
 		5F2E024B17E01A0700D26231 /* menu_item_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2E024517E01A0700D26231 /* menu_item_0@2x.png */; };
 		5F2E024C17E01A0700D26231 /* menu_item_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2E024617E01A0700D26231 /* menu_item_3@2x.png */; };
@@ -437,6 +438,8 @@
 		5F2584A81782F9A900D99C16 /* edit_right_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_right_clicked@2x.png"; path = "nutrition/Resource/edit_right_clicked@2x.png"; sourceTree = "<group>"; };
 		5F2584A91782F9AA00D99C16 /* edit_right_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_right_normal@2x.png"; path = "nutrition/Resource/edit_right_normal@2x.png"; sourceTree = "<group>"; };
 		5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_left_normal@2x.png"; path = "nutrition/Resource/edit_left_normal@2x.png"; sourceTree = "<group>"; };
+		5F2938AE1856E69B00FAE2E2 /* NGFoodNutritionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodNutritionCell.h; path = nutrition/Class/NGFoodNutritionCell.h; sourceTree = "<group>"; };
+		5F2938AF1856E69B00FAE2E2 /* NGFoodNutritionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodNutritionCell.m; path = nutrition/Class/NGFoodNutritionCell.m; sourceTree = "<group>"; };
 		5F2E024417E01A0700D26231 /* menu_item_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_4@2x.png"; path = "nutrition/Resource/menu_item_4@2x.png"; sourceTree = "<group>"; };
 		5F2E024517E01A0700D26231 /* menu_item_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_0@2x.png"; path = "nutrition/Resource/menu_item_0@2x.png"; sourceTree = "<group>"; };
 		5F2E024617E01A0700D26231 /* menu_item_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_3@2x.png"; path = "nutrition/Resource/menu_item_3@2x.png"; sourceTree = "<group>"; };
@@ -1291,6 +1294,8 @@
 				5FEA388C184DA7B900EC1C96 /* NGReportNutritonFoodCell.m */,
 				5FEA388E184DA89C00EC1C96 /* NGReportDiseaseCell.h */,
 				5FEA388F184DA89C00EC1C96 /* NGReportDiseaseCell.m */,
+				5F2938AE1856E69B00FAE2E2 /* NGFoodNutritionCell.h */,
+				5F2938AF1856E69B00FAE2E2 /* NGFoodNutritionCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -2192,6 +2197,7 @@
 				5F729BC11842FFE8004FC428 /* NGCyclopediaViewController.m in Sources */,
 				5FEA3887184DA53300EC1C96 /* NGReportBMICell.m in Sources */,
 				5F4FD72317D4B75900DBA25A /* LZDiseaseCell.m in Sources */,
+				5F2938B01856E69B00FAE2E2 /* NGFoodNutritionCell.m in Sources */,
 				5FECADA21838912900D72A8C /* NGDiagnoseViewController.m in Sources */,
 				5FD76DE717D5AB6200746418 /* LZCheckResultViewController.m in Sources */,
 				5FD76DEC17D5B83600746418 /* LZEmptyClassCell.m in Sources */,

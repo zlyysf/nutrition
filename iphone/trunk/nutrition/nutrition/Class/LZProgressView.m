@@ -30,7 +30,7 @@
 }
 -(void) drawWithShadows :(CGContextRef) myContext
 {
-    CGSize          myShadowOffset = CGSizeMake (0,  0.5);
+//    CGSize          myShadowOffset = CGSizeMake (0,  0.5);
     float           myColorValues[] = {140/255.f, 137/255.f, 137/255.f, 0.75};
     CGColorRef      myColor;
     CGColorSpaceRef myColorSpace;
@@ -40,7 +40,7 @@
     // Your drawing code here
     myColorSpace = CGColorSpaceCreateDeviceRGB ();
     myColor = CGColorCreate (myColorSpace, myColorValues);
-    CGContextSetShadowWithColor (myContext, myShadowOffset, 0.5, myColor);
+//    CGContextSetShadowWithColor (myContext, myShadowOffset, 0.5, myColor);
     // Your drawing code here
     [[UIColor colorWithRed:194/255.f green:194/255.f blue:194/255.f alpha:1] setStroke];//设置线条颜色
     [drawingBackColor setFill]; //设置填充颜色
@@ -56,7 +56,7 @@
     {
         return;
     }
-    CGRect fillRect = CGRectMake(drawingRect.origin.x+3, drawingRect.origin.y+3, (drawingRect.size.width-6)*drawingProgress, drawingRect.size.height-5.5);
+    CGRect fillRect = CGRectMake(drawingRect.origin.x, drawingRect.origin.y, (drawingRect.size.width)*drawingProgress, drawingRect.size.height);
 
     [drawingFillColor setStroke];
     [drawingFillColor setFill];
@@ -88,7 +88,7 @@
     
     CGContextAddPath(context, pathRef);
     CGContextSetLineWidth(context, 0.5);
-    CGContextDrawPath(context,kCGPathFillStroke);
+    CGContextDrawPath(context,kCGPathEOFillStroke);
     
     CGPathRelease(pathRef);
 }

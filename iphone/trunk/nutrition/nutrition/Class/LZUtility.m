@@ -594,7 +594,7 @@
     NSNumber *userHeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserHeightKey];
     NSNumber *userWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
     NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
-    NSDate *birthday = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserBirthdayKey];
+    NSDate *birthday = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserBirthKey];
     
     return (userSex && userAge && userHeight && userWeight && userActivityLevel && birthday);
 }

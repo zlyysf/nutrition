@@ -81,7 +81,7 @@
 #define LZUserDailyIntakeKey @"LZUserDailyIntakeKey" //a dictionary for user daily intake
 //#define LZPlanPersonsKey @"LZPersonAmountKey"//int
 //#define LZPlanDaysKey @"LZPlanDaysKey"//int
-#define LZUserBirthdayKey @"LZUserBirthdayKey" // NSDate object
+#define LZUserBirthKey @"LZUserBirthKey" // NSDate object
 
 #define LZSettingKey_randomSelectFood @"randomSelectFood" //BOOL
 #define LZSettingKey_randomRangeSelectFood @"randomRangeSelectFood" //int
@@ -322,7 +322,7 @@
 #define Strategy_random  @"random"
 #define Strategy_max  @"max"
 
-#define kProgressBarRect CGRectMake(2,2,226,14)
+#define kProgressBarRect CGRectMake(0,0,230,10)
 #define kKeyBoardToolBarRect CGRectMake(0,0,320,44)
 #define TopNavigationBarHeight 44
 #define FoodTypeSelectorViewHeight 41

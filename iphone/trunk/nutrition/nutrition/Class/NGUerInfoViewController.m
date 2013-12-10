@@ -108,7 +108,7 @@
     [self.sexSegmentControll setSelectedSegmentIndex:[userSex intValue]];
     [self displayActivityLevelDiscription];
     NSNumber *userActivityLevel = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserActivityLevelKey];
-    currentDate = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserBirthdayKey];
+    currentDate = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserBirthKey];
     [self.activitySegmentControll setSelectedSegmentIndex:[userActivityLevel intValue]];
     currentWeight = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserWeightKey];
     if (currentWeight == nil)
@@ -167,7 +167,7 @@
         int userAge = [LZUtility calculateAgeAccordingToTheBirthdate:self.currentDate];
         NSLog(@"%d",userAge);
         [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:userAge] forKey:LZUserAgeKey];
-        [[NSUserDefaults standardUserDefaults]setObject:self.currentDate forKey:LZUserBirthdayKey];
+        [[NSUserDefaults standardUserDefaults]setObject:self.currentDate forKey:LZUserBirthKey];
     }
     else
     {
