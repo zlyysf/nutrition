@@ -38,6 +38,7 @@
 
 @optional
 - (void)didClickPage:(NGCycleScrollView *)csView atIndex:(NSInteger)index;
+-(void)didChangeToPage:(NSInteger)index;
 
 @end
 

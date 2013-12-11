@@ -709,16 +709,38 @@
             </objects>
             <point key="canvasLocation" x="140" y="-207"/>
         </scene>
-        <!--View Controller - 图表-->
+        <!--Chart View Controller - 图表-->
         <scene sceneID="7N4-63-oKb">
             <objects>
-                <viewController id="rNA-8P-kbe" sceneMemberID="viewController">
+                <viewController id="rNA-8P-kbe" customClass="NGChartViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NkG-hK-gQu">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="ESQ-4k-Hma">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="营养"/>
+                                    <segment title="体质"/>
+                                    <segment title="体重"/>
+                                    <segment title="体温"/>
+                                    <segment title="血压"/>
+                                    <segment title="心跳"/>
+                                </segments>
+                                <color key="tintColor" red="0.2627450980392157" green="0.44313725490196076" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="contentTypeChanged:" destination="rNA-8P-kbe" eventType="valueChanged" id="yyK-ot-Iai"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="图表" id="p0h-ld-p5o"/>
+                    <connections>
+                        <outlet property="contentTypeChangeControl" destination="ESQ-4k-Hma" id="SgY-AP-1oj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GpV-0m-Onj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

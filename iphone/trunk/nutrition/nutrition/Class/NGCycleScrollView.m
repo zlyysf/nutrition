@@ -65,10 +65,10 @@
 //    _pageControl.currentPage = _curPage;
     
     //从scrollView上移除所有的subview
-//    NSArray *subViews = [_scrollView subviews];
-//    if([subViews count] != 0) {
-//        [subViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-//    }
+    NSArray *subViews = [_scrollView subviews];
+    if([subViews count] != 0) {
+        [subViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    }
     
     [self getDisplayImagesWithCurpage:_curPage];
     
@@ -87,6 +87,9 @@
 
 - (void)getDisplayImagesWithCurpage:(int)page {
     
+    if ([_delegate respondsToSelector:@selector(didChangeToPage:)]) {
+        [_delegate didChangeToPage:page];
+    }
     int pre = [self validPageValue:_curPage-1];
     int last = [self validPageValue:_curPage+1];
     

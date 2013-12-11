@@ -114,6 +114,7 @@
 		5F2584AE1782F9AB00D99C16 /* edit_right_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584A91782F9AA00D99C16 /* edit_right_normal@2x.png */; };
 		5F2584B01782FA2100D99C16 /* edit_left_normal@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */; };
 		5F2938B01856E69B00FAE2E2 /* NGFoodNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2938AF1856E69B00FAE2E2 /* NGFoodNutritionCell.m */; };
+		5F2938B318583EF400FAE2E2 /* NGChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2938B218583EF400FAE2E2 /* NGChartViewController.m */; };
 		5F2E024A17E01A0700D26231 /* menu_item_4@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2E024417E01A0700D26231 /* menu_item_4@2x.png */; };
 		5F2E024B17E01A0700D26231 /* menu_item_0@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2E024517E01A0700D26231 /* menu_item_0@2x.png */; };
 		5F2E024C17E01A0700D26231 /* menu_item_3@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2E024617E01A0700D26231 /* menu_item_3@2x.png */; };
@@ -440,6 +441,8 @@
 		5F2584AF1782FA2000D99C16 /* edit_left_normal@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "edit_left_normal@2x.png"; path = "nutrition/Resource/edit_left_normal@2x.png"; sourceTree = "<group>"; };
 		5F2938AE1856E69B00FAE2E2 /* NGFoodNutritionCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodNutritionCell.h; path = nutrition/Class/NGFoodNutritionCell.h; sourceTree = "<group>"; };
 		5F2938AF1856E69B00FAE2E2 /* NGFoodNutritionCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodNutritionCell.m; path = nutrition/Class/NGFoodNutritionCell.m; sourceTree = "<group>"; };
+		5F2938B118583EF400FAE2E2 /* NGChartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGChartViewController.h; path = nutrition/Class/NGChartViewController.h; sourceTree = "<group>"; };
+		5F2938B218583EF400FAE2E2 /* NGChartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGChartViewController.m; path = nutrition/Class/NGChartViewController.m; sourceTree = "<group>"; };
 		5F2E024417E01A0700D26231 /* menu_item_4@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_4@2x.png"; path = "nutrition/Resource/menu_item_4@2x.png"; sourceTree = "<group>"; };
 		5F2E024517E01A0700D26231 /* menu_item_0@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_0@2x.png"; path = "nutrition/Resource/menu_item_0@2x.png"; sourceTree = "<group>"; };
 		5F2E024617E01A0700D26231 /* menu_item_3@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "menu_item_3@2x.png"; path = "nutrition/Resource/menu_item_3@2x.png"; sourceTree = "<group>"; };
@@ -1265,6 +1268,8 @@
 				5FF08A9918506AB200A954C8 /* NGNutritionInfoViewController.m */,
 				5F206DE51855E63000E8D094 /* NGSingleFoodViewController.h */,
 				5F206DE61855E63000E8D094 /* NGSingleFoodViewController.m */,
+				5F2938B118583EF400FAE2E2 /* NGChartViewController.h */,
+				5F2938B218583EF400FAE2E2 /* NGChartViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -2191,6 +2196,7 @@
 				5F22A68B17CEFC400043D760 /* LZFoodSearchViewController.m in Sources */,
 				5F22A68E17CF11930043D760 /* LZSearchBar.m in Sources */,
 				5F22A6C817CF4C6E0043D760 /* LZFoodTypeButton.m in Sources */,
+				5F2938B318583EF400FAE2E2 /* NGChartViewController.m in Sources */,
 				5F87498517D09D050061E36D /* LZNutritionListViewController.m in Sources */,
 				5F87498B17D0C2EE0061E36D /* LZRichNutritionViewController.m in Sources */,
 				5F65274A17D49DA50089CBB5 /* LZHealthCheckViewController.m in Sources */,

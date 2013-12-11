@@ -43,10 +43,12 @@
 }
 -(void)scrolltoprevious
 {
+    NSLog(@"%@",self.cycleView.scrollView.subviews);
     [self.cycleView scrollToPreviousPage];
 }
 -(void)scrolltonext
 {
+    NSLog(@"%@",self.cycleView.scrollView.subviews);
     [self.cycleView scrollToNextPage];
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -157,18 +159,37 @@
 //- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
 //{
 //}// custom view for footer. will be adjusted to default or specified footer height
+-(void)didChangeToPage:(NSInteger)index
+{
+    NSLog(@"did change to %d",index);
+}
 - (UIView *)pageAtIndex:(NSInteger)index
 {
     UIView *newView = [[UIView alloc]initWithFrame:cycleView.bounds];
     [newView setBackgroundColor:[UIColor clearColor]];
-    if (index%3 == 0)
+    int newIndex;
+    if (index <0)
+    {
+        int i;
+        for (i=1; i*3+index<0; i++)
+        {
+        }
+        newIndex = i*3+index;
+        
+    }
+    else
+    {
+        newIndex = index;
+    }
+    NSLog(@"require %d",index);
+    if (newIndex%3 == 0)
     {
         
         [newView addSubview:self.listView1];
         [self.listView1 reloadData];
         
     }
-    else if(index%3 == 1)
+    else if(newIndex%3 == 1)
     {
         [newView addSubview:self.listView2];
         [self.listView2 reloadData];
