@@ -1169,7 +1169,7 @@
             cellNotEmpty_nutrient = (cell_nutrient.type!=cellBlank && cell_nutrient.str.length>0);
             if (cellNotEmpty_nutrient){
                 NSString *nutrientDesc = cell_nutrient.str;
-                [nutrientDesc stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                nutrientDesc = [nutrientDesc stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 NSString *nutrientId = nutrientDescToIdDict[nutrientDesc];
                 assert(nutrientId!=nil);
                 
@@ -1916,13 +1916,18 @@
 }
 
 
--(NSMutableDictionary*)convertDataFromExcelToSqlite_SimptomNutrientIllnessSummarySheet:(NSDictionary*)dataOfSimptomNutrientIllnessSummarySheet
+-(NSMutableDictionary*)convertDataFromExcelToSqlite_SimptomNutrientIllnessSummarySheet:(NSDictionary*)dataOfSimptomNutrientIllnessSummarySheet andDataTranslate:(NSDictionary*)dataTranslate
 {
     NSMutableArray *symptomTypes = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"symptomTypes"];
     NSMutableDictionary *symptomsByTypeDict = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"symptomsByTypeDict"];//type -> symptoms
     NSMutableDictionary *nutrientIdAndIllnessDataBySymptomWithTypeDict = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"nutrientIdAndIllnessDataBySymptomWithTypeDict"]; // type+"--"+symptom -> [nutrientIds, illnessAry]
     NSMutableDictionary *symptomHealthmarkDict= [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"symptomHealthmarkDict"];//symptom --> healthmark
     NSSet *illnessSet = [dataOfSimptomNutrientIllnessSummarySheet objectForKey:@"illnessSet"];
+    
+    NSDictionary *idToEnNameDict_symptomType = dataTranslate[@"idToEnNameDict_symptomType"];
+    NSDictionary *idToEnNameDict_symptom = dataTranslate[@"idToEnNameDict_symptom"];
+    NSDictionary *idToRowDict_illness = dataTranslate[@"idToRowDict_illness"];
+    
 
     NSMutableArray *symptomTypeRows = [NSMutableArray arrayWithCapacity:symptomTypes.count];
     NSMutableArray *symptomRows = [NSMutableArray arrayWithCapacity:nutrientIdAndIllnessDataBySymptomWithTypeDict.count];
@@ -1931,18 +1936,21 @@
     NSMutableArray *IllnessRows = [NSMutableArray arrayWithCapacity:illnessSet.count];
     
     for (int i=0; i<symptomTypes.count; i++) {
-        NSString *symptomType = symptomTypes[i];
+        NSString *symptomTypeId = symptomTypes[i];
         NSMutableArray *symptomTypeRow = [NSMutableArray arrayWithCapacity:5];
         NSString *forSex = @"both";
-        if ([symptomType isEqualToString:@"男性"]){
+        if ([symptomTypeId isEqualToString:@"男性"]){
             forSex = @"male";
-        }else if([symptomType isEqualToString:@"女性"]){
+        }else if([symptomTypeId isEqualToString:@"女性"]){
             forSex = @"female";
         }
-        [symptomTypeRow addObject:symptomType];
+        NSString *symptomTypeCnName = symptomTypeId;
+        NSString *symptomTypeEnName = idToEnNameDict_symptomType[symptomTypeId];
+        assert(symptomTypeEnName!=nil);
+        [symptomTypeRow addObject:symptomTypeId];
         [symptomTypeRow addObject:[NSNumber numberWithInt:i]];
-        [symptomTypeRow addObject:symptomType];
-        [symptomTypeRow addObject:symptomType];
+        [symptomTypeRow addObject:symptomTypeCnName];
+        [symptomTypeRow addObject:symptomTypeEnName];
         [symptomTypeRow addObject:forSex];
         [symptomTypeRows addObject: symptomTypeRow];
     }//for
@@ -1951,14 +1959,17 @@
         NSString *symptomType = symptomTypes[i];
         NSArray *symptoms = [symptomsByTypeDict objectForKey:symptomType];
         for(int j=0; j<symptoms.count; j++){
-            NSString *symptom = symptoms[j];
-            NSNumber *nmHealthMark = [symptomHealthmarkDict objectForKey:symptom];
+            NSString *symptomId = symptoms[j];
+            NSNumber *nmHealthMark = [symptomHealthmarkDict objectForKey:symptomId];
             NSMutableArray *symptomRow = [NSMutableArray arrayWithCapacity:5];
+            NSString *symptomCnName = symptomId;
+            NSString *symptomEnName = idToEnNameDict_symptom[symptomId];
+            assert(symptomEnName!=nil);
             [symptomRow addObject:symptomType];
-            [symptomRow addObject:symptom];
+            [symptomRow addObject:symptomId];
             [symptomRow addObject:[NSNumber numberWithInt:i*10000+j]];
-            [symptomRow addObject:symptom];
-            [symptomRow addObject:symptom];
+            [symptomRow addObject:symptomCnName];
+            [symptomRow addObject:symptomEnName];
             [symptomRow addObject:nmHealthMark];
             [symptomRows addObject:symptomRow];
         }//for j
@@ -1997,11 +2008,24 @@
         }//for j
     }//for i
     
-    for (NSString *illness in illnessSet) {
+    for (NSString *illnessId in illnessSet) {
         NSMutableArray *illnessRow = [NSMutableArray arrayWithCapacity:5];
-        [illnessRow addObject:illness];
-        [illnessRow addObject:illness];
-        [illnessRow addObject:illness];
+        
+        NSDictionary *illnessTranslate = idToRowDict_illness[illnessId];
+        assert(illnessTranslate!=nil);
+        NSString *illnessCnName = illnessId;
+        NSString *illnessEnName = illnessTranslate[COLUMN_NAME_IllnessNameEn];
+        assert(illnessEnName!=nil);
+        NSString *illnessUrlCn = illnessTranslate[COLUMN_NAME_UrlCn];
+        assert(illnessUrlCn!=nil);
+        NSString *illnessUrlEn = illnessTranslate[COLUMN_NAME_UrlEn];
+        assert(illnessUrlEn!=nil);
+
+        [illnessRow addObject:illnessId];
+        [illnessRow addObject:illnessCnName];
+        [illnessRow addObject:illnessEnName];
+        [illnessRow addObject:illnessUrlCn];
+        [illnessRow addObject:illnessUrlEn];
         [IllnessRows addObject:illnessRow];
     }
     
@@ -2018,7 +2042,8 @@
 -(void)convertExcelToSqlite_SimptomNutrientIllnessSummarySheet
 {
     NSDictionary * dataInSheet = [self readSimptomNutrientIllnessSummarySheet];
-    NSDictionary * rowsDict = [self convertDataFromExcelToSqlite_SimptomNutrientIllnessSummarySheet:dataInSheet];
+    NSDictionary *dataTranslate = [self readSymptomTranslateData];
+    NSDictionary * rowsDict = [self convertDataFromExcelToSqlite_SimptomNutrientIllnessSummarySheet:dataInSheet andDataTranslate:dataTranslate];
     
     NSMutableArray *symptomTypeRows = [rowsDict objectForKey:@"symptomTypeRows"];
     NSMutableArray *symptomRows = [rowsDict objectForKey:@"symptomRows"];
@@ -2032,7 +2057,7 @@
     [db.da executeSql:@"CREATE TABLE Symptom(SymptomTypeId TEXT, SymptomId TEXT, DisplayOrder INTEGER, SymptomNameCn TEXT, SymptomNameEn TEXT, healthMark REAL, PRIMARY KEY(SymptomId) );"];
     [db.da executeSql:@"CREATE TABLE SymptomNutrient(SymptomTypeId TEXT, SymptomId TEXT, NutrientID TEXT);"];
     [db.da executeSql:@"CREATE TABLE SymptomPossibleIllness(SymptomTypeId TEXT, SymptomId TEXT, IllnessId TEXT);"];
-    [db.da executeSql:@"CREATE TABLE Illness(IllnessId TEXT PRIMARY KEY, IllnessNameCn TEXT, IllnessNameEn TEXT);"];
+    [db.da executeSql:@"CREATE TABLE Illness(IllnessId TEXT PRIMARY KEY, IllnessNameCn TEXT, IllnessNameEn TEXT, UrlCn TEXT, UrlEn TEXT);"];
     
     [db.da executeSql:@"CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, inputNameValuePairs TEXT, Note TEXT, calculateNameValuePairs TEXT);"];
     
@@ -2040,7 +2065,7 @@
     NSMutableArray *columnNames_Symptom = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_DisplayOrder, COLUMN_NAME_SymptomNameCn, COLUMN_NAME_SymptomNameEn, COLUMN_NAME_HealthMark, nil];
     NSMutableArray *columnNames_SymptomNutrient = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_NutrientID, nil];
     NSMutableArray *columnNames_SymptomPossibleIllness = [NSMutableArray arrayWithObjects: COLUMN_NAME_SymptomTypeId, COLUMN_NAME_SymptomId, COLUMN_NAME_IllnessId, nil];
-    NSMutableArray *columnNames_Illness = [NSMutableArray arrayWithObjects: COLUMN_NAME_IllnessId, COLUMN_NAME_IllnessNameCn, COLUMN_NAME_IllnessNameEn, nil];
+    NSMutableArray *columnNames_Illness = [NSMutableArray arrayWithObjects: COLUMN_NAME_IllnessId, COLUMN_NAME_IllnessNameCn, COLUMN_NAME_IllnessNameEn, COLUMN_NAME_UrlCn, COLUMN_NAME_UrlEn, nil];
 
     [db.da insertToTable_withTableName:TABLE_NAME_SymptomType withColumnNames:columnNames_SymptomType andRows2D:symptomTypeRows andIfNeedClearTable:true];
     [db.da insertToTable_withTableName:TABLE_NAME_Symptom withColumnNames:columnNames_Symptom andRows2D:symptomRows andIfNeedClearTable:true];
@@ -2258,12 +2283,17 @@
 
 
 
--(NSMutableDictionary*)convertDataFromReadToSqlite_readAndCheckIllnessSuggestionTxtdoc:(NSDictionary*)illnessSuggestionDataDict
+-(NSMutableDictionary*)convertDataFromReadToSqlite_readAndCheckIllnessSuggestionTxtdoc:(NSDictionary*)illnessSuggestionDataDict andDataTranslate:(NSDictionary*)dataTranslate
 {
     NSMutableArray *illnessAllAry = [illnessSuggestionDataDict objectForKey:@"illnessAllAry"];
     NSMutableArray *aryIllnessNotInCurDB = [illnessSuggestionDataDict objectForKey:@"aryIllnessNotInCurDB"];
     NSMutableArray *suggestionAllAry = [illnessSuggestionDataDict objectForKey:@"suggestionAllAry"];
     NSMutableDictionary *illnessSuggestionsDict = [illnessSuggestionDataDict objectForKey:@"illnessSuggestionsDict"];
+    
+    NSDictionary *idToEnNameDict_symptomType = dataTranslate[@"idToEnNameDict_symptomType"];
+    NSDictionary *idToEnNameDict_symptom = dataTranslate[@"idToEnNameDict_symptom"];
+    NSDictionary *idToRowDict_illness = dataTranslate[@"idToRowDict_illness"];
+    
     
     NSMutableArray *rowsIllnessSuggestion = [NSMutableArray arrayWithCapacity:suggestionAllAry.count];
     NSMutableArray *rowsIllnessToSuggestion = [NSMutableArray array];
@@ -2292,11 +2322,23 @@
     }//for i
     
     for (int i=0; i<aryIllnessNotInCurDB.count; i++) {
-        NSString *illness = aryIllnessNotInCurDB[i];
+        NSString *illnessId = aryIllnessNotInCurDB[i];
         NSMutableArray *illnessRow = [NSMutableArray arrayWithCapacity:5];
-        [illnessRow addObject:illness];
-        [illnessRow addObject:illness];
-        [illnessRow addObject:illness];
+        NSDictionary *illnessTranslate = idToRowDict_illness[illnessId];
+        assert(illnessTranslate!=nil);
+        NSString *illnessCnName = illnessId;
+        NSString *illnessEnName = illnessTranslate[COLUMN_NAME_IllnessNameEn];
+        assert(illnessEnName!=nil);
+        NSString *illnessUrlCn = illnessTranslate[COLUMN_NAME_UrlCn];
+        assert(illnessUrlCn!=nil);
+        NSString *illnessUrlEn = illnessTranslate[COLUMN_NAME_UrlEn];
+        assert(illnessUrlEn!=nil);
+        
+        [illnessRow addObject:illnessId];
+        [illnessRow addObject:illnessCnName];
+        [illnessRow addObject:illnessEnName];
+        [illnessRow addObject:illnessUrlCn];
+        [illnessRow addObject:illnessUrlEn];
         [rowsIllness addObject:illnessRow];
     }
     
@@ -2315,7 +2357,8 @@
 -(void)convertExcelToSqlite_IllnessSuggestionTxtdoc
 {
     NSDictionary * dataRead = [self readAndCheckIllnessSuggestionTxtdoc];
-    NSDictionary * rowsDict = [self convertDataFromReadToSqlite_readAndCheckIllnessSuggestionTxtdoc:dataRead];
+    NSDictionary *dataTranslate = [self readSymptomTranslateData];
+    NSDictionary * rowsDict = [self convertDataFromReadToSqlite_readAndCheckIllnessSuggestionTxtdoc:dataRead andDataTranslate:dataTranslate];
     NSMutableArray *rowsIllnessSuggestion = [rowsDict objectForKey:@"rowsIllnessSuggestion"];
     NSMutableArray *rowsIllnessToSuggestion = [rowsDict objectForKey:@"rowsIllnessToSuggestion"];
     NSMutableArray *rowsIllness = [rowsDict objectForKey:@"rowsIllness"];
@@ -2327,7 +2370,7 @@
     
     NSMutableArray *columnNames_IllnessToSuggestion = [NSMutableArray arrayWithObjects: COLUMN_NAME_IllnessId, COLUMN_NAME_SuggestionId, nil];
     NSMutableArray *columnNames_IllnessSuggestion = [NSMutableArray arrayWithObjects: COLUMN_NAME_SuggestionId, COLUMN_NAME_SuggestionCn, COLUMN_NAME_SuggestionEn, nil];
-    NSMutableArray *columnNames_Illness = [NSMutableArray arrayWithObjects: COLUMN_NAME_IllnessId, COLUMN_NAME_IllnessNameCn, COLUMN_NAME_IllnessNameEn, nil];
+    NSMutableArray *columnNames_Illness = [NSMutableArray arrayWithObjects: COLUMN_NAME_IllnessId, COLUMN_NAME_IllnessNameCn, COLUMN_NAME_IllnessNameEn, COLUMN_NAME_UrlCn, COLUMN_NAME_UrlEn, nil];
     
     [db.da insertToTable_withTableName:TABLE_NAME_Illness withColumnNames:columnNames_Illness andRows2D:rowsIllness andIfNeedClearTable:FALSE];
     [db.da insertToTable_withTableName:TABLE_NAME_IllnessToSuggestion withColumnNames:columnNames_IllnessToSuggestion andRows2D:rowsIllnessToSuggestion andIfNeedClearTable:true];
@@ -2336,7 +2379,171 @@
     
 }
 
+/*
+ ret data: idToEnNameDict
+ */
+-(NSDictionary *)readSymptomTranslateData
+{
+    NSDictionary *idToEnNameDict_symptomType = [self readSymptomTranslateData_SymptomTypeSheet];
+    NSDictionary *idToEnNameDict_symptom = [self readSymptomTranslateData_SymptomSheet];
+    NSDictionary *idToRowDict_illness = [self readSymptomTranslateData_IllnessSheet];
+    NSMutableDictionary *retData = [NSMutableDictionary dictionary];
+    [retData setObject:idToEnNameDict_symptomType forKey:@"idToEnNameDict_symptomType"];
+    [retData setObject:idToEnNameDict_symptom forKey:@"idToEnNameDict_symptom"];
+    [retData setObject:idToRowDict_illness forKey:@"idToRowDict_illness"];
+    return retData;
+}
 
+/*
+ ret data: idToEnNameDict
+ */
+-(NSDictionary *)readSymptomTranslateData_SymptomTypeSheet
+{
+    NSString *fileName = @"SymptomTranslate.xls";
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
+    NSLog(@"in readSymptomTranslateData_SymptomTypeSheet, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+    int sheetIdx = 0;
+    int rowIdx_ColumnRow=1, colIdx_Start=1;
+    
+//    NSMutableArray *idAry = [NSMutableArray array];
+//    NSMutableDictionary *rowsByIdDict = [NSMutableDictionary dictionary];
+    NSMutableDictionary *idToEnNameDict = [NSMutableDictionary dictionary];
+    
+    DHcell *cell_Id, *cell_enName;
+    int rowIdx = rowIdx_ColumnRow+1, colIdx=colIdx_Start;
+    bool cellIdEmpty ;
+    do {
+        cell_Id = [reader cellInWorkSheetIndex:sheetIdx row:rowIdx col:colIdx];
+        cell_enName = [reader cellInWorkSheetIndex:sheetIdx row:rowIdx col:colIdx+1];
+        rowIdx++;
+        cellIdEmpty = (cell_Id.type==cellBlank || cell_Id.str.length==0);
+        if (!cellIdEmpty){
+            NSString *symptomTypeId = cell_Id.str;
+            symptomTypeId = [symptomTypeId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSString *symptomTypeNameEn = cell_enName.str;
+            
+            [idToEnNameDict setObject:symptomTypeNameEn forKey:symptomTypeId];
+            NSLog(@"in readSymptomTranslateData_SymptomTypeSheet, [id,enName]=%@,%@",symptomTypeId,symptomTypeNameEn);
+        }
+    } while (!cellIdEmpty);
+    
+    return idToEnNameDict;
+}
+
+
+/*
+ ret data: idToEnNameDict
+ */
+-(NSDictionary *)readSymptomTranslateData_SymptomSheet
+{
+    NSString *fileName = @"SymptomTranslate.xls";
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
+    NSLog(@"in readSymptomTranslateData_SymptomSheet, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+    int sheetIdx = 1;
+    int rowIdx_ColumnRow=1, colIdx_Start=1;
+    
+    //    NSMutableArray *idAry = [NSMutableArray array];
+    //    NSMutableDictionary *rowsByIdDict = [NSMutableDictionary dictionary];
+    NSMutableDictionary *idToEnNameDict = [NSMutableDictionary dictionary];
+    
+    DHcell *cell_Id, *cell_enName;
+    int rowIdx = rowIdx_ColumnRow+1, colIdx=colIdx_Start;
+    bool cellIdEmpty ;
+    do {
+        cell_Id = [reader cellInWorkSheetIndex:sheetIdx row:rowIdx col:colIdx+1];
+        cell_enName = [reader cellInWorkSheetIndex:sheetIdx row:rowIdx col:colIdx+2];
+        rowIdx++;
+        cellIdEmpty = (cell_Id.type==cellBlank || cell_Id.str.length==0);
+        if (!cellIdEmpty){
+            NSString *symptomId = cell_Id.str;
+            symptomId = [symptomId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSString *symptomNameEn = cell_enName.str;
+            
+            [idToEnNameDict setObject:symptomNameEn forKey:symptomId];
+            NSLog(@"in readSymptomTranslateData_SymptomSheet, [id,enName]=%@,%@",symptomId,symptomNameEn);
+        }
+    } while (!cellIdEmpty);
+    
+    return idToEnNameDict;
+}
+
+
+
+
+
+/*
+ ret data: idToRowDict
+ */
+-(NSDictionary *)readSymptomTranslateData_IllnessSheet
+{
+    NSString *fileName = @"SymptomTranslate.xls";
+    NSString *xlsPath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:fileName];
+    NSLog(@"in readSymptomTranslateData_IllnessSheet, xlsPath=%@",xlsPath);
+    DHxlsReader *reader = [DHxlsReader xlsReaderFromFile:xlsPath];
+	assert(reader);
+    
+    int sheetIdx = 2;
+    int rowIdx_ColumnRow=1, colIdx_Start=1;
+    
+    int rowIdx, colIdx;
+    DHcell *cell_column = nil;
+    NSMutableArray * columns = [NSMutableArray arrayWithCapacity:100];
+    
+    rowIdx = rowIdx_ColumnRow;
+    colIdx = colIdx_Start;
+    bool cellNotEmpty ;
+    do {
+        cell_column = [reader cellInWorkSheetIndex:sheetIdx row:rowIdx col:colIdx];
+        colIdx++;
+        cellNotEmpty = cell_column.type != cellBlank && cell_column.str.length>0;
+        if (cellNotEmpty){
+            NSString *columnName = cell_column.str;
+            columnName = [columnName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            [columns addObject:columnName];
+        }
+    } while (cellNotEmpty);
+    assert(columns.count==4);
+    assert([COLUMN_NAME_IllnessNameEn isEqualToString: columns[1]]);
+    assert([COLUMN_NAME_UrlCn isEqualToString: columns[2]]);
+    assert([COLUMN_NAME_UrlEn isEqualToString: columns[3]]);
+
+    //    NSMutableArray *idAry = [NSMutableArray array];
+    NSMutableDictionary *rowsByIdDict = [NSMutableDictionary dictionary];
+    
+    DHcell *cell_Id, *cell_enName, *cell_urlCn, *cell_urlEn;
+    rowIdx = rowIdx_ColumnRow+1, colIdx=colIdx_Start;
+    bool cellIdEmpty ;
+    do {
+        cell_Id = [reader cellInWorkSheetIndex:sheetIdx row:rowIdx col:colIdx+0];
+        cell_enName = [reader cellInWorkSheetIndex:sheetIdx row:rowIdx col:colIdx+1];
+        cell_urlCn = [reader cellInWorkSheetIndex:sheetIdx row:rowIdx col:colIdx+2];
+        cell_urlEn = [reader cellInWorkSheetIndex:sheetIdx row:rowIdx col:colIdx+3];
+        rowIdx++;
+        cellIdEmpty = (cell_Id.type==cellBlank || cell_Id.str.length==0);
+        if (!cellIdEmpty){
+            NSString *illnessId = cell_Id.str;
+            illnessId = [illnessId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            NSString *nameEn = cell_enName.str;
+            NSString *urlCn = cell_urlCn.str;
+            NSString *urlEn = cell_urlEn.str;
+            NSMutableDictionary *rowDict = [NSMutableDictionary dictionary];
+            [rowDict setObject:illnessId forKey:COLUMN_NAME_IllnessId];
+            [rowDict setObject:nameEn forKey:COLUMN_NAME_IllnessNameEn];
+            [rowDict setObject:urlCn forKey:COLUMN_NAME_UrlCn];
+            [rowDict setObject:urlEn forKey:COLUMN_NAME_UrlEn];
+            [rowsByIdDict setObject:rowDict forKey:illnessId];
+            
+            NSLog(@"in readSymptomTranslateData_IllnessSheet, [id,enName,urlCn,urlEn]=%@,%@,%@,%@",illnessId,nameEn,urlCn,urlEn);
+        }
+    } while (!cellIdEmpty);
+    return rowsByIdDict;
+}
 
 
 

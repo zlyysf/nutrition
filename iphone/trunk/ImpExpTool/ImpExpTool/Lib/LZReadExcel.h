@@ -63,6 +63,8 @@
 -(void)convertExcelToSqlite_IllnessSuggestionTxtdoc;
 
 
+-(NSDictionary *)readSymptomTranslateData;
+
 @end
 
 

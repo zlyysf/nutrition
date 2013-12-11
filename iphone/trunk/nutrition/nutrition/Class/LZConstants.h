@@ -216,6 +216,8 @@
 #define COLUMN_NAME_IllnessId @"IllnessId"
 #define COLUMN_NAME_IllnessNameCn @"IllnessNameCn"
 #define COLUMN_NAME_IllnessNameEn @"IllnessNameEn"
+#define COLUMN_NAME_UrlCn @"UrlCn"
+#define COLUMN_NAME_UrlEn @"UrlEn"
 
 #define TABLE_NAME_UserRecordSymptom @"UserRecordSymptom"
 #define COLUMN_NAME_DayLocal @"DayLocal"

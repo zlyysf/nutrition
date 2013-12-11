@@ -45,15 +45,18 @@
 //    [workRe convertExcelToSqlite_NutritionInfo];
 //    [workRe convertExcelToSqlite_FoodPicPath];
 //    [workRe convertExcelToSqlite_CustomRichFood];
-    [workRe convertExcelToSqlite_CustomRichFood2];
+//    [workRe convertExcelToSqlite_CustomRichFood2];
+    
 //    [workRe convertExcelToSqlite_NutrientDisease];
 ////    [workRe readNutrientDiseaseSheet_withDepartment:3];
 //    [workRe convertExcelToSqlite_TranslationItem];
     
-//    [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
-//    [workRe checkIllnessInferenceTxtdoc];
+    [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
+    [workRe checkIllnessInferenceTxtdoc];
     
-//    [workRe convertExcelToSqlite_IllnessSuggestionTxtdoc];
+    [workRe convertExcelToSqlite_IllnessSuggestionTxtdoc];
+    
+//    [workRe readSymptomTranslateData];
     
 //    //    LZDBAccess *db = [LZDBAccess singletonCustomDB];
 //    LZDBAccess *db = [workRe getDBconnection];
