@@ -19,8 +19,7 @@ import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityHome;
 public class V3SettingFragment extends Fragment {
     static final String LogTag = V3SettingFragment.class.getSimpleName();
 
-    EditText birthdayTextView, heightTextView, weightTextView, genderTextView,
-            intensityTextView;
+    EditText birthdayTextView, heightTextView, weightTextView;
     Button saveButton;
 
     @Override
@@ -36,9 +35,6 @@ public class V3SettingFragment extends Fragment {
         birthdayTextView = (EditText) view.findViewById(R.id.birthdayTextView);
         heightTextView = (EditText) view.findViewById(R.id.heightTextView);
         weightTextView = (EditText) view.findViewById(R.id.weightTextView);
-        genderTextView = (EditText) view.findViewById(R.id.genderTextView);
-        intensityTextView = (EditText) view
-                .findViewById(R.id.intensityTextView);
         return view;
     }
 
@@ -62,10 +58,6 @@ public class V3SettingFragment extends Fragment {
                         Double.parseDouble(heightTextView.getText().toString()));
                 userInfo.put(Constants.ParamKey_weight,
                         Double.parseDouble(weightTextView.getText().toString()));
-                userInfo.put(Constants.ParamKey_sex,
-                        Integer.parseInt(genderTextView.getText().toString()));
-                userInfo.put(Constants.ParamKey_activityLevel, Integer
-                        .parseInt(intensityTextView.getText().toString()));
                 StoredConfigTool.saveUserInfo(getActivity(), userInfo);
             }
         });
@@ -78,9 +70,6 @@ public class V3SettingFragment extends Fragment {
                 .toString());
         weightTextView.setText(userInfo.get(Constants.ParamKey_weight)
                 .toString());
-        genderTextView.setText(userInfo.get(Constants.ParamKey_sex).toString());
-        intensityTextView.setText(userInfo
-                .get(Constants.ParamKey_activityLevel).toString());
 
     }
 

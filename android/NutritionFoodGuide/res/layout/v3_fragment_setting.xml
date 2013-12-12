@@ -56,8 +56,9 @@
     </LinearLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal" >
 
         <TextView
@@ -65,16 +66,40 @@
             android:text="性别" >
         </TextView>
 
-        <EditText
-            android:id="@+id/genderTextView"
-            style="@style/v3_table_name_text"
-            android:text="男/女" >
-        </EditText>
+        <com.makeramen.segmented.SegmentedRadioGroup
+            android:id="@+id/genderRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:checkedButton="@+id/maleRadioButton"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/maleRadioButton"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="40dip"
+                android:text="男"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+
+            <RadioButton
+                android:id="@+id/femaleRadioButton"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="40dip"
+                android:text="女"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+        </com.makeramen.segmented.SegmentedRadioGroup>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal" >
 
         <TextView
@@ -82,11 +107,54 @@
             android:text="活动强度" >
         </TextView>
 
-        <EditText
-            android:id="@+id/intensityTextView"
-            style="@style/v3_table_name_text"
-            android:text="中等" >
-        </EditText>
+        <com.makeramen.segmented.SegmentedRadioGroup
+            android:id="@+id/intensityRadioGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dip"
+            android:checkedButton="@+id/intensity1RadioButton"
+            android:orientation="horizontal" >
+
+            <RadioButton
+                android:id="@+id/intensity1RadioButton"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="40dip"
+                android:text="轻"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+
+            <RadioButton
+                android:id="@+id/intensity2RadioButton"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="40dip"
+                android:text="中等"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+
+            <RadioButton
+                android:id="@+id/intensity3RadioButton"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="40dip"
+                android:text="强"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+
+            <RadioButton
+                android:id="@+id/intensity4RadioButton"
+                android:button="@null"
+                android:gravity="center"
+                android:minHeight="33dip"
+                android:minWidth="40dip"
+                android:text="很强"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="@color/radio_colors" />
+        </com.makeramen.segmented.SegmentedRadioGroup>
     </LinearLayout>
 
 </LinearLayout>
