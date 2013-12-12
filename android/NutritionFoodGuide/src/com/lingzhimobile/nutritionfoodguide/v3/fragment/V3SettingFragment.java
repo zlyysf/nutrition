@@ -10,6 +10,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.R;
@@ -20,6 +21,7 @@ public class V3SettingFragment extends Fragment {
     static final String LogTag = V3SettingFragment.class.getSimpleName();
 
     EditText birthdayTextView, heightTextView, weightTextView;
+    RadioGroup genderRadioGroup, intensityRadioGroup;
     Button saveButton;
 
     @Override
@@ -35,6 +37,8 @@ public class V3SettingFragment extends Fragment {
         birthdayTextView = (EditText) view.findViewById(R.id.birthdayTextView);
         heightTextView = (EditText) view.findViewById(R.id.heightTextView);
         weightTextView = (EditText) view.findViewById(R.id.weightTextView);
+        genderRadioGroup = (RadioGroup) view.findViewById(R.id.genderRadioGroup);
+        intensityRadioGroup = (RadioGroup) view.findViewById(R.id.intensityRadioGroup);
         return view;
     }
 
@@ -58,6 +62,8 @@ public class V3SettingFragment extends Fragment {
                         Double.parseDouble(heightTextView.getText().toString()));
                 userInfo.put(Constants.ParamKey_weight,
                         Double.parseDouble(weightTextView.getText().toString()));
+                userInfo.put(Constants.ParamKey_sex, genderRadioGroup.getCheckedRadioButtonId());
+                userInfo.put(Constants.ParamKey_activityLevel, intensityRadioGroup.getCheckedRadioButtonId());
                 StoredConfigTool.saveUserInfo(getActivity(), userInfo);
             }
         });
@@ -70,6 +76,8 @@ public class V3SettingFragment extends Fragment {
                 .toString());
         weightTextView.setText(userInfo.get(Constants.ParamKey_weight)
                 .toString());
+        genderRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_sex));
+        intensityRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_activityLevel));
 
     }
 
