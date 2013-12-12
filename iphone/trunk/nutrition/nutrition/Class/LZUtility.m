@@ -1557,7 +1557,18 @@
         return [NSString stringWithFormat:@"%d",numInt];
     }
 }
-
++(int)getMonthLocalForDistance:(int)distance
+{
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDate *currentDate = [NSDate date];
+    NSDateComponents *comps = [[NSDateComponents alloc] init];
+    [comps setMonth:distance];
+    NSDate *date = [calendar dateByAddingComponents:comps toDate:currentDate  options:0];
+    unsigned unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit;
+    NSDateComponents* new = [calendar components:unitFlags fromDate:date];
+    
+    return [new year]*100+[new month];
+}
 #define UniqueDeviceId_Related_SSKeychain_ServiceName @"SSKeychain_ServiceName"
 #define UniqueDeviceId_Related_SSKeychain_Account @"SSKeychain_Account"
 

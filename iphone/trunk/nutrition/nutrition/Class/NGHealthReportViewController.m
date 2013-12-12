@@ -51,7 +51,7 @@
     isChinese = [LZUtility isCurrentLanguageChinese];
     if (isFirstSave)
     {
-        UIBarButtonItem *savedItem = [[UIBarButtonItem alloc]initWithTitle:@"已保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveRecord)];
+        UIBarButtonItem *savedItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveRecord)];
         [savedItem setEnabled:NO];
         self.navigationItem.rightBarButtonItem = savedItem;
     }

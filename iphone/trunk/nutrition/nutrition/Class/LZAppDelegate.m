@@ -59,6 +59,7 @@
     if (IOS7_OR_LATER)
     {
         [[UINavigationBar appearance]setTintColor:[UIColor colorWithRed:67/255.f green:113/255.f blue:71/255.f alpha:1.0f]];
+        [[UINavigationBar appearance]setBarTintColor:[UIColor colorWithRed:204/255.f green:255/255.f blue:204/255.f alpha:1.0f]];
 //        [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
 //        [[UINavigationBar appearance]setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:25],UITextAttributeFont,[UIColor colorWithRed:0.f green:51/255.f blue:0.f alpha:1.0f],UITextAttributeTextColor, nil]];
     }

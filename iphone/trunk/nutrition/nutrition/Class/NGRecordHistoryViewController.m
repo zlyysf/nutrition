@@ -36,11 +36,10 @@
     self.cycleView.delegate = self;
     self.cycleView.datasource = self;
     [self.view addSubview:cycleView];
-    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithTitle:@"上一个" style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltoprevious)];
+    UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"left.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltoprevious)];
     self.navigationItem.leftBarButtonItem = leftItem;
-    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithTitle:@"下一个" style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltonext)];
-    self.navigationItem.rightBarButtonItem = rightItem;
-}
+    UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"right.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltonext)];
+    self.navigationItem.rightBarButtonItem = rightItem;}
 -(void)scrolltoprevious
 {
     NSLog(@"%@",self.cycleView.scrollView.subviews);

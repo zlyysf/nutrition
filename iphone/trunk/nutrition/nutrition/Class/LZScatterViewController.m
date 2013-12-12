@@ -100,7 +100,7 @@
 - (void)configurePlotSpace
 {
     CPTXYPlotSpace * plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
-    plotSpace.allowsUserInteraction = YES;
+    //plotSpace.allowsUserInteraction = YES;
     if (self.scatterType == ScatterTypeBMI) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3.5) length:CPTDecimalFromFloat(34.5)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(20.75) length:CPTDecimalFromFloat(2.5)];
