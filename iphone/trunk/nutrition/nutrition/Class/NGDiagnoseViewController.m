@@ -23,10 +23,11 @@
 @property (strong,nonatomic) UITextField *currentTextField;
 @property (strong,nonatomic) UITextView *currentTextView;
 @property (strong,nonatomic) NSMutableDictionary *userInputValueDict;
+@property (assign,nonatomic)BOOL needRefresh;
 @end
 
 @implementation NGDiagnoseViewController
-@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField,userInputValueDict;
+@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField,userInputValueDict,userSelectedSymptom,needRefresh;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -51,9 +52,13 @@
     self.listView.tableHeaderView = headerView;
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     UIBarButtonItem *submitItem = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(getHealthReport)];
+    [submitItem setEnabled:NO];
     self.navigationItem.rightBarButtonItem = submitItem;
-    userInputValueDict = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"",@"note",@"",@"weight",@"",@"heat",@"",@"heartbeat",@"",@"highpressure",@"",@"lowpressure", nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userInfoChanged:) name:Notification_SettingsChangedKey object:nil];
     isChinese =[LZUtility isCurrentLanguageChinese];
+    userSelectedSymptom = [[NSMutableArray alloc]init];
+    needRefresh = NO;
+    [self refresh];
     
     	// Do any additional setup after loading the view.
 }
@@ -69,22 +74,22 @@
     }
 
     //根据状态dict 得到用户选的症状
-    NSMutableArray *userSelectedSymptom = [[NSMutableArray alloc]init];//需保存数据
-    for (NSString *symptomId in [symptomStateDict allKeys])
-    {
-        NSArray *stateArray = [symptomStateDict objectForKey:symptomId];
-        for (int i=0 ;i< [stateArray count];i++)
-        {
-            NSNumber *state = [stateArray objectAtIndex:i];
-            if ([state boolValue])
-            {
-                NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomId];
-                NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:i];
-                NSString *symptomName = [symptomDict objectForKey:@"SymptomId"];
-                [userSelectedSymptom addObject:symptomName];
-            }
-        }
-    }
+//    NSMutableArray *userSelectedSymptom = [[NSMutableArray alloc]init];//需保存数据
+//    for (NSString *symptomId in [symptomStateDict allKeys])
+//    {
+//        NSArray *stateArray = [symptomStateDict objectForKey:symptomId];
+//        for (int i=0 ;i< [stateArray count];i++)
+//        {
+//            NSNumber *state = [stateArray objectAtIndex:i];
+//            if ([state boolValue])
+//            {
+//                NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomId];
+//                NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:i];
+//                NSString *symptomName = [symptomDict objectForKey:@"SymptomId"];
+//                [userSelectedSymptom addObject:symptomName];
+//            }
+//        }
+//    }
     if ([userSelectedSymptom count]==0)
     {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"请至少选择一个症状" delegate:nil cancelButtonTitle:@"我知道了" otherButtonTitles:nil];
@@ -274,12 +279,17 @@
     healthReportViewController.attentionDict = illnessAttentionDict;
     healthReportViewController.recommendFoodDict = recommendedFoods;
     healthReportViewController.dataToSave = dataToSave;
+    needRefresh = YES;
     [self.navigationController pushViewController:healthReportViewController animated:YES];
+    
 }
--(void)viewWillAppear:(BOOL)animated
+-(void)userInfoChanged:(NSNotification *)notification
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    needRefresh = YES;
+}
+-(void)refresh
+{
+    needRefresh = NO;
     LZDataAccess *da = [LZDataAccess singleton];
     NSNumber *userSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];
     NSArray *symptomTypeRows;
@@ -307,8 +317,21 @@
         }
         [symptomStateDict setObject:symptomState forKey:key];
     }
+    [self.userSelectedSymptom removeAllObjects];
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    userInputValueDict = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"",@"note",@"",@"weight",@"",@"heat",@"",@"heartbeat",@"",@"highpressure",@"",@"lowpressure", nil];
     [self.listView reloadData];
-    //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
+
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+    if (needRefresh)
+    {
+        [self refresh];
+    }
+        //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
@@ -538,16 +561,27 @@
 #pragma mark- NGDiagnosesViewDelegate
 -(void)ItemState:(BOOL )state tag:(int)tag forIndexPath:(NSIndexPath *)indexPath
 {
-//    if (state)
-//    {
-//        NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
-//        NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
-//        NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:tag];
-//        NSString *text = [symptomDict objectForKey:@"SymptomNameCn"];
-//        NSString *message = [NSString stringWithFormat:@"您点击的症状是 %@, cell index section: %d row :%d",text,indexPath.section,indexPath.row];
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:Nil message:message delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//        [alert show];
-//    }
+    NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
+    NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
+    NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:tag];
+    NSString *text = [symptomDict objectForKey:@"SymptomNameCn"];
+    if (state)
+    {
+        [self.userSelectedSymptom addObject:text];
+    }
+    else
+    {
+        [self.userSelectedSymptom removeObject:text];
+    }
+    if ([self.userSelectedSymptom count]!= 0)
+    {
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }
+    else
+    {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
+       
     
 }
 #pragma mark- UITextFieldDelegate

@@ -73,12 +73,10 @@
 }
 -(void)saveRecord:(id)sender
 {
-    UIBarButtonItem *saveItem = (UIBarButtonItem *)sender;
-    [saveItem setTitle:@"已保存"];
-    [saveItem setEnabled:NO];
-    LZDataAccess *da = [LZDataAccess singleton];
+    
     if (self.dataToSave)
     {
+        LZDataAccess *da = [LZDataAccess singleton];
         NSNumber *dayLocalNum =[self.dataToSave objectForKey:@"dayLocal"];
         int dayLocal = [dayLocalNum intValue];
         NSDate *updateTime =[self.dataToSave objectForKey:@"date"];
@@ -86,7 +84,10 @@
         NSString *note = [self.dataToSave objectForKey:@"note"];
         NSDictionary *CalculateNameValuePairsData = [self.dataToSave objectForKey:@"CalculateNameValuePairsData"];
         
-        [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+        if ([da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData])
+        {
+            [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        }
     }
 }
 //-(void)displayReport

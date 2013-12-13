@@ -274,7 +274,7 @@
     if (index == currentPage)
     {
         NSString *title = [NSString stringWithFormat:@"%d.%d",thisMonthLocal/100,thisMonthLocal%100];
-        self.title = title;
+        self.navigationItem.title = title;
     }
     
     int startLocal = thisMonthLocal*100+1;

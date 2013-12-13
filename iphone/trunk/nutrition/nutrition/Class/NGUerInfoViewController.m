@@ -68,6 +68,10 @@
     [self.birthdayPicker addTarget:self action:@selector(datepickerChanged) forControlEvents:UIControlEventValueChanged];
     UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"baocunbutton",@"保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;
+    if (!isPresented)
+    {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
     [self.listView setContentSize:CGSizeMake(320, 455)];
     //[self displayUserInfo];
     
@@ -154,7 +158,10 @@
             self.heightTextField.text = [LZUtility convertIntToInch:[currentHeight intValue]];
         }
     }
-
+    if (!isPresented)
+    {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
 }
 -(void)saveButtonTapped
 {
@@ -206,9 +213,14 @@
     NSNumber *activityNumber = [NSNumber numberWithInt:[self.activitySegmentControll selectedSegmentIndex]];
     [[NSUserDefaults standardUserDefaults]setObject:activityNumber forKey:LZUserActivityLevelKey];
     [[NSUserDefaults standardUserDefaults]synchronize];
+    [[NSNotificationCenter defaultCenter]postNotificationName:Notification_SettingsChangedKey object:nil];
     if (isPresented)
     {
         [self dismissModalViewControllerAnimated:YES];
+    }
+    else
+    {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
     }
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -251,8 +263,12 @@
     self.activityDescriptionLabel.text = currentDes;
 
 }
+- (IBAction)sexChanged:(id)sender {
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+}
 - (IBAction)activityChanged:(id)sender
 {
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
     [self displayActivityLevelDiscription];
 }
 - (void)didReceiveMemoryWarning
@@ -454,6 +470,7 @@
     }
     textField.inputAccessoryView = keyboardToolbar;
     self.currentTextField = textField;
+    [self.navigationItem.rightBarButtonItem setEnabled:YES];
     //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 50 * USEC_PER_SEC);
     //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
     //        if (tag == 200)
@@ -472,6 +489,11 @@
     //    });
     
     //[textField becomeFirstResponder];
+    return YES;
+}
+-(BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    self.currentTextField = nil;
     return YES;
 }
 - (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string
@@ -500,6 +522,24 @@
 //        return NO;
 //    }
     
+}
+- (IBAction)birthdayButtonClicked:(id)sender {
+//    if (self.currentTextField == nil || self.currentTextField!= self.birthdayTextField)
+//    {
+        [self.birthdayTextField becomeFirstResponder];
+//    }
+}
+- (IBAction)heightButtonClicked:(id)sender {
+//    if (self.currentTextField == nil || self.currentTextField!= self.heightTextField)
+//    {
+        [self.heightTextField becomeFirstResponder];
+ //   }
+}
+- (IBAction)weightButtonClicked:(id)sender {
+//    if (self.currentTextField == nil || self.currentTextField!= self.weightTextField)
+//    {
+        [self.weightTextField becomeFirstResponder];
+ //   }
 }
 
 #pragma mark- LZKeyboardToolBarDelegate
