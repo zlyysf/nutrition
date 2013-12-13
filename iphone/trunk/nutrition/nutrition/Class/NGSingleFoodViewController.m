@@ -245,9 +245,31 @@
     //[cell.nameButton setTitle:nutritionName forState:UIControlStateNormal];
     cell.nutritionNameLabel.text = nutritionName;
     NSNumber *percent = [aNutrient objectForKey:@"1foodSupply1NutrientRate"];
-    NSNumber *food1Supply1NutrientAmount = [aNutrient objectForKey:@"food1Supply1NutrientAmount"];
+    //NSNumber *food1Supply1NutrientAmount = [aNutrient objectForKey:@"food1Supply1NutrientAmount"];
     NSNumber *nutrientTotalDRI = [aNutrient objectForKey:@"nutrientTotalDRI"];
     NSString *unit = [aNutrient objectForKey:@"Unit"];
+    if ([nutrientTotalDRI floatValue ]>=100)
+    {
+        if ([unit isEqualToString:@"kcal"])
+        {
+
+        }
+        else if ([unit isEqualToString:@"mg"])
+        {
+            unit = @"g";
+            nutrientTotalDRI = [NSNumber numberWithFloat:[nutrientTotalDRI floatValue ]/1000];
+        }
+        else if ([unit isEqualToString:@"g"])
+        {
+            unit = @"kg";
+            nutrientTotalDRI = [NSNumber numberWithFloat:[nutrientTotalDRI floatValue ]/1000];
+        }
+        else
+        {
+            unit = @"mg";
+            nutrientTotalDRI = [NSNumber numberWithFloat:[nutrientTotalDRI floatValue ]/1000];
+        }
+    }
     float progress = [percent floatValue]>1.f ? 1.f :[percent floatValue];
     float radius;
     if (progress >0.03 )
@@ -262,7 +284,7 @@
     [cell.supplyProgressView.layer setBorderWidth:0.5f];
     [cell.supplyProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:0.f fillRadius:0.f];
     
-    cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%% (%.2f/%.2f%@)",(int)([percent floatValue] *100),[food1Supply1NutrientAmount floatValue],[nutrientTotalDRI floatValue ],unit];
+    cell.supplyPercentlabel.text = [NSString stringWithFormat:@"%d%%/%.1f%@",(int)([percent floatValue] *100),[nutrientTotalDRI floatValue ],unit];
     return cell;
     //    }
     //    else
