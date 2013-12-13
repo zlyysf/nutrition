@@ -328,6 +328,7 @@
 #define kKeyBoardToolBarRect CGRectMake(0,0,320,44)
 #define TopNavigationBarHeight 44
 #define FoodTypeSelectorViewHeight 41
+#define ItemSelectedColor [UIColor colorWithRed:67/255.f green:113/255.f blue:71/255.f alpha:0.2f]
 
 #define Notification_TakenFoodChangedKey @"KeyTakenFoodChangedNotification"
 #define Notification_SettingsChangedKey @"KeySettingsChangedNotification"

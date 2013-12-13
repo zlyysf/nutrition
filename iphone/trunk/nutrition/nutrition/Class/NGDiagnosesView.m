@@ -74,7 +74,7 @@
         [label setText:text];
         [label setTextAlignment:UITextAlignmentCenter];
         [label.layer setMasksToBounds:YES];
-        [label.layer setCornerRadius:3];
+        [label.layer setCornerRadius:5];
         label.tag = i;
         
         [label.layer setBorderWidth: 0.5f];

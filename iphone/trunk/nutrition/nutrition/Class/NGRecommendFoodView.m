@@ -8,8 +8,9 @@
 
 #import "NGRecommendFoodView.h"
 #define FoodPicSideWidth 80
+#import "LZUtility.h"
 @implementation NGRecommendFoodView
-@synthesize foodImageView,foodNameLabel,foodAmountLabel;
+@synthesize foodImageView,foodNameLabel,foodAmountLabel,touchButton;
 - (id)initWithFrame:(CGRect)frame
            foodName:(NSString *)foodName
             foodPic:(NSString *)foodPic
@@ -39,6 +40,11 @@
         [foodAmountLabel setTextColor:[UIColor whiteColor]];
         foodAmountLabel.text = foodAmount;
         [self addSubview:foodAmountLabel];
+        
+        self.touchButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        UIImage *selectedImage = [LZUtility createImageWithColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5f] imageSize:CGSizeMake( frame.size.width, frame.size.height)];
+        [touchButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
+        [self addSubview:touchButton];
     }
     return self;
 }

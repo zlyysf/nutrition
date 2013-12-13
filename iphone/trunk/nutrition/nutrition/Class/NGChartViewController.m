@@ -58,6 +58,12 @@
 //    NSArray *array = [da getUserRecordSymptom_DistinctMonth];
     currentScatterType = ScatterTypeNI;
     //-(NSArray*)getUserRecordSymptomDataByRange_withStartDayLocal:(int)StartDayLocal andEndDayLocal:(int)EndDayLocal andStartMonthLocal:(int)StartMonthLocal andEndMonthLocal:(int)EndMonthLocal;
+    [self.contentTypeChangeControl setTitle:@"营养" forSegmentAtIndex:0];
+    [self.contentTypeChangeControl setTitle:@"体质" forSegmentAtIndex:1];
+    [self.contentTypeChangeControl setTitle:@"体重" forSegmentAtIndex:2];
+    [self.contentTypeChangeControl setTitle:@"体温" forSegmentAtIndex:3];
+    [self.contentTypeChangeControl setTitle:@"血压" forSegmentAtIndex:4];
+    [self.contentTypeChangeControl setTitle:@"心跳" forSegmentAtIndex:5];
     
     
 }

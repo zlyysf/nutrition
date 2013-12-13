@@ -16,4 +16,5 @@
 @property (strong,nonatomic)UIImageView *foodImageView;
 @property (strong,nonatomic)UILabel *foodNameLabel;
 @property (strong,nonatomic)UILabel *foodAmountLabel;
+@property (strong,nonatomic)UIButton *touchButton;
 @end

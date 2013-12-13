@@ -17,6 +17,7 @@
 #import "NGIllnessInfoViewController.h"
 #import "NGNutritionInfoViewController.h"
 #import "NGSingleFoodViewController.h"
+#import "LZConstants.h"
 #define BorderColor [UIColor lightGrayColor].CGColor
 
 #define AttentionItemLabelWidth 188
@@ -30,10 +31,11 @@
     BOOL isChinese;
 }
 @property (nonatomic,assign)BOOL isFirstLoad;
+@property (nonatomic,strong)UIImage *selectedImage;
 @end
 
 @implementation NGHealthReportViewController
-@synthesize lackNutritionArray,potentialArray,attentionDict,isFirstLoad,isFirstSave,recommendFoodDict,dataToSave;
+@synthesize lackNutritionArray,potentialArray,attentionDict,isFirstLoad,isFirstSave,recommendFoodDict,dataToSave,selectedImage;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -60,7 +62,7 @@
         UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveRecord:)];
         self.navigationItem.rightBarButtonItem = saveItem;
     }
-    
+    selectedImage = [LZUtility createImageWithColor:ItemSelectedColor imageSize:CGSizeMake(300, 54)];
 	// Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -227,6 +229,7 @@
 }
 -(void)nutritionButtonClicked:(LZCustomDataButton*)sender
 {
+    [sender setBackgroundColor:ItemSelectedColor];
     NSString *nutritionId = (NSString *)sender.customData;
     NSLog(@"%@",nutritionId);
     LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
@@ -295,6 +298,10 @@
         [cell.levelView.layer setBorderColor:BorderColor];
         [cell.levelView.layer setBorderWidth:0.5f];
         cell.headerLabel.text = @"体质指数";
+        cell.level1Label.text = @"过轻";
+        cell.level2Label.text = @"正常";
+        cell.level3Label.text = @"过重";
+        cell.level4Label.text = @"肥胖";
         NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.BMIValue];
         cell.bmiValueLabel.text = scoreText;
         [cell setBMIValue:self.BMIValue];
@@ -337,9 +344,19 @@
             queryKey = @"IconTitleEn";
         }
         NSString *nutritionName = [dict objectForKey:queryKey];
-        [cell.nutritionNameButton setTitle:nutritionName forState:UIControlStateNormal];
+        //[cell.nutritionNameButton setTitle:nutritionName forState:UIControlStateNormal];
+        //cell.nutritionNameButton setba
+        [cell.nutritionNameButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
+        //[cell.nutritionNameButton setBackgroundColor:[UIColor clearColor] forState:UIControlStateNormal];
+        //[cell.nutritionNameButton setBackgroundColor:ItemSelectedColor forState:UIControlStateHighlighted];
+        //[cell.nutritionNameButton setShowsTouchWhenHighlighted:YES];
+        cell.nutritionNameLabel.text = nutritionName;
+        [cell.nutritionNameLabel setBackgroundColor:[UIColor clearColor]];
         cell.nutritionNameButton.customData = nutritionId;
-        [cell.nutritionNameButton addTarget:self action:@selector(nutritionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        //[cell.nutritionNameButton addTarget:self action:@selector(nutritionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
+        //[cell.nutritionNameButton addTarget:self action:@selector(setBgColorForButton:) forControlEvents:UIControlEventTouchDown];
+        //[cell.nutritionNameButton addTarget:self action:@selector(clearBgColorForButton:) forControlEvents:UIControlEventTouchDragExit];
         [cell setFoods:recommendFood isChinese:isChinese];
         cell.delegate = self;
         cell.cellIndex = indexPath;
@@ -389,13 +406,21 @@
         [illnessLabel setText:@"潜在疾病"];
         [illnessLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0]];
         [illnessLabel setFont:SmallLabelFont];
-        LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(AttentionLabelStartX, 12, 172, 36)];
+        UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(AttentionLabelStartX, 12, 172, 36)];
+        [illnessNameLabel setFont:BigLabelFont];
+        [illnessNameLabel setTextColor:[UIColor blackColor]];
+        [illnessNameLabel setText:illnessId];
+        [illnessNameLabel setBackgroundColor:[UIColor clearColor]];
+        [cell.backView addSubview:illnessNameLabel];
+        LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, 0, 300, 54)];
         illnessButton.customData =illnessId;
         [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        [illnessButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-        [illnessButton.titleLabel setFont:BigLabelFont];
-        [illnessButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [illnessButton setTitle:illnessId forState:UIControlStateNormal];
+        
+        [illnessButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
+        //[illnessButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
+        //[illnessButton.titleLabel setFont:BigLabelFont];
+        //[illnessButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        //[illnessButton setTitle:illnessId forState:UIControlStateNormal];
         [cell.backView addSubview:illnessButton];
         UIImageView *detailArrow = [[UIImageView alloc]initWithFrame:CGRectMake(265, 20, 20, 20)];
         [detailArrow setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
@@ -442,6 +467,15 @@
         return cell;
     }
     
+}
+-(void)setBgColorForButton:(UIButton*)sender
+{
+    [sender setBackgroundColor:ItemSelectedColor];
+}
+
+-(void)clearBgColorForButton:(UIButton*)sender
+{
+    [sender setBackgroundColor:[UIColor clearColor]];
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {

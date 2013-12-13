@@ -44,9 +44,10 @@
     self.headerLabel.layer.borderWidth = 0.5f;
     [self.headerLabel setBackgroundColor:[UIColor colorWithRed:243/255.f green:220/255.f blue:183/255.f alpha:1.0f]];
     switchViewControl = [[UISegmentedControl alloc]initWithFrame:CGRectMake(0, 0, 80, 30)];
+    [switchViewControl setSegmentedControlStyle:UISegmentedControlStyleBar];
     [switchViewControl insertSegmentWithImage:[UIImage imageNamed:@"history.png"] atIndex:0 animated:NO];
     [switchViewControl insertSegmentWithImage:[UIImage imageNamed:@"fork.png"] atIndex:1 animated:NO];
-
+    [switchViewControl setTintColor:[UIColor colorWithRed:6/255.f green:62/255.f blue:4/255.f alpha:1.0f]];
     [switchViewControl addTarget:self action:@selector(switchControlValueChange:) forControlEvents:UIControlEventValueChanged];
     [switchViewControl setSelectedSegmentIndex:1];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:switchViewControl];
@@ -191,9 +192,9 @@
             }
         }
         NGRecommendFoodView *foodView = [[NGRecommendFoodView alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*135, 80, 120) foodName:foodName foodPic:picturePath foodAmount:foodTotalUnit];
-        foodView.tag = 10+i;
-        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(foodClicked:)];
-        [foodView addGestureRecognizer:tap];
+        foodView.touchButton.tag = 10+i;
+        [foodView.touchButton addTarget:self action:@selector(foodClicked:) forControlEvents:UIControlEventTouchUpInside];
+        
         [self.backView addSubview:foodView];
     }
     self.contentScrollView.hidden = NO;
@@ -201,11 +202,11 @@
 //    [HUD hide:YES];
 //    self.listView.hidden = NO;
 }
--(void)foodClicked:(UIGestureRecognizer*)sender
+-(void)foodClicked:(UIButton*)sender
 {
-    NGRecommendFoodView *foodView = (NGRecommendFoodView *)sender.view;
+    //NGRecommendFoodView *foodView = (NGRecommendFoodView *)sender.view;
     
-    int tag = foodView.tag-10;
+    int tag = sender.tag-10;
     NSDictionary *foodInfo = [foodArray objectAtIndex:tag];
     NSLog(@"%@",foodInfo);
     NSString *foodQueryKey;

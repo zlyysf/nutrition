@@ -17,6 +17,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *nutritionHeaderlabel;
 @property (strong, nonatomic) IBOutlet UILabel *foodHeaderLabel;
 @property (nonatomic, assign) id<NGReportNutritonFoodCellDelegate>delegate;
+@property (strong, nonatomic) IBOutlet UILabel *nutritionNameLabel;
 @property (strong, nonatomic) IBOutlet LZCustomDataButton *nutritionNameButton;
 @property (strong,nonatomic)NSIndexPath *cellIndex;
 @property (strong, nonatomic) IBOutlet UIScrollView *foodScrollView;

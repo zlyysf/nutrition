@@ -102,8 +102,8 @@
         {
             NGRecommendFoodView *foodView = [[NGRecommendFoodView alloc]initWithFrame:CGRectMake(1+l*(80+RecommendFoodMargin), 0, 80, 120) foodName:foodName foodPic:picturePath foodAmount:foodTotalUnit];
             foodView.tag = 10+l;
-            UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(foodClicked:)];
-            [foodView addGestureRecognizer:tap];
+            foodView.touchButton.tag = 10+l;
+            [foodView.touchButton addTarget:self action:@selector(foodClicked:) forControlEvents:UIControlEventTouchUpInside];
             [self.foodScrollView addSubview:foodView];
         }
         else
@@ -118,10 +118,10 @@
         
     }
 }
--(void)foodClicked:(UITapGestureRecognizer*)sender
+-(void)foodClicked:(UIButton*)sender
 {
-    NGRecommendFoodView *view = (NGRecommendFoodView*)sender.view;
-    int tag = view.tag-10;
+    //NGRecommendFoodView *view = (NGRecommendFoodView*)sender.view;
+    int tag = sender.tag-10;
     if (self.delegate && [self.delegate respondsToSelector:@selector(foodClickedForIndex:andTag:)])
     {
         [self.delegate foodClickedForIndex:cellIndex andTag:tag];
