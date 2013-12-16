@@ -2222,6 +2222,30 @@ public class DataAccess {
 		Object[] bindArgs = new Object[]{dayLocal,lUpdateTimeUTC,inputNameValuePairs,Note,calculateNameValuePairs};
 		mDBcon.execSQL(insertSql, bindArgs);
 	}
+	public void insertUserRecordSymptom_withRawData(HashMap<String, Object> hmRawData)
+	{
+		Log.d(LogTag, "insertUserRecordSymptom_withRawData enter");
+		if (hmRawData == null)
+			return;
+		String key;
+	    key = Constants.COLUMN_NAME_DayLocal;
+	    Integer dayLocalObj = (Integer)hmRawData.get(key);
+	    int dayLocal = dayLocalObj.intValue();
+	    
+	    key = Constants.COLUMN_NAME_UpdateTimeUTC;
+	    Date UpdateTimeUTC = (Date)hmRawData.get(key);
+	    
+	    key = Constants.COLUMN_NAME_Note;
+	    String note = (String)hmRawData.get(key);
+	    
+	    key = Constants.COLUMN_NAME_inputNameValuePairs;
+	    String jsonStr_inputNameValuePairs =  (String)hmRawData.get(key);
+	    
+	    key = Constants.COLUMN_NAME_calculateNameValuePairs;
+	    String jsonStr_calculateNameValuePairs =  (String)hmRawData.get(key);
+
+	    insertUserRecordSymptom_withDayLocal(dayLocal,UpdateTimeUTC,jsonStr_inputNameValuePairs,note,jsonStr_calculateNameValuePairs);
+	}
 	public void updateUserRecordSymptom_withDayLocal(int dayLocal,Date updateTimeUTC,String inputNameValuePairs,String Note,String calculateNameValuePairs)
 	{
 		Log.d(LogTag, "updateUserRecordSymptom_withDayLocal enter");

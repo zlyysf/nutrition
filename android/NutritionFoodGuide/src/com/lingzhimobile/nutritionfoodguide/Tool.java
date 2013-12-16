@@ -33,6 +33,10 @@ import android.util.Log;
 public class Tool {
 	static final String LogTag = "Tool";
 	
+	public interface JustCallback{
+		void cbFun();
+	}
+	
 	public static int copyRawFileToSDCardFile(Context mCtx, int rawFileResId, String sdCardFilePath)
 	{
 		int mDBRawResource = rawFileResId;

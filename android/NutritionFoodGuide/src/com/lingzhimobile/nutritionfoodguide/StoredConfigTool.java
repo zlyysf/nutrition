@@ -7,6 +7,8 @@ import java.util.HashMap;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.parse.ParseObject;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -23,6 +25,8 @@ public class StoredConfigTool {
 	
 	public static final String PreferenceKey_NutrientsToRecommend = "NutrientsToRecommend";
 	public static final String Seperator_NutrientsToRecommend = ",,";
+	
+	public static final String PreferenceKey_alreadyLoadFromRemote = "alreadyLoadFromRemote";
 	
 	public static final String PreferenceKey_AppPart = "nutrientApp";
 	public static String getPreferenceKey_AppWithVersionPart(Context ctx){
@@ -220,4 +224,50 @@ public class StoredConfigTool {
 		}
 	}
 
+	
+	public static HashMap<String, Object> getParseObjectInfo_CurrentUserRecordSymptom(Context ctx)
+	{
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		String parseObjId = sharedPref.getString(Constants.ParseObjectKey_objectId, "");
+		int dayLocal = sharedPref.getInt(Constants.COLUMN_NAME_DayLocal, 0);
+
+		HashMap<String, Object> hm = new HashMap<String, Object>();
+		hm.put(Constants.ParseObjectKey_objectId, parseObjId);
+		hm.put(Constants.COLUMN_NAME_DayLocal, Integer.valueOf(dayLocal));
+		return hm;
+	}
+	public static void saveParseObjectInfo_CurrentUserRecordSymptom(Context ctx, HashMap<String, Object> hmData){
+		String parseObjId = null;
+		int dayLocal = 0;
+		if (hmData!=null){
+			parseObjId = (String)hmData.get(Constants.ParseObjectKey_objectId);
+			Integer intObj_dayLocal = (Integer)hmData.get(Constants.COLUMN_NAME_DayLocal);
+			if (intObj_dayLocal!=null)
+				dayLocal = intObj_dayLocal.intValue();
+		}
+		
+		saveParseObjectInfo_CurrentUserRecordSymptom(ctx,parseObjId,dayLocal);
+	}
+	public static void saveParseObjectInfo_CurrentUserRecordSymptom(Context ctx, String parseObjId, int dayLocal){
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putString(Constants.ParseObjectKey_objectId, parseObjId);
+		editor.putInt(Constants.COLUMN_NAME_DayLocal, dayLocal);
+		editor.commit();
+	}
+	
+	public static boolean getFlagAlreadyLoadFromRemote(Context ctx){
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		boolean flag = sharedPref.getBoolean(PreferenceKey_alreadyLoadFromRemote, false);
+		return flag;
+	}
+	public static void setFlagAlreadyLoadFromRemote(Context ctx){
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		editor.putBoolean(PreferenceKey_alreadyLoadFromRemote, true);
+		editor.commit();
+	}
+
+	
+	
 }

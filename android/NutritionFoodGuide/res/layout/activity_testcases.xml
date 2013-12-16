@@ -42,4 +42,24 @@
 	        android:text="PUpdate" />
     </LinearLayout>
     
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+        <Button
+	        android:id="@+id/btnParseRowSave"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="PRowSave" />
+	
+	    <Button
+	        android:id="@+id/btnParseRowGet"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="PRowGet" />
+	    
+	   
+    </LinearLayout>
+    
 </LinearLayout>

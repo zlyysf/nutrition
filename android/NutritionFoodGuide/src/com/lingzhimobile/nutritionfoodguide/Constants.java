@@ -12,7 +12,8 @@ public class Constants {
 	public static final String ParseObjectKey_objectId = "objectId";
 	public static final String ParseObjectKey_UserRecord_deviceId = "deviceId";
 	public static final String ParseObjectKey_UserRecord_attachFile = "attachFile";
-
+	public static final String ParseObject_UserRecordSymptom = "UserRecordSymptom";
+	
 	
 	public static final boolean KeyIsEnvironmentDebug = true;
 	public static final String DBupdateTime = "201311211600";

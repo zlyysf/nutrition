@@ -9,10 +9,18 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination;
+import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.RecommendFood;
+import com.lingzhimobile.nutritionfoodguide.StoredConfigTool;
 import com.lingzhimobile.nutritionfoodguide.Tool;
+import com.lingzhimobile.nutritionfoodguide.ToolParse;
+import com.lingzhimobile.nutritionfoodguide.Tool.JustCallback;
+
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 import android.content.Context;
 import android.util.Log;
@@ -29,7 +37,8 @@ public class TestCaseDA {
 //		test_getIllnessSuggestionsDistinct1(ctx);
 //		test_JsonTool();
 //		test_dalUserRecordSymptom1(ctx);
-		test_getIllness2(ctx);
+//		test_getIllness2(ctx);
+		test_syncRemoteDataInParse(ctx);
 	}
 	
 	static void test1(Context ctx){
@@ -329,6 +338,132 @@ public class TestCaseDA {
 	    da.getFoodCnTypes();
 	    
 	}
+	
+	static void test_syncRemoteDataInParse(Context ctx){
+		saveParseRowObj1(ctx);
+	}
+	
+	static void saveParseRowObj1(Context ctx){
+		final Context cCtx = ctx;
+
+		if (true){
+			final int daylocal1 = 20010304;
+	    	Date dt = new Date();
+	    	HashMap<String, Object> inputNameValuePairsData = new HashMap<String, Object>();
+	    	String Note = "Note"+dt.toGMTString();
+	    	HashMap<String, Object> calculateNameValuePairsData = new HashMap<String, Object>();
+		   
+	    	inputNameValuePairsData.put(Constants.Key_Symptoms, new Object[]{"症状1","症状2"});
+	    	inputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+
+	    	calculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.4));
+
+	    	HashMap<String, Object> RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("10001", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("10002", Integer.valueOf(150));
+//		    CalculateNameValuePairsData.put("RecommendFoodAndAmounts", RecommendFoodAndAmounts);
+		    HashMap<String, Object> LackNutrientsAndFoods = new HashMap<String, Object>();
+		    LackNutrientsAndFoods.put("Vb1", RecommendFoodAndAmounts);
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("10011", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("10012", Integer.valueOf(150));
+		    LackNutrientsAndFoods.put("Vb2", RecommendFoodAndAmounts);
+		    calculateNameValuePairsData.put(Constants.Key_LackNutrientsAndFoods, LackNutrientsAndFoods);
+		    
+		    HashMap<String, Object> InferIllnessesAndSuggestions = new HashMap<String, Object>();
+		    InferIllnessesAndSuggestions.put("疾病1", new Object[]{"建议11","建议12"});
+		    InferIllnessesAndSuggestions.put("疾病2", new Object[]{"建议21","建议22"});
+		    calculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    
+	    	final ParseObject parseObjUserRecord1 = ToolParse.getToSaveParseObject_UserRecordSymptom(ctx,daylocal1,dt,inputNameValuePairsData,Note,calculateNameValuePairsData );
+	    	parseObjUserRecord1.saveInBackground(new SaveCallback() {
+				
+				@Override
+				public void done(ParseException e) {
+					String msg;
+					if (e != null){
+						msg = "ERR: "+e.getMessage();
+					}else{
+						msg = "Save OK."+ parseObjUserRecord1.getObjectId();
+						StoredConfigTool.saveParseObjectInfo_CurrentUserRecordSymptom(cCtx, parseObjUserRecord1.getObjectId(), daylocal1);
+					}
+					Log.d("ActivityTestCases", "saveParseRowObj msg:"+msg);
+					
+					saveParseRowObj2(cCtx);
+				}//done
+			});//saveInBackground
+		}
+    }
+	
+
+	static void saveParseRowObj2(Context ctx){
+		final Context cCtx = ctx;
+
+		if (true){
+			final int daylocal2 = 20010305;
+	    	Date dt = new Date();
+	    	HashMap<String, Object> inputNameValuePairsData = new HashMap<String, Object>();
+	    	String Note = "Note"+dt.toGMTString();
+	    	HashMap<String, Object> calculateNameValuePairsData = new HashMap<String, Object>();
+		   
+	    	inputNameValuePairsData.put(Constants.Key_Symptoms, new Object[]{"Symptom1","Symptom2"});
+	    	inputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+
+	    	calculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.4));
+
+	    	HashMap<String, Object> RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("20001", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("20002", Integer.valueOf(150));
+//		    CalculateNameValuePairsData.put("RecommendFoodAndAmounts", RecommendFoodAndAmounts);
+		    HashMap<String, Object> LackNutrientsAndFoods = new HashMap<String, Object>();
+		    LackNutrientsAndFoods.put("Vb2", RecommendFoodAndAmounts);
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("20011", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("20012", Integer.valueOf(150));
+		    LackNutrientsAndFoods.put("Vb3", RecommendFoodAndAmounts);
+		    calculateNameValuePairsData.put(Constants.Key_LackNutrientsAndFoods, LackNutrientsAndFoods);
+		    
+		    HashMap<String, Object> InferIllnessesAndSuggestions = new HashMap<String, Object>();
+		    InferIllnessesAndSuggestions.put("disease1", new Object[]{"建议11","建议12"});
+		    InferIllnessesAndSuggestions.put("disease2", new Object[]{"建议21","建议22"});
+		    calculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    
+	    	final ParseObject parseObjUserRecord2 = ToolParse.getToSaveParseObject_UserRecordSymptom(ctx,daylocal2,dt,inputNameValuePairsData,Note,calculateNameValuePairsData );
+	    	parseObjUserRecord2.saveInBackground(new SaveCallback() {
+				
+				@Override
+				public void done(ParseException e) {
+					String msg;
+					if (e != null){
+						msg = "ERR: "+e.getMessage();
+					}else{
+						msg = "Save OK."+ parseObjUserRecord2.getObjectId();
+						StoredConfigTool.saveParseObjectInfo_CurrentUserRecordSymptom(cCtx, parseObjUserRecord2.getObjectId(), daylocal2);
+					}
+					Log.d("ActivityTestCases", "saveParseRowObj msg:"+msg);
+					
+					ToolParse.syncRemoteDataToLocal(cCtx, new JustCallback(){
+
+						@Override
+						public void cbFun() {
+							DataAccess da = DataAccess.getSingleton(cCtx);
+							da.getUserRecordSymptomRawRowsByRange_withStartDayLocal(0,0,0,0);
+							
+							ToolParse.syncRemoteDataToLocal(cCtx, new JustCallback(){
+
+								@Override
+								public void cbFun() {
+									DataAccess da = DataAccess.getSingleton(cCtx);
+									da.getUserRecordSymptomRawRowsByRange_withStartDayLocal(0,0,0,0);
+									
+								}
+							});//syncRemoteDataToLocal
+						}
+					});//syncRemoteDataToLocal
+				}//done
+			});//saveInBackground
+		}
+    }
 
 }
 

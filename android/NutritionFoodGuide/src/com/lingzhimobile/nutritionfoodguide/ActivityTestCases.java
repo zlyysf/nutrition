@@ -2,6 +2,8 @@ package com.lingzhimobile.nutritionfoodguide;
 
 
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 
@@ -43,6 +45,12 @@ public class ActivityTestCases extends Activity implements OnClickListener{
         button1 = (Button)findViewById(R.id.btnParseUpdate);
         button1.setOnClickListener(this);
       
+        button1 = (Button)findViewById(R.id.btnParseRowSave);
+        button1.setOnClickListener(this);
+        button1 = (Button)findViewById(R.id.btnParseRowGet);
+        button1.setOnClickListener(this);
+   
+
     }
     
     @Override
@@ -71,6 +79,15 @@ public class ActivityTestCases extends Activity implements OnClickListener{
 			case R.id.btnParseUpdate:
 				updateParseObj();
 				break;
+				
+			case R.id.btnParseRowSave:
+				saveParseRowObj();
+				break;
+			case R.id.btnParseRowGet:
+				getParseRowObj();
+				break;
+			
+
 		}
 		
 	}
@@ -156,4 +173,85 @@ public class ActivityTestCases extends Activity implements OnClickListener{
 			}
 		});//saveInBackground
     }
+    
+    
+    
+    
+    
+    void saveParseRowObj(){
+
+    	int daylocal = 12345678;
+    	Date dt = new Date();
+    	HashMap<String, Object> inputNameValuePairsData = new HashMap<String, Object>();
+    	String Note = "Note";
+    	HashMap<String, Object> calculateNameValuePairsData = new HashMap<String, Object>();
+    	
+    	inputNameValuePairsData.put("ia1", 11122);
+    	inputNameValuePairsData.put("ia2", "aaa222");
+    	calculateNameValuePairsData.put("ca1", 123);
+
+    	ParseObject parseObjUserRecord = ToolParse.getToSaveParseObject_UserRecordSymptom(this,daylocal,dt,inputNameValuePairsData,Note,calculateNameValuePairsData );
+
+    	class T1SaveCallback extends SaveCallback{
+    		ParseObject m_parseObj;
+    		int m_daylocal;
+    		public T1SaveCallback(ParseObject parseObj,int daylocal){
+    			m_parseObj = parseObj;
+    			m_daylocal = daylocal;
+    		}
+    		
+    		@Override
+			public void done(ParseException e) {
+				String msg;
+				if (e != null){
+					msg = "ERR: "+e.getMessage();
+				}else{
+					msg = "Save OK."+ m_parseObj.getObjectId();
+					StoredConfigTool.saveParseObjectInfo_CurrentUserRecordSymptom(ActivityTestCases.this, m_parseObj.getObjectId(), m_daylocal);
+				}
+				Log.d("ActivityTestCases", "saveParseRowObj msg:"+msg);
+			}
+    	};
+    	T1SaveCallback funCallback = new T1SaveCallback(parseObjUserRecord,daylocal);
+//    	parseObjUserRecord.saveInBackground(funCallback);
+    	
+    	parseObjUserRecord.saveEventually(funCallback);
+    	Log.d("ActivityTestCases", "after saveEventually, objId="+parseObjUserRecord.getObjectId());//objId=null，看来是只有实际保存上了才有objId，这样会导致saveEventually保存多于1条的记录。这样，它也并不比saveInBackground要好多少。
+    	StoredConfigTool.saveParseObjectInfo_CurrentUserRecordSymptom(ActivityTestCases.this, parseObjUserRecord.getObjectId(), daylocal);
+    }
+    void getParseRowObj(){
+    	int daylocal = 12345678;
+    	ParseQuery<ParseObject> query = ToolParse.getParseQueryByCurrentDeviceForUserRecordSymptom(this,daylocal);
+    	
+    	query.findInBackground(new FindCallback<ParseObject>() {
+			@Override
+			public void done(List<ParseObject> parseObjs, ParseException e) {
+				String msg=null;
+				if (e == null) {
+					if (parseObjs == null || parseObjs.size()==0){
+						msg = "Error: NOT GET any parse obj ";
+					}else{
+						mParseObject = parseObjs.get(0);
+						msg = "Get OK." + mParseObject.getObjectId()
+								+", daylocal="+mParseObject.getInt(Constants.COLUMN_NAME_DayLocal)
+								+", inputNameValuePairs="+mParseObject.getString(Constants.COLUMN_NAME_inputNameValuePairs);
+						
+					}
+				} else {
+					msg = "Error: "+ e.getMessage();
+				}
+				Log.d("ActivityTestCases", "getParseRowObj msg:"+msg);
+			}//done
+		});//findInBackground
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 }
