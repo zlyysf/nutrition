@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NGCycleScrollView.h"
+
 #import "LZScatterViewController.h"
-@interface NGChartViewController : UIViewController<NGCycleScrollViewDatasource,NGCycleScrollViewDelegate>
+@interface NGChartViewController : UIViewController<UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UISegmentedControl *contentTypeChangeControl;
+@property (strong, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @property (nonatomic,strong)LZScatterViewController *chart1Controller;
 @property (nonatomic,strong)LZScatterViewController *chart2Controller;
 @property (nonatomic,strong)LZScatterViewController *chart3Controller;

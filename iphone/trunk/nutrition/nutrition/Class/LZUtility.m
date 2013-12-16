@@ -1557,13 +1557,18 @@
         return [NSString stringWithFormat:@"%d",numInt];
     }
 }
-+(int)getMonthLocalForDistance:(int)distance
++(int)getMonthLocalForDistance:(int)distance startLocal:(int)startLocal
 {
     NSCalendar* calendar = [NSCalendar currentCalendar];
-    NSDate *currentDate = [NSDate date];
+
+    NSDateComponents *compstart = [[NSDateComponents alloc] init];
+    [compstart setYear:startLocal/100];
+    [compstart setMonth:startLocal%100];
+    NSDate *startDate = [calendar dateFromComponents:compstart];
+    
     NSDateComponents *comps = [[NSDateComponents alloc] init];
     [comps setMonth:distance];
-    NSDate *date = [calendar dateByAddingComponents:comps toDate:currentDate  options:0];
+    NSDate *date = [calendar dateByAddingComponents:comps toDate:startDate  options:0];
     unsigned unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit;
     NSDateComponents* new = [calendar components:unitFlags fromDate:date];
     
