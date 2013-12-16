@@ -11,7 +11,7 @@
 #import "LZRecommendFood.h"
 #import <math.h>
 #import "MBProgressHUD.h"
-#import "SSKeychain.h"
+#import "LZKeychainManager.h"
 #import <Security/Security.h>
 #import <Parse/Parse.h>
 
@@ -1569,8 +1569,8 @@
     
     return [new year]*100+[new month];
 }
-#define UniqueDeviceId_Related_SSKeychain_ServiceName @"SSKeychain_ServiceName"
-#define UniqueDeviceId_Related_SSKeychain_Account @"SSKeychain_Account"
+
+#define KEYCHAIN_DEVICE_ID @"Keychain_Device_Id"
 
 // http://stackoverflow.com/questions/6993325/uidevice-uniqueidentifier-deprecated-what-to-do-now
 +(NSString *)createNewUUID
@@ -1580,22 +1580,23 @@
     CFRelease(theUUID);
     return ( NSString *)CFBridgingRelease(string);
 }
-+(NSString *)getUniqueDeviceId
+
++(NSString *)uniqueDeviceId
 {
-    // getting the unique key (if present ) from keychain , assuming "your app identifier" as a key
-    NSString *retrieveuuid = [SSKeychain passwordForService:UniqueDeviceId_Related_SSKeychain_ServiceName account:UniqueDeviceId_Related_SSKeychain_Account];
-    if (retrieveuuid == nil) {
-        NSString *uuid  = [self createNewUUID];
-        [SSKeychain setPassword:uuid forService:UniqueDeviceId_Related_SSKeychain_ServiceName account:UniqueDeviceId_Related_SSKeychain_Account];
+    static NSString *deviceId = nil;
+    if (deviceId == nil) {
+        deviceId = [LZKeychainManager loadObjectWithService:KEYCHAIN_DEVICE_ID];
+        if (deviceId == nil) {
+            deviceId = [self createNewUUID];
+            [LZKeychainManager saveObject:deviceId withService:KEYCHAIN_DEVICE_ID];
+        }
     }
-    return retrieveuuid;
+    return  deviceId;
 }
-
-
 
 +(PFObject*) newParseObjectByCurrentDeviceForUserRecord_withFileContent:(NSString*) fileContent
 {
-    NSString *uniqueDeviceId = [self getUniqueDeviceId];
+    NSString *uniqueDeviceId = [self uniqueDeviceId];
 
     NSData * fileData = [fileContent dataUsingEncoding:NSUTF8StringEncoding];
     PFFile *pFile = [PFFile fileWithName:@"UserRecord.txt" data:fileData];
@@ -1618,7 +1619,7 @@
 
 +(PFQuery*) getParseQueryByCurrentDeviceForUserRecord
 {
-    NSString *uniqueDeviceId = [self getUniqueDeviceId];
+    NSString *uniqueDeviceId = [self uniqueDeviceId];
     PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_UserRecord];
     [pQuery whereKey:ParseObjectKey_UserRecord_deviceId equalTo:uniqueDeviceId];
     return pQuery;

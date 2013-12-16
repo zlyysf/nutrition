@@ -59,8 +59,6 @@
 		0882403E173A7E7400E71E6E /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882403D173A7E7400E71E6E /* readme.txt */; };
 		088241441744DE8000E71E6E /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
 		0882419F175621DE00E71E6E /* foodDealed in Resources */ = {isa = PBXBuildFile; fileRef = 0882419E175621DE00E71E6E /* foodDealed */; };
-		08859A0A18504BEC0063553D /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A0918504BEC0063553D /* SSKeychain.m */; };
-		08859A0B18504C690063553D /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A0918504BEC0063553D /* SSKeychain.m */; };
 		08859A0C18504C8C0063553D /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D82517AF8E69000AEC06 /* Security.framework */; };
 		08859A0E18504CD90063553D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0D18504CD90063553D /* CFNetwork.framework */; };
 		08859A1018504CF80063553D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0F18504CF80063553D /* MobileCoreServices.framework */; };
@@ -262,6 +260,7 @@
 		5FF6320517718E100068CBFE /* LZNutritionInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF6320317718E100068CBFE /* LZNutritionInfoView.m */; };
 		5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
 		5FF8473D1758546900DEA6DE /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8473B1758546900DEA6DE /* README.mdown */; };
+		FC1D1C27185EF0F500911A6C /* LZKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC1D1C26185EF0F500911A6C /* LZKeychainManager.m */; };
 		FCEE441D1851FC24008329AF /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCEE441C1851FC24008329AF /* libCorePlot-CocoaTouch.a */; };
 		FCEE44201851FC98008329AF /* LZScatterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCEE441F1851FC98008329AF /* LZScatterViewController.m */; };
 /* End PBXBuildFile section */
@@ -302,8 +301,6 @@
 		088241421744DE8000E71E6E /* LZTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZTest1.h; sourceTree = "<group>"; };
 		088241431744DE8000E71E6E /* LZTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZTest1.m; sourceTree = "<group>"; };
 		0882419E175621DE00E71E6E /* foodDealed */ = {isa = PBXFileReference; lastKnownFileType = folder; name = foodDealed; path = ../../../ui/pictures/foodDealed; sourceTree = "<group>"; };
-		08859A0818504BEC0063553D /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
-		08859A0918504BEC0063553D /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		08859A0D18504CD90063553D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		08859A0F18504CF80063553D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		08859A1118504D2C0063553D /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
@@ -625,6 +622,8 @@
 		5FF847391758546900DEA6DE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = nutrition/MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		5FF8473A1758546900DEA6DE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = nutrition/MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		5FF8473B1758546900DEA6DE /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.mdown; path = nutrition/MBProgressHUD/README.mdown; sourceTree = "<group>"; };
+		FC1D1C25185EF0F500911A6C /* LZKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZKeychainManager.h; path = nutrition/Class/LZKeychainManager.h; sourceTree = "<group>"; };
+		FC1D1C26185EF0F500911A6C /* LZKeychainManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZKeychainManager.m; path = nutrition/Class/LZKeychainManager.m; sourceTree = "<group>"; };
 		FCEE43D21851FC23008329AF /* CorePlot-CocoaTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CorePlot-CocoaTouch.h"; sourceTree = "<group>"; };
 		FCEE43D31851FC23008329AF /* CPTAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTAnnotation.h; sourceTree = "<group>"; };
 		FCEE43D41851FC23008329AF /* CPTAnnotationHostLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPTAnnotationHostLayer.h; sourceTree = "<group>"; };
@@ -814,6 +813,8 @@
 				5FF6320017718E0E0068CBFE /* LZNutrientionManager.h */,
 				5FF6320117718E0F0068CBFE /* LZNutrientionManager.m */,
 				08859A1A185058390063553D /* FBMissingSymbols.m */,
+				FC1D1C25185EF0F500911A6C /* LZKeychainManager.h */,
+				FC1D1C26185EF0F500911A6C /* LZKeychainManager.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -856,16 +857,6 @@
 			name = ResExternal;
 			sourceTree = "<group>";
 		};
-		08859A0718504BEC0063553D /* sskeychain */ = {
-			isa = PBXGroup;
-			children = (
-				08859A0818504BEC0063553D /* SSKeychain.h */,
-				08859A0918504BEC0063553D /* SSKeychain.m */,
-			);
-			name = sskeychain;
-			path = nutrition/sskeychain;
-			sourceTree = "<group>";
-		};
 		5F0081E817C47E6F000938C2 /* JWNavigationViewController */ = {
 			isa = PBXGroup;
 			children = (
@@ -901,7 +892,6 @@
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
-				08859A0718504BEC0063553D /* sskeychain */,
 				0818CA1218477B50003DB33A /* CDataScanner.m */,
 				5FECAD9F183885CA00D72A8C /* Nutrition2.0 */,
 				5FAB5764180266C200657793 /* ShareSDK_v2.5.1 */,
@@ -1804,7 +1794,6 @@
 				085C8D8817336B82001A1ABB /* CustomDB.dat in Sources */,
 				085C8D6217336A29001A1ABB /* main.m in Sources */,
 				085C8D6617336A29001A1ABB /* LZAppDelegate.m in Sources */,
-				08859A0B18504C690063553D /* SSKeychain.m in Sources */,
 				085C8D6F17336A29001A1ABB /* LZViewController.m in Sources */,
 				088241441744DE8000E71E6E /* LZTest1.m in Sources */,
 			);
@@ -1841,6 +1830,7 @@
 				5F03D34D174B9241008EFB60 /* LZStandardContentCell.m in Sources */,
 				5F94A86517531CC100664B57 /* LZDietListMakeViewController.m in Sources */,
 				08859A1B185058390063553D /* FBMissingSymbols.m in Sources */,
+				FC1D1C27185EF0F500911A6C /* LZKeychainManager.m in Sources */,
 				5F94A86817531ED700664B57 /* LZSettingsViewController.m in Sources */,
 				5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */,
 				5F62743A175C93F3006E46CA /* LZFoodNutritionCell.m in Sources */,
@@ -1878,7 +1868,6 @@
 				5F90D80D17AF8873000AEC06 /* CJSONScanner.m in Sources */,
 				5F90D80E17AF8873000AEC06 /* CJSONSerializer.m in Sources */,
 				5F90D80F17AF8873000AEC06 /* ioapi.c in Sources */,
-				08859A0A18504BEC0063553D /* SSKeychain.m in Sources */,
 				5F90D81017AF8873000AEC06 /* mztools.c in Sources */,
 				5F90D81117AF8873000AEC06 /* unzip.c in Sources */,
 				5F729BC4184320ED004FC428 /* NGCommonDiseaseCell.m in Sources */,

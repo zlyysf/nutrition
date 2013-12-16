@@ -125,7 +125,7 @@
 +(int)getMonthLocalForDistance:(int)distance;
 
 
-+(NSString *)getUniqueDeviceId;
++(NSString *)uniqueDeviceId;
 
 
 +(void)Test_saveParseObj;
