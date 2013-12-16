@@ -9,17 +9,9 @@
 #import "LZAppDelegate.h"
 #import "LZConstants.h"
 #import "MobClick.h"
-#import <ShareSDK/ShareSDK.h>
-#import "WXApi.h"
 #import "LZUtility.h"
 #import "LZDataAccess.h"
 #import "LZReviewAppManager.h"
-#import "LZMainPageViewController.h"
-#import "LZHealthCheckViewController.h" 
-#import "LZNutritionInfoView.h"
-#import "JWNavigationViewController.h"
-#import "LZRecommendFilterView.h"
-#import "LZCheckTypeSwitchView.h"
 #import "LZNutrientionManager.h"
 #import <Parse/Parse.h>
 
@@ -79,11 +71,11 @@
     //检查更新
     [MobClick checkUpdate:NSLocalizedString(@"umeng_checkupdate_title",@"检测到新版本") cancelButtonTitle:NSLocalizedString(@"umeng_checkupdate_cancel",@"下次再说" )otherButtonTitles:NSLocalizedString(@"umeng_checkupdate_other",@"去下载")];
     //initialize persons and days setting
-    [ShareSDK registerApp:ShareSDKAPPKey];
-    [ShareSDK connectSinaWeiboWithAppKey:SinaWeiboAppKey
-                               appSecret:SinaWeiboAppSecret
-                             redirectUri:@"http://www.lingzhimobile.com/"];
-    [ShareSDK connectWeChatWithAppId:WeChatAppId wechatCls:[WXApi class]];
+//    [ShareSDK registerApp:ShareSDKAPPKey];
+//    [ShareSDK connectSinaWeiboWithAppKey:SinaWeiboAppKey
+//                               appSecret:SinaWeiboAppSecret
+//                             redirectUri:@"http://www.lingzhimobile.com/"];
+//    [ShareSDK connectWeChatWithAppId:WeChatAppId wechatCls:[WXApi class]];
     [LZNutrientionManager SharedInstance];
 
 //    NSNumber *checkReminderState = [[NSUserDefaults standardUserDefaults]objectForKey:KeyHealthCheckReminderState];
@@ -337,22 +329,22 @@
     [[NSUserDefaults standardUserDefaults]removeObjectForKey:KeyDebugSettingsDict];
     [[NSUserDefaults standardUserDefaults]synchronize];
 }
-- (BOOL)application:(UIApplication *)application
-      handleOpenURL:(NSURL *)url
-{
-    return [ShareSDK handleOpenURL:url
-                        wxDelegate:self];
-}
-
-
-- (BOOL)application:(UIApplication *)application
-            openURL:(NSURL *)url
-  sourceApplication:(NSString  *)sourceApplication
-         annotation:(id)annotation
-{
-    return [ShareSDK handleOpenURL:url
-                 sourceApplication:sourceApplication
-                        annotation:annotation
-                        wxDelegate:self];
-}
+//- (BOOL)application:(UIApplication *)application
+//      handleOpenURL:(NSURL *)url
+//{
+//    return [ShareSDK handleOpenURL:url
+//                        wxDelegate:self];
+//}
+//
+//
+//- (BOOL)application:(UIApplication *)application
+//            openURL:(NSURL *)url
+//  sourceApplication:(NSString  *)sourceApplication
+//         annotation:(id)annotation
+//{
+//    return [ShareSDK handleOpenURL:url
+//                 sourceApplication:sourceApplication
+//                        annotation:annotation
+//                        wxDelegate:self];
+//}
 @end
