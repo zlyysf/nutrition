@@ -130,6 +130,8 @@
             [self.table1DataSource removeAllObjects];
             [self.table1DataSource addObjectsFromArray:[self getDataSourceForMonthLocal:currentLocal]];
             [self.listView1 reloadData];
+            
+            [self.contentScrollView addSubview:self.listView2];
             [self.listView2 setFrame:CGRectMake((currentPage+1)*320, 0, 320,height)];
             [self.table2DataSource removeAllObjects];
             [self.table2DataSource addObjectsFromArray:[self getDataSourceForMonthLocal:nextLocal]];

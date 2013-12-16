@@ -750,12 +750,20 @@
                                     <action selector="contentTypeChanged:" destination="rNA-8P-kbe" eventType="valueChanged" id="yyK-ot-Iai"/>
                                 </connections>
                             </segmentedControl>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="AD6-am-FpL">
+                                <rect key="frame" x="0.0" y="29" width="320" height="426"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="rNA-8P-kbe" id="pXM-2s-iv4"/>
+                                </connections>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="图表" id="p0h-ld-p5o"/>
                     <connections>
+                        <outlet property="contentScrollView" destination="AD6-am-FpL" id="TRZ-lc-VQn"/>
                         <outlet property="contentTypeChangeControl" destination="ESQ-4k-Hma" id="SgY-AP-1oj"/>
                     </connections>
                 </viewController>
