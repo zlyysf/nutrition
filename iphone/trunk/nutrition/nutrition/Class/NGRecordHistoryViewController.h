@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NGCycleScrollView.h"
-@interface NGRecordHistoryViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,NGCycleScrollViewDelegate,NGCycleScrollViewDatasource>
+//#import "NGCycleScrollView.h"
+@interface NGRecordHistoryViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIScrollViewDelegate>
 @property (strong, nonatomic) IBOutlet UITableView *listView1;
 @property (strong, nonatomic) IBOutlet UITableView *listView2;
 @property (strong, nonatomic) IBOutlet UITableView *listView3;
+@property (strong, nonatomic) IBOutlet UIScrollView *contentScrollView;
 @end

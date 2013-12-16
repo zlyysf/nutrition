@@ -263,6 +263,7 @@
         isUserFirstSave = YES;
         //没保存过
         [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_HistoryUpdatedKey object:nil];
     }
     else
     {

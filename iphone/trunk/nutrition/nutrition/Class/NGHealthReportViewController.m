@@ -86,8 +86,9 @@
         NSString *note = [self.dataToSave objectForKey:@"note"];
         NSDictionary *CalculateNameValuePairsData = [self.dataToSave objectForKey:@"CalculateNameValuePairsData"];
         
-        if ([da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData])
+        if ([da updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData])
         {
+            [[NSNotificationCenter defaultCenter]postNotificationName:Notification_HistoryUpdatedKey object:nil];
             [self.navigationItem.rightBarButtonItem setEnabled:NO];
         }
     }

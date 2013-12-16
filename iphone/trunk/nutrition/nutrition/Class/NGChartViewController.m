@@ -116,20 +116,20 @@
     
     LZDataAccess *da = [LZDataAccess singleton];
     
-    int thisMonthLocal = [LZUtility getMonthLocalForDistance:currentPage];
+    int thisMonthLocal = [LZUtility getMonthLocalForDistance:currentPage startLocal:201314];
     
     int thisStartLocal = thisMonthLocal*100+1;
     int thisEndLocal = thisMonthLocal*100+32;
     NSArray *thisData = [da getUserRecordSymptomDataByRange_withStartDayLocal:thisStartLocal andEndDayLocal:thisEndLocal andStartMonthLocal:0 andEndMonthLocal:0];
     NSArray *thisDataSource = [self getArrayForType:currentScatterType data:thisData];
 
-    int preMonthLocal = [LZUtility getMonthLocalForDistance:currentPage-1];
+    int preMonthLocal = [LZUtility getMonthLocalForDistance:currentPage-1 startLocal:201314];
     int preStartLocal = preMonthLocal*100+1;
     int preEndLocal = preMonthLocal*100+32;
     NSArray *preData = [da getUserRecordSymptomDataByRange_withStartDayLocal:preStartLocal andEndDayLocal:preEndLocal andStartMonthLocal:0 andEndMonthLocal:0];
     NSArray *preDataSource = [self getArrayForType:currentScatterType data:preData];
     
-    int nextMonthLocal = [LZUtility getMonthLocalForDistance:currentPage+1];
+    int nextMonthLocal = [LZUtility getMonthLocalForDistance:currentPage+1 startLocal:201314];
     int nextStartLocal = nextMonthLocal*100+1;
     int nextEndLocal = nextMonthLocal*100+32;
     NSArray *nextData = [da getUserRecordSymptomDataByRange_withStartDayLocal:nextStartLocal andEndDayLocal:nextEndLocal andStartMonthLocal:0 andEndMonthLocal:0];
@@ -275,7 +275,7 @@
 {
     LZDataAccess *da = [LZDataAccess singleton];
 
-    int thisMonthLocal = [LZUtility getMonthLocalForDistance:index];
+    int thisMonthLocal = [LZUtility getMonthLocalForDistance:index startLocal:201312];
     
     if (index == currentPage)
     {
