@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.apmem.tools.layouts.FlowLayout;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
@@ -16,21 +17,25 @@ import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
 import com.lingzhimobile.nutritionfoodguide.AsyncTaskDoRecommend;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.Tool;
 import com.lingzhimobile.nutritionfoodguide.myProgressDialog;
+import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityReport;
 
-public class V3DiagnoseFragment extends Fragment {
+public class V3DiagnoseFragment extends V3BaseHeadFragment {
 	static final String LogTag = V3DiagnoseFragment.class.getSimpleName();
 	
 	static final int[] checkboxColorCheckedResIds = {R.color.red, R.color.green, R.color.blue};
@@ -69,6 +74,7 @@ public class V3DiagnoseFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
 	    View view = inflater.inflate(R.layout.v3_fragment_diagnose, container, false);
+	    initHeaderLayout(view);
         initViewHandles(inflater, view);
         initViewsContent();
         setViewEventHandlers();
@@ -77,6 +83,8 @@ public class V3DiagnoseFragment extends Fragment {
     }
 
     void initViewHandles(LayoutInflater inflater, View view){
+        leftButton = (Button) view.findViewById(R.id.leftButton);
+        rightButton = (Button) view.findViewById(R.id.rightButton);
         m_listView1 = (ListView)view.findViewById(R.id.listView1);
         View headerView = inflater.inflate(R.layout.v3_symptom_header, null, false);
         View footerView = inflater.inflate(R.layout.v3_symptom_footer, null, false);
@@ -187,5 +195,26 @@ public class V3DiagnoseFragment extends Fragment {
     public static Fragment newInstance(int arg0) {
         Fragment diagnoseFragment = new V3DiagnoseFragment();
         return diagnoseFragment;
+    }
+
+    @Override
+    protected void setHeader() {
+        leftButton.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), ActivityTestCases.class);
+                getActivity().startActivity(intent);
+            }
+        });
+        
+        rightButton.setOnClickListener(new OnClickListener() {
+            
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), V3ActivityReport.class);
+                getActivity().startActivity(intent);
+            }
+        });
     }
 }

@@ -14,7 +14,7 @@ import com.lingzhimobile.nutritionfoodguide.GridViewExpandHeight;
 import com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight;
 import com.lingzhimobile.nutritionfoodguide.R;
 
-public class V3EncyclopediaFragment extends Fragment {
+public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     static final String LogTag = V3EncyclopediaFragment.class.getSimpleName();
 
     GridView foodGridView;
@@ -36,6 +36,7 @@ public class V3EncyclopediaFragment extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.v3_fragment_encyclopedia,
                 container, false);
+        initHeaderLayout(view);
         foodGridView = (GridViewExpandHeight) view.findViewById(R.id.foodCell);
         FoodCellAdapter foodCellAdapter = new FoodCellAdapter();
         foodGridView.setAdapter(foodCellAdapter);
@@ -110,5 +111,11 @@ public class V3EncyclopediaFragment extends Fragment {
             return convertView;
         }
 
+    }
+
+    @Override
+    protected void setHeader() {
+        // TODO Auto-generated method stub
+        
     }
 }

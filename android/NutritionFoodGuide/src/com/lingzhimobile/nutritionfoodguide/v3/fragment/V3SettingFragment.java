@@ -17,12 +17,11 @@ import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.StoredConfigTool;
 import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityHome;
 
-public class V3SettingFragment extends Fragment {
+public class V3SettingFragment extends V3BaseHeadFragment {
     static final String LogTag = V3SettingFragment.class.getSimpleName();
 
     EditText birthdayTextView, heightTextView, weightTextView;
     RadioGroup genderRadioGroup, intensityRadioGroup;
-    Button saveButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,7 +33,7 @@ public class V3SettingFragment extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.v3_fragment_setting, container,
                 false);
-        saveButton = (Button) view.findViewById(R.id.rightButton);
+        initHeaderLayout(view);
         birthdayTextView = (EditText) view.findViewById(R.id.birthdayTextView);
         heightTextView = (EditText) view.findViewById(R.id.heightTextView);
         weightTextView = (EditText) view.findViewById(R.id.weightTextView);
@@ -51,7 +50,23 @@ public class V3SettingFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        saveButton.setOnClickListener(new OnClickListener() {
+        HashMap<String, Object> userInfo = StoredConfigTool
+                .getUserInfo(getActivity());
+
+        birthdayTextView.setText(userInfo.get(Constants.ParamKey_age)
+                .toString());
+        heightTextView.setText(userInfo.get(Constants.ParamKey_height)
+                .toString());
+        weightTextView.setText(userInfo.get(Constants.ParamKey_weight)
+                .toString());
+        genderRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_sex));
+        intensityRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_activityLevel));
+
+    }
+
+    @Override
+    protected void setHeader() {
+        rightButton.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -67,18 +82,6 @@ public class V3SettingFragment extends Fragment {
                 StoredConfigTool.saveUserInfo(getActivity(), userInfo);
             }
         });
-        HashMap<String, Object> userInfo = StoredConfigTool
-                .getUserInfo(getActivity());
-
-        birthdayTextView.setText(userInfo.get(Constants.ParamKey_age)
-                .toString());
-        heightTextView.setText(userInfo.get(Constants.ParamKey_height)
-                .toString());
-        weightTextView.setText(userInfo.get(Constants.ParamKey_weight)
-                .toString());
-        genderRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_sex));
-        intensityRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_activityLevel));
-
     }
 
 }

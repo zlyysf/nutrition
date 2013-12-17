@@ -12,15 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.lingzhimobile.nutritionfoodguide.R;
 
-public class V3HistoryFragment extends Fragment {
+public class V3HistoryFragment extends V3BaseHeadFragment {
 
     List<Integer> monthList;
-    Button previousButton, nextButton;
+    ViewPager monthViewPager;
+    MonthAdapter monthAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,32 +39,12 @@ public class V3HistoryFragment extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.v3_fragment_history, container,
                 false);
-        previousButton = (Button) view.findViewById(R.id.leftButton);
-        nextButton = (Button) view.findViewById(R.id.rightButton);
-        final ViewPager monthViewPager = (ViewPager) view
+        initHeaderLayout(view);
+        monthViewPager = (ViewPager) view
                 .findViewById(R.id.historyViewPager);
-        final MonthAdapter monthAdapter = new MonthAdapter(getChildFragmentManager());
+        monthAdapter = new MonthAdapter(getChildFragmentManager());
         monthViewPager.setAdapter(monthAdapter);
 
-        previousButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                int currentItemIndex = monthViewPager.getCurrentItem();
-                if (currentItemIndex > 0)
-                    monthViewPager.setCurrentItem(currentItemIndex - 1, false);
-            }
-        });
-
-        nextButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                int currentItemIndex = monthViewPager.getCurrentItem();
-                if (currentItemIndex < monthAdapter.getCount())
-                    monthViewPager.setCurrentItem(currentItemIndex + 1, false);
-            }
-        });
         return view;
     }
 
@@ -127,6 +107,33 @@ public class V3HistoryFragment extends Fragment {
         public int getCount() {
             return monthList.size();
         }
+
+    }
+
+    @Override
+    protected void setHeader() {
+        leftButton.setText("Previous");
+        rightButton.setText("Next");
+
+        leftButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                int currentItemIndex = monthViewPager.getCurrentItem();
+                if (currentItemIndex > 0)
+                    monthViewPager.setCurrentItem(currentItemIndex - 1, false);
+            }
+        });
+
+        rightButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                int currentItemIndex = monthViewPager.getCurrentItem();
+                if (currentItemIndex < monthAdapter.getCount())
+                    monthViewPager.setCurrentItem(currentItemIndex + 1, false);
+            }
+        });
 
     }
 }
