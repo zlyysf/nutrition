@@ -69,6 +69,17 @@
 		088B768517C4BADD00206959 /* LZDataAccessUtil.h in Sources */ = {isa = PBXBuildFile; fileRef = 088B768217C4B8F200206959 /* LZDataAccessUtil.h */; };
 		088B768617C4BADD00206959 /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768317C4B8F200206959 /* LZDataAccessUtil.m */; };
 		08ED42D317D4970A00917C78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
+		08FDAC93186030C10015E7EE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A17185054030063553D /* Parse.framework */; };
+		08FDAC94186031170015E7EE /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
+		08FDAC95186031740015E7EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631DB17702CDF0068CBFE /* AudioToolbox.framework */; };
+		08FDAC961860317C0015E7EE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0D18504CD90063553D /* CFNetwork.framework */; };
+		08FDAC97186031900015E7EE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D81C17AF8921000AEC06 /* CoreLocation.framework */; };
+		08FDAC98186031990015E7EE /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A1118504D2C0063553D /* libz.1.1.3.dylib */; };
+		08FDAC99186031A10015E7EE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0F18504CF80063553D /* MobileCoreServices.framework */; };
+		08FDAC9A186031AA0015E7EE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C3B176B1E9000E68D0E /* QuartzCore.framework */; };
+		08FDAC9B186031BC0015E7EE /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D717702CD00068CBFE /* StoreKit.framework */; };
+		08FDAC9C186031C40015E7EE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C39176B1E8600E68D0E /* SystemConfiguration.framework */; };
+		08FDAC9D186031E20015E7EE /* LZKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC1D1C26185EF0F500911A6C /* LZKeychainManager.m */; };
 		5F03D348174B9241008EFB60 /* LZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D33C174B923F008EFB60 /* LZProgressView.m */; };
 		5F0A4155180E685F007B8715 /* LZCustomDataButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0A4154180E685F007B8715 /* LZCustomDataButton.m */; };
 		5F206DE41855AE1200E8D094 /* gray_vertical_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F206DE31855AE1200E8D094 /* gray_vertical_line@2x.png */; };
@@ -603,11 +614,20 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08FDAC9C186031C40015E7EE /* SystemConfiguration.framework in Frameworks */,
+				08FDAC9B186031BC0015E7EE /* StoreKit.framework in Frameworks */,
 				08859A0C18504C8C0063553D /* Security.framework in Frameworks */,
+				08FDAC9A186031AA0015E7EE /* QuartzCore.framework in Frameworks */,
+				08FDAC99186031A10015E7EE /* MobileCoreServices.framework in Frameworks */,
+				08FDAC98186031990015E7EE /* libz.1.1.3.dylib in Frameworks */,
+				08FDAC97186031900015E7EE /* CoreLocation.framework in Frameworks */,
+				085C8D5A17336A29001A1ABB /* CoreGraphics.framework in Frameworks */,
+				08FDAC961860317C0015E7EE /* CFNetwork.framework in Frameworks */,
+				08FDAC95186031740015E7EE /* AudioToolbox.framework in Frameworks */,
 				085C8D7917336A3D001A1ABB /* libsqlite3.dylib in Frameworks */,
 				085C8D5817336A29001A1ABB /* UIKit.framework in Frameworks */,
 				085C8D5917336A29001A1ABB /* Foundation.framework in Frameworks */,
-				085C8D5A17336A29001A1ABB /* CoreGraphics.framework in Frameworks */,
+				08FDAC93186030C10015E7EE /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1474,6 +1494,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08FDAC94186031170015E7EE /* FBMissingSymbols.m in Sources */,
 				0818C9C818472682003DB33A /* CDataScanner.m in Sources */,
 				0818CA1118477B16003DB33A /* CDataScanner.h in Sources */,
 				0818CA0A18477AC6003DB33A /* CJSONDeserializer.h in Sources */,
@@ -1506,6 +1527,7 @@
 				085C8D6217336A29001A1ABB /* main.m in Sources */,
 				085C8D6617336A29001A1ABB /* LZAppDelegate.m in Sources */,
 				085C8D6F17336A29001A1ABB /* LZViewController.m in Sources */,
+				08FDAC9D186031E20015E7EE /* LZKeychainManager.m in Sources */,
 				088241441744DE8000E71E6E /* LZTest1.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1664,6 +1686,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/flyouting/zlyApple/work/nutrition/git1/iphone/trunk/nutrition/nutrition,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "testApp/testApp-Prefix.pch";
 				INFOPLIST_FILE = "testApp/testApp-Info.plist";
@@ -1677,6 +1703,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					/Users/flyouting/zlyApple/work/nutrition/git1/iphone/trunk/nutrition/nutrition,
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "testApp/testApp-Prefix.pch";
 				INFOPLIST_FILE = "testApp/testApp-Info.plist";

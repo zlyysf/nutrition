@@ -10,6 +10,9 @@
 
 #import "LZViewController.h"
 
+#import "LZConstants.h"
+#import <Parse/Parse.h> 
+
 @implementation LZAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -23,6 +26,14 @@
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    [Parse setApplicationId:ParseApp_ApplicationID clientKey:ParseApp_ClientKey];
+    
+    PFACL *defaultACL = [PFACL ACL];
+    [defaultACL setPublicReadAccess:true];
+    [defaultACL setPublicWriteAccess:true];
+    [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:true];
+    
     return YES;
 }
 

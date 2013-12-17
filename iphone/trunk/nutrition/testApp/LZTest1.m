@@ -42,7 +42,9 @@
 //    [self.class test_getIllnessSuggestionsDistinct1];
 //    [self.class test_dalUserRecordSymptom1];
 //    [self.class test_getSingleNutrientRichFoodWithAmount_forNutrients];
-    [self.class test_getIllness2];
+//    [self.class test_getIllness2];
+//    [self.class test_syncRemoteDataInParse];
+    [self.class test_syncRemoteDataInParse_2];
 
     
 //    [self.class testFormatResult1];
@@ -2552,6 +2554,108 @@ BOOL needLimitNutrients = FALSE;
     
     [da getFoodCnTypes];
     
+}
+
+
++(void)test_syncRemoteDataInParse
+{
+    [self saveParseRowObj1];
+}
++(void)test_syncRemoteDataInParse_2
+{
+    [LZUtility syncRemoteDataToLocal_withJustCallback:^(BOOL succeeded) {
+        LZDataAccess *da = [LZDataAccess singleton];
+        [da getUserRecordSymptomRawRowsByRange_withStartDayLocal:0 andEndDayLocal:0 andStartMonthLocal:0 andEndMonthLocal:0];
+        
+    }];//syncRemoteDataToLocal_withJustCallback
+}
+
++(void)saveParseRowObj1
+{
+    if (true){
+        int dayLocal = 20120304;
+        NSDate *updateTime = [NSDate date];
+        NSMutableDictionary * InputNameValuePairsData = [NSMutableDictionary dictionary];
+        NSString *note = @"note1";
+        NSMutableDictionary * CalculateNameValuePairsData = [NSMutableDictionary dictionary];
+        NSMutableDictionary * LackNutrientsAndFoods,*InferIllnessesAndSuggestions;
+        
+        [InputNameValuePairsData setObject:[NSArray arrayWithObjects:@"症状a1",@"症状a2", nil] forKey:Key_Symptoms];
+        [InputNameValuePairsData setObject:[NSNumber numberWithDouble:67.8] forKey:Key_Weight];
+        
+        [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:87.5] forKey:Key_HealthMark];
+        LackNutrientsAndFoods = [NSMutableDictionary dictionary];
+        [LackNutrientsAndFoods setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:100],@"20001", [NSNumber numberWithInt:150],@"20002", nil] forKey:@"Vb1"];
+        [LackNutrientsAndFoods setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:100],@"10011", [NSNumber numberWithInt:150],@"10012", nil] forKey:@"Vb2"];
+        [CalculateNameValuePairsData setObject:LackNutrientsAndFoods forKey:Key_LackNutrientsAndFoods];
+        InferIllnessesAndSuggestions = [NSMutableDictionary dictionary];
+        [InferIllnessesAndSuggestions setObject:[NSArray arrayWithObjects:@"建议a1",@"建议a2", nil] forKey:@"疾病a1"];
+        [InferIllnessesAndSuggestions setObject:[NSArray arrayWithObjects:@"建议b1",@"建议b2", nil] forKey:@"疾病a2"];
+        [CalculateNameValuePairsData setObject:InferIllnessesAndSuggestions forKey:Key_InferIllnessesAndSuggestions];
+        
+        PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+                                                 
+        [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            NSMutableString *msg = [NSMutableString string];
+            if (succeeded){
+                [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
+                [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
+            }else{
+                [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
+            }
+            NSLog(@"saveParseRowObj1 %@",msg);
+            
+            [self saveParseRowObj2];
+        }];
+    }
+}
+
++(void)saveParseRowObj2
+{
+    if (true){
+        int dayLocal = 20120305;
+        NSDate *updateTime = [NSDate date];
+        NSMutableDictionary * InputNameValuePairsData = [NSMutableDictionary dictionary];
+        NSString *note = @"note2";
+        NSMutableDictionary * CalculateNameValuePairsData = [NSMutableDictionary dictionary];
+        NSMutableDictionary * LackNutrientsAndFoods,*InferIllnessesAndSuggestions;
+        
+        [InputNameValuePairsData setObject:[NSArray arrayWithObjects:@"症状b1",@"症状b2", nil] forKey:Key_Symptoms];
+        [InputNameValuePairsData setObject:[NSNumber numberWithDouble:67.8] forKey:Key_Weight];
+        
+        [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:87.5] forKey:Key_HealthMark];
+        LackNutrientsAndFoods = [NSMutableDictionary dictionary];
+        [LackNutrientsAndFoods setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:100],@"20201", [NSNumber numberWithInt:150],@"20202", nil] forKey:@"Vb1"];
+        [LackNutrientsAndFoods setObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:100],@"10211", [NSNumber numberWithInt:150],@"10212", nil] forKey:@"Vb2"];
+        [CalculateNameValuePairsData setObject:LackNutrientsAndFoods forKey:Key_LackNutrientsAndFoods];
+        InferIllnessesAndSuggestions = [NSMutableDictionary dictionary];
+        [InferIllnessesAndSuggestions setObject:[NSArray arrayWithObjects:@"建议c1",@"建议c2", nil] forKey:@"疾病c1"];
+        [InferIllnessesAndSuggestions setObject:[NSArray arrayWithObjects:@"建议d1",@"建议d2", nil] forKey:@"疾病d2"];
+        [CalculateNameValuePairsData setObject:InferIllnessesAndSuggestions forKey:Key_InferIllnessesAndSuggestions];
+        
+        PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+        
+        [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            NSMutableString *msg = [NSMutableString string];
+            if (succeeded){
+                [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
+                [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
+            }else{
+                [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
+            }
+            NSLog(@"saveParseRowObj2 %@",msg);
+            
+            [LZUtility syncRemoteDataToLocal_withJustCallback:^(BOOL succeeded) {
+                LZDataAccess *da = [LZDataAccess singleton];
+                [da getUserRecordSymptomRawRowsByRange_withStartDayLocal:0 andEndDayLocal:0 andStartMonthLocal:0 andEndMonthLocal:0];
+                
+                [LZUtility syncRemoteDataToLocal_withJustCallback:^(BOOL succeeded) {
+                    [da getUserRecordSymptomRawRowsByRange_withStartDayLocal:0 andEndDayLocal:0 andStartMonthLocal:0 andEndMonthLocal:0];
+                    
+                }];//syncRemoteDataToLocal_withJustCallback
+            }];//syncRemoteDataToLocal_withJustCallback
+        }];//saveInBackgroundWithBlock
+    }
 }
 
 

@@ -10,7 +10,8 @@
 
 #import "LZDataAccess.h"
 #import "LZUtility.h"
-
+#import "LZConstants.h"
+#import <Parse/Parse.h>
 
 @interface LZUtility : NSObject
 
@@ -131,6 +132,12 @@
 +(void)Test_saveParseObj;
 +(void)Test_getParseObj;
 +(void)Test_updateParseObj;
+
++(void) saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId: (NSString*) parseObjId andDayLocal:(int) dayLocal;
++(PFObject*) getToSaveParseObject_UserRecordSymptom_withDayLocal:(int) dayLocal andUpdateTimeUTC:(NSDate*) updateTimeUTC andInputNameValuePairsData:(NSDictionary*) inputNameValuePairsData andNote:(NSString*) Note andCalculateNameValuePairsData:(NSDictionary*) calculateNameValuePairsData;
++(PFQuery*) getParseQueryByCurrentDeviceForUserRecordSymptom_withDayLocal:(int)dayLocal;
++(PFQuery*) getParseQueryByCurrentDeviceForUserRecordSymptom;
++(void) syncRemoteDataToLocal_withJustCallback:(JustCallbackBlock) justCallback;
 
 @end
 

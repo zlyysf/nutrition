@@ -13,8 +13,9 @@
 #import "MBProgressHUD.h"
 #import "LZKeychainManager.h"
 #import <Security/Security.h>
-#import <Parse/Parse.h>
 
+#import "CJSONDeserializer.h"
+#import "CJSONSerializer.h"
 
 @implementation LZUtility
 
@@ -1703,6 +1704,183 @@ PFObject *g_parseObjUserRecord=nil;
         NSLog(@"Test_updateParseObj %@",msg);
 	}];
 }
+
++(void) saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId: (NSString*) parseObjId andDayLocal:(int) dayLocal
+{
+    [[NSUserDefaults standardUserDefaults]setObject:parseObjId forKey:ParseObjectKey_objectId];
+    [[NSUserDefaults standardUserDefaults]setInteger:dayLocal forKey:COLUMN_NAME_DayLocal];
+    [[NSUserDefaults standardUserDefaults]synchronize];
+}
+
++(PFObject*) getToSaveParseObject_UserRecordSymptom_withDayLocal:(int) dayLocal andUpdateTimeUTC:(NSDate*) updateTimeUTC andInputNameValuePairsData:(NSDictionary*) inputNameValuePairsData andNote:(NSString*) Note andCalculateNameValuePairsData:(NSDictionary*) calculateNameValuePairsData
+{
+    NSString* stored_parseObjId = [[NSUserDefaults standardUserDefaults] stringForKey:ParseObjectKey_objectId];
+    NSInteger stored_dayLocal = [[NSUserDefaults standardUserDefaults] integerForKey:COLUMN_NAME_DayLocal];
+    
+    
+    NSString* parseObjIdValid = nil;
+    if (stored_parseObjId != nil && stored_parseObjId.length>0 && stored_dayLocal>0){
+        if (stored_dayLocal == dayLocal){
+            parseObjIdValid = stored_parseObjId;//stored value is valid
+        }else{
+            //				StoredConfigTool.saveParseObjectInfo_CurrentUserRecordSymptom(ctx,null);//stored value is old , clear
+        }
+    }
+    
+    PFObject* parseObj = nil;
+    if (parseObjIdValid==nil)
+        parseObj = [PFObject objectWithClassName:ParseObject_UserRecordSymptom];
+    else
+        parseObj = [PFObject objectWithoutDataWithClassName:ParseObject_UserRecordSymptom objectId:parseObjIdValid];
+    
+    NSString *uniqueDeviceId = [self uniqueDeviceId];
+    [parseObj setObject:uniqueDeviceId forKey:ParseObjectKey_UserRecord_deviceId];
+    
+    [parseObj setObject:[NSNumber numberWithInt:dayLocal] forKey:COLUMN_NAME_DayLocal];
+    
+    long long llUpdateTimeUTC = [self getMillisecond:updateTimeUTC];
+    [parseObj setObject:[NSNumber numberWithLongLong:llUpdateTimeUTC] forKey:COLUMN_NAME_UpdateTimeUTC];
+    
+    CJSONSerializer * CJSONSerializer1 = [CJSONSerializer serializer];
+    NSError *error = NULL;
+    if (inputNameValuePairsData!=nil){
+        NSData *jsonData_inputNameValuePairs = [CJSONSerializer1 serializeObject:inputNameValuePairsData error:&error];
+        assert(error == NULL);
+        NSString *jsonString_inputNameValuePairs = [[NSString alloc] initWithData:jsonData_inputNameValuePairs encoding:NSUTF8StringEncoding];
+        [parseObj setObject:jsonString_inputNameValuePairs forKey:COLUMN_NAME_inputNameValuePairs];
+    }
+    
+    if(Note != nil){
+        [parseObj setObject:Note forKey:COLUMN_NAME_Note];
+    }
+    
+    if (calculateNameValuePairsData!=nil){
+        NSData *jsonData_calculateNameValuePairs = [CJSONSerializer1 serializeObject:calculateNameValuePairsData error:&error];
+        assert(error == NULL);
+        NSString *jsonString_calculateNameValuePairs = [[NSString alloc] initWithData:jsonData_calculateNameValuePairs encoding:NSUTF8StringEncoding];
+        [parseObj setObject:jsonString_calculateNameValuePairs forKey:COLUMN_NAME_calculateNameValuePairs];
+    }
+    
+    return parseObj;
+}
+
+
++(PFQuery*) getParseQueryByCurrentDeviceForUserRecordSymptom_withDayLocal:(int)dayLocal
+{
+    NSString *uniqueDeviceId = [self uniqueDeviceId];
+    PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_UserRecordSymptom];
+    [pQuery whereKey:ParseObjectKey_UserRecordSymptom_deviceId equalTo:uniqueDeviceId];
+    [pQuery whereKey:COLUMN_NAME_DayLocal equalTo:[NSNumber numberWithInt:dayLocal ]];
+    return pQuery;
+}
+
++(PFQuery*) getParseQueryByCurrentDeviceForUserRecordSymptom
+{
+    NSString *uniqueDeviceId = [self uniqueDeviceId];
+    PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_UserRecordSymptom];
+    [pQuery whereKey:ParseObjectKey_UserRecordSymptom_deviceId equalTo:uniqueDeviceId];
+    [pQuery addAscendingOrder:COLUMN_NAME_DayLocal];
+    return pQuery;
+}
+
+
++(NSMutableDictionary*) parseParseObjectToHashMapRawRow_UserRecordSymptom:(PFObject*) parseObj
+{
+    if (parseObj == nil)
+        return nil;
+    NSMutableDictionary* dataDict = [NSMutableDictionary dictionary];
+    
+    NSString *key;
+    id val;
+    key = COLUMN_NAME_DayLocal;
+    NSNumber *nmDayLocal = [parseObj objectForKey:key];
+    [dataDict setObject:nmDayLocal forKey:key];
+    
+    key = COLUMN_NAME_UpdateTimeUTC;
+    NSNumber *nmUpdateTimeUTC = [parseObj objectForKey:key];
+    NSDate *UpdateTimeUTC = [LZUtility getDateFromMillisecond:[nmUpdateTimeUTC longLongValue]];
+    [dataDict setObject:UpdateTimeUTC forKey:key];
+
+    
+    key = COLUMN_NAME_Note;
+    val = [parseObj objectForKey:key];
+    if (val != nil){
+        [dataDict setObject:val forKey:key];
+    }
+    
+    key = COLUMN_NAME_inputNameValuePairs;
+    val = [parseObj objectForKey:key];
+    if (val != nil){
+        [dataDict setObject:val forKey:key];
+    }
+
+    key = COLUMN_NAME_calculateNameValuePairs;
+    val = [parseObj objectForKey:key];
+    if (val != nil){
+        [dataDict setObject:val forKey:key];
+    }
+    
+    return dataDict;
+}
+
+
+
++(void) syncRemoteDataToLocal_withJustCallback:(JustCallbackBlock) justCallback
+{
+    BOOL alreadyLoadFromRemote = [[NSUserDefaults standardUserDefaults]boolForKey:LZSettingKey_alreadyLoadFromRemote];
+    if (alreadyLoadFromRemote){
+        if (justCallback!=nil){
+            justCallback(true);
+        }
+        return;
+    }
+
+    PFQuery *queryRemote = [self getParseQueryByCurrentDeviceForUserRecordSymptom];
+    [queryRemote findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        NSMutableString *msg = [NSMutableString string];
+        bool succeeded = (error==nil);
+        if (!succeeded){
+            [msg appendFormat:@" query.findObjectsInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
+        }else{
+            if (objects.count==0){
+                [msg appendFormat:@" No data in remote."];
+            }else{
+                [msg appendFormat:@" Have %d rows in remote.",objects.count];
+
+                LZDataAccess *da = [LZDataAccess singleton];
+                for(int i=0; i<objects.count; i++){
+                    PFObject* parseObj = objects[i];
+                    NSMutableDictionary *hmRawRow = [self parseParseObjectToHashMapRawRow_UserRecordSymptom:parseObj];
+                    [da insertUserRecordSymptom_withRawData:hmRawRow];
+                }//for
+            }
+            [[NSUserDefaults standardUserDefaults]setBool:YES forKey:LZSettingKey_alreadyLoadFromRemote];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+        }
+        NSLog(@"syncRemoteDataToLocal_withJustCallback %@",msg);
+        
+        if (justCallback!=nil){
+            justCallback(succeeded);
+        }
+    }];
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @end

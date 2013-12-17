@@ -18,6 +18,8 @@
 #define ParseObjectKey_objectId @"objectId"
 #define ParseObjectKey_UserRecord_deviceId @"deviceId"
 #define ParseObjectKey_UserRecord_attachFile @"attachFile"
+#define ParseObject_UserRecordSymptom @"UserRecordSymptom"
+#define ParseObjectKey_UserRecordSymptom_deviceId @"deviceId"
 
 #define KeyDebugSettingsDict @"KeyDebugSettingsDict"
 #define AppVersionCheckName @"NutritionFoodGuide"
@@ -103,6 +105,8 @@
 #define LZSettingKey_needPriorityFoodToSpecialNutrient @"needPriorityFoodToSpecialNutrient"
 #define LZSettingKey_randSeed @"randSeed"
 #define LZSettingKey_randSeedOut @"randSeedOut"
+
+#define LZSettingKey_alreadyLoadFromRemote @"alreadyLoadFromRemote"
 
 #define ParamKey_sex @"sex"
 #define ParamKey_age @"age"
@@ -397,6 +401,8 @@
 #define KeyNotifyTimeTypeXiaWu @"2"
 #define KeyNotifyTimeTypeShuiQian @"3"
 #define KeyNotifyTimeTypeReminder @"10"
+
+typedef void (^JustCallbackBlock)(BOOL succeeded);
 
 
 

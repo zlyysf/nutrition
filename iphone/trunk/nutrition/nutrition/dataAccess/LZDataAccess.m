@@ -2218,6 +2218,31 @@
     NSLog(@"insertUserRecordSymptom_withDayLocal ret:%d",dbopState);
     return dbopState;
 }
+-(BOOL)insertUserRecordSymptom_withRawData:(NSDictionary*)hmRawData
+{
+    if (hmRawData==nil)
+        return true;
+    NSString *key;
+    key = COLUMN_NAME_DayLocal;
+    NSNumber *nmDayLocal = [hmRawData objectForKey:key];
+    assert(nmDayLocal!=nil);
+    int dayLocal = [nmDayLocal intValue];
+    
+    key = COLUMN_NAME_UpdateTimeUTC;
+    NSDate *UpdateTimeUTC = [hmRawData objectForKey:key];
+    assert(UpdateTimeUTC!=nil);
+    
+    key = COLUMN_NAME_Note;
+    NSString *note = [hmRawData objectForKey:key];
+    
+    key = COLUMN_NAME_inputNameValuePairs;
+    NSString *jsonStr_inputNameValuePairs = [hmRawData objectForKey:key];
+    
+    key = COLUMN_NAME_calculateNameValuePairs;
+    NSString *jsonStr_calculateNameValuePairs = [hmRawData objectForKey:key];
+    
+    [self insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:UpdateTimeUTC andInputNameValuePairs:jsonStr_inputNameValuePairs andNote:note andCalculateNameValuePairs:jsonStr_calculateNameValuePairs];
+}
 -(BOOL)updateUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs
 {
     NSLog(@"updateUserRecordSymptom_withDayLocal enter");
@@ -2268,6 +2293,7 @@
 //    NSLog(@"insertUserRecordSymptom_withDayLocal ret:%d",opStatus);
     return opStatus;
 }
+
 -(BOOL)updateUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairsData:(NSDictionary*)inputNameValuePairsData andNote:(NSString*)Note andCalculateNameValuePairsData:(NSDictionary*)calculateNameValuePairsData
 {
     NSError *error = NULL;
