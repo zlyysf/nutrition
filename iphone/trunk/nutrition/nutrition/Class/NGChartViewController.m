@@ -43,18 +43,18 @@
     
     chart3Controller = [[LZScatterViewController alloc]init];
     [chart3Controller configureScatterView:contentRect];
-
+    self.title = NSLocalizedString(@"tubiao_title", @"图表");
 	// Do any additional setup after loading the view.
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"left.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltoprevious)];
     self.navigationItem.leftBarButtonItem = leftItem;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"right.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltonext)];
     self.navigationItem.rightBarButtonItem = rightItem;
-    [self.contentTypeChangeControl setTitle:@"营养" forSegmentAtIndex:0];
-    [self.contentTypeChangeControl setTitle:@"体质" forSegmentAtIndex:1];
-    [self.contentTypeChangeControl setTitle:@"体重" forSegmentAtIndex:2];
-    [self.contentTypeChangeControl setTitle:@"体温" forSegmentAtIndex:3];
-    [self.contentTypeChangeControl setTitle:@"血压" forSegmentAtIndex:4];
-    [self.contentTypeChangeControl setTitle:@"心跳" forSegmentAtIndex:5];
+    [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_yingyang", @"营养") forSegmentAtIndex:0];
+    [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_tizhi", @"体质") forSegmentAtIndex:1];
+    [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_tizhong", @"体重") forSegmentAtIndex:2];
+    [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_tiwen", @"体温") forSegmentAtIndex:3];
+    [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_xueya", @"血压") forSegmentAtIndex:4];
+    [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_xintiao", @"心跳") forSegmentAtIndex:5];
     [self initialize];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(historyUpdated:) name: Notification_HistoryUpdatedKey object:nil];
 }

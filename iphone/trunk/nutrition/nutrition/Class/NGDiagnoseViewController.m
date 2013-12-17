@@ -40,18 +40,18 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = @"健康记录";
+    self.title = NSLocalizedString(@"jiankangjilu_title", @"健康记录");
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
     [headerView setBackgroundColor:[UIColor clearColor]];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 4, 280, 21)];
     [label setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0f]];
     [label setFont:[UIFont systemFontOfSize:14]];
-    [label setText:@"今天哪里不舒服吗？点击记录一下吧。"];
+    [label setText:NSLocalizedString(@"jiankangjilu_question", @"今天哪里不舒服吗？点击记录一下吧。")];
     [label setBackgroundColor:[UIColor clearColor]];
     [headerView addSubview:label];
     self.listView.tableHeaderView = headerView;
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
-    UIBarButtonItem *submitItem = [[UIBarButtonItem alloc]initWithTitle:@"提交" style:UIBarButtonItemStyleBordered target:self action:@selector(getHealthReport)];
+    UIBarButtonItem *submitItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"jiankangjilu_tijiao", @"提交") style:UIBarButtonItemStyleBordered target:self action:@selector(getHealthReport)];
     [submitItem setEnabled:NO];
     self.navigationItem.rightBarButtonItem = submitItem;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userInfoChanged:) name:Notification_SettingsChangedKey object:nil];
@@ -466,24 +466,24 @@
         [cell.backView.layer setBorderWidth:0.5f];
         [cell.headerNameLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
         [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        cell.headerNameLabel.text = @"  生理指标";
-        cell.heatLabel.text = @"体温";
-        cell.weightLabel.text = @"体重";
-        cell.heartbeatLabel.text = @"心跳";
-        cell.highpressureLabel.text = @"高压";
-        cell.lowpressureLabel.text = @"低压";
-        cell.heatUnitLabel.text = @"摄氏度";
+        cell.headerNameLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"jiankangjilu_shenglizhibiao", @"生理指标") ];
+        cell.heatLabel.text = NSLocalizedString(@"jiankangjilu_tiwen", @"体温");
+        cell.weightLabel.text = NSLocalizedString(@"jiankangjilu_tizhong", @"体重");
+        cell.heartbeatLabel.text = NSLocalizedString(@"jiangkangjilu_xintiao", @"心跳");
+        cell.highpressureLabel.text = NSLocalizedString(@"jiankangjilu_gaoya", @"高压");
+        cell.lowpressureLabel.text = NSLocalizedString(@"jiankangjilu_diya", @"低压");
+        cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_sheshidu", @"摄氏度");
         if (isChinese) {
-            cell.weightUnitLabel.text = @"公斤";
+            cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_gongjin", @"公斤");
         }
         else
         {
-            cell.weightUnitLabel.text = @"磅";
+            cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_bang", @"磅");
         }
         
-        cell.heartbeatUnitLabel.text = @"次/分钟";
-        cell.highpressureUnitLabel.text = @"毫米水银";
-        cell.lowpressureUnitLabel.text = @"毫米水银";
+        cell.heartbeatUnitLabel.text = NSLocalizedString(@"jaingkanjilu_xintiaodanwei", @"次/分钟");
+        cell.highpressureUnitLabel.text = NSLocalizedString(@"jiankangjilu_xueyadanwei", @"毫米水银");
+        cell.lowpressureUnitLabel.text = NSLocalizedString(@"jiankangjilu_xueyadanwei", @"毫米水银");
         NSString *weight = [self.userInputValueDict objectForKey:@"weight"];
         NSString *heat = [self.userInputValueDict objectForKey:@"heat"];
         NSString *heartbeat = [self.userInputValueDict objectForKey:@"heartbeat"];
@@ -517,7 +517,7 @@
         [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
         NSString *note = [self.userInputValueDict objectForKey:@"note"];
         cell.noteTextView.text = note;
-        cell.headerNameLabel.text = @"  笔记";
+        cell.headerNameLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"jiankangjilu_biji", @"笔记")];;
         cell.noteTextView.delegate = self;
         return cell;
     }

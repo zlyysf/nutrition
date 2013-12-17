@@ -51,18 +51,15 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     isFirstLoad = YES;
     isChinese = [LZUtility isCurrentLanguageChinese];
+    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"baocunbutton", @"保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveRecord:)];
+    self.navigationItem.rightBarButtonItem = saveItem;
+
     if (isFirstSave)
     {
-        UIBarButtonItem *savedItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveRecord)];
-        [savedItem setEnabled:NO];
-        self.navigationItem.rightBarButtonItem = savedItem;
-    }
-    else
-    {
-        UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:@"保存" style:UIBarButtonItemStyleBordered target:self action:@selector(saveRecord:)];
-        self.navigationItem.rightBarButtonItem = saveItem;
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
     }
     selectedImage = [LZUtility createImageWithColor:ItemSelectedColor imageSize:CGSizeMake(300, 54)];
+    self.title = NSLocalizedString(@"jiankangbaogao_title", @"健康报告");
 	// Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -298,11 +295,11 @@
         [cell.backView.layer setBorderWidth:0.5f];
         [cell.levelView.layer setBorderColor:BorderColor];
         [cell.levelView.layer setBorderWidth:0.5f];
-        cell.headerLabel.text = @"体质指数";
-        cell.level1Label.text = @"过轻";
-        cell.level2Label.text = @"正常";
-        cell.level3Label.text = @"过重";
-        cell.level4Label.text = @"肥胖";
+        cell.headerLabel.text = NSLocalizedString(@"zhenduanbaogao_tizhizhishu", @"体质指数");
+        cell.level1Label.text = NSLocalizedString(@"zhenduanbaogao_guoqing", @"过轻");
+        cell.level2Label.text = NSLocalizedString(@"zhenduanbaogao_zhengchang", @"正常");
+        cell.level3Label.text = NSLocalizedString(@"zhenduanbaogao_guozhong", @"过重");
+        cell.level4Label.text = NSLocalizedString(@"zhenduanbaogao_feipang", @"肥胖");
         NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.BMIValue];
         cell.bmiValueLabel.text = scoreText;
         [cell setBMIValue:self.BMIValue];
@@ -313,7 +310,7 @@
         NGReportHealthScoreCell *cell = (NGReportHealthScoreCell*)[tableView dequeueReusableCellWithIdentifier:@"NGReportHealthScoreCell"];
         [cell.backView.layer setBorderColor:BorderColor];
         [cell.backView.layer setBorderWidth:0.5f];
-        cell.headerLabel.text = @"健康指数";
+        cell.headerLabel.text = NSLocalizedString(@"zhenduanbaogao_jiankangzhishu", @"健康指数");
         //12,56,78 3,42,40,20
         NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.HealthValue];
         CGSize textSize = [scoreText sizeWithFont:[UIFont boldSystemFontOfSize:55.f] constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
@@ -327,8 +324,8 @@
         NGReportNutritonFoodCell *cell = (NGReportNutritonFoodCell*)[tableView dequeueReusableCellWithIdentifier:@"NGReportNutritonFoodCell"];
         [cell.backView.layer setBorderColor:BorderColor];
         [cell.backView.layer setBorderWidth:0.5f];
-        cell.nutritionHeaderlabel.text = @"缺乏营养";
-        cell.foodHeaderLabel.text = @"推荐食物";
+        cell.nutritionHeaderlabel.text = NSLocalizedString(@"zhenduanbaogao_quefayingyan", @"缺乏营养");
+        cell.foodHeaderLabel.text = NSLocalizedString(@"zhenduanbaogao_tuijianshiwu", @"推荐食物");
         NSString *nutritionId = [self.lackNutritionArray objectAtIndex:indexPath.row];
         NSArray *recommendFood = [self.recommendFoodDict objectForKey:nutritionId];
         LZNutrientionManager*nm = [LZNutrientionManager SharedInstance];
@@ -404,7 +401,7 @@
         }
         UILabel *illnessLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 60, 20)];
         [cell.backView addSubview:illnessLabel];
-        [illnessLabel setText:@"潜在疾病"];
+        [illnessLabel setText:NSLocalizedString(@"zhenduanbaogao_qianzaishiwu", @"潜在疾病")];
         [illnessLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0]];
         [illnessLabel setFont:SmallLabelFont];
         UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(AttentionLabelStartX, 12, 172, 36)];
@@ -430,7 +427,7 @@
         {
             UILabel *attenLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 60+(part2Height-20)/2, 60, 20)];
             [cell.backView addSubview:attenLabel];
-            [attenLabel setText:@"注意事项"];
+            [attenLabel setText:NSLocalizedString(@"zhenduanbaogao_zhuyishixiang", @"注意事项")];
             [attenLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0]];
             [attenLabel setFont:SmallLabelFont];
             float onelineHeight = [@"o" sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap].height;

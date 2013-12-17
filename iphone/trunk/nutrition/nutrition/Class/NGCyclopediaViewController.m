@@ -51,6 +51,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    self.title = NSLocalizedString(@"baike_title", @"百科");
     if ([LZUtility isCurrentLanguageChinese])
     {
         isChinese = YES;
@@ -83,6 +84,7 @@
     foodCellHeight = 20+30+ totalFloor*(80+FoodItemMargin)+FoodItemMargin;
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     selectedImage = [LZUtility createImageWithColor:ItemSelectedColor imageSize:CGSizeMake(300, 54)];
+    
 }
 -(NSString *)getNutritionName:(NSString *)nutritionId
 {
@@ -137,7 +139,7 @@
             [cell.headerLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.headerLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
-            cell.headerLabel.text = @"  常见疾病";
+            cell.headerLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"baike_changjianjibing",@"常见疾病")];
             for (int i =0 ; i< [self.commonDiseaseArray count]; i++)
             {
                 NSDictionary *illnessDict = [self.commonDiseaseArray objectAtIndex:i];
@@ -194,7 +196,7 @@
             [cell.headerLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.headerLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
-            cell.headerLabel.text = @"  营养";
+            cell.headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"baike_yingyang", @"营养")];
             float startY = 50;
             int floor = 1;
             int perRowCount = 4;
@@ -232,7 +234,7 @@
             float vitaminLabelY = (part1Height-20)/2+30;
             [cell.vitaminLabel setFrame:CGRectMake(10, vitaminLabelY, 60, 20)];
             
-            [cell.vitaminLabel setText:@"维生素"];
+            [cell.vitaminLabel setText:NSLocalizedString(@"baike_weishengsu", @"维生素")];
             [cell.sepline1View setFrame:CGRectMake(0, startY, 300, 1)];
             
             startY += 20;
@@ -272,7 +274,7 @@
             float mineralLabelY = (part2Height-20)/2+30+part1Height;
             [cell.mineralLabel setFrame:CGRectMake(10, mineralLabelY, 60, 20)];
             
-            [cell.mineralLabel setText:@"矿物质"];
+            [cell.mineralLabel setText:NSLocalizedString(@"baike_kuangwuzhi", @"矿物质")];
             [cell.sepline2View setFrame:CGRectMake(0, startY, 300, 1)];
             startY += 20;
             floor = 1;
@@ -327,7 +329,7 @@
             [cell.headerLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.headerLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
-            cell.headerLabel.text = @"  食物";
+            cell.headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"baike_shiwu", @"食物")];
             float startY = 50;
             int floor = 1;
             int perRowCount = 3;
@@ -411,6 +413,7 @@
 {
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
     NGIllnessInfoViewController *illnessInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGIllnessInfoViewController"];
+#warning here we should pass a real url
     illnessInfoViewController.illnessURL = @"http://www.baidu.com";
     illnessInfoViewController.title = illnessId;
     [self.navigationController pushViewController:illnessInfoViewController animated:YES];

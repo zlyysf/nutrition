@@ -53,8 +53,8 @@
     [self.nutritionListView.layer setBorderWidth:0.5f];
     [self.topHeaderLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
     [self.underHeaderLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
-    [self.topHeaderLabel setText:[NSString stringWithFormat:@"  %@",@"选择重量"]];
-    [self.underHeaderLabel setText:[NSString stringWithFormat:@"  %@",@"营养含量"]];
+    [self.topHeaderLabel setText:[NSString stringWithFormat:@"  %@",NSLocalizedString(@"shiwu_xuanzezhonglian", @"选择重量")]];
+    [self.underHeaderLabel setText:[NSString stringWithFormat:@"  %@",NSLocalizedString(@"shiwu_yingyanghanliang", @"营养含量")]];
     [self initialize];
 
     

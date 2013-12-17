@@ -39,7 +39,8 @@
     self.contentScrollView.hidden = YES;
     self.contentWebView.hidden = YES;
     isFirstLoad = YES;
-    self.headerLabel.text = [NSString stringWithFormat:@"   以下是富含%@的食物和每日推荐量",self.title];
+    NSString *tips = [NSString stringWithFormat:NSLocalizedString(@"yingyangsu_header", @"以下是富含%@的食物和每日推荐量"),self.title];
+    self.headerLabel.text = [NSString stringWithFormat:@"   %@",tips];
     self.headerLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.headerLabel.layer.borderWidth = 0.5f;
     [self.headerLabel setBackgroundColor:[UIColor colorWithRed:243/255.f green:220/255.f blue:183/255.f alpha:1.0f]];
@@ -62,6 +63,7 @@
         //self.listView.hidden = YES;
         
         //HUD.labelText = @"智能推荐中...";
+
         NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.contentWebView loadRequest:request];

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13A603" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="OzI-f9-7o9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="4514" systemVersion="13B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="OzI-f9-7o9">
     <dependencies>
         <deployment defaultVersion="1280" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3747"/>
     </dependencies>
     <scenes>
-        <!--Diagnose View Controller - 健康诊断-->
+        <!--Diagnose View Controller-->
         <scene sceneID="Mkl-lz-TzA">
             <objects>
                 <viewController id="gCu-WT-jDR" customClass="NGDiagnoseViewController" sceneMemberID="viewController">
@@ -260,7 +260,7 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="健康诊断" id="IEA-0g-DUx"/>
+                    <navigationItem key="navigationItem" id="IEA-0g-DUx"/>
                     <connections>
                         <outlet property="listView" destination="WmL-we-Jkd" id="zij-06-9TM"/>
                     </connections>
@@ -542,7 +542,7 @@
                         <rect key="frame" x="129" y="330" width="163" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <color key="tintColor" red="0.0" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="tintColor" red="0.023529411764705882" green="0.24313725490196078" blue="0.015686274509803921" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </tabBar>
@@ -558,7 +558,7 @@
             </objects>
             <point key="canvasLocation" x="-399" y="347"/>
         </scene>
-        <!--Record History View Controller - 历史-->
+        <!--Record History View Controller-->
         <scene sceneID="JPX-8s-QED">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" id="rYM-Xc-5j6" customClass="NGRecordHistoryViewController" sceneMemberID="viewController">
@@ -666,7 +666,7 @@
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="历史" id="NXm-hD-YXl"/>
+                    <navigationItem key="navigationItem" id="NXm-hD-YXl"/>
                     <connections>
                         <outlet property="contentScrollView" destination="KIr-Wa-68I" id="hyi-0D-4ts"/>
                         <outlet property="listView1" destination="B1S-a7-ckZ" id="IzL-du-1Ga"/>
@@ -678,11 +678,11 @@
             </objects>
             <point key="canvasLocation" x="666" y="-207"/>
         </scene>
-        <!--Navigation Controller - 诊断-->
+        <!--Navigation Controller-->
         <scene sceneID="z6T-AR-4go">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="l1A-5E-cwy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="诊断" image="clinic-50.png" id="0Tn-7t-VTw"/>
+                    <tabBarItem key="tabBarItem" title="" image="clinic-50.png" id="0Tn-7t-VTw"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lft-h7-n8X">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -690,7 +690,7 @@
                         <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <color key="textColor" red="0.0" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.023529411760000001" green="0.24313725489999999" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -702,11 +702,11 @@
             </objects>
             <point key="canvasLocation" x="140" y="-862"/>
         </scene>
-        <!--Navigation Controller - 历史-->
+        <!--Navigation Controller-->
         <scene sceneID="Qtp-2w-VEa">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="huN-N7-Zqp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="历史" image="month_view-50.png" id="gwE-ZA-WbE"/>
+                    <tabBarItem key="tabBarItem" title="" image="month_view-50.png" id="gwE-ZA-WbE"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5gi-2R-4Ro">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -714,7 +714,7 @@
                         <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <color key="textColor" red="0.0" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.023529411764705882" green="0.24313725490196078" blue="0.015686274509803921" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -726,7 +726,7 @@
             </objects>
             <point key="canvasLocation" x="140" y="-207"/>
         </scene>
-        <!--Chart View Controller - 图表-->
+        <!--Chart View Controller-->
         <scene sceneID="7N4-63-oKb">
             <objects>
                 <viewController id="rNA-8P-kbe" customClass="NGChartViewController" sceneMemberID="viewController">
@@ -761,7 +761,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
-                    <navigationItem key="navigationItem" title="图表" id="p0h-ld-p5o"/>
+                    <navigationItem key="navigationItem" id="p0h-ld-p5o"/>
                     <connections>
                         <outlet property="contentScrollView" destination="AD6-am-FpL" id="TRZ-lc-VQn"/>
                         <outlet property="contentTypeChangeControl" destination="ESQ-4k-Hma" id="SgY-AP-1oj"/>
@@ -771,7 +771,7 @@
             </objects>
             <point key="canvasLocation" x="666" y="447"/>
         </scene>
-        <!--Cyclopedia View Controller - 百科-->
+        <!--Cyclopedia View Controller-->
         <scene sceneID="8Na-Fy-u2a">
             <objects>
                 <viewController id="z5M-Ld-fXZ" customClass="NGCyclopediaViewController" sceneMemberID="viewController">
@@ -906,7 +906,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" title="百科" id="XuJ-d0-c06"/>
+                    <navigationItem key="navigationItem" id="XuJ-d0-c06"/>
                     <connections>
                         <outlet property="listView" destination="d4z-ju-PrI" id="3uK-rn-YRG"/>
                     </connections>
@@ -1349,11 +1349,11 @@
             </objects>
             <point key="canvasLocation" x="1061" y="1775"/>
         </scene>
-        <!--Navigation Controller - 图表-->
+        <!--Navigation Controller-->
         <scene sceneID="4ix-Sc-C3R">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SJE-XH-BDc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="图表" image="line_chart-50.png" id="weY-qo-DQf"/>
+                    <tabBarItem key="tabBarItem" title="" image="line_chart-50.png" id="weY-qo-DQf"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="DOO-O4-Q6h">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1361,7 +1361,7 @@
                         <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <color key="textColor" red="0.0" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.023529411760000001" green="0.24313725489999999" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1373,11 +1373,11 @@
             </objects>
             <point key="canvasLocation" x="140" y="447"/>
         </scene>
-        <!--Navigation Controller - 百科-->
+        <!--Navigation Controller-->
         <scene sceneID="O9o-Ip-9Cw">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6Ki-Ri-HLF" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="百科" image="physics-50.png" id="MIF-UI-Iy9"/>
+                    <tabBarItem key="tabBarItem" title="" image="physics-50.png" id="MIF-UI-Iy9"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="QZd-hT-Vkm">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1385,7 +1385,7 @@
                         <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <color key="textColor" red="0.0" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.023529411760000001" green="0.24313725489999999" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
@@ -1397,11 +1397,11 @@
             </objects>
             <point key="canvasLocation" x="140" y="1097"/>
         </scene>
-        <!--Navigation Controller - 信息-->
+        <!--Navigation Controller-->
         <scene sceneID="rYV-3N-T6W">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Db7-Oh-NMS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="信息" image="info-50.png" id="oEC-cN-4Nj"/>
+                    <tabBarItem key="tabBarItem" title="" image="info-50.png" id="oEC-cN-4Nj"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="NpU-oQ-OvP">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -1409,7 +1409,7 @@
                         <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <color key="textColor" red="0.0" green="0.20000000000000001" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="textColor" red="0.023529411760000001" green="0.24313725489999999" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
                         </textAttributes>
                     </navigationBar>
                     <nil name="viewControllers"/>
