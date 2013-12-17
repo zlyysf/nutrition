@@ -468,7 +468,7 @@
         [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
         cell.headerNameLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"jiankangjilu_shenglizhibiao", @"生理指标") ];
         cell.heatLabel.text = NSLocalizedString(@"jiankangjilu_tiwen", @"体温");
-        cell.weightLabel.text = NSLocalizedString(@"jiankangjilu_tizhong", @"体重");
+        cell.weightLabel.text = NSLocalizedString(@"editprofile_weightlabel", @"体重");
         cell.heartbeatLabel.text = NSLocalizedString(@"jiangkangjilu_xintiao", @"心跳");
         cell.highpressureLabel.text = NSLocalizedString(@"jiankangjilu_gaoya", @"高压");
         cell.lowpressureLabel.text = NSLocalizedString(@"jiankangjilu_diya", @"低压");

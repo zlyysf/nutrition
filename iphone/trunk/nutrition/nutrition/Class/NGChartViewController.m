@@ -49,9 +49,9 @@
     self.navigationItem.leftBarButtonItem = leftItem;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"right.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltonext)];
     self.navigationItem.rightBarButtonItem = rightItem;
-    [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_yingyang", @"营养") forSegmentAtIndex:0];
+    [self.contentTypeChangeControl setTitle:NSLocalizedString(@"mainpage_menuitem_yingyang", @"营养") forSegmentAtIndex:0];
     [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_tizhi", @"体质") forSegmentAtIndex:1];
-    [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_tizhong", @"体重") forSegmentAtIndex:2];
+    [self.contentTypeChangeControl setTitle:NSLocalizedString(@"editprofile_weightlabel", @"体重") forSegmentAtIndex:2];
     [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_tiwen", @"体温") forSegmentAtIndex:3];
     [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_xueya", @"血压") forSegmentAtIndex:4];
     [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_xintiao", @"心跳") forSegmentAtIndex:5];

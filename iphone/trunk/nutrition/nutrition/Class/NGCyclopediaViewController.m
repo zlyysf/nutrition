@@ -196,7 +196,7 @@
             [cell.headerLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.headerLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
-            cell.headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"baike_yingyang", @"营养")];
+            cell.headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"mainpage_menuitem_yingyang", @"营养")];
             float startY = 50;
             int floor = 1;
             int perRowCount = 4;
@@ -329,7 +329,7 @@
             [cell.headerLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.headerLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
-            cell.headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"baike_shiwu", @"食物")];
+            cell.headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"foodsearch_viewtitle", @"食物")];
             float startY = 50;
             int floor = 1;
             int perRowCount = 3;
