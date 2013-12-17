@@ -34,6 +34,7 @@ public class V3SettingFragment extends Fragment {
             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.v3_fragment_setting, container,
                 false);
+        saveButton = (Button) view.findViewById(R.id.rightButton);
         birthdayTextView = (EditText) view.findViewById(R.id.birthdayTextView);
         heightTextView = (EditText) view.findViewById(R.id.heightTextView);
         weightTextView = (EditText) view.findViewById(R.id.weightTextView);
@@ -50,7 +51,6 @@ public class V3SettingFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        saveButton = ((V3ActivityHome) getActivity()).rightButton;
         saveButton.setOnClickListener(new OnClickListener() {
 
             @Override

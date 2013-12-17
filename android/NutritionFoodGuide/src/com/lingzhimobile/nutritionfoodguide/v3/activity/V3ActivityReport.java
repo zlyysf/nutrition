@@ -58,10 +58,6 @@ public class V3ActivityReport extends V3BaseActivity {
         
         da = DataAccess.getSingleton(V3ActivityReport.this);
         
-        leftButton.setText("健康记录");
-        title.setText("健康报告");
-        rightButton.setVisibility(View.GONE);
-
         // get data from intent
         Intent intent = getIntent();
         heartRate = intent.getIntExtra(Constants.Key_HeartRate, 101);

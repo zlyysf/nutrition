@@ -3,10 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <include
-        android:id="@+id/titleLayout"
-        layout="@layout/v3_header_layout" />
-
     <com.lingzhimobile.nutritionfoodguide.v3.view.V3NoScrollViewPager
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"

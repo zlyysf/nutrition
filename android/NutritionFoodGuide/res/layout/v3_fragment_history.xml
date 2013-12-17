@@ -7,7 +7,7 @@
     <include
         android:id="@+id/titleLayout"
         layout="@layout/v3_header_layout" />
-    <com.lingzhimobile.nutritionfoodguide.v3.view.V3NoScrollViewPager
+    <com.lingzhimobile.nutritionfoodguide.v3.view.V3NoScrollViewPager
         android:id="@+id/historyViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
