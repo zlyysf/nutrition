@@ -34,7 +34,7 @@ public class Tool {
 	static final String LogTag = "Tool";
 	
 	public interface JustCallback{
-		void cbFun();
+		void cbFun(boolean succeeded);
 	}
 	
 	public static int copyRawFileToSDCardFile(Context mCtx, int rawFileResId, String sdCardFilePath)

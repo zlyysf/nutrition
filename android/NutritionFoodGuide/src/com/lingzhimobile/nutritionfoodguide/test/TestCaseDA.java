@@ -445,14 +445,14 @@ public class TestCaseDA {
 					ToolParse.syncRemoteDataToLocal(cCtx, new JustCallback(){
 
 						@Override
-						public void cbFun() {
+						public void cbFun(boolean succeeded) {
 							DataAccess da = DataAccess.getSingleton(cCtx);
 							da.getUserRecordSymptomRawRowsByRange_withStartDayLocal(0,0,0,0);
 							
 							ToolParse.syncRemoteDataToLocal(cCtx, new JustCallback(){
 
 								@Override
-								public void cbFun() {
+								public void cbFun(boolean succeeded) {
 									DataAccess da = DataAccess.getSingleton(cCtx);
 									da.getUserRecordSymptomRawRowsByRange_withStartDayLocal(0,0,0,0);
 									

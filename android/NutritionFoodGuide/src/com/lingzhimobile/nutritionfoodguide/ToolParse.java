@@ -198,7 +198,7 @@ public class ToolParse {
 		final JustCallback c_myCbFun = justCallback;
 		if (StoredConfigTool.getFlagAlreadyLoadFromRemote(cCtx)){
 			if (c_myCbFun!=null)
-				c_myCbFun.cbFun();
+				c_myCbFun.cbFun(true);
 			return;
 		}
 		
@@ -208,7 +208,8 @@ public class ToolParse {
 			@Override
 			public void done(List<ParseObject> parseObjs, ParseException e) {
 				String msg=null;
-				if (e == null) {
+				boolean succeeded = (e == null);
+				if (succeeded) {
 					if (parseObjs == null || parseObjs.size()==0){
 						msg = "No data in remote.";
 					}else{
@@ -221,12 +222,14 @@ public class ToolParse {
 						}//for
 					}
 					StoredConfigTool.setFlagAlreadyLoadFromRemote(cCtx);
-					if (c_myCbFun!=null)
-						c_myCbFun.cbFun();
+					
 				} else {
 					msg = "Error: "+ e.getMessage();
 				}
 				Log.d(LogTag, "getParseRowObj msg:"+msg);
+				
+				if (c_myCbFun!=null)
+					c_myCbFun.cbFun(succeeded);
 			}//done
 		});//findInBackground
 	}
