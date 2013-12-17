@@ -153,6 +153,13 @@
 ＋）注意饮食卫生，避免肠道细菌感染
 ＋）不宜长期饮酒
 
++ Limit dairy products, if you are lactose intolerant.
++ Try low-fat foods. Fat might make worse diarrhea.
++ Limit fiber, if fiber may make diarrhea, pain and gas worse.
++ Eat small meals, five or six small meals a day.
++ Drink plenty of liquids. Water is best. Avoid alcohol and beverages that contain caffeine.
++ Quit smoking.
++ Adequate exercise can reduce stress, relieve depression and normalize bowel function.
 
 @急性肾小球肾炎
 
@@ -160,11 +167,19 @@
 ＋）适当锻炼，增加活动量
 ＋）限制饮水和钠盐摄入
 
++ Restricting salt intake to minimize fluid retention, swelling and hypertension
++ Cutting back on protein and potassium consumption
++ Maintaining a healthy weight
++ Control your blood pressure, to lessen your kidney damage from hypertension.
++ Control your blood sugar to help prevent diabetic nephropathy.
 
 @缺铁性贫血
 
 ＋）多吃富含铁的食品
 ＋）纠正偏食
+
++ Choose iron-rich foods 
++ Choose vitamin C rich foods to enhance iron absorption 
 
 
 @甲状腺功能亢进
@@ -173,10 +188,17 @@
 ＋）适当增加糖类食物
 ＋）高枕卧位，限制钠盐，可减轻眼部水肿
 
++ Apply cool compresses to your eyes.
++ Wearing sunglasses helps protect them from both sun and wind.
++ Elevate the head of your bed. Keeping your head higher than the rest of your body.
++ Get enough calcium and vitamin D. 
+
 
 @甲状腺功能减退
 
 无
+None
+
 
 @糖尿病
 
@@ -184,16 +206,31 @@
 ＋）选择富含纤维的食物
 ＋）宜在餐后进行适量运动，循序渐进，长期坚持
 
++ Eat healthy foods. Choose foods low in fat and calories. 
++ Focus on fruits, vegetables and whole grains.
++ Get more physical activity. Aim for 30 minutes of moderate physical activity a day.
++ Lose excess pounds. Maintain a healthy weight.
++ Wash your feet daily in lukewarm water. Check your feet every day for blisters, cuts, sores, redness or swelling.
++ Keep your blood pressure and cholesterol under control.
++ Take care of your teeth. Diabetes may leave you prone to gum infections.
+
 
 @低血糖
 
 ＋）口服糖水或含糖饮料
 ＋）进食含糖的食物
 
++ Eating frequent small meals throughout the day to help prevent your blood sugar levels from getting too low.
++ Eating candy, drinking fruit juice or taking glucose tablets to raise your blood sugar level.
+
 
 @骨关节炎
 
 ＋）适当锻炼，减轻体重
+
++ Weight loss. If you're obese, losing weight will reduce the stress on your weight-bearing joints.
++ Heat and cold. Heating pads or ice packs may help relieve arthritis pain.
++ Assistive devices. Using canes, walkers, raised toilet seats and other assistive devices can help protect your joints perform daily tasks.
 
 
 @骨质疏松
@@ -202,7 +239,12 @@
 ＋）增加富含钙，维生素D的食物
 ＋）加强户外运动，负重锻炼
 
-
++ Adequate amounts of calcium
++ Adequate amounts of vitamin D
++ Regular exercise
++ Don't smoke. Smoking increases bone loss.
++ Avoid excessive alcohol, which may decrease bone formation and calcium absorption.
++ Prevent falls. Wear low-heeled shoes with nonslip soles.
 
 
 
