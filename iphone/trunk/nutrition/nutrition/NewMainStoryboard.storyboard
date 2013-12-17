@@ -8,7 +8,7 @@
         <!--Diagnose View Controller-->
         <scene sceneID="Mkl-lz-TzA">
             <objects>
-                <viewController id="gCu-WT-jDR" customClass="NGDiagnoseViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NGDiagnoseViewController" id="gCu-WT-jDR" customClass="NGDiagnoseViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FG1-tG-sRr">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -20,7 +20,7 @@
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NGMeasurementCell" rowHeight="350" id="yxP-zX-QVf" customClass="NGMeasurementCell">
-                                        <rect key="frame" x="0.0" y="86" width="320" height="350"/>
+                                        <rect key="frame" x="0.0" y="22" width="320" height="350"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="yxP-zX-QVf" id="Wge-sE-6Ck">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="350"/>
@@ -180,7 +180,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NGNoteCell" rowHeight="350" id="LQj-Qi-VkZ" customClass="NGNoteCell">
-                                        <rect key="frame" x="0.0" y="436" width="320" height="350"/>
+                                        <rect key="frame" x="0.0" y="372" width="320" height="350"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LQj-Qi-VkZ" id="cxz-Cc-S5Y">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="350"/>
@@ -216,7 +216,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NGDiagnoseCell" rowHeight="222" id="9jV-PR-t1q" customClass="NGDiagnoseCell">
-                                        <rect key="frame" x="0.0" y="786" width="320" height="222"/>
+                                        <rect key="frame" x="0.0" y="722" width="320" height="222"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9jV-PR-t1q" id="f3d-P0-95j">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="222"/>
@@ -546,13 +546,6 @@
                         <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
                         <color key="selectedImageTintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                     </tabBar>
-                    <connections>
-                        <segue destination="l1A-5E-cwy" kind="relationship" relationship="viewControllers" id="RRq-xY-mvi"/>
-                        <segue destination="huN-N7-Zqp" kind="relationship" relationship="viewControllers" id="OcE-tG-8Mh"/>
-                        <segue destination="SJE-XH-BDc" kind="relationship" relationship="viewControllers" id="HoU-CF-9Pd"/>
-                        <segue destination="6Ki-Ri-HLF" kind="relationship" relationship="viewControllers" id="rvM-li-e7u"/>
-                        <segue destination="Db7-Oh-NMS" kind="relationship" relationship="viewControllers" id="vq6-6s-7Tw"/>
-                    </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z2j-ZF-l48" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -561,17 +554,17 @@
         <!--Record History View Controller-->
         <scene sceneID="JPX-8s-QED">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="rYM-Xc-5j6" customClass="NGRecordHistoryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NGRecordHistoryViewController" automaticallyAdjustsScrollViewInsets="NO" id="rYM-Xc-5j6" customClass="NGRecordHistoryViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="laA-Pf-MUS">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="KIr-Wa-68I">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="B1S-a7-ckZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -600,7 +593,7 @@
                                         </connections>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="U4R-Mp-7nw">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -629,7 +622,7 @@
                                         </connections>
                                     </tableView>
                                     <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" allowsSelection="NO" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="Iwb-Kw-muB">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -678,60 +671,12 @@
             </objects>
             <point key="canvasLocation" x="666" y="-207"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="z6T-AR-4go">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="l1A-5E-cwy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="clinic-50.png" id="0Tn-7t-VTw"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="Lft-h7-n8X">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <color key="textColor" red="0.023529411760000001" green="0.24313725489999999" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="gCu-WT-jDR" kind="relationship" relationship="rootViewController" id="tWg-jr-KDi"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="x9w-ex-81r" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="140" y="-862"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="Qtp-2w-VEa">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="huN-N7-Zqp" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="month_view-50.png" id="gwE-ZA-WbE"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="5gi-2R-4Ro">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <color key="textColor" red="0.023529411764705882" green="0.24313725490196078" blue="0.015686274509803921" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="rYM-Xc-5j6" kind="relationship" relationship="rootViewController" id="UKh-YZ-czr"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6se-Vx-7ba" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="140" y="-207"/>
-        </scene>
         <!--Chart View Controller-->
         <scene sceneID="7N4-63-oKb">
             <objects>
-                <viewController id="rNA-8P-kbe" customClass="NGChartViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NGChartViewController" id="rNA-8P-kbe" customClass="NGChartViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="NkG-hK-gQu">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" id="ESQ-4k-Hma">
@@ -751,7 +696,7 @@
                                 </connections>
                             </segmentedControl>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="AD6-am-FpL">
-                                <rect key="frame" x="0.0" y="29" width="320" height="426"/>
+                                <rect key="frame" x="0.0" y="29" width="320" height="539"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="rNA-8P-kbe" id="pXM-2s-iv4"/>
@@ -774,7 +719,7 @@
         <!--Cyclopedia View Controller-->
         <scene sceneID="8Na-Fy-u2a">
             <objects>
-                <viewController id="z5M-Ld-fXZ" customClass="NGCyclopediaViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NGCyclopediaViewController" id="z5M-Ld-fXZ" customClass="NGCyclopediaViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KMJ-UB-bJV">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -786,7 +731,7 @@
                                 <color key="sectionIndexTrackingBackgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NGCommonDiseaseCell" rowHeight="200" id="MEz-lS-DjN" customClass="NGCommonDiseaseCell">
-                                        <rect key="frame" x="0.0" y="86" width="320" height="200"/>
+                                        <rect key="frame" x="0.0" y="22" width="320" height="200"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MEz-lS-DjN" id="4It-BD-pcl">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
@@ -815,7 +760,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NGNutritionCell" rowHeight="110" id="xHJ-dt-RGt" customClass="NGNutritionCell">
-                                        <rect key="frame" x="0.0" y="286" width="320" height="110"/>
+                                        <rect key="frame" x="0.0" y="222" width="320" height="110"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xHJ-dt-RGt" id="QDX-Mo-5ed">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
@@ -870,7 +815,7 @@
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="NGFoodsCell" rowHeight="120" id="TTx-3B-Mpk" customClass="NGFoodsCell">
-                                        <rect key="frame" x="0.0" y="396" width="320" height="120"/>
+                                        <rect key="frame" x="0.0" y="332" width="320" height="120"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="TTx-3B-Mpk" id="Knl-25-Wet">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="120"/>
@@ -1028,11 +973,11 @@
             <objects>
                 <viewController storyboardIdentifier="NGUerInfoViewController" id="D4K-QU-mXC" customClass="NGUerInfoViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="2Md-KZ-jXt">
-                        <rect key="frame" x="0.0" y="64" width="320" height="455"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" id="bVg-Rm-vnt">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="455"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="CHS-a2-Sok">
@@ -1349,88 +1294,11 @@
             </objects>
             <point key="canvasLocation" x="1061" y="1775"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="4ix-Sc-C3R">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="SJE-XH-BDc" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="line_chart-50.png" id="weY-qo-DQf"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="DOO-O4-Q6h">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <color key="textColor" red="0.023529411760000001" green="0.24313725489999999" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="rNA-8P-kbe" kind="relationship" relationship="rootViewController" id="gZY-Xt-s5m"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="wrs-hP-BaF" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="140" y="447"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="O9o-Ip-9Cw">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="6Ki-Ri-HLF" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="physics-50.png" id="MIF-UI-Iy9"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="QZd-hT-Vkm">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <color key="textColor" red="0.023529411760000001" green="0.24313725489999999" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="z5M-Ld-fXZ" kind="relationship" relationship="rootViewController" id="zJV-hW-rCY"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="mUA-hl-Dx8" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="140" y="1097"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="rYV-3N-T6W">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Db7-Oh-NMS" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="" image="info-50.png" id="oEC-cN-4Nj"/>
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="NpU-oQ-OvP">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" red="0.80000000000000004" green="1" blue="0.80000000000000004" alpha="1" colorSpace="calibratedRGB"/>
-                        <textAttributes key="titleTextAttributes">
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="25"/>
-                            <color key="textColor" red="0.023529411760000001" green="0.24313725489999999" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
-                        </textAttributes>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="D4K-QU-mXC" kind="relationship" relationship="rootViewController" id="90o-iv-gaT"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="eaS-N7-boH" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="140" y="1775"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="clinic-50.png" width="25" height="25"/>
         <image name="gray_horizon_line.png" width="1" height="1"/>
         <image name="gray_vertical_line.png" width="1" height="1"/>
-        <image name="info-50.png" width="25" height="25"/>
         <image name="item_detail_arrow.png" width="50" height="50"/>
-        <image name="line_chart-50.png" width="25" height="25"/>
-        <image name="month_view-50.png" width="25" height="25"/>
-        <image name="physics-50.png" width="25" height="25"/>
         <image name="体温计.png" width="58" height="58"/>
         <image name="体重.png" width="58" height="58"/>
         <image name="心跳.png" width="58" height="58"/>

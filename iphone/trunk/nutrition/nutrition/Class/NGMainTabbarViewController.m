@@ -8,7 +8,12 @@
 
 #import "NGMainTabbarViewController.h"
 #import "LZUtility.h"
+#import "NGDiagnoseViewController.h"
+#import "NGRecordHistoryViewController.h"
+#import "NGChartViewController.h"
+#import "NGCyclopediaViewController.h"
 #import "NGUerInfoViewController.h"
+
 @interface NGMainTabbarViewController ()
 
 @end
@@ -27,6 +32,36 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGDiagnoseViewController"];
+    UINavigationController *nav = [[ UINavigationController alloc] initWithRootViewController:diagnoseViewController];
+    UITabBarItem *diagnoseItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"jiankangjilu_title", @"健康记录") image:[UIImage imageNamed:@"clinic-50.png"] tag:0];
+    nav.tabBarItem = diagnoseItem;
+    
+    NGRecordHistoryViewController *recordHistoryViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGRecordHistoryViewController"];
+    UINavigationController *nav1 = [[ UINavigationController alloc] initWithRootViewController:recordHistoryViewController];
+    UITabBarItem *recordItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"lishi_title", @"历史") image:[UIImage imageNamed:@"month_view-50.png"] tag:1];
+    nav1.tabBarItem = recordItem;
+    
+    NGChartViewController *chartViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGChartViewController"];
+    UINavigationController *nav2 = [[ UINavigationController alloc] initWithRootViewController:chartViewController];
+    UITabBarItem *chartItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"tubiao_title", @"历史") image:[UIImage imageNamed:@"line_chart-50.png"] tag:2];
+    nav2.tabBarItem = chartItem;
+    
+    NGCyclopediaViewController *cyclopediaViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGCyclopediaViewController"];
+    UINavigationController *nav3 = [[ UINavigationController alloc] initWithRootViewController:cyclopediaViewController];
+    UITabBarItem *recentItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"baike_title", @"百科") image:[UIImage imageNamed:@"physics-50.png"] tag:3];
+    nav3.tabBarItem = recentItem;
+    
+    NGUerInfoViewController *uerInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGUerInfoViewController"];
+    UINavigationController *nav4 = [[ UINavigationController alloc] initWithRootViewController:uerInfoViewController];
+    UITabBarItem *infoItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"xinxi_title", @"信息") image:[UIImage imageNamed:@"info-50.png"] tag:4];
+    nav4.tabBarItem = infoItem;
+    
+    
+    NSMutableArray *controllers = [NSMutableArray arrayWithObjects: nav,nav1,nav2,nav3,nav4,nil];
+    self.viewControllers = controllers;
+
 	// Do any additional setup after loading the view.
 }
 -(void)viewDidAppear:(BOOL)animated

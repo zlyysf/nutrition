@@ -51,6 +51,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
     self.title = NSLocalizedString(@"baike_title", @"百科");
     if ([LZUtility isCurrentLanguageChinese])
     {
