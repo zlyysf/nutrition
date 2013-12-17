@@ -37,15 +37,15 @@ public class TestCaseDA {
 //		test_getIllnessSuggestionsDistinct1(ctx);
 //		test_JsonTool();
 //		test_dalUserRecordSymptom1(ctx);
+		test_genData_UserRecordSymptom1(ctx);
 //		test_getIllness2(ctx);
-		test_syncRemoteDataInParse(ctx);
+//		test_syncRemoteDataInParse(ctx);
 	}
 	
 	static void test1(Context ctx){
 		DataAccess da = DataAccess.getSingleton(ctx);
 		da.getDRIbyGender(Constants.Gender_female	, 30);
 	}
-	
 	
 	static HashMap<String, Object> getUserInfo()
 	{
@@ -328,7 +328,282 @@ public class TestCaseDA {
 //	    da.getUserRecordSymptom_DistinctMonth();
 
 	}
-	
+	static void test_genData_UserRecordSymptom1(Context ctx)
+	{
+		DataAccess da = DataAccess.getSingleton(ctx);
+		
+		if (true){
+			int dayLocal = 20120304;
+		    Date updateTime = new Date();
+		    HashMap<String, Object> InputNameValuePairsData;
+		    HashMap<String, Object> CalculateNameValuePairsData;
+		    HashMap<String, Object> RecommendFoodAndAmounts;
+		    HashMap<String, Object> LackNutrientsAndFoods, InferIllnessesAndSuggestions;
+		    
+		    String note = "note"+dayLocal;
+		    
+		    Object[] Symptoms = new Object[]{"头晕","易流泪"};
+		    InputNameValuePairsData = new HashMap<String, Object>();
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
+		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
+
+		    CalculateNameValuePairsData = new HashMap<String, Object>();
+		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.4));
+		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(87.5));
+
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("12036", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("01005", Integer.valueOf(150));
+
+		    LackNutrientsAndFoods = new HashMap<String, Object>();
+		    LackNutrientsAndFoods.put("Vit_A_RAE", RecommendFoodAndAmounts);
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("20109", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("11224", Integer.valueOf(150));
+		    LackNutrientsAndFoods.put("Calcium_(mg)", RecommendFoodAndAmounts);
+		    CalculateNameValuePairsData.put(Constants.Key_LackNutrientsAndFoods, LackNutrientsAndFoods);
+		    
+		    InferIllnessesAndSuggestions = new HashMap<String, Object>();
+		    InferIllnessesAndSuggestions.put("中度高血压", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
+		    InferIllnessesAndSuggestions.put("低血糖", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
+		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    
+		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
+		    
+		    da.insertUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,note,CalculateNameValuePairsData);
+		}
+		
+		if (true){
+			int dayLocal = 20120305;
+		    Date updateTime = new Date();
+		    HashMap<String, Object> InputNameValuePairsData;
+		    HashMap<String, Object> CalculateNameValuePairsData;
+		    HashMap<String, Object> RecommendFoodAndAmounts;
+		    HashMap<String, Object> LackNutrientsAndFoods, InferIllnessesAndSuggestions;
+		    
+		    String note = "note"+dayLocal;
+		    
+		    Object[] Symptoms = new Object[]{"头发干枯","耳鸣"};
+		    InputNameValuePairsData = new HashMap<String, Object>();
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(37.7));
+		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(68.8));
+		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(71));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(85));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(145));
+
+		    CalculateNameValuePairsData = new HashMap<String, Object>();
+		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(24.4));
+		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(80.5));
+
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("12036", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("01005", Integer.valueOf(150));
+
+		    LackNutrientsAndFoods = new HashMap<String, Object>();
+		    LackNutrientsAndFoods.put("Vit_C_(mg)", RecommendFoodAndAmounts);
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("20109", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("11224", Integer.valueOf(150));
+		    LackNutrientsAndFoods.put("Iron_(mg)", RecommendFoodAndAmounts);
+		    CalculateNameValuePairsData.put(Constants.Key_LackNutrientsAndFoods, LackNutrientsAndFoods);
+		    
+		    InferIllnessesAndSuggestions = new HashMap<String, Object>();
+		    InferIllnessesAndSuggestions.put("功能性消化不良", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
+		    InferIllnessesAndSuggestions.put("急性扁桃体炎", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
+		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    
+		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
+		    
+		    da.insertUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,note,CalculateNameValuePairsData);
+		}
+		
+		if (true){
+			int dayLocal = 20120306;
+		    Date updateTime = new Date();
+		    HashMap<String, Object> InputNameValuePairsData;
+		    HashMap<String, Object> CalculateNameValuePairsData;
+		    HashMap<String, Object> RecommendFoodAndAmounts;
+		    HashMap<String, Object> LackNutrientsAndFoods, InferIllnessesAndSuggestions;
+		    
+		    String note = "note"+dayLocal;
+		    
+		    Object[] Symptoms = new Object[]{"脸色苍白","视觉模糊"};
+		    InputNameValuePairsData = new HashMap<String, Object>();
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(37.1));
+		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(65.8));
+		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(75));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(95));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(155));
+
+		    CalculateNameValuePairsData = new HashMap<String, Object>();
+		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(24.1));
+		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(83.5));
+
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("12036", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("01005", Integer.valueOf(150));
+
+		    LackNutrientsAndFoods = new HashMap<String, Object>();
+		    LackNutrientsAndFoods.put("Vit_C_(mg)", RecommendFoodAndAmounts);
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("20109", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("11224", Integer.valueOf(150));
+		    LackNutrientsAndFoods.put("Iron_(mg)", RecommendFoodAndAmounts);
+		    CalculateNameValuePairsData.put(Constants.Key_LackNutrientsAndFoods, LackNutrientsAndFoods);
+		    
+		    InferIllnessesAndSuggestions = new HashMap<String, Object>();
+		    InferIllnessesAndSuggestions.put("急性病毒性咽炎", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
+		    InferIllnessesAndSuggestions.put("急性病毒性喉炎", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
+		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    
+		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
+		    
+		    da.insertUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,note,CalculateNameValuePairsData);
+		}
+		
+		if (true){
+			int dayLocal = 20120210;
+		    Date updateTime = new Date();
+		    HashMap<String, Object> InputNameValuePairsData;
+		    HashMap<String, Object> CalculateNameValuePairsData;
+		    HashMap<String, Object> RecommendFoodAndAmounts;
+		    HashMap<String, Object> LackNutrientsAndFoods, InferIllnessesAndSuggestions;
+		    
+		    String note = "note"+dayLocal;
+		    
+		    Object[] Symptoms = new Object[]{"脸下垂","易疲劳"};
+		    InputNameValuePairsData = new HashMap<String, Object>();
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.1));
+		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(69.8));
+		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(70));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(75));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(135));
+
+		    CalculateNameValuePairsData = new HashMap<String, Object>();
+		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.1));
+		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(84.5));
+
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("12036", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("01005", Integer.valueOf(150));
+
+		    LackNutrientsAndFoods = new HashMap<String, Object>();
+		    LackNutrientsAndFoods.put("Vit_C_(mg)", RecommendFoodAndAmounts);
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("20109", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("11224", Integer.valueOf(150));
+		    LackNutrientsAndFoods.put("Iron_(mg)", RecommendFoodAndAmounts);
+		    CalculateNameValuePairsData.put(Constants.Key_LackNutrientsAndFoods, LackNutrientsAndFoods);
+		    
+		    InferIllnessesAndSuggestions = new HashMap<String, Object>();
+		    InferIllnessesAndSuggestions.put("急性肾小球肾炎", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
+		    InferIllnessesAndSuggestions.put("急性胃炎", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
+		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    
+		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
+		    
+		    da.insertUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,note,CalculateNameValuePairsData);
+		}
+		
+		if (true){
+			int dayLocal = 20120211;
+		    Date updateTime = new Date();
+		    HashMap<String, Object> InputNameValuePairsData;
+		    HashMap<String, Object> CalculateNameValuePairsData;
+		    HashMap<String, Object> RecommendFoodAndAmounts;
+		    HashMap<String, Object> LackNutrientsAndFoods, InferIllnessesAndSuggestions;
+		    
+		    String note = "note"+dayLocal;
+		    
+		    Object[] Symptoms = new Object[]{"脸抽搐","浑浊"};
+		    InputNameValuePairsData = new HashMap<String, Object>();
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.6));
+		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(66.8));
+		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(73));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(78));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(138));
+
+		    CalculateNameValuePairsData = new HashMap<String, Object>();
+		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.6));
+		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(86.5));
+
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("12036", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("01005", Integer.valueOf(150));
+
+		    LackNutrientsAndFoods = new HashMap<String, Object>();
+		    LackNutrientsAndFoods.put("Vit_C_(mg)", RecommendFoodAndAmounts);
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("20109", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("11224", Integer.valueOf(150));
+		    LackNutrientsAndFoods.put("Iron_(mg)", RecommendFoodAndAmounts);
+		    CalculateNameValuePairsData.put(Constants.Key_LackNutrientsAndFoods, LackNutrientsAndFoods);
+		    
+		    InferIllnessesAndSuggestions = new HashMap<String, Object>();
+		    InferIllnessesAndSuggestions.put("感冒", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
+		    InferIllnessesAndSuggestions.put("慢性支气管炎", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
+		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    
+		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
+		    
+		    da.insertUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,note,CalculateNameValuePairsData);
+		}
+		
+		if (true){
+			int dayLocal = 20111220;
+		    Date updateTime = new Date();
+		    HashMap<String, Object> InputNameValuePairsData;
+		    HashMap<String, Object> CalculateNameValuePairsData;
+		    HashMap<String, Object> RecommendFoodAndAmounts;
+		    HashMap<String, Object> LackNutrientsAndFoods, InferIllnessesAndSuggestions;
+		    
+		    String note = "note"+dayLocal;
+		    
+		    Object[] Symptoms = new Object[]{"老年斑","发红发痒"};
+		    InputNameValuePairsData = new HashMap<String, Object>();
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.6));
+		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(66.8));
+		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(73));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(78));
+		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(138));
+
+		    CalculateNameValuePairsData = new HashMap<String, Object>();
+		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.6));
+		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(86.5));
+
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("12036", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("01005", Integer.valueOf(150));
+
+		    LackNutrientsAndFoods = new HashMap<String, Object>();
+		    LackNutrientsAndFoods.put("Vit_C_(mg)", RecommendFoodAndAmounts);
+		    RecommendFoodAndAmounts = new HashMap<String, Object>();
+		    RecommendFoodAndAmounts.put("20109", Integer.valueOf(100));
+		    RecommendFoodAndAmounts.put("11224", Integer.valueOf(150));
+		    LackNutrientsAndFoods.put("Iron_(mg)", RecommendFoodAndAmounts);
+		    CalculateNameValuePairsData.put(Constants.Key_LackNutrientsAndFoods, LackNutrientsAndFoods);
+		    
+		    InferIllnessesAndSuggestions = new HashMap<String, Object>();
+		    InferIllnessesAndSuggestions.put("慢性胃炎", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
+		    InferIllnessesAndSuggestions.put("支气管哮喘", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
+		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    
+		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
+		    
+		    da.insertUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,note,CalculateNameValuePairsData);
+		}
+	    
+		da.getUserRecordSymptomDataByRange_withStartDayLocal(0,0,0,0);
+	}
 	static void test_getIllness2(Context ctx)
 	{
 	    
