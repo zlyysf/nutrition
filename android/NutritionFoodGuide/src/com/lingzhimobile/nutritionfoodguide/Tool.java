@@ -1343,7 +1343,7 @@ public class Tool {
 	    if (symptomSet.contains("弥漫性骨痛")
 	        || (existAtLeastN_withToBeCheckedCollection(symptomIds,guZhiShuSong_SymptomSetFull1in2,1)
 	            && symptomSet.contains("腰背疼痛")) ){
-	        inferIllnessAry.add("骨质疏松症");
+	        inferIllnessAry.add("骨质疏松");
 	    }
 	    
 	    return inferIllnessAry;

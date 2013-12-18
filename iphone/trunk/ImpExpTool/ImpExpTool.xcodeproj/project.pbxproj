@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		0818C9BF18433C0B003DB33A /* DiseaseInference.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0818C9BE18433C0B003DB33A /* DiseaseInference.txt */; };
-		0818C9C41845C0D9003DB33A /* DiseaseTreatment.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0818C9C31845C0D9003DB33A /* DiseaseTreatment.txt */; };
 		0818C9FF184745AD003DB33A /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0818C9F9184745AD003DB33A /* CJSONDeserializer.m */; };
 		0818CA00184745AD003DB33A /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0818C9FB184745AD003DB33A /* CJSONSerializer.m */; };
 		0818CA01184745AD003DB33A /* NSDictionary_JSONExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0818C9FE184745AD003DB33A /* NSDictionary_JSONExtensions.m */; };
@@ -54,6 +53,7 @@
 		0882419A17530AC500E71E6E /* Food_common.xls in Resources */ = {isa = PBXBuildFile; fileRef = 0882419917530AC500E71E6E /* Food_common.xls */; };
 		088821C617B132FB0054FABD /* benefits_nutrition_mapping.xls in Resources */ = {isa = PBXBuildFile; fileRef = 088821C517B132FB0054FABD /* benefits_nutrition_mapping.xls */; };
 		088B768A17C4C44200206959 /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768917C4C44200206959 /* LZDataAccessUtil.m */; };
+		08CAE9A318618E8200158038 /* LZKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CAE9A218618E8200158038 /* LZKeychainManager.m */; };
 		08CDEAD117A652DD00AFA47E /* foodDealed in Resources */ = {isa = PBXBuildFile; fileRef = 08CDEAD017A652DD00AFA47E /* foodDealed */; };
 		08CDEAD417A6865E00AFA47E /* CustomRichFood.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */; };
 		08D0479C1856EB7C007AAB2E /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08D0479B1856EB7C007AAB2E /* Parse.framework */; };
@@ -70,7 +70,6 @@
 		08ED42CF17D48BAD00917C78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 08ED42CD17D48BAD00917C78 /* MBProgressHUD.m */; };
 		08ED42D017D48BAD00917C78 /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 08ED42CE17D48BAD00917C78 /* README.mdown */; };
 		08F23C4A1856C66A005AE1B8 /* SymptomTranslate.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08F23C491856C66A005AE1B8 /* SymptomTranslate.xls */; };
-		08F23C511856EAED005AE1B8 /* SSKeychain.m in Sources */ = {isa = PBXBuildFile; fileRef = 08F23C501856EAED005AE1B8 /* SSKeychain.m */; };
 		08F78D84183C9DFD000DC96B /* SymptomSummary.xls in Resources */ = {isa = PBXBuildFile; fileRef = 08F78D83183C9DFD000DC96B /* SymptomSummary.xls */; };
 /* End PBXBuildFile section */
 
@@ -93,7 +92,6 @@
 
 /* Begin PBXFileReference section */
 		0818C9BE18433C0B003DB33A /* DiseaseInference.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DiseaseInference.txt; path = ../../../data/DiseaseInference.txt; sourceTree = "<group>"; };
-		0818C9C31845C0D9003DB33A /* DiseaseTreatment.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = DiseaseTreatment.txt; path = ../../../data/DiseaseTreatment.txt; sourceTree = "<group>"; };
 		0818C9F8184745AD003DB33A /* CJSONDeserializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONDeserializer.h; sourceTree = "<group>"; };
 		0818C9F9184745AD003DB33A /* CJSONDeserializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CJSONDeserializer.m; sourceTree = "<group>"; };
 		0818C9FA184745AD003DB33A /* CJSONSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CJSONSerializer.h; sourceTree = "<group>"; };
@@ -161,6 +159,8 @@
 		088821C517B132FB0054FABD /* benefits_nutrition_mapping.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = benefits_nutrition_mapping.xls; path = ../../../data/benefits_nutrition_mapping.xls; sourceTree = "<group>"; };
 		088B768817C4C44200206959 /* LZDataAccessUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZDataAccessUtil.h; sourceTree = "<group>"; };
 		088B768917C4C44200206959 /* LZDataAccessUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZDataAccessUtil.m; sourceTree = "<group>"; };
+		08CAE9A118618E8200158038 /* LZKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZKeychainManager.h; path = ../nutrition/nutrition/Class/LZKeychainManager.h; sourceTree = "<group>"; };
+		08CAE9A218618E8200158038 /* LZKeychainManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZKeychainManager.m; path = ../nutrition/nutrition/Class/LZKeychainManager.m; sourceTree = "<group>"; };
 		08CDEAD017A652DD00AFA47E /* foodDealed */ = {isa = PBXFileReference; lastKnownFileType = folder; name = foodDealed; path = ../../../ui/pictures/foodDealed; sourceTree = "<group>"; };
 		08CDEAD317A6865E00AFA47E /* CustomRichFood.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = CustomRichFood.xls; path = ../../../data/CustomRichFood.xls; sourceTree = "<group>"; };
 		08D0479B1856EB7C007AAB2E /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = ../nutrition/nutrition/Parse.framework; sourceTree = "<group>"; };
@@ -178,8 +178,6 @@
 		08ED42CD17D48BAD00917C78 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		08ED42CE17D48BAD00917C78 /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.mdown; sourceTree = "<group>"; };
 		08F23C491856C66A005AE1B8 /* SymptomTranslate.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = SymptomTranslate.xls; path = ../../../data/SymptomTranslate.xls; sourceTree = "<group>"; };
-		08F23C4F1856EAED005AE1B8 /* SSKeychain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SSKeychain.h; sourceTree = "<group>"; };
-		08F23C501856EAED005AE1B8 /* SSKeychain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SSKeychain.m; sourceTree = "<group>"; };
 		08F78D83183C9DFD000DC96B /* SymptomSummary.xls */ = {isa = PBXFileReference; lastKnownFileType = file; name = SymptomSummary.xls; path = ../../../data/SymptomSummary.xls; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -341,6 +339,8 @@
 		088240CB1740A1CA00E71E6E /* externalRef */ = {
 			isa = PBXGroup;
 			children = (
+				08CAE9A118618E8200158038 /* LZKeychainManager.h */,
+				08CAE9A218618E8200158038 /* LZKeychainManager.m */,
 				08D0479E1856EBDE007AAB2E /* FBMissingSymbols.m */,
 				08F23C4E1856EAED005AE1B8 /* sskeychain */,
 				08ED42CB17D48BAD00917C78 /* MBProgressHUD */,
@@ -382,7 +382,6 @@
 			isa = PBXGroup;
 			children = (
 				08F23C491856C66A005AE1B8 /* SymptomTranslate.xls */,
-				0818C9C31845C0D9003DB33A /* DiseaseTreatment.txt */,
 				0818C9BE18433C0B003DB33A /* DiseaseInference.txt */,
 				08F78D83183C9DFD000DC96B /* SymptomSummary.xls */,
 				08559A9F180E3EEC00571FDD /* SomeItemCnEn.xls */,
@@ -415,8 +414,6 @@
 		08F23C4E1856EAED005AE1B8 /* sskeychain */ = {
 			isa = PBXGroup;
 			children = (
-				08F23C4F1856EAED005AE1B8 /* SSKeychain.h */,
-				08F23C501856EAED005AE1B8 /* SSKeychain.m */,
 			);
 			name = sskeychain;
 			path = ../nutrition/nutrition/sskeychain;
@@ -502,7 +499,6 @@
 				088240DD1740A88700E71E6E /* ABBREV.xls in Resources */,
 				088240E11740A88700E71E6E /* customUSDAdataV2.xls in Resources */,
 				0882411C1740E08300E71E6E /* USDAFullDataInSqlite.dat in Resources */,
-				0818C9C41845C0D9003DB33A /* DiseaseTreatment.txt in Resources */,
 				0882411F17410E6300E71E6E /* Female_DRI.xls in Resources */,
 				0882412017410E6300E71E6E /* Male_DRI.xls in Resources */,
 				0882412717422E7C00E71E6E /* Food.xls in Resources */,
@@ -531,7 +527,6 @@
 				0818CA01184745AD003DB33A /* NSDictionary_JSONExtensions.m in Sources */,
 				0882412217411C9A00E71E6E /* LZConstants.h in Sources */,
 				08D0479F1856EBDE007AAB2E /* FBMissingSymbols.m in Sources */,
-				08F23C511856EAED005AE1B8 /* SSKeychain.m in Sources */,
 				0882408D1740924300E71E6E /* main.m in Sources */,
 				088240911740924300E71E6E /* LZAppDelegate.m in Sources */,
 				0882409A1740924300E71E6E /* LZViewController.m in Sources */,
@@ -548,6 +543,7 @@
 				088241251741E3CD00E71E6E /* LZFacade.m in Sources */,
 				0853BDD717957DD300B05122 /* LZRecommendFood.m in Sources */,
 				0818CA00184745AD003DB33A /* CJSONSerializer.m in Sources */,
+				08CAE9A318618E8200158038 /* LZKeychainManager.m in Sources */,
 				088B768A17C4C44200206959 /* LZDataAccessUtil.m in Sources */,
 				08ED42CF17D48BAD00917C78 /* MBProgressHUD.m in Sources */,
 			);

@@ -54,7 +54,7 @@
     [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
     [workRe checkIllnessInferenceTxtdoc];
     
-    [workRe convertExcelToSqlite_IllnessSuggestionTxtdoc];
+////    [workRe convertExcelToSqlite_IllnessSuggestionTxtdoc];
     
 //    [workRe readSymptomTranslateData];
     
@@ -216,7 +216,7 @@
     [workRe convertExcelToSqlite_TranslationItem];
     
     [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
-    [workRe convertExcelToSqlite_IllnessSuggestionTxtdoc];
+////    [workRe convertExcelToSqlite_IllnessSuggestionTxtdoc];
     
     [db generateTableAndData_Food_Supply_DRI_Common_withIfNeedClearTable:true];
     [db generateTableAndData_Food_Supply_DRI_Amount_withIfNeedClearTable:true];

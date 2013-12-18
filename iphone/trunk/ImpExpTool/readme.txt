@@ -100,9 +100,9 @@ CREATE TABLE SymptomType(SymptomTypeId TEXT PRIMARY KEY, DisplayOrder INTEGER, S
 CREATE TABLE Symptom(SymptomTypeId TEXT, SymptomId TEXT, DisplayOrder INTEGER, SymptomNameCn TEXT, SymptomNameEn TEXT, HealthMark REAL, PRIMARY KEY(SymptomId) );
 CREATE TABLE SymptomNutrient(SymptomTypeId TEXT, SymptomId TEXT, NutrientID TEXT);
 CREATE TABLE SymptomPossibleIllness(SymptomTypeId TEXT, SymptomId TEXT, IllnessId TEXT);
-CREATE TABLE Illness(IllnessId TEXT PRIMARY KEY, IllnessNameCn TEXT, IllnessNameEn TEXT, UrlCn TEXT, UrlEn TEXT);
+CREATE TABLE Illness(IllnessId TEXT PRIMARY KEY, DisplayOrder INTEGER, IllnessNameCn TEXT, IllnessNameEn TEXT, UrlCn TEXT, UrlEn TEXT);
 
-CREATE TABLE IllnessToSuggestion(IllnessId TEXT, SuggestionId TEXT);
+CREATE TABLE IllnessToSuggestion(IllnessId TEXT, SuggestionId TEXT, DisplayOrder INTEGER);
 CREATE TABLE IllnessSuggestion(SuggestionId TEXT, SuggestionCn TEXT, SuggestionEn TEXT);
 
 CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, inputNameValuePairs TEXT, Note TEXT, calculateNameValuePairs TEXT);

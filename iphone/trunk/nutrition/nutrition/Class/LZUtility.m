@@ -1110,7 +1110,7 @@
     if ([symptomSet containsObject:@"弥漫性骨痛"]
         || ([self existAtLeastN_withToBeCheckedCollection:symptomIds andFullCollection:guZhiShuSong_SymptomSetFull1in2 andAtLeastN:1]
             && [symptomSet containsObject:@"腰背疼痛"]) ){
-        [inferIllnessAry addObject:@"骨质疏松症"];
+        [inferIllnessAry addObject:@"骨质疏松"];
     }
     
     return inferIllnessAry;

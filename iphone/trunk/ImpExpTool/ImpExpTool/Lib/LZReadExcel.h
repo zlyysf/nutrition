@@ -60,7 +60,7 @@
 -(void)convertExcelToSqlite_SimptomNutrientIllnessSummarySheet;
 
 -(void)checkIllnessInferenceTxtdoc;
--(void)convertExcelToSqlite_IllnessSuggestionTxtdoc;
+//-(void)convertExcelToSqlite_IllnessSuggestionTxtdoc;
 
 
 -(NSDictionary *)readSymptomTranslateData;
