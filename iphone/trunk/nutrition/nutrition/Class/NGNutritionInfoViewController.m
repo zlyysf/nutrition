@@ -20,7 +20,7 @@
 @end
 
 @implementation NGNutritionInfoViewController
-@synthesize nutrientDict,foodArray,switchViewControl;
+@synthesize nutrientDict,foodArray,switchViewControl,requestUrl;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -64,7 +64,7 @@
         
         //HUD.labelText = @"智能推荐中...";
 
-        NSURL *url = [NSURL URLWithString:@"http://www.baidu.com"];
+        NSURL *url = [NSURL URLWithString:requestUrl];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.contentWebView loadRequest:request];
         

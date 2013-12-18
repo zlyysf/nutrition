@@ -144,7 +144,6 @@
             for (int i =0 ; i< [self.commonDiseaseArray count]; i++)
             {
                 NSDictionary *illnessDict = [self.commonDiseaseArray objectAtIndex:i];
-                NSString *illnessId = [illnessDict objectForKey:@"IllnessId"];
                 NSString *illnessName;
                 if (isChinese) {
                     illnessName =[illnessDict objectForKey:@"IllnessNameCn"];
@@ -155,7 +154,7 @@
                 }
                 LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, 34+i*(DiseaseItemLabelHeight+DiseaseItemMargin), 300, DiseaseItemLabelHeight+DiseaseItemMargin)];
                 [cell.backView addSubview:illnessButton];
-                illnessButton.customData = illnessId;
+                illnessButton.customData = [NSNumber numberWithInt:i];
                 [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                 [illnessButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
 //                [illnessButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
@@ -379,22 +378,27 @@
     NSDictionary *dict = [nm getNutritionInfo:nutritionId];
     NSString *captionKey;
 //    NSString *descriptionKey;
-    if ([LZUtility isCurrentLanguageChinese])
+    NSString *urlKey;
+    //    NSString *descriptionKey;
+    if (isChinese)
     {
         captionKey = @"NutrientCnCaption";
-//        descriptionKey = @"NutrientDescription";
+        urlKey = @"UrlCn";
+        //        descriptionKey = @"NutrientDescription";
     }
     else
     {
         captionKey = @"NutrientEnCaption";
-//        descriptionKey = @"NutrientDescriptionEn";
+        urlKey = @"UrlEn";
+        //        descriptionKey = @"NutrientDescriptionEn";
     }
-//    NSString *description = [dict objectForKey:descriptionKey];
+    NSString *urlString = [dict objectForKey:urlKey];//    NSString *description = [dict objectForKey:descriptionKey];
     NSString *nutritionName = [dict objectForKey:captionKey];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
     NGNutritionInfoViewController *nutritionInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGNutritionInfoViewController"];
     nutritionInfoViewController.title =nutritionName;
     nutritionInfoViewController.nutrientDict = dict;
+    nutritionInfoViewController.requestUrl = urlString;
  //   nutritionInfoViewController.nutritionDescription = description;
 //    richNutrientController.nutrientDict = dict;
 //    richNutrientController.nutrientTitle = nutritionName;
@@ -403,20 +407,26 @@
 }
 -(void)illnessButtonClicked:(LZCustomDataButton *)sender
 {
-    NSString *illnessId = (NSString *)sender.customData;
-    NSLog(@"%@",illnessId);
-    [self performSelector:@selector(pushToIllnessPage:) withObject:illnessId afterDelay:0.f];
-    
-
-    
-}
--(void)pushToIllnessPage:(NSString *)illnessId
-{
+    NSNumber *illnessIndex = (NSNumber *)sender.customData;
+    NSDictionary *illnessDict = [self.commonDiseaseArray objectAtIndex:[illnessIndex intValue]];
+    NSString *urlKey;
+    NSString *nameKey;
+    if (isChinese)
+    {
+        urlKey = @"UrlCn";
+        nameKey = @"IllnessNameCn";
+    }
+    else
+    {
+        urlKey = @"UrlEn";
+        nameKey = @"IllnessNameEn";
+    }
+    NSString *illnessUrl = [illnessDict objectForKey:urlKey];
+    NSString *illnessName = [illnessDict objectForKey:nameKey];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
     NGIllnessInfoViewController *illnessInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGIllnessInfoViewController"];
-#warning here we should pass a real url
-    illnessInfoViewController.illnessURL = @"http://www.baidu.com";
-    illnessInfoViewController.title = illnessId;
+    illnessInfoViewController.illnessURL = illnessUrl;
+    illnessInfoViewController.title = illnessName;
     [self.navigationController pushViewController:illnessInfoViewController animated:YES];
 }
 -(void)typeButtonTapped:(LZFoodTypeButton *)sender

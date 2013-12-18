@@ -15,4 +15,5 @@
 @property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong,nonatomic)NSArray*foodArray;
 @property (strong, nonatomic) IBOutlet UILabel *headerLabel;
+@property (strong,nonatomic) NSString *requestUrl;
 @end

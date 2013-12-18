@@ -32,10 +32,11 @@
 }
 @property (nonatomic,assign)BOOL isFirstLoad;
 @property (nonatomic,strong)UIImage *selectedImage;
+@property (nonatomic,strong)NSArray *illnessArray;
 @end
 
 @implementation NGHealthReportViewController
-@synthesize lackNutritionArray,potentialArray,attentionDict,isFirstLoad,isFirstSave,recommendFoodDict,dataToSave,selectedImage;
+@synthesize lackNutritionArray,potentialArray,attentionDict,isFirstLoad,isFirstSave,recommendFoodDict,dataToSave,selectedImage,illnessArray;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -58,6 +59,8 @@
     {
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
     }
+    LZDataAccess *da = [LZDataAccess singleton];
+    self.illnessArray = [da getIllness_ByIllnessIds:potentialArray];
     selectedImage = [LZUtility createImageWithColor:ItemSelectedColor imageSize:CGSizeMake(300, 54)];
     self.title = NSLocalizedString(@"jiankangbaogao_title", @"健康报告");
 	// Do any additional setup after loading the view.
@@ -240,29 +243,33 @@
 }
 -(void)nutritionButtonClicked:(LZCustomDataButton*)sender
 {
-    [sender setBackgroundColor:ItemSelectedColor];
     NSString *nutritionId = (NSString *)sender.customData;
     NSLog(@"%@",nutritionId);
     LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
     NSDictionary *dict = [nm getNutritionInfo:nutritionId];
     NSString *captionKey;
+    NSString *urlKey;
     //    NSString *descriptionKey;
-    if ([LZUtility isCurrentLanguageChinese])
+    if (isChinese)
     {
         captionKey = @"NutrientCnCaption";
+        urlKey = @"UrlCn";
         //        descriptionKey = @"NutrientDescription";
     }
     else
     {
         captionKey = @"NutrientEnCaption";
+        urlKey = @"UrlEn";
         //        descriptionKey = @"NutrientDescriptionEn";
     }
+    NSString *urlString = [dict objectForKey:urlKey];
     //    NSString *description = [dict objectForKey:descriptionKey];
     NSString *nutritionName = [dict objectForKey:captionKey];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
     NGNutritionInfoViewController *nutritionInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGNutritionInfoViewController"];
     nutritionInfoViewController.title =nutritionName;
     nutritionInfoViewController.nutrientDict = dict;
+    nutritionInfoViewController.requestUrl =urlString;
     //   nutritionInfoViewController.nutritionDescription = description;
     //    richNutrientController.nutrientDict = dict;
     //    richNutrientController.nutrientTitle = nutritionName;
@@ -271,12 +278,26 @@
 }
 -(void)illnessButtonClicked:(LZCustomDataButton*)sender
 {
-    NSString *illnessId = (NSString *)sender.customData;
-    NSLog(@"%@",illnessId);
+    NSIndexPath *illnessIndex = (NSIndexPath *)sender.customData;
+    NSDictionary *illnessDict = [self.illnessArray objectAtIndex:illnessIndex.row];
+    NSString *urlKey;
+    NSString *nameKey;
+    if (isChinese)
+    {
+        urlKey = @"UrlCn";
+        nameKey = @"IllnessNameCn";
+    }
+    else
+    {
+        urlKey = @"UrlEn";
+        nameKey = @"IllnessNameEn";
+    }
+    NSString *illnessUrl = [illnessDict objectForKey:urlKey];
+    NSString *illnessName = [illnessDict objectForKey:nameKey];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
     NGIllnessInfoViewController *illnessInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGIllnessInfoViewController"];
-    illnessInfoViewController.illnessURL = @"http://www.baidu.com";
-    illnessInfoViewController.title = illnessId;
+    illnessInfoViewController.illnessURL = illnessUrl;
+    illnessInfoViewController.title = illnessName;
     [self.navigationController pushViewController:illnessInfoViewController animated:YES];
 }
 - (void)didReceiveMemoryWarning
@@ -364,7 +385,7 @@
         cell.nutritionNameLabel.text = nutritionName;
         [cell.nutritionNameLabel setBackgroundColor:[UIColor clearColor]];
         cell.nutritionNameButton.customData = nutritionId;
-        //[cell.nutritionNameButton addTarget:self action:@selector(nutritionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.nutritionNameButton addTarget:self action:@selector(nutritionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         //[cell.nutritionNameButton addTarget:self action:@selector(setBgColorForButton:) forControlEvents:UIControlEventTouchDown];
         //[cell.nutritionNameButton addTarget:self action:@selector(clearBgColorForButton:) forControlEvents:UIControlEventTouchDragExit];
@@ -420,11 +441,21 @@
         UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(AttentionLabelStartX, 12, 172, 36)];
         [illnessNameLabel setFont:BigLabelFont];
         [illnessNameLabel setTextColor:[UIColor blackColor]];
-        [illnessNameLabel setText:illnessId];
+        NSDictionary *illnessDict = [self.illnessArray objectAtIndex:indexPath.row];
+        NSString *illnessName;
+        if (isChinese) {
+            illnessName =[illnessDict objectForKey:@"IllnessNameCn"];
+        }
+        else
+        {
+            illnessName =[illnessDict objectForKey:@"IllnessNameEn"];
+        }
+
+        [illnessNameLabel setText:illnessName];
         [illnessNameLabel setBackgroundColor:[UIColor clearColor]];
         [cell.backView addSubview:illnessNameLabel];
         LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, 0, 300, 54)];
-        illnessButton.customData =illnessId;
+        illnessButton.customData =indexPath;
         [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
         
         [illnessButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];

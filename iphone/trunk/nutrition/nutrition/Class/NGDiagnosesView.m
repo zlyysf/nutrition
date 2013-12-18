@@ -18,7 +18,7 @@
     }
     return self;
 }
--(float)displayForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray selectedColor:(UIColor *)color itemStateArray:(NSMutableArray *)stateArray
+-(float)displayForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray selectedColor:(UIColor *)color itemStateArray:(NSMutableArray *)stateArray isChinese:(BOOL)isChinese
 {
     for (UILabel *subview in [self subviews]) {
         [subview removeFromSuperview];
@@ -28,10 +28,19 @@
     float totalHeight = 0;
     CGRect previousFrame = CGRectZero;
     BOOL gotPreviousFrame = NO;
+    NSString *queryKey;
+    if (isChinese) {
+        queryKey =@"SymptomNameCn";
+    }
+    else
+    {
+        queryKey = @"SymptomNameEn";
+    }
     for (int i =0;i< [textArray count];i++)
     {
         NSDictionary *symptomDict = [textArray objectAtIndex:i];
-        NSString *text = [symptomDict objectForKey:@"SymptomNameCn"];
+        
+        NSString *text = [symptomDict objectForKey:queryKey];
         CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
         textSize.width += horizonPadding*2;
         textSize.height += verticalPadding*2;

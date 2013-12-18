@@ -11,7 +11,7 @@
 -(void)ItemState:(BOOL)state tag:(int )tag forIndexPath:(NSIndexPath*)indexPath;
 @end
 @interface NGDiagnosesView : UIView
--(float)displayForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray selectedColor:(UIColor *)color itemStateArray:(NSMutableArray *)stateArray;
+-(float)displayForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray selectedColor:(UIColor *)color itemStateArray:(NSMutableArray *)stateArray isChinese:(BOOL)isChinese;
 @property (strong,nonatomic)NSIndexPath *cellIndex;
 @property (strong,nonatomic)UIColor *selectColor;
 @property (strong,nonatomic)NSMutableArray *itemStateArray;

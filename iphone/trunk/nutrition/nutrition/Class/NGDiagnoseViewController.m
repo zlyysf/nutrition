@@ -23,11 +23,12 @@
 @property (strong,nonatomic) UITextField *currentTextField;
 @property (strong,nonatomic) UITextView *currentTextView;
 @property (strong,nonatomic) NSMutableDictionary *userInputValueDict;
+@property (strong,nonatomic) NSArray *symptomTypeRows;
 @property (assign,nonatomic)BOOL needRefresh;
 @end
 
 @implementation NGDiagnoseViewController
-@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField,userInputValueDict,userSelectedSymptom,needRefresh;
+@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField,userInputValueDict,userSelectedSymptom,needRefresh,symptomTypeRows;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -306,7 +307,6 @@
     needRefresh = NO;
     LZDataAccess *da = [LZDataAccess singleton];
     NSNumber *userSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];
-    NSArray *symptomTypeRows;
     if ([userSex intValue]==0)
     {
         symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_male];
@@ -365,9 +365,18 @@
     float totalHeight = 0;
     CGRect previousFrame = CGRectZero;
     BOOL gotPreviousFrame = NO;
+    NSString *queryKey;
+    if (isChinese) {
+        queryKey =@"SymptomNameCn";
+    }
+    else
+    {
+        queryKey = @"SymptomNameEn";
+    }
+
     for (NSDictionary *symptomDict in textArray)
     {
-        NSString *text = [symptomDict objectForKey:@"SymptomNameCn"];
+        NSString *text = [symptomDict objectForKey:queryKey];
         CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
         textSize.width += horizonPadding*2;
         textSize.height += verticalPadding*2;
@@ -537,16 +546,29 @@
     else
     {
         NGDiagnoseCell *cell = (NGDiagnoseCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGDiagnoseCell"];
-        NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
+        //NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
+        
+        NSDictionary *symptomDict = [symptomTypeRows objectAtIndex:indexPath.row];
+        NSString *symptomTypeId = [symptomDict objectForKey:COLUMN_NAME_SymptomTypeId];
         UIColor *selectColor = [LZUtility getSymptomTypeColorForId:symptomTypeId];
-        cell.nameLabel.text =[NSString stringWithFormat:@"  %@",symptomTypeId];
+        NSString *queryKey;
+        if (isChinese)
+        {
+            queryKey = @"SymptomTypeNameCn";
+        }
+        else
+        {
+            queryKey = @"SymptomTypeNameEn";
+        }
+        NSString *typeStr = [symptomDict objectForKey:queryKey];
+        cell.nameLabel.text =[NSString stringWithFormat:@"  %@",typeStr];
         cell.nameLabel.backgroundColor = selectColor;
         cell.nameLabel.layer.borderWidth = 0.5f;
         cell.nameLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
         
         NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
         NSMutableArray *itemStateArray = [self.symptomStateDict objectForKey:symptomTypeId];
-        float height = [cell.diagnosesView displayForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray selectedColor:selectColor itemStateArray:itemStateArray];
+        float height = [cell.diagnosesView displayForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray selectedColor:selectColor itemStateArray:itemStateArray isChinese:isChinese];
         cell.backView.frame =CGRectMake(10, 0, 300, height+80);
         cell.diagnosesView.frame = CGRectMake(10, 55, 280, height);
         cell.diagnosesView.cellIndex = indexPath;
@@ -578,7 +600,8 @@
     NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
     NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
     NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:tag];
-    NSString *text = [symptomDict objectForKey:@"SymptomNameCn"];
+
+    NSString *text = [symptomDict objectForKey:@"SymptomId"];
     if (state)
     {
         [self.userSelectedSymptom addObject:text];
