@@ -2200,6 +2200,20 @@
     return rows;
 }
 
+-(NSArray*)getIllness_ByIllnessIds:(NSArray*)illnessIds
+{
+    NSLog(@"getIllness_ByIllnessIds enter");
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    if (illnessIds != nil){
+        if (illnessIds.count > 0)
+            [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_IllnessId,illnessIds, nil]];
+        else
+            return nil;
+    }
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Illness andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart: nil andNeedDistinct:false];
+    NSLog(@"getIllness_ByIllnessIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    return rows;
+}
 
 /*
  dayLocal 是 8位整数,如  20120908

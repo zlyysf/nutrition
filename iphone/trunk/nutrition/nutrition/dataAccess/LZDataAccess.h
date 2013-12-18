@@ -120,6 +120,7 @@
 
 -(NSArray*)getIllnessIds;
 -(NSArray*)getAllIllness;
+-(NSArray*)getIllness_ByIllnessIds:(NSArray*)illnessIds;
 
 -(BOOL)insertUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs;
 -(BOOL)insertUserRecordSymptom_withRawData:(NSDictionary*)hmRawData;
