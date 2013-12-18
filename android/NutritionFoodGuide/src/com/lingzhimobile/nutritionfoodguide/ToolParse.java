@@ -219,6 +219,10 @@ public class ToolParse {
 							ParseObject parseObj = parseObjs.get(i);//有可能dayLocal有重复的，这里暂且不管
 							HashMap<String, Object> hmRawRow = parseParseObjectToHashMapRawRow_UserRecordSymptom(parseObj);
 							da.insertUserRecordSymptom_withRawData(hmRawRow);
+							if(i==parseObjs.size()-1){
+								Integer dayLocalObj = (Integer)hmRawRow.get(Constants.COLUMN_NAME_DayLocal);
+								StoredConfigTool.saveParseObjectInfo_CurrentUserRecordSymptom(cCtx, parseObj.getObjectId(), dayLocalObj.intValue());
+							}
 						}//for
 					}
 					StoredConfigTool.setFlagAlreadyLoadFromRemote(cCtx);
