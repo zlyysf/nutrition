@@ -108,6 +108,7 @@
 -(NSArray*)getSymptomTypeRows_withForSex:(NSString*)forSex;
 -(NSArray*)getSymptomRows_BySymptomTypeIds:(NSArray*)symptomTypeIds;
 -(NSMutableDictionary*)getSymptomRowsByTypeDict_BySymptomTypeIds:(NSArray*)symptomTypeIds;
+-(NSArray*)getSymptomRows_BySymptomIds:(NSArray*)symptomIds;
 
 -(NSArray*)getSymptomNutrientRows_BySymptomIds:(NSArray*)symptomIds;
 -(NSArray*)getSymptomNutrientDistinctIds_BySymptomIds:(NSArray*)symptomIds;
@@ -117,6 +118,7 @@
 -(NSArray*)getIllnessSuggestionDistinctIds_ByIllnessIds:(NSArray*)illnessIds;
 -(NSArray*)getIllnessSuggestions_BySuggestionIds:(NSArray*)suggestionIds;
 -(NSArray*)getIllnessSuggestionsDistinct_ByIllnessIds:(NSArray*)illnessIds;
+-(NSArray*)getIllnessSuggestions_ByIllnessId:(NSString*)illnessId;
 
 -(NSArray*)getIllnessIds;
 -(NSArray*)getAllIllness;

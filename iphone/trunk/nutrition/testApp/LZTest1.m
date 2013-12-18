@@ -37,9 +37,9 @@
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
 //    [self.class test_TranslationItem1];
 //    [self.class test_getFoodsByShowingPart];
-//    [self.class test_getSymptom1];
+    [self.class test_getSymptom1];
 //    [self.class test_inferIllnesses_withSymptoms1];
-    [self.class test_getIllnessSuggestionsDistinct1];
+//    [self.class test_getIllnessSuggestionsDistinct1];
 //    [self.class test_dalUserRecordSymptom1];
 //    [self.class test_getSingleNutrientRichFoodWithAmount_forNutrients];
 //    [self.class test_getIllness2];
@@ -2415,6 +2415,8 @@ BOOL needLimitNutrients = FALSE;
     [da getSymptomNutrientDistinctIds_BySymptomIds:symptomIds];
     
     [da getSymptomHealthMarkSum_BySymptomIds:symptomIds];
+    
+    [da getSymptomRows_BySymptomIds:symptomIds];
 }
 
 +(void)test_inferIllnesses_withSymptoms1
@@ -2437,6 +2439,8 @@ BOOL needLimitNutrients = FALSE;
     NSArray* illnessIds = [NSArray arrayWithObjects:@"感冒", @"急性病毒性咽炎", @"轻度高血压", @"骨关节炎", nil];
     LZDataAccess *da = [LZDataAccess singleton];
     [da getIllnessSuggestionsDistinct_ByIllnessIds:illnessIds];
+    
+    [da getIllnessSuggestions_ByIllnessId:@"感冒"];
     
     [da getIllness_ByIllnessIds:illnessIds];
     

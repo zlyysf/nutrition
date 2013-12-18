@@ -2088,6 +2088,22 @@
     return symptomsByTypeDict;
 }
 
+
+-(NSArray*)getSymptomRows_BySymptomIds:(NSArray*)symptomIds
+{
+    NSLog(@"getSymptomRows_BySymptomIds enter");
+    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+    if (symptomIds.count > 0){
+        [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SymptomId,symptomIds, nil]];
+    }else{
+        //take as select all
+    }
+    
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Symptom andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:COLUMN_NAME_DisplayOrder andNeedDistinct:false];
+    NSLog(@"getSymptomRows_BySymptomIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    return rows;
+}
+
 /*
  这里认为SymptomNutrient的主键是SymptomId，而不是SymptomTypeId+SymptomId。
  */
@@ -2150,7 +2166,7 @@
     if (illnessIds.count > 0)
         [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_IllnessId,illnessIds, nil]];
     
-    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_IllnessToSuggestion andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_SuggestionId, nil] andOrderByPart: nil andNeedDistinct:true];
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_IllnessToSuggestion andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_SuggestionId, nil] andOrderByPart: COLUMN_NAME_DisplayOrder andNeedDistinct:true];
     NSArray *suggestionIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SuggestionId andDictionaryArray:rows];
     NSLog(@"getIllnessSuggestionDistinctIds_ByIllnessIdIds suggestionIds=%@", [LZUtility getObjectDescription:suggestionIds andIndent:0] );
     return suggestionIds;
@@ -2182,6 +2198,18 @@
     return rows;
 }
 
+-(NSArray*)getIllnessSuggestions_ByIllnessId:(NSString*)illnessId
+{
+    NSLog(@"getIllnessSuggestions_ByIllnessId enter");
+    NSArray *suggestionIds = [self getIllnessSuggestionDistinctIds_ByIllnessIds:[NSArray arrayWithObjects:illnessId, nil]];
+    if (suggestionIds.count == 0)
+        return nil;
+    NSArray *rows = [self getIllnessSuggestions_BySuggestionIds:suggestionIds];
+    
+    NSLog(@"getIllnessSuggestions_ByIllnessId rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    return rows;
+}
+
 -(NSArray*)getIllnessIds
 {
     NSLog(@"getIllnessIds enter");
@@ -2194,7 +2222,7 @@
 -(NSArray*)getAllIllness
 {
     NSLog(@"getAllIllness enter");
-    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Illness andFieldValuePairs:nil andSelectColumns:nil andOrderByPart: nil andNeedDistinct:false];
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Illness andFieldValuePairs:nil andSelectColumns:nil andOrderByPart: COLUMN_NAME_DisplayOrder andNeedDistinct:false];
     
     NSLog(@"getAllIllness ret=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
