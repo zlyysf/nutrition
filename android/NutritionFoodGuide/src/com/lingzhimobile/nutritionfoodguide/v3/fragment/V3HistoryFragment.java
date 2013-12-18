@@ -5,25 +5,22 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.test.TestCaseDA;
+import com.lingzhimobile.nutritionfoodguide.v3.adapter.HistoryMonthAdapter;
 
 public class V3HistoryFragment extends V3BaseHeadFragment {
 
     List<Integer> monthList;
     ViewPager monthViewPager;
-    MonthAdapter monthAdapter;
+    HistoryMonthAdapter monthAdapter;
 
     ArrayList<HashMap<String, Object>> historyMap;
 
@@ -37,6 +34,8 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
         TestCaseDA.test_genData_UserRecordSymptom1(getActivity());
         da = DataAccess.getSingleton(getActivity());
         monthList = da.getUserRecordSymptom_DistinctMonth();
+        
+        TestCaseDA.test_genData_UserRecordSymptom1(getActivity());
     }
 
     @Override
@@ -46,7 +45,7 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
                 false);
         initHeaderLayout(view);
         monthViewPager = (ViewPager) view.findViewById(R.id.historyViewPager);
-        monthAdapter = new MonthAdapter(getChildFragmentManager());
+        monthAdapter = new HistoryMonthAdapter(getChildFragmentManager(), monthList);
         monthViewPager.setAdapter(monthAdapter);
 
         title.setText(monthAdapter.getPageTitle(0));
@@ -59,70 +58,6 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
         args.putInt("tab_id", tabId);
         fragment.setArguments(args);
         return fragment;
-    }
-
-    static class MonthFragment extends Fragment {
-
-        int mMonth;
-        ArrayList<HashMap<String, Object>> records;
-        DataAccess da;
-
-        public static MonthFragment newInstance(int month) {
-            MonthFragment fragment = new MonthFragment();
-            Bundle args = new Bundle();
-            args.putInt("month", month);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-
-            da = DataAccess.getSingleton(getActivity());
-            mMonth = getArguments().getInt("month");
-            records = da.getUserRecordSymptomDataByRange_withStartDayLocal(0,
-                    0, mMonth, mMonth + 1);
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
-            View view = inflater.inflate(R.layout.v3_fragment_month, container,
-                    false);
-            TextView monthTextView = (TextView) view
-                    .findViewById(R.id.monthTextView);
-            monthTextView.setText(String.valueOf(mMonth));
-            ((TextView) view.findViewById(R.id.recordTextView)).setText(records
-                    .toString());
-            return view;
-        }
-
-    }
-
-    class MonthAdapter extends FragmentPagerAdapter {
-
-        public MonthAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int arg0) {
-            int month = monthList.get(arg0);
-            return MonthFragment.newInstance(month);
-        }
-
-        @Override
-        public int getCount() {
-            return monthList.size();
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return String.valueOf(monthList.get(position));
-        }
-
-        
     }
 
     @Override
