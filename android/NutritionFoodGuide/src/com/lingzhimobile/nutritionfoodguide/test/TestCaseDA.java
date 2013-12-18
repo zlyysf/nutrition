@@ -328,7 +328,7 @@ public class TestCaseDA {
 //	    da.getUserRecordSymptom_DistinctMonth();
 
 	}
-	static void test_genData_UserRecordSymptom1(Context ctx)
+	public static void test_genData_UserRecordSymptom1(Context ctx)
 	{
 		DataAccess da = DataAccess.getSingleton(ctx);
 		

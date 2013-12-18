@@ -1,6 +1,7 @@
 package com.lingzhimobile.nutritionfoodguide.v3.fragment;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.os.Bundle;
@@ -14,7 +15,9 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.R;
+import com.lingzhimobile.nutritionfoodguide.test.TestCaseDA;
 
 public class V3HistoryFragment extends V3BaseHeadFragment {
 
@@ -22,16 +25,18 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
     ViewPager monthViewPager;
     MonthAdapter monthAdapter;
 
+    ArrayList<HashMap<String, Object>> historyMap;
+
+    DataAccess da;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle arg = getArguments();
-        monthList = new ArrayList<Integer>();
-        monthList.add(201308);
-        monthList.add(201309);
-        monthList.add(201310);
-        monthList.add(201311);
-        monthList.add(201312);
+
+        TestCaseDA.test_genData_UserRecordSymptom1(getActivity());
+        da = DataAccess.getSingleton(getActivity());
+        monthList = da.getUserRecordSymptom_DistinctMonth();
     }
 
     @Override
@@ -40,11 +45,11 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
         View view = inflater.inflate(R.layout.v3_fragment_history, container,
                 false);
         initHeaderLayout(view);
-        monthViewPager = (ViewPager) view
-                .findViewById(R.id.historyViewPager);
+        monthViewPager = (ViewPager) view.findViewById(R.id.historyViewPager);
         monthAdapter = new MonthAdapter(getChildFragmentManager());
         monthViewPager.setAdapter(monthAdapter);
 
+        title.setText(monthAdapter.getPageTitle(0));
         return view;
     }
 
@@ -59,7 +64,9 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
     static class MonthFragment extends Fragment {
 
         int mMonth;
-        
+        ArrayList<HashMap<String, Object>> records;
+        DataAccess da;
+
         public static MonthFragment newInstance(int month) {
             MonthFragment fragment = new MonthFragment();
             Bundle args = new Bundle();
@@ -68,15 +75,15 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
             return fragment;
         }
 
-        
         @Override
         public void onCreate(Bundle savedInstanceState) {
-            // TODO Auto-generated method stub
             super.onCreate(savedInstanceState);
-            
-            mMonth = getArguments().getInt("month");
-        }
 
+            da = DataAccess.getSingleton(getActivity());
+            mMonth = getArguments().getInt("month");
+            records = da.getUserRecordSymptomDataByRange_withStartDayLocal(0,
+                    0, mMonth, mMonth + 1);
+        }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -86,6 +93,8 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
             TextView monthTextView = (TextView) view
                     .findViewById(R.id.monthTextView);
             monthTextView.setText(String.valueOf(mMonth));
+            ((TextView) view.findViewById(R.id.recordTextView)).setText(records
+                    .toString());
             return view;
         }
 
@@ -108,6 +117,12 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
             return monthList.size();
         }
 
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return String.valueOf(monthList.get(position));
+        }
+
+        
     }
 
     @Override
@@ -120,8 +135,11 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
             @Override
             public void onClick(View v) {
                 int currentItemIndex = monthViewPager.getCurrentItem();
-                if (currentItemIndex > 0)
-                    monthViewPager.setCurrentItem(currentItemIndex - 1, false);
+                if (currentItemIndex > 0) {
+                    currentItemIndex --;
+                    title.setText(monthAdapter.getPageTitle(currentItemIndex));
+                    monthViewPager.setCurrentItem(currentItemIndex, false);
+                }
             }
         });
 
@@ -130,8 +148,11 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
             @Override
             public void onClick(View v) {
                 int currentItemIndex = monthViewPager.getCurrentItem();
-                if (currentItemIndex < monthAdapter.getCount())
-                    monthViewPager.setCurrentItem(currentItemIndex + 1, false);
+                if (currentItemIndex < monthAdapter.getCount()-1){
+                    currentItemIndex++;
+                    title.setText(monthAdapter.getPageTitle(currentItemIndex));
+                    monthViewPager.setCurrentItem(currentItemIndex, false);
+                }
             }
         });
 
