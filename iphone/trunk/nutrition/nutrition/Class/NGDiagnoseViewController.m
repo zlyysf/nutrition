@@ -264,6 +264,19 @@
         //没保存过
         [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
         [[NSNotificationCenter defaultCenter]postNotificationName:Notification_HistoryUpdatedKey object:nil];
+        
+        //to sync to remote parse service
+        PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+        [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+            NSMutableString *msg = [NSMutableString string];
+            if (succeeded){
+                [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
+                [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
+            }else{
+                [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
+            }
+            NSLog(@"when insertUserRecordSymptom_withDayLocal, %@",msg);
+        }];//saveInBackgroundWithBlock
     }
     else
     {

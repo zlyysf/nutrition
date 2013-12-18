@@ -1852,6 +1852,11 @@ PFObject *g_parseObjUserRecord=nil;
                     PFObject* parseObj = objects[i];
                     NSMutableDictionary *hmRawRow = [self parseParseObjectToHashMapRawRow_UserRecordSymptom:parseObj];
                     [da insertUserRecordSymptom_withRawData:hmRawRow];
+                    
+                    if (i==objects.count-1){
+                        NSNumber *nmDayLocal = [hmRawRow objectForKey:COLUMN_NAME_DayLocal];
+                        [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObj.objectId andDayLocal:[nmDayLocal intValue]];
+                    }
                 }//for
             }
             [[NSUserDefaults standardUserDefaults]setBool:YES forKey:LZSettingKey_alreadyLoadFromRemote];

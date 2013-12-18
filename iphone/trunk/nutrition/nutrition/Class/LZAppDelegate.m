@@ -124,6 +124,8 @@
     [defaultACL setPublicWriteAccess:true];
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:true];
     
+    [LZUtility syncRemoteDataToLocal_withJustCallback:nil];
+    
     return YES;
 }
 
