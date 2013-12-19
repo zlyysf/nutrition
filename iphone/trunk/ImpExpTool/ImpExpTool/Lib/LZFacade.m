@@ -54,8 +54,6 @@
     [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
 //    [workRe checkIllnessInferenceTxtdoc];
     
-    [[workRe getDBconnection] convertIllnessSuggestionToCsv:@"IllnessSuggestion1.csv"];
-    
 ////    [workRe convertExcelToSqlite_IllnessSuggestionTxtdoc];
     
 //    [workRe readSymptomTranslateData];
