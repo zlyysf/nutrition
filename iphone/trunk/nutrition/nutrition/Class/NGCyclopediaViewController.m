@@ -52,7 +52,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    self.title = NSLocalizedString(@"baike_title", @"百科");
+    self.title = NSLocalizedString(@"baike_c_title", @"页面标题：百科");
     if ([LZUtility isCurrentLanguageChinese])
     {
         isChinese = YES;
@@ -140,7 +140,7 @@
             [cell.headerLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.headerLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
-            cell.headerLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"baike_changjianjibing",@"常见疾病")];
+            cell.headerLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"baike_c_changjianjibing",@"常见疾病栏标题：常见疾病")];
             for (int i =0 ; i< [self.commonDiseaseArray count]; i++)
             {
                 NSDictionary *illnessDict = [self.commonDiseaseArray objectAtIndex:i];
@@ -196,7 +196,7 @@
             [cell.headerLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.headerLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
-            cell.headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"mainpage_menuitem_yingyang", @"营养")];
+            cell.headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"baike_c_yangyang", @"营养栏标题：营养")];
             float startY = 50;
             int floor = 1;
             int perRowCount = 4;
@@ -234,7 +234,7 @@
             float vitaminLabelY = (part1Height-20)/2+30;
             [cell.vitaminLabel setFrame:CGRectMake(10, vitaminLabelY, 60, 20)];
             
-            [cell.vitaminLabel setText:NSLocalizedString(@"baike_weishengsu", @"维生素")];
+            [cell.vitaminLabel setText:NSLocalizedString(@"baike_c_weishengsu", @"维生素项标题：维生素")];
             [cell.sepline1View setFrame:CGRectMake(0, startY, 300, 1)];
             
             startY += 20;
@@ -274,7 +274,7 @@
             float mineralLabelY = (part2Height-20)/2+30+part1Height;
             [cell.mineralLabel setFrame:CGRectMake(10, mineralLabelY, 60, 20)];
             
-            [cell.mineralLabel setText:NSLocalizedString(@"baike_kuangwuzhi", @"矿物质")];
+            [cell.mineralLabel setText:NSLocalizedString(@"baike_c_kuangwuzhi", @"矿物质项标题：矿物质")];
             [cell.sepline2View setFrame:CGRectMake(0, startY, 300, 1)];
             startY += 20;
             floor = 1;
@@ -329,7 +329,7 @@
             [cell.headerLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.headerLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
-            cell.headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"foodsearch_viewtitle", @"食物")];
+            cell.headerLabel.text = [NSString stringWithFormat:@"  %@", NSLocalizedString(@"baike_c_shiwu", @"食物栏标题：食物")];
             float startY = 50;
             int floor = 1;
             int perRowCount = 3;

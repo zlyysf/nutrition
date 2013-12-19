@@ -39,7 +39,7 @@
     self.contentScrollView.hidden = YES;
     self.contentWebView.hidden = YES;
     isFirstLoad = YES;
-    NSString *tips = [NSString stringWithFormat:NSLocalizedString(@"yingyangsu_header", @"以下是富含%@的食物和每日推荐量"),self.title];
+    NSString *tips = [NSString stringWithFormat:NSLocalizedString(@"yingyangsu_c_header", @"页面表头：以下是富含%@的食物和每日推荐量"),self.title];
     self.headerLabel.text = [NSString stringWithFormat:@"   %@",tips];
     self.headerLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
     self.headerLabel.layer.borderWidth = 0.5f;

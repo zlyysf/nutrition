@@ -602,11 +602,11 @@
 
 + (NSDictionary *)getActivityLevelInfo
 {
-    NSArray *levelArray = [[NSArray alloc]initWithObjects:NSLocalizedString(@"activitylevel0",@"轻"),NSLocalizedString(@"activitylevel1", @"中等"),NSLocalizedString(@"activitylevel2",@"强"),NSLocalizedString(@"activitylevel3",@"很强"), nil];
-    NSDictionary *levelDescription = [[NSDictionary alloc]initWithObjectsAndKeys:NSLocalizedString(@"activitylevel0_des",@"每日仅做一些轻度运动，如散步，购物，做家务等。"),NSLocalizedString(@"activitylevel0",@"轻"),
-                                                                                 NSLocalizedString(@"activitylevel1_des",@"每日做大概30分钟中等运动，如快速步行，平地骑车，跳交谊舞等。"),NSLocalizedString(@"activitylevel1",@"中等"),  
-                                                                                 NSLocalizedString(@"activitylevel2_des",@"每日做大概60分钟中等运动；或30分钟的强度运动，如中速跑步，爬山，打羽毛球等。"),NSLocalizedString(@"activitylevel2",@"强"),
-                                                                                 NSLocalizedString(@"activitylevel3_des",@"每日做大概45~60分钟的剧烈运动，如快跑，游泳，打篮球等。"),NSLocalizedString(@"activitylevel3",@"很强"),nil];
+    NSArray *levelArray = [[NSArray alloc]initWithObjects:NSLocalizedString(@"xinxi_c_qing",@"活动强度：轻"),NSLocalizedString(@"xinxi_c_zhongdeng", @"活动强度：中等"),NSLocalizedString(@"xinxi_c_qiang",@"活动强度：强"),NSLocalizedString(@"xinxi_c_henqiang",@"活动强度：很强"), nil];
+    NSDictionary *levelDescription = [[NSDictionary alloc]initWithObjectsAndKeys:NSLocalizedString(@"xinxi_c_qingmiaoshu",@"强度轻：每日仅做一些轻度运动，如散步，购物，做家务等。"),NSLocalizedString(@"xinxi_c_qing",@"活动强度：轻"),
+                                                                                 NSLocalizedString(@"xinxi_c_zhongdengmiaoshu",@"强度中等描述：每日做大概30分钟中等运动，如快速步行，平地骑车，跳交谊舞等。"),NSLocalizedString(@"xinxi_c_zhongdeng", @"活动强度：中等"),
+                                                                                 NSLocalizedString(@"xinxi_c_qiangmiaoshu",@"强度强描述：每日做大概60分钟中等运动；或30分钟的强度运动，如中速跑步，爬山，打羽毛球等。"),NSLocalizedString(@"xinxi_c_qiang",@"活动强度：强"),
+                                                                                 NSLocalizedString(@"xinxi_c_henqiangmiaoshu",@"强度很强描述：每日做大概45~60分钟的剧烈运动，如快跑，游泳，打篮球等。"),NSLocalizedString(@"xinxi_c_henqiang",@"活动强度：很强"),nil];
     NSDictionary *activityDict = [[NSDictionary alloc]initWithObjectsAndKeys:levelArray,@"levelArray",levelDescription,@"levelDescription" ,nil];
     return activityDict;
     

@@ -39,12 +39,12 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     [self.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [self.backView.layer setBorderWidth:0.5f];
-    self.birthdayLabel.text = NSLocalizedString(@"xinxi_shengri", @"生日");
-    self.heightLabel.text = NSLocalizedString(@"editprofile_heightlabel", @"身高");
-    self.sexLabel.text = NSLocalizedString(@"xinxi_xingbie", @"性别");
-    self.weightLabel.text = NSLocalizedString(@"editprofile_weightlabel", @"体重");
-    self.activityLabel.text = NSLocalizedString(@"editprofile_activitylabel", @"活动强度");
-    self.title = NSLocalizedString(@"xinxi_title", @"信息");
+    self.birthdayLabel.text = NSLocalizedString(@"xinxi_c_shengri", @"生日项标题：生日");
+    self.heightLabel.text = NSLocalizedString(@"xinxi_c_shengao", @"身高项标题：身高");
+    self.sexLabel.text = NSLocalizedString(@"xinxi_c_xingbie", @"性别项标题：性别");
+    self.weightLabel.text = NSLocalizedString(@"xinxi_c_tizhong", @"体重项标题：体重");
+    self.activityLabel.text = NSLocalizedString(@"xinxi_c_huodongqiangdu", @"活动强度项标题：活动强度");
+    self.title = NSLocalizedString(@"xinxi_c_title", @"页面标题：信息");
     self.birthdayPicker = [[UIDatePicker alloc]init];
     self.birthdayPicker.datePickerMode = UIDatePickerModeDate;
     self.heightPicker = [[UIPickerView alloc]init];
@@ -66,7 +66,7 @@
     }
     [self.birthdayPicker setMaximumDate:[LZUtility dateBeforeTodayForYears:1]];
     [self.birthdayPicker addTarget:self action:@selector(datepickerChanged) forControlEvents:UIControlEventValueChanged];
-    UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"baocunbutton",@"保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
+    UIBarButtonItem *saveButtonItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"xinxi_c_baocun",@"保存按钮：保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveButtonTapped)];
     self.navigationItem.rightBarButtonItem = saveButtonItem;
     if (!isPresented)
     {
@@ -102,8 +102,8 @@
 -(void)displayUserInfo
 {
     NSArray *levelArray = [[LZUtility getActivityLevelInfo]objectForKey:@"levelArray"];
-    [self.sexSegmentControll setTitle:NSLocalizedString(@"malebutton", @"男") forSegmentAtIndex:0];
-    [self.sexSegmentControll setTitle:NSLocalizedString(@"femalebutton", @"女") forSegmentAtIndex:1];
+    [self.sexSegmentControll setTitle:NSLocalizedString(@"xinxi_c_nan", @"性别男：男") forSegmentAtIndex:0];
+    [self.sexSegmentControll setTitle:NSLocalizedString(@"xinxi_c_nv", @"性别女：女") forSegmentAtIndex:1];
     [self.activitySegmentControll setTitle:[levelArray objectAtIndex:0] forSegmentAtIndex:0];
     [self.activitySegmentControll setTitle:[levelArray objectAtIndex:1] forSegmentAtIndex:1];
     [self.activitySegmentControll setTitle:[levelArray objectAtIndex:2] forSegmentAtIndex:2];
@@ -178,7 +178,7 @@
     }
     else
     {
-        [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:NSLocalizedString(@"xinxi_shengricuowu_alert", @"生日填写错误，请重新填写")];
+        [self alertWithTitle:NSLocalizedString(@"xinxi_m_wenxintishi",@"alert标题：温馨提示") msg:NSLocalizedString(@"xinxi_m_shengricuowu", @"生日错误信息：生日填写错误，请重新填写")];
         return;
     }
     if (currentHeight != nil)
@@ -187,7 +187,7 @@
     }
     else
     {
-        [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert3_message", @"身高填写错误，请重新填写")];
+        [self alertWithTitle:NSLocalizedString(@"xinxi_m_wenxintishi",@"alert标题：温馨提示") msg:NSLocalizedString(@"xinxi_m_shengaocuowu", @"身高错误信息：身高填写错误，请重新填写")];
         return;
     }
     if ([self.weightTextField.text length]!= 0 && [self.weightTextField.text intValue]>0)
@@ -205,7 +205,7 @@
     }
     else
     {
-        [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:NSLocalizedString(@"editprofile_alert4_message", @"体重填写错误，请重新填写")];
+        [self alertWithTitle:NSLocalizedString(@"xinxi_m_wenxintishi",@"alert标题：温馨提示") msg:NSLocalizedString(@"xinxi_m_tizhongcuowu", @"体重错误信息：体重填写错误，请重新填写")];
         return;
     }
     NSNumber *sexNumber = [NSNumber numberWithInt:[self.sexSegmentControll selectedSegmentIndex]];
@@ -328,7 +328,7 @@
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:_title_
                                                     message:msg
                                                    delegate:nil
-                                          cancelButtonTitle:NSLocalizedString(@"quedingbutton",@"确定")
+                                          cancelButtonTitle:NSLocalizedString(@"xinxi_c_queding",@"alert确定按钮：确定")
                                           otherButtonTitles:nil];
     [alert show];
 }
