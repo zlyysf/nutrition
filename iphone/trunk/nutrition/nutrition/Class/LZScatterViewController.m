@@ -103,19 +103,19 @@
     //plotSpace.allowsUserInteraction = YES;
     if (self.scatterType == ScatterTypeBMI) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3.5) length:CPTDecimalFromFloat(34.5)];
-        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(20.75) length:CPTDecimalFromFloat(2.5)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(20.86) length:CPTDecimalFromFloat(2.39)];
     }
     else if (self.scatterType == ScatterTypeTemperature) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3.5) length:CPTDecimalFromFloat(34.5)];
-        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(34.1) length:CPTDecimalFromFloat(8.2)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(34.5) length:CPTDecimalFromFloat(7.8)];
     }
     else if (self.scatterType == ScatterTypeBP) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3) length:CPTDecimalFromFloat(34)];
-        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(45) length:CPTDecimalFromFloat(157)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(50) length:CPTDecimalFromFloat(152)];
     }
     else {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(33.5)];
-        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-12) length:CPTDecimalFromFloat(114)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-8) length:CPTDecimalFromFloat(110)];
     }
 }
 
@@ -155,13 +155,13 @@
     x.labelFormatter = xFormatter;
     
     
-    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
-    axisTitleStyle.color = [CPTColor blackColor];
-    axisTitleStyle.fontName = @"Helvetica-Bold";
-    axisTitleStyle.fontSize = 12.0f;
-    x.title = @"Day of Month";
-    x.titleTextStyle = axisTitleStyle;
-    x.titleOffset = 25.0f;
+//    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
+//    axisTitleStyle.color = [CPTColor blackColor];
+//    axisTitleStyle.fontName = @"Helvetica-Bold";
+//    axisTitleStyle.fontSize = 12.0f;
+//    x.title = @"Day of Month";
+//    x.titleTextStyle = axisTitleStyle;
+//    x.titleOffset = 25.0f;
     
     //    CPTMutableLineStyle *axisLineStyle = [CPTMutableLineStyle lineStyle];
     //    axisLineStyle.lineWidth = 1.0f;
@@ -189,22 +189,33 @@
     x.tickDirection = CPTSignNegative;
     
     
-    //    CGFloat dateCount = [[[CPDStockPriceStore sharedInstance] datesInMonth] count];
-    //    NSMutableSet *xLabels = [NSMutableSet setWithCapacity:dateCount];
-    //    NSMutableSet *xLocations = [NSMutableSet setWithCapacity:dateCount];
-    //    NSInteger i = 0;
-    //    for (NSString *date in [[CPDStockPriceStore sharedInstance] datesInMonth]) {
-    //        CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:date  textStyle:x.labelTextStyle];
-    //        CGFloat location = i++;
-    //        label.tickLocation = CPTDecimalFromCGFloat(location);
-    //        label.offset = x.majorTickLength;
-    //        if (label) {
-    //            [xLabels addObject:label];
-    //            [xLocations addObject:[NSNumber numberWithFloat:location]];
-    //        }
-    //    }
-    //    x.axisLabels = xLabels;
-    //    x.majorTickLocations = xLocations;
+//    NSMutableSet *xLabels = [NSMutableSet setWithCapacity:1];
+//    NSMutableSet *xLocations = [NSMutableSet setWithCapacity:1];
+//    CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:@"1"  textStyle:x.labelTextStyle];
+//    CGFloat location = 1;
+//    label.tickLocation = CPTDecimalFromCGFloat(location);
+//    label.offset = x.majorTickLength;
+//    if (label) {
+//        [xLabels addObject:label];
+//        [xLocations addObject:[NSNumber numberWithFloat:location]];
+//    }
+//    x.axisLabels = xLabels;
+//    x.majorTickLocations = xLocations;
+//    
+//    xLabels = [NSMutableSet setWithCapacity:1];
+//    xLocations = [NSMutableSet setWithCapacity:1];
+//    label = [[CPTAxisLabel alloc] initWithText:@"3"  textStyle:x.labelTextStyle];
+//    location = 3;
+//    label.tickLocation = CPTDecimalFromCGFloat(location);
+//    label.offset = x.majorTickLength;
+//    if (label) {
+//        [xLabels addObject:label];
+//        [xLocations addObject:[NSNumber numberWithFloat:location]];
+//    }
+//    x.minorTickAxisLabels = xLabels;
+//    x.minorTickLocations = xLocations;
+    
+    
     
     
     // 需要排除的不显示数字的主刻度
