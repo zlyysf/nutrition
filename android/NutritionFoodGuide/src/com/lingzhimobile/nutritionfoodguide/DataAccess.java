@@ -2056,6 +2056,28 @@ public class DataAccess {
 	    
 	}
 	
+	public ArrayList<HashMap<String, Object>> getSymptomRows_BySymptomIds(ArrayList<String> symptomIds)
+	{
+		Log.d(LogTag, "getSymptomRows_BySymptomIds enter");
+		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+		if (symptomIds != null){
+			if (symptomIds.size() == 0){
+				return null;
+			}
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_SymptomId,symptomIds};
+	    	columnValuePairs_equal.add(columnValuePair);
+		}
+
+		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Symptom, 
+	    		columnValuePairs_equal, null, null, Constants.COLUMN_NAME_DisplayOrder, false);
+		String logMsg = "getSymptomRows_BySymptomIds rows="+Tool.getIndentFormatStringOfObject(rows,0);
+		Log.d(LogTag, logMsg);
+		Tool_microlog4android.logDebug(logMsg);
+	    return rows;
+	    
+	}
+
+	
 	public HashMap<String,ArrayList<HashMap<String, Object>>> getSymptomRowsByTypeDict_BySymptomTypeIds(ArrayList<String> symptomTypeIds)
 	{
 		Log.d(LogTag, "getSymptomRowsByTypeDict_BySymptomTypeIds enter");
@@ -2159,7 +2181,7 @@ public class DataAccess {
 
 		String[] selectColumns = {Constants.COLUMN_NAME_SuggestionId};
 		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_IllnessToSuggestion, 
-	    		columnValuePairs_equal, null, selectColumns, null, true);
+	    		columnValuePairs_equal, null, selectColumns, Constants.COLUMN_NAME_DisplayOrder, true);
 		ArrayList<Object> suggestionIdObjs = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_SuggestionId, rows);
 		ArrayList<String> suggestionIds = Tool.convertToStringArrayList(suggestionIdObjs);
 		
@@ -2200,16 +2222,51 @@ public class DataAccess {
 	    Log.d(LogTag, "getIllnessSuggestionsDistinct_ByIllnessIds rows="+Tool.getIndentFormatStringOfObject(rows,0) );
 	    return rows;
 	}
+	
+	public ArrayList<HashMap<String, Object>> getIllnessSuggestions_ByIllnessId(String illnessId)
+	{
+		Log.d(LogTag, "getIllnessSuggestions_ByIllnessId enter");
+		ArrayList<String> illnessIds = new ArrayList<String>();
+		illnessIds.add(illnessId);
+		
+		ArrayList<String> suggestionIds = getIllnessSuggestionDistinctIds_ByIllnessIds(illnessIds);
+		if (suggestionIds==null || suggestionIds.size()==0)
+			return null;
+
+		ArrayList<HashMap<String, Object>> rows = getIllnessSuggestions_BySuggestionIds(suggestionIds);
+		Log.d(LogTag, "getIllnessSuggestions_ByIllnessId rows="+Tool.getIndentFormatStringOfObject(rows,0) );
+	    return rows;
+	}
 
 	public ArrayList<HashMap<String, Object>> getAllIllness()
 	{
 		Log.d(LogTag, "getAllIllness enter");
-		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Illness,null,null,null,null,false);
+		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Illness,null,null,null,Constants.COLUMN_NAME_DisplayOrder,false);
 		Log.d(LogTag, "getAllIllness ret="+Tool.getIndentFormatStringOfObject(rows,0) );
 	    return rows;
 	}
 	
-	
+	public ArrayList<HashMap<String, Object>> getIllness_ByIllnessIds(ArrayList<String> illnessIds)
+	{
+		Log.d(LogTag, "getIllness_ByIllnessIds enter");
+		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+		if (illnessIds != null){
+			if (illnessIds.size() == 0){
+				return null;
+			}
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_IllnessId,illnessIds};
+	    	columnValuePairs_equal.add(columnValuePair);
+		}
+
+		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Illness, 
+	    		columnValuePairs_equal, null, null, null, false);
+		String logMsg = "getIllness_ByIllnessIds row count="+rows.size()+",\nrows="+Tool.getIndentFormatStringOfObject(rows,0);
+		Log.d(LogTag, logMsg);
+//		Tool_microlog4android.logDebug(logMsg);
+	    return rows;
+
+	}
+
 	
 	/*
 	 dayLocal 是 8位整数,如  20120908

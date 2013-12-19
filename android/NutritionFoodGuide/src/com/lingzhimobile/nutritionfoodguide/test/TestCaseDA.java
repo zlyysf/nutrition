@@ -34,10 +34,10 @@ public class TestCaseDA {
 //		test_foodCollocationApis(ctx);
 //		test_Symptom1(ctx);
 //		test_inferIllnesses_withSymptoms1(ctx);
-//		test_getIllnessSuggestionsDistinct1(ctx);
+		test_getIllnessSuggestionsDistinct1(ctx);
 //		test_JsonTool();
 //		test_dalUserRecordSymptom1(ctx);
-		test_genData_UserRecordSymptom1(ctx);
+//		test_genData_UserRecordSymptom1(ctx);
 //		test_getIllness2(ctx);
 //		test_syncRemoteDataInParse(ctx);
 	}
@@ -155,6 +155,8 @@ public class TestCaseDA {
 //		HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientIdList.get(0));
 		
 		da.getSymptomHealthMarkSum_BySymptomIds(symptomIds);
+		
+		da.getSymptomRows_BySymptomIds(symptomIdList);
 	}
 	
 	static void test_inferIllnesses_withSymptoms1(Context ctx){
@@ -174,8 +176,12 @@ public class TestCaseDA {
 	static void test_getIllnessSuggestionsDistinct1(Context ctx)
 	{
 		String[] illnessIds = {"感冒", "急性病毒性咽炎", "轻度高血压", "骨关节炎"};
+		ArrayList<String> illnessIdList = Tool.convertFromArrayToList(illnessIds);
 		DataAccess da = DataAccess.getSingleton(ctx);
 	    da.getIllnessSuggestionsDistinct_ByIllnessIds(Tool.convertFromArrayToList(illnessIds));
+	    
+	    da.getIllness_ByIllnessIds(illnessIdList);
+	    da.getIllnessSuggestions_ByIllnessId("感冒");
 	}
 	
 	static void test_JsonTool(){
@@ -875,6 +881,8 @@ public class TestCaseDA {
 		}
     }
 
+	
+	
 }
 
 
