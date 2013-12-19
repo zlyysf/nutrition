@@ -42,6 +42,11 @@
     table1DataSource = [[NSMutableArray alloc]init];
     table2DataSource = [[NSMutableArray alloc]init];
     table3DataSource = [[NSMutableArray alloc]init];
+    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 15)];
+    [footerView setBackgroundColor:[UIColor clearColor]];
+    self.listView1.tableFooterView = footerView;
+    self.listView2.tableFooterView = footerView;
+    self.listView3.tableFooterView = footerView;
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"left.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltoprevious)];
     self.navigationItem.leftBarButtonItem = leftItem;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"right.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltonext)];
@@ -49,6 +54,28 @@
     [self initialize];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(historyUpdated:) name: Notification_HistoryUpdatedKey object:nil];
 }
+-(void)viewWillAppear:(BOOL)animated
+{
+    
+}
+
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (IOS7_OR_LATER)
+    {
+        [self.listView1 setSectionIndexBackgroundColor:[UIColor clearColor]];
+        [self.listView1 setSectionIndexColor:[UIColor colorWithRed:6/255.f green:62/255.f blue:4/255.f alpha:1.0f]];
+        [self.listView1 setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
+        [self.listView2 setSectionIndexBackgroundColor:[UIColor clearColor]];
+        [self.listView2 setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
+        [self.listView2 setSectionIndexColor:[UIColor colorWithRed:6/255.f green:62/255.f blue:4/255.f alpha:1.0f]];
+        [self.listView3 setSectionIndexBackgroundColor:[UIColor clearColor]];
+        [self.listView3 setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
+        [self.listView3 setSectionIndexColor:[UIColor colorWithRed:6/255.f green:62/255.f blue:4/255.f alpha:1.0f]];
+        //[self.listView setSectionIndexColor:[UIColor blackColor]];
+    }
+}
+
 -(void)historyUpdated:(NSNotification *)notification
 {
     [self initialize];
@@ -290,24 +317,6 @@
 //    NSLog(@"%@",self.cycleView.scrollView.subviews);
 //    [self.cycleView scrollToNextPage];
 }
--(void)viewWillAppear:(BOOL)animated
-{
-    
-}
-
--(void)viewDidAppear:(BOOL)animated
-{
-    if (IOS7_OR_LATER)
-    {
-        [self.listView1 setSectionIndexBackgroundColor:[UIColor clearColor]];
-        [self.listView1 setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
-        [self.listView2 setSectionIndexBackgroundColor:[UIColor clearColor]];
-        [self.listView2 setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
-        [self.listView3 setSectionIndexBackgroundColor:[UIColor clearColor]];
-        [self.listView3 setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
-        //[self.listView setSectionIndexColor:[UIColor blackColor]];
-    }
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -328,23 +337,42 @@
     if (tableView == self.listView1)
     {
         NGRecordCell *cell = (NGRecordCell*)[self.listView1 dequeueReusableCellWithIdentifier:@"NGRecordCell"];
-        cell.textLabel.text = @"1";
+        [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [cell.backView.layer setBorderWidth:0.5f];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
+        label.numberOfLines = 0;
+        [cell.backView addSubview:label];
+        
+        NSDictionary *record = [self.table1DataSource objectAtIndex:indexPath.section];
+        label.text  =[[record allKeys]description];
         return cell;
     }
     else if(tableView == self.listView2)
     {
         NGRecordCell *cell = (NGRecordCell*)[self.listView2 dequeueReusableCellWithIdentifier:@"NGRecordCell"];
-        cell.textLabel.text = @"2";
+        [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [cell.backView.layer setBorderWidth:0.5f];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
+        label.numberOfLines = 0;
+        [cell.backView addSubview:label];
+        
+        NSDictionary *record = [self.table2DataSource objectAtIndex:indexPath.section];
+        label.text  =[[record allKeys]description];
         return cell;
     }
     else
     {
         NGRecordCell *cell = (NGRecordCell*)[self.listView3 dequeueReusableCellWithIdentifier:@"NGRecordCell"];
-        cell.textLabel.text = @"3";
+        [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        [cell.backView.layer setBorderWidth:0.5f];
+        UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(0, 0, 200, 200)];
+        label.numberOfLines = 0;
+        [cell.backView addSubview:label];
+        
+        NSDictionary *record = [self.table3DataSource objectAtIndex:indexPath.section];
+        label.text  =[[record allKeys]description];
         return cell;
     }
-    
-    
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView              // Default is 1 if not implemented
