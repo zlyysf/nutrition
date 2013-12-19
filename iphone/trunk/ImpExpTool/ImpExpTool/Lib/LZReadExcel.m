@@ -2551,6 +2551,7 @@
     NSMutableArray *ary2D_illness = [NSMutableArray array];
     NSMutableArray *ary2D_illnessToSuggestion = [NSMutableArray array];
     NSMutableArray *ary2D_suggestion = [NSMutableArray array];
+    NSMutableSet *repeatedSuggestionIdSet = [NSMutableSet set];
     
     DHcell *cell_Id, *cell_enName, *cell_urlCn, *cell_urlEn, *cell_suggestionsCn, *cell_suggestionsEn;
     rowIdx = rowIdx_ColumnRow+1, colIdx=colIdx_Start;
@@ -2587,59 +2588,66 @@
                 assert(suggestionsEn.length == 0);
             }else{
                 //由于细项的建议存在着重复，即一个中文对应多个英文。干脆改成粗项对应
-//                suggestionsCn = [suggestionsCn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                suggestionsEn = [suggestionsEn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-//                assert(suggestionsCn.length>0);
-//                assert(suggestionsEn.length>0);
-//                NSArray * ary_suggestionsCn = [suggestionsCn componentsSeparatedByString:@"\n"];
-//                NSArray * ary_suggestionsEn = [suggestionsEn componentsSeparatedByString:@"\n"];
-//                assert(ary_suggestionsCn.count == ary_suggestionsEn.count);
-//                for(int i=0; i<ary_suggestionsCn.count; i++){
-//                    NSString * suggestionCn = ary_suggestionsCn[i];
-//                    NSString * suggestionEn = ary_suggestionsEn[i];
-//                    NSRange searchPos = [suggestionCn rangeOfString:@"."];
-//                    assert(searchPos.location != NSNotFound);
-//                    suggestionCn = [suggestionCn substringFromIndex:searchPos.location+1];
-//                    searchPos = [suggestionEn rangeOfString:@"."];
-//                    assert(searchPos.location != NSNotFound);
-//                    suggestionEn = [suggestionEn substringFromIndex:searchPos.location+1];
-//                    
-//                    NSString *suggestionEnStored = dict_suggestion_idToEn[suggestionCn];
-//                    if ( suggestionEnStored != nil){
+                suggestionsCn = [suggestionsCn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                suggestionsEn = [suggestionsEn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                assert(suggestionsCn.length>0);
+                assert(suggestionsEn.length>0);
+                NSArray * ary_suggestionsCn = [suggestionsCn componentsSeparatedByString:@"\n"];
+                NSArray * ary_suggestionsEn = [suggestionsEn componentsSeparatedByString:@"\n"];
+                assert(ary_suggestionsCn.count == ary_suggestionsEn.count);
+                for(int i=0; i<ary_suggestionsCn.count; i++){
+                    NSString * suggestionCn = ary_suggestionsCn[i];
+                    NSString * suggestionEn = ary_suggestionsEn[i];
+                    NSRange searchPos = [suggestionCn rangeOfString:@"."];
+                    assert(searchPos.location != NSNotFound);
+                    suggestionCn = [suggestionCn substringFromIndex:searchPos.location+1];
+                    searchPos = [suggestionEn rangeOfString:@"."];
+                    assert(searchPos.location != NSNotFound);
+                    suggestionEn = [suggestionEn substringFromIndex:searchPos.location+1];
+                    
+                    NSString *suggestionEnStored = dict_suggestion_idToEn[suggestionCn];
+                    if ( suggestionEnStored != nil){
 //                        assert([suggestionEn isEqualToString:suggestionEnStored] );
-//                    }else{
-//                        [dict_suggestion_idToEn setObject:suggestionEn forKey:suggestionCn];
-//                        
-//                        NSMutableArray *ary_suggestion = [NSMutableArray arrayWithObjects:suggestionCn,suggestionCn,suggestionEn,nil];
-//                        [ary2D_suggestion addObject:ary_suggestion];
-//                    }
-//                    
-//                    NSMutableArray *ary_illnessToSuggestion = [NSMutableArray arrayWithObjects:illnessId, suggestionCn, [NSNumber numberWithInt:i], nil];
-//                    [ary2D_illnessToSuggestion addObject:ary_illnessToSuggestion];
-//                }//for
-                NSString *suggestionCn = [suggestionsCn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                NSString *suggestionEn = [suggestionsEn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-                assert(suggestionCn.length>0);
-                assert(suggestionEn.length>0);
-                NSString *suggestionEnStored = dict_suggestion_idToEn[suggestionCn];
-                if ( suggestionEnStored != nil){
-                    assert([suggestionEn isEqualToString:suggestionEnStored] );
-                }else{
-                    [dict_suggestion_idToEn setObject:suggestionEn forKey:suggestionCn];
-
-                    NSMutableArray *ary_suggestion = [NSMutableArray arrayWithObjects:suggestionCn,suggestionCn,suggestionEn,nil];
-                    [ary2D_suggestion addObject:ary_suggestion];
-                }
-
-                NSMutableArray *ary_illnessToSuggestion = [NSMutableArray arrayWithObjects:illnessId, suggestionCn, [NSNumber numberWithInt:0],  nil];
-                [ary2D_illnessToSuggestion addObject:ary_illnessToSuggestion];
+                        if (![suggestionEn isEqualToString:suggestionEnStored]){
+                            [repeatedSuggestionIdSet addObject:suggestionCn];
+                        }
+                    }else{
+                        [dict_suggestion_idToEn setObject:suggestionEn forKey:suggestionCn];
+                        
+                        NSMutableArray *ary_suggestion = [NSMutableArray arrayWithObjects:suggestionCn,suggestionCn,suggestionEn,nil];
+                        [ary2D_suggestion addObject:ary_suggestion];
+                    }
+                    
+                    NSMutableArray *ary_illnessToSuggestion = [NSMutableArray arrayWithObjects:illnessId, suggestionCn, [NSNumber numberWithInt:i], nil];
+                    [ary2D_illnessToSuggestion addObject:ary_illnessToSuggestion];
+                }//for
+                
+                //由于细项的建议存在着重复，即一个中文对应多个英文。干脆改成粗项对应。不过后来还是要细项
+//                NSString *suggestionCn = [suggestionsCn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//                NSString *suggestionEn = [suggestionsEn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//                assert(suggestionCn.length>0);
+//                assert(suggestionEn.length>0);
+//                NSString *suggestionEnStored = dict_suggestion_idToEn[suggestionCn];
+//                if ( suggestionEnStored != nil){
+//                    assert([suggestionEn isEqualToString:suggestionEnStored] );
+//                }else{
+//                    [dict_suggestion_idToEn setObject:suggestionEn forKey:suggestionCn];
+//
+//                    NSMutableArray *ary_suggestion = [NSMutableArray arrayWithObjects:suggestionCn,suggestionCn,suggestionEn,nil];
+//                    [ary2D_suggestion addObject:ary_suggestion];
+//                }
+//
+//                NSMutableArray *ary_illnessToSuggestion = [NSMutableArray arrayWithObjects:illnessId, suggestionCn, [NSNumber numberWithInt:0],  nil];
+//                [ary2D_illnessToSuggestion addObject:ary_illnessToSuggestion];
                 
             }
-            
             
             NSLog(@"in readSymptomTranslateData_IllnessSheet_andSuggestion_andCheck, [id,enName,urlCn,urlEn]=%@,%@,%@,%@",illnessId,nameEn,urlCn,urlEn);
         }
     } while (!cellIdEmpty);
+    
+    NSLog(@"readSymptomTranslateData_IllnessSheet_andSuggestion_andCheck repeatedSuggestionIdSet=%@",[LZUtility getObjectDescription:[repeatedSuggestionIdSet allObjects ] andIndent:0]);
+    
     NSMutableDictionary *retData = [NSMutableDictionary dictionary];
     [retData setObject:dict_illness_idToRow forKey:@"dict_illness_idToRow"];
     [retData setObject:ary2D_illness forKey:@"ary2D_illness"];

@@ -66,6 +66,7 @@
 -(NSString*)convertSymptomTypeInfoToCsv:(NSString*)csvFileName;
 -(NSString*)convertSymptomInfoToCsv:(NSString*)csvFileName;
 -(NSString*)convertIllnessInfoToCsv:(NSString*)csvFileName;
+-(NSString*)convertIllnessSuggestionToCsv:(NSString*)csvFileName;
 
 
 -(NSArray *)getFoodOriginalAttributesByIds:(NSArray *)idAry;
