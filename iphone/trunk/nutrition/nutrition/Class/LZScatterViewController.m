@@ -113,6 +113,18 @@
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3) length:CPTDecimalFromFloat(34)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(50) length:CPTDecimalFromFloat(152)];
     }
+    else if (self.scatterType == ScatterTypeNI) {
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3) length:CPTDecimalFromFloat(34)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(57) length:CPTDecimalFromFloat(45)];
+    }
+    else if (self.scatterType == ScatterTypeWeight) {
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3) length:CPTDecimalFromFloat(34)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(36.5) length:CPTDecimalFromFloat(60)];
+    }
+    else if (self.scatterType == ScatterTypeHeartbeat) {
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3) length:CPTDecimalFromFloat(34)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(43) length:CPTDecimalFromFloat(35)];
+    }
     else {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(33.5)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-8) length:CPTDecimalFromFloat(110)];
@@ -142,6 +154,12 @@
         x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"35");
     else if (self.scatterType == ScatterTypeBP)
         x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"60");
+    else if (self.scatterType == ScatterTypeNI)
+         x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"60");
+    else if (self.scatterType == ScatterTypeWeight)
+        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"40");
+    else if (self.scatterType == ScatterTypeHeartbeat)
+        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"45");
     else
         x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
     
@@ -295,6 +313,66 @@
         y.labelExclusionRanges = exclusionRanges;
         
     }
+    else if (self.scatterType == ScatterTypeNI) {
+        y.title = nil;
+        y.titleTextStyle = axisTitleStyle;
+        y.titleOffset = 10;
+        y.majorGridLineStyle = y.majorTickLineStyle;
+        y.labelOffset = -8.0f;
+        
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
+        
+        NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
+        [yFormatter setMaximumFractionDigits:1];
+        y.labelFormatter = yFormatter;
+        
+        y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
+        y.minorTicksPerInterval = 2;    // Count of minor ticks between 2 major ticks
+        
+        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(40) length:CPTDecimalFromFloat(19)]];
+        y.labelExclusionRanges = exclusionRanges;
+        
+    }
+    else if (self.scatterType == ScatterTypeHeartbeat) {
+        y.title = nil;
+        y.titleTextStyle = axisTitleStyle;
+        y.titleOffset = 10;
+        y.majorGridLineStyle = y.majorTickLineStyle;
+        y.labelOffset = -8.0f;
+        
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
+        
+        NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
+        [yFormatter setMaximumFractionDigits:1];
+        y.labelFormatter = yFormatter;
+        
+        y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
+        y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
+        
+        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(30) length:CPTDecimalFromFloat(11)]];
+        y.labelExclusionRanges = exclusionRanges;
+        
+    }
+    else if (self.scatterType == ScatterTypeWeight) {
+        y.title = nil;
+        y.titleTextStyle = axisTitleStyle;
+        y.titleOffset = 10;
+        y.majorGridLineStyle = y.majorTickLineStyle;
+        y.labelOffset = -8.0f;
+        
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
+        
+        NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
+        [yFormatter setMaximumFractionDigits:1];
+        y.labelFormatter = yFormatter;
+        
+        y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
+        y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
+        
+        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(30) length:CPTDecimalFromFloat(9)]];
+        y.labelExclusionRanges = exclusionRanges;
+        
+    }
     else {
         y.title = nil;
         y.titleTextStyle = axisTitleStyle;
@@ -329,7 +407,7 @@
         [self.graph addPlot:bluePlot];
         CPTMutableLineStyle *blueLineStyle  = [[CPTMutableLineStyle alloc] init];
         blueLineStyle.miterLimit            = 1.0f;
-        blueLineStyle.lineWidth             = 3.0f;
+        blueLineStyle.lineWidth             = 1.5f;
         blueLineStyle.lineColor             = [CPTColor blueColor];
         
         
@@ -338,13 +416,13 @@
         bluePlot.dataSource        = self;
         
         CPTMutableLineStyle *blueSymbolLineStyle = [CPTMutableLineStyle lineStyle];
-        blueSymbolLineStyle.lineColor             = [CPTColor blackColor];
-        blueSymbolLineStyle.lineWidth             = 2.0;
+        blueSymbolLineStyle.lineColor             = [CPTColor blueColor];
+        blueSymbolLineStyle.lineWidth             = 0.0f;
         
         CPTPlotSymbol *bluePlotSymbol  = [CPTPlotSymbol ellipsePlotSymbol];
         bluePlotSymbol.fill            = [CPTFill fillWithColor:[CPTColor blueColor]];
         bluePlotSymbol.lineStyle       = blueSymbolLineStyle;
-        bluePlotSymbol.size            = CGSizeMake(10.0, 10.0);
+        bluePlotSymbol.size            = CGSizeMake(5.0, 5.0);
         bluePlot.plotSymbol = bluePlotSymbol;
     }
     
@@ -357,7 +435,7 @@
             [self.graph addPlot:greenPlot];
             CPTMutableLineStyle *greenLineStyle  = [[CPTMutableLineStyle alloc] init];
             greenLineStyle.miterLimit            = 1.0f;
-            greenLineStyle.lineWidth             = 3.0f;
+            greenLineStyle.lineWidth             = 1.5f;
             greenLineStyle.lineColor             = [CPTColor greenColor];
             
             
@@ -366,13 +444,13 @@
             greenPlot.dataSource        = self;
             
             CPTMutableLineStyle *greenSymbolLineStyle = [CPTMutableLineStyle lineStyle];
-            greenSymbolLineStyle.lineColor             = [CPTColor blackColor];
-            greenSymbolLineStyle.lineWidth             = 2.0;
+            greenSymbolLineStyle.lineColor             = [CPTColor greenColor];
+            greenSymbolLineStyle.lineWidth             = 0.0f;
             
             CPTPlotSymbol *greenPlotSymbol  = [CPTPlotSymbol ellipsePlotSymbol];
             greenPlotSymbol.fill            = [CPTFill fillWithColor:[CPTColor greenColor]];
             greenPlotSymbol.lineStyle       = greenSymbolLineStyle;
-            greenPlotSymbol.size            = CGSizeMake(10.0, 10.0);
+            greenPlotSymbol.size            = CGSizeMake(5.0, 5.0);
             greenPlot.plotSymbol = greenPlotSymbol;
         }
     }

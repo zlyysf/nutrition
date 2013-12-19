@@ -247,8 +247,92 @@
         }
     }
 }
+
+- (NSArray *)plotDataSourceForTesting
+{
+    if (currentScatterType == ScatterTypeBP) {
+        NSMutableArray *lbpArray = [NSMutableArray arrayWithCapacity:POINTS_COUNT];
+        NSMutableArray *hbpArray = [NSMutableArray arrayWithCapacity:POINTS_COUNT];
+        for (NSInteger i = 0; i < 2; i++) {
+            for (NSInteger j = 0; j < POINTS_COUNT; j++) {
+                int day = 1 + j * 1.5;
+                NSNumber *x = [NSNumber numberWithInteger:day];
+                int lowerBound, upperBound;
+                if (i == 0) {
+                    lowerBound = 70;
+                    upperBound = 100;
+                }
+                else {
+                    lowerBound = 150;
+                    upperBound = 180;
+                }
+                int randomValue = lowerBound + arc4random() % (upperBound - lowerBound);
+                NSNumber *y = [NSNumber numberWithFloat:randomValue];
+                NSLog(@"%@", y);
+                if (i == 0) {
+                    [lbpArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
+                }
+                else {
+                    [hbpArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
+                }
+            }
+        }
+        NSArray *bpArray = @[lbpArray, hbpArray];
+        return bpArray;
+    }
+    else {
+        NSMutableArray *dataForPlot = [NSMutableArray arrayWithCapacity:POINTS_COUNT];
+        dataForPlot = [NSMutableArray arrayWithCapacity:POINTS_COUNT];
+        for (NSInteger i = 0; i < POINTS_COUNT; i++) {
+            int day = 1 + i * 1.5;
+            NSNumber *x = [NSNumber numberWithInteger:day];
+            NSNumber *y;
+            if (currentScatterType == ScatterTypeBMI) {
+                int lowerBound = 21;
+                int upperBound = 23;
+                float randomValue = lowerBound + arc4random() % (upperBound - lowerBound) + 0.2f;
+                y = [NSNumber numberWithFloat:randomValue];
+                NSLog(@"%@", y);
+            }
+            else if (currentScatterType == ScatterTypeTemperature) {
+                int lowerBound = 36.5;
+                int upperBound = 37.5;
+                float randomValue = lowerBound + arc4random() % (upperBound - lowerBound) + 0.2f;
+                y = [NSNumber numberWithFloat:randomValue];
+                NSLog(@"%@", y);
+            }
+            else if (currentScatterType == ScatterTypeNI) {
+                int lowerBound = 80;
+                int upperBound = 90;
+                float randomValue = lowerBound + arc4random() % (upperBound - lowerBound);
+                y = [NSNumber numberWithFloat:randomValue];
+                NSLog(@"%@", y);
+            }
+            else if (currentScatterType == ScatterTypeHeartbeat) {
+                int lowerBound = 50;
+                int upperBound = 70;
+                float randomValue = lowerBound + arc4random() % (upperBound - lowerBound);
+                y = [NSNumber numberWithFloat:randomValue];
+                NSLog(@"%@", y);
+            }
+            else if (currentScatterType == ScatterTypeWeight) {
+                int lowerBound = 65;
+                int upperBound = 70;
+                float randomValue = lowerBound + arc4random() % (upperBound - lowerBound);
+                y = [NSNumber numberWithFloat:randomValue];
+                NSLog(@"%@", y);
+            }
+            else
+                y = [NSNumber numberWithInt:5 + i * 5];
+            [dataForPlot addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
+        }
+        return dataForPlot;
+    }
+}
+
 -(NSArray *)getDataSourceForMonthLocal:(int)monthLocal
 {
+    return [self plotDataSourceForTesting];
     
     NSString *key = [NSString stringWithFormat:@"%d",monthLocal];
     NSArray *data = [self.historyDict objectForKey:key];

@@ -18,7 +18,7 @@ typedef  NS_ENUM(NSUInteger, ScatterType) {
     ScatterTypeHeartbeat = 5,
 };
 
-#define POINTS_COUNT 10
+#define POINTS_COUNT 20
 
 @interface LZScatterViewController : UIViewController <CPTPlotDataSource>
 
