@@ -705,7 +705,7 @@
 -(NSString*)convertSymptomTypeInfoToCsv:(NSString*)csvFileName
 {
     NSString *sqlQuery = @""
-    "select SymptomTypeId, SymptomTypeNameEn"
+    "select *"
     "  from SymptomType"
     "  order by DisplayOrder"
     ;
@@ -714,7 +714,7 @@
 -(NSString*)convertSymptomInfoToCsv:(NSString*)csvFileName
 {
     NSString *sqlQuery = @""
-    "select SymptomTypeId, SymptomId, SymptomNameEn"
+    "select *"
     "  from Symptom"
     "  order by DisplayOrder"
     ;
@@ -723,8 +723,16 @@
 -(NSString*)convertIllnessInfoToCsv:(NSString*)csvFileName
 {
     NSString *sqlQuery = @""
-    "select IllnessId, IllnessNameEn"
-    "  from Illness order by IllnessId"
+    "select *"
+    "  from Illness order by DisplayOrder"
+    ;
+    return [_da convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
+}
+-(NSString*)convertIllnessSuggestionToCsv:(NSString*)csvFileName
+{
+    NSString *sqlQuery = @""
+    "select *"
+    "  from IllnessSuggestion"
     ;
     return [_da convertSelectSqlToCsv_withSelectSql:sqlQuery andCsvFileName:csvFileName];
 }

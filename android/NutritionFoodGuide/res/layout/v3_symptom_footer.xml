@@ -34,8 +34,10 @@
                 android:text="体温" />
 
             <EditText
+                android:id="@+id/etBodyTemperature"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:minWidth="100dp"
                 android:text="37" />
 
@@ -66,8 +68,10 @@
                 android:text="体重" />
 
             <EditText
+                android:id="@+id/etWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:minWidth="100dp"
                 android:text="76" />
 
@@ -98,8 +102,10 @@
                 android:text="心跳" />
 
             <EditText
+                android:id="@+id/etHeartRate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:minWidth="100dp"
                 android:text="65" />
 
@@ -140,8 +146,10 @@
                         android:text="高压" />
 
                     <EditText
+                        android:id="@+id/etBloodPressureHigh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:minWidth="100dp"
                         android:text="110" />
 
@@ -164,8 +172,10 @@
                         android:text="低压" />
 
                     <EditText
+                        android:id="@+id/etBloodPressureLow"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:minWidth="100dp"
                         android:text="80" />
 
@@ -185,7 +195,7 @@
         android:text="笔记" />
 
     <EditText
-        android:id="@+id/noteEditText"
+        android:id="@+id/etNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

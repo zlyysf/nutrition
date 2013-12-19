@@ -142,7 +142,16 @@
     
     if ([heat length] != 0 && [heat doubleValue]>0)
     {
-        [measureData setObject:[NSNumber numberWithDouble:[heat doubleValue]] forKey:Key_BodyTemperature];
+        if (isChinese)
+        {
+            [measureData setObject:[NSNumber numberWithDouble:[heat doubleValue]] forKey:Key_BodyTemperature];
+        }
+        else
+        {
+            double tempC = ([heat doubleValue]-32.f)/1.8f;
+            [measureData setObject:[NSNumber numberWithDouble:tempC] forKey:Key_BodyTemperature];
+        }
+        
     }
     if ([heartbeat length] != 0 && [heartbeat intValue]>0)
     {
@@ -349,6 +358,28 @@
 //    [MobClick endLogPageView:UmengPathGeRenXinXi];
 }
 
+-(void)checkSubmitItemEnableState
+{
+    BOOL hasInput = NO;
+    for (NSString *key in [self.userInputValueDict allKeys])
+    {
+        NSString *value = [self.userInputValueDict objectForKey:key];
+        if ([value length]!=0)
+        {
+            hasInput = YES;
+            break;
+        }
+    }
+    if (hasInput || [self.userSelectedSymptom count]!= 0)
+    {
+        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+    }
+    else
+    {
+        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    }
+
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -488,13 +519,15 @@
         cell.heartbeatLabel.text = NSLocalizedString(@"jiangkangjilu_c_xintiao", @"心跳项标题：心跳");
         cell.highpressureLabel.text = NSLocalizedString(@"jiankangjilu_c_gaoya", @"高压项标题：高压");
         cell.lowpressureLabel.text = NSLocalizedString(@"jiankangjilu_c_diya", @"低压项标题：低压");
-        cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_sheshidu", @"体温项单位：摄氏度");
+        
         if (isChinese) {
             cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_gongjin", @"体重项单位：公斤");
+            cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_sheshidu", @"体温项单位：摄氏度");
         }
         else
         {
             cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_bang", @"体重项单位：磅");
+            cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_huashidu", @"体温项单位：华氏度");
         }
         
         cell.heartbeatUnitLabel.text = NSLocalizedString(@"jaingkanjilu_c_xintiaodanwei", @"心跳项单位：次/分钟");
@@ -604,15 +637,16 @@
     {
         [self.userSelectedSymptom removeObject:text];
     }
-    if ([self.userSelectedSymptom count]!= 0)
-    {
-        [self.navigationItem.rightBarButtonItem setEnabled:YES];
-    }
-    else
-    {
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    }
-       
+    [self checkSubmitItemEnableState];
+//    if ([self.userSelectedSymptom count]!= 0)
+//    {
+//        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+//    }
+//    else
+//    {
+//        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+//    }
+    
     
 }
 #pragma mark- UITextFieldDelegate
@@ -687,6 +721,7 @@
         default:
             break;
     }
+    [self checkSubmitItemEnableState];
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
@@ -718,6 +753,7 @@
     {
         [self.userInputValueDict setObject:content forKey:@"note"];
     }
+    [self checkSubmitItemEnableState];
 }
 
 #pragma mark- LZKeyboardToolBarDelegate

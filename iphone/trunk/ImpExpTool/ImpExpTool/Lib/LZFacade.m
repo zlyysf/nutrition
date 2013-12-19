@@ -52,7 +52,7 @@
 //    [workRe convertExcelToSqlite_TranslationItem];
     
     [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
-    [workRe checkIllnessInferenceTxtdoc];
+//    [workRe checkIllnessInferenceTxtdoc];
     
 ////    [workRe convertExcelToSqlite_IllnessSuggestionTxtdoc];
     
@@ -134,6 +134,7 @@
     [db convertSymptomTypeInfoToCsv:@"SymptomType.csv"];
     [db convertSymptomInfoToCsv:@"Symptom.csv"];
     [db convertIllnessInfoToCsv:@"Illness.csv"];
+    [db convertIllnessSuggestionToCsv:@"IllnessSuggestion.csv"];
     
     LZReadExcel *workRe = [[LZReadExcel alloc]init];
     [workRe myInitDBConnectionWithFilePath:dbFilePath1 andIfNeedClear:FALSE];

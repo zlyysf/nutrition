@@ -138,7 +138,7 @@
         {
             floor+=1;
         }
-        startX = 10+(i-(floor-1)*perRowCount)*95;
+        startX = 15+(i-(floor-1)*perRowCount)*95;
         NSDictionary *foodInfo = [foodArray objectAtIndex:i];
         NSString *picturePath;
         NSString *picPath = [foodInfo objectForKey:@"PicPath"];
