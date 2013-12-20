@@ -82,8 +82,8 @@
 - (void)configureGraph
 {
     self.graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
-    self.graph.paddingLeft = self.graph.paddingRight = 0.0;
-    self.graph.paddingTop = self.graph.paddingBottom = 0.0;
+    self.graph.paddingLeft = self.graph.paddingRight = 8.0;
+    self.graph.paddingTop = self.graph.paddingBottom = 8.0;
     CPTTheme *theme = [CPTTheme themeNamed:kCPTPlainWhiteTheme];
     [self.graph applyTheme:theme];
     
@@ -102,28 +102,28 @@
     CPTXYPlotSpace * plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
     //plotSpace.allowsUserInteraction = YES;
     if (self.scatterType == ScatterTypeBMI) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3.5) length:CPTDecimalFromFloat(34.5)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.2) length:CPTDecimalFromFloat(33.7)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(20.86) length:CPTDecimalFromFloat(2.39)];
     }
     else if (self.scatterType == ScatterTypeTemperature) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3.5) length:CPTDecimalFromFloat(34.5)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-0.9) length:CPTDecimalFromFloat(32.6)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(34.5) length:CPTDecimalFromFloat(7.8)];
     }
     else if (self.scatterType == ScatterTypeBP) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3) length:CPTDecimalFromFloat(34)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.6) length:CPTDecimalFromFloat(33.1)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(50) length:CPTDecimalFromFloat(152)];
     }
     else if (self.scatterType == ScatterTypeNI) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3) length:CPTDecimalFromFloat(34)];
-        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(57) length:CPTDecimalFromFloat(45)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(57.5) length:CPTDecimalFromFloat(43)];
     }
     else if (self.scatterType == ScatterTypeWeight) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3) length:CPTDecimalFromFloat(34)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-0.9) length:CPTDecimalFromFloat(32.6)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(36.5) length:CPTDecimalFromFloat(60)];
     }
     else if (self.scatterType == ScatterTypeHeartbeat) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-3) length:CPTDecimalFromFloat(34)];
-        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(43) length:CPTDecimalFromFloat(35)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-0.9) length:CPTDecimalFromFloat(32.6)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(43) length:CPTDecimalFromFloat(28)];
     }
     else {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(33.5)];
@@ -186,7 +186,7 @@
     //    axisLineStyle.lineColor = [CPTColor blackColor];
     //    x.axisLineStyle = axisLineStyle;
     
-    //x.labelingPolicy = CPTAxisLabelingPolicyNone;
+    x.labelingPolicy = CPTAxisLabelingPolicyNone;
     
     //    CPTMutableTextStyle *axisTextStyle = [[CPTMutableTextStyle alloc] init];
     //    axisTextStyle.color = [CPTColor blackColor];
@@ -207,19 +207,22 @@
     x.tickDirection = CPTSignNegative;
     
     
-//    NSMutableSet *xLabels = [NSMutableSet setWithCapacity:1];
-//    NSMutableSet *xLocations = [NSMutableSet setWithCapacity:1];
-//    CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:@"1"  textStyle:x.labelTextStyle];
-//    CGFloat location = 1;
-//    label.tickLocation = CPTDecimalFromCGFloat(location);
-//    label.offset = x.majorTickLength;
-//    if (label) {
-//        [xLabels addObject:label];
-//        [xLocations addObject:[NSNumber numberWithFloat:location]];
-//    }
-//    x.axisLabels = xLabels;
-//    x.majorTickLocations = xLocations;
-//    
+    NSUInteger dateCount = 11;
+    NSMutableSet *xLabels = [NSMutableSet setWithCapacity:dateCount];
+    NSMutableSet *xLocations = [NSMutableSet setWithCapacity:dateCount];
+    for (int i = 0; i < dateCount; i++) {
+        int dateNum = i * 3 + 1;
+        CPTAxisLabel *label = [[CPTAxisLabel alloc] initWithText:[NSString stringWithFormat:@"%d", dateNum]  textStyle:x.labelTextStyle];
+        label.tickLocation = CPTDecimalFromCGFloat(dateNum);
+        label.offset = x.majorTickLength;
+        if (label) {
+            [xLabels addObject:label];
+            [xLocations addObject:[NSNumber numberWithFloat:dateNum]];
+        }
+    }
+    x.axisLabels = xLabels;
+    x.majorTickLocations = xLocations;
+//
 //    xLabels = [NSMutableSet setWithCapacity:1];
 //    xLocations = [NSMutableSet setWithCapacity:1];
 //    label = [[CPTAxisLabel alloc] initWithText:@"3"  textStyle:x.labelTextStyle];
@@ -234,7 +237,7 @@
 //    x.minorTickLocations = xLocations;
     
     
-    
+    //x.axisConstraints = [CPTConstraints constraintWithUpperOffset:132];
     
     // 需要排除的不显示数字的主刻度
     NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-5) length:CPTDecimalFromFloat(4)],
@@ -252,13 +255,13 @@
     axisTitleStyle.fontName = @"Helvetica-Bold";
     axisTitleStyle.fontSize = 12.0f;
     if (self.scatterType == ScatterTypeTemperature) {
-        y.title = @"(℃)";
+        //y.title = @"(℃)";
         y.titleTextStyle = axisTitleStyle;
         y.titleOffset = 15;
         y.majorGridLineStyle = y.majorTickLineStyle;
         y.labelOffset = -8.0f;
         
-        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
         NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
         [yFormatter setMaximumFractionDigits:1];
@@ -279,7 +282,7 @@
         y.majorGridLineStyle = y.majorTickLineStyle;
         y.labelOffset = -8.0f;
         
-        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
         NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
         [yFormatter setMaximumFractionDigits:1];
@@ -300,7 +303,7 @@
         y.majorGridLineStyle = y.majorTickLineStyle;
         y.labelOffset = -8.0f;
         
-        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
         NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
         [yFormatter setMaximumFractionDigits:1];
@@ -320,7 +323,7 @@
         y.majorGridLineStyle = y.majorTickLineStyle;
         y.labelOffset = -8.0f;
         
-        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
         NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
         [yFormatter setMaximumFractionDigits:1];
@@ -340,7 +343,7 @@
         y.majorGridLineStyle = y.majorTickLineStyle;
         y.labelOffset = -8.0f;
         
-        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
         NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
         [yFormatter setMaximumFractionDigits:1];
@@ -360,7 +363,7 @@
         y.majorGridLineStyle = y.majorTickLineStyle;
         y.labelOffset = -8.0f;
         
-        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
         NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
         [yFormatter setMaximumFractionDigits:1];

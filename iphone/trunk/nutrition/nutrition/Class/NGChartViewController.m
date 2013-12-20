@@ -255,7 +255,7 @@
         NSMutableArray *hbpArray = [NSMutableArray arrayWithCapacity:POINTS_COUNT];
         for (NSInteger i = 0; i < 2; i++) {
             for (NSInteger j = 0; j < POINTS_COUNT; j++) {
-                int day = 1 + j * 1.5;
+                int day = j + 1;
                 NSNumber *x = [NSNumber numberWithInteger:day];
                 int lowerBound, upperBound;
                 if (i == 0) {
@@ -284,7 +284,7 @@
         NSMutableArray *dataForPlot = [NSMutableArray arrayWithCapacity:POINTS_COUNT];
         dataForPlot = [NSMutableArray arrayWithCapacity:POINTS_COUNT];
         for (NSInteger i = 0; i < POINTS_COUNT; i++) {
-            int day = 1 + i * 1.5;
+            int day = i + 1;
             NSNumber *x = [NSNumber numberWithInteger:day];
             NSNumber *y;
             if (currentScatterType == ScatterTypeBMI) {
