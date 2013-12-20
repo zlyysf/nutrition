@@ -123,6 +123,29 @@ public class StoredConfigTool {
 		editor.putInt(Constants.ParamKey_activityLevel, activityLevel);
 		editor.commit();
 	}
+	public static void saveUserInfo_withPartItems(Context ctx, HashMap<String, Object> userInfo){
+		if(userInfo==null){
+			return ;
+		}
+		Integer intObj_sex = (Integer)userInfo.get(Constants.ParamKey_sex);
+		Integer intObj_age = (Integer)userInfo.get(Constants.ParamKey_age);
+		Double dblObj_weight = (Double)userInfo.get(Constants.ParamKey_weight);
+		Double dblObj_height = (Double)userInfo.get(Constants.ParamKey_height);
+		Integer intObj_activityLevel = (Integer)userInfo.get(Constants.ParamKey_activityLevel);
+		
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = sharedPref.edit();
+		
+		if(intObj_sex!=null) editor.putInt(Constants.ParamKey_sex, intObj_sex.intValue());
+		if(intObj_age!=null) editor.putInt(Constants.ParamKey_age, intObj_age.intValue());
+		if(dblObj_weight!=null) editor.putFloat(Constants.ParamKey_weight, dblObj_weight.floatValue());
+		if(dblObj_height!=null) editor.putFloat(Constants.ParamKey_height, dblObj_height.floatValue());
+		if(intObj_activityLevel!=null) editor.putInt(Constants.ParamKey_activityLevel, intObj_activityLevel.intValue());
+		
+		editor.commit();
+	}
+	
+	
 	
 	public static String[] getNutrientsToRecommend(Context ctx){
 		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);

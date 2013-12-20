@@ -34,6 +34,7 @@ import com.lingzhimobile.nutritionfoodguide.AsyncTaskDoRecommend;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.R;
+import com.lingzhimobile.nutritionfoodguide.StoredConfigTool;
 import com.lingzhimobile.nutritionfoodguide.Tool;
 import com.lingzhimobile.nutritionfoodguide.myProgressDialog;
 import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityReport;
@@ -158,6 +159,12 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
             	int HeartRate = Integer.parseInt(m_etHeartRate.getText().toString());
             	int BloodPressureLow = Integer.parseInt(m_etBloodPressureLow.getText().toString());
             	int BloodPressureHigh = Integer.parseInt(m_etBloodPressureHigh.getText().toString());
+            	
+            	if (Weight>0){
+            		HashMap<String, Object> userInfo = new HashMap<String, Object>();
+            		userInfo.put(Constants.Key_Weight, Double.valueOf(Weight));
+            		StoredConfigTool.saveUserInfo_withPartItems(getActivity(), userInfo);
+            	}
             	
                 Intent intent = new Intent(getActivity(), V3ActivityReport.class);
                 intent.putStringArrayListExtra(Constants.COLUMN_NAME_SymptomId, selectedSymptomIds);

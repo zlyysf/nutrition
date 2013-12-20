@@ -1089,7 +1089,7 @@ public class Tool {
 	 */
 	public static double getBMI_withWeight(double weight,double height)
 	{
-	    double BMI = weight / (height*height);
+	    double BMI = weight * 10000 / (height*height);// *10000 is because height unit is cm
 	    return BMI;
 	}
 	
@@ -1130,19 +1130,19 @@ public class Tool {
 	            }
 	        }
 	        
-	        Double nmBodyTemperature = (Double)measureData.get(Constants.Key_BodyTemperature);
-	        if (nmBodyTemperature != null){
-	            double bodyTemperature = nmBodyTemperature.doubleValue();
-	            if (bodyTemperature >= 40.0){
-	                inferIllnessAry.add("超高热");
-	            }else if (bodyTemperature >= 39.0){
-	                inferIllnessAry.add("高热");
-	            }else if (bodyTemperature >= 38.0){
-	                inferIllnessAry.add("中热");
-	            }else if (bodyTemperature >= 37.5){
-	                inferIllnessAry.add("低热");
-	            }
-	        }
+//	        Double nmBodyTemperature = (Double)measureData.get(Constants.Key_BodyTemperature);
+//	        if (nmBodyTemperature != null){
+//	            double bodyTemperature = nmBodyTemperature.doubleValue();
+//	            if (bodyTemperature >= 40.0){
+//	                inferIllnessAry.add("超高热");
+//	            }else if (bodyTemperature >= 39.0){
+//	                inferIllnessAry.add("高热");
+//	            }else if (bodyTemperature >= 38.0){
+//	                inferIllnessAry.add("中热");
+//	            }else if (bodyTemperature >= 37.5){
+//	                inferIllnessAry.add("低热");
+//	            }
+//	        }
 	    }
 	    
 	    String[] ganMao_SymptomsFull1 = {"鼻塞","清鼻涕","鼻后滴漏","喷嚏"};

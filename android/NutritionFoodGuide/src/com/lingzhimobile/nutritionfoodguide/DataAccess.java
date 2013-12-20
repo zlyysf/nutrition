@@ -2135,6 +2135,31 @@ public class DataAccess {
 	    return nutrientIds;
 	}
 	
+	public ArrayList<String> getSymptomNutrientIdsWithDisplaySort_BySymptomIds(ArrayList<String> symptomIds)
+	{
+		Log.d(LogTag, "getSymptomNutrientIdsWithDisplaySort_BySymptomIds enter");
+		if (symptomIds==null || symptomIds.size()==0)
+			return null;
+		
+		StringBuffer sbQuery = new StringBuffer();
+		String placeholdersStr = generatePlaceholderPartForIn(symptomIds.size());
+
+		sbQuery.append("SELECT NutrientID, sum(NutrientID) FROM SymptomNutrient"+
+				" WHERE SymptomId IN ("+placeholdersStr+")"+
+				" GROUP BY NutrientID"+
+				" ORDER BY sum(NutrientID) desc;");
+	   
+		Cursor cs = mDBcon.rawQuery(sbQuery.toString(),symptomIds.toArray(new String[symptomIds.size()]));
+	    ArrayList<HashMap<String, Object>> rows = Tool.getRowsWithTypeFromCursor(cs);
+	    cs.close();
+	    
+	    ArrayList<Object> nutrientIdsAsOBj = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_NutrientID, rows);
+	    ArrayList<String> nutrientIds = Tool.convertToStringArrayList(nutrientIdsAsOBj);
+	    
+	    Log.d(LogTag, "getSymptomNutrientIdsWithDisplaySort_BySymptomIds ret:"+Tool.getIndentFormatStringOfObject(nutrientIds,0) );
+	    return nutrientIds;
+	}
+	
 	public double getSymptomHealthMarkSum_BySymptomIds(String[] symptomIds)
 	{
 		Log.d(LogTag, "getSymptomHealthMark_BySymptomIds enter");
