@@ -105,6 +105,31 @@
         healthScore = 0;
     }
 
+    //得到用户症状的数组
+    NSMutableArray *symptomsByTypeArray = [[NSMutableArray alloc]init];
+    for (NSDictionary *symptomTypeDict in symptomTypeRows)
+    {
+        NSString *symptomTypeId = [symptomTypeDict objectForKey:COLUMN_NAME_SymptomTypeId];
+        NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
+        NSMutableArray *itemStateArray = [self.symptomStateDict objectForKey:symptomTypeId];
+        NSMutableArray *selectSymtomArray = [[NSMutableArray alloc]init];
+        for (int i = 0;i<[itemStateArray count];i++)
+        {
+            NSNumber *state = [itemStateArray objectAtIndex:i];
+            if ([state boolValue])
+            {
+                NSDictionary *symtomDict = [symptomIdRelatedArray objectAtIndex:i];
+                NSString *symtomId = [symtomDict objectForKey:@"SymptomId"];
+                [selectSymtomArray addObject:symtomId];
+            }
+        }
+        if ([selectSymtomArray count]!=0)
+        {
+            NSArray *aSymptomsByType = [[NSArray alloc]initWithObjects:symptomTypeId,selectSymtomArray, nil];
+            [symptomsByTypeArray addObject:aSymptomsByType];
+        }
+    }
+    
     
     //根据症状和测量数据得到用户的潜在疾病和BMI值
         //1.计算BMI
@@ -206,6 +231,7 @@
     int dayLocal = [dayStr intValue];
     NSMutableDictionary * InputNameValuePairsData = [NSMutableDictionary dictionary];
     [InputNameValuePairsData setObject:userSelectedSymptom forKey:Key_Symptoms];
+    [InputNameValuePairsData setObject:symptomsByTypeArray forKey:Key_SymptomsByType];
     if ([measureData objectForKey:Key_BodyTemperature]) {
         [InputNameValuePairsData setObject:[measureData objectForKey:Key_BodyTemperature] forKey:Key_Temperature];
     }
@@ -252,8 +278,8 @@
                 NSString *attentionId = [anAttention objectForKey:@"SuggestionId"];
                 [attentionIdArray addObject:attentionId];
             }
-            [illnessAttention setObject:attentionIdArray forKey:illnessId];
         }
+        [illnessAttention setObject:attentionIdArray forKey:illnessId];
     }
 
     [CalculateNameValuePairsData setObject:illnessAttention forKey:Key_InferIllnessesAndSuggestions];
