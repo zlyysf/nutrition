@@ -54,6 +54,7 @@
 		B9B8BD76182EB096001C61CA /* 开心果@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD75182EB096001C61CA /* 开心果@2x.png */; };
 		B9B8BD7A182EC8DA001C61CA /* clinic-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9B8BD79182EC8DA001C61CA /* clinic-50@2x.png */; };
 		B9C235B118481B2C00D7ACCD /* red_triangle@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9C235B018481B2C00D7ACCD /* red_triangle@2x.png */; };
+		B9CD95441866A7FC00D29E2E /* appicon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9CD95431866A7FC00D29E2E /* appicon@2x.png */; };
 		B9FD73291833DEEE00D8051B /* 体温计@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73161833DEEE00D8051B /* 体温计@2x.png */; };
 		B9FD732A1833DEEE00D8051B /* 体重@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73171833DEEE00D8051B /* 体重@2x.png */; };
 		B9FD732B1833DEEE00D8051B /* 嘴@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = B9FD73181833DEEE00D8051B /* 嘴@2x.png */; };
@@ -82,7 +83,7 @@
 		B909100B183541D500B89A21 /* left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left@2x.png"; sourceTree = "<group>"; };
 		B948352B1830704000FCBB8F /* detail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail@2x.png"; sourceTree = "<group>"; };
 		B948352D1830780C00FCBB8F /* detail2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail2@2x.png"; sourceTree = "<group>"; };
-		B9770783182AA4FC006FD25E /* health.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = health.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9770783182AA4FC006FD25E /* 调养胶囊.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "调养胶囊.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9770786182AA4FC006FD25E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B9770788182AA4FC006FD25E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B977078A182AA4FC006FD25E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -120,7 +121,6 @@
 		B9AEA061183BD6A900E921A0 /* 豆制品@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "豆制品@2x.png"; sourceTree = "<group>"; };
 		B9AEA06E183C146B00E921A0 /* gray line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray line@2x.png"; sourceTree = "<group>"; };
 		B9AEA072183C179C00E921A0 /* gray vertical line@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "gray vertical line@2x.png"; sourceTree = "<group>"; };
-		B9B7AEC5184C08F1002951BB /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main_iPhone.strings; sourceTree = "<group>"; };
 		B9B7AEC8184C124F002951BB /* fork@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "fork@2x.png"; sourceTree = "<group>"; };
 		B9B7AECA184C13D0002951BB /* history@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "history@2x.png"; sourceTree = "<group>"; };
 		B9B8BD6B182EA050001C61CA /* document-75.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "document-75.png"; sourceTree = "<group>"; };
@@ -130,6 +130,7 @@
 		B9B8BD75182EB096001C61CA /* 开心果@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "开心果@2x.png"; sourceTree = "<group>"; };
 		B9B8BD79182EC8DA001C61CA /* clinic-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "clinic-50@2x.png"; sourceTree = "<group>"; };
 		B9C235B018481B2C00D7ACCD /* red_triangle@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "red_triangle@2x.png"; sourceTree = "<group>"; };
+		B9CD95431866A7FC00D29E2E /* appicon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "appicon@2x.png"; path = "icons/appicon@2x.png"; sourceTree = "<group>"; };
 		B9FD73161833DEEE00D8051B /* 体温计@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体温计@2x.png"; sourceTree = "<group>"; };
 		B9FD73171833DEEE00D8051B /* 体重@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "体重@2x.png"; sourceTree = "<group>"; };
 		B9FD73181833DEEE00D8051B /* 嘴@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "嘴@2x.png"; sourceTree = "<group>"; };
@@ -167,6 +168,7 @@
 		B977077A182AA4FC006FD25E = {
 			isa = PBXGroup;
 			children = (
+				B9CD95431866A7FC00D29E2E /* appicon@2x.png */,
 				B97B4097182D48F000F0333E /* icons */,
 				B977078C182AA4FC006FD25E /* health */,
 				B9770785182AA4FC006FD25E /* Frameworks */,
@@ -177,7 +179,7 @@
 		B9770784182AA4FC006FD25E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B9770783182AA4FC006FD25E /* health.app */,
+				B9770783182AA4FC006FD25E /* 调养胶囊.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -299,7 +301,7 @@
 			);
 			name = health;
 			productName = health;
-			productReference = B9770783182AA4FC006FD25E /* health.app */;
+			productReference = B9770783182AA4FC006FD25E /* 调养胶囊.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -394,6 +396,7 @@
 				B9815C8718304CAA000D6439 /* month_view-50@2x.png in Resources */,
 				B9AAC059182FEAAE00810F8D /* rounded square@2x.png in Resources */,
 				B9AEA064183BD6A900E921A0 /* 奶制品@2x.png in Resources */,
+				B9CD95441866A7FC00D29E2E /* appicon@2x.png in Resources */,
 				B9AEA073183C179C00E921A0 /* gray vertical line@2x.png in Resources */,
 				B9FD732C1833DEEE00D8051B /* 头发@2x.png in Resources */,
 				B9FD73321833DEEE00D8051B /* 肺@2x.png in Resources */,
@@ -430,7 +433,6 @@
 			isa = PBXVariantGroup;
 			children = (
 				B9770799182AA4FC006FD25E /* Base */,
-				B9B7AEC5184C08F1002951BB /* en */,
 			);
 			name = Main_iPhone.storyboard;
 			sourceTree = "<group>";
@@ -532,7 +534,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "health/health-Prefix.pch";
 				INFOPLIST_FILE = "health/health-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "调养胶囊";
 				PROVISIONING_PROFILE = "EAE2CAB2-3112-424A-9368-17C5D8B1B851";
 				WRAPPER_EXTENSION = app;
 			};
@@ -548,7 +550,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "health/health-Prefix.pch";
 				INFOPLIST_FILE = "health/health-Info.plist";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "调养胶囊";
 				PROVISIONING_PROFILE = "EAE2CAB2-3112-424A-9368-17C5D8B1B851";
 				WRAPPER_EXTENSION = app;
 			};
