@@ -2307,7 +2307,7 @@
 -(BOOL)insertUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairsData:(NSDictionary*)inputNameValuePairsData andNote:(NSString*)Note andCalculateNameValuePairsData:(NSDictionary*)calculateNameValuePairsData
 {
 //    NSArray* Symptoms = [inputNameValuePairsData objectForKey: Key_Symptoms];
-//    NSNumber *nmTemperature = [inputNameValuePairsData objectForKey: Key_Temperature];
+//    NSNumber *nmTemperature = [inputNameValuePairsData objectForKey: Key_BodyTemperature];
 //    NSNumber *nmWeight = [inputNameValuePairsData objectForKey: Key_Weight];
 //    NSNumber *nmHeartRate = [inputNameValuePairsData objectForKey: Key_HeartRate];
 //    NSNumber *nmBloodPressureLow = [inputNameValuePairsData objectForKey: Key_BloodPressureLow];

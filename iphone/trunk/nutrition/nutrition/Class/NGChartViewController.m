@@ -537,7 +537,7 @@
             }
             else if (scatterType == ScatterTypeTemperature)
             {
-                NSNumber *temperature = [inputNameValuePairs objectForKey:Key_Temperature];
+                NSNumber *temperature = [inputNameValuePairs objectForKey:Key_BodyTemperature];
                 if (temperature != nil)
                 {
                     [dataSource addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:x],@"x",temperature,@"y" ,nil]];

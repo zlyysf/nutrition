@@ -233,7 +233,7 @@
     [InputNameValuePairsData setObject:userSelectedSymptom forKey:Key_Symptoms];
     [InputNameValuePairsData setObject:symptomsByTypeArray forKey:Key_SymptomsByType];
     if ([measureData objectForKey:Key_BodyTemperature]) {
-        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BodyTemperature] forKey:Key_Temperature];
+        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BodyTemperature] forKey:Key_BodyTemperature];
     }
     if ([measureData objectForKey:Key_Weight]) {
         [InputNameValuePairsData setObject:[measureData objectForKey:Key_Weight] forKey:Key_Weight];

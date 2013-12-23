@@ -247,7 +247,7 @@
 
 #define Key_Symptoms @"Symptoms"
 #define Key_SymptomsByType @"SymptomsByType"
-#define Key_Temperature @"Temperature"
+//#define Key_Temperature @"Temperature"
 #define Key_BMI @"BMI"
 //#define Key_LackNutrientIDs @"LackNutrientIDs"
 #define Key_LackNutrientsAndFoods @"LackNutrientsAndFoods"
