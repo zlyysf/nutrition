@@ -239,7 +239,7 @@ public class TestCaseDA {
 	    Object[] Symptoms = new Object[]{"s11",1.23};
 	    InputNameValuePairsData = new HashMap<String, Object>();
 	    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
-	    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+	    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
 	    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
 	    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
 	    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
@@ -279,7 +279,7 @@ public class TestCaseDA {
 //	    note = "note1b";
 //	    InputNameValuePairsData = new HashMap<String, Object>();
 //	    InputNameValuePairsData.put(Constants.Key_Symptoms, new String[]{"s11b","s12b"});
-//	    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.72));
+//	    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.72));
 //	    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.82));
 //	    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(612));
 //	    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(802));
@@ -307,7 +307,7 @@ public class TestCaseDA {
 //	    
 //	    InputNameValuePairsData = new HashMap<String, Object>();
 //	    InputNameValuePairsData.put(Constants.Key_Symptoms, new String[]{"s21","s22"});
-//	    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(236.7));
+//	    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(236.7));
 //	    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(267.8));
 //	    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(261));
 //	    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(280));
@@ -351,7 +351,7 @@ public class TestCaseDA {
 		    Object[] Symptoms = new Object[]{"头晕","易流泪"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
 		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
-		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
@@ -396,7 +396,7 @@ public class TestCaseDA {
 		    Object[] Symptoms = new Object[]{"头发干枯","耳鸣"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
 		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
-		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(37.7));
+		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(37.7));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(68.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(71));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(85));
@@ -441,7 +441,7 @@ public class TestCaseDA {
 		    Object[] Symptoms = new Object[]{"脸色苍白","视觉模糊"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
 		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
-		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(37.1));
+		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(37.1));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(65.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(75));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(95));
@@ -486,7 +486,7 @@ public class TestCaseDA {
             Object[] Symptoms = new Object[]{"头晕","易流泪"};
             InputNameValuePairsData = new HashMap<String, Object>();
             InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
-            InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+            InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
             InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
             InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
             InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
@@ -531,7 +531,7 @@ public class TestCaseDA {
             Object[] Symptoms = new Object[]{"头晕","易流泪"};
             InputNameValuePairsData = new HashMap<String, Object>();
             InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
-            InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+            InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
             InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
             InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
             InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
@@ -576,7 +576,7 @@ public class TestCaseDA {
             Object[] Symptoms = new Object[]{"头晕","易流泪"};
             InputNameValuePairsData = new HashMap<String, Object>();
             InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
-            InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+            InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
             InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
             InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
             InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
@@ -621,7 +621,7 @@ public class TestCaseDA {
 		    Object[] Symptoms = new Object[]{"脸下垂","易疲劳"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
 		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
-		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.1));
+		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.1));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(69.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(70));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(75));
@@ -666,7 +666,7 @@ public class TestCaseDA {
 		    Object[] Symptoms = new Object[]{"脸抽搐","浑浊"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
 		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
-		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.6));
+		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.6));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(66.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(73));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(78));
@@ -711,7 +711,7 @@ public class TestCaseDA {
 		    Object[] Symptoms = new Object[]{"老年斑","发红发痒"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
 		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
-		    InputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.6));
+		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.6));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(66.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(73));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(78));
@@ -770,7 +770,7 @@ public class TestCaseDA {
 	    	HashMap<String, Object> calculateNameValuePairsData = new HashMap<String, Object>();
 		   
 	    	inputNameValuePairsData.put(Constants.Key_Symptoms, new Object[]{"症状1","症状2"});
-	    	inputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+	    	inputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
 
 	    	calculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.4));
 
@@ -823,7 +823,7 @@ public class TestCaseDA {
 	    	HashMap<String, Object> calculateNameValuePairsData = new HashMap<String, Object>();
 		   
 	    	inputNameValuePairsData.put(Constants.Key_Symptoms, new Object[]{"Symptom1","Symptom2"});
-	    	inputNameValuePairsData.put(Constants.Key_Temperature, Double.valueOf(36.7));
+	    	inputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
 
 	    	calculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.4));
 

@@ -192,15 +192,16 @@ public class Constants {
 	public static final String Key_Weight = "Weight";
 
 	public static final String Key_Symptoms ="Symptoms";
-	public static final String Key_Temperature ="Temperature";
+	public static final String Key_SymptomsByType ="SymptomsByType";//store redundant data [ [symptomType1,[symptom11,symptom12]], [symptomType2,[symptom21,symptom22]] ]
+//	public static final String Key_Temperature ="Temperature";
 	public static final String Key_BMI ="BMI";
 //	public static final String Key_LackNutrientIDs ="LackNutrientIDs";
 	public static final String Key_LackNutrientsAndFoods ="LackNutrientsAndFoods";
 	public static final String Key_InferIllnessesAndSuggestions ="InferIllnessesAndSuggestions";
-//	public static final String Key_InferIllnesses ="InferIllnesses";
+	public static final String Key_IllnessIds ="IllnessIds";
+	public static final String Key_distinctSuggestionIds ="distinctSuggestionIds";
 	public static final String Key_HealthMark ="HealthMark";
 //	public static final String Key_RecommendFoodAndAmounts ="RecommendFoodAndAmounts";
-//	public static final String Key_Suggestions ="Suggestions";
 	public static final String Key_NutrientsWithFoodAndAmounts ="NutrientsWithFoodAndAmounts";
 
 	

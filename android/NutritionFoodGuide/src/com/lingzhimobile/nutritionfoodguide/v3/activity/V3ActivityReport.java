@@ -1,22 +1,32 @@
 package com.lingzhimobile.nutritionfoodguide.v3.activity;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Map.Entry;
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import android.R.integer;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.NutritionTool;
@@ -25,29 +35,32 @@ import com.lingzhimobile.nutritionfoodguide.RecommendFood;
 import com.lingzhimobile.nutritionfoodguide.StoredConfigTool;
 import com.lingzhimobile.nutritionfoodguide.Tool;
 import com.lingzhimobile.nutritionfoodguide.test.TestCaseRecommendFood;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3DiagnoseFragment;
 
 public class V3ActivityReport extends V3BaseActivity {
+	
+	static final String LogTag = "V3ActivityReport";
 	
 	final static int c_nutrientFoodCountLimit = 5;
 
     // widgets
+	Button m_btnSave;
     ListView elementFoodListView;
     ListView diseaseAttentionListView;
     LinearLayout attentionLinearLayout;
-    
     TextView bmiTextView, healthTextView;
 
-
-    
     ArrayList<String> m_SymptomIdList;
     String[] m_symptomIds;
+    String m_SymptomsByType_str;
+    ArrayList<Object> m_SymptomsByType;
     double m_BodyTemperature, m_Weight;
     int m_HeartRate, m_BloodPressureLow, m_BloodPressureHigh;
     HashMap<String, Object> m_measureHm;
+    String m_note;
     
     HashMap<String, Double> m_DRIsDict;
     HashMap<String, HashMap<String, Object>> m_nutrientInfoDict2Level;
-    
     
     double m_BMI, m_HealthMark;
     ArrayList<String> m_nutrientIdList;
@@ -56,6 +69,8 @@ public class V3ActivityReport extends V3BaseActivity {
     ArrayList<String> m_illnessIdList ;
     HashMap<String, HashMap<String, Object>> m_illnessInfoDict2Level;
     HashMap<String, ArrayList<HashMap<String, Object>>> m_suggestionsByIllnessHm;
+    
+    boolean m_alreadyExistDataRow = false;
 
 //    List<String> nutrientList = new ArrayList<String>();
 //    List<List<Pair<String, Double>>> recommendFoodList = new ArrayList<List<Pair<String, Double>>>();
@@ -77,10 +92,11 @@ public class V3ActivityReport extends V3BaseActivity {
         
         da = DataAccess.getSingleton(this);
         
-        getInputParams();
-        calculate();
-        show();
-        
+        initViewHandles();
+        initViewsContent();
+        setViewEventHandlers();
+        setViewsContent();
+
 //        GetNutrientFoodTask getNutrientFoodTask = new GetNutrientFoodTask();
 //        getNutrientFoodTask.execute();
 //
@@ -89,7 +105,35 @@ public class V3ActivityReport extends V3BaseActivity {
 
     }
     
-    void getInputParams(){
+    void initViewHandles(){
+        m_btnSave = (Button) findViewById(R.id.rightButton);
+        bmiTextView = (TextView) findViewById(R.id.bmiTextView);
+        healthTextView = (TextView) findViewById(R.id.healthTextView);
+        elementFoodListView = (ListView) findViewById(R.id.elementFoodListView);
+        diseaseAttentionListView = (ListView) findViewById(R.id.diseaseAttentionListView);
+	}
+    
+    void initViewsContent(){
+    	getInputParams();
+        
+    }
+    
+    void setViewEventHandlers(){
+    	m_btnSave.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                save();
+            }
+        });
+    }
+    
+    void setViewsContent(){
+    	calculate();
+    	show();
+    }
+    
+    
+    void getInputParams() {
     	Intent intent = getIntent();
         m_SymptomIdList = intent.getStringArrayListExtra(Constants.COLUMN_NAME_SymptomId);
         m_symptomIds = Tool.convertToStringArray(m_SymptomIdList);
@@ -99,12 +143,24 @@ public class V3ActivityReport extends V3BaseActivity {
         m_HeartRate = intent.getIntExtra(Constants.Key_HeartRate, 0);
         m_BloodPressureLow = intent.getIntExtra(Constants.Key_BloodPressureLow, 0);
         m_BloodPressureHigh = intent.getIntExtra(Constants.Key_BloodPressureHigh, 0);
+        
+        m_note = intent.getStringExtra(Constants.COLUMN_NAME_Note);
+        
         m_measureHm = new HashMap<String, Object>();
         m_measureHm.put(Constants.Key_BodyTemperature, m_BodyTemperature);
         m_measureHm.put(Constants.Key_Weight, m_Weight);
         m_measureHm.put(Constants.Key_HeartRate, m_HeartRate);
         m_measureHm.put(Constants.Key_BloodPressureLow, m_BloodPressureLow);
         m_measureHm.put(Constants.Key_BloodPressureHigh, m_BloodPressureHigh);
+        
+        m_SymptomsByType_str = intent.getStringExtra(Constants.Key_SymptomsByType);
+        try {
+			m_SymptomsByType = Tool.JsonToArrayList(new JSONArray(m_SymptomsByType_str));
+			Log.d(LogTag, "m_SymptomsByType="+m_SymptomsByType);
+		} catch (JSONException e) {
+			Log.e(LogTag, "new JSONArray string Err"+e.getMessage(),e);
+			throw new RuntimeException(e);
+		}
     }
     
     ArrayList<HashMap<String, Object>> getRandItemWithGivenCount(int count, ArrayList<HashMap<String, Object>> items){
@@ -122,6 +178,12 @@ public class V3ActivityReport extends V3BaseActivity {
     }
     
     void calculate(){
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    	Date updateTime = new Date();
+		int dayLocal = Integer.parseInt(sdf.format(updateTime));
+    	HashMap<String, Object> row = da.getUserRecordSymptomDataByDayLocal(dayLocal);
+    	m_alreadyExistDataRow = (row!=null);
+    	
     	HashMap<String, Object> hmUserInfo = StoredConfigTool.getUserInfo(this);
     	m_DRIsDict = da.getStandardDRIs_withUserInfo(hmUserInfo, null);
     	
@@ -168,23 +230,104 @@ public class V3ActivityReport extends V3BaseActivity {
     			m_suggestionsByIllnessHm.put(illnessId, illnessSuggestions);
     		}
     	}
+    	
+    	if (!m_alreadyExistDataRow){
+    		save();
+    	}
     }
     
     void show(){
-		bmiTextView = (TextView) findViewById(R.id.bmiTextView);
 		String bmiStr = String.format("%3.1f", m_BMI);
 		bmiTextView.setText(bmiStr);
 		  
-		healthTextView = (TextView) findViewById(R.id.healthTextView);
 		healthTextView.setText(String.valueOf(m_HealthMark));
 		
-		elementFoodListView = (ListView) findViewById(R.id.elementFoodListView);
 		nutrientFoodAdapter = new NutrientFoodAdapter();
 		elementFoodListView.setAdapter(nutrientFoodAdapter);
 		
-		diseaseAttentionListView = (ListView) findViewById(R.id.diseaseAttentionListView);
 		diseaseAttentionAdapter = new DiseaseAttentionAdapter();
 		diseaseAttentionListView.setAdapter(diseaseAttentionAdapter);
+    }
+    
+    HashMap<String, HashMap<String, Double>> getData_FoodAndAmountByNutrient_fromFoodsByNutrient(){
+    	HashMap<String, HashMap<String, Double>> FoodAndAmountByNutrientData = new HashMap<String, HashMap<String,Double>>();
+    	if (m_FoodsByNutrient!=null){
+    		Iterator<Map.Entry<String, ArrayList<HashMap<String, Object>>>> iter = m_FoodsByNutrient.entrySet().iterator();
+    		while (iter.hasNext()) {
+    			Map.Entry<String, ArrayList<HashMap<String, Object>>> entry = iter.next();
+	    		String nutrientId = entry.getKey();
+	    		ArrayList<HashMap<String, Object>> foods = entry.getValue();
+	    		HashMap<String, Double> foodAndAmountHm = new HashMap<String, Double>();
+	    		if (foods!=null){
+	    			for(int i=0; i<foods.size(); i++){
+	    				HashMap<String, Object> food = foods.get(i);
+	    				String foodId = (String)food.get(Constants.COLUMN_NAME_NDB_No);
+	    				Double foodAmount = (Double)food.get(Constants.Key_Amount);
+	    				foodAndAmountHm.put(foodId, foodAmount);
+	    			}
+	    		}
+	    		FoodAndAmountByNutrientData.put(nutrientId, foodAndAmountHm);
+    		}
+    	}
+    	return FoodAndAmountByNutrientData;
+    }
+    
+    HashMap<String, ArrayList<String>> getData_SuggestionIdsByIllness_fromSuggestionsByIllness(){
+    	//HashMap<String, ArrayList<HashMap<String, Object>>> m_suggestionsByIllnessHm;
+    	HashMap<String, ArrayList<String>> SuggestionIdsByIllnessData = new HashMap<String, ArrayList<String>>();
+    	if (m_suggestionsByIllnessHm!=null){
+    		Iterator<Map.Entry<String, ArrayList<HashMap<String, Object>>>> iter = m_suggestionsByIllnessHm.entrySet().iterator();
+    		while (iter.hasNext()) {
+    			Map.Entry<String, ArrayList<HashMap<String, Object>>> entry = iter.next();
+    			String illnessId = entry.getKey();
+	    		ArrayList<HashMap<String, Object>> suggestions = entry.getValue();
+	    		ArrayList<Object> suggestionIdsAsObj = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_SuggestionId, suggestions);
+	    		ArrayList<String> suggestionIds = Tool.convertToStringArrayList(suggestionIdsAsObj);
+	    		if (suggestionIds==null)
+	    			suggestionIds = new ArrayList<String>();
+	    		SuggestionIdsByIllnessData.put(illnessId, suggestionIds);
+    		}
+    	}
+    	return SuggestionIdsByIllnessData;
+    }
+    
+    void save(){
+//    	Calendar calendarNow = Calendar.getInstance();
+//    	int year = calendarNow.get(Calendar.YEAR);    //获取年
+//    	int month = calendarNow.get(Calendar.MONTH) + 1; 
+    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    	Date updateTime = new Date();
+		int dayLocal = Integer.parseInt(sdf.format(updateTime));
+		
+	    HashMap<String, Object> InputNameValuePairsData;
+	    HashMap<String, Object> CalculateNameValuePairsData;
+	    HashMap<String, ArrayList<String>>  InferIllnessesAndSuggestions;
+	    
+	    InputNameValuePairsData = new HashMap<String, Object>();
+	    InputNameValuePairsData.put(Constants.Key_Symptoms, m_symptomIds);
+	    InputNameValuePairsData.put(Constants.Key_SymptomsByType, m_SymptomsByType);
+	    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(m_BodyTemperature));
+	    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(m_Weight));
+	    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(m_HeartRate));
+	    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(m_BloodPressureLow));
+	    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(m_BloodPressureHigh));
+
+	    CalculateNameValuePairsData = new HashMap<String, Object>();
+	    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(m_BMI));
+	    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(m_HealthMark));
+	    
+	    HashMap<String, HashMap<String, Double>> FoodAndAmountByNutrientData = getData_FoodAndAmountByNutrient_fromFoodsByNutrient();
+	    CalculateNameValuePairsData.put(Constants.Key_LackNutrientsAndFoods, FoodAndAmountByNutrientData);
+	    
+	    InferIllnessesAndSuggestions = getData_SuggestionIdsByIllness_fromSuggestionsByIllness();
+	    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+	    
+	    if (!m_alreadyExistDataRow){
+	    	da.insertUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,m_note,CalculateNameValuePairsData);
+	    	m_alreadyExistDataRow = true;
+	    }else{
+	    	da.updateUserRecordSymptom_withDayLocal(dayLocal, updateTime, InputNameValuePairsData, m_note, CalculateNameValuePairsData);
+	    }
     }
 
     class GetDiseaseAttentionTask extends AsyncTask<Void, Void, Void> {

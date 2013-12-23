@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apmem.tools.layouts.FlowLayout;
+import org.json.JSONArray;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -139,18 +140,28 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
             @Override
             public void onClick(View v) {
             	ArrayList<String> selectedSymptomIds = new ArrayList<String>();
+            	ArrayList<ArrayList<Object>> symptomIdsByType = new ArrayList<ArrayList<Object>>();
             	for(int i=0; i<m_symptomTypeRows.size(); i++){
             		HashMap<String, Object> symptomTypeRow = m_symptomTypeRows.get(i);
             		String symptomTypeId = (String)symptomTypeRow.get(Constants.COLUMN_NAME_SymptomTypeId);
             		ArrayList<HashMap<String, Object>> SymptomRowsByType = m_SymptomRowsByTypeDict.get(symptomTypeId);
             		SparseBooleanArray symptomCheckedFlagsByType = m_symptomCheckedFlagsByTypeHm.get(symptomTypeId);
+            		
+            		ArrayList<String> selectedSymptomIdsInType = new ArrayList<String>();
             		for(int j=0; j<SymptomRowsByType.size(); j++){
             			if (symptomCheckedFlagsByType.get(j)){
             				HashMap<String, Object> SymptomRow = SymptomRowsByType.get(j);
                 			String symptomId = (String)SymptomRow.get(Constants.COLUMN_NAME_SymptomId);
                 			selectedSymptomIds.add(symptomId);
+                			selectedSymptomIdsInType.add(symptomId);
             			}
-            		}	
+            		}
+            		if (selectedSymptomIdsInType.size()>0){
+            			ArrayList<Object> selectedSymptomIdsWithType = new ArrayList<Object>();
+            			selectedSymptomIdsWithType.add(symptomTypeId);
+            			selectedSymptomIdsWithType.add(selectedSymptomIdsInType);
+            			symptomIdsByType.add(selectedSymptomIdsWithType);
+            		}
             	}
             	Log.d(LogTag, "selectedSymptomIds="+selectedSymptomIds);
             	
@@ -159,6 +170,8 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
             	int HeartRate = Integer.parseInt(m_etHeartRate.getText().toString());
             	int BloodPressureLow = Integer.parseInt(m_etBloodPressureLow.getText().toString());
             	int BloodPressureHigh = Integer.parseInt(m_etBloodPressureHigh.getText().toString());
+            	
+            	String note = m_etNote.getText().toString();
             	
             	if (Weight>0){
             		HashMap<String, Object> userInfo = new HashMap<String, Object>();
@@ -173,6 +186,11 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
                 intent.putExtra(Constants.Key_HeartRate, HeartRate);
                 intent.putExtra(Constants.Key_BloodPressureLow, BloodPressureLow);
                 intent.putExtra(Constants.Key_BloodPressureHigh, BloodPressureHigh);
+                intent.putExtra(Constants.COLUMN_NAME_Note, note);
+                
+                JSONArray jsonAry_symptomIdsByType = Tool.CollectionToJSONArray(symptomIdsByType);
+                String jsonString_symptomIdsByType = jsonAry_symptomIdsByType.toString();
+                intent.putExtra(Constants.Key_SymptomsByType, jsonString_symptomIdsByType);
                 
                 getActivity().startActivity(intent);
             }
