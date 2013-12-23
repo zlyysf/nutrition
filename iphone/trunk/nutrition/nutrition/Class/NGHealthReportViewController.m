@@ -20,10 +20,9 @@
 #import "LZConstants.h"
 #define BorderColor [UIColor lightGrayColor].CGColor
 
-#define AttentionItemLabelWidth 188
-#define AttentionItemOrderlabelWidth 12
-#define AttentionItemMargin 8
-#define AttentionLabelStartX 86
+#define AttentionItemLabelWidth 225
+#define AttentionItemOrderlabelWidth 15
+#define AttentionItemMargin 5
 #define BigLabelFont [UIFont systemFontOfSize:22.f]
 #define SmallLabelFont [UIFont systemFontOfSize:14.f]
 @interface NGHealthReportViewController ()<NGReportNutritonFoodCellDelegate>
@@ -33,10 +32,11 @@
 @property (nonatomic,assign)BOOL isFirstLoad;
 @property (nonatomic,strong)UIImage *selectedImage;
 @property (nonatomic,strong)NSArray *illnessArray;
+@property (nonatomic,assign)float illnessCellHeight;
 @end
 
 @implementation NGHealthReportViewController
-@synthesize lackNutritionArray,potentialArray,attentionDict,isFirstLoad,isFirstSave,recommendFoodDict,dataToSave,selectedImage,illnessArray;
+@synthesize lackNutritionArray,potentialArray,attentionArray,isFirstLoad,isFirstSave,recommendFoodDict,dataToSave,selectedImage,illnessArray,illnessCellHeight;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -63,6 +63,7 @@
     self.illnessArray = [da getIllness_ByIllnessIds:potentialArray];
     selectedImage = [LZUtility createImageWithColor:ItemSelectedColor imageSize:CGSizeMake(300, 54)];
     self.title = NSLocalizedString(@"jiankangbaogao_c_title", @"页面标题：健康报告");
+    illnessCellHeight = [self calculateHeightForAttentionPart];
 	// Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -205,41 +206,44 @@
 //    [self.mainScrollView setContentSize:CGSizeMake(320, totalheight)];
 //    
 //}
--(float)calculateHeightForAttentionPart:(NSArray *)attentionArray
+-(float)calculateHeightForAttentionPart
 {
-    int attentionCount = [attentionArray count];
-//    float onelineHeight = [@"o" sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap].height;
-    float height = 0;
-    for (int k = 0; k<attentionCount; k++)
+    if (self.illnessArray == nil  || [self.illnessArray count]==0)
     {
-        NSDictionary *anItem = [attentionArray objectAtIndex:k];
-        NSString *text;
-        if (isChinese)
+        return 0;
+    }
+    else
+    {
+        if (self.attentionArray == nil || [self.attentionArray count]==0)
         {
-            text = [anItem objectForKey:@"SuggestionCn"];
+            return 30+ [self.illnessArray count]*(AttentionItemMargin+35);
         }
         else
         {
-            text = [anItem objectForKey:@"SuggestionEn"];
-        }
-        CGSize textSize = [text sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
-        height+= (textSize.height+AttentionItemMargin);
-//        UILabel *orderLabel = [[UILabel alloc]initWithFrame:CGRectMake(AttentionLabelStartX, attentionStartY, AttentionItemOrderlabelWidth, onelineHeight)];
-//        [orderLabel setFont:SmallLabelFont];
-//        [orderLabel setText:[NSString stringWithFormat:@"%d.",k+1]];
-//        [orderLabel setTextColor:[UIColor blackColor]];
-//        UILabel *attentionItemLabel = [[UILabel  alloc]initWithFrame:CGRectMake(AttentionLabelStartX+AttentionItemOrderlabelWidth,attentionStartY, textSize.width, textSize.height)];
-//        [attentionItemLabel setBackgroundColor:[UIColor clearColor]];
-//        [attentionItemLabel setFont:SmallLabelFont];
-//        [attentionItemLabel setNumberOfLines:0];
-//        [attentionItemLabel setText:text];
-//        [attentionItemLabel setTextColor:[UIColor blackColor]];
-//        [self.bottomView addSubview:attentionItemLabel];
-//        attentionStartY += (textSize.height+AttentionItemMargin);
-    }
-    height -=AttentionItemMargin;
-    return height;
+            int attentionCount = [self.attentionArray count];
+            float height = 0;
+            NSString *queryKey;
+            if (isChinese)
+            {
+                queryKey = @"SuggestionCn";
+            }
+            else
+            {
+                queryKey = @"SuggestionEn";
+            }
+            for (int k = 0; k<attentionCount; k++)
+            {
+                NSDictionary *anItem = [attentionArray objectAtIndex:k];
+                NSString *text = [anItem objectForKey:queryKey];
+                
+                CGSize textSize = [text sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
+                height+= (textSize.height+AttentionItemMargin);
+            }
+            height -=AttentionItemMargin;
+            return height+35+30+[self.illnessArray count]*(AttentionItemMargin+35)+10;
 
+        }
+    }
 }
 -(void)nutritionButtonClicked:(LZCustomDataButton*)sender
 {
@@ -317,7 +321,14 @@
     }
     else
     {
-        return [self.potentialArray count];
+        if (self.illnessArray != nil && [self.illnessArray count]!=0)
+        {
+            return 1;
+        }
+        else
+        {
+            return 0;
+        }
     }
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -347,9 +358,9 @@
         cell.headerLabel.text = NSLocalizedString(@"jiankangbaogao_c_jiankangzhishu", @"健康指数栏标题：健康指数");
         //12,56,78 3,42,40,20
         NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.HealthValue];
-        CGSize textSize = [scoreText sizeWithFont:[UIFont boldSystemFontOfSize:55.f] constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
-        [cell.healthScoreLabel setFrame:CGRectMake(78, 12, textSize.width, 56)];
-        [cell.fullPercentLabel setFrame:CGRectMake(78+textSize.width+3, 42, 40, 20)];
+        CGSize textSize = [scoreText sizeWithFont:[UIFont boldSystemFontOfSize:40.f] constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        [cell.healthScoreLabel setFrame:CGRectMake(40, 35, textSize.width, 35)];
+        [cell.fullPercentLabel setFrame:CGRectMake(40+textSize.width, 50, 40, 20)];
         cell.healthScoreLabel.text = scoreText;
         return cell;
     }
@@ -397,116 +408,108 @@
     else
     {
         NGReportDiseaseCell *cell = (NGReportDiseaseCell*)[tableView dequeueReusableCellWithIdentifier:@"NGReportDiseaseCell"];
-        [cell.backView.layer setBorderColor:BorderColor];
-        [cell.backView.layer setBorderWidth:0.5f];
-        for (UIView *subv in cell.backView.subviews)
+        if (cell.hasLoaded)
         {
-            [subv removeFromSuperview];
-        }
-        NSString *illnessId = [self.potentialArray objectAtIndex:indexPath.row];
-        NSArray *attentionArray = [self.attentionDict objectForKey:illnessId];
-        float part2Height = 0;
-        BOOL needAddMore;
-        if (attentionArray == nil || [attentionArray count]==0)
-        {
-            if (indexPath.row == [self.potentialArray count]-1)
-            {
-                [cell.backView setFrame:CGRectMake(10, 0, 300, 60)];
-            }
-            else
-            {
-                [cell.backView setFrame:CGRectMake(10, 0, 300, 61)];
-            }
-            needAddMore = NO;
+            return cell;
         }
         else
         {
-            part2Height =(int)[self calculateHeightForAttentionPart:attentionArray];
-            NSLog(@"cell for cell %d %d %f",indexPath.section,indexPath.row,part2Height);
-            if (indexPath.row == [self.potentialArray count]-1)
-            {
-                [cell.backView setFrame:CGRectMake(10, 0, 300, part2Height+60+10)];
-            }
-            else
-            {
-                [cell.backView setFrame:CGRectMake(10, 0, 300, part2Height+60+10+1)];
-            }
-            needAddMore = YES;
-        }
-        UILabel *illnessLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 60, 20)];
-        [cell.backView addSubview:illnessLabel];
-        [illnessLabel setText:NSLocalizedString(@"jiangkangbaogao_c_qianzaishiwu", @"潜在疾病项标题：潜在疾病")];
-        [illnessLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0]];
-        [illnessLabel setFont:SmallLabelFont];
-        UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(AttentionLabelStartX, 12, 172, 36)];
-        [illnessNameLabel setFont:BigLabelFont];
-        [illnessNameLabel setTextColor:[UIColor blackColor]];
-        NSDictionary *illnessDict = [self.illnessArray objectAtIndex:indexPath.row];
-        NSString *illnessName;
-        if (isChinese) {
-            illnessName =[illnessDict objectForKey:@"IllnessNameCn"];
-        }
-        else
-        {
-            illnessName =[illnessDict objectForKey:@"IllnessNameEn"];
-        }
+            [cell.backView.layer setBorderColor:BorderColor];
+            [cell.backView.layer setBorderWidth:0.5f];
+            [cell.backView setFrame:CGRectMake(10, 0, 300, illnessCellHeight)];
+            cell.backView.clipsToBounds  = YES;
+            //NSString *illnessId = [self.potentialArray objectAtIndex:indexPath.row];
 
-        [illnessNameLabel setText:illnessName];
-        [illnessNameLabel setBackgroundColor:[UIColor clearColor]];
-        [cell.backView addSubview:illnessNameLabel];
-        LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, 0, 300, 54)];
-        illnessButton.customData =indexPath;
-        [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [illnessButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
-        //[illnessButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
-        //[illnessButton.titleLabel setFont:BigLabelFont];
-        //[illnessButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        //[illnessButton setTitle:illnessId forState:UIControlStateNormal];
-        [cell.backView addSubview:illnessButton];
-        UIImageView *detailArrow = [[UIImageView alloc]initWithFrame:CGRectMake(265, 20, 20, 20)];
-        [detailArrow setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
-        [cell.backView addSubview:detailArrow];
-        if (needAddMore)
-        {
-            UILabel *attenLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 60+(part2Height-20)/2, 60, 20)];
-            [cell.backView addSubview:attenLabel];
-            [attenLabel setText:NSLocalizedString(@"jiankangbaogao_c_zhuyishixiang", @"注意事项项标题：注意事项")];
-            [attenLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0]];
-            [attenLabel setFont:SmallLabelFont];
-            float onelineHeight = [@"o" sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap].height;
-            float startY = 60;
-            int attentionCount = [attentionArray count];
-            for (int k = 0; k<attentionCount; k++)
+            UILabel *illnessHeaderLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 20)];
+            [cell.backView addSubview:illnessHeaderLabel];
+            [illnessHeaderLabel setText:NSLocalizedString(@"jiangkangbaogao_c_qianzaishiwu", @"潜在疾病项标题：潜在疾病")];
+            [illnessHeaderLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0]];
+            [illnessHeaderLabel setFont:SmallLabelFont];
+            
+            float startY = 30;
+            NSString *illnessNameKey;
+            if (isChinese) {
+                illnessNameKey =@"IllnessNameCn";
+            }
+            else
             {
-                NSDictionary *anItem = [attentionArray objectAtIndex:k];
-                NSString *text;
+                illnessNameKey =@"IllnessNameEn";
+            }
+
+            for (int i=0 ; i<[self.illnessArray count]; i++)
+            {
+                LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, startY, 300, 35)];
+                illnessButton.customData =indexPath;
+                [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [illnessButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
+                [cell.backView addSubview:illnessButton];
+                
+                UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(40, startY, 172, 35)];
+                [illnessNameLabel setFont:BigLabelFont];
+                [illnessNameLabel setTextColor:[UIColor blackColor]];
+                NSDictionary *illnessDict = [self.illnessArray objectAtIndex:i];
+                NSString *illnessName = [illnessDict objectForKey:illnessNameKey];
+                [illnessNameLabel setText:illnessName];
+                [illnessNameLabel setBackgroundColor:[UIColor clearColor]];
+                [cell.backView addSubview:illnessNameLabel];
+
+                UIImageView *detailArrow = [[UIImageView alloc]initWithFrame:CGRectMake(265, startY+8, 20, 20)];
+                [detailArrow setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
+                [cell.backView addSubview:detailArrow];
+
+                startY += 35;
+            }
+            
+            if (self.attentionArray != nil && [self.attentionArray count]!= 0)
+            {
+                UIImageView *sepLine = [[UIImageView alloc]initWithFrame:CGRectMake(0, startY, 300, 1)];
+                [cell.backView  addSubview:sepLine];
+                [sepLine setImage:[UIImage imageNamed:@"gray_horizon_line.png"]];
+                [sepLine setContentMode:UIViewContentModeCenter];
+                startY+=5;
+                
+                UILabel *suggestionHeaderLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, startY, 200, 20)];
+                [cell.backView addSubview:suggestionHeaderLabel];
+                [suggestionHeaderLabel setText:NSLocalizedString(@"jiankangbaogao_c_zhuyishixiang", @"注意事项项标题：注意事项")];
+                [suggestionHeaderLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0]];
+                [suggestionHeaderLabel setFont:SmallLabelFont];
+                startY+=30;
+                
+                NSString *suggestionQueryKey;
                 if (isChinese)
                 {
-                    text = [anItem objectForKey:@"SuggestionCn"];
+                    suggestionQueryKey = @"SuggestionCn";
                 }
                 else
                 {
-                    text = [anItem objectForKey:@"SuggestionEn"];
+                    suggestionQueryKey = @"SuggestionEn";
                 }
-                CGSize textSize = [text sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
-                UILabel *orderLabel = [[UILabel alloc]initWithFrame:CGRectMake(AttentionLabelStartX, startY, AttentionItemOrderlabelWidth, onelineHeight)];
-                [orderLabel setFont:SmallLabelFont];
-                [orderLabel setText:[NSString stringWithFormat:@"%d.",k+1]];
-                [orderLabel setTextColor:[UIColor blackColor]];
-                [cell.backView addSubview:orderLabel];
-                UILabel *attentionItemLabel = [[UILabel  alloc]initWithFrame:CGRectMake(AttentionLabelStartX+AttentionItemOrderlabelWidth,startY, textSize.width, textSize.height)];
-                [attentionItemLabel setBackgroundColor:[UIColor clearColor]];
-                [attentionItemLabel setFont:SmallLabelFont];
-                [attentionItemLabel setNumberOfLines:0];
-                [attentionItemLabel setText:text];
-                [attentionItemLabel setTextColor:[UIColor blackColor]];
-                [cell.backView addSubview:attentionItemLabel];
-                startY+= (textSize.height+AttentionItemMargin);
+                float onelineHeight = [@"o" sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap].height;
+                
+                for (int k = 0; k<[attentionArray count]; k++)
+                {
+                    NSDictionary *anItem = [attentionArray objectAtIndex:k];
+                    NSString *text = [anItem objectForKey:suggestionQueryKey];
+                    CGSize textSize = [text sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(AttentionItemLabelWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
+                    UILabel *orderLabel = [[UILabel alloc]initWithFrame:CGRectMake(40, startY, AttentionItemOrderlabelWidth, onelineHeight)];
+                    [orderLabel setFont:SmallLabelFont];
+                    [orderLabel setText:[NSString stringWithFormat:@"%d.",k+1]];
+                    [orderLabel setTextColor:[UIColor blackColor]];
+                    [cell.backView addSubview:orderLabel];
+                    
+                    UILabel *attentionItemLabel = [[UILabel  alloc]initWithFrame:CGRectMake(40+AttentionItemOrderlabelWidth,startY, textSize.width, textSize.height)];
+                    [attentionItemLabel setBackgroundColor:[UIColor clearColor]];
+                    [attentionItemLabel setFont:SmallLabelFont];
+                    [attentionItemLabel setNumberOfLines:0];
+                    [attentionItemLabel setText:text];
+                    [attentionItemLabel setTextColor:[UIColor blackColor]];
+                    [cell.backView addSubview:attentionItemLabel];
+                    startY+= (textSize.height+AttentionItemMargin);
+                }
             }
-
+            cell.hasLoaded = YES;
+            return cell;
         }
-        return cell;
     }
     
 }
@@ -543,18 +546,7 @@
     }
     else
     {
-        NSString *illness = [self.potentialArray objectAtIndex:indexPath.row];
-        NSArray *attentionArray = [self.attentionDict objectForKey:illness];
-        if (attentionArray == nil || [attentionArray count]==0)
-        {
-            return 60;
-        }
-        else
-        {
-            float part2Height =(int)[self calculateHeightForAttentionPart:attentionArray];
-            NSLog(@"height for cell %d %d %f",indexPath.section,indexPath.row,part2Height);
-            return 60+part2Height +10;
-        }
+        return illnessCellHeight;
     }
 
 }

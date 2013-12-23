@@ -12,7 +12,7 @@
 
 @property (strong, nonatomic) NSArray *lackNutritionArray;
 @property (strong, nonatomic) NSArray *potentialArray;
-@property (strong, nonatomic) NSDictionary *attentionDict;
+@property (strong, nonatomic) NSArray *attentionArray;
 @property (strong, nonatomic) NSDictionary *recommendFoodDict;
 @property (strong,nonatomic)NSDictionary *dataToSave;
 @property (assign, nonatomic)BOOL isFirstSave;

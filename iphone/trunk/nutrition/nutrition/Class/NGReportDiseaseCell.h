@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface NGReportDiseaseCell : UITableViewCell
+#import "LZEmptyClassCell.h"
+@interface NGReportDiseaseCell : LZEmptyClassCell
 @property (strong, nonatomic) IBOutlet UIView *backView;
 
 @end

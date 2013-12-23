@@ -252,6 +252,8 @@
 //#define Key_LackNutrientIDs @"LackNutrientIDs"
 #define Key_LackNutrientsAndFoods @"LackNutrientsAndFoods"
 #define Key_InferIllnessesAndSuggestions @"InferIllnessesAndSuggestions"
+#define Key_IllnessIds @"IllnessIds"
+#define Key_distinctSuggestionIds @"distinctSuggestionIds"
 //#define Key_InferIllnesses @"InferIllnesses"
 #define Key_HealthMark @"HealthMark"
 //#define Key_RecommendFoodAndAmounts @"RecommendFoodAndAmounts"

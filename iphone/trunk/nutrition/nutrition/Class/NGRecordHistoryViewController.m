@@ -502,27 +502,84 @@
         {
             NSString *typeId = [aSymptomType objectAtIndex:0];
             NSArray *symptomIds = [aSymptomType objectAtIndex:1];
+            NSString *typeName = [self getTypeNameForTypeId:typeId];
+            NSString *symptomNames = [self getSymptomNamesForTypeId:typeId symptomId:symptomIds];
             
         }
     }
     return cell;
 
 }
+-(NSString *)getTypeNameForTypeId:(NSString *)typeId
+{
+    NSString *typeName;
+    NSString *queryKey;
+    if (isChinese)
+    {
+        queryKey = @"SymptomTypeNameCn";
+    }
+    else
+    {
+        queryKey = @"SymptomTypeNameEn";
+    }
+
+    for (NSDictionary *typeDict in self.symptomTypeRows)
+    {
+        NSString *aId = [typeDict objectForKey:@"SymptomTypeId"];
+        if ([aId isEqualToString:typeId])
+        {
+            typeName = [typeDict objectForKey:queryKey];
+            break;
+            
+        }
+    }
+    return typeName;
+}
+-(NSString *)getSymptomNamesForTypeId:(NSString *)typeId symptomId:(NSArray *)symptomIds
+{
+    NSSet *idSet = [NSSet setWithArray:symptomIds];
+    NSArray *idArrays = [self.symptomRowsDict objectForKey:typeId];
+    NSMutableArray *symptomNames = [[NSMutableArray alloc]init];
+    NSString *queryKey;
+    if (isChinese)
+    {
+        queryKey = @"SymptomNameCn";
+    }
+    else
+    {
+        queryKey = @"SymptomNameEn";
+    }
+
+    for (NSDictionary *sympDict in idArrays)
+    {
+        NSString *aId = [sympDict objectForKey:@"SymptomId"];
+        if ([idSet containsObject:aId])
+        {
+            NSString *aName = [sympDict objectForKey:queryKey];
+            [symptomNames addObject:aName];
+        }
+    }
+    return [symptomNames componentsJoinedByString:@","];
+    
+}
 -(NSString *)getIllnessText:(NSArray *)illnessIds
 {
     LZDataAccess *da = [LZDataAccess singleton];
     NSArray *illnessArray = [da getIllness_ByIllnessIds:illnessIds];
     NSMutableArray *namesArray = [[NSMutableArray alloc]init];
+    NSString *queryKey;
+    if (isChinese)
+    {
+        queryKey =@"IllnessNameCn";
+    }
+    else
+    {
+        queryKey =@"IllnessNameEn";
+    }
     for (NSDictionary *illnessDict in illnessArray)
     {
-        NSString *illnessName;
-        if (isChinese) {
-            illnessName =[illnessDict objectForKey:@"IllnessNameCn"];
-        }
-        else
-        {
-            illnessName =[illnessDict objectForKey:@"IllnessNameEn"];
-        }
+        NSString *illnessName =[illnessDict objectForKey:queryKey];
+
         [namesArray addObject:illnessName];
     }
     return [namesArray componentsJoinedByString:@","];

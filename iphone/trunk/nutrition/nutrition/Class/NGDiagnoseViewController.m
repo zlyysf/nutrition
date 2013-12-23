@@ -192,7 +192,7 @@
     }
     NSArray *illnessAry = [LZUtility inferIllnesses_withSymptoms:userSelectedSymptom andMeasureData:measureData];//需保存数据
     
-    //根据潜在疾病得到注意事项
+    //根据潜在疾病得到注意事项,旧的数据格式
     NSMutableDictionary *illnessAttentionDict = [[NSMutableDictionary alloc]init];//需保存数据
     for (NSString *illnessId in illnessAry)
     {
@@ -203,6 +203,10 @@
             [illnessAttentionDict setObject:attentionItem forKey:illnessId];
         }
     }
+    
+    //根据潜在疾病得到注意事项,新的数据格式
+    NSArray *distinctSuggestionIds = [da getIllnessSuggestionsDistinct_ByIllnessIds:illnessAry];
+    
     
     //根据症状获得用户缺少的营养元素
     NSArray *lackNutritionArray =  [da getSymptomNutrientDistinctIds_BySymptomIds:userSelectedSymptom];//需保存数据
@@ -283,8 +287,26 @@
     }
 
     [CalculateNameValuePairsData setObject:illnessAttention forKey:Key_InferIllnessesAndSuggestions];
-
-
+    
+    if (illnessAry == nil)
+    {
+        [CalculateNameValuePairsData setObject:[NSArray array] forKey:Key_IllnessIds];
+    }
+    else
+    {
+        [CalculateNameValuePairsData setObject:illnessAry forKey:Key_IllnessIds];
+    }
+    
+    if (distinctSuggestionIds == nil)
+    {
+        [CalculateNameValuePairsData setObject:[NSArray array] forKey:Key_distinctSuggestionIds];
+    }
+    else
+    {
+        [CalculateNameValuePairsData setObject:distinctSuggestionIds forKey:Key_distinctSuggestionIds];
+    }
+    
+    
         //2.判断
     NSDictionary *recordData = [da getUserRecordSymptomDataByDayLocal:dayLocal];
     BOOL isUserFirstSave;
@@ -320,7 +342,7 @@
     healthReportViewController.HealthValue = healthScore;
     healthReportViewController.lackNutritionArray = lackNutritionArray;
     healthReportViewController.potentialArray = illnessAry;
-    healthReportViewController.attentionDict = illnessAttentionDict;
+    healthReportViewController.attentionArray = distinctSuggestionIds;
     healthReportViewController.recommendFoodDict = recommendedFoods;
     healthReportViewController.dataToSave = dataToSave;
     needRefresh = YES;
