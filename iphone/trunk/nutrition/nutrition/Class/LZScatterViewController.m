@@ -82,7 +82,7 @@
 - (void)configureGraph
 {
     self.graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
-    self.graph.paddingLeft = self.graph.paddingRight = 8.0;
+    self.graph.paddingLeft = self.graph.paddingRight = 0.0;
     self.graph.paddingTop = self.graph.paddingBottom = 8.0;
     CPTTheme *theme = [CPTTheme themeNamed:kCPTPlainWhiteTheme];
     [self.graph applyTheme:theme];
@@ -101,28 +101,28 @@
 {
     CPTXYPlotSpace * plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
     //plotSpace.allowsUserInteraction = YES;
-    if (self.scatterType == ScatterTypeBMI) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.2) length:CPTDecimalFromFloat(33.7)];
+    if (self.scatterType == ScatterTypeNI) {
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.3) length:CPTDecimalFromFloat(34)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(57.5) length:CPTDecimalFromFloat(43.5)];
+    }
+    else if (self.scatterType == ScatterTypeBMI) {
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.8) length:CPTDecimalFromFloat(34.5)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(20.86) length:CPTDecimalFromFloat(2.39)];
     }
+    else if (self.scatterType == ScatterTypeWeight) {
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
+        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(36.5) length:CPTDecimalFromFloat(60)];
+    }
     else if (self.scatterType == ScatterTypeTemperature) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-0.9) length:CPTDecimalFromFloat(32.6)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(34.5) length:CPTDecimalFromFloat(7.8)];
     }
     else if (self.scatterType == ScatterTypeBP) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.6) length:CPTDecimalFromFloat(33.1)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.3) length:CPTDecimalFromFloat(34)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(50) length:CPTDecimalFromFloat(152)];
     }
-    else if (self.scatterType == ScatterTypeNI) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33)];
-        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(57.5) length:CPTDecimalFromFloat(43)];
-    }
-    else if (self.scatterType == ScatterTypeWeight) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-0.9) length:CPTDecimalFromFloat(32.6)];
-        plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(36.5) length:CPTDecimalFromFloat(60)];
-    }
     else if (self.scatterType == ScatterTypeHeartbeat) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-0.9) length:CPTDecimalFromFloat(32.6)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(43) length:CPTDecimalFromFloat(28)];
     }
     else {
@@ -147,17 +147,19 @@
 //    lineStyle.lineColor = [CPTColor blackColor];
     
     CPTXYAxis * x = axisSet.xAxis;
-    if (self.scatterType == ScatterTypeBMI) {
+    
+    //x.visibleAxisRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(1) length:CPTDecimalFromFloat(33.5)];
+    if (self.scatterType == ScatterTypeNI)
+        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"60");
+    else if (self.scatterType == ScatterTypeBMI) {
         x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"21"); // Y coordinate of Axis X
     }
+    else if (self.scatterType == ScatterTypeWeight)
+        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"40");
     else if (self.scatterType == ScatterTypeTemperature)
         x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"35");
     else if (self.scatterType == ScatterTypeBP)
         x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"60");
-    else if (self.scatterType == ScatterTypeNI)
-         x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"60");
-    else if (self.scatterType == ScatterTypeWeight)
-        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"40");
     else if (self.scatterType == ScatterTypeHeartbeat)
         x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"45");
     else
@@ -205,6 +207,7 @@
     //    tickLineStyle.lineWidth = 1.0f;
     
     x.tickDirection = CPTSignNegative;
+    x.majorTickLength = 4.0f;
     
     
     NSUInteger dateCount = 11;
@@ -218,6 +221,10 @@
         if (label) {
             [xLabels addObject:label];
             [xLocations addObject:[NSNumber numberWithFloat:dateNum]];
+//            if (dateNum != 1) {
+//                [xLocations addObject:[NSNumber numberWithFloat:dateNum]];
+//            }
+            
         }
     }
     x.axisLabels = xLabels;
@@ -243,44 +250,54 @@
     NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-5) length:CPTDecimalFromFloat(4)],
                                  [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(31.5) length:CPTDecimalFromFloat(4)]];
     x.labelExclusionRanges = exclusionRanges;
+    x.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(1) length:CPTDecimalFromFloat(30.1)];
 }
 
 - (void)configureAxisY
 {
+    
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)self.graph.axisSet;
     CPTXYAxis * y = axisSet.yAxis;
-    
     CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
     axisTitleStyle.color = [CPTColor blackColor];
     axisTitleStyle.fontName = @"Helvetica-Bold";
     axisTitleStyle.fontSize = 12.0f;
-    if (self.scatterType == ScatterTypeTemperature) {
-        //y.title = @"(℃)";
+    
+    y.tickDirection = CPTSignNegative;
+    y.labelOffset = 0;
+    y.majorTickLength = 4.0f;
+    y.gridLinesRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(1) length:CPTDecimalFromFloat(30.1)];
+    y.minorTicksPerInterval = 0;
+    
+    if (self.scatterType == ScatterTypeNI) {
+        y.title = nil;
         y.titleTextStyle = axisTitleStyle;
-        y.titleOffset = 15;
+        y.titleOffset = 10;
         y.majorGridLineStyle = y.majorTickLineStyle;
-        y.labelOffset = -8.0f;
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
         NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
         [yFormatter setMaximumFractionDigits:1];
-        //[yFormatter setMinimumFractionDigits:1];
         y.labelFormatter = yFormatter;
         
-        y.majorIntervalLength = CPTDecimalFromString(@"1");   // Major tick interval
-        y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
+        y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
+        //y.minorTicksPerInterval = 0;    // Count of minor ticks between 2 major ticks
         
-        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(33) length:CPTDecimalFromFloat(1.5)]];
+        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(60) length:CPTDecimalFromFloat(40.5)];
+        
+        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(40) length:CPTDecimalFromFloat(19)]];
         y.labelExclusionRanges = exclusionRanges;
-
+        y.labelTextStyle = axisSet.xAxis.labelTextStyle;
+        
     }
     else if (self.scatterType == ScatterTypeBMI) {
         y.title = nil;
         y.titleTextStyle = axisTitleStyle;
         y.titleOffset = 10;
         y.majorGridLineStyle = y.majorTickLineStyle;
-        y.labelOffset = -8.0f;
+        //y.labelOffset = -8.0f;
+        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(21) length:CPTDecimalFromFloat(5)];
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
@@ -290,38 +307,19 @@
         y.labelFormatter = yFormatter;
         
         y.majorIntervalLength = CPTDecimalFromString(@"0.2");   // Major tick interval
-        y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
+        //y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
         
         NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0) length:CPTDecimalFromFloat(20.9)]];
         y.labelExclusionRanges = exclusionRanges;
         
     }
-    else if (self.scatterType == ScatterTypeBP) {
+    else if (self.scatterType == ScatterTypeWeight) {
         y.title = nil;
         y.titleTextStyle = axisTitleStyle;
         y.titleOffset = 10;
         y.majorGridLineStyle = y.majorTickLineStyle;
-        y.labelOffset = -8.0f;
-        
-        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
-        
-        NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
-        [yFormatter setMaximumFractionDigits:1];
-        y.labelFormatter = yFormatter;
-        
-        y.majorIntervalLength = CPTDecimalFromString(@"20");   // Major tick interval
-        y.minorTicksPerInterval = 2;    // Count of minor ticks between 2 major ticks
-        
-        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(40) length:CPTDecimalFromFloat(19)]];
-        y.labelExclusionRanges = exclusionRanges;
-        
-    }
-    else if (self.scatterType == ScatterTypeNI) {
-        y.title = nil;
-        y.titleTextStyle = axisTitleStyle;
-        y.titleOffset = 10;
-        y.majorGridLineStyle = y.majorTickLineStyle;
-        y.labelOffset = -8.0f;
+        //y.labelOffset = -8.0f;
+        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(40) length:CPTDecimalFromFloat(56.5)];
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
@@ -330,7 +328,48 @@
         y.labelFormatter = yFormatter;
         
         y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
-        y.minorTicksPerInterval = 2;    // Count of minor ticks between 2 major ticks
+        //y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
+        
+        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(30) length:CPTDecimalFromFloat(9)]];
+        y.labelExclusionRanges = exclusionRanges;
+        
+    }
+    else if (self.scatterType == ScatterTypeTemperature) {
+        //y.title = @"(℃)";
+        y.titleTextStyle = axisTitleStyle;
+        y.titleOffset = 15;
+        y.majorGridLineStyle = y.majorTickLineStyle;
+        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(35) length:CPTDecimalFromFloat(7.3)];
+        
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
+        
+        NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
+        [yFormatter setMaximumFractionDigits:1];
+        //[yFormatter setMinimumFractionDigits:1];
+        y.labelFormatter = yFormatter;
+        
+        y.majorIntervalLength = CPTDecimalFromString(@"1");   // Major tick interval
+        //y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
+        
+        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(33) length:CPTDecimalFromFloat(1.5)]];
+        y.labelExclusionRanges = exclusionRanges;
+
+    }
+    else if (self.scatterType == ScatterTypeBP) {
+        y.title = nil;
+        y.titleTextStyle = axisTitleStyle;
+        y.titleOffset = 10;
+        y.majorGridLineStyle = y.majorTickLineStyle;
+        //y.labelOffset = -8.0f;
+        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(60) length:CPTDecimalFromFloat(142)];
+        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
+        
+        NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
+        [yFormatter setMaximumFractionDigits:1];
+        y.labelFormatter = yFormatter;
+        
+        y.majorIntervalLength = CPTDecimalFromString(@"20");   // Major tick interval
+        //y.minorTicksPerInterval = 2;    // Count of minor ticks between 2 major ticks
         
         NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(40) length:CPTDecimalFromFloat(19)]];
         y.labelExclusionRanges = exclusionRanges;
@@ -341,7 +380,8 @@
         y.titleTextStyle = axisTitleStyle;
         y.titleOffset = 10;
         y.majorGridLineStyle = y.majorTickLineStyle;
-        y.labelOffset = -8.0f;
+        //y.labelOffset = -8.0f;
+        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(45) length:CPTDecimalFromFloat(26)];
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
@@ -350,29 +390,9 @@
         y.labelFormatter = yFormatter;
         
         y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
-        y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
+        //y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
         
         NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(30) length:CPTDecimalFromFloat(11)]];
-        y.labelExclusionRanges = exclusionRanges;
-        
-    }
-    else if (self.scatterType == ScatterTypeWeight) {
-        y.title = nil;
-        y.titleTextStyle = axisTitleStyle;
-        y.titleOffset = 10;
-        y.majorGridLineStyle = y.majorTickLineStyle;
-        y.labelOffset = -8.0f;
-        
-        y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
-        
-        NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
-        [yFormatter setMaximumFractionDigits:1];
-        y.labelFormatter = yFormatter;
-        
-        y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
-        y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
-        
-        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(30) length:CPTDecimalFromFloat(9)]];
         y.labelExclusionRanges = exclusionRanges;
         
     }
@@ -381,7 +401,7 @@
         y.titleTextStyle = axisTitleStyle;
         y.titleOffset = 10;
         y.majorGridLineStyle = y.majorTickLineStyle;
-        y.labelOffset = -8.0f;
+        //y.labelOffset = -8.0f;
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
         
@@ -390,7 +410,7 @@
         y.labelFormatter = yFormatter;
         
         y.majorIntervalLength = CPTDecimalFromString(@"20");   // Major tick interval
-        y.minorTicksPerInterval = 2;    // Count of minor ticks between 2 major ticks
+        //y.minorTicksPerInterval = 2;    // Count of minor ticks between 2 major ticks
         
         NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-20) length:CPTDecimalFromFloat(21)]];
         y.labelExclusionRanges = exclusionRanges;
@@ -399,7 +419,7 @@
     y.minorTickLineStyle = y.majorTickLineStyle;
     
     
-    y.tickDirection = CPTSignNegative;
+    //y.tickDirection = CPTSignPositive;
 }
 
 - (void)configurePlot
