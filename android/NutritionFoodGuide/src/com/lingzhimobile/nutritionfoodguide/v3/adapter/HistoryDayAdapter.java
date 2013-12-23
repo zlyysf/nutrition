@@ -72,7 +72,24 @@ public class HistoryDayAdapter extends BaseAdapter {
                 .findViewById(R.id.heartRateTextView);
         TextView noteTextView = (TextView) convertView
                 .findViewById(R.id.noteTextView);
-
+        TextView nutrient1TextView = (TextView) convertView
+        .findViewById(R.id.nutrient1TextView);
+        TextView nutrient2TextView = (TextView) convertView
+        .findViewById(R.id.nutrient2TextView);
+        TextView nutrient3TextView = (TextView) convertView
+        .findViewById(R.id.nutrient3TextView);
+        TextView nutrient4TextView = (TextView) convertView
+        .findViewById(R.id.nutrient4TextView);
+        TextView []nutrientTextViews = new TextView[]{nutrient1TextView,nutrient2TextView,nutrient3TextView,nutrient4TextView};
+        for(int i = 0;i< nutrientTextViews.length;i++){
+            if ( i < record.nutrientList.size()){
+                nutrientTextViews[i].setText(record.nutrientList.get(i));
+                nutrientTextViews[i].setVisibility(View.VISIBLE);
+            } else {
+                nutrientTextViews[i].setVisibility(View.INVISIBLE);
+            }
+        }
+        
         dayTextView.setText(record.day);
         weekdayTextView.setText(record.weekday);
         bmiTextView.setText(String.valueOf(record.bmi));
@@ -95,6 +112,7 @@ public class HistoryDayAdapter extends BaseAdapter {
         double weight;
         int heartRate;
         double bmi;
+        List<String> nutrientList;
         List<String> illnessList;
 
         DayRecord(HashMap<String, Object> record) {
@@ -112,10 +130,20 @@ public class HistoryDayAdapter extends BaseAdapter {
             Map calculateNameValuePairs = (Map) record
                     .get("calculateNameValuePairs");
             bmi = (Double) calculateNameValuePairs.get("BMI");
+            
+            Map lackNutrientsAndFoods = (Map) calculateNameValuePairs
+                .get("LackNutrientsAndFoods");
+            Set keySet = lackNutrientsAndFoods.keySet();
+            Iterator keyIter = keySet.iterator();
+            nutrientList = new ArrayList<String>();
+            while (keyIter.hasNext()) {
+                nutrientList.add((String) keyIter.next());
+            }
+    
             Map inferIllnessesAndSuggestions = (Map) calculateNameValuePairs
                     .get("InferIllnessesAndSuggestions");
-            Set keySet = inferIllnessesAndSuggestions.keySet();
-            Iterator keyIter = keySet.iterator();
+            keySet = inferIllnessesAndSuggestions.keySet();
+            keyIter = keySet.iterator();
             illnessList = new ArrayList<String>();
             while (keyIter.hasNext()) {
                 illnessList.add((String) keyIter.next());
