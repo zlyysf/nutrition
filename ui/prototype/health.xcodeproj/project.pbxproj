@@ -83,7 +83,7 @@
 		B909100B183541D500B89A21 /* left@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "left@2x.png"; sourceTree = "<group>"; };
 		B948352B1830704000FCBB8F /* detail@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail@2x.png"; sourceTree = "<group>"; };
 		B948352D1830780C00FCBB8F /* detail2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "detail2@2x.png"; sourceTree = "<group>"; };
-		B9770783182AA4FC006FD25E /* 调养胶囊.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "调养胶囊.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B9770783182AA4FC006FD25E /* 养生胶囊.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "养生胶囊.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9770786182AA4FC006FD25E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		B9770788182AA4FC006FD25E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		B977078A182AA4FC006FD25E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -179,7 +179,7 @@
 		B9770784182AA4FC006FD25E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				B9770783182AA4FC006FD25E /* 调养胶囊.app */,
+				B9770783182AA4FC006FD25E /* 养生胶囊.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -301,7 +301,7 @@
 			);
 			name = health;
 			productName = health;
-			productReference = B9770783182AA4FC006FD25E /* 调养胶囊.app */;
+			productReference = B9770783182AA4FC006FD25E /* 养生胶囊.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -534,7 +534,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "health/health-Prefix.pch";
 				INFOPLIST_FILE = "health/health-Info.plist";
-				PRODUCT_NAME = "调养胶囊";
+				PRODUCT_NAME = "养生胶囊";
 				PROVISIONING_PROFILE = "EAE2CAB2-3112-424A-9368-17C5D8B1B851";
 				WRAPPER_EXTENSION = app;
 			};
@@ -550,7 +550,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "health/health-Prefix.pch";
 				INFOPLIST_FILE = "health/health-Info.plist";
-				PRODUCT_NAME = "调养胶囊";
+				PRODUCT_NAME = "养生胶囊";
 				PROVISIONING_PROFILE = "EAE2CAB2-3112-424A-9368-17C5D8B1B851";
 				WRAPPER_EXTENSION = app;
 			};

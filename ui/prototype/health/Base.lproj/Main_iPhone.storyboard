@@ -169,7 +169,7 @@
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="推荐食物" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="42F-CU-wjs">
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="调养食物" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="42F-CU-wjs">
                                                         <rect key="frame" x="10" y="144" width="60" height="21"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3123,7 +3123,7 @@
             </objects>
             <point key="canvasLocation" x="-256" y="200"/>
         </scene>
-        <!--Table View Controller - 健康报告-->
+        <!--Table View Controller - 养生报告-->
         <scene sceneID="PAI-Ih-Dx8">
             <objects>
                 <tableViewController id="FXO-UN-pud" sceneMemberID="viewController">
@@ -3760,7 +3760,7 @@
                                                             <rect key="frame" x="260" y="35" width="20" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="推荐食物" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yyt-sC-Q8U">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="调养食物" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Yyt-sC-Q8U">
                                                             <rect key="frame" x="10" y="65" width="200" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -3971,7 +3971,7 @@
                                                             <rect key="frame" x="260" y="245" width="20" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="推荐食物" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CHN-Ym-U29">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="调养食物" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="CHN-Ym-U29">
                                                             <rect key="frame" x="10" y="275" width="200" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -4182,7 +4182,7 @@
                                                             <rect key="frame" x="260" y="455" width="20" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="推荐食物" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Rvm-cD-SKj">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="调养食物" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Rvm-cD-SKj">
                                                             <rect key="frame" x="10" y="485" width="200" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -4427,7 +4427,7 @@
                                                             <rect key="frame" x="0.0" y="150" width="300" height="1"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                         </imageView>
-                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="注意事项" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cxj-Y7-I61">
+                                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="调养办法" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cxj-Y7-I61">
                                                             <rect key="frame" x="10" y="155" width="200" height="20"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -4511,7 +4511,7 @@
                             <outlet property="delegate" destination="FXO-UN-pud" id="cEI-cp-CUH"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="健康报告" id="7OP-lb-cfL">
+                    <navigationItem key="navigationItem" title="养生报告" id="7OP-lb-cfL">
                         <barButtonItem key="rightBarButtonItem" title="已保存" id="mBF-zI-hOu">
                             <color key="tintColor" red="0.40000000600000002" green="0.40000000600000002" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                         </barButtonItem>
@@ -4522,11 +4522,11 @@
             </objects>
             <point key="canvasLocation" x="2080" y="-784"/>
         </scene>
-        <!--Navigation Controller - 诊断-->
+        <!--Navigation Controller - 养生-->
         <scene sceneID="eF0-Oo-nCY">
             <objects>
                 <navigationController definesPresentationContext="YES" id="QAy-TW-7Xy" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="诊断" image="clinic-50.png" id="zzD-R7-guP"/>
+                    <tabBarItem key="tabBarItem" title="养生" image="clinic-50.png" id="zzD-R7-guP"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="pNh-GO-x8P">
                         <rect key="frame" x="0.0" y="0.0" width="0.0" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -4545,7 +4545,7 @@
             </objects>
             <point key="canvasLocation" x="789" y="-476"/>
         </scene>
-        <!--Table View Controller - 健康记录-->
+        <!--Table View Controller - 选择症状-->
         <scene sceneID="lpm-ty-Tog">
             <objects>
                 <tableViewController id="G7l-M4-dgf" sceneMemberID="viewController">
@@ -4563,8 +4563,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="今天哪里不舒服吗？点击记录一下吧。" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4uE-jL-hZ0">
-                                                    <rect key="frame" x="20" y="4" width="242" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="选择您今天的症状，然后查看养生报告。" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="4uE-jL-hZ0">
+                                                    <rect key="frame" x="20" y="4" width="300" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.40000000596046448" green="0.40000000596046448" blue="0.40000000596046448" alpha="1" colorSpace="calibratedRGB"/>
@@ -6821,8 +6821,8 @@
                             <outlet property="delegate" destination="G7l-M4-dgf" id="lH6-kJ-rCf"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="健康记录" id="ukj-6f-G4o">
-                        <barButtonItem key="rightBarButtonItem" title="提交" id="cYW-it-OkM">
+                    <navigationItem key="navigationItem" title="选择症状" id="ukj-6f-G4o">
+                        <barButtonItem key="rightBarButtonItem" title="查看" id="cYW-it-OkM">
                             <color key="tintColor" red="0.2613552231626397" green="0.44258211096938771" blue="0.27921990608199215" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <segue destination="FXO-UN-pud" kind="push" id="698-0M-aXp"/>
