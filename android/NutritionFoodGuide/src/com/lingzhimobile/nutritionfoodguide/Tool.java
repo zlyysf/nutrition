@@ -271,25 +271,23 @@ public class Tool {
 			String colName = colNames[i];
 			int colIdx = cs.getColumnIndex(colName);
 			String colValStr = cs.getString(colIdx);
-			if (Constants.COLUMN_NAME_NDB_No.equalsIgnoreCase(colName) || Constants.COLUMN_NAME_FoodId.equalsIgnoreCase(colName)){
+			
+			if ( Cursor.FIELD_TYPE_STRING == cs.getType(colIdx) ){
 				hmRow.put(colName, colValStr);
 			}else{
-//				Object colValObj = null;
-//				try{
-//					double d_colVal = cs.getDouble(colIdx);
-//					colValObj = Double.valueOf(d_colVal);
-//				}catch (Exception e) {//NO exception, getDouble return 0.0 always
-//					colValObj = cs.getString(colIdx);
-//				}
-				Object colValObj = null;
-				try{
-					double d_colVal = Double.parseDouble(colValStr);
-					colValObj = Double.valueOf(d_colVal);
-				}catch (NumberFormatException e) {
-					colValObj = colValStr;
+				if (Constants.COLUMN_NAME_NDB_No.equalsIgnoreCase(colName) || Constants.COLUMN_NAME_FoodId.equalsIgnoreCase(colName)){
+					hmRow.put(colName, colValStr);
+				}else{
+					Object colValObj = null;
+					try{
+						double d_colVal = Double.parseDouble(colValStr);
+						colValObj = Double.valueOf(d_colVal);
+					}catch (NumberFormatException e) {
+						colValObj = colValStr;
+					}
+					
+					hmRow.put(colName, colValObj);
 				}
-				
-				hmRow.put(colName, colValObj);
 			}
 		}
 		return hmRow;
