@@ -1,27 +1,36 @@
 package com.lingzhimobile.nutritionfoodguide.v3.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.ViewPager;
-import android.view.MotionEvent;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
-import android.widget.Button;
 import android.widget.RadioButton;
-import android.widget.TextView;
 
-import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
 import com.lingzhimobile.nutritionfoodguide.R;
-import com.lingzhimobile.nutritionfoodguide.v3.adapter.V3HomeTabAdapter;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3DiagnoseFragment;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3EncyclopediaFragment;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3HistoryFragment;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3SettingFragment;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3TabContentFragment;
 import com.parse.ParseAnalytics;
 
 public class V3ActivityHome extends V3BaseActivity {
 
-    private ViewPager mViewPager;
-    private V3HomeTabAdapter mHomeTabAdapter;
+    private static final String TAG_DIAGNOSE = "diagnose";
+    private static final String TAG_HISTORY = "history";
+    private static final String TAG_CHART = "chart";
+    private static final String TAG_CYCLOPEDIA = "cyclopedia";
+    private static final String TAG_SETTING = "setting";
+    private static final String[] TAGS = new String[]{TAG_DIAGNOSE, TAG_HISTORY, TAG_CHART, TAG_CYCLOPEDIA, TAG_SETTING};
+    
     RadioButton tabButtonDiagnose, tabButtonHistory, tabButtonChart,
             tabButtonCyclopedia, tabButtonSetting;
+
+    @Override
+    public void onBackPressed() {
+        this.finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,28 +40,12 @@ public class V3ActivityHome extends V3BaseActivity {
 
         setContentView(R.layout.tab_activity);
 
-        mViewPager = (ViewPager) findViewById(R.id.viewPager);
-
-        final String[] sectionTitles = getResources().getStringArray(
-                R.array.home_tab_selections);
-        mHomeTabAdapter = new V3HomeTabAdapter(getSupportFragmentManager(),
-                sectionTitles);
-        mViewPager.setAdapter(mHomeTabAdapter);
-        mViewPager.setOnTouchListener(new OnTouchListener() {
-            
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                // TODO Auto-generated method stub
-                return true;
-            }
-        });
-
         tabButtonDiagnose = (RadioButton) findViewById(R.id.rbDiagnose);
         tabButtonDiagnose.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View arg0) {
-                mViewPager.setCurrentItem(0, false);
+                setCurrentItem(0);
             }
         });
         tabButtonHistory = (RadioButton) findViewById(R.id.rbHistory);
@@ -60,7 +53,7 @@ public class V3ActivityHome extends V3BaseActivity {
 
             @Override
             public void onClick(View arg0) {
-                mViewPager.setCurrentItem(1, false);
+                setCurrentItem(1);
             }
         });
         tabButtonChart = (RadioButton) findViewById(R.id.rbChart);
@@ -68,7 +61,7 @@ public class V3ActivityHome extends V3BaseActivity {
 
             @Override
             public void onClick(View arg0) {
-                mViewPager.setCurrentItem(2, false);
+                setCurrentItem(2);
             }
         });
         tabButtonCyclopedia = (RadioButton) findViewById(R.id.rbCyclopedia);
@@ -76,7 +69,7 @@ public class V3ActivityHome extends V3BaseActivity {
 
             @Override
             public void onClick(View arg0) {
-                mViewPager.setCurrentItem(3, false);
+                setCurrentItem(3);
             }
         });
         tabButtonSetting = (RadioButton) findViewById(R.id.rbSetting);
@@ -84,10 +77,36 @@ public class V3ActivityHome extends V3BaseActivity {
 
             @Override
             public void onClick(View arg0) {
-                mViewPager.setCurrentItem(4, false);
+                setCurrentItem(4);
             }
         });
 
+        setCurrentItem(0);
+    }
+
+    protected void setCurrentItem(int i) {
+        FragmentManager fragmentManager = this.getSupportFragmentManager();
+        Fragment fragment = fragmentManager.findFragmentByTag(TAGS[i]);
+        if (fragment == null) {
+            switch(i){
+            case 0:
+                fragment = V3DiagnoseFragment.newInstance(0);
+                break;
+            case 1:
+                fragment = V3HistoryFragment.newInstance(1);
+                break;
+            case 2:
+                fragment = V3TabContentFragment.newInstance(2);
+                break;
+            case 3:
+                fragment = V3EncyclopediaFragment.newInstance(1);
+                break;
+            case 4:
+                fragment = V3SettingFragment.newInstance(1);
+                break;
+            }
+        }
+        fragmentManager.beginTransaction().replace(R.id.contentFrameLayout, fragment, TAGS[i]).addToBackStack(null).commit();
     }
 
 }

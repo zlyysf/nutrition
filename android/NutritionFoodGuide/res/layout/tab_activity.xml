@@ -3,16 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
-    <com.lingzhimobile.nutritionfoodguide.v3.view.V3NoScrollViewPager
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/viewPager"
+    <FrameLayout 
+        android:id="@+id/contentFrameLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/tab"
         android:layout_below="@+id/titleLayout"
-        tools:context=".ProfileActivity" >
-    </com.lingzhimobile.nutritionfoodguide.v3.view.V3NoScrollViewPager>
+        />
 
     <LinearLayout
         android:id="@+id/tab"
