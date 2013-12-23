@@ -26,16 +26,8 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
-import com.lingzhimobile.nutritionfoodguide.Constants;
-import com.lingzhimobile.nutritionfoodguide.DataAccess;
-import com.lingzhimobile.nutritionfoodguide.NutritionTool;
-import com.lingzhimobile.nutritionfoodguide.R;
-import com.lingzhimobile.nutritionfoodguide.RecommendFood;
-import com.lingzhimobile.nutritionfoodguide.StoredConfigTool;
-import com.lingzhimobile.nutritionfoodguide.Tool;
-import com.lingzhimobile.nutritionfoodguide.test.TestCaseRecommendFood;
-import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3DiagnoseFragment;
+import com.lingzhimobile.nutritionfoodguide.*;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.*;
 
 public class V3ActivityReport extends V3BaseActivity {
 	
@@ -45,8 +37,10 @@ public class V3ActivityReport extends V3BaseActivity {
 
     // widgets
 	Button m_btnSave;
+	ListView m_lvehIllness, m_lvehSuggestion;
+	
     ListView elementFoodListView;
-    ListView diseaseAttentionListView;
+//    ListView diseaseAttentionListView;
     LinearLayout attentionLinearLayout;
     TextView bmiTextView, healthTextView;
 
@@ -68,6 +62,10 @@ public class V3ActivityReport extends V3BaseActivity {
     HashMap<String, ArrayList<HashMap<String, Object>>> m_FoodsByNutrient;
     ArrayList<String> m_illnessIdList ;
     HashMap<String, HashMap<String, Object>> m_illnessInfoDict2Level;
+    ArrayList<String> m_suggestionDistinctIdList;
+//    ArrayList<HashMap<String, Object>> m_suggestionDistinctRowList;
+    HashMap<String, HashMap<String, Object>> m_suggestionInfoDict2Level;
+    
     HashMap<String, ArrayList<HashMap<String, Object>>> m_suggestionsByIllnessHm;
     
     boolean m_alreadyExistDataRow = false;
@@ -79,7 +77,7 @@ public class V3ActivityReport extends V3BaseActivity {
 //    List<List<String>> attentionList = new ArrayList<List<String>>();
 
     NutrientFoodAdapter nutrientFoodAdapter;
-    DiseaseAttentionAdapter diseaseAttentionAdapter;
+//    DiseaseAttentionAdapter diseaseAttentionAdapter;
     
 
     DataAccess da;
@@ -110,7 +108,10 @@ public class V3ActivityReport extends V3BaseActivity {
         bmiTextView = (TextView) findViewById(R.id.bmiTextView);
         healthTextView = (TextView) findViewById(R.id.healthTextView);
         elementFoodListView = (ListView) findViewById(R.id.elementFoodListView);
-        diseaseAttentionListView = (ListView) findViewById(R.id.diseaseAttentionListView);
+//        diseaseAttentionListView = (ListView) findViewById(R.id.diseaseAttentionListView);
+        
+        m_lvehIllness = (ListView) findViewById(R.id.lvehIllness);
+        m_lvehSuggestion = (ListView) findViewById(R.id.lvehSuggestion);
 	}
     
     void initViewsContent(){
@@ -229,6 +230,11 @@ public class V3ActivityReport extends V3BaseActivity {
     			ArrayList<HashMap<String, Object>> illnessSuggestions = da.getIllnessSuggestions_ByIllnessId(illnessId);
     			m_suggestionsByIllnessHm.put(illnessId, illnessSuggestions);
     		}
+    		
+    		m_suggestionDistinctIdList = da.getIllnessSuggestionDistinctIds_ByIllnessIds(m_illnessIdList);
+    		ArrayList<HashMap<String, Object>> suggestionDistinctRowList = da.getIllnessSuggestions_BySuggestionIds(m_suggestionDistinctIdList);
+    		m_suggestionInfoDict2Level = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_SuggestionId,suggestionDistinctRowList);
+    		
     	}
     	
     	if (!m_alreadyExistDataRow){
@@ -245,8 +251,13 @@ public class V3ActivityReport extends V3BaseActivity {
 		nutrientFoodAdapter = new NutrientFoodAdapter();
 		elementFoodListView.setAdapter(nutrientFoodAdapter);
 		
-		diseaseAttentionAdapter = new DiseaseAttentionAdapter();
-		diseaseAttentionListView.setAdapter(diseaseAttentionAdapter);
+//		diseaseAttentionAdapter = new DiseaseAttentionAdapter();
+//		diseaseAttentionListView.setAdapter(diseaseAttentionAdapter);
+		
+		IllnessAdapter IllnessAdapter1 = new IllnessAdapter();
+		m_lvehIllness.setAdapter(IllnessAdapter1);
+		SuggestionAdapter SuggestionAdapter1 = new SuggestionAdapter();
+		m_lvehSuggestion.setAdapter(SuggestionAdapter1);
     }
     
     HashMap<String, HashMap<String, Double>> getData_FoodAndAmountByNutrient_fromFoodsByNutrient(){
@@ -363,7 +374,7 @@ public class V3ActivityReport extends V3BaseActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            diseaseAttentionAdapter.notifyDataSetChanged();
+//            diseaseAttentionAdapter.notifyDataSetChanged();
         }
 
     }
@@ -465,7 +476,56 @@ public class V3ActivityReport extends V3BaseActivity {
 
     }
 
-    class DiseaseAttentionAdapter extends BaseAdapter {
+//    class DiseaseAttentionAdapter extends BaseAdapter {
+//
+//        @Override
+//        public int getCount() {
+//            return m_illnessIdList==null?0:m_illnessIdList.size();
+//        }
+//
+//        @Override
+//        public Object getItem(int arg0) {
+//            return m_illnessIdList.get(arg0);
+//        }
+//
+//        @Override
+//        public long getItemId(int position) {
+//            return position;
+//        }
+//
+//        @Override
+//        public View getView(int position, View convertView, ViewGroup parent) {
+//            if (convertView == null) {
+//                convertView = getLayoutInflater().inflate(R.layout.v3_disease_cell, null);
+//            }
+//            String illnessId = m_illnessIdList.get(position);
+//            HashMap<String, Object> illnessInfo = m_illnessInfoDict2Level.get(illnessId);
+//            ArrayList<HashMap<String, Object>> illnessSuggestions = m_suggestionsByIllnessHm.get(illnessId);
+//            String illnessName = (String)illnessInfo.get(Constants.COLUMN_NAME_IllnessNameCn);
+//            
+//            TextView diseaseTextView = (TextView) convertView.findViewById(R.id.diseaseTextView);
+//            diseaseTextView.setText(illnessName);
+//
+//            attentionLinearLayout = (LinearLayout) convertView.findViewById(R.id.attentionLinearLayout);
+//            attentionLinearLayout.removeAllViews();
+//
+//            if (illnessSuggestions!=null) {
+//            	for(int i=0; i<illnessSuggestions.size(); i++){
+//            		HashMap<String, Object> illnessSuggestion = illnessSuggestions.get(i);
+//            		String suggestionName = (String)illnessSuggestion.get(Constants.COLUMN_NAME_SuggestionCn);
+//            		View view = getLayoutInflater().inflate(R.layout.v3_attention_cell, null);
+//                    TextView attentionTextView = (TextView) view.findViewById(R.id.attentionTextView);
+//                    attentionTextView.setText(suggestionName);
+//                    attentionLinearLayout.addView(view);
+//            	}
+//            }
+//
+//            return convertView;
+//        }
+//
+//    }
+    
+    class IllnessAdapter extends BaseAdapter {
 
         @Override
         public int getCount() {
@@ -485,29 +545,51 @@ public class V3ActivityReport extends V3BaseActivity {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                convertView = getLayoutInflater().inflate(R.layout.v3_disease_cell, null);
+                convertView = getLayoutInflater().inflate(R.layout.v3_row_illness, null);
             }
+            TextView tvIllness = (TextView) convertView.findViewById(R.id.tvIllness);
+            
             String illnessId = m_illnessIdList.get(position);
             HashMap<String, Object> illnessInfo = m_illnessInfoDict2Level.get(illnessId);
-            ArrayList<HashMap<String, Object>> illnessSuggestions = m_suggestionsByIllnessHm.get(illnessId);
+            
             String illnessName = (String)illnessInfo.get(Constants.COLUMN_NAME_IllnessNameCn);
             
-            TextView diseaseTextView = (TextView) convertView.findViewById(R.id.diseaseTextView);
-            diseaseTextView.setText(illnessName);
+            tvIllness.setText(illnessName);
 
-            attentionLinearLayout = (LinearLayout) convertView.findViewById(R.id.attentionLinearLayout);
-            attentionLinearLayout.removeAllViews();
+            return convertView;
+        }
 
-            if (illnessSuggestions!=null) {
-            	for(int i=0; i<illnessSuggestions.size(); i++){
-            		HashMap<String, Object> illnessSuggestion = illnessSuggestions.get(i);
-            		String suggestionName = (String)illnessSuggestion.get(Constants.COLUMN_NAME_SuggestionCn);
-            		View view = getLayoutInflater().inflate(R.layout.v3_attention_cell, null);
-                    TextView attentionTextView = (TextView) view.findViewById(R.id.attentionTextView);
-                    attentionTextView.setText(suggestionName);
-                    attentionLinearLayout.addView(view);
-            	}
+    }
+    class SuggestionAdapter extends BaseAdapter {
+
+        @Override
+        public int getCount() {
+            return m_suggestionDistinctIdList==null?0:m_suggestionDistinctIdList.size();
+        }
+
+        @Override
+        public Object getItem(int arg0) {
+            return m_suggestionDistinctIdList.get(arg0);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            if (convertView == null) {
+                convertView = getLayoutInflater().inflate(R.layout.v3_row_suggestion, null);
             }
+            TextView tvSuggestion = (TextView) convertView.findViewById(R.id.tvSuggestion);
+            
+            String suggestionId = m_suggestionDistinctIdList.get(position);
+            HashMap<String, Object> suggestionInfo = m_suggestionInfoDict2Level.get(suggestionId);
+            
+            String suggestionTxt = (String)suggestionInfo.get(Constants.COLUMN_NAME_SuggestionCn);
+            
+            tvSuggestion.setText(suggestionTxt);
 
             return convertView;
         }

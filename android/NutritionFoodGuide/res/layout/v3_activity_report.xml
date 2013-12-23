@@ -92,8 +92,34 @@
                 android:orientation="vertical" >
             </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
 
+            <!--
             <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
                 android:id="@+id/diseaseAttentionListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/wheat"
+                android:orientation="vertical" >
+            </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
+            -->
+            
+            <TextView
+                    style="@style/v3_table_name_text"
+                    android:text="潜在疾病" />
+            <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
+                android:id="@+id/lvehIllness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:background="@color/wheat"
+                android:orientation="vertical" >
+            </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
+            
+            <TextView
+                    style="@style/v3_table_name_text"
+                    android:text="调养办法" />
+            <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
+                android:id="@+id/lvehSuggestion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
