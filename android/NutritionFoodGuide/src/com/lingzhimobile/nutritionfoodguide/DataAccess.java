@@ -2289,7 +2289,6 @@ public class DataAccess {
 		Log.d(LogTag, logMsg);
 //		Tool_microlog4android.logDebug(logMsg);
 	    return rows;
-
 	}
 
 	
@@ -2301,7 +2300,7 @@ public class DataAccess {
 		Log.d(LogTag, "insertUserRecordSymptom_withDayLocal enter");
 		long lUpdateTimeUTC = updateTimeUTC.getTime();
 		String insertSql = "INSERT INTO UserRecordSymptom (DayLocal, UpdateTimeUTC, inputNameValuePairs, Note, calculateNameValuePairs) VALUES (?,?,?,?,?);";
-		Object[] bindArgs = new Object[]{dayLocal,lUpdateTimeUTC,inputNameValuePairs,Note,calculateNameValuePairs};
+		Object[] bindArgs = new Object[]{Integer.valueOf(dayLocal),lUpdateTimeUTC,inputNameValuePairs,Note,calculateNameValuePairs};
 		mDBcon.execSQL(insertSql, bindArgs);
 	}
 	public void insertUserRecordSymptom_withRawData(HashMap<String, Object> hmRawData)
@@ -2333,7 +2332,7 @@ public class DataAccess {
 		Log.d(LogTag, "updateUserRecordSymptom_withDayLocal enter");
 		long lUpdateTimeUTC = updateTimeUTC.getTime();
 		String updateSql = "UPDATE UserRecordSymptom SET UpdateTimeUTC=?, inputNameValuePairs=?, Note=?, calculateNameValuePairs=? WHERE DayLocal=? ;";
-		Object[] bindArgs = new Object[]{lUpdateTimeUTC, inputNameValuePairs, Note, calculateNameValuePairs, dayLocal};
+		Object[] bindArgs = new Object[]{lUpdateTimeUTC, inputNameValuePairs, Note, calculateNameValuePairs, Integer.valueOf(dayLocal)};
 		mDBcon.execSQL(updateSql, bindArgs);
 	}
 	

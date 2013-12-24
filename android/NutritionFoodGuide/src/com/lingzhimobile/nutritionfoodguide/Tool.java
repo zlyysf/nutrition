@@ -455,6 +455,17 @@ public class Tool {
 	    }
 	    return dic2Level;
 	}
+	public static ArrayList<HashMap<String, Object>> getdictionaryArrayFrom2LevelDictionary(ArrayList<String> itemIds, HashMap<String, HashMap<String, Object>> dict2Level)
+	{
+		if (itemIds==null || dict2Level==null)
+			return null;
+		ArrayList<HashMap<String, Object>> dictAry = new ArrayList<HashMap<String,Object>>();
+		for(int i=0; i<itemIds.size(); i++){
+			String itemId = itemIds.get(i);
+			dictAry.add(dict2Level.get(itemId));
+		}
+		return dictAry;
+	}
 	public static HashMap<Object, Object[]> array2DtoArrayHashMap_withKeyIndex(int keyIndex, Object[][] array2D)
 	{
 	    if (array2D == null)
@@ -478,6 +489,19 @@ public class Tool {
 			Tool.addItemToListHash(dataItem, propVal, dataColGroupedHm);
 		}
 		return dataColGroupedHm;
+	}
+	
+	public static ArrayList<String> getKeysFromHashMap(HashMap<String, Object> hm){
+		if (hm==null)
+			return null;
+		ArrayList<String> keys = new ArrayList<String>();
+		Iterator<Map.Entry<String, Object>> iter = hm.entrySet().iterator();
+		while (iter.hasNext()) {
+			Map.Entry<String, Object> entry = iter.next();
+    		String key = entry.getKey();
+    		keys.add(key);
+		}
+		return keys;
 	}
 	
 	public static Long convertToLong(Object item){
@@ -1347,7 +1371,17 @@ public class Tool {
 	    return inferIllnessAry;
 	}
 	
-	
+	public static String getBMIStatusId(double bmiVal){
+		if (bmiVal<18.5){
+			return "过轻";
+		}else if(bmiVal<25){
+			return "正常";
+		}else if(bmiVal<30){
+			return "过重";
+		}else{
+			return "肥胖";
+		}
+	}
 	
 	public static JSONObject HashMapToJsonObject(HashMap<String, Object> hmObj){
 		if (hmObj == null)
@@ -1483,6 +1517,15 @@ public class Tool {
 		Charset utf8charset = Charset.forName("UTF-8");
 		String dataString = new String(dataByte, utf8charset);
 		return dataString;
+	}
+	
+	public static Date getDateFromYearMonthDay(int yearMonthDay){
+		int day = yearMonthDay % 100;
+		int yearMonth = yearMonthDay / 100;
+		int month = yearMonth % 100;
+		int year = yearMonth / 100;
+		GregorianCalendar greCalendar = new GregorianCalendar(year, month-1, day);
+		return greCalendar.getTime();
 	}
 }
 

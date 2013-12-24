@@ -34,10 +34,10 @@ public class TestCaseDA {
 //		test_foodCollocationApis(ctx);
 //		test_Symptom1(ctx);
 //		test_inferIllnesses_withSymptoms1(ctx);
-		test_getIllnessSuggestionsDistinct1(ctx);
+//		test_getIllnessSuggestionsDistinct1(ctx);
 //		test_JsonTool();
 //		test_dalUserRecordSymptom1(ctx);
-//		test_genData_UserRecordSymptom1(ctx);
+		test_genData_UserRecordSymptom1(ctx);
 //		test_getIllness2(ctx);
 //		test_syncRemoteDataInParse(ctx);
 	}
@@ -348,15 +348,29 @@ public class TestCaseDA {
 		    
 		    String note = "note"+dayLocal;
 		    
-		    Object[] Symptoms = new Object[]{"头晕","易流泪"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
-		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
 		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
-
+//          Object[] Symptoms = new Object[]{"头晕","易流泪"};
+//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    ArrayList<Object> SymptomsByType = new ArrayList<Object>();
+		    
+		    ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
+		    ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"烦躁","紧张焦虑"});
+		    typeAndSymptoms1.add("心理");
+		    typeAndSymptoms1.add(SymptomsOfType1);
+		    SymptomsByType.add(typeAndSymptoms1);
+		    
+		    ArrayList<Object> typeAndSymptoms2 = new ArrayList<Object>();
+		    ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"阳痿","早泄","精液减少"});
+		    typeAndSymptoms2.add("男性");
+		    typeAndSymptoms2.add(SymptomsOfType2);
+		    SymptomsByType.add(typeAndSymptoms2);
+		    InputNameValuePairsData.put(Constants.Key_SymptomsByType, SymptomsByType);
+		    
 		    CalculateNameValuePairsData = new HashMap<String, Object>();
 		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.4));
 		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(87.5));
@@ -393,15 +407,29 @@ public class TestCaseDA {
 		    
 		    String note = "note"+dayLocal;
 		    
-		    Object[] Symptoms = new Object[]{"头发干枯","耳鸣"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
-		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
 		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(37.7));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(68.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(71));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(85));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(145));
-
+//          Object[] Symptoms = new Object[]{"头发干枯","耳鸣"};
+//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    ArrayList<Object> SymptomsByType = new ArrayList<Object>();
+		    
+		    ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
+		    ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"夜尿","多尿"});
+		    typeAndSymptoms1.add("排泄");
+		    typeAndSymptoms1.add(SymptomsOfType1);
+		    SymptomsByType.add(typeAndSymptoms1);
+		    
+		    ArrayList<Object> typeAndSymptoms2 = new ArrayList<Object>();
+		    ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"站立不稳","体力耐力下降","负重能力下降"});
+		    typeAndSymptoms2.add("行动");
+		    typeAndSymptoms2.add(SymptomsOfType2);
+		    SymptomsByType.add(typeAndSymptoms2);
+		    InputNameValuePairsData.put(Constants.Key_SymptomsByType, SymptomsByType);
+		    
 		    CalculateNameValuePairsData = new HashMap<String, Object>();
 		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(24.4));
 		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(80.5));
@@ -438,15 +466,30 @@ public class TestCaseDA {
 		    
 		    String note = "note"+dayLocal;
 		    
-		    Object[] Symptoms = new Object[]{"脸色苍白","视觉模糊"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
-		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
 		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(37.1));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(65.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(75));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(95));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(155));
-
+//          Object[] Symptoms = new Object[]{"脸色苍白","视觉模糊"};
+//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    ArrayList<Object> SymptomsByType = new ArrayList<Object>();
+		    
+		    ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
+		    ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"发热","畏寒"});
+		    typeAndSymptoms1.add("周身");
+		    typeAndSymptoms1.add(SymptomsOfType1);
+		    SymptomsByType.add(typeAndSymptoms1);
+		    
+		    ArrayList<Object> typeAndSymptoms2 = new ArrayList<Object>();
+		    ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"食欲不振","食欲亢进","恶心"});
+		    typeAndSymptoms2.add("消化");
+		    typeAndSymptoms2.add(SymptomsOfType2);
+		    SymptomsByType.add(typeAndSymptoms2);
+		    InputNameValuePairsData.put(Constants.Key_SymptomsByType, SymptomsByType);
+          
+          
 		    CalculateNameValuePairsData = new HashMap<String, Object>();
 		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(24.1));
 		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(83.5));
@@ -483,14 +526,30 @@ public class TestCaseDA {
             
             String note = "note"+dayLocal;
             
-            Object[] Symptoms = new Object[]{"头晕","易流泪"};
+            
             InputNameValuePairsData = new HashMap<String, Object>();
-            InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+            
             InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
             InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
             InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
             InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
             InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
+//            Object[] Symptoms = new Object[]{"头晕","易流泪"};
+//            InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+            ArrayList<Object> SymptomsByType = new ArrayList<Object>();
+            
+            ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"头晕","头发干枯"});
+            typeAndSymptoms1.add("头面");
+            typeAndSymptoms1.add(SymptomsOfType1);
+            SymptomsByType.add(typeAndSymptoms1);
+            
+            ArrayList<Object> typeAndSymptoms2 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"视觉模糊","暗光看不清","怕光"});
+            typeAndSymptoms2.add("眼睛");
+            typeAndSymptoms2.add(SymptomsOfType2);
+            SymptomsByType.add(typeAndSymptoms2);
+            InputNameValuePairsData.put(Constants.Key_SymptomsByType, SymptomsByType);
 
             CalculateNameValuePairsData = new HashMap<String, Object>();
             CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.4));
@@ -528,15 +587,29 @@ public class TestCaseDA {
             
             String note = "note"+dayLocal;
             
-            Object[] Symptoms = new Object[]{"头晕","易流泪"};
             InputNameValuePairsData = new HashMap<String, Object>();
-            InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
             InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
             InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
             InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
             InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
-
+//          Object[] Symptoms = new Object[]{"头晕","易流泪"};
+//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+            ArrayList<Object> SymptomsByType = new ArrayList<Object>();
+            
+            ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"耳鸣","耳后出油"});
+            typeAndSymptoms1.add("耳鼻");
+            typeAndSymptoms1.add(SymptomsOfType1);
+            SymptomsByType.add(typeAndSymptoms1);
+            
+            ArrayList<Object> typeAndSymptoms2 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"口唇干裂","张口疼痛","舌发炎/红包"});
+            typeAndSymptoms2.add("口腔");
+            typeAndSymptoms2.add(SymptomsOfType2);
+            SymptomsByType.add(typeAndSymptoms2);
+            InputNameValuePairsData.put(Constants.Key_SymptomsByType, SymptomsByType);
+          
             CalculateNameValuePairsData = new HashMap<String, Object>();
             CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.4));
             CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(87.5));
@@ -573,15 +646,29 @@ public class TestCaseDA {
             
             String note = "note"+dayLocal;
             
-            Object[] Symptoms = new Object[]{"头晕","易流泪"};
             InputNameValuePairsData = new HashMap<String, Object>();
-            InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.7));
             InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(67.8));
             InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
             InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
             InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
-
+//          Object[] Symptoms = new Object[]{"头晕","易流泪"};
+//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+            ArrayList<Object> SymptomsByType = new ArrayList<Object>();
+            
+            ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"松动","脱落"});
+            typeAndSymptoms1.add("牙齿");
+            typeAndSymptoms1.add(SymptomsOfType1);
+            SymptomsByType.add(typeAndSymptoms1);
+            
+            ArrayList<Object> typeAndSymptoms2 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"咽喉发痒","咽喉灼热","咽喉疼痛"});
+            typeAndSymptoms2.add("咽喉");
+            typeAndSymptoms2.add(SymptomsOfType2);
+            SymptomsByType.add(typeAndSymptoms2);
+            InputNameValuePairsData.put(Constants.Key_SymptomsByType, SymptomsByType);
+            
             CalculateNameValuePairsData = new HashMap<String, Object>();
             CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.4));
             CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(87.5));
@@ -618,15 +705,29 @@ public class TestCaseDA {
 		    
 		    String note = "note"+dayLocal;
 		    
-		    Object[] Symptoms = new Object[]{"脸下垂","易疲劳"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
-		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
 		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.1));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(69.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(70));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(75));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(135));
-
+//          Object[] Symptoms = new Object[]{"脸下垂","易疲劳"};
+//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+            ArrayList<Object> SymptomsByType = new ArrayList<Object>();
+            
+            ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"呼吸不畅","咳嗽"});
+            typeAndSymptoms1.add("呼吸");
+            typeAndSymptoms1.add(SymptomsOfType1);
+            SymptomsByType.add(typeAndSymptoms1);
+            
+            ArrayList<Object> typeAndSymptoms2 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"心律失常","心慌","心跳过速"});
+            typeAndSymptoms2.add("心脏");
+            typeAndSymptoms2.add(SymptomsOfType2);
+            SymptomsByType.add(typeAndSymptoms2);
+            InputNameValuePairsData.put(Constants.Key_SymptomsByType, SymptomsByType);
+            
 		    CalculateNameValuePairsData = new HashMap<String, Object>();
 		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.1));
 		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(84.5));
@@ -663,15 +764,29 @@ public class TestCaseDA {
 		    
 		    String note = "note"+dayLocal;
 		    
-		    Object[] Symptoms = new Object[]{"脸抽搐","浑浊"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
-		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
 		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.6));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(66.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(73));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(78));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(138));
-
+//          Object[] Symptoms = new Object[]{"脸抽搐","浑浊"};
+//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+            ArrayList<Object> SymptomsByType = new ArrayList<Object>();
+            
+            ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"胸闷","左下或下腹痛"});
+            typeAndSymptoms1.add("胸腹腔");
+            typeAndSymptoms1.add(SymptomsOfType1);
+            SymptomsByType.add(typeAndSymptoms1);
+            
+            ArrayList<Object> typeAndSymptoms2 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"松弛","皮肤干燥","皱纹","伤口不愈合"});
+            typeAndSymptoms2.add("皮肤");
+            typeAndSymptoms2.add(SymptomsOfType2);
+            SymptomsByType.add(typeAndSymptoms2);
+            InputNameValuePairsData.put(Constants.Key_SymptomsByType, SymptomsByType);
+            
 		    CalculateNameValuePairsData = new HashMap<String, Object>();
 		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.6));
 		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(86.5));
@@ -708,15 +823,29 @@ public class TestCaseDA {
 		    
 		    String note = "note"+dayLocal;
 		    
-		    Object[] Symptoms = new Object[]{"老年斑","发红发痒"};
 		    InputNameValuePairsData = new HashMap<String, Object>();
-		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
 		    InputNameValuePairsData.put(Constants.Key_BodyTemperature, Double.valueOf(36.6));
 		    InputNameValuePairsData.put(Constants.Key_Weight, Double.valueOf(66.8));
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(73));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(78));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(138));
-
+//          Object[] Symptoms = new Object[]{"老年斑","发红发痒"};
+//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+            ArrayList<Object> SymptomsByType = new ArrayList<Object>();
+            
+            ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"手脚震颤","手脚发痒"});
+            typeAndSymptoms1.add("手足");
+            typeAndSymptoms1.add(SymptomsOfType1);
+            SymptomsByType.add(typeAndSymptoms1);
+            
+            ArrayList<Object> typeAndSymptoms2 = new ArrayList<Object>();
+            ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"四肢无力","四肢肿胀","下肢水肿","关节疼痛","关节肿胀"});
+            typeAndSymptoms2.add("四肢");
+            typeAndSymptoms2.add(SymptomsOfType2);
+            SymptomsByType.add(typeAndSymptoms2);
+            InputNameValuePairsData.put(Constants.Key_SymptomsByType, SymptomsByType);
+            
 		    CalculateNameValuePairsData = new HashMap<String, Object>();
 		    CalculateNameValuePairsData.put(Constants.Key_BMI, Double.valueOf(23.6));
 		    CalculateNameValuePairsData.put(Constants.Key_HealthMark, Double.valueOf(86.5));

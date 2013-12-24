@@ -18,7 +18,7 @@ import com.lingzhimobile.nutritionfoodguide.v3.adapter.HistoryMonthAdapter;
 
 public class V3HistoryFragment extends V3BaseHeadFragment {
 
-    List<Integer> monthList;
+	ArrayList<Integer> monthList;
     ViewPager monthViewPager;
     HistoryMonthAdapter monthAdapter;
 
@@ -29,27 +29,40 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle arg = getArguments();
+//        Bundle arg = getArguments();
 
-        TestCaseDA.test_genData_UserRecordSymptom1(getActivity());
         da = DataAccess.getSingleton(getActivity());
         monthList = da.getUserRecordSymptom_DistinctMonth();
-        
-        TestCaseDA.test_genData_UserRecordSymptom1(getActivity());
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.v3_fragment_history, container,
-                false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.v3_fragment_history, container, false);
         initHeaderLayout(view);
         monthViewPager = (ViewPager) view.findViewById(R.id.historyViewPager);
         monthAdapter = new HistoryMonthAdapter(getChildFragmentManager(), monthList);
         monthViewPager.setAdapter(monthAdapter);
+        
+        monthViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+			@Override
+			public void onPageSelected(int position) {
+				setTitleWithPager();
+			}
+			@Override
+			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+			}
+			@Override
+			public void onPageScrollStateChanged(int state) {
+			}
+		});
 
         title.setText(monthAdapter.getPageTitle(0));
         return view;
+    }
+    
+    void setTitleWithPager(){
+    	int currentItemIndex = monthViewPager.getCurrentItem();
+    	title.setText(monthAdapter.getPageTitle(currentItemIndex));
     }
 
     public static V3HistoryFragment newInstance(int tabId) {

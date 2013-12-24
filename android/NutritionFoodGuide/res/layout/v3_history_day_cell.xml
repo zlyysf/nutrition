@@ -14,13 +14,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="11月12日" />
+            android:text="0月0日" />
 
         <TextView
             android:id="@+id/weekdayTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="周五" />
+            android:text="周0" />
     </LinearLayout>
 
     <LinearLayout
@@ -33,28 +33,28 @@
             android:id="@+id/nutrient1TextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="74" />
+            android:text="v1" />
 
         <TextView
             android:id="@+id/nutrient2TextView"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="A" />
+            android:text="v2" />
 
         <TextView
             android:id="@+id/nutrient3TextView"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="铁" />
+            android:text="v3" />
 
         <TextView
             android:id="@+id/nutrient4TextView"
             android:layout_marginLeft="20dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="锌" />
+            android:text="v4" />
     </LinearLayout>
 
     <LinearLayout
@@ -89,6 +89,7 @@
             android:text="关节炎，急性咽炎，消化性溃疡" />
     </LinearLayout>
 
+    <!--
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -132,6 +133,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="鼻塞，干燥，流血，鼻涕，鼻屎多，嗅觉不好" />
+    </LinearLayout>
+    -->
+    <LinearLayout
+        android:id="@+id/llSymptomAndType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        <!-- to contain v3_part_symptomandtype_inhistory -->
+
+        
     </LinearLayout>
 
     <TableLayout

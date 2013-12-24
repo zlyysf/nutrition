@@ -1,6 +1,6 @@
 package com.lingzhimobile.nutritionfoodguide.v3.adapter;
 
-import java.util.List;
+import java.util.*;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -10,26 +10,34 @@ import com.lingzhimobile.nutritionfoodguide.v3.fragment.HistoryMonthFragment;
 
 public class HistoryMonthAdapter extends FragmentPagerAdapter {
 
-    List<Integer> mMonthList;
-    public HistoryMonthAdapter(FragmentManager fm, List<Integer> monthList) {
+	ArrayList<Integer> mMonthList;
+    public HistoryMonthAdapter(FragmentManager fm, ArrayList<Integer> monthList) {
         super(fm);
         mMonthList = monthList;
     }
 
     @Override
     public Fragment getItem(int arg0) {
-        int month = mMonthList.get(arg0);
-        return HistoryMonthFragment.newInstance(month);
+        int yearMonth = mMonthList.get(arg0);
+        return HistoryMonthFragment.newInstance(yearMonth);
     }
 
     @Override
     public int getCount() {
-        return mMonthList.size();
+        return mMonthList==null?0:mMonthList.size();
     }
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return String.valueOf(mMonthList.get(position));
+    	if (mMonthList!=null){
+    		int yearMonth = mMonthList.get(position);
+        	int year = yearMonth / 100;
+        	int month = yearMonth % 100;
+        	String title = year + " 年 " + month + " 月";
+            return title;
+    	}else{
+    		return "";
+    	}
     }
 
     

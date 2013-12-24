@@ -16,15 +16,17 @@ import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.v3.adapter.HistoryDayAdapter;
 
 public class HistoryMonthFragment extends Fragment {
+	
+	final static String Key_yearMonth = "yearMonth";
 
-    int mMonth;
+    int m_yearMonth;
     ArrayList<HashMap<String, Object>> records;
     DataAccess da;
 
-    public static HistoryMonthFragment newInstance(int month) {
+    public static HistoryMonthFragment newInstance(int yearMonth) {
         HistoryMonthFragment fragment = new HistoryMonthFragment();
         Bundle args = new Bundle();
-        args.putInt("month", month);
+        args.putInt(Key_yearMonth, yearMonth);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,16 +36,13 @@ public class HistoryMonthFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         da = DataAccess.getSingleton(getActivity());
-        mMonth = getArguments().getInt("month");
-        records = da.getUserRecordSymptomDataByRange_withStartDayLocal(0,
-                0, mMonth, mMonth + 1);
+        m_yearMonth = getArguments().getInt(Key_yearMonth);
+        records = da.getUserRecordSymptomDataByRange_withStartDayLocal(0,0, m_yearMonth, m_yearMonth + 1);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.v3_fragment_month, container,
-                false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.v3_fragment_month, container, false);
         ListView recordListView = (ListView) view.findViewById(R.id.recordListView);
         HistoryDayAdapter dayAdapter = new HistoryDayAdapter(getActivity(), records);
         recordListView.setAdapter(dayAdapter);
