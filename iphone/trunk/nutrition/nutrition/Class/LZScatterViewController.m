@@ -140,13 +140,20 @@
 - (void)configureAxisX
 {
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)self.graph.axisSet;
-    
-//    CPTMutableLineStyle *lineStyle = [[CPTMutableLineStyle alloc] init];
-//    lineStyle.miterLimit = 1.0f;
-//    lineStyle.lineWidth = 2.0;
-//    lineStyle.lineColor = [CPTColor blackColor];
-    
     CPTXYAxis * x = axisSet.xAxis;
+    
+    // Config the axis label text style
+    CPTMutableTextStyle *axisLabelTextStyle = [x.labelTextStyle mutableCopy];
+    axisLabelTextStyle.color = [CPTColor blackColor];
+    axisLabelTextStyle.fontName = @"Helvetica-Bold";
+    axisLabelTextStyle.fontSize = 12.0f;
+    x.labelTextStyle = axisLabelTextStyle;
+    
+    // Config the line style of Axis X major tick
+    CPTMutableLineStyle *lineStyle = [x.axisLineStyle mutableCopy];
+    lineStyle.lineWidth = 0.5;
+    x.majorTickLineStyle = lineStyle;
+    //x.axisLineStyle = lineStyle;
     
     //x.visibleAxisRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(1) length:CPTDecimalFromFloat(33.5)];
     if (self.scatterType == ScatterTypeNI)
@@ -165,51 +172,21 @@
     else
         x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
     
-    x.majorIntervalLength = CPTDecimalFromString(@"4");   // Major tick interval
-    x.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
-    x.minorTickLineStyle = x.majorTickLineStyle;
-    NSNumberFormatter *xFormatter = [[NSNumberFormatter alloc] init];
+
+    // Axis X is using the customized lables and ticks, so these configuration is not used for now
+    //x.majorIntervalLength = CPTDecimalFromString(@"4");   // Major tick interval
+    //x.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
+    //x.minorTickLineStyle = x.majorTickLineStyle;
+    //NSNumberFormatter *xFormatter = [[NSNumberFormatter alloc] init];
+    //[xFormatter setMaximumFractionDigits:1];
+    //x.labelFormatter = xFormatter;
     
-    [xFormatter setMaximumFractionDigits:1];
-    
-    x.labelFormatter = xFormatter;
-    
-    
-//    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
-//    axisTitleStyle.color = [CPTColor blackColor];
-//    axisTitleStyle.fontName = @"Helvetica-Bold";
-//    axisTitleStyle.fontSize = 12.0f;
-//    x.title = @"Day of Month";
-//    x.titleTextStyle = axisTitleStyle;
-//    x.titleOffset = 25.0f;
-    
-    //    CPTMutableLineStyle *axisLineStyle = [CPTMutableLineStyle lineStyle];
-    //    axisLineStyle.lineWidth = 1.0f;
-    //    axisLineStyle.lineColor = [CPTColor blackColor];
-    //    x.axisLineStyle = axisLineStyle;
     
     x.labelingPolicy = CPTAxisLabelingPolicyNone;
-    
-    //    CPTMutableTextStyle *axisTextStyle = [[CPTMutableTextStyle alloc] init];
-    //    axisTextStyle.color = [CPTColor blackColor];
-    //    axisTextStyle.fontName = @"Helvetica-Bold";
-    //    axisTextStyle.fontSize = 11.0f;
-    //    x.labelTextStyle = axisTextStyle;
-    
-    //x.majorTickLineStyle = axisLineStyle;
-    //    x.majorTickLength = 4.0f;
-    
-    //    CPTMutableLineStyle *tickLineStyle = [CPTMutableLineStyle lineStyle];
-    //    tickLineStyle.lineColor = [CPTColor blackColor];
-    //    tickLineStyle.lineWidth = 20.0f;
-    //    CPTMutableLineStyle *gridLineStyle = [CPTMutableLineStyle lineStyle];
-    //    tickLineStyle.lineColor = [CPTColor blackColor];
-    //    tickLineStyle.lineWidth = 1.0f;
-    
     x.tickDirection = CPTSignNegative;
     x.majorTickLength = 4.0f;
     
-    
+    // Customize the labels and ticks of Axis X
     NSUInteger dateCount = 11;
     NSMutableSet *xLabels = [NSMutableSet setWithCapacity:dateCount];
     NSMutableSet *xLocations = [NSMutableSet setWithCapacity:dateCount];
@@ -229,24 +206,13 @@
     }
     x.axisLabels = xLabels;
     x.majorTickLocations = xLocations;
-//
-//    xLabels = [NSMutableSet setWithCapacity:1];
-//    xLocations = [NSMutableSet setWithCapacity:1];
-//    label = [[CPTAxisLabel alloc] initWithText:@"3"  textStyle:x.labelTextStyle];
-//    location = 3;
-//    label.tickLocation = CPTDecimalFromCGFloat(location);
-//    label.offset = x.majorTickLength;
-//    if (label) {
-//        [xLabels addObject:label];
-//        [xLocations addObject:[NSNumber numberWithFloat:location]];
-//    }
-//    x.minorTickAxisLabels = xLabels;
-//    x.minorTickLocations = xLocations;
+    
+    //x.minorTickAxisLabels = xLabels;
+    //x.minorTickLocations = xLocations;
     
     
     //x.axisConstraints = [CPTConstraints constraintWithUpperOffset:132];
     
-    // 需要排除的不显示数字的主刻度
     NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-5) length:CPTDecimalFromFloat(4)],
                                  [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(31.5) length:CPTDecimalFromFloat(4)]];
     x.labelExclusionRanges = exclusionRanges;
@@ -255,25 +221,43 @@
 
 - (void)configureAxisY
 {
-    
     CPTXYAxisSet *axisSet = (CPTXYAxisSet *)self.graph.axisSet;
-    CPTXYAxis * y = axisSet.yAxis;
-    CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
-    axisTitleStyle.color = [CPTColor blackColor];
-    axisTitleStyle.fontName = @"Helvetica-Bold";
-    axisTitleStyle.fontSize = 12.0f;
+    CPTXYAxis *y = axisSet.yAxis;
+    
+    // Config the axis title text style. Not used for now
+    //CPTMutableTextStyle *axisTitleStyle = [CPTMutableTextStyle textStyle];
+    //axisTitleStyle.color = [CPTColor blackColor];
+    //axisTitleStyle.fontName = @"Helvetica-Bold";
+    //axisTitleStyle.fontSize = 12.0f;
+    
+    // Config the axis label text style
+    CPTMutableTextStyle *axisLabelTextStyle = [y.labelTextStyle mutableCopy];
+    axisLabelTextStyle.color = [CPTColor blackColor];
+    axisLabelTextStyle.fontName = @"Helvetica-Bold";
+    axisLabelTextStyle.fontSize = 12.0f;
+    y.labelTextStyle = axisLabelTextStyle;
+    
+    // Config the line style of Axis Y, major grid line and the major tick
+    CPTMutableLineStyle *lineStyle = [y.axisLineStyle mutableCopy];
+    lineStyle.lineWidth = 0.5;
+    y.majorGridLineStyle = lineStyle;
+    //y.axisLineStyle = lineStyle;
+    y.majorTickLineStyle = lineStyle;
     
     y.tickDirection = CPTSignNegative;
     y.labelOffset = 0;
     y.majorTickLength = 4.0f;
     y.gridLinesRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(1) length:CPTDecimalFromFloat(30.1)];
-    y.minorTicksPerInterval = 0;
+    y.minorTicksPerInterval = 0; // Count of minor ticks between 2 major ticks
+    
+    //y.minorTickLineStyle = y.majorTickLineStyle;
     
     if (self.scatterType == ScatterTypeNI) {
-        y.title = nil;
-        y.titleTextStyle = axisTitleStyle;
-        y.titleOffset = 10;
-        y.majorGridLineStyle = y.majorTickLineStyle;
+        
+        // Config the title of axis Y. Not used for now
+        //y.title = nil;
+        //y.titleTextStyle = axisTitleStyle;
+        //y.titleOffset = 10;
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
@@ -288,15 +272,9 @@
         
         NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(40) length:CPTDecimalFromFloat(19)]];
         y.labelExclusionRanges = exclusionRanges;
-        y.labelTextStyle = axisSet.xAxis.labelTextStyle;
         
     }
     else if (self.scatterType == ScatterTypeBMI) {
-        y.title = nil;
-        y.titleTextStyle = axisTitleStyle;
-        y.titleOffset = 10;
-        y.majorGridLineStyle = y.majorTickLineStyle;
-        //y.labelOffset = -8.0f;
         y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(21) length:CPTDecimalFromFloat(5)];
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
@@ -307,18 +285,12 @@
         y.labelFormatter = yFormatter;
         
         y.majorIntervalLength = CPTDecimalFromString(@"0.2");   // Major tick interval
-        //y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
         
         NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(0) length:CPTDecimalFromFloat(20.9)]];
         y.labelExclusionRanges = exclusionRanges;
         
     }
     else if (self.scatterType == ScatterTypeWeight) {
-        y.title = nil;
-        y.titleTextStyle = axisTitleStyle;
-        y.titleOffset = 10;
-        y.majorGridLineStyle = y.majorTickLineStyle;
-        //y.labelOffset = -8.0f;
         y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(40) length:CPTDecimalFromFloat(56.5)];
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
@@ -328,17 +300,12 @@
         y.labelFormatter = yFormatter;
         
         y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
-        //y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
         
         NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(30) length:CPTDecimalFromFloat(9)]];
         y.labelExclusionRanges = exclusionRanges;
         
     }
     else if (self.scatterType == ScatterTypeTemperature) {
-        //y.title = @"(℃)";
-        y.titleTextStyle = axisTitleStyle;
-        y.titleOffset = 15;
-        y.majorGridLineStyle = y.majorTickLineStyle;
         y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(35) length:CPTDecimalFromFloat(7.3)];
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
@@ -349,18 +316,12 @@
         y.labelFormatter = yFormatter;
         
         y.majorIntervalLength = CPTDecimalFromString(@"1");   // Major tick interval
-        //y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
         
         NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(33) length:CPTDecimalFromFloat(1.5)]];
         y.labelExclusionRanges = exclusionRanges;
 
     }
     else if (self.scatterType == ScatterTypeBP) {
-        y.title = nil;
-        y.titleTextStyle = axisTitleStyle;
-        y.titleOffset = 10;
-        y.majorGridLineStyle = y.majorTickLineStyle;
-        //y.labelOffset = -8.0f;
         y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(60) length:CPTDecimalFromFloat(142)];
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
@@ -376,11 +337,6 @@
         
     }
     else if (self.scatterType == ScatterTypeHeartbeat) {
-        y.title = nil;
-        y.titleTextStyle = axisTitleStyle;
-        y.titleOffset = 10;
-        y.majorGridLineStyle = y.majorTickLineStyle;
-        //y.labelOffset = -8.0f;
         y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(45) length:CPTDecimalFromFloat(26)];
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
@@ -397,12 +353,6 @@
         
     }
     else {
-        y.title = nil;
-        y.titleTextStyle = axisTitleStyle;
-        y.titleOffset = 10;
-        y.majorGridLineStyle = y.majorTickLineStyle;
-        //y.labelOffset = -8.0f;
-        
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0"); // X coordinate of Axis Y
         
         NSNumberFormatter *yFormatter = [[NSNumberFormatter alloc] init];
@@ -415,11 +365,7 @@
         NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-20) length:CPTDecimalFromFloat(21)]];
         y.labelExclusionRanges = exclusionRanges;
     }
-   
-    y.minorTickLineStyle = y.majorTickLineStyle;
     
-    
-    //y.tickDirection = CPTSignPositive;
 }
 
 - (void)configurePlot
