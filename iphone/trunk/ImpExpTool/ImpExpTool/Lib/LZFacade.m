@@ -52,7 +52,7 @@
 //    [workRe convertExcelToSqlite_TranslationItem];
     
     [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
-//    [workRe checkIllnessInferenceTxtdoc];
+    [workRe checkIllnessInferenceTxtdoc];
     
 ////    [workRe convertExcelToSqlite_IllnessSuggestionTxtdoc];
     
