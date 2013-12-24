@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface NGReportBMICell : UITableViewCell
+#import "LZEmptyClassCell.h"
+@interface NGReportBMICell : LZEmptyClassCell
 @property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong, nonatomic) IBOutlet UILabel *headerLabel;
 @property (strong, nonatomic) IBOutlet UILabel *bmiValueLabel;

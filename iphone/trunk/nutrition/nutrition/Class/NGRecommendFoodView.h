@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-
+#import "LZCustomDataButton.h"
 @interface NGRecommendFoodView : UIView
 - (id)initWithFrame:(CGRect)frame
            foodName:(NSString *)foodName
@@ -16,5 +16,5 @@
 @property (strong,nonatomic)UIImageView *foodImageView;
 @property (strong,nonatomic)UILabel *foodNameLabel;
 @property (strong,nonatomic)UILabel *foodAmountLabel;
-@property (strong,nonatomic)UIButton *touchButton;
+@property (strong,nonatomic)LZCustomDataButton *touchButton;
 @end

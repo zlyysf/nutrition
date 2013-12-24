@@ -41,7 +41,7 @@
         foodAmountLabel.text = foodAmount;
         [self addSubview:foodAmountLabel];
         
-        self.touchButton = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
+        self.touchButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, 0, frame.size.width, frame.size.height)];
         UIImage *selectedImage = [LZUtility createImageWithColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5f] imageSize:CGSizeMake( frame.size.width, frame.size.height)];
         [touchButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
         [self addSubview:touchButton];

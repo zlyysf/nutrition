@@ -12,7 +12,7 @@
 #import "LZUtility.h"
 #import "LZConstants.h"
 #import "LZNutrientionManager.h"
-#define MAXNutritonDisplayCount 5
+#define MAXNutritonDisplayCount 3
 @interface NGRecordHistoryViewController ()
 {
     BOOL isChinese;
