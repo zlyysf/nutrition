@@ -147,7 +147,11 @@ public class Constants {
 	public static final String COLUMN_NAME_DiseaseTimeType ="DiseaseTimeType";
 	public static final String COLUMN_NAME_LackLevelMark ="LackLevelMark";
 	
-	
+	public static final String TABLE_NAME_TranslationItem ="TranslationItem";
+	public static final String COLUMN_NAME_ItemType ="ItemType";
+	public static final String COLUMN_NAME_ItemID ="ItemID";
+	public static final String COLUMN_NAME_ItemNameCn ="ItemNameCn";
+	public static final String COLUMN_NAME_ItemNameEn ="ItemNameEn";
 
 	public static final String TABLE_NAME_SymptomType ="SymptomType";
 	public static final String TABLE_NAME_Symptom ="Symptom";
@@ -205,9 +209,8 @@ public class Constants {
 	public static final String Key_NutrientsWithFoodAndAmounts ="NutrientsWithFoodAndAmounts";
 
 	
-
-
-	
+	public static final String TranslationItemType_FoodCnType ="FoodCnType";
+	public static final String TranslationItemType_SingleItemUnitName ="SingleItemUnitName";
 	
 	public static final String DiseaseGroupType_wizard ="wizard";
 	public static final String DiseaseGroupType_specialPeople ="specialPeople";

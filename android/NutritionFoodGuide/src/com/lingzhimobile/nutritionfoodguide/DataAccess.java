@@ -2014,7 +2014,35 @@ public class DataAccess {
 	//------------------------------------------------------------------------------------------
 	
 	
-	
+//	-(NSDictionary*)getTranslationItemsDictionaryByType:(NSString*)itemType
+//	{
+//	    NSLog(@"getTranslationItemsDictionaryByType enter, itemType=%@",itemType);
+//	    NSMutableArray *fieldValuePairs = [NSMutableArray array];
+//	    if (itemType != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_ItemType,itemType, nil]];
+//	    
+//	    NSArray *translationItemInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_TranslationItem andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:nil andNeedDistinct:false];
+//	    NSDictionary *translationItemInfo2LevelDict = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_ItemID andDicArray:translationItemInfoAry];
+//	    
+//	    NSLog(@"getTranslationItemsDictionaryByType return=%@",[LZUtility getObjectDescription:translationItemInfo2LevelDict andIndent:0]);
+//	    return translationItemInfo2LevelDict;
+//	}
+	public HashMap<String, HashMap<String, Object>> getTranslationItemsDictionaryByType(String itemType)
+	{
+		Log.d(LogTag, "getTranslationItemsDictionaryByType enter, itemType="+itemType);
+		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
+		if (itemType != null){
+	    	Object[] columnValuePair = {Constants.COLUMN_NAME_ItemType,new Object[]{itemType}};
+	    	columnValuePairs_equal.add(columnValuePair);
+		}
+
+		ArrayList<HashMap<String, Object>> translationItemInfoAry = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_TranslationItem, 
+	    		columnValuePairs_equal, null, null, null, false);
+		HashMap<String, HashMap<String, Object>> translationItemInfo2LevelDict = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_ItemID,translationItemInfoAry);
+		String logMsg = "getTranslationItemsDictionaryByType ret="+Tool.getIndentFormatStringOfObject(translationItemInfo2LevelDict,0);
+		Log.d(LogTag, logMsg);
+	    return translationItemInfo2LevelDict;
+	    
+	}
 
 	public ArrayList<HashMap<String, Object>> getSymptomTypeRows_withForSex(String forSex)
 	{

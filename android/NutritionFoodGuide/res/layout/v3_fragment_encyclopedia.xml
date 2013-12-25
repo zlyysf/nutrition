@@ -9,7 +9,6 @@
         layout="@layout/v3_header_layout" />
 
     <ScrollView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
 
@@ -43,6 +42,7 @@
                         <TableRow>
 
                             <TextView
+                                android:id="@+id/tvNutrientVitamin1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -50,6 +50,7 @@
                             </TextView>
 
                             <TextView
+                                android:id="@+id/tvNutrientVitamin2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -57,6 +58,7 @@
                             </TextView>
 
                             <TextView
+                                android:id="@+id/tvNutrientVitamin3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -64,6 +66,7 @@
                             </TextView>
 
                             <TextView
+                                android:id="@+id/tvNutrientVitamin4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -74,6 +77,7 @@
                         <TableRow>
 
                             <TextView
+                                android:id="@+id/tvNutrientVitamin5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -81,6 +85,7 @@
                             </TextView>
 
                             <TextView
+                                android:id="@+id/tvNutrientVitamin6"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -88,6 +93,7 @@
                             </TextView>
 
                             <TextView
+                                android:id="@+id/tvNutrientVitamin7"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -95,6 +101,7 @@
                             </TextView>
 
                             <TextView
+                                android:id="@+id/tvNutrientVitamin8"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -120,6 +127,7 @@
                         <TableRow>
 
                             <TextView
+                                android:id="@+id/tvNutrientMineral1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -127,6 +135,7 @@
                             </TextView>
 
                             <TextView
+                                android:id="@+id/tvNutrientMineral2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -134,6 +143,7 @@
                             </TextView>
 
                             <TextView
+                                android:id="@+id/tvNutrientMineral3"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -144,7 +154,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="B9"
+                                android:text="ph"
                                 android:visibility="invisible" >
                             </TextView>
                         </TableRow>
@@ -152,6 +162,7 @@
                         <TableRow>
 
                             <TextView
+                                android:id="@+id/tvNutrientMineral4"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -159,6 +170,7 @@
                             </TextView>
 
                             <TextView
+                                android:id="@+id/tvNutrientMineral5"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -169,7 +181,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="D"
+                                android:text="ph"
                                 android:visibility="invisible" >
                             </TextView>
 
@@ -177,7 +189,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
-                                android:text="E"
+                                android:text="ph"
                                 android:visibility="invisible" >
                             </TextView>
                         </TableRow>
@@ -201,6 +213,7 @@
                         <TableRow>
 
                             <TextView
+                                android:id="@+id/tvNutrientMacro1"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -208,6 +221,7 @@
                             </TextView>
 
                             <TextView
+                                android:id="@+id/tvNutrientMacro2"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_weight="1"
@@ -228,7 +242,7 @@
                     android:text="食物" />
 
                 <com.lingzhimobile.nutritionfoodguide.GridViewExpandHeight
-                    android:id="@+id/foodCell"
+                    android:id="@+id/gvFoodType"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -253,7 +267,7 @@
                     android:text="常见疾病" />
 
                 <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
-                    android:id="@+id/commonDiseaseListView"
+                    android:id="@+id/lvIllness"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
                 </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
