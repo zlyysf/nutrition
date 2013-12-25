@@ -88,7 +88,44 @@
             android:layout_height="wrap_content"
             android:text="关节炎，急性咽炎，消化性溃疡" />
     </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
+        <TextView
+            style="@style/v3_table_name_text"
+            android:text="调养食物" />
+
+        <TextView
+            android:id="@+id/tvRecommendFoods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100g牛肉，200g牛奶" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+
+        <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="horizontal" >
+
+	        <TextView
+	            style="@style/v3_table_name_text"
+	            android:text="养生贴士" />
+	    </LinearLayout>    
+	    <TextView
+	            android:id="@+id/tvSuggestions"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:text="Suggestions" />
+    </LinearLayout>
+    
     <!--
     <LinearLayout
         android:layout_width="match_parent"

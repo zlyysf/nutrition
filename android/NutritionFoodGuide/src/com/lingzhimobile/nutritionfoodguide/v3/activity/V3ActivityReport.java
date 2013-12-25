@@ -332,6 +332,8 @@ public class V3ActivityReport extends V3BaseActivity {
 	    
 	    InferIllnessesAndSuggestions = getData_SuggestionIdsByIllness_fromSuggestionsByIllness();
 	    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+	    CalculateNameValuePairsData.put(Constants.Key_IllnessIds, m_illnessIdList);
+	    CalculateNameValuePairsData.put(Constants.Key_distinctSuggestionIds, m_suggestionDistinctIdList);
 	    
 	    if (!m_alreadyExistDataRow){
 	    	da.insertUserRecordSymptom_withDayLocal(dayLocal,updateTime,InputNameValuePairsData,m_note,CalculateNameValuePairsData);

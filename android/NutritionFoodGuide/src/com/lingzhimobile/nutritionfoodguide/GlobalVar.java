@@ -20,6 +20,7 @@ public class GlobalVar {
 	static HashMap<String, HashMap<String, Object>> m_symptomInfoDict2Level = null;
 	static HashMap<String, HashMap<String, Object>> m_nutrientInfoDict2Level = null;
 	static HashMap<String, HashMap<String, Object>> m_foodInfoDict2Level = null;
+	static HashMap<String, HashMap<String, Object>> m_suggestionInfoDict2Level = null;
 	
 	
 	public static void InitDiseaseAndGroupData(Context ctx) 
@@ -89,6 +90,14 @@ public class GlobalVar {
 		return m_foodInfoDict2Level;
 	}
 	
+	public static HashMap<String, HashMap<String, Object>> getAllSuggestion2LevelDict(Context ctx){
+		if (m_suggestionInfoDict2Level == null){
+			DataAccess da = DataAccess.getSingleton(ctx);
+			ArrayList<HashMap<String, Object>> suggestionRows = da.getIllnessSuggestions_BySuggestionIds(null);
+			m_suggestionInfoDict2Level = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_SuggestionId,suggestionRows);
+		}
+		return m_suggestionInfoDict2Level;
+	}
 
 }
 

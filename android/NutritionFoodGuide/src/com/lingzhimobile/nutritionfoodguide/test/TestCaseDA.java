@@ -391,6 +391,8 @@ public class TestCaseDA {
 		    InferIllnessesAndSuggestions.put("中度高血压", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
 		    InferIllnessesAndSuggestions.put("低血糖", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
 		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    CalculateNameValuePairsData.put(Constants.Key_IllnessIds, new Object[]{"中度高血压","低血糖"});
+		    CalculateNameValuePairsData.put(Constants.Key_distinctSuggestionIds, new Object[]{"坚持低脂肪的食谱。","控制血压和胆固醇的指标。"});
 		    
 		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
 		    
@@ -450,6 +452,8 @@ public class TestCaseDA {
 		    InferIllnessesAndSuggestions.put("功能性消化不良", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
 		    InferIllnessesAndSuggestions.put("急性扁桃体炎", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
 		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    CalculateNameValuePairsData.put(Constants.Key_IllnessIds, new Object[]{"急性扁桃体炎","功能性消化不良"});
+		    CalculateNameValuePairsData.put(Constants.Key_distinctSuggestionIds, new Object[]{"坚持低脂肪的食谱。","控制血压和胆固醇的指标。"});
 		    
 		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
 		    
@@ -510,6 +514,8 @@ public class TestCaseDA {
 		    InferIllnessesAndSuggestions.put("急性病毒性咽炎", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
 		    InferIllnessesAndSuggestions.put("急性病毒性喉炎", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
 		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    CalculateNameValuePairsData.put(Constants.Key_IllnessIds, new Object[]{"中度高血压","低血糖"});
+		    CalculateNameValuePairsData.put(Constants.Key_distinctSuggestionIds, new Object[]{"坚持低脂肪的食谱。","控制血压和胆固醇的指标。"});
 		    
 		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
 		    
@@ -571,6 +577,8 @@ public class TestCaseDA {
             InferIllnessesAndSuggestions.put("中度高血压", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
             InferIllnessesAndSuggestions.put("低血糖", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
             CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+            CalculateNameValuePairsData.put(Constants.Key_IllnessIds, new Object[]{"急性扁桃体炎","功能性消化不良"});
+            CalculateNameValuePairsData.put(Constants.Key_distinctSuggestionIds, new Object[]{"坚持低脂肪的食谱。","控制血压和胆固醇的指标。"});
             
             da.deleteUserRecordSymptomByByDayLocal(dayLocal);
             
@@ -630,6 +638,8 @@ public class TestCaseDA {
             InferIllnessesAndSuggestions.put("中度高血压", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
             InferIllnessesAndSuggestions.put("低血糖", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
             CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+            CalculateNameValuePairsData.put(Constants.Key_IllnessIds, new Object[]{"中度高血压","低血糖"});
+            CalculateNameValuePairsData.put(Constants.Key_distinctSuggestionIds, new Object[]{"坚持低脂肪的食谱。","控制血压和胆固醇的指标。"});
             
             da.deleteUserRecordSymptomByByDayLocal(dayLocal);
             
@@ -689,6 +699,8 @@ public class TestCaseDA {
             InferIllnessesAndSuggestions.put("中度高血压", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
             InferIllnessesAndSuggestions.put("低血糖", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
             CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+            CalculateNameValuePairsData.put(Constants.Key_IllnessIds, new Object[]{"急性扁桃体炎","功能性消化不良"});
+            CalculateNameValuePairsData.put(Constants.Key_distinctSuggestionIds, new Object[]{"坚持低脂肪的食谱。","控制血压和胆固醇的指标。"});
             
             da.deleteUserRecordSymptomByByDayLocal(dayLocal);
             
@@ -748,6 +760,8 @@ public class TestCaseDA {
 		    InferIllnessesAndSuggestions.put("急性肾小球肾炎", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
 		    InferIllnessesAndSuggestions.put("急性胃炎", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
 		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    CalculateNameValuePairsData.put(Constants.Key_IllnessIds, new Object[]{"中度高血压","低血糖"});
+		    CalculateNameValuePairsData.put(Constants.Key_distinctSuggestionIds, new Object[]{"坚持低脂肪的食谱。","控制血压和胆固醇的指标。"});
 		    
 		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
 		    
@@ -807,6 +821,8 @@ public class TestCaseDA {
 		    InferIllnessesAndSuggestions.put("感冒", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
 		    InferIllnessesAndSuggestions.put("慢性支气管炎", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
 		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    CalculateNameValuePairsData.put(Constants.Key_IllnessIds, new Object[]{"急性扁桃体炎","功能性消化不良"});
+		    CalculateNameValuePairsData.put(Constants.Key_distinctSuggestionIds, new Object[]{"坚持低脂肪的食谱。","控制血压和胆固醇的指标。"});
 		    
 		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
 		    
@@ -866,6 +882,8 @@ public class TestCaseDA {
 		    InferIllnessesAndSuggestions.put("慢性胃炎", new Object[]{"确定和排除诱发过敏的食物","Suggestion12"});
 		    InferIllnessesAndSuggestions.put("支气管哮喘", new Object[]{"大量饮水，有利于痰液稀释，气管畅通","Suggestion22"});
 		    CalculateNameValuePairsData.put(Constants.Key_InferIllnessesAndSuggestions, InferIllnessesAndSuggestions);
+		    CalculateNameValuePairsData.put(Constants.Key_IllnessIds, new Object[]{"中度高血压","低血糖"});
+		    CalculateNameValuePairsData.put(Constants.Key_distinctSuggestionIds, new Object[]{"坚持低脂肪的食谱。","控制血压和胆固醇的指标。"});
 		    
 		    da.deleteUserRecordSymptomByByDayLocal(dayLocal);
 		    

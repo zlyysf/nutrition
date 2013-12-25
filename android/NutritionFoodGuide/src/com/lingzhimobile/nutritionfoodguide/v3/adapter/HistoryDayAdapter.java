@@ -74,6 +74,8 @@ public class HistoryDayAdapter extends BaseAdapter {
         TextView heartRateTextView = (TextView) convertView.findViewById(R.id.heartRateTextView);
         TextView noteTextView = (TextView) convertView.findViewById(R.id.noteTextView);
         
+        TextView tvSuggestions = (TextView) convertView.findViewById(R.id.tvSuggestions);
+        
         TextView nutrient1TextView = (TextView) convertView.findViewById(R.id.nutrient1TextView);
         TextView nutrient2TextView = (TextView) convertView.findViewById(R.id.nutrient2TextView);
         TextView nutrient3TextView = (TextView) convertView.findViewById(R.id.nutrient3TextView);
@@ -115,23 +117,7 @@ public class HistoryDayAdapter extends BaseAdapter {
         HashMap<String, Object> inputNameValuePairs = (HashMap<String, Object>) dataRow.get(Constants.COLUMN_NAME_inputNameValuePairs);
         HashMap<String, Object> calculateNameValuePairs = (HashMap<String, Object>) dataRow.get(Constants.COLUMN_NAME_calculateNameValuePairs);
         
-        HashMap<String, HashMap<String, Object>> allIllnessInfoDict2Level = GlobalVar.getAllIllness2LevelDict(mContext);
-        HashMap<String, HashMap<String, Object>> symptomTypeInfoDict2Level = GlobalVar.getAllSymptomType2LevelDict(mContext);
-        HashMap<String, HashMap<String, Object>> allSymptomInfoDict2Level = GlobalVar.getAllSymptom2LevelDict(mContext);
-        HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(mContext);
         
-        ArrayList<Object> illnessIdObjList = (ArrayList<Object>)calculateNameValuePairs.get(Constants.Key_IllnessIds);
-        ArrayList<String> illnessIdList = null;
-        if (illnessIdObjList!=null){
-        	illnessIdList = Tool.convertToStringArrayList(illnessIdObjList);
-        }else{
-        	HashMap<String, Object> inferIllnessesAndSuggestions = (HashMap<String, Object>) calculateNameValuePairs.get(Constants.Key_InferIllnessesAndSuggestions);
-        	illnessIdList = Tool.getKeysFromHashMap(inferIllnessesAndSuggestions);
-        }
-        ArrayList<HashMap<String, Object>> illnessRowList = Tool.getdictionaryArrayFrom2LevelDictionary(illnessIdList, allIllnessInfoDict2Level);
-        ArrayList<Object> illnessCaptionList = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_IllnessNameCn, illnessRowList);
-        illnessStr = StringUtils.join(illnessCaptionList,"，");
-        illnessTextView.setText(illnessStr);
         
         Object bmiObj = calculateNameValuePairs.get(Constants.Key_BMI);
         if (bmiObj!=null){
@@ -180,6 +166,42 @@ public class HistoryDayAdapter extends BaseAdapter {
         }else{
         	heartRateTextView.setText("");
         }
+        
+        HashMap<String, HashMap<String, Object>> allIllnessInfoDict2Level = GlobalVar.getAllIllness2LevelDict(mContext);
+        HashMap<String, HashMap<String, Object>> symptomTypeInfoDict2Level = GlobalVar.getAllSymptomType2LevelDict(mContext);
+        HashMap<String, HashMap<String, Object>> allSymptomInfoDict2Level = GlobalVar.getAllSymptom2LevelDict(mContext);
+        HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(mContext);
+        HashMap<String, HashMap<String, Object>> allSuggestionInfoDict2Level = GlobalVar.getAllSuggestion2LevelDict(mContext);
+        
+        ArrayList<Object> illnessIdObjList = (ArrayList<Object>)calculateNameValuePairs.get(Constants.Key_IllnessIds);
+        ArrayList<String> illnessIdList = null;
+        if (illnessIdObjList!=null){
+        	illnessIdList = Tool.convertToStringArrayList(illnessIdObjList);
+        }else{
+        	HashMap<String, Object> inferIllnessesAndSuggestions = (HashMap<String, Object>) calculateNameValuePairs.get(Constants.Key_InferIllnessesAndSuggestions);
+        	illnessIdList = Tool.getKeysFromHashMap(inferIllnessesAndSuggestions);
+        }
+        ArrayList<HashMap<String, Object>> illnessRowList = Tool.getdictionaryArrayFrom2LevelDictionary(illnessIdList, allIllnessInfoDict2Level);
+        ArrayList<Object> illnessCaptionList = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_IllnessNameCn, illnessRowList);
+        illnessStr = StringUtils.join(illnessCaptionList,"，");
+        illnessTextView.setText(illnessStr);
+        
+        ArrayList<Object> distinctSuggestionIdObjList = (ArrayList<Object>)calculateNameValuePairs.get(Constants.Key_distinctSuggestionIds);
+        String suggestionsTxt = "";
+        if (distinctSuggestionIdObjList!=null && distinctSuggestionIdObjList.size()>0){
+        	ArrayList<String> distinctSuggestionIdList = Tool.convertToStringArrayList(distinctSuggestionIdObjList);
+            ArrayList<HashMap<String, Object>> distinctSuggestionRowList = Tool.getdictionaryArrayFrom2LevelDictionary(distinctSuggestionIdList, allSuggestionInfoDict2Level);
+            ArrayList<String> suggestionTxtList = new ArrayList<String>();
+            for(int i=0; i<distinctSuggestionRowList.size(); i++){
+            	HashMap<String, Object> suggestionRow = distinctSuggestionRowList.get(i);
+            	String suggestionCaption = (String)suggestionRow.get(Constants.COLUMN_NAME_SuggestionCn);
+            	String suggestionTxt = String.format("%d    %s", i+1,suggestionCaption);
+            	suggestionTxtList.add(suggestionTxt);
+            }
+            suggestionsTxt = StringUtils.join(suggestionTxtList,"\n\n");
+            
+        }
+        tvSuggestions.setText(suggestionsTxt);
         
 //      ArrayList<Object> allSymptomIdObjList = (ArrayList<Object>)inputNameValuePairs.get(Constants.Key_Symptoms);
         ArrayList<Object> symptomsByType3DList = (ArrayList<Object>)inputNameValuePairs.get(Constants.Key_SymptomsByType);
