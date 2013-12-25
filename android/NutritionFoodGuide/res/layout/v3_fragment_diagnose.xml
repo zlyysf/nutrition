@@ -8,16 +8,12 @@
         android:id="@+id/titleLayout"
         layout="@layout/v3_header_layout" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
 
-        <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
+        <ListView
             android:id="@+id/listView1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:cacheColorHint="#00000000"
             android:divider="@null" />
-    </ScrollView>
 
 </LinearLayout>
