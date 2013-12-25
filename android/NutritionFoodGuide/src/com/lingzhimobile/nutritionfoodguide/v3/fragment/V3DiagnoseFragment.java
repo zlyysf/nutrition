@@ -76,6 +76,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initViewsContent();
     }
 
 	@Override
@@ -84,7 +85,6 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 	    View view = inflater.inflate(R.layout.v3_fragment_diagnose, container, false);
 	    initHeaderLayout(view);
         initViewHandles(inflater, view);
-        initViewsContent();
         setViewEventHandlers();
         setViewsContent();
         return view;

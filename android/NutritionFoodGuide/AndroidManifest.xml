@@ -51,6 +51,7 @@
         <activity android:name=".v3.activity.V3ActivityHome"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.NoTitleBar"
+            android:windowSoftInputMode="adjustPan"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
