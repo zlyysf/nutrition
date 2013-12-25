@@ -1288,26 +1288,48 @@
     return NO;
 }
 
-+(NSDictionary *)getNutritionNameInfo:(NSString *)name
++(NSString *)getNutritionNameInfo:(NSString *)name isChinese:(BOOL)isChinese
 {
-    NSString *chinisePart = @"";
-    NSString *englishPart = @"";
-    int alength = [name length];
-    for (int i = 0; i<alength; i++) {
-        //char commitChar = [name characterAtIndex:i];
-        NSString *temp = [name substringWithRange:NSMakeRange(i,1)];
-        const char *u8Temp = [temp UTF8String];
-        if (3==strlen(u8Temp))
+    //先根据空格拆分
+    if (isChinese)
+    {
+        NSString *chinisePart = @"";
+        NSString *englishPart = @"";
+        int alength = [name length];
+        for (int i = 0; i<alength; i++) {
+            //char commitChar = [name characterAtIndex:i];
+            NSString *temp = [name substringWithRange:NSMakeRange(i,1)];
+            const char *u8Temp = [temp UTF8String];
+            if (3==strlen(u8Temp))
+            {
+                chinisePart = [chinisePart stringByAppendingString:temp];
+            }
+            else
+            {
+                englishPart = [englishPart stringByAppendingString:temp];
+            }
+        }
+        if ([englishPart length] ==0)
         {
-            chinisePart = [chinisePart stringByAppendingString:temp];
+            return chinisePart;
         }
         else
         {
-            englishPart = [englishPart stringByAppendingString:temp];
+            return englishPart;
         }
     }
-    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:chinisePart,@"ChinesePart",englishPart,@"EnglishPart", nil];
-    return dict;
+    else
+    {
+        NSArray *nameArray = [name componentsSeparatedByString:@" "];
+        if ([nameArray count]==2)
+        {
+            return [nameArray objectAtIndex:1];
+        }
+        else
+        {
+            return name;
+        }
+    }
 }
 
 + (UIImage *) createImageWithColor: (UIColor *) color imageSize:(CGSize )imageSize

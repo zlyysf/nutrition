@@ -103,7 +103,8 @@
         queryKey = @"IconTitleEn";
     }
     NSString *nutritionName = [dict objectForKey:queryKey];
-    return nutritionName;
+    NSString *convertedString = [LZUtility getNutritionNameInfo:nutritionName isChinese:isChinese];
+    return convertedString;
 
 }
 - (void)didReceiveMemoryWarning
@@ -141,17 +142,20 @@
             [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [cell.headerLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
             cell.headerLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"baike_c_changjianjibing",@"常见疾病栏标题：常见疾病")];
+            NSString *nameKey;
+            if (isChinese)
+            {
+                nameKey = @"IllnessNameCn";
+            }
+            else
+            {
+                nameKey = @"IllnessNameEn";
+            }
             for (int i =0 ; i< [self.commonDiseaseArray count]; i++)
             {
                 NSDictionary *illnessDict = [self.commonDiseaseArray objectAtIndex:i];
-                NSString *illnessName;
-                if (isChinese) {
-                    illnessName =[illnessDict objectForKey:@"IllnessNameCn"];
-                }
-                else
-                {
-                    illnessName =[illnessDict objectForKey:@"IllnessNameEn"];
-                }
+                NSString *illnessName =[illnessDict objectForKey:nameKey];
+     
                 LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, 34+i*(DiseaseItemLabelHeight+DiseaseItemMargin), 300, DiseaseItemLabelHeight+DiseaseItemMargin)];
                 [cell.backView addSubview:illnessButton];
                 illnessButton.customData = [NSNumber numberWithInt:i];

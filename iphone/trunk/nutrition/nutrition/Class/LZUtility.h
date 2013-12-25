@@ -109,7 +109,7 @@
 
 +(BOOL)isCurrentLanguageChinese;
 
-+(NSDictionary *)getNutritionNameInfo:(NSString *)name;
++(NSString *)getNutritionNameInfo:(NSString *)name isChinese:(BOOL)isChinese;
 + (UIImage *) createImageWithColor: (UIColor *) color imageSize:(CGSize )imageSize;
 
 +(NSString *)getSingleItemUnitName:(NSString *)unitName;

@@ -239,11 +239,16 @@
     LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
     NSDictionary *dict = [nm getNutritionInfo:nutrientId];
     NSString *nutritionName = [dict objectForKey:queryKey];
+
+    //UIColor *backColor = [LZUtility getNutrientColorForNutrientId:nutritionId];
+    //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
+    NSString *convertedString = [LZUtility getNutritionNameInfo:nutritionName isChinese:isChinese];
+
     
     UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
     //cell.nutrientId = nutrientId;
     //[cell.nameButton setTitle:nutritionName forState:UIControlStateNormal];
-    cell.nutritionNameLabel.text = nutritionName;
+    cell.nutritionNameLabel.text = convertedString;
     NSNumber *percent = [aNutrient objectForKey:@"1foodSupply1NutrientRate"];
     //NSNumber *food1Supply1NutrientAmount = [aNutrient objectForKey:@"food1Supply1NutrientAmount"];
     NSNumber *nutrientTotalDRI = [aNutrient objectForKey:@"nutrientTotalDRI"];
