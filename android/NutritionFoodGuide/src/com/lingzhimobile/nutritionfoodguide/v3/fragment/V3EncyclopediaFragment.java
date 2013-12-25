@@ -3,6 +3,8 @@ package com.lingzhimobile.nutritionfoodguide.v3.fragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -15,16 +17,21 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombinationList;
+import com.lingzhimobile.nutritionfoodguide.ActivityHome;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.GlobalVar;
 import com.lingzhimobile.nutritionfoodguide.GridViewExpandHeight;
 import com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight;
+import com.lingzhimobile.nutritionfoodguide.OnClickListenerInListItem;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.Tool;
+import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityIllness;
 
 public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     static final String LogTag = V3EncyclopediaFragment.class.getSimpleName();
+    
     
     static final String[] nutrients_vitamin = {"Vit_A_RAE","Vit_C_(mg)","Vit_D_(µg)","Vit_E_(mg)",
         "Riboflavin_(mg)","Vit_B6_(mg)","Folate_Tot_(µg)","Vit_B12_(µg)"};
@@ -75,6 +82,8 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     	}
     	return m_FoodClassToImageIdInfoDict;
     }
+    
+    Activity m_activity;
 
     ArrayList<TextView> m_tvNutrientVitaminList, m_tvNutrientMineralList, m_tvNutrientMacroList;
     GridView m_gvFoodType;
@@ -90,6 +99,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        m_activity = this.getActivity();
     }
 
     @Override
@@ -237,10 +247,34 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
             HashMap<String, Object> illnessRow = m_illnessRowList.get(position);
             String illnessCaption = (String)illnessRow.get(Constants.COLUMN_NAME_IllnessNameCn);
             tvIllness.setText(illnessCaption);
+            
+            OnClickListenerInListItem_illness OnClickListenerInListItem_illness1 = (OnClickListenerInListItem_illness)tvIllness.getTag();
+            if (OnClickListenerInListItem_illness1==null){
+            	OnClickListenerInListItem_illness1 = new OnClickListenerInListItem_illness();
+            	OnClickListenerInListItem_illness1.initInputData(position);
+            	tvIllness.setOnClickListener(OnClickListenerInListItem_illness1);
+            	tvIllness.setTag(OnClickListenerInListItem_illness1);
+            }else{
+            	OnClickListenerInListItem_illness1.initInputData(position);
+            }
+            
             return convertView;
         }
 
     }
+    
+    class OnClickListenerInListItem_illness extends OnClickListenerInListItem{
+    	@Override
+		public void onClick(View v) {
+    		HashMap<String, Object> illnessRow = m_illnessRowList.get(m_rowPos);
+    		String illnessId = (String)illnessRow.get(Constants.COLUMN_NAME_IllnessId);
+    		Intent intent = new Intent(m_activity, V3ActivityIllness.class);
+			intent.putExtra(Constants.COLUMN_NAME_IllnessId, illnessId);
+			startActivity(intent);
+		}
+    }
+    
+    
 
 //    class FoodCellAdapter extends BaseAdapter {
 //

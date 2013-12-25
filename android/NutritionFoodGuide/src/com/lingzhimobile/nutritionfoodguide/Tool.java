@@ -10,6 +10,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.json.*;
 
 
+
+
 import android.R.bool;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
@@ -29,6 +31,8 @@ import android.os.DropBoxManager.Entry;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 public class Tool {
 	static final String LogTag = "Tool";
@@ -1526,6 +1530,25 @@ public class Tool {
 		int year = yearMonth / 100;
 		GregorianCalendar greCalendar = new GregorianCalendar(year, month-1, day);
 		return greCalendar.getTime();
+	}
+	
+	private static class MyWebViewClient extends WebViewClient
+    {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url)
+        {
+        	view.loadUrl(url);
+            return true;
+        }
+    }
+	
+	public static void setWebViewBasicHere(WebView webView1){
+		webView1.getSettings().setJavaScriptEnabled(true); //需要Enable JavaScript，不然webview只会加载一部分页面，往下滑到末尾不会继续加载，出现一个 点击加载更多的按钮 也点不动。
+    	
+		MyWebViewClient MyWebViewClient1 = new MyWebViewClient();
+		webView1.setWebViewClient(MyWebViewClient1);//防止在 loadUrl 弹出选择系统中的浏览器的界面 http://www.myexception.cn/web/971082.html
+    	
+		//另外需要在各个activity中设置 onKeyDown 处理back键
 	}
 }
 

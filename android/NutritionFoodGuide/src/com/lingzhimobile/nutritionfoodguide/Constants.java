@@ -172,6 +172,8 @@ public class Constants {
 	public static final String COLUMN_NAME_IllnessId ="IllnessId";
 	public static final String COLUMN_NAME_IllnessNameCn ="IllnessNameCn";
 	public static final String COLUMN_NAME_IllnessNameEn ="IllnessNameEn";
+	public static final String COLUMN_NAME_UrlCn ="UrlCn";
+	public static final String COLUMN_NAME_UrlEn ="UrlEn";
 	
 	public static final String TABLE_NAME_UserRecordSymptom ="UserRecordSymptom";
 	public static final String COLUMN_NAME_DayLocal ="DayLocal";
