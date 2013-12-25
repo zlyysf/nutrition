@@ -8,8 +8,8 @@
 
 #import "LZScatterViewController.h"
 
-#define BLUE_PLOT_IDENTIFIER @"blue plot"
-#define GREEN_PLOT_IDENTIFIER @"green plot"
+#define BLUE_PLOT_IDENTIFIER @"BluePlot"
+#define GREEN_PLOT_IDENTIFIER @"GreenPlot"
 
 @interface LZScatterViewController ()
 
@@ -102,11 +102,11 @@
     CPTXYPlotSpace * plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
     //plotSpace.allowsUserInteraction = YES;
     if (self.scatterType == ScatterTypeNI) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.3) length:CPTDecimalFromFloat(34)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.0) length:CPTDecimalFromFloat(33.7)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(57.5) length:CPTDecimalFromFloat(43.5)];
     }
     else if (self.scatterType == ScatterTypeBMI) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.8) length:CPTDecimalFromFloat(34.5)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(34.2)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(20.86) length:CPTDecimalFromFloat(2.39)];
     }
     else if (self.scatterType == ScatterTypeWeight) {
@@ -118,7 +118,7 @@
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(34.5) length:CPTDecimalFromFloat(7.8)];
     }
     else if (self.scatterType == ScatterTypeBP) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.3) length:CPTDecimalFromFloat(34)];
+        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.0) length:CPTDecimalFromFloat(33.7)];
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(50) length:CPTDecimalFromFloat(152)];
     }
     else if (self.scatterType == ScatterTypeHeartbeat) {
@@ -144,14 +144,14 @@
     
     // Config the axis label text style
     CPTMutableTextStyle *axisLabelTextStyle = [x.labelTextStyle mutableCopy];
-    axisLabelTextStyle.color = [CPTColor blackColor];
+    axisLabelTextStyle.color = [CPTColor grayColor];
     axisLabelTextStyle.fontName = @"Helvetica-Bold";
     axisLabelTextStyle.fontSize = 12.0f;
     x.labelTextStyle = axisLabelTextStyle;
     
     // Config the line style of Axis X major tick
     CPTMutableLineStyle *lineStyle = [x.axisLineStyle mutableCopy];
-    lineStyle.lineWidth = 0.5;
+    //lineStyle.lineWidth = 0.5;
     x.majorTickLineStyle = lineStyle;
     //x.axisLineStyle = lineStyle;
     
@@ -232,7 +232,7 @@
     
     // Config the axis label text style
     CPTMutableTextStyle *axisLabelTextStyle = [y.labelTextStyle mutableCopy];
-    axisLabelTextStyle.color = [CPTColor blackColor];
+    axisLabelTextStyle.color = [CPTColor grayColor];
     axisLabelTextStyle.fontName = @"Helvetica-Bold";
     axisLabelTextStyle.fontSize = 12.0f;
     y.labelTextStyle = axisLabelTextStyle;
@@ -245,8 +245,8 @@
     y.majorTickLineStyle = lineStyle;
     
     y.tickDirection = CPTSignNegative;
-    y.labelOffset = 0;
-    y.majorTickLength = 4.0f;
+    y.labelOffset = 2.0f;
+    y.majorTickLength = 0.0f;
     y.gridLinesRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(1) length:CPTDecimalFromFloat(30.1)];
     y.minorTicksPerInterval = 0; // Count of minor ticks between 2 major ticks
     
@@ -396,6 +396,7 @@
     }
     
    
+    // Only the Blood Pressure tab is using the green plot as the low blood pressure plot
     
     CPTScatterPlot *greenPlot = (CPTScatterPlot *)[self.graph plotWithIdentifier:GREEN_PLOT_IDENTIFIER];
     if (self.scatterType == ScatterTypeBP) {
