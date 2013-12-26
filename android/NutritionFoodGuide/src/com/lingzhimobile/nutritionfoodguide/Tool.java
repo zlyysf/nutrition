@@ -914,7 +914,9 @@ public class Tool {
 				Object key = entry.getKey();
 				Object val = entry.getValue();
 				sb1.append("\n\t"+strIndent+key.toString()+"=");
-				if (isSimpleObjectForObject(val)){
+				if(val == null){
+					sb1.append("<NULL>");
+				}else if (isSimpleObjectForObject(val)){
 					sb1.append(val.toString());
 				}else{
 					String s2 = getIndentFormatStringOfObject(val,level+2);
@@ -1457,11 +1459,14 @@ public class Tool {
 			}
 			if (valObj != null){
 				if (valObj instanceof JSONObject){
-					HashMap<String, Object> hmSub = JsonToHashMap((JSONObject)valObj);
+					JSONObject jsonValObj = (JSONObject)valObj;
+					HashMap<String, Object> hmSub = JsonToHashMap(jsonValObj);
 					hm.put(key, hmSub);
 				}else if (valObj instanceof JSONArray){
 					ArrayList<Object> alSub = JsonToArrayList((JSONArray)valObj);
 					hm.put(key, alSub);
+				}else if (JSONObject.NULL.equals(valObj)){
+					hm.put(key, null);
 				}else{
 					hm.put(key, valObj);
 				}
@@ -1491,6 +1496,8 @@ public class Tool {
 	    		}else if (item instanceof JSONArray){
 	    			ArrayList<Object> itemAl = JsonToArrayList((JSONArray)item);
 	    			al.add(itemAl);
+	    		}else if (JSONObject.NULL.equals(item)){
+	    			al.add(null);
 	    		}else{
 	    			al.add(item);
 	    		}
