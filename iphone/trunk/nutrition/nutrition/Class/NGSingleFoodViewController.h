@@ -18,6 +18,6 @@
 @property (strong, nonatomic) IBOutlet UILabel *underHeaderLabel;
 @property (strong, nonatomic) IBOutlet UITableView *nutritionListView;
 @property (strong, nonatomic) IBOutlet UIScrollView *contentScrollView;
-@property (strong,nonatomic)NSArray *nutrientSupplyArray;
+@property (strong,nonatomic)NSMutableArray *nutrientSupplyArray;
 @property (strong,nonatomic)NSMutableDictionary *inOutParam;
 @end

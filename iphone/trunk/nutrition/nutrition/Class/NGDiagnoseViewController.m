@@ -94,6 +94,8 @@
     
     //笔记
     
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+    
     NSString *note = [self.userInputValueDict objectForKey:@"note"];//需保存数据
     
     //根据症状获得症状健康分值
@@ -335,18 +337,24 @@
         isUserFirstSave = NO;
     }
     NSDictionary *dataToSave = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:dayLocal],@"dayLocal" ,today,@"date",InputNameValuePairsData,@"InputNameValuePairsData",note,@"note",CalculateNameValuePairsData,@"CalculateNameValuePairsData",nil];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
-    NGHealthReportViewController *healthReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGHealthReportViewController"];
-    healthReportViewController.isFirstSave = isUserFirstSave;
-    healthReportViewController.BMIValue = userBMI;
-    healthReportViewController.HealthValue = healthScore;
-    healthReportViewController.lackNutritionArray = lackNutritionArray;
-    healthReportViewController.potentialArray = illnessAry;
-    healthReportViewController.attentionArray = distinctSuggestionIds;
-    healthReportViewController.recommendFoodDict = recommendedFoods;
-    healthReportViewController.dataToSave = dataToSave;
-    needRefresh = YES;
-    [self.navigationController pushViewController:healthReportViewController animated:YES];
+        
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+            NGHealthReportViewController *healthReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGHealthReportViewController"];
+            healthReportViewController.isFirstSave = isUserFirstSave;
+            healthReportViewController.BMIValue = userBMI;
+            healthReportViewController.HealthValue = healthScore;
+            healthReportViewController.lackNutritionArray = lackNutritionArray;
+            healthReportViewController.potentialArray = illnessAry;
+            healthReportViewController.attentionArray = distinctSuggestionIds;
+            healthReportViewController.recommendFoodDict = recommendedFoods;
+            healthReportViewController.dataToSave = dataToSave;
+            needRefresh = YES;
+            [self.navigationController pushViewController:healthReportViewController animated:YES];
+        
+        });
+    });
+    
     
 }
 -(void)userInfoChanged:(NSNotification *)notification

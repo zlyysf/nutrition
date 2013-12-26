@@ -133,7 +133,7 @@
     if (isFirstLoad)
     {
         [self displayNutrientUI];
-        isFirstLoad = NO;
+        //isFirstLoad = NO;
     }
 }
 - (IBAction)stepperChanged:(UIStepper *)sender {
@@ -187,38 +187,58 @@
 
 -(void)displayNutrientUI
 {
-    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        dispatch_sync(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+            LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+            
+            if(self.inOutParam == nil)
+            {
+                NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+                NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+                NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+                NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+                NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+                NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+                NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                          userSex,ParamKey_sex, userAge,ParamKey_age,
+                                          userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                                          userActivityLevel,ParamKey_activityLevel, nil];
+                inOutParam = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                              userInfo,Key_userInfo,
+                              self.foodInfoDict,@"FoodAttrs",
+                              [NSNumber numberWithInt:currentValue],@"FoodAmount",
+                              nil];
+            }
+            else
+            {
+                [inOutParam setObject:[NSNumber numberWithInt:currentValue] forKey:@"FoodAmount"];
+            }
+            self.nutrientSupplyArray = [rf calculateGiveFoodSupplyNutrientAndFormatForUI:self.inOutParam];
+            
+            [self.nutrientSupplyArray sortUsingComparator:^NSComparisonResult(id obj1,id obj2){
+                
+                NSDictionary *dict1 = (NSDictionary*)obj1;
+                NSDictionary *dict2 = (NSDictionary*)obj2;
+                NSNumber *percent1 = [dict1 objectForKey:@"1foodSupply1NutrientRate"];
+                NSNumber *percent2 = [dict2 objectForKey:@"1foodSupply1NutrientRate"];
+                return [percent2 compare:percent1];
+                
+            }];
 
-    if(self.inOutParam == nil)
-    {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
-        NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
-        NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
-        NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
-        NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  userSex,ParamKey_sex, userAge,ParamKey_age,
-                                  userWeight,ParamKey_weight, userHeight,ParamKey_height,
-                                  userActivityLevel,ParamKey_activityLevel, nil];
-        inOutParam = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                      userInfo,Key_userInfo,
-                      self.foodInfoDict,@"FoodAttrs",
-                      [NSNumber numberWithInt:currentValue],@"FoodAmount",
-                      nil];
-    }
-    else
-    {
-        [inOutParam setObject:[NSNumber numberWithInt:currentValue] forKey:@"FoodAmount"];
-    }
-    self.nutrientSupplyArray = [rf calculateGiveFoodSupplyNutrientAndFormatForUI:self.inOutParam];
-    if (isFirstLoad)
-    {
-        float tableViewHeight = [self.nutrientSupplyArray count]*55;
-        [self.contentScrollView setContentSize:CGSizeMake(320, 184+tableViewHeight+20)];
-        [self.nutritionListView setFrame:CGRectMake(10, 184, 300, tableViewHeight)];
-    }
-    [self.nutritionListView reloadData];
+        });
+        dispatch_sync(dispatch_get_main_queue(), ^(void){
+            if (isFirstLoad)
+            {
+                float tableViewHeight = [self.nutrientSupplyArray count]*55;
+                [self.contentScrollView setContentSize:CGSizeMake(320, 184+tableViewHeight+20)];
+                [self.nutritionListView setFrame:CGRectMake(10, 184, 300, tableViewHeight)];
+                isFirstLoad = NO;
+            }
+            [self.nutritionListView reloadData];
+        });
+    });
+    
+    
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
