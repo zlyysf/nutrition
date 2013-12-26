@@ -221,5 +221,7 @@
 	<color name="darkblue">#00008B</color><!--暗蓝色 -->  
 	<color name="navy">#000080</color><!--海军色 -->  
 
+    <color name="v3_app_bg">#e6e6e6</color>
+    <color name="v3_header_bg">#cbe7bf</color>
 
 </resources>

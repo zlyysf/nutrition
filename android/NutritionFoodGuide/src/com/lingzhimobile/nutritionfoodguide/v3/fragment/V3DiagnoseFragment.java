@@ -12,9 +12,6 @@ import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.SyncStateContract.Columns;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.util.SparseBooleanArray;
@@ -31,13 +28,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
-import com.lingzhimobile.nutritionfoodguide.AsyncTaskDoRecommend;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.StoredConfigTool;
 import com.lingzhimobile.nutritionfoodguide.Tool;
-import com.lingzhimobile.nutritionfoodguide.myProgressDialog;
 import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityReport;
 
 public class V3DiagnoseFragment extends V3BaseHeadFragment {
