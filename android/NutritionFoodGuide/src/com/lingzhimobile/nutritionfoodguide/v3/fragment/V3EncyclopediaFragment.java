@@ -13,33 +13,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.GridView;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SimpleAdapter;
-import android.widget.TextView;
+import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 
-import com.lingzhimobile.nutritionfoodguide.ActivityFoodByClass;
-import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombinationList;
-import com.lingzhimobile.nutritionfoodguide.ActivityHome;
-import com.lingzhimobile.nutritionfoodguide.ActivityNutrients;
-import com.lingzhimobile.nutritionfoodguide.ActivityRichFood;
-import com.lingzhimobile.nutritionfoodguide.ActivitySearchFoodWithClass;
-import com.lingzhimobile.nutritionfoodguide.Constants;
-import com.lingzhimobile.nutritionfoodguide.DataAccess;
-import com.lingzhimobile.nutritionfoodguide.GlobalVar;
-import com.lingzhimobile.nutritionfoodguide.GridViewExpandHeight;
-import com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight;
-import com.lingzhimobile.nutritionfoodguide.NutritionTool;
-import com.lingzhimobile.nutritionfoodguide.OnClickListenerInListItem;
-import com.lingzhimobile.nutritionfoodguide.R;
-import com.lingzhimobile.nutritionfoodguide.Tool;
-import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityIllness;
+import com.lingzhimobile.nutritionfoodguide.*;
+import com.lingzhimobile.nutritionfoodguide.v3.activity.*;
+
 
 public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     static final String LogTag = V3EncyclopediaFragment.class.getSimpleName();
@@ -191,7 +170,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 				String foodTypeId = m_foodTypeIdList.get(position);
 //				Log.d(LogTag, "onItemClick "+foodCnType);
 				
-				Intent intent = new Intent(getActivity(), ActivityFoodByClass.class);
+				Intent intent = new Intent(getActivity(), V3ActivityFoods.class);
 //				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 //				intent.putExtra(Constants.IntentParamKey_InvokerType, mInvokerType);
 				intent.putExtra(Constants.COLUMN_NAME_CnType, foodTypeId);
