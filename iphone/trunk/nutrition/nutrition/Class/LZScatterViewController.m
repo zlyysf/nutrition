@@ -101,34 +101,57 @@
 {
     CPTXYPlotSpace * plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
     //plotSpace.allowsUserInteraction = YES;
+    float yPercentUnderX = 0.06;
+    float xOrthogonalCoordinate;
+    float yMaxTick;
     if (self.scatterType == ScatterTypeNI) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.0) length:CPTDecimalFromFloat(33.7)];
+        xOrthogonalCoordinate = 60;
+        yMaxTick = 101;
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(57.5) length:CPTDecimalFromFloat(43.5)];
     }
     else if (self.scatterType == ScatterTypeBMI) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(34.2)];
+        xOrthogonalCoordinate = 21;
+        yMaxTick = 22.65;
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(20.86) length:CPTDecimalFromFloat(2.39)];
     }
     else if (self.scatterType == ScatterTypeWeight) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
+        xOrthogonalCoordinate = 45;
+        yMaxTick = 85.5;
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(36.5) length:CPTDecimalFromFloat(60)];
     }
     else if (self.scatterType == ScatterTypeTemperature) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
+        xOrthogonalCoordinate = 34;
+        yMaxTick = 42.1;
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(34.5) length:CPTDecimalFromFloat(7.8)];
     }
     else if (self.scatterType == ScatterTypeBP) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.0) length:CPTDecimalFromFloat(33.7)];
+        xOrthogonalCoordinate = 60;
+        yMaxTick = 202;
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(50) length:CPTDecimalFromFloat(152)];
     }
     else if (self.scatterType == ScatterTypeHeartbeat) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
+        xOrthogonalCoordinate = 40;
+        yMaxTick = 81;
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(43) length:CPTDecimalFromFloat(28)];
     }
     else {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(33.5)];
+        xOrthogonalCoordinate = 0;
+        yMaxTick = 100;
         plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-8) length:CPTDecimalFromFloat(110)];
     }
+    float yStart = (xOrthogonalCoordinate - yMaxTick * yPercentUnderX) / (1 - yPercentUnderX);
+    float yLength = yMaxTick - yStart;
+    plotSpace.yRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(yStart) length:CPTDecimalFromFloat(yLength)];
+    CPTXYAxisSet *axisSet = (CPTXYAxisSet *)self.graph.axisSet;
+    CPTXYAxis *x = axisSet.xAxis;
+    x.orthogonalCoordinateDecimal = CPTDecimalFromFloat(xOrthogonalCoordinate);
 }
 
 - (void)configureAxis
@@ -156,21 +179,21 @@
     //x.axisLineStyle = lineStyle;
     
     //x.visibleAxisRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(1) length:CPTDecimalFromFloat(33.5)];
-    if (self.scatterType == ScatterTypeNI)
-        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"60");
-    else if (self.scatterType == ScatterTypeBMI) {
-        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"21"); // Y coordinate of Axis X
-    }
-    else if (self.scatterType == ScatterTypeWeight)
-        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"40");
-    else if (self.scatterType == ScatterTypeTemperature)
-        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"35");
-    else if (self.scatterType == ScatterTypeBP)
-        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"60");
-    else if (self.scatterType == ScatterTypeHeartbeat)
-        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"45");
-    else
-        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
+//    if (self.scatterType == ScatterTypeNI)
+//        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"60");
+//    else if (self.scatterType == ScatterTypeBMI) {
+//        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"21"); // Y coordinate of Axis X
+//    }
+//    else if (self.scatterType == ScatterTypeWeight)
+//        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"40");
+//    else if (self.scatterType == ScatterTypeTemperature)
+//        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"35");
+//    else if (self.scatterType == ScatterTypeBP)
+//        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"60");
+//    else if (self.scatterType == ScatterTypeHeartbeat)
+//        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"45");
+//    else
+//        x.orthogonalCoordinateDecimal = CPTDecimalFromString(@"0");
     
 
     // Axis X is using the customized lables and ticks, so these configuration is not used for now
@@ -291,7 +314,7 @@
         
     }
     else if (self.scatterType == ScatterTypeWeight) {
-        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(40) length:CPTDecimalFromFloat(56.5)];
+        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(45) length:CPTDecimalFromFloat(41.5)];
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
@@ -306,7 +329,7 @@
         
     }
     else if (self.scatterType == ScatterTypeTemperature) {
-        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(35) length:CPTDecimalFromFloat(7.3)];
+        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(34) length:CPTDecimalFromFloat(8.3)];
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
@@ -317,7 +340,7 @@
         
         y.majorIntervalLength = CPTDecimalFromString(@"1");   // Major tick interval
         
-        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(33) length:CPTDecimalFromFloat(1.5)]];
+        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(32) length:CPTDecimalFromFloat(1.5)]];
         y.labelExclusionRanges = exclusionRanges;
 
     }
@@ -337,7 +360,7 @@
         
     }
     else if (self.scatterType == ScatterTypeHeartbeat) {
-        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(45) length:CPTDecimalFromFloat(26)];
+        y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(40) length:CPTDecimalFromFloat(41)];
         
         y.orthogonalCoordinateDecimal = CPTDecimalFromString(@"1"); // X coordinate of Axis Y
         
@@ -348,7 +371,7 @@
         y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
         //y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
         
-        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(30) length:CPTDecimalFromFloat(11)]];
+        NSArray *exclusionRanges = @[[CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(20) length:CPTDecimalFromFloat(11)]];
         y.labelExclusionRanges = exclusionRanges;
         
     }
