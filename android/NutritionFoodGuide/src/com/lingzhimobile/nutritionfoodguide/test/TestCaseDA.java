@@ -354,8 +354,8 @@ public class TestCaseDA {
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
-//          Object[] Symptoms = new Object[]{"头晕","易流泪"};
-//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    Object[] Symptoms = new Object[]{"头晕","易流泪"};
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
 		    ArrayList<Object> SymptomsByType = new ArrayList<Object>();
 		    
 		    ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
@@ -415,8 +415,8 @@ public class TestCaseDA {
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(71));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(85));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(145));
-//          Object[] Symptoms = new Object[]{"头发干枯","耳鸣"};
-//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    Object[] Symptoms = new Object[]{"头发干枯","耳鸣"};
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
 		    ArrayList<Object> SymptomsByType = new ArrayList<Object>();
 		    
 		    ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
@@ -476,8 +476,8 @@ public class TestCaseDA {
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(75));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(95));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(155));
-//          Object[] Symptoms = new Object[]{"脸色苍白","视觉模糊"};
-//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    Object[] Symptoms = new Object[]{"脸色苍白","视觉模糊"};
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
 		    ArrayList<Object> SymptomsByType = new ArrayList<Object>();
 		    
 		    ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
@@ -540,8 +540,8 @@ public class TestCaseDA {
             InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
             InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
             InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
-//            Object[] Symptoms = new Object[]{"头晕","易流泪"};
-//            InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+			Object[] Symptoms = new Object[]{"头晕","易流泪"};
+			InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             ArrayList<Object> SymptomsByType = new ArrayList<Object>();
             
             ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
@@ -601,8 +601,8 @@ public class TestCaseDA {
             InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
             InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
             InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
-//          Object[] Symptoms = new Object[]{"头晕","易流泪"};
-//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+            Object[] Symptoms = new Object[]{"头晕","易流泪"};
+            InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             ArrayList<Object> SymptomsByType = new ArrayList<Object>();
             
             ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
@@ -662,8 +662,8 @@ public class TestCaseDA {
             InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
             InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
             InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
-//          Object[] Symptoms = new Object[]{"头晕","易流泪"};
-//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+            Object[] Symptoms = new Object[]{"头晕","易流泪"};
+            InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             ArrayList<Object> SymptomsByType = new ArrayList<Object>();
             
             ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
@@ -723,8 +723,8 @@ public class TestCaseDA {
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(70));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(75));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(135));
-//          Object[] Symptoms = new Object[]{"脸下垂","易疲劳"};
-//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    Object[] Symptoms = new Object[]{"脸下垂","易疲劳"};
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             ArrayList<Object> SymptomsByType = new ArrayList<Object>();
             
             ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
@@ -784,8 +784,8 @@ public class TestCaseDA {
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(73));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(78));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(138));
-//          Object[] Symptoms = new Object[]{"脸抽搐","浑浊"};
-//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    Object[] Symptoms = new Object[]{"脸抽搐","浑浊"};
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             ArrayList<Object> SymptomsByType = new ArrayList<Object>();
             
             ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
@@ -845,8 +845,8 @@ public class TestCaseDA {
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(73));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(78));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(138));
-//          Object[] Symptoms = new Object[]{"老年斑","发红发痒"};
-//          InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
+		    Object[] Symptoms = new Object[]{"老年斑","发红发痒"};
+		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             ArrayList<Object> SymptomsByType = new ArrayList<Object>();
             
             ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();

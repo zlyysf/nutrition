@@ -82,6 +82,7 @@ public class HistoryDayAdapter extends BaseAdapter {
         TextView nutrient4TextView = (TextView) convertView.findViewById(R.id.nutrient4TextView);
         TextView []nutrientTextViews = new TextView[]{nutrient1TextView,nutrient2TextView,nutrient3TextView,nutrient4TextView};
         
+        TextView tvSymptoms = (TextView) convertView.findViewById(R.id.tvSymptoms);
         LinearLayout llSymptomAndType = (LinearLayout)convertView.findViewById(R.id.llSymptomAndType);
         
 
@@ -203,7 +204,18 @@ public class HistoryDayAdapter extends BaseAdapter {
         }
         tvSuggestions.setText(suggestionsTxt);
         
-//      ArrayList<Object> allSymptomIdObjList = (ArrayList<Object>)inputNameValuePairs.get(Constants.Key_Symptoms);
+
+        String symptomsStr = "";
+        ArrayList<Object> allSymptomIdObjList = (ArrayList<Object>)inputNameValuePairs.get(Constants.Key_Symptoms);
+        if (allSymptomIdObjList!=null && allSymptomIdObjList.size()>0){
+        	ArrayList<String> allSymptomIdList = Tool.convertToStringArrayList(allSymptomIdObjList);
+    		ArrayList<HashMap<String, Object>> symptomInfos = Tool.getdictionaryArrayFrom2LevelDictionary(allSymptomIdList, allSymptomInfoDict2Level);
+    		ArrayList<Object> symptomStrs = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_SymptomNameCn, symptomInfos);
+    		symptomsStr = StringUtils.join(symptomStrs,"，");
+        }
+        tvSymptoms.setText(symptomsStr);
+        
+        
         ArrayList<Object> symptomsByType3DList = (ArrayList<Object>)inputNameValuePairs.get(Constants.Key_SymptomsByType);
         ArrayList<String> symptomTypeIdList = new ArrayList<String>();
         ArrayList<String> allSymptomIdList = new ArrayList<String>();
@@ -234,7 +246,7 @@ public class HistoryDayAdapter extends BaseAdapter {
         	}else{
         		subView1.setVisibility(View.VISIBLE);
         		TextView tvSymptomType = (TextView)subView1.findViewById(R.id.tvSymptomType);
-        		TextView tvSymptoms = (TextView)subView1.findViewById(R.id.tvSymptoms);
+        		TextView tvSymptoms1 = (TextView)subView1.findViewById(R.id.tvSymptoms);
         		String symptomTypeId = symptomTypeIdList.get(i);
         		HashMap<String, Object> symptomTypeInfo = symptomTypeInfoDict2Level.get(symptomTypeId);
         		ArrayList<String> symptomIdsByType = symptomsByTypeHm.get(symptomTypeId);
@@ -242,8 +254,8 @@ public class HistoryDayAdapter extends BaseAdapter {
         		tvSymptomType.setText(symptomTypeCaption);
         		ArrayList<HashMap<String, Object>> symptomInfosByType = Tool.getdictionaryArrayFrom2LevelDictionary(symptomIdsByType, allSymptomInfoDict2Level);
         		ArrayList<Object> symptomStrs = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_SymptomNameCn, symptomInfosByType);
-        		String symptomsStr = StringUtils.join(symptomStrs,"，");
-        		tvSymptoms.setText(symptomsStr);
+        		String symptomsStr1 = StringUtils.join(symptomStrs,"，");
+        		tvSymptoms1.setText(symptomsStr1);
         	}
         }
 
