@@ -148,20 +148,30 @@ public class V3ActivityReport extends V3BaseActivity {
         m_note = intent.getStringExtra(Constants.COLUMN_NAME_Note);
         
         m_measureHm = new HashMap<String, Object>();
-        m_measureHm.put(Constants.Key_BodyTemperature, m_BodyTemperature);
-        m_measureHm.put(Constants.Key_Weight, m_Weight);
-        m_measureHm.put(Constants.Key_HeartRate, m_HeartRate);
-        m_measureHm.put(Constants.Key_BloodPressureLow, m_BloodPressureLow);
-        m_measureHm.put(Constants.Key_BloodPressureHigh, m_BloodPressureHigh);
+        if (m_BodyTemperature > 0)
+        	m_measureHm.put(Constants.Key_BodyTemperature, m_BodyTemperature);
+        if (m_Weight > 0)
+        	m_measureHm.put(Constants.Key_Weight, m_Weight);
+        if (m_HeartRate>0)
+        	m_measureHm.put(Constants.Key_HeartRate, m_HeartRate);
+        if (m_BloodPressureLow>0)
+        	m_measureHm.put(Constants.Key_BloodPressureLow, m_BloodPressureLow);
+        if (m_BloodPressureHigh>0)
+        	m_measureHm.put(Constants.Key_BloodPressureHigh, m_BloodPressureHigh);
         
         m_SymptomsByType_str = intent.getStringExtra(Constants.Key_SymptomsByType);
-        try {
-			m_SymptomsByType = Tool.JsonToArrayList(new JSONArray(m_SymptomsByType_str));
-			Log.d(LogTag, "m_SymptomsByType="+m_SymptomsByType);
-		} catch (JSONException e) {
-			Log.e(LogTag, "new JSONArray string Err"+e.getMessage(),e);
-			throw new RuntimeException(e);
-		}
+        if (m_SymptomsByType_str!=null && m_SymptomsByType_str.length()>0){
+        	try {
+    			m_SymptomsByType = Tool.JsonToArrayList(new JSONArray(m_SymptomsByType_str));
+    			Log.d(LogTag, "m_SymptomsByType="+m_SymptomsByType);
+    		} catch (JSONException e) {
+    			Log.e(LogTag, "new JSONArray string Err"+e.getMessage(),e);
+    			throw new RuntimeException(e);
+    		}
+        }else{
+        	m_SymptomsByType = null;
+        }
+        
     }
     
     ArrayList<HashMap<String, Object>> getRandItemWithGivenCount(int count, ArrayList<HashMap<String, Object>> items){
@@ -204,9 +214,12 @@ public class V3ActivityReport extends V3BaseActivity {
     		m_HealthMark = Math.max(0, 100 - deductSum);
     	}
     	
-    	m_nutrientIdList = da.getSymptomNutrientIdsWithDisplaySort_BySymptomIds(m_SymptomIdList);
-    	m_nutrientIds = Tool.convertToStringArray(m_nutrientIdList);
-    	m_nutrientInfoDict2Level = da.getNutrientInfoAs2LevelDictionary_withNutrientIds(m_nutrientIds);
+    	if (m_SymptomIdList!=null && m_SymptomIdList.size()>0){
+    		m_nutrientIdList = da.getSymptomNutrientIdsWithDisplaySort_BySymptomIds(m_SymptomIdList);
+        	m_nutrientIds = Tool.convertToStringArray(m_nutrientIdList);
+    	}
+    	
+    	m_nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(this);
     	
     	if (m_nutrientIds!=null && m_nutrientIds.length>0){
     		m_FoodsByNutrient = new HashMap<String, ArrayList<HashMap<String,Object>>>();
@@ -220,7 +233,7 @@ public class V3ActivityReport extends V3BaseActivity {
     	}
     	
     	m_illnessIdList = Tool.inferIllnesses_withSymptoms(m_SymptomIdList, m_measureHm);
-    	if (m_illnessIdList != null ){
+    	if (m_illnessIdList != null && m_illnessIdList.size()>0 ){
     		ArrayList<HashMap<String, Object>> illnessRows = da.getIllness_ByIllnessIds(m_illnessIdList);
     		m_illnessInfoDict2Level = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_IllnessId,illnessRows);
     		

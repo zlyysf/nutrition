@@ -1128,16 +1128,15 @@ public class Tool {
 	 */
 	public static ArrayList<String> inferIllnesses_withSymptoms(ArrayList<String> symptomIds,HashMap<String, Object> measureData)
 	{
-		HashSet<String> symptomSet = new HashSet<String>();
-		symptomSet.addAll(symptomIds);
-
 		ArrayList<String> inferIllnessAry = new ArrayList<String>();
+		
+
 	    
 	    if (measureData != null) {
 	    	Integer nmHeartRate = (Integer)measureData.get(Constants.Key_HeartRate);
 	        if (nmHeartRate != null){
 	            int heartRate = nmHeartRate.intValue();
-	            if (heartRate < 60){
+	            if (heartRate >0 && heartRate < 60){
 	                inferIllnessAry.add("窦性心动过缓");
 	            }else if(heartRate > 100){
 	                inferIllnessAry.add("窦性心动过速");
@@ -1173,6 +1172,12 @@ public class Tool {
 //	        }
 	    }
 	    
+		if (symptomIds==null || symptomIds.size()==0){
+			return inferIllnessAry;
+		}
+		HashSet<String> symptomSet = new HashSet<String>();
+		symptomSet.addAll(symptomIds);
+
 	    String[] ganMao_SymptomsFull1 = {"鼻塞","清鼻涕","鼻后滴漏","喷嚏"};
 	    String[] ganMao_SymptomsFull4 = {"发热","畏寒","味觉迟钝","头痛","易流泪",
 	                                     "听力减退","咽喉发痒","咽喉灼热","咽喉疼痛","咽干",

@@ -165,33 +165,66 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
             	}
             	Log.d(LogTag, "selectedSymptomIds="+selectedSymptomIds);
             	
-            	double BodyTemperature = Double.parseDouble(m_etBodyTemperature.getText().toString());
-            	double Weight = Double.parseDouble(m_etWeight.getText().toString());
-            	int HeartRate = Integer.parseInt(m_etHeartRate.getText().toString());
-            	int BloodPressureLow = Integer.parseInt(m_etBloodPressureLow.getText().toString());
-            	int BloodPressureHigh = Integer.parseInt(m_etBloodPressureHigh.getText().toString());
             	
-            	String note = m_etNote.getText().toString();
             	
-            	if (Weight>0){
-            		HashMap<String, Object> userInfo = new HashMap<String, Object>();
-            		userInfo.put(Constants.Key_Weight, Double.valueOf(Weight));
-            		StoredConfigTool.saveUserInfo_withPartItems(getActivity(), userInfo);
-            	}
+            	
+            	
+            	
+            	
+            	
             	
                 Intent intent = new Intent(getActivity(), V3ActivityReport.class);
-                intent.putStringArrayListExtra(Constants.COLUMN_NAME_SymptomId, selectedSymptomIds);
-                intent.putExtra(Constants.Key_BodyTemperature, BodyTemperature);
-                intent.putExtra(Constants.Key_Weight, Weight);
-                intent.putExtra(Constants.Key_HeartRate, HeartRate);
-                intent.putExtra(Constants.Key_BloodPressureLow, BloodPressureLow);
-                intent.putExtra(Constants.Key_BloodPressureHigh, BloodPressureHigh);
-                intent.putExtra(Constants.COLUMN_NAME_Note, note);
+                if (selectedSymptomIds!=null && selectedSymptomIds.size()>0){
+                	intent.putStringArrayListExtra(Constants.COLUMN_NAME_SymptomId, selectedSymptomIds);
+                }
                 
-                JSONArray jsonAry_symptomIdsByType = Tool.CollectionToJSONArray(symptomIdsByType);
-                String jsonString_symptomIdsByType = jsonAry_symptomIdsByType.toString();
-                intent.putExtra(Constants.Key_SymptomsByType, jsonString_symptomIdsByType);
+                String strBodyTemperature = m_etBodyTemperature.getText().toString();
+                if (strBodyTemperature!=null && strBodyTemperature.length()>0){
+                	double BodyTemperature = Double.parseDouble(strBodyTemperature);
+                	intent.putExtra(Constants.Key_BodyTemperature, BodyTemperature);
+                }
                 
+                String strWeight = m_etWeight.getText().toString();
+                if (strWeight!=null && strWeight.length()>0){
+                	double Weight = Double.parseDouble(strWeight);
+                	intent.putExtra(Constants.Key_Weight, Weight);
+                	
+                	if (Weight>0){
+                		HashMap<String, Object> userInfo = new HashMap<String, Object>();
+                		userInfo.put(Constants.Key_Weight, Double.valueOf(Weight));
+                		StoredConfigTool.saveUserInfo_withPartItems(getActivity(), userInfo);
+                	}
+                }
+                
+                String strHeartRate = m_etHeartRate.getText().toString();
+                if (strHeartRate!=null && strHeartRate.length()>0){
+                	int HeartRate = Integer.parseInt(strHeartRate);
+                	intent.putExtra(Constants.Key_HeartRate, HeartRate);
+                }
+                
+                String strBloodPressureLow = m_etBloodPressureLow.getText().toString();
+                if (strBloodPressureLow!=null && strBloodPressureLow.length()>0){
+                	int BloodPressureLow = Integer.parseInt(strBloodPressureLow);
+                	intent.putExtra(Constants.Key_BloodPressureLow, BloodPressureLow);
+                }
+                
+                String strBloodPressureHigh = m_etBloodPressureHigh.getText().toString();
+                if (strBloodPressureHigh!=null && strBloodPressureHigh.length()>0){
+                	int BloodPressureHigh = Integer.parseInt(strBloodPressureHigh);
+                	intent.putExtra(Constants.Key_BloodPressureHigh, BloodPressureHigh);
+                }
+                
+                String note = m_etNote.getText().toString();
+                if (note!=null && note.length()>0){
+                	intent.putExtra(Constants.COLUMN_NAME_Note, note);
+                }
+                
+                if (symptomIdsByType!=null && symptomIdsByType.size()>0){
+                	JSONArray jsonAry_symptomIdsByType = Tool.CollectionToJSONArray(symptomIdsByType);
+                	String jsonString_symptomIdsByType = jsonAry_symptomIdsByType.toString();
+                   	intent.putExtra(Constants.Key_SymptomsByType, jsonString_symptomIdsByType);
+                }
+
                 getActivity().startActivity(intent);
             }
         });
