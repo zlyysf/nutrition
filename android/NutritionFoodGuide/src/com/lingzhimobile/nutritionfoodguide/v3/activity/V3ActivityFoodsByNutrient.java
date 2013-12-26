@@ -1,0 +1,255 @@
+package com.lingzhimobile.nutritionfoodguide.v3.activity;
+
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.Map.Entry;
+
+
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import android.R.integer;
+import android.app.Activity;
+import android.content.Intent;
+import android.os.AsyncTask;
+import android.os.Bundle;
+import android.text.InputType;
+import android.util.Log;
+import android.util.Pair;
+import android.view.*;
+
+import android.view.View.OnClickListener;
+import android.view.View.OnFocusChangeListener;
+import android.view.View.OnTouchListener;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
+import android.widget.*;
+import android.widget.RadioGroup.OnCheckedChangeListener;
+
+
+import com.lingzhimobile.nutritionfoodguide.*;
+
+import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
+import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityFoodsByType.ListAdapterForFood.OnClickListenerForInputFoodAmount;
+import com.umeng.analytics.MobclickAgent;
+
+public class V3ActivityFoodsByNutrient extends V3BaseActivity {
+	
+	static final String LogTag = "V3ActivityFoodsByNutrient";
+	
+	Button m_btnBack;
+	TextView m_tvTitle;
+	RadioGroup m_SegmentedRadioGroup1;
+	RadioButton m_rbDescription, m_rbFoods;
+	
+	LinearLayout m_llFoods, m_llNutrientDescription;
+	
+	TextView m_tvNutrientFoods;
+	GridView m_gridView1;
+	
+	WebView m_webView1;
+
+//	String mInvokerType = null;
+	String mNutrientId;
+//	String mNutrientCnCaption;
+	double mToSupplyNutrientAmount ;
+	HashMap<String, Object> m_nutrientInfo;
+
+	ArrayList<HashMap<String, Object>> m_foodsData;
+
+	public void onResume() {
+		super.onResume();
+		MobclickAgent.onResume(this);
+	}
+	public void onPause() {
+		super.onPause();
+		MobclickAgent.onPause(this);
+	}
+
+	@Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.v3_activity_foods_bynutrient);
+        
+        initViewHandles();
+        initViewsContent();
+        setViewEventHandlers();
+        setViewsContent();
+    }
+	
+	void initViewHandles(){
+    	
+    	m_tvTitle = (TextView) findViewById(R.id.titleText);
+    	m_btnBack = (Button) findViewById(R.id.leftButton);
+
+    	m_SegmentedRadioGroup1 = (RadioGroup)findViewById(R.id.SegmentedRadioGroup1);
+    	m_rbDescription = (RadioButton)findViewById(R.id.rbDescription);
+    	m_rbFoods = (RadioButton)findViewById(R.id.rbFoods);
+
+        m_llFoods = (LinearLayout)findViewById(R.id.llFoods);
+        m_llNutrientDescription = (LinearLayout)findViewById(R.id.llNutrientDescription);
+        
+        m_tvNutrientFoods = (TextView)findViewById(R.id.tvNutrientFoods);
+        m_gridView1 = (GridView)findViewById(R.id.gridView1);
+        
+        m_webView1 = (WebView)findViewById(R.id.webView1);
+        
+	}
+	void initViewsContent(){
+
+		Intent paramIntent = getIntent();
+        
+        mNutrientId =  paramIntent.getStringExtra(Constants.COLUMN_NAME_NutrientID);
+        mToSupplyNutrientAmount = paramIntent.getDoubleExtra(Constants.Key_Amount, 0);
+//        mNutrientCnCaption = paramIntent.getStringExtra(Constants.Key_Name);
+        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        if (prevActvTitle!=null)
+        	m_btnBack.setText(prevActvTitle);
+        
+        HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(this);
+        m_nutrientInfo = nutrientInfoDict2Level.get(mNutrientId);
+        String nutrientCaption = (String)m_nutrientInfo.get(Constants.COLUMN_NAME_NutrientCnCaption);
+//        m_currentTitle = mNutrientCnCaption;
+        m_tvTitle.setText(nutrientCaption);
+        
+        String url = (String)m_nutrientInfo.get(Constants.COLUMN_NAME_UrlCn);
+        Tool.setWebViewBasicHere(m_webView1);
+        m_webView1.loadUrl(url);
+        
+        DataAccess da = DataAccess.getSingleton(this);
+        m_foodsData = da.getRichNutritionFoodForNutrient(mNutrientId, mToSupplyNutrientAmount, false);
+        
+        m_tvNutrientFoods.setText(Tool.getStringFromIdWithParams(getResources(), R.string.chooseRichFood,new String[]{nutrientCaption}));
+        
+	}
+	void setViewEventHandlers(){
+		m_btnBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+		
+
+		m_SegmentedRadioGroup1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+//				int radioButtonId = group.getCheckedRadioButtonId();
+//				RadioButton rb = (RadioButton)ActivityUserProfile.this.findViewById(radioButtonId);
+				switchViews();
+			}
+		});
+	}
+	void setViewsContent(){
+		ListAdapterForFood adapter = new ListAdapterForFood(this,m_foodsData);
+		m_gridView1.setAdapter(adapter);
+		
+		
+//		RichFoodAdapter adapter = new RichFoodAdapter();
+//		m_listView1.setAdapter(adapter);
+//		
+//		if (Constants.InvokerType_FromNutrients.equals(mInvokerType) || Constants.InvokerType_FromDiagnoseResultNutrients.equals(mInvokerType)){
+//			m_rbNutrientInfo.setChecked(true);
+//		}else{
+//			m_rbRichFood.setChecked(true);
+//			m_llRightTab.setVisibility(View.GONE);
+//		}
+		
+		m_rbDescription.setChecked(true);
+		switchViews();
+
+	}
+	
+	void switchViews(){
+		if (m_rbDescription.isChecked()){
+			m_llFoods.setVisibility(View.GONE);
+			m_llNutrientDescription.setVisibility(View.VISIBLE);
+		}else{
+			m_llFoods.setVisibility(View.VISIBLE);
+			m_llNutrientDescription.setVisibility(View.GONE);
+		}
+	}
+	
+    
+
+	static class ListAdapterForFood extends BaseAdapter{
+		Activity m_thisActivity;
+		ArrayList<HashMap<String, Object>> m_foodsData;
+		
+		public ListAdapterForFood(Activity thisActivity, ArrayList<HashMap<String, Object>> foodsData){
+			m_thisActivity = thisActivity;
+			m_foodsData = foodsData;
+		}
+		public void setInputData(ArrayList<HashMap<String, Object>> foods){
+			m_foodsData = foods;
+			notifyDataSetChanged();
+		}
+		@Override
+		public int getCount() {
+			return m_foodsData==null? 0 : m_foodsData.size();
+		}
+
+		@Override
+		public HashMap<String, Object> getItem(int position) {
+			return m_foodsData.get(position);
+		}
+
+		@Override
+		public long getItemId(int position) {
+			return position;
+		}
+		
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			if (convertView == null){
+				convertView = m_thisActivity.getLayoutInflater().inflate(R.layout.v3_grid_cell_square_food_amount, null);
+			}
+			View vwItem = convertView;
+			
+			HashMap<String, Object> foodInfo = getItem(position);
+			
+			TextView tvFood = (TextView)vwItem.findViewById(R.id.tvFood);
+			tvFood.setText((String)foodInfo.get(Constants.COLUMN_NAME_CnCaption));
+			
+			TextView tvAmount = (TextView)vwItem.findViewById(R.id.tvAmount);
+			Double amountObj = (Double)foodInfo.get(Constants.Key_Amount);
+			String amountStr = String.format("%dg", amountObj.intValue());
+			tvAmount.setText(amountStr);
+			
+			ImageView imageView1 = (ImageView)vwItem.findViewById(R.id.imageView1);
+			imageView1.setImageDrawable(Tool.getDrawableForFoodPic(m_thisActivity.getAssets(), (String)foodInfo.get(Constants.COLUMN_NAME_PicPath)));
+			
+			OnClickListenerForInputFoodAmount myOnClickListenerForInputAmount = (OnClickListenerForInputFoodAmount)imageView1.getTag();
+			if (myOnClickListenerForInputAmount == null){
+				myOnClickListenerForInputAmount = new OnClickListenerForInputFoodAmount(m_thisActivity,this);
+				myOnClickListenerForInputAmount.initInputData(position);
+				imageView1.setOnClickListener(myOnClickListenerForInputAmount);
+				imageView1.setTag(myOnClickListenerForInputAmount);
+			}else{
+				myOnClickListenerForInputAmount.initInputData(position);
+			}
+			
+			return vwItem;
+		}
+		
+		static class OnClickListenerForInputFoodAmount extends OnClickListenerInListItem{
+			Activity m_thisActivity;
+			BaseAdapter m_listAdapter;
+
+			public OnClickListenerForInputFoodAmount(Activity thisActivity, BaseAdapter listAdapter){
+				m_thisActivity = thisActivity;
+				m_listAdapter = listAdapter;
+			}
+
+			@Override
+			public void onClick(View v) {
+				HashMap<String, Object> foodData = (HashMap<String, Object>)m_listAdapter.getItem(m_rowPos);
+				String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
+				String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
+				Log.d(LogTag, "OnClickListenerForInputFoodAmount foodId="+foodId+", foodName="+foodName);
+			}
+		}//class OnClickListenerForInputFoodAmount
+		
+	}//ListAdapterForFood
+
+}

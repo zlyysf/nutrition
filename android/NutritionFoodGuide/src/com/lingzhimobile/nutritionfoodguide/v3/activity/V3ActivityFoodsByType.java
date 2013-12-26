@@ -29,7 +29,7 @@ import com.umeng.analytics.MobclickAgent;
 
 public class V3ActivityFoodsByType extends V3BaseActivity {
 	
-	static final String LogTag = "V3ActivityFoods";
+	static final String LogTag = "V3ActivityFoodsByType";
 
 	String mFoodCnType;
 	ArrayList<HashMap<String, Object>> m_foodsData;

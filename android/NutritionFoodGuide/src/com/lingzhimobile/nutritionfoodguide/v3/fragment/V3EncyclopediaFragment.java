@@ -252,12 +252,11 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 			if (nutrientId!=null){
 				HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(getActivity());
 				HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientId);
-				Intent intent = new Intent(getActivity(), ActivityRichFood.class);
+				Intent intent = new Intent(getActivity(), V3ActivityFoodsByNutrient.class);
 //				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 //				intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromNutrients);
 				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
 				intent.putExtra(Constants.Key_Amount, m_DRIsDict.get(nutrientId).doubleValue());
-				intent.putExtra(Constants.Key_Name, (String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientCnCaption));
 				startActivity(intent);
 			}	
 		}
