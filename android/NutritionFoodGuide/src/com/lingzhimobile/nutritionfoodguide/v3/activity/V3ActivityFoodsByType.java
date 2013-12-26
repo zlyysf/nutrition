@@ -27,7 +27,7 @@ import android.widget.*;
 import com.lingzhimobile.nutritionfoodguide.*;
 import com.umeng.analytics.MobclickAgent;
 
-public class V3ActivityFoods extends V3BaseActivity {
+public class V3ActivityFoodsByType extends V3BaseActivity {
 	
 	static final String LogTag = "V3ActivityFoods";
 
@@ -51,7 +51,7 @@ public class V3ActivityFoods extends V3BaseActivity {
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.v3_activity_foods);
+        setContentView(R.layout.v3_activity_foods_bytype);
         
         initViewHandles();
         initViewsContent();

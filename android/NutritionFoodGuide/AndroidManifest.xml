@@ -63,7 +63,7 @@
             android:theme="@android:style/Theme.NoTitleBar" />
         <activity android:name=".v3.activity.V3ActivityIllness"
             android:theme="@android:style/Theme.NoTitleBar" />
-        <activity android:name=".v3.activity.V3ActivityFoods"
+        <activity android:name=".v3.activity.V3ActivityFoodsByType"
             android:theme="@android:style/Theme.NoTitleBar" />
         
         <activity android:name=".V2ActivityHome"

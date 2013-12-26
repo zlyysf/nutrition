@@ -170,7 +170,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 				String foodTypeId = m_foodTypeIdList.get(position);
 //				Log.d(LogTag, "onItemClick "+foodCnType);
 				
-				Intent intent = new Intent(getActivity(), V3ActivityFoods.class);
+				Intent intent = new Intent(getActivity(), V3ActivityFoodsByType.class);
 //				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 //				intent.putExtra(Constants.IntentParamKey_InvokerType, mInvokerType);
 				intent.putExtra(Constants.COLUMN_NAME_CnType, foodTypeId);
