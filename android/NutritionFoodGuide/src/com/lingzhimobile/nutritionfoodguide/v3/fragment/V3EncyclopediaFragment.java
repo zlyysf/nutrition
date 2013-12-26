@@ -3,27 +3,39 @@ package com.lingzhimobile.nutritionfoodguide.v3.fragment;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 
+import com.lingzhimobile.nutritionfoodguide.ActivityFoodByClass;
 import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombinationList;
 import com.lingzhimobile.nutritionfoodguide.ActivityHome;
+import com.lingzhimobile.nutritionfoodguide.ActivityNutrients;
+import com.lingzhimobile.nutritionfoodguide.ActivityRichFood;
+import com.lingzhimobile.nutritionfoodguide.ActivitySearchFoodWithClass;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.GlobalVar;
 import com.lingzhimobile.nutritionfoodguide.GridViewExpandHeight;
 import com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight;
+import com.lingzhimobile.nutritionfoodguide.NutritionTool;
 import com.lingzhimobile.nutritionfoodguide.OnClickListenerInListItem;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.Tool;
@@ -83,6 +95,8 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     	return m_FoodClassToImageIdInfoDict;
     }
     
+    HashMap<String, Double> m_DRIsDict ;
+    
     Activity m_activity;
 
     ArrayList<TextView> m_tvNutrientVitaminList, m_tvNutrientMineralList, m_tvNutrientMacroList;
@@ -107,7 +121,8 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
         View view = inflater.inflate(R.layout.v3_fragment_encyclopedia, container, false);
         
         initViewHandles(view);
-        
+        initViewsContent();
+        setViewEventHandlers();
         setViewsContent();
 
         return view;
@@ -151,12 +166,40 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
         m_tvNutrientMacroList = new ArrayList<TextView>();
         m_tvNutrientMacroList.add(tvNutrientMacro1);
         m_tvNutrientMacroList.add(tvNutrientMacro2);
-        
-        
+
         m_gvFoodType = (GridViewExpandHeight) topView.findViewById(R.id.gvFoodType);
         m_lvIllness = (ListViewExpandHeight) topView.findViewById(R.id.lvIllness);
 
 	}
+    void initViewsContent(){
+    	m_DRIsDict = NutritionTool.getDRIsDictOfCurrentUser(getActivity(), null);
+    }
+    void setViewEventHandlers(){
+    	OnClickListener_nutrient OnClickListener_nutrient1 = new OnClickListener_nutrient();
+    	ArrayList<TextView> tvNutrientAll = new ArrayList<TextView>();
+    	tvNutrientAll.addAll(m_tvNutrientVitaminList);
+    	tvNutrientAll.addAll(m_tvNutrientMineralList);
+    	tvNutrientAll.addAll(m_tvNutrientMacroList);
+    	for(int i=0; i<tvNutrientAll.size(); i++){
+    		TextView tvNutrient = tvNutrientAll.get(i);
+    		tvNutrient.setOnClickListener(OnClickListener_nutrient1);
+    	}
+
+    	m_gvFoodType.setOnItemClickListener(new OnItemClickListener(){
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				String foodTypeId = m_foodTypeIdList.get(position);
+//				Log.d(LogTag, "onItemClick "+foodCnType);
+				
+				Intent intent = new Intent(getActivity(), ActivityFoodByClass.class);
+//				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
+//				intent.putExtra(Constants.IntentParamKey_InvokerType, mInvokerType);
+				intent.putExtra(Constants.COLUMN_NAME_CnType, foodTypeId);
+//				startActivityForResult(intent,IntentRequestCode_ActivitySearchFoodWithClass);
+				startActivity(intent);
+			}//onItemClick
+		});//setOnItemClickListener
+    }
     void setViewsContent(){
     	HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(getActivity());
     	for(int i=0; i<nutrients_vitamin.length; i++){
@@ -166,6 +209,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     		String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
     		String[] cnEnParts = Tool.splitNutrientTitleToCnEn(nutrientCaption);
     		tvNutrientVitamin.setText(cnEnParts[cnEnParts.length-1]);
+    		tvNutrientVitamin.setTag(nutrientId);
     	}
     	for(int i=0; i<nutrients_mineral.length; i++){
     		String nutrientId = nutrients_mineral[i];
@@ -173,6 +217,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     		HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientId);
     		String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
     		tvNutrient.setText(nutrientCaption);
+    		tvNutrient.setTag(nutrientId);
     	}
     	for(int i=0; i<nutrients_macro.length; i++){
     		String nutrientId = nutrients_macro[i];
@@ -180,14 +225,13 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     		HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientId);
     		String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
     		tvNutrient.setText(nutrientCaption);
+    		tvNutrient.setTag(nutrientId);
     	}
     	
     	DataAccess da = DataAccess.getSingleton(getActivity());
     	m_foodTypeIdList = da.getFoodCnTypes();
     	m_foodTypeTranslation2LevelDict =  da.getTranslationItemsDictionaryByType(Constants.TranslationItemType_FoodCnType);
     	
-//    	FoodCellAdapter foodCellAdapter = new FoodCellAdapter();
-//        m_gvFoodType.setAdapter(foodCellAdapter);
     	HashMap<Object, Object[]> l_FoodClassToImageIdInfoDict = getFoodClassToImageIdInfoDict();
 		ArrayList<HashMap<String, Object>> meumList = new ArrayList<HashMap<String, Object>>();
 		for(int i=0; i< m_foodTypeIdList.size(); i++)
@@ -219,6 +263,25 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     public static Fragment newInstance(int arg0) {
         Fragment encyclopediaFragment = new V3EncyclopediaFragment();
         return encyclopediaFragment;
+    }
+    
+    class OnClickListener_nutrient implements View.OnClickListener{
+
+		@Override
+		public void onClick(View v) {
+			String nutrientId = (String)v.getTag();
+			if (nutrientId!=null){
+				HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(getActivity());
+				HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientId);
+				Intent intent = new Intent(getActivity(), ActivityRichFood.class);
+//				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
+//				intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromNutrients);
+				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
+				intent.putExtra(Constants.Key_Amount, m_DRIsDict.get(nutrientId).doubleValue());
+				intent.putExtra(Constants.Key_Name, (String)nutrientInfo.get(Constants.COLUMN_NAME_NutrientCnCaption));
+				startActivity(intent);
+			}	
+		}
     }
 
     class IllnessAdapter extends BaseAdapter {
@@ -274,36 +337,6 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 		}
     }
     
-    
-
-//    class FoodCellAdapter extends BaseAdapter {
-//
-//        @Override
-//        public int getCount() {
-//            return m_foodTypeIdList==null? 0:m_foodTypeIdList.size();
-//        }
-//
-//        @Override
-//        public Object getItem(int arg0) {
-//            return m_foodTypeIdList.get(arg0);
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            return position;
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            if (convertView == null) {
-//                convertView = getActivity().getLayoutInflater().inflate(R.layout.v3_grid_cell_food, null);
-//            }
-//            TextView foodName = (TextView) convertView.findViewById(R.id.foodName);
-//            foodName.setText(foods[position]);
-//            return convertView;
-//        }
-//
-//    }
 
     @Override
     protected void setHeader() {
