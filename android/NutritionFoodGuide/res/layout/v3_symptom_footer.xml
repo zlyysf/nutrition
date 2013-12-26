@@ -5,9 +5,10 @@
     android:orientation="vertical" >
 
     <TextView
+        android:background="@color/v3_numbers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="测量" />
+        android:text="生理指标" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -190,11 +191,13 @@
     </LinearLayout>
 
     <TextView
+        android:background="@color/v3_note_head"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="笔记" />
 
     <EditText
+        android:background="@color/v3_note_text"
         android:id="@+id/etNote"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

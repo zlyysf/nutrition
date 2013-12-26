@@ -223,5 +223,27 @@
 
     <color name="v3_app_bg">#e6e6e6</color>
     <color name="v3_header_bg">#cbe7bf</color>
-
+    
+    <color name="v3_head_face">#efcad7</color>
+    <color name="v3_eyes">#e8dac9</color>
+    <color name="v3_ear_nose">#c6b798</color>
+    <color name="v3_mouth_tongue">#e7cfb2</color>
+    <color name="v3_teeth">#e2e3d4</color>
+    <color name="v3_throat">#dfb6d9</color>
+    <color name="v3_respiration">#b5dddf</color>
+    <color name="v3_heart">#ebe1aa</color>
+    <color name="v3_chest_stomach">#c9de7e</color>
+    <color name="v3_skin">#c8efac</color>
+    <color name="v3_hands_feet">#9cb9d0</color>
+    <color name="v3_arms_legs">#9cb9d0</color>
+    <color name="v3_body">#dfb6d9</color>
+    <color name="v3_yinshi">#e4efeb</color>
+    <color name="v3_digestion">#c1c1ef</color>
+    <color name="v3_movement">#dfdfd5</color>
+    <color name="v3_psychology">#e6d9d1</color>
+    <color name="v3_male">#a7ccd8</color>
+    <color name="v3_female">#efcad7</color>
+    <color name="v3_numbers">#c6d4ef</color>
+    <color name="v3_note_head">#ecaba2</color>
+    <color name="v3_note_text">#e5e7d1</color>
 </resources>

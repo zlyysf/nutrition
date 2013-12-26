@@ -38,7 +38,13 @@ import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityReport;
 public class V3DiagnoseFragment extends V3BaseHeadFragment {
 	static final String LogTag = V3DiagnoseFragment.class.getSimpleName();
 	
-	static final int[] checkboxColorCheckedResIds = {R.color.red, R.color.green, R.color.blue};
+    static final int[] checkboxColorCheckedResIds = { R.color.v3_head_face,
+            R.color.v3_eyes, R.color.v3_ear_nose, R.color.v3_mouth_tongue,
+            R.color.v3_teeth, R.color.v3_throat, R.color.v3_respiration,
+            R.color.v3_heart, R.color.v3_chest_stomach, R.color.v3_skin,
+            R.color.v3_hands_feet, R.color.v3_arms_legs, R.color.v3_body,
+            R.color.v3_yinshi, R.color.v3_digestion, R.color.v3_movement,
+            R.color.v3_psychology, R.color.v3_male, R.color.v3_female };
 	static final int checkboxColorNormalResId = R.color.gray;
 	
 	Button m_btnSubmit;
@@ -258,6 +264,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 		    diagnoseFlow.removeAllViews();
 		    String diagnoseTitleStr = getItem(position);
 		    diagnoseTitle.setText(diagnoseTitleStr);
+		    diagnoseTitle.setBackgroundResource(checkboxColorCheckedResIds[position]);
 		    
 		    ArrayList<HashMap<String, Object>> SymptomRows = m_SymptomRowsByTypeDict.get(diagnoseTitleStr);
 		    for (int i=0; i<SymptomRows.size(); i++) {
