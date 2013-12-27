@@ -145,25 +145,28 @@ public class V3ActivityFoodsByType extends V3BaseActivity {
 			return vwItem;
 		}
 		
-		static class OnClickListenerForInputFoodAmount extends OnClickListenerInListItem{
-			Activity m_thisActivity;
-			BaseAdapter m_listAdapter;
-
-			public OnClickListenerForInputFoodAmount(Activity thisActivity, BaseAdapter listAdapter){
-				m_thisActivity = thisActivity;
-				m_listAdapter = listAdapter;
-			}
-
-			@Override
-			public void onClick(View v) {
-				HashMap<String, Object> foodData = (HashMap<String, Object>)m_listAdapter.getItem(m_rowPos);
-				String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
-				String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
-				Log.d(LogTag, "OnClickListenerForInputFoodAmount foodId="+foodId+", foodName="+foodName);
-			}
-		}//class OnClickListenerForInputFoodAmount
-		
 	}//ListAdapterForFood
+	
+	static class OnClickListenerForInputFoodAmount extends OnClickListenerInListItem{
+		Activity m_thisActivity;
+		ListAdapterForFood m_listAdapter;
+
+		public OnClickListenerForInputFoodAmount(Activity thisActivity, ListAdapterForFood listAdapter){
+			m_thisActivity = thisActivity;
+			m_listAdapter = listAdapter;
+		}
+
+		@Override
+		public void onClick(View v) {
+			HashMap<String, Object> foodData = (HashMap<String, Object>)m_listAdapter.getItem(m_rowPos);
+			String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
+			String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
+			Log.d(LogTag, "OnClickListenerForInputFoodAmount foodId="+foodId+", foodName="+foodName);
+			Intent intent1 = new Intent(m_thisActivity, ActivityFoodNutrition.class);
+			intent1.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+			m_thisActivity.startActivity(intent1);
+		}
+	}//class OnClickListenerForInputFoodAmount
     
 
 }

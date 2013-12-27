@@ -30,7 +30,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import com.lingzhimobile.nutritionfoodguide.*;
 
 import com.lingzhimobile.nutritionfoodguide.DialogHelperSimpleInput.InterfaceWhenConfirmInput;
-import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityFoodsByType.ListAdapterForFood.OnClickListenerForInputFoodAmount;
+import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityFoodsByType.*;
 import com.umeng.analytics.MobclickAgent;
 
 public class V3ActivityFoodsByNutrient extends V3BaseActivity {
@@ -141,7 +141,7 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 		});
 	}
 	void setViewsContent(){
-		ListAdapterForFood adapter = new ListAdapterForFood(this,m_foodsData);
+		ListAdapterForFood_fromNutrient adapter = new ListAdapterForFood_fromNutrient(this,m_foodsData);
 		m_gridView1.setAdapter(adapter);
 		
 		
@@ -170,33 +170,10 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 		}
 	}
 	
-    
+    static class ListAdapterForFood_fromNutrient extends ListAdapterForFood{
 
-	static class ListAdapterForFood extends BaseAdapter{
-		Activity m_thisActivity;
-		ArrayList<HashMap<String, Object>> m_foodsData;
-		
-		public ListAdapterForFood(Activity thisActivity, ArrayList<HashMap<String, Object>> foodsData){
-			m_thisActivity = thisActivity;
-			m_foodsData = foodsData;
-		}
-		public void setInputData(ArrayList<HashMap<String, Object>> foods){
-			m_foodsData = foods;
-			notifyDataSetChanged();
-		}
-		@Override
-		public int getCount() {
-			return m_foodsData==null? 0 : m_foodsData.size();
-		}
-
-		@Override
-		public HashMap<String, Object> getItem(int position) {
-			return m_foodsData.get(position);
-		}
-
-		@Override
-		public long getItemId(int position) {
-			return position;
+		public ListAdapterForFood_fromNutrient(Activity thisActivity, ArrayList<HashMap<String, Object>> foodsData) {
+			super(thisActivity, foodsData);
 		}
 		
 		@Override
@@ -231,25 +208,6 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 			
 			return vwItem;
 		}
-		
-		static class OnClickListenerForInputFoodAmount extends OnClickListenerInListItem{
-			Activity m_thisActivity;
-			BaseAdapter m_listAdapter;
-
-			public OnClickListenerForInputFoodAmount(Activity thisActivity, BaseAdapter listAdapter){
-				m_thisActivity = thisActivity;
-				m_listAdapter = listAdapter;
-			}
-
-			@Override
-			public void onClick(View v) {
-				HashMap<String, Object> foodData = (HashMap<String, Object>)m_listAdapter.getItem(m_rowPos);
-				String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
-				String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
-				Log.d(LogTag, "OnClickListenerForInputFoodAmount foodId="+foodId+", foodName="+foodName);
-			}
-		}//class OnClickListenerForInputFoodAmount
-		
-	}//ListAdapterForFood
-
+    	
+    }
 }
