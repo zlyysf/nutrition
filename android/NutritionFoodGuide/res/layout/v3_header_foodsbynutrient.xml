@@ -23,17 +23,21 @@
 
 
     <com.makeramen.segmented.SegmentedRadioGroup
+        xmlns:ca="http://schemas.android.com/apk/res/com.lingzhimobile.nutritionfoodguide"
             android:id="@+id/SegmentedRadioGroup1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_margin="5dip"
             android:checkedButton="@+id/maleRadioButton"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" 
+            ca:segment_radio_left = "@drawable/v3_radio_left_foodsbynutrient"
+            ca:segment_radio_right = "@drawable/v3_radio_right_foodsbynutrient"
+            >
 
             <RadioButton
                 android:id="@+id/rbDescription"
-                android:background="@drawable/v3_description_2x"
+
                 android:button="@null"
                 android:gravity="center"
                 android:minHeight="33dip"
@@ -43,7 +47,7 @@
 
             <RadioButton
                 android:id="@+id/rbFoods"
-                android:background="@drawable/v3_fork_2x"
+
                 android:button="@null"
                 android:gravity="center"
                 android:minHeight="33dip"
