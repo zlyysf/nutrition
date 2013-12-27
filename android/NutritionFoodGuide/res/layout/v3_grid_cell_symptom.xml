@@ -7,7 +7,7 @@
 
     <CheckBox
         android:id="@+id/cbSymptom"
-        style="@null"
+        style="@style/v3_diagnose_content_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical|center_horizontal"
@@ -15,7 +15,7 @@
         android:layout_weight="0"
         android:background="@null"
         android:button="@null"
-        android:gravity="center_vertical|center_horizontal"
+        android:gravity="center"
         android:minWidth="40dp"
         android:text="aaaaaaaaaaa"
         android:textColor="@color/black" />
