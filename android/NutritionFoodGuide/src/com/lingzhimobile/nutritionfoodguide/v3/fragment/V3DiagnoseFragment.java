@@ -359,8 +359,6 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 
     @Override
     protected void setHeader() {
-        
-        
-        
+        title.setText("选择症状");
     }
 }
