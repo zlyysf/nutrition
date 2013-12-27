@@ -75,60 +75,39 @@ public class StoredConfigTool {
 	{
 		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
 		int sex = sharedPref.getInt(Constants.ParamKey_sex, Default_sex);
-		int age = sharedPref.getInt(Constants.ParamKey_age, Default_age);
+		long l_birthday = sharedPref.getLong(Constants.ParamKey_birthday, 0);
+//		int age = sharedPref.getInt(Constants.ParamKey_age, Default_age);
 		double weight = sharedPref.getFloat(Constants.ParamKey_weight, Default_weight);
 		double height = sharedPref.getFloat(Constants.ParamKey_height, Default_height);
 		int activityLevel = sharedPref.getInt(Constants.ParamKey_activityLevel, Default_activityLevel);
+		
+		long msInYear_ = 365*24*60*60*1000;
+		
+		Date dtNow = new Date();
+		if (l_birthday == 0)
+			l_birthday = dtNow.getTime() - Default_age*msInYear_;
+		Date dt_birthday = new Date(l_birthday);
+		long age = (dtNow.getTime() - dt_birthday.getTime()) / msInYear_;
 
 		HashMap<String, Object> hmUserInfo = new HashMap<String, Object>();
 		hmUserInfo.put(Constants.ParamKey_sex, Integer.valueOf(sex));
-		hmUserInfo.put(Constants.ParamKey_age, Integer.valueOf(age));
+		hmUserInfo.put(Constants.ParamKey_birthday, dt_birthday);
+		hmUserInfo.put(Constants.ParamKey_age, Integer.valueOf((int)age));
 		hmUserInfo.put(Constants.ParamKey_weight, Double.valueOf(weight));
 		hmUserInfo.put(Constants.ParamKey_height, Double.valueOf(height));
 		hmUserInfo.put(Constants.ParamKey_activityLevel, Integer.valueOf(activityLevel));
 		return hmUserInfo;
 	}
 	public static void saveUserInfo(Context ctx, HashMap<String, Object> userInfo){
-		if(userInfo==null){
-			return ;
-		}
-		Integer intObj_sex = (Integer)userInfo.get(Constants.ParamKey_sex);
-		Integer intObj_age = (Integer)userInfo.get(Constants.ParamKey_age);
-		Double dblObj_weight = (Double)userInfo.get(Constants.ParamKey_weight);
-		Double dblObj_height = (Double)userInfo.get(Constants.ParamKey_height);
-		Integer intObj_activityLevel = (Integer)userInfo.get(Constants.ParamKey_activityLevel);
-		int sex = Default_sex;
-		int age = Default_age;
-		double weight = Default_weight;
-		double height = Default_height;
-		int activityLevel = Default_activityLevel;
-		
-		if (intObj_sex!=null)
-			sex = intObj_sex.intValue();
-		if (intObj_age!=null)
-			age = intObj_age.intValue();
-		if (dblObj_weight!=null)
-			weight = dblObj_weight.doubleValue();
-		if (dblObj_height!=null)
-			height = dblObj_height.doubleValue();
-		if (intObj_activityLevel!=null)
-			activityLevel = intObj_activityLevel.intValue();
-		
-		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
-		SharedPreferences.Editor editor = sharedPref.edit();
-		editor.putInt(Constants.ParamKey_sex, sex);
-		editor.putInt(Constants.ParamKey_age, age);
-		editor.putFloat(Constants.ParamKey_weight, (float)weight);
-		editor.putFloat(Constants.ParamKey_height, (float)height);
-		editor.putInt(Constants.ParamKey_activityLevel, activityLevel);
-		editor.commit();
+		saveUserInfo_withPartItems(ctx,userInfo);
 	}
 	public static void saveUserInfo_withPartItems(Context ctx, HashMap<String, Object> userInfo){
 		if(userInfo==null){
 			return ;
 		}
 		Integer intObj_sex = (Integer)userInfo.get(Constants.ParamKey_sex);
-		Integer intObj_age = (Integer)userInfo.get(Constants.ParamKey_age);
+		Date dt_birthday = (Date)userInfo.get(Constants.ParamKey_birthday);
+//		Integer intObj_age = (Integer)userInfo.get(Constants.ParamKey_age);
 		Double dblObj_weight = (Double)userInfo.get(Constants.ParamKey_weight);
 		Double dblObj_height = (Double)userInfo.get(Constants.ParamKey_height);
 		Integer intObj_activityLevel = (Integer)userInfo.get(Constants.ParamKey_activityLevel);
@@ -137,7 +116,8 @@ public class StoredConfigTool {
 		SharedPreferences.Editor editor = sharedPref.edit();
 		
 		if(intObj_sex!=null) editor.putInt(Constants.ParamKey_sex, intObj_sex.intValue());
-		if(intObj_age!=null) editor.putInt(Constants.ParamKey_age, intObj_age.intValue());
+		if (dt_birthday!=null) editor.putLong(Constants.ParamKey_birthday, dt_birthday.getTime());
+//		if(intObj_age!=null) editor.putInt(Constants.ParamKey_age, intObj_age.intValue());
 		if(dblObj_weight!=null) editor.putFloat(Constants.ParamKey_weight, dblObj_weight.floatValue());
 		if(dblObj_height!=null) editor.putFloat(Constants.ParamKey_height, dblObj_height.floatValue());
 		if(intObj_activityLevel!=null) editor.putInt(Constants.ParamKey_activityLevel, intObj_activityLevel.intValue());

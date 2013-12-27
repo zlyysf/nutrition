@@ -304,6 +304,7 @@ public class Constants {
 
 	
 	public static final String ParamKey_sex ="sex";//int 0 means male 1 means female
+	public static final String ParamKey_birthday ="birthday";//long , ms
 	public static final String ParamKey_age ="age";//int 
 	public static final String ParamKey_weight ="weight";//int cm
 	public static final String ParamKey_height ="height";//int kg
