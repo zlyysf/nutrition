@@ -167,16 +167,19 @@
     
     // Config the axis label text style
     CPTMutableTextStyle *axisLabelTextStyle = [x.labelTextStyle mutableCopy];
-    axisLabelTextStyle.color = [CPTColor grayColor];
-    axisLabelTextStyle.fontName = @"Helvetica-Bold";
+    axisLabelTextStyle.color = [CPTColor blackColor];
+    axisLabelTextStyle.fontName = @"Helvetica Neue";
     axisLabelTextStyle.fontSize = 12.0f;
     x.labelTextStyle = axisLabelTextStyle;
     
     // Config the line style of Axis X major tick
     CPTMutableLineStyle *lineStyle = [x.axisLineStyle mutableCopy];
-    //lineStyle.lineWidth = 0.5;
+    lineStyle.lineWidth = 0.5f;
+    lineStyle.lineColor = [CPTColor blackColor];
     x.majorTickLineStyle = lineStyle;
-    //x.axisLineStyle = lineStyle;
+    
+    // config axis style
+    x.axisLineStyle = lineStyle;
     
     //x.visibleAxisRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(1) length:CPTDecimalFromFloat(33.5)];
 //    if (self.scatterType == ScatterTypeNI)
@@ -255,17 +258,23 @@
     
     // Config the axis label text style
     CPTMutableTextStyle *axisLabelTextStyle = [y.labelTextStyle mutableCopy];
-    axisLabelTextStyle.color = [CPTColor grayColor];
-    axisLabelTextStyle.fontName = @"Helvetica-Bold";
+    axisLabelTextStyle.color = [CPTColor blackColor];
+    axisLabelTextStyle.fontName = @"Helvetica Neue";
     axisLabelTextStyle.fontSize = 12.0f;
     y.labelTextStyle = axisLabelTextStyle;
     
     // Config the line style of Axis Y, major grid line and the major tick
     CPTMutableLineStyle *lineStyle = [y.axisLineStyle mutableCopy];
-    lineStyle.lineWidth = 0.5;
+    lineStyle.lineWidth = 0.5f;
+    lineStyle.lineColor = [CPTColor lightGrayColor];
     y.majorGridLineStyle = lineStyle;
-    //y.axisLineStyle = lineStyle;
-    y.majorTickLineStyle = lineStyle;
+
+    // config axis style
+    CPTMutableLineStyle *axisLineStyle = [y.axisLineStyle mutableCopy];
+    axisLineStyle.lineWidth = 0.5f;
+    axisLineStyle.lineColor = [CPTColor blackColor];
+    y.axisLineStyle = axisLineStyle;
+
     
     y.tickDirection = CPTSignNegative;
     y.labelOffset = 2.0f;
@@ -397,10 +406,14 @@
     if (bluePlot == nil) {
         bluePlot  = [[CPTScatterPlot alloc] init];
         [self.graph addPlot:bluePlot];
+        
+        // color
+        CPTColor *plotColor = [CPTColor colorWithComponentRed:25.0/255.0 green:25.0/255.0 blue:112.0/255.0 alpha:1.0];
+        
         CPTMutableLineStyle *blueLineStyle  = [[CPTMutableLineStyle alloc] init];
         blueLineStyle.miterLimit            = 1.0f;
-        blueLineStyle.lineWidth             = 1.5f;
-        blueLineStyle.lineColor             = [CPTColor blueColor];
+        blueLineStyle.lineWidth             = 1.0f;
+        blueLineStyle.lineColor             = plotColor;
         
         
         bluePlot.dataLineStyle     = blueLineStyle;
@@ -408,11 +421,11 @@
         bluePlot.dataSource        = self;
         
         CPTMutableLineStyle *blueSymbolLineStyle = [CPTMutableLineStyle lineStyle];
-        blueSymbolLineStyle.lineColor             = [CPTColor blueColor];
-        blueSymbolLineStyle.lineWidth             = 0.0f;
+        blueSymbolLineStyle.lineColor             = plotColor;
+        blueSymbolLineStyle.lineWidth             = 0.5f;
         
         CPTPlotSymbol *bluePlotSymbol  = [CPTPlotSymbol ellipsePlotSymbol];
-        bluePlotSymbol.fill            = [CPTFill fillWithColor:[CPTColor blueColor]];
+        bluePlotSymbol.fill            = [CPTFill fillWithColor:plotColor];
         bluePlotSymbol.lineStyle       = blueSymbolLineStyle;
         bluePlotSymbol.size            = CGSizeMake(5.0, 5.0);
         bluePlot.plotSymbol = bluePlotSymbol;
@@ -426,10 +439,14 @@
         if (greenPlot == nil) {
             greenPlot  = [[CPTScatterPlot alloc] init];
             [self.graph addPlot:greenPlot];
+            
+            CPTColor *plotColor = [CPTColor colorWithComponentRed:178.0/255.0 green:34.0/255.0 blue:34.0/255.0 alpha:1.0];
+            
+            
             CPTMutableLineStyle *greenLineStyle  = [[CPTMutableLineStyle alloc] init];
             greenLineStyle.miterLimit            = 1.0f;
-            greenLineStyle.lineWidth             = 1.5f;
-            greenLineStyle.lineColor             = [CPTColor greenColor];
+            greenLineStyle.lineWidth             = 1.0f;
+            greenLineStyle.lineColor             = plotColor;
             
             
             greenPlot.dataLineStyle     = greenLineStyle;
@@ -437,11 +454,11 @@
             greenPlot.dataSource        = self;
             
             CPTMutableLineStyle *greenSymbolLineStyle = [CPTMutableLineStyle lineStyle];
-            greenSymbolLineStyle.lineColor             = [CPTColor greenColor];
-            greenSymbolLineStyle.lineWidth             = 0.0f;
+            greenSymbolLineStyle.lineColor             = plotColor;
+            greenSymbolLineStyle.lineWidth             = 0.5f;
             
             CPTPlotSymbol *greenPlotSymbol  = [CPTPlotSymbol ellipsePlotSymbol];
-            greenPlotSymbol.fill            = [CPTFill fillWithColor:[CPTColor greenColor]];
+            greenPlotSymbol.fill            = [CPTFill fillWithColor:plotColor];
             greenPlotSymbol.lineStyle       = greenSymbolLineStyle;
             greenPlotSymbol.size            = CGSizeMake(5.0, 5.0);
             greenPlot.plotSymbol = greenPlotSymbol;

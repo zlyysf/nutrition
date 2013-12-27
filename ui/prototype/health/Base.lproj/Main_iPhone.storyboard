@@ -464,7 +464,6 @@
                                     <segment title="血压"/>
                                     <segment title="心跳"/>
                                 </segments>
-                                <color key="tintColor" red="0.26135522319999999" green="0.442582111" blue="0.27921990610000003" alpha="1" colorSpace="calibratedRGB"/>
                             </segmentedControl>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray line.png" id="h1y-Aj-aO6">
                                 <rect key="frame" x="0.0" y="105" width="285" height="1"/>
