@@ -1828,6 +1828,7 @@
         cellNotEmpty = (cell_SimptomType.type!=cellBlank && cell_SimptomType.str.length>0);
         if (cellNotEmpty && ![@"症状总数" isEqualToString:cell_SimptomType.str] ){
             NSString *simptomType = cell_SimptomType.str;
+            simptomType = [simptomType stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
             NSLog(@"simptomType: %@ [%d]",simptomType,idxRow);
             [symptomTypes addObject:simptomType];
             [symptomType_rowIdxAry addObject:[NSNumber numberWithInt:idxRow]];
@@ -1853,6 +1854,7 @@
             cellNotEmpty_Simptom = (cell_Simptom.type!=cellBlank && cell_Simptom.str.length>0);
             if(cellNotEmpty_Simptom){
                 NSString *symptomOfType = cell_Simptom.str;
+                symptomOfType = [symptomOfType stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
                 [simptomsOfType addObject:symptomOfType];
                 cell_healthMark = [reader cellInWorkSheetIndex:sheetIndex row:idxRow+RowOffset_healthMark col:idxCol];
                 cell_Nutrients = [reader cellInWorkSheetIndex:sheetIndex row:idxRow+RowOffset_Nutrients col:idxCol];
@@ -1890,13 +1892,14 @@
                 [nutrientIdAndIllnessDataBySymptomWithTypeDict setObject:ary2D forKey:keyTypeAndSymptom];
                 [symptomHealthmarkDict setObject:mnHealthMark forKey:symptomOfType];
                 
-                
-                if ([symptomSet containsObject:symptomOfType]){
-                    noError = false;
-                    NSLog(@"Repeated simptom name: %@", symptomOfType);
-                }else{
-                    [symptomSet addObject:symptomOfType];
-                }
+//                if ([symptomSet containsObject:symptomOfType]){
+//                    noError = false;
+//                    NSLog(@"Repeated simptom name: %@", symptomOfType);
+//                }else{
+//                    [symptomSet addObject:symptomOfType];
+//                }
+                assert(![symptomSet containsObject:symptomOfType]);
+                [symptomSet addObject:symptomOfType];
             }
             idxCol ++;
         }while (cellNotEmpty_Simptom);
@@ -2146,34 +2149,51 @@
                 if ( ! [illnessIdSet containsObject:illnessStr]){
                     NSLog(@"ERROR, the illness not in DB:%@ at line %d",illnessStr,i);
                 }
-            }else if ([line rangeOfString:@"==>"].location != NSNotFound){
-                NSRange range1 = [line rangeOfString:@"==>"];
-                NSString *illnessStr = [line substringFromIndex:range1.location+3];
-                illnessStr = [illnessStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                if ( ! [illnessIdSet containsObject:illnessStr]){
-                    NSLog(@"ERROR, the illness not in DB:%@ at line %d",illnessStr,i);
-                }
             }else{
-                NSCharacterSet *sepCharSet = [NSCharacterSet characterSetWithCharactersInString:@" ()（）,，\t"];
-                NSArray *tokens = [line componentsSeparatedByCharactersInSet:sepCharSet];
-                for(int j=0; j<tokens.count; j++){
-                    NSString *token = tokens[j];
-                    token = [token stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-                    if (token.length > 0){
-                        if ([@"和" isEqualToString:token] || [@"或" isEqualToString:token] || [@"无" isEqualToString:token]){
-                            //do nothing
-                        }else{
-                            NSString *symptomStr = token;
-                            if (! [symptomIdSet containsObject:symptomStr]){
-                                if ([symptomStr rangeOfString:@"有"].location != NSNotFound){
-                                    NSLog(@"Possible ERROR, the symptom not in DB:%@ at line %d",symptomStr,i);
-                                }else{
-                                    NSLog(@"ERROR, the symptom not in DB:%@ at line %d",symptomStr,i);
+                NSString *strWithSymptoms , *illnessStr;
+                NSRange searchIllnessFlagRange = [line rangeOfString:@"==>"];
+                if (searchIllnessFlagRange.location != NSNotFound){
+                    illnessStr = [line substringFromIndex:searchIllnessFlagRange.location+3];
+                    illnessStr = [illnessStr stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                    strWithSymptoms = [line substringToIndex:searchIllnessFlagRange.location];
+                }else{
+                    illnessStr = nil;
+                    strWithSymptoms = line;
+                }
+                
+                if (illnessStr != nil && illnessStr.length > 0){
+                    if ( ! [illnessIdSet containsObject:illnessStr]){
+                        NSLog(@"ERROR, the illness not in DB:%@ at line %d",illnessStr,i);
+                    }
+                }
+                
+                if (strWithSymptoms != nil && strWithSymptoms.length > 0){
+                    NSCharacterSet *sepCharSet = [NSCharacterSet characterSetWithCharactersInString:@" ()（）,，\t"];
+                    NSArray *tokens = [strWithSymptoms componentsSeparatedByCharactersInSet:sepCharSet];
+                    for(int j=0; j<tokens.count; j++){
+                        NSString *token = tokens[j];
+                        token = [token stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+                        if (token.length > 0){
+                            if ([token hasPrefix:@"以下"] || [@"和" isEqualToString:token] || [@"或" isEqualToString:token] || [@"无" isEqualToString:token]){
+                                //do nothing
+                            }else if ([token hasPrefix:@"有一"] || [token hasPrefix:@"有二"] || [token hasPrefix:@"有三"] || [token hasPrefix:@"有四"] || [token hasPrefix:@"有五"] || [token hasPrefix:@"有六"] || [token hasPrefix:@"有七"] || [token hasPrefix:@"有八"] || [token hasPrefix:@"有九"]){
+                                //do nothing
+                            }else{
+                                if (! [symptomIdSet containsObject:token]){
+                                    NSLog(@"ERROR, the symptom not in DB:%@ at line %d",token,i);
+                                    
+                                    NSRange searchIllnessTextRange1 = [token rangeOfString:@"体温"];
+                                    NSRange searchIllnessTextRange2 = [token rangeOfString:@"热"];
+                                    if (searchIllnessTextRange1.location != NSNotFound || searchIllnessTextRange2.location != NSNotFound){
+                                        if ( ! [illnessIdSet containsObject:token]){
+                                            NSLog(@"Possible ERROR, the illness not in DB:%@ at line %d",token,i);
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }//if (token.length > 0)
-                }//for j
+                        }//if (token.length > 0)
+                    }//for j
+                }
             }
         }//if (line.length > 0)
     }//for i
@@ -2590,6 +2610,8 @@
             NSString *nameEn = cell_enName.str;
             NSString *urlCn = cell_urlCn.str;
             NSString *urlEn = cell_urlEn.str;
+            if (urlCn == nil) urlCn = @"";
+            if (urlEn == nil) urlEn = @"";
             NSMutableDictionary *rowDict = [NSMutableDictionary dictionary];
             [rowDict setObject:illnessId forKey:COLUMN_NAME_IllnessId];
             [rowDict setObject:nameEn forKey:COLUMN_NAME_IllnessNameEn];

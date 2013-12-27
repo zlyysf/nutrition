@@ -934,6 +934,8 @@
                 [inferIllnessAry addObject:@"中热"];
             }else if (bodyTemperature >= 37.5){
                 [inferIllnessAry addObject:@"低热"];
+            }else if (bodyTemperature < 36.5){
+                [inferIllnessAry addObject:@"体温过低"];
             }
         }
     }
@@ -1042,7 +1044,7 @@
     NSSet *changBing_SymptomSetFull1in5 = [NSSet setWithArray:changBing_SymptomsFull1in5];
     if ([self existAtLeastN_withToBeCheckedCollection:symptomIds andFullCollection:changBing_SymptomSetFull1in2 andAtLeastN:1]
         && [self existAtLeastN_withToBeCheckedCollection:symptomIds andFullCollection:changBing_SymptomSetFull1in5 andAtLeastN:1]
-        && [symptomSet containsObject:@"左下或下腹痛"]){
+        && ([symptomSet containsObject:@"左下或下腹痛"] || [symptomSet containsObject:@"下腹痛"])){
         [inferIllnessAry addObject:@"炎症性肠病"];
     }
 
@@ -1056,8 +1058,8 @@
     NSArray *pinXue_SymptomsFull8 = [NSArray arrayWithObjects:
                                      @"乏力",@"倦怠萎靡",@"体力耐力下降",@"烦躁",@"易怒",@"注意力分散",
                                      @"口唇干裂",@"口腔溃疡",@"舌发炎/红包",@"吞咽困难",@"气短",@"心慌",
-                                     @"皮肤干燥",@"皱纹",@"头晕",@"头痛",@"头发干枯",@"头发脱落",@"脸色苍白",
-                                     @"视觉模糊",@"耳鸣",@"指甲缺乏光泽",@"指甲脆薄易裂",@"指甲变平",@"指甲凹下呈勺状", nil];
+                                     @"皮肤干燥",@"皮肤皱纹",@"头晕",@"头痛",@"头发干枯",@"头发脱落",@"脸色苍白",
+                                     @"视觉模糊",@"耳鸣",@"指甲缺乏光泽",@"指甲脆薄易裂",@"指甲变平",@"指甲勺状下凹", nil];
     NSSet *pinXue_SymptomSetFull8 = [NSSet setWithArray:pinXue_SymptomsFull8];
     if ([self existAtLeastN_withToBeCheckedCollection:symptomIds andFullCollection:pinXue_SymptomSetFull8 andAtLeastN:8] ){
         [inferIllnessAry addObject:@"缺铁性贫血"];
