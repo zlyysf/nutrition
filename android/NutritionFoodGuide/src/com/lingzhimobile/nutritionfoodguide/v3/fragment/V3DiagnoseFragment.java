@@ -8,6 +8,7 @@ import org.json.JSONArray;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.RectF;
 import android.graphics.drawable.ShapeDrawable;
 import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;

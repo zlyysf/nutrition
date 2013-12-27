@@ -51,7 +51,7 @@
     <style name="v3_diagnose_content_text">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
-        <item name="android:paddingLeft">30dp</item>
+        <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:paddingBottom">5dp</item>

@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="10dp"
+    android:layout_margin="10dp"
+    android:background="@drawable/v3_shape_diagnose_item"
     android:orientation="vertical" >
 
     <CheckBox
@@ -13,10 +14,9 @@
         android:layout_gravity="center_vertical|center_horizontal"
         android:layout_margin="5dp"
         android:layout_weight="0"
-        android:background="@null"
+        
         android:button="@null"
         android:gravity="center"
-        android:minWidth="40dp"
         android:text="aaaaaaaaaaa"
         android:textColor="@color/black" />
 
