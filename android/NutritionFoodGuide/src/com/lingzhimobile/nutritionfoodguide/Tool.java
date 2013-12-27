@@ -1157,19 +1157,21 @@ public class Tool {
 	            }
 	        }
 	        
-//	        Double nmBodyTemperature = (Double)measureData.get(Constants.Key_BodyTemperature);
-//	        if (nmBodyTemperature != null){
-//	            double bodyTemperature = nmBodyTemperature.doubleValue();
-//	            if (bodyTemperature >= 40.0){
-//	                inferIllnessAry.add("超高热");
-//	            }else if (bodyTemperature >= 39.0){
-//	                inferIllnessAry.add("高热");
-//	            }else if (bodyTemperature >= 38.0){
-//	                inferIllnessAry.add("中热");
-//	            }else if (bodyTemperature >= 37.5){
-//	                inferIllnessAry.add("低热");
-//	            }
-//	        }
+	        Double nmBodyTemperature = (Double)measureData.get(Constants.Key_BodyTemperature);
+	        if (nmBodyTemperature != null){
+	            double bodyTemperature = nmBodyTemperature.doubleValue();
+	            if (bodyTemperature >= 40.0){
+	                inferIllnessAry.add("超高热");
+	            }else if (bodyTemperature >= 39.0){
+	                inferIllnessAry.add("高热");
+	            }else if (bodyTemperature >= 38.0){
+	                inferIllnessAry.add("中热");
+	            }else if (bodyTemperature >= 37.5){
+	                inferIllnessAry.add("低热");
+	            }else if (bodyTemperature < 36.5){
+	            	inferIllnessAry.add("体温过低");
+	            }
+	        }
 	    }
 	    
 		if (symptomIds==null || symptomIds.size()==0){
@@ -1303,7 +1305,7 @@ public class Tool {
 	    changBing_SymptomSetFull1in5.addAll(Tool.convertFromArrayToList(changBing_SymptomsFull1in5));
 	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,changBing_SymptomSetFull1in2,1)
 	        && existAtLeastN_withToBeCheckedCollection(symptomIds,changBing_SymptomSetFull1in5,1)
-	        && symptomSet.contains("左下或下腹痛")){
+	        && (symptomSet.contains("左下或下腹痛") || symptomSet.contains("下腹痛"))){
 	        inferIllnessAry.add("炎症性肠病");
 	    }
 
@@ -1317,8 +1319,8 @@ public class Tool {
 	    
 	    String[] pinXue_SymptomsFull8 = {"乏力","倦怠萎靡","体力耐力下降","烦躁","易怒","注意力分散",
 	                                     "口唇干裂","口腔溃疡","舌发炎/红包","吞咽困难","气短","心慌",
-	                                     "皮肤干燥","皱纹","头晕","头痛","头发干枯","头发脱落","脸色苍白",
-	                                     "视觉模糊","耳鸣","指甲缺乏光泽","指甲脆薄易裂","指甲变平","指甲凹下呈勺状"};
+	                                     "皮肤干燥","皮肤皱纹","头晕","头痛","头发干枯","头发脱落","脸色苍白",
+	                                     "视觉模糊","耳鸣","指甲缺乏光泽","指甲脆薄易裂","指甲变平","指甲勺状下凹"};
 	    HashSet<String> pinXue_SymptomSetFull8 = new HashSet<String>();
 	    pinXue_SymptomSetFull8.addAll(Tool.convertFromArrayToList(pinXue_SymptomsFull8));
 	    if (existAtLeastN_withToBeCheckedCollection(symptomIds,pinXue_SymptomSetFull8,8) ){
