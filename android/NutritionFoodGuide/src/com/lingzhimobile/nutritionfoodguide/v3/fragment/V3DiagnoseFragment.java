@@ -45,7 +45,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
             R.color.v3_hands_feet, R.color.v3_arms_legs, R.color.v3_body,
             R.color.v3_yinshi, R.color.v3_digestion, R.color.v3_movement,
             R.color.v3_psychology, R.color.v3_male, R.color.v3_female };
-	static final int checkboxColorNormalResId = R.color.gray;
+	static final int checkboxColorNormalResId = R.color.white;
 	
 	Button m_btnSubmit;
 	EditText m_etNote, m_etBodyTemperature, m_etWeight, m_etHeartRate, m_etBloodPressureHigh, m_etBloodPressureLow;
