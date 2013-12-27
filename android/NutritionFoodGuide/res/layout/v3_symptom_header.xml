@@ -7,6 +7,6 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="今天哪里不舒服吗？点击记录一下吧。" />
+        android:text="选择您今天的症状，然后点击查看养生报告。" />
 
 </LinearLayout>

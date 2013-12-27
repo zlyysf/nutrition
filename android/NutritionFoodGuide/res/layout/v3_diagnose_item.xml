@@ -6,6 +6,7 @@
     android:padding="10dp" >
 
     <TextView
+        style="@style/v3_diagnose_tab_name_text"
         android:id="@+id/diagnoseTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

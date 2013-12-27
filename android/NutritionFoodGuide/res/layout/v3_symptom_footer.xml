@@ -11,6 +11,7 @@
         android:text="生理指标" />
 
     <LinearLayout
+        android:background="@color/v3_numbers"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
