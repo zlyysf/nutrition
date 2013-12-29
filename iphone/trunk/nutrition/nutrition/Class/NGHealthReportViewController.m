@@ -19,6 +19,8 @@
 #import "LZConstants.h"
 #import "LZEmptyClassCell.h"
 #import "NGRecommendFoodView.h"
+#import "LZRecommendFood.h"
+#import "MBProgressHUD.h"
 #define BorderColor [UIColor lightGrayColor].CGColor
 
 #define AttentionItemLabelWidth 240
@@ -27,9 +29,10 @@
 #define BigLabelFont [UIFont systemFontOfSize:22.f]
 #define SmallLabelFont [UIFont systemFontOfSize:14.f]
 #define MaxDisplayFoodCount 5
-@interface NGHealthReportViewController ()
+@interface NGHealthReportViewController ()<MBProgressHUDDelegate>
 {
     BOOL isChinese;
+    MBProgressHUD *HUD;
 }
 @property (nonatomic,assign)BOOL isFirstLoad;
 @property (nonatomic,strong)UIImage *selectedImage;
@@ -39,10 +42,18 @@
 @property (nonatomic,assign)float recommendFoodCellHeight;
 @property (nonatomic,assign)float suggestionCellHeight;
 @property (nonatomic,strong)UIView *recommendFoodView;
+@property (nonatomic,strong)UIView *lackNutritionFoodView;
+@property (strong, nonatomic) NSArray *lackNutritionArray;
+@property (strong, nonatomic) NSArray *potentialArray;
+@property (strong, nonatomic) NSArray *attentionArray;
+@property (strong, nonatomic) NSDictionary *recommendFoodDict;
+@property (strong,nonatomic)NSDictionary *dataToSave;
+@property (assign, nonatomic)double BMIValue;
+@property (assign, nonatomic)double HealthValue;
 @end
 
 @implementation NGHealthReportViewController
-@synthesize lackNutritionArray,potentialArray,attentionArray,isFirstLoad,isFirstSave,recommendFoodDict,dataToSave,selectedImage,illnessArray,illnessCellHeight,lackNutritonCellHeight,recommendFoodCellHeight,suggestionCellHeight,recommendFoodView;
+@synthesize lackNutritionArray,potentialArray,attentionArray,isFirstLoad,recommendFoodDict,dataToSave,selectedImage,illnessArray,illnessCellHeight,lackNutritonCellHeight,recommendFoodCellHeight,suggestionCellHeight,recommendFoodView,lackNutritionFoodView,userInputValueDict,userSelectedSymptom,symptomsByTypeArray,isOnlyDisplay;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -58,53 +69,388 @@
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     isFirstLoad = YES;
     isChinese = [LZUtility isCurrentLanguageChinese];
-    UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"jiankangbaogao_c_baocun", @"保存按钮：保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveRecord:)];
-    self.navigationItem.rightBarButtonItem = saveItem;
-
-    if (isFirstSave)
+    if (!isOnlyDisplay)
     {
-        [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"jiankangbaogao_c_baocun", @"保存按钮：保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveRecord:)];
+        [saveItem setEnabled:NO];
+        self.navigationItem.rightBarButtonItem = saveItem;
     }
-    LZDataAccess *da = [LZDataAccess singleton];
-    self.illnessArray = [da getIllness_ByIllnessIds:potentialArray];
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    HUD.hidden = YES;
+    HUD.delegate = self;
+    self.listView.hidden = YES;
     selectedImage = [LZUtility createImageWithColor:ItemSelectedColor imageSize:CGSizeMake(300, 54)];
     self.title = NSLocalizedString(@"jiankangbaogao_c_title", @"页面标题：健康报告");
-    if (self.lackNutritionArray != nil && [self.lackNutritionArray count]!= 0)
-    {
-        lackNutritonCellHeight =[self.lackNutritionArray count]*50+35;
-    }
-    else
-    {
-        lackNutritonCellHeight = 0;
-    }
-    if (self.lackNutritionArray != nil && [self.lackNutritionArray count]!= 0)
-    {
-        recommendFoodCellHeight =[self.lackNutritionArray count]*140+25;
-        [self createRecommendView];
-    }
-    else
-    {
-        recommendFoodCellHeight = 0;
-    }
-    if (self.illnessArray != nil && [self.illnessArray count]!= 0)
-    {
-        illnessCellHeight = [self.illnessArray count]*50+35;
-    }
-    else
-    {
-        illnessCellHeight = 0;
-    }
-    suggestionCellHeight = [self calculateHeightForAttentionPart];
-	// Do any additional setup after loading the view.
+    	// Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     if (isFirstLoad)
     {
+        HUD.hidden = NO;
+        [HUD show:YES];
         isFirstLoad = NO;
-        //[self displayReport];
+        [self displayReport];
     }
 }
+-(void)displayReport
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
+        
+        NSString *note = [self.userInputValueDict objectForKey:@"note"];//需保存数据
+        
+        //根据症状获得症状健康分值
+        LZDataAccess *da = [LZDataAccess singleton];
+        double symptomScore = [da getSymptomHealthMarkSum_BySymptomIds:userSelectedSymptom];
+        self.HealthValue = 100 - symptomScore;//需保存数据
+        if (self.HealthValue<Config_nearZero)
+        {
+            self.HealthValue = 0;
+        }
+        
+        //根据症状和测量数据得到用户的潜在疾病和BMI值
+        //1.计算BMI
+        NSString *weight = [self.userInputValueDict objectForKey:@"weight"];
+        NSString *heat = [self.userInputValueDict objectForKey:@"heat"];
+        NSString *heartbeat = [self.userInputValueDict objectForKey:@"heartbeat"];
+        NSString *highpress = [self.userInputValueDict objectForKey:@"highpressure"];
+        NSString *lowpress = [self.userInputValueDict objectForKey:@"lowpressure"];
+        NSNumber *userWeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserWeightKey];
+        NSNumber *paramHeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserHeightKey];
+        NSMutableDictionary *measureData = [[NSMutableDictionary alloc]init];
+        if ([weight length] == 0 || [weight doubleValue]<=0)
+        {
+            self.BMIValue = [LZUtility getBMI_withWeight:[userWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
+        }
+        else
+        {
+            NSNumber *newWeight;
+            if (isChinese)
+            {
+                newWeight = [NSNumber numberWithDouble:[weight doubleValue]];
+            }
+            else
+            {
+                double convertedWeight = (double)([weight doubleValue]/kKGConvertLBRatio);
+                newWeight = [NSNumber numberWithDouble:convertedWeight];
+            }
+            [[NSUserDefaults standardUserDefaults]setObject:newWeight forKey:LZUserWeightKey];
+            [measureData setObject:newWeight forKey:Key_Weight];
+            [[NSUserDefaults standardUserDefaults]synchronize];
+            self.BMIValue = [LZUtility getBMI_withWeight:[newWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
+        }
+        //2.计算潜在疾病
+        
+        if ([heat length] != 0 && [heat doubleValue]>0)
+        {
+            if (isChinese)
+            {
+                [measureData setObject:[NSNumber numberWithDouble:[heat doubleValue]] forKey:Key_BodyTemperature];
+            }
+            else
+            {
+                double tempC = ([heat doubleValue]-32.f)/1.8f;
+                [measureData setObject:[NSNumber numberWithDouble:tempC] forKey:Key_BodyTemperature];
+            }
+            
+        }
+        if ([heartbeat length] != 0 && [heartbeat intValue]>0)
+        {
+            [measureData setObject:[NSNumber numberWithInt:[heartbeat intValue]] forKey:Key_HeartRate];
+        }
+        if ([lowpress length] != 0 && [lowpress intValue]>0)
+        {
+            [measureData setObject:[NSNumber numberWithInt:[lowpress intValue]] forKey:Key_BloodPressureLow];
+        }
+        if ([highpress length] != 0 && [highpress intValue]>0)
+        {
+            [measureData setObject:[NSNumber numberWithInt:[highpress intValue]] forKey:Key_BloodPressureHigh];
+        }
+        potentialArray = [LZUtility inferIllnesses_withSymptoms:userSelectedSymptom andMeasureData:measureData];//需保存数据
+        self.illnessArray = [da getIllness_ByIllnessIds:potentialArray];
+        //根据潜在疾病得到注意事项,旧的数据格式
+        NSMutableDictionary *illnessAttentionDict = [[NSMutableDictionary alloc]init];//需保存数据
+        for (NSString *illnessId in potentialArray)
+        {
+            NSArray *illnessIds = [NSArray arrayWithObject:illnessId];
+            NSArray *attentionItem = [da getIllnessSuggestionsDistinct_ByIllnessIds:illnessIds];
+            if (attentionItem)
+            {
+                [illnessAttentionDict setObject:attentionItem forKey:illnessId];
+            }
+        }
+        
+        //根据潜在疾病得到注意事项,新的数据格式
+        self.attentionArray = [da getIllnessSuggestionsDistinct_ByIllnessIds:potentialArray];
+        
+        
+        //根据症状获得用户缺少的营养元素
+        self.lackNutritionArray = [[NSArray alloc]init];
+        self.recommendFoodDict = [[NSDictionary alloc]init];
+        if (![userSelectedSymptom count]==0)
+        {
+            lackNutritionArray =  [da getSymptomNutrientDistinctIds_BySymptomIds:userSelectedSymptom];//需保存数据
+            
+            //根据缺少元素得到推荐的食物
+            NSNumber *paramSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];
+            NSNumber *paramAge = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserAgeKey];
+            NSNumber *paramWeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserWeightKey];
+            NSNumber *paramActivity = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserActivityLevelKey];
+            NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                      paramSex,ParamKey_sex, paramAge,ParamKey_age,
+                                      paramWeight,ParamKey_weight, paramHeight,ParamKey_height,
+                                      paramActivity,ParamKey_activityLevel, nil];
+            //NSArray *nutrientIds = [LZRecommendFood getCustomNutrients:nil];
+            LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+            self.recommendFoodDict = [rf getSingleNutrientRichFoodWithAmount_forNutrients:lackNutritionArray withUserInfo:userInfo andOptions:nil];//需保存数据
+        }
+        
+        
+        
+        
+        
+        //把保存数据封装，判断今天是否保存过了，如果还没有，则自动保存，如果保存过了，传递给reportcontroller，由用户选择是否再次保存
+        //1. 封装数据
+        
+        NSDate *today = [NSDate date];
+        NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
+        [formatter setLocale:[[NSLocale alloc] init]];
+        [formatter setDateFormat:@"yyyyMMdd"];
+        NSString *dayStr = [formatter stringFromDate:today];
+        int dayLocal = [dayStr intValue];
+        NSMutableDictionary * InputNameValuePairsData = [NSMutableDictionary dictionary];
+        [InputNameValuePairsData setObject:userSelectedSymptom forKey:Key_Symptoms];
+        [InputNameValuePairsData setObject:symptomsByTypeArray forKey:Key_SymptomsByType];
+        if ([measureData objectForKey:Key_BodyTemperature]) {
+            [InputNameValuePairsData setObject:[measureData objectForKey:Key_BodyTemperature] forKey:Key_BodyTemperature];
+        }
+        if ([measureData objectForKey:Key_Weight]) {
+            [InputNameValuePairsData setObject:[measureData objectForKey:Key_Weight] forKey:Key_Weight];
+        }
+        if ([measureData objectForKey:Key_HeartRate]) {
+            [InputNameValuePairsData setObject:[measureData objectForKey:Key_HeartRate] forKey:Key_HeartRate];
+        }
+        if ([measureData objectForKey:Key_BloodPressureLow]) {
+            [InputNameValuePairsData setObject:[measureData objectForKey:Key_BloodPressureLow] forKey:Key_BloodPressureLow];
+        }
+        if ([measureData objectForKey:Key_BloodPressureHigh]) {
+            [InputNameValuePairsData setObject:[measureData objectForKey:Key_BloodPressureHigh] forKey:Key_BloodPressureHigh];
+        }
+        
+        NSMutableDictionary * CalculateNameValuePairsData = [NSMutableDictionary dictionary];
+        [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:self.BMIValue] forKey:Key_BMI];
+        [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:self.HealthValue] forKey:Key_HealthMark];
+        NSMutableDictionary *LackNutrientsAndFoods = [NSMutableDictionary dictionary];
+        for (NSString *nutritionId in lackNutritionArray)
+        {
+            NSArray *recFood = [self.recommendFoodDict objectForKey:nutritionId];
+            NSMutableDictionary *relatedFood = [[NSMutableDictionary alloc]init];
+            for (NSDictionary * aFood in recFood)
+            {
+                NSNumber *amount = [aFood objectForKey:@"FoodAmount"];
+                NSString *foodId = [aFood objectForKey:@"NDB_No"];
+                [relatedFood setObject:amount forKey:foodId];
+            }
+            [LackNutrientsAndFoods setObject:relatedFood forKey:nutritionId];
+        }
+        [CalculateNameValuePairsData setObject:LackNutrientsAndFoods forKey:Key_LackNutrientsAndFoods];
+        NSMutableDictionary *illnessAttention = [[NSMutableDictionary alloc]init];
+        
+        for (NSString *illnessId in potentialArray)
+        {
+            NSArray *attentionArr = [illnessAttentionDict objectForKey:illnessId];
+            NSMutableArray *attentionIdArray = [[NSMutableArray alloc]init];
+            if (attentionArr != nil && [attentionArr count]!= 0)
+            {
+                for (NSDictionary *anAttention in attentionArr)
+                {
+                    NSString *attentionId = [anAttention objectForKey:@"SuggestionId"];
+                    [attentionIdArray addObject:attentionId];
+                }
+            }
+            [illnessAttention setObject:attentionIdArray forKey:illnessId];
+        }
+        
+        [CalculateNameValuePairsData setObject:illnessAttention forKey:Key_InferIllnessesAndSuggestions];
+        
+        if (potentialArray == nil)
+        {
+            [CalculateNameValuePairsData setObject:[NSArray array] forKey:Key_IllnessIds];
+        }
+        else
+        {
+            [CalculateNameValuePairsData setObject:potentialArray forKey:Key_IllnessIds];
+        }
+        
+        if (self.attentionArray == nil)
+        {
+            [CalculateNameValuePairsData setObject:[NSArray array] forKey:Key_distinctSuggestionIds];
+        }
+        else
+        {
+            [CalculateNameValuePairsData setObject:self.attentionArray forKey:Key_distinctSuggestionIds];
+        }
+        
+        
+        //2.判断
+        NSDictionary *recordData = [da getUserRecordSymptomDataByDayLocal:dayLocal];
+        BOOL isFirstSave;
+        if (recordData == nil || [[recordData allKeys]count]==0)
+        {
+            isFirstSave = YES;
+            //[self.navigationItem.rightBarButtonItem setEnabled:NO];
+            //没保存过
+            [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+            [[NSNotificationCenter defaultCenter]postNotificationName:Notification_HistoryUpdatedKey object:nil];
+            
+            //to sync to remote parse service
+            PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+            [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                NSMutableString *msg = [NSMutableString string];
+                if (succeeded){
+                    [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
+                    [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
+                }else{
+                    [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
+                }
+                NSLog(@"when insertUserRecordSymptom_withDayLocal, %@",msg);
+            }];//saveInBackgroundWithBlock
+        }
+        else
+        {
+            isFirstSave = NO;//[self.navigationItem.rightBarButtonItem setEnabled:YES];
+        }
+        self.dataToSave = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:dayLocal],@"dayLocal" ,today,@"date",InputNameValuePairsData,@"InputNameValuePairsData",note,@"note",CalculateNameValuePairsData,@"CalculateNameValuePairsData",nil];
+                if (self.illnessArray != nil && [self.illnessArray count]!= 0)
+        {
+            illnessCellHeight = [self.illnessArray count]*50+35;
+        }
+        else
+        {
+            illnessCellHeight = 0;
+        }
+        suggestionCellHeight = [self calculateHeightForAttentionPart];
+
+        dispatch_async(dispatch_get_main_queue(), ^(void){
+            //[HUD hide:YES];
+            
+            if (self.lackNutritionArray != nil && [self.lackNutritionArray count]!= 0)
+            {
+                [self createLackNutritionView];
+            }
+            else
+            {
+                lackNutritonCellHeight = 0;
+            }
+            if (self.lackNutritionArray != nil && [self.lackNutritionArray count]!= 0)
+            {
+                recommendFoodCellHeight =[self.lackNutritionArray count]*140+25;
+                [self createRecommendView];
+            }
+            else
+            {
+                recommendFoodCellHeight = 0;
+            }
+            [self.listView reloadData];
+            [HUD hide:YES];
+            self.listView.hidden = NO;
+            if (isFirstSave) {
+                [self.navigationItem.rightBarButtonItem setEnabled:NO];
+            }
+            else
+            {
+                [self.navigationItem.rightBarButtonItem setEnabled:YES];
+            }
+        });
+    });
+
+}
+-(void)createLackNutritionView
+{
+    lackNutritionFoodView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, 50)];
+    [lackNutritionFoodView setBackgroundColor:[UIColor whiteColor]];
+    [lackNutritionFoodView.layer setBorderColor:BorderColor];
+    [lackNutritionFoodView.layer setBorderWidth:0.5f];
+    lackNutritionFoodView.clipsToBounds = YES;
+    
+    UILabel *headerLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 20)];
+    [headerLabel setFont:SmallLabelFont];
+    [headerLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:10.f]];
+    [headerLabel setText:NSLocalizedString(@"jiankangbaogao_c_quefayingyan", @"缺乏营养项标题：缺乏营养")];
+    [lackNutritionFoodView addSubview:headerLabel];
+    
+
+    NSString *queryKey;
+    if (isChinese)
+    {
+        queryKey = @"IconTitleCn";
+    }
+    else
+    {
+        queryKey = @"IconTitleEn";
+    }
+    
+    LZNutrientionManager*nm = [LZNutrientionManager SharedInstance];
+    float startY = 35;
+    float totalHeight = 0;
+    CGRect previousFrame = CGRectZero;
+    BOOL gotPreviousFrame = NO;
+    for (NSString *nutritionId in self.lackNutritionArray)
+    {
+        NSDictionary *dict = [nm getNutritionInfo:nutritionId];
+        NSString *nutritionName = [dict objectForKey:queryKey];
+        NSString *convertedString = [LZUtility getNutritionNameInfo:nutritionName isChinese:isChinese];
+        CGSize textSize = [convertedString sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(280, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        if (textSize.width< 40)
+        {
+            textSize.width = 40;
+        }
+        textSize.width += 6*2;
+        textSize.height += 4*2;
+        LZCustomDataButton *nutritionNameButton;
+        UIColor *backColor =[LZUtility getNutrientColorForNutrientId:nutritionId];
+        
+        if (!gotPreviousFrame) {
+            nutritionNameButton = [[LZCustomDataButton alloc] initWithFrame:CGRectMake(10, startY, textSize.width, textSize.height)];
+            
+            //labelFrame =CGRectMake(0, 0, textSize.width, textSize.height);
+            totalHeight = textSize.height;
+        } else {
+            CGRect newRect = CGRectZero;
+            if (previousFrame.origin.x + previousFrame.size.width + textSize.width + 14 > 280) {
+                newRect.origin = CGPointMake(10, previousFrame.origin.y + previousFrame.size.height + 15);
+                totalHeight += textSize.height + 15;
+            } else {
+                newRect.origin = CGPointMake(previousFrame.origin.x + previousFrame.size.width + 14, previousFrame.origin.y);
+            }
+            newRect.size = textSize;
+            nutritionNameButton = [[LZCustomDataButton alloc] initWithFrame:newRect];
+        }
+        UIImage *backImage = [LZUtility createImageWithColor:backColor imageSize:CGSizeMake(textSize.width, textSize.height)];
+        [nutritionNameButton setBackgroundImage:backImage forState:UIControlStateNormal];
+        
+        //[button setBackgroundColor:[LZUtility getNutrientColorForNutrientId:nutritionId]];
+        nutritionNameButton.customData = nutritionId;
+
+        [nutritionNameButton setTitle:convertedString forState:UIControlStateNormal];
+        [nutritionNameButton.titleLabel setFont:SmallLabelFont];
+        [nutritionNameButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [nutritionNameButton.layer setMasksToBounds:YES];
+        [nutritionNameButton.layer setCornerRadius:5];
+        [nutritionNameButton.layer setBorderWidth:0.5f];
+        [nutritionNameButton.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        previousFrame = nutritionNameButton.frame;
+        gotPreviousFrame = YES;
+        [nutritionNameButton addTarget:self action:@selector(nutritionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [lackNutritionFoodView addSubview:nutritionNameButton];
+    }
+
+    lackNutritonCellHeight = totalHeight+45;
+    [lackNutritionFoodView setFrame:CGRectMake(10, 0, 300, lackNutritonCellHeight)];
+
+}
+
 -(void)createRecommendView
 {
     recommendFoodView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, recommendFoodCellHeight)];
@@ -487,13 +833,14 @@
             [cell.backView.layer setBorderWidth:0.5f];
             cell.headerLabel.text = NSLocalizedString(@"jiankangbaogao_c_jiankangzhishu", @"健康指数栏标题：健康指数");
             //12,56,78 3,42,40,20
-            NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.HealthValue];
-            CGSize textSize = [scoreText sizeWithFont:[UIFont boldSystemFontOfSize:40.f] constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
-            [cell.healthScoreLabel setFrame:CGRectMake(40, 35, textSize.width, 35)];
-            [cell.fullPercentLabel setFrame:CGRectMake(40+textSize.width, 50, 40, 20)];
-            cell.healthScoreLabel.text = scoreText;
             cell.hasLoaded = YES;
         }
+        NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.HealthValue];
+        CGSize textSize = [scoreText sizeWithFont:[UIFont boldSystemFontOfSize:40.f] constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        [cell.healthScoreLabel setFrame:CGRectMake(40, 35, textSize.width, 35)];
+        [cell.fullPercentLabel setFrame:CGRectMake(40+textSize.width, 50, 40, 20)];
+        cell.healthScoreLabel.text = scoreText;
+
         return cell;
     }
     else if (indexPath.section == 1)
@@ -510,10 +857,10 @@
             cell.level2Label.text = NSLocalizedString(@"jiankangbaogao_c_zhengchang", @"体质指数范围：正常");
             cell.level3Label.text = NSLocalizedString(@"jiankangbaogao_c_guozhong", @"体质指数范围：过重");
             cell.level4Label.text = NSLocalizedString(@"jiankangbaogao_c_feipang", @"体质指数范围：肥胖");
-            NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.BMIValue];
-            cell.bmiValueLabel.text = scoreText;
-            [cell setBMIValue:self.BMIValue];
         }
+        NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.BMIValue];
+        cell.bmiValueLabel.text = scoreText;
+        [cell setBMIValue:self.BMIValue];
         return cell;
     }
     else if (indexPath.section == 2)
@@ -521,51 +868,7 @@
         LZEmptyClassCell *cell = (LZEmptyClassCell*)[tableView dequeueReusableCellWithIdentifier:@"NGLackNutritonCell"];
         if (!cell.hasLoaded)
         {
-            UIView *backView = [[UIView alloc]initWithFrame:CGRectMake(10, 0, 300, lackNutritonCellHeight)];
-            [backView setBackgroundColor:[UIColor whiteColor]];
-            [backView.layer setBorderColor:BorderColor];
-            [backView.layer setBorderWidth:0.5f];
-            [cell.contentView addSubview:backView];
-            
-            UILabel *headerLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 20)];
-            [headerLabel setFont:SmallLabelFont];
-            [headerLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:10.f]];
-            [headerLabel setText:NSLocalizedString(@"jiankangbaogao_c_quefayingyan", @"缺乏营养项标题：缺乏营养")];
-            [backView addSubview:headerLabel];
-            NSString *queryKey;
-            if (isChinese)
-            {
-                queryKey = @"IconTitleCn";
-            }
-            else
-            {
-                queryKey = @"IconTitleEn";
-            }
-
-            LZNutrientionManager*nm = [LZNutrientionManager SharedInstance];
-            float startY = 32;
-            for (int i=0; i<[self.lackNutritionArray count]; i++)
-            {
-                NSString *nutritionId = [self.lackNutritionArray objectAtIndex:i];
-                
-                NSDictionary *dict = [nm getNutritionInfo:nutritionId];
-                NSString *nutritionName = [dict objectForKey:queryKey];
-                LZCustomDataButton *nutritionNameButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, startY, 300, 36)];
-                [nutritionNameButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
-                nutritionNameButton.customData = nutritionId;
-                [nutritionNameButton addTarget:self action:@selector(nutritionButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-                [backView addSubview:nutritionNameButton];
-                UILabel *nutritionNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(40, startY, 170, 36)];
-                [nutritionNameLabel setText:nutritionName];
-                [nutritionNameLabel setFont:BigLabelFont];
-                [backView addSubview:nutritionNameLabel];
-                
-                UIImageView *detailArrow = [[UIImageView alloc]initWithFrame:CGRectMake(265, startY+8, 20, 20)];
-                [detailArrow setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
-                [backView addSubview:detailArrow];
-                startY += 50;
-                
-            }
+            [cell.contentView addSubview:lackNutritionFoodView];
             cell.hasLoaded = YES;
         }
         return cell;
@@ -743,4 +1046,11 @@
     singleFoodViewController.foodInfoDict = foodAtr;
     [self.navigationController pushViewController:singleFoodViewController animated:YES];
 }
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+    HUD.hidden = YES;
+}
+
 @end

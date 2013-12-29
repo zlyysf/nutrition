@@ -12,6 +12,7 @@
 #import "LZUtility.h"
 #import "LZConstants.h"
 #import "LZNutrientionManager.h"
+#import "NGHealthReportViewController.h"
 #define MAXNutritonDisplayCount 3
 @interface NGRecordHistoryViewController ()
 {
@@ -55,18 +56,26 @@
     self.listView2.tableFooterView = footerView;
     self.listView3.tableFooterView = footerView;
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"left.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltoprevious)];
+    [leftItem setEnabled:NO];
     self.navigationItem.leftBarButtonItem = leftItem;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"right.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltonext)];
+    [rightItem setEnabled:NO];
     self.navigationItem.rightBarButtonItem = rightItem;
-    [self initialize];
-    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(historyUpdated:) name: Notification_HistoryUpdatedKey object:nil];
-    LZDataAccess *da = [LZDataAccess singleton];
 
-    symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_both];
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(historyUpdated:) name: Notification_HistoryUpdatedKey object:nil];
     
-    NSArray* symptomTypeIdArray = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SymptomTypeId andDictionaryArray:symptomTypeRows];
-    symptomRowsDict = [da getSymptomRowsByTypeDict_BySymptomTypeIds:symptomTypeIdArray];
-    isChinese = [LZUtility isCurrentLanguageChinese];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        LZDataAccess *da = [LZDataAccess singleton];
+
+        symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_both];
+        
+        NSArray* symptomTypeIdArray = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SymptomTypeId andDictionaryArray:symptomTypeRows];
+        symptomRowsDict = [da getSymptomRowsByTypeDict_BySymptomTypeIds:symptomTypeIdArray];
+        isChinese = [LZUtility isCurrentLanguageChinese];
+        dispatch_async(dispatch_get_main_queue(), ^{
+                [self initialize];
+        });
+    });
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -345,7 +354,84 @@
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSDictionary *record;
+    if (tableView == self.listView1)
+    {
+        record = [self.table1DataSource objectAtIndex:indexPath.section];
+    }
+    else if(tableView == self.listView2)
+    {
+        record = [self.table2DataSource objectAtIndex:indexPath.section];
+        
+    }
+    else
+    {
+        record = [self.table3DataSource objectAtIndex:indexPath.section];
+    }
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGHealthReportViewController *healthReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGHealthReportViewController"];
 
+    NSDictionary *InputNameValuePairsData = [record objectForKey:@"inputNameValuePairs"];
+    NSMutableDictionary *userInputValueDict = [[NSMutableDictionary alloc]init];
+    NSNumber *temperature = [InputNameValuePairsData objectForKey:Key_BodyTemperature];
+    if (temperature != nil)
+    {
+        NSString *temperatureStr = [NSString stringWithFormat:@"%f",[temperature doubleValue]];
+        [userInputValueDict setObject:temperatureStr forKey:@"heat"];
+    }
+    NSNumber *weight = [InputNameValuePairsData objectForKey:Key_Weight];
+    if (weight != nil)
+    {
+        NSString *weightStr = [NSString stringWithFormat:@"%f",[weight doubleValue]];
+        [userInputValueDict setObject:weightStr forKey:@"weight"];
+    }
+
+    NSNumber *heartRate = [InputNameValuePairsData objectForKey:Key_HeartRate];
+    if (heartRate != nil)
+    {
+        NSString *heartRateStr = [NSString stringWithFormat:@"%d",[heartRate intValue]];
+        [userInputValueDict setObject:heartRateStr forKey:@"heartbeat"];
+    }
+
+    NSNumber *pressureLow = [InputNameValuePairsData objectForKey:Key_BloodPressureLow];
+    if (pressureLow != nil)
+    {
+        NSString *pressureLowStr = [NSString stringWithFormat:@"%d",[pressureLow intValue]];
+        [userInputValueDict setObject:pressureLowStr forKey:@"lowpressure"];
+    }
+
+    NSNumber *pressureHigh = [InputNameValuePairsData objectForKey:Key_BloodPressureHigh];
+    if (pressureHigh != nil)
+    {
+        NSString *pressureHighStr = [NSString stringWithFormat:@"%d",[pressureHigh intValue]];
+        [userInputValueDict setObject:pressureHighStr forKey:@"highpressure"];
+    }
+
+//    if ([measureData objectForKey:Key_BodyTemperature]) {
+//        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BodyTemperature] forKey:Key_BodyTemperature];
+//    }
+//    if ([measureData objectForKey:Key_Weight]) {
+//        [InputNameValuePairsData setObject:[measureData objectForKey:Key_Weight] forKey:Key_Weight];
+//    }
+//    if ([measureData objectForKey:Key_HeartRate]) {
+//        [InputNameValuePairsData setObject:[measureData objectForKey:Key_HeartRate] forKey:Key_HeartRate];
+//    }
+//    if ([measureData objectForKey:Key_BloodPressureLow]) {
+//        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BloodPressureLow] forKey:Key_BloodPressureLow];
+//    }
+//    if ([measureData objectForKey:Key_BloodPressureHigh]) {
+//        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BloodPressureHigh] forKey:Key_BloodPressureHigh];
+//    }
+
+    healthReportViewController.userInputValueDict = userInputValueDict;
+    healthReportViewController.userSelectedSymptom = [InputNameValuePairsData objectForKey:Key_Symptoms];
+    healthReportViewController.symptomsByTypeArray = [InputNameValuePairsData objectForKey:Key_SymptomsByType];
+    healthReportViewController.isOnlyDisplay = YES;
+    [self.navigationController pushViewController:healthReportViewController animated:YES];
+
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     NGRecordCell *cell;
@@ -419,7 +505,7 @@
             startY += 40;
             floor+=1;
         }
-        startX = 10+(i-(floor-1)*perRowCount)*55;
+        startX = 10+(i-(floor-1)*perRowCount)*70;
         
         if(i == 0)
         {
@@ -439,7 +525,7 @@
         {
             NSString *nutritionId =[keys objectAtIndex:i-1];
             UIColor *backColor =[LZUtility getNutrientColorForNutrientId:nutritionId];
-            UILabel *nutritionLabel = [[UILabel alloc]initWithFrame:CGRectMake(startX, startY,40, 30)];
+            UILabel *nutritionLabel = [[UILabel alloc]initWithFrame:CGRectMake(startX, startY,60, 30)];
             [nutritionLabel setFont:[UIFont systemFontOfSize:14]];
             nutritionLabel.textAlignment = UITextAlignmentCenter;
             nutritionLabel.text = [self getNutritionName:nutritionId];
@@ -453,41 +539,7 @@
         }
         
     }
-    //加体质指数
-    startY+=45;
-    NSNumber *BMI = [calculateNameValuePairs objectForKey:Key_BMI];
-    NSString *bmiStr = [LZUtility getAccurateStringWithDecimal:[BMI doubleValue]];
-    NSString *bmiLevel = [self bmiLevel:[BMI doubleValue]];
-    UILabel *bmiHeaderLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, startY, 60, 21)];
-    [bmiHeaderLabel setFont:[UIFont systemFontOfSize:14]];
-    bmiHeaderLabel.text = NSLocalizedString(@"jiankangbaogao_c_tizhizhishu", @"体质指数栏标题：体质指数");
-    [cell.backView addSubview:bmiHeaderLabel];
-    UILabel *bmiLevelLabel = [[UILabel alloc]initWithFrame:CGRectMake(85, startY, 150, 21)];
-    [bmiLevelLabel setFont:[UIFont systemFontOfSize:14]];
-    bmiLevelLabel.text = [NSString stringWithFormat:@"%@,%@",bmiStr,bmiLevel];
-    [cell.backView addSubview:bmiLevelLabel];
-    
-    startY+=30;
-    //加潜在疾病
-    NSDictionary *inferIllnessesAndSuggestions = [calculateNameValuePairs objectForKey:Key_InferIllnessesAndSuggestions];
-    NSArray *illnessIds = [inferIllnessesAndSuggestions allKeys];
-    if ([illnessIds count]!=0)//有潜在疾病
-    {
-        NSString *illnessText = [self getIllnessText:illnessIds];
-        UILabel *illnessHeaderLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, startY, 60, 21)];
-        [illnessHeaderLabel setFont:[UIFont systemFontOfSize:14]];
-        illnessHeaderLabel.text = NSLocalizedString(@"jiangkangbaogao_c_qianzaishiwu", @"潜在疾病项标题：潜在疾病");
-        [cell.backView addSubview:illnessHeaderLabel];
-        CGSize illnessLabelSize = [illnessText sizeWithFont:[UIFont systemFontOfSize:14]constrainedToSize:CGSizeMake(205, 9999) lineBreakMode:UILineBreakModeWordWrap];
-        
-        UILabel *illnessLabel = [[UILabel alloc]initWithFrame:CGRectMake(85, startY, illnessLabelSize.width, illnessLabelSize.height)];
-        illnessLabel.numberOfLines = 0;
-        [illnessLabel setFont:[UIFont systemFontOfSize:14]];
-        illnessLabel.text = illnessText;
-        [cell.backView addSubview:illnessLabel];
-        startY +=(illnessLabelSize.height+30);
-    }
-    
+    startY += 40;
     //加用户选择的症状
     NSDictionary *inputNameValuePairs = [record objectForKey:@"inputNameValuePairs"];
     NSArray *symptomTypeArray = [inputNameValuePairs objectForKey:Key_SymptomsByType];
@@ -497,16 +549,55 @@
         [cell.backView  addSubview:sepLine2];
         [sepLine2 setImage:[UIImage imageNamed:@"gray_horizon_line.png"]];
         [sepLine2 setContentMode:UIViewContentModeCenter];
-        startY +=15;
+        startY += 5;
+        UILabel *headerLabel = [[UILabel  alloc]initWithFrame:CGRectMake(10, startY, 160, 20)];
+        [headerLabel setFont:[UIFont systemFontOfSize:14]];
+        [headerLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:10.f]];
+        [headerLabel setText:NSLocalizedString(@"lishi_c_zhengzhuang", @"历史页症状项标题：症状")];
+        [cell.backView addSubview:headerLabel];
+        startY += 30;
+        NSMutableArray *namesArray = [[NSMutableArray alloc]init];
         for (NSArray *aSymptomType in symptomTypeArray)
         {
             NSString *typeId = [aSymptomType objectAtIndex:0];
             NSArray *symptomIds = [aSymptomType objectAtIndex:1];
-            NSString *typeName = [self getTypeNameForTypeId:typeId];
-            NSString *symptomNames = [self getSymptomNamesForTypeId:typeId symptomId:symptomIds];
-            
+            [namesArray addObjectsFromArray:[self getSymptomNamesForTypeId:typeId symptomId:symptomIds]];
         }
+        NSString *text = [namesArray componentsJoinedByString:@","];
+        CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(270, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, startY, textSize.width, textSize.height)];
+        textLabel.numberOfLines = 0;
+        [textLabel setTextColor:[UIColor blackColor]];
+        [textLabel setFont:[UIFont systemFontOfSize:14]];
+        [textLabel setText:text];
+        [cell.backView addSubview:textLabel];
+        startY += textSize.height;
     }
+    startY +=20;
+    NSString *note = [record objectForKey:@"Note"];
+    if (note != nil && [note length]>0)
+    {
+        UIImageView *sepLine3 = [[UIImageView alloc]initWithFrame:CGRectMake(0, startY, 300, 1)];
+        [cell.backView  addSubview:sepLine3];
+        [sepLine3 setImage:[UIImage imageNamed:@"gray_horizon_line.png"]];
+        [sepLine3 setContentMode:UIViewContentModeCenter];
+        startY += 5;
+        UILabel *headerLabel = [[UILabel  alloc]initWithFrame:CGRectMake(10, startY, 160, 20)];
+        [headerLabel setFont:[UIFont systemFontOfSize:14]];
+        [headerLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:10.f]];
+        [headerLabel setText:NSLocalizedString(@"lishi_c_biji", @"历史页笔记项标题：笔记")];
+        [cell.backView addSubview:headerLabel];
+        startY += 30;
+        CGSize textSize = [note sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(270, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, startY, textSize.width, textSize.height)];
+        textLabel.numberOfLines = 0;
+        [textLabel setTextColor:[UIColor blackColor]];
+        [textLabel setFont:[UIFont systemFontOfSize:14]];
+        [textLabel setText:note];
+        [cell.backView addSubview:textLabel];
+        startY += textSize.height;
+    }
+    
     return cell;
 
 }
@@ -535,7 +626,7 @@
     }
     return typeName;
 }
--(NSString *)getSymptomNamesForTypeId:(NSString *)typeId symptomId:(NSArray *)symptomIds
+-(NSArray *)getSymptomNamesForTypeId:(NSString *)typeId symptomId:(NSArray *)symptomIds
 {
     NSSet *idSet = [NSSet setWithArray:symptomIds];
     NSArray *idArrays = [self.symptomRowsDict objectForKey:typeId];
@@ -559,7 +650,7 @@
             [symptomNames addObject:aName];
         }
     }
-    return [symptomNames componentsJoinedByString:@","];
+    return symptomNames ;
     
 }
 -(NSString *)getIllnessText:(NSArray *)illnessIds
@@ -602,7 +693,8 @@
         queryKey = @"IconTitleEn";
     }
     NSString *nutritionName = [dict objectForKey:queryKey];
-    return nutritionName;
+    NSString *converted = [LZUtility getNutritionNameInfo:nutritionName isChinese:isChinese];
+    return converted;
     
 }
 
@@ -695,7 +787,31 @@
     //2.计算第一部分高度 可变的有营养素 潜在疾病，没有为空
     //3.计算第二部分高度 根据用户所选症状，没有为空
     //4.计算第四部分高度，根据用户填写的数据，没有为空
-    return 465;
+    float otherHeight = 90;
+    float part1Height = 0;
+    float part2Height = 0;
+    NSDictionary *inputNameValuePairs = [recordDict objectForKey:@"inputNameValuePairs"];
+    NSArray *symptomTypeArray = [inputNameValuePairs objectForKey:Key_SymptomsByType];
+    if (symptomTypeArray != nil && [symptomTypeArray count]!= 0)//有选择的症状
+    {
+        NSMutableArray *namesArray = [[NSMutableArray alloc]init];
+        for (NSArray *aSymptomType in symptomTypeArray)
+        {
+            NSString *typeId = [aSymptomType objectAtIndex:0];
+            NSArray *symptomIds = [aSymptomType objectAtIndex:1];
+            [namesArray addObjectsFromArray:[self getSymptomNamesForTypeId:typeId symptomId:symptomIds]];
+        }
+        NSString *text = [namesArray componentsJoinedByString:@","];
+        CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(270, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        part1Height = textSize.height+55;
+    }
+    NSString *note = [recordDict objectForKey:@"Note"];
+    if (note != nil && [note length]>0)
+    {
+        CGSize textSize = [note sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(270, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        part2Height = textSize.height +55;
+    }
+    return otherHeight+part1Height+part2Height;
 }
 //- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
 //{

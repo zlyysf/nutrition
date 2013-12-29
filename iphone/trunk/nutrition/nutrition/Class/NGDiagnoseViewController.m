@@ -16,10 +16,8 @@
 #import "LZKeyboardToolBar.h"
 #import "NGHealthReportViewController.h"
 #import "LZRecommendFood.h"
-#import "MBProgressHUD.h"
-@interface NGDiagnoseViewController ()<NGDiagnosesViewDelegate,LZKeyboardToolBarDelegate,MBProgressHUDDelegate,UITextViewDelegate,UITextFieldDelegate>
+@interface NGDiagnoseViewController ()<NGDiagnosesViewDelegate,LZKeyboardToolBarDelegate,UITextViewDelegate,UITextFieldDelegate>
 {
-    MBProgressHUD *HUD;
     BOOL isChinese;
 }
 @property (strong,nonatomic) UITextField *currentTextField;
@@ -53,10 +51,7 @@
     [label setFont:[UIFont systemFontOfSize:14]];
     [label setText:NSLocalizedString(@"jiankangjilu_c_header", @"页面表头：今天哪里不舒服吗？点击记录一下吧。")];
     symptomRowHeightDict = [[NSMutableDictionary alloc]init];
-    HUD = [[MBProgressHUD alloc] initWithView:self.view];
-    [self.view addSubview:HUD];
-    HUD.hidden = YES;
-    HUD.delegate = self;
+
     [label setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     [headerView addSubview:label];
     self.listView.tableHeaderView = headerView;
@@ -146,43 +141,9 @@
     {
         [self.currentTextView resignFirstResponder];
     }
-    HUD.hidden = NO;
-    [HUD show:YES];
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    //根据状态dict 得到用户选的症状
-//    NSMutableArray *userSelectedSymptom = [[NSMutableArray alloc]init];//需保存数据
-//    for (NSString *symptomId in [symptomStateDict allKeys])
-//    {
-//        NSArray *stateArray = [symptomStateDict objectForKey:symptomId];
-//        for (int i=0 ;i< [stateArray count];i++)
-//        {
-//            NSNumber *state = [stateArray objectAtIndex:i];
-//            if ([state boolValue])
-//            {
-//                NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomId];
-//                NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:i];
-//                NSString *symptomName = [symptomDict objectForKey:@"SymptomId"];
-//                [userSelectedSymptom addObject:symptomName];
-//            }
-//        }
-//    }
-    
-    //笔记
-    
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-    
-    NSString *note = [self.userInputValueDict objectForKey:@"note"];//需保存数据
-    
-    //根据症状获得症状健康分值
-    LZDataAccess *da = [LZDataAccess singleton];
-    double symptomScore = [da getSymptomHealthMarkSum_BySymptomIds:userSelectedSymptom];
-    double healthScore = 100 - symptomScore;//需保存数据
-    if (healthScore<Config_nearZero)
-    {
-        healthScore = 0;
-    }
 
-    //得到用户症状的数组
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    NGHealthReportViewController *healthReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGHealthReportViewController"];
     NSMutableArray *symptomsByTypeArray = [[NSMutableArray alloc]init];
     for (NSDictionary *symptomTypeDict in symptomTypeRows)
     {
@@ -206,242 +167,12 @@
             [symptomsByTypeArray addObject:aSymptomsByType];
         }
     }
-    
-    
-    //根据症状和测量数据得到用户的潜在疾病和BMI值
-        //1.计算BMI
-    NSString *weight = [self.userInputValueDict objectForKey:@"weight"];
-    NSString *heat = [self.userInputValueDict objectForKey:@"heat"];
-    NSString *heartbeat = [self.userInputValueDict objectForKey:@"heartbeat"];
-    NSString *highpress = [self.userInputValueDict objectForKey:@"highpressure"];
-    NSString *lowpress = [self.userInputValueDict objectForKey:@"lowpressure"];
-    NSNumber *userWeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserWeightKey];
-    NSNumber *paramHeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserHeightKey];
-    double userBMI;//需保存数据
-    NSMutableDictionary *measureData = [[NSMutableDictionary alloc]init];
-    if ([weight length] == 0 || [weight doubleValue]<=0)
-    {
-        userBMI = [LZUtility getBMI_withWeight:[userWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
-    }
-    else
-    {
-        NSNumber *newWeight;
-        if (isChinese)
-        {
-            newWeight = [NSNumber numberWithDouble:[weight doubleValue]];
-        }
-        else
-        {
-            double convertedWeight = (double)([weight doubleValue]/kKGConvertLBRatio);
-            newWeight = [NSNumber numberWithDouble:convertedWeight];
-        }
-        [[NSUserDefaults standardUserDefaults]setObject:newWeight forKey:LZUserWeightKey];
-        [measureData setObject:newWeight forKey:Key_Weight];
-        [[NSUserDefaults standardUserDefaults]synchronize];
-        userBMI = [LZUtility getBMI_withWeight:[newWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
-    }
-        //2.计算潜在疾病
-    
-    if ([heat length] != 0 && [heat doubleValue]>0)
-    {
-        if (isChinese)
-        {
-            [measureData setObject:[NSNumber numberWithDouble:[heat doubleValue]] forKey:Key_BodyTemperature];
-        }
-        else
-        {
-            double tempC = ([heat doubleValue]-32.f)/1.8f;
-            [measureData setObject:[NSNumber numberWithDouble:tempC] forKey:Key_BodyTemperature];
-        }
-        
-    }
-    if ([heartbeat length] != 0 && [heartbeat intValue]>0)
-    {
-        [measureData setObject:[NSNumber numberWithInt:[heartbeat intValue]] forKey:Key_HeartRate];
-    }
-    if ([lowpress length] != 0 && [lowpress intValue]>0)
-    {
-        [measureData setObject:[NSNumber numberWithInt:[lowpress intValue]] forKey:Key_BloodPressureLow];
-    }
-    if ([highpress length] != 0 && [highpress intValue]>0)
-    {
-        [measureData setObject:[NSNumber numberWithInt:[highpress intValue]] forKey:Key_BloodPressureHigh];
-    }
-    NSArray *illnessAry = [LZUtility inferIllnesses_withSymptoms:userSelectedSymptom andMeasureData:measureData];//需保存数据
-    
-    //根据潜在疾病得到注意事项,旧的数据格式
-    NSMutableDictionary *illnessAttentionDict = [[NSMutableDictionary alloc]init];//需保存数据
-    for (NSString *illnessId in illnessAry)
-    {
-        NSArray *illnessIds = [NSArray arrayWithObject:illnessId];
-        NSArray *attentionItem = [da getIllnessSuggestionsDistinct_ByIllnessIds:illnessIds];
-        if (attentionItem)
-        {
-            [illnessAttentionDict setObject:attentionItem forKey:illnessId];
-        }
-    }
-    
-    //根据潜在疾病得到注意事项,新的数据格式
-    NSArray *distinctSuggestionIds = [da getIllnessSuggestionsDistinct_ByIllnessIds:illnessAry];
-    
-    
-    //根据症状获得用户缺少的营养元素
-    NSArray *lackNutritionArray = [[NSArray alloc]init];
-    NSMutableDictionary * recommendedFoods = [[NSMutableDictionary alloc]init];
-    if (![userSelectedSymptom count]==0)
-    {
-        lackNutritionArray =  [da getSymptomNutrientDistinctIds_BySymptomIds:userSelectedSymptom];//需保存数据
-        
-        //根据缺少元素得到推荐的食物
-        NSNumber *paramSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];
-        NSNumber *paramAge = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserAgeKey];
-        NSNumber *paramWeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserWeightKey];
-        NSNumber *paramActivity = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserActivityLevelKey];
-        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                  paramSex,ParamKey_sex, paramAge,ParamKey_age,
-                                  paramWeight,ParamKey_weight, paramHeight,ParamKey_height,
-                                  paramActivity,ParamKey_activityLevel, nil];
-        //NSArray *nutrientIds = [LZRecommendFood getCustomNutrients:nil];
-        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-       recommendedFoods = [rf getSingleNutrientRichFoodWithAmount_forNutrients:lackNutritionArray withUserInfo:userInfo andOptions:nil];//需保存数据
-    }
-    
-    
-    
-
-    
-    //把保存数据封装，判断今天是否保存过了，如果还没有，则自动保存，如果保存过了，传递给reportcontroller，由用户选择是否再次保存
-        //1. 封装数据
-    
-    NSDate *today = [NSDate date];
-    NSDateFormatter *formatter=[[NSDateFormatter alloc] init];
-    [formatter setLocale:[[NSLocale alloc] init]];
-    [formatter setDateFormat:@"yyyyMMdd"];
-    NSString *dayStr = [formatter stringFromDate:today];
-    int dayLocal = [dayStr intValue];
-    NSMutableDictionary * InputNameValuePairsData = [NSMutableDictionary dictionary];
-    [InputNameValuePairsData setObject:userSelectedSymptom forKey:Key_Symptoms];
-    [InputNameValuePairsData setObject:symptomsByTypeArray forKey:Key_SymptomsByType];
-    if ([measureData objectForKey:Key_BodyTemperature]) {
-        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BodyTemperature] forKey:Key_BodyTemperature];
-    }
-    if ([measureData objectForKey:Key_Weight]) {
-        [InputNameValuePairsData setObject:[measureData objectForKey:Key_Weight] forKey:Key_Weight];
-    }
-    if ([measureData objectForKey:Key_HeartRate]) {
-        [InputNameValuePairsData setObject:[measureData objectForKey:Key_HeartRate] forKey:Key_HeartRate];
-    }
-    if ([measureData objectForKey:Key_BloodPressureLow]) {
-        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BloodPressureLow] forKey:Key_BloodPressureLow];
-    }
-    if ([measureData objectForKey:Key_BloodPressureHigh]) {
-        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BloodPressureHigh] forKey:Key_BloodPressureHigh];
-    }
-    
-    NSMutableDictionary * CalculateNameValuePairsData = [NSMutableDictionary dictionary];
-    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:userBMI] forKey:Key_BMI];
-    [CalculateNameValuePairsData setObject:[NSNumber numberWithDouble:healthScore] forKey:Key_HealthMark];
-    NSMutableDictionary *LackNutrientsAndFoods = [NSMutableDictionary dictionary];
-    for (NSString *nutritionId in lackNutritionArray)
-    {
-        NSArray *recFood = [recommendedFoods objectForKey:nutritionId];
-        NSMutableDictionary *relatedFood = [[NSMutableDictionary alloc]init];
-        for (NSDictionary * aFood in recFood)
-        {
-            NSNumber *amount = [aFood objectForKey:@"FoodAmount"];
-            NSString *foodId = [aFood objectForKey:@"NDB_No"];
-            [relatedFood setObject:amount forKey:foodId];
-        }
-        [LackNutrientsAndFoods setObject:relatedFood forKey:nutritionId];
-    }
-    [CalculateNameValuePairsData setObject:LackNutrientsAndFoods forKey:Key_LackNutrientsAndFoods];
-    NSMutableDictionary *illnessAttention = [[NSMutableDictionary alloc]init];
-    
-    for (NSString *illnessId in illnessAry)
-    {
-        NSArray *attentionArray = [illnessAttentionDict objectForKey:illnessId];
-        NSMutableArray *attentionIdArray = [[NSMutableArray alloc]init];
-        if (attentionArray != nil && [attentionArray count]!= 0)
-        {
-            for (NSDictionary *anAttention in attentionArray)
-            {
-                NSString *attentionId = [anAttention objectForKey:@"SuggestionId"];
-                [attentionIdArray addObject:attentionId];
-            }
-        }
-        [illnessAttention setObject:attentionIdArray forKey:illnessId];
-    }
-
-    [CalculateNameValuePairsData setObject:illnessAttention forKey:Key_InferIllnessesAndSuggestions];
-    
-    if (illnessAry == nil)
-    {
-        [CalculateNameValuePairsData setObject:[NSArray array] forKey:Key_IllnessIds];
-    }
-    else
-    {
-        [CalculateNameValuePairsData setObject:illnessAry forKey:Key_IllnessIds];
-    }
-    
-    if (distinctSuggestionIds == nil)
-    {
-        [CalculateNameValuePairsData setObject:[NSArray array] forKey:Key_distinctSuggestionIds];
-    }
-    else
-    {
-        [CalculateNameValuePairsData setObject:distinctSuggestionIds forKey:Key_distinctSuggestionIds];
-    }
-    
-    
-        //2.判断
-    NSDictionary *recordData = [da getUserRecordSymptomDataByDayLocal:dayLocal];
-    BOOL isUserFirstSave;
-    if (recordData == nil || [[recordData allKeys]count]==0)
-    {
-        isUserFirstSave = YES;
-        //没保存过
-        [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
-        [[NSNotificationCenter defaultCenter]postNotificationName:Notification_HistoryUpdatedKey object:nil];
-        
-        //to sync to remote parse service
-        PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
-        [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-            NSMutableString *msg = [NSMutableString string];
-            if (succeeded){
-                [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
-                [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
-            }else{
-                [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
-            }
-            NSLog(@"when insertUserRecordSymptom_withDayLocal, %@",msg);
-        }];//saveInBackgroundWithBlock
-    }
-    else
-    {
-        isUserFirstSave = NO;
-    }
-    NSDictionary *dataToSave = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:dayLocal],@"dayLocal" ,today,@"date",InputNameValuePairsData,@"InputNameValuePairsData",note,@"note",CalculateNameValuePairsData,@"CalculateNameValuePairsData",nil];
-        
-        dispatch_async(dispatch_get_main_queue(), ^(void){
-            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
-            NGHealthReportViewController *healthReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGHealthReportViewController"];
-            healthReportViewController.isFirstSave = isUserFirstSave;
-            healthReportViewController.BMIValue = userBMI;
-            healthReportViewController.HealthValue = healthScore;
-            healthReportViewController.lackNutritionArray = lackNutritionArray;
-            healthReportViewController.potentialArray = illnessAry;
-            healthReportViewController.attentionArray = distinctSuggestionIds;
-            healthReportViewController.recommendFoodDict = recommendedFoods;
-            healthReportViewController.dataToSave = dataToSave;
-            needClearState = YES;
-            [HUD hide:YES];
-            [self.navigationItem.rightBarButtonItem setEnabled:YES];
-            [self.navigationController pushViewController:healthReportViewController animated:YES];
-        
-        });
-    });
-    
-    
+    healthReportViewController.userInputValueDict = userInputValueDict;
+    healthReportViewController.userSelectedSymptom = userSelectedSymptom;
+    healthReportViewController.symptomsByTypeArray = symptomsByTypeArray;
+    healthReportViewController.isOnlyDisplay = NO;
+    needClearState = YES;
+    [self.navigationController pushViewController:healthReportViewController animated:YES];
 }
 -(void)userInfoChanged:(NSNotification *)notification
 {
@@ -887,11 +618,5 @@
     {
         [self.currentTextView resignFirstResponder];
     }
-}
-#pragma mark MBProgressHUDDelegate methods
-
-- (void)hudWasHidden:(MBProgressHUD *)hud {
-	// Remove HUD from screen when the HUD was hidded
-    HUD.hidden = YES;
 }
 @end

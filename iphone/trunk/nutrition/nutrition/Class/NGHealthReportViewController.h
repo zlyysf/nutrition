@@ -10,12 +10,10 @@
 
 @interface NGHealthReportViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
 
-@property (strong, nonatomic) NSArray *lackNutritionArray;
-@property (strong, nonatomic) NSArray *potentialArray;
-@property (strong, nonatomic) NSArray *attentionArray;
-@property (strong, nonatomic) NSDictionary *recommendFoodDict;
-@property (strong,nonatomic)NSDictionary *dataToSave;
-@property (assign, nonatomic)BOOL isFirstSave;
-@property (assign, nonatomic)double BMIValue;
-@property (assign, nonatomic)double HealthValue;
+
+@property (strong,nonatomic)NSDictionary *userInputValueDict;
+@property (strong, nonatomic) NSArray *userSelectedSymptom;
+@property (strong, nonatomic) IBOutlet UITableView *listView;
+@property (strong, nonatomic) NSArray *symptomsByTypeArray;
+@property (assign,nonatomic)BOOL isOnlyDisplay;
 @end

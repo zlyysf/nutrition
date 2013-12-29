@@ -273,6 +273,7 @@
                 [button.layer setCornerRadius:5];
                 [button.layer setBorderWidth:0.5f];
                 [button.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+                button.lineBreakMode = NSLineBreakByTruncatingTail;
                 
             }
             startY += 50;
