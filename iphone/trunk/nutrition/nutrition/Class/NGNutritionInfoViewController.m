@@ -11,8 +11,10 @@
 #import "LZRecommendFood.h"
 #import "NGRecommendFoodView.h"
 #import "NGSingleFoodViewController.h"
-@interface NGNutritionInfoViewController ()
+#import "MBProgressHUD.h"
+@interface NGNutritionInfoViewController ()<MBProgressHUDDelegate>
 {
+    MBProgressHUD *HUD;
     BOOL isFirstLoad;
     BOOL isChinese;
 }
@@ -53,6 +55,10 @@
     [switchViewControl setSelectedSegmentIndex:1];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:switchViewControl];
     self.navigationItem.rightBarButtonItem = rightItem;
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    HUD.hidden = YES;
+    HUD.delegate = self;
 
 
 	// Do any additional setup after loading the view.
@@ -60,16 +66,13 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     if (isFirstLoad) {
-        //self.listView.hidden = YES;
-        
-        //HUD.labelText = @"智能推荐中...";
+        HUD.hidden = NO;
+        [HUD show:YES];
 
         NSURL *url = [NSURL URLWithString:requestUrl];
         NSURLRequest *request = [NSURLRequest requestWithURL:url];
         [self.contentWebView loadRequest:request];
-        
-        
-        [self performSelector:@selector(loadDataForDisplay) withObject:nil afterDelay:0.f];
+        [self loadDataForDisplay];
     }
 }
 -(void)switchControlValueChange:(UISegmentedControl*)sender
@@ -87,119 +90,125 @@
 }
 -(void)loadDataForDisplay
 {
-    NSNumber *planPerson = [NSNumber numberWithInt:1];
-    NSNumber *planDays = [NSNumber numberWithInt:1];
-    
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
-    NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
-    NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
-    NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
-    NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              userSex,ParamKey_sex, userAge,ParamKey_age,
-                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
-                              userActivityLevel,ParamKey_activityLevel, nil];
-    
-    BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
-    NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss, nil];
-    
-    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSDictionary *takenFoodAmountDict = [[NSDictionary alloc]init];//[[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
-    //    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
-    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_withUserInfo:userInfo andDecidedFoods:takenFoodAmountDict andOptions:options];
-    
-    //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
-    NSString *nutrientId = [self.nutrientDict objectForKey:@"NutrientID"];
-    NSDictionary *DRIsDict = [retDict objectForKey:@"DRI"];//nutrient name as key, also column name
-    NSDictionary *nutrientInitialSupplyDict = [retDict objectForKey:@"nutrientInitialSupplyDict"];
-    NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientId];
-    double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientId]) doubleValue]*[planPerson intValue]*[planDays intValue];
-    double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal] andIfNeedCustomDefinedFoods:false];//显示时不用自定义的富含食物清单来限制
-    isFirstLoad = NO;
-    self.foodArray = [NSArray arrayWithArray:recommendFoodArray];
-    int totalFloor = [foodArray count]/3+ (([foodArray count]%3 == 0)?0:1);
-    float backHeight = totalFloor*(15+120)+15+30;
-    [self.contentScrollView setContentSize:CGSizeMake(320, backHeight+30)];
-    [self.backView setFrame:CGRectMake(10, 15, 300, backHeight)];
-    [self.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-    [self.backView.layer setBorderWidth:0.5f];
-    
-    float startY = 45;
-    int floor = 1;
-    int perRowCount = 3;
-    float startX;
-    for (int i=0; i< [self.foodArray count]; i++)
-    {
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        NSNumber *planPerson = [NSNumber numberWithInt:1];
+        NSNumber *planDays = [NSNumber numberWithInt:1];
         
-        if (i>=floor *perRowCount)
-        {
-            floor+=1;
-        }
-        startX = 15+(i-(floor-1)*perRowCount)*95;
-        NSDictionary *foodInfo = [foodArray objectAtIndex:i];
-        NSString *picturePath;
-        NSString *picPath = [foodInfo objectForKey:@"PicPath"];
-        if (picPath == nil || [picPath isEqualToString:@""])
-        {
-            picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
-        }
-        else
-        {
-            NSString * picFolderPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"foodDealed"];
-            picturePath = [picFolderPath stringByAppendingPathComponent:picPath];
-        }
-        NSString *foodQueryKey;
-        if (isChinese)
-        {
-            foodQueryKey = @"CnCaption";
-        }
-        else
-        {
-            foodQueryKey = @"FoodNameEn";
-        }
-        NSString *foodName = [foodInfo objectForKey:foodQueryKey];
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+        NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+        NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+        NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+        NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  userSex,ParamKey_sex, userAge,ParamKey_age,
+                                  userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                                  userActivityLevel,ParamKey_activityLevel, nil];
         
-        NSNumber *weight = [foodInfo objectForKey:@"FoodAmount"];
-        //cell.foodUnitLabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
-        //NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
-        NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodInfo objectForKey:COLUMN_NAME_SingleItemUnitName]];
-        NSString *foodTotalUnit = @"";
-        if ([singleUnitName length]==0)
-        {
-            foodTotalUnit = [NSString stringWithFormat:@"%dg",[weight intValue]];
-        }
-        else
-        {
-            NSNumber *singleUnitWeight = [foodInfo objectForKey:COLUMN_NAME_SingleItemUnitWeight];
-            int maxCount = (int)(ceilf(([weight floatValue]*2)/[singleUnitWeight floatValue]));
-            //int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
-            if (maxCount <= 0)
+        BOOL needConsiderNutrientLoss = Config_needConsiderNutrientLoss;
+        NSDictionary * options = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:needConsiderNutrientLoss],LZSettingKey_needConsiderNutrientLoss, nil];
+        
+        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+        NSDictionary *takenFoodAmountDict = [[NSDictionary alloc]init];//[[NSUserDefaults standardUserDefaults] objectForKey:LZUserDailyIntakeKey];
+        //    NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_AbstractPerson:params withDecidedFoods:takenFoodAmountDict];
+        NSMutableDictionary *retDict = [rf takenFoodSupplyNutrients_withUserInfo:userInfo andDecidedFoods:takenFoodAmountDict andOptions:options];
+        
+        //NSDictionary *nutrient = [nutrientInfoArray objectAtIndex:indexPath.row];
+        NSString *nutrientId = [self.nutrientDict objectForKey:@"NutrientID"];
+        NSDictionary *DRIsDict = [retDict objectForKey:@"DRI"];//nutrient name as key, also column name
+        NSDictionary *nutrientInitialSupplyDict = [retDict objectForKey:@"nutrientInitialSupplyDict"];
+        NSNumber *nmNutrientInitSupplyVal = [nutrientInitialSupplyDict objectForKey:nutrientId];
+        double dNutrientNeedVal = [((NSNumber*)[DRIsDict objectForKey:nutrientId]) doubleValue]*[planPerson intValue]*[planDays intValue];
+        double dNutrientLackVal = dNutrientNeedVal - [nmNutrientInitSupplyVal doubleValue];
+        LZDataAccess *da = [LZDataAccess singleton];
+        NSArray *recommendFoodArray = [da getRichNutritionFoodForNutrient:nutrientId andNutrientAmount:[NSNumber numberWithDouble:dNutrientLackVal] andIfNeedCustomDefinedFoods:false];//显示时不用自定义的富含食物清单来限制
+        isFirstLoad = NO;
+        self.foodArray = [NSArray arrayWithArray:recommendFoodArray];
+        
+    dispatch_async(dispatch_get_main_queue(), ^{
+            int totalFloor = [foodArray count]/3+ (([foodArray count]%3 == 0)?0:1);
+            float backHeight = totalFloor*(15+120)+15+30;
+            [self.contentScrollView setContentSize:CGSizeMake(320, backHeight+30)];
+            [self.backView setFrame:CGRectMake(10, 15, 300, backHeight)];
+            [self.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+            [self.backView.layer setBorderWidth:0.5f];
+            
+            float startY = 45;
+            int floor = 1;
+            int perRowCount = 3;
+            float startX;
+            for (int i=0; i< [self.foodArray count]; i++)
             {
-                foodTotalUnit = [NSString stringWithFormat:@"%dg",[weight intValue]];
-            }
-            else
-            {
-                if (maxCount %2 == 0)
+                
+                if (i>=floor *perRowCount)
                 {
-                    foodTotalUnit = [NSString stringWithFormat:@"%d%@",(int)(maxCount*0.5f),singleUnitName];
+                    floor+=1;
+                }
+                startX = 15+(i-(floor-1)*perRowCount)*95;
+                NSDictionary *foodInfo = [foodArray objectAtIndex:i];
+                NSString *picturePath;
+                NSString *picPath = [foodInfo objectForKey:@"PicPath"];
+                if (picPath == nil || [picPath isEqualToString:@""])
+                {
+                    picturePath = [[NSBundle mainBundle]pathForResource:@"defaulFoodPic" ofType:@"png"];
                 }
                 else
                 {
-                    foodTotalUnit = [NSString stringWithFormat:@"%.1f%@",maxCount*0.5f,singleUnitName];
+                    NSString * picFolderPath = [[[NSBundle mainBundle] bundlePath] stringByAppendingPathComponent:@"foodDealed"];
+                    picturePath = [picFolderPath stringByAppendingPathComponent:picPath];
                 }
+                NSString *foodQueryKey;
+                if (isChinese)
+                {
+                    foodQueryKey = @"CnCaption";
+                }
+                else
+                {
+                    foodQueryKey = @"FoodNameEn";
+                }
+                NSString *foodName = [foodInfo objectForKey:foodQueryKey];
                 
+                NSNumber *weight = [foodInfo objectForKey:@"FoodAmount"];
+                //cell.foodUnitLabel.text = [NSString stringWithFormat:@"%dg",[weight intValue]];
+                //NSDictionary *foodAtr = [allFoodUnitDict objectForKey:foodId];
+                NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodInfo objectForKey:COLUMN_NAME_SingleItemUnitName]];
+                NSString *foodTotalUnit = @"";
+                if ([singleUnitName length]==0)
+                {
+                    foodTotalUnit = [NSString stringWithFormat:@"%dg",[weight intValue]];
+                }
+                else
+                {
+                    NSNumber *singleUnitWeight = [foodInfo objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+                    int maxCount = (int)(ceilf(([weight floatValue]*2)/[singleUnitWeight floatValue]));
+                    //int unitCount = (int)((float)([weight floatValue]/[singleUnitWeight floatValue])+0.5);
+                    if (maxCount <= 0)
+                    {
+                        foodTotalUnit = [NSString stringWithFormat:@"%dg",[weight intValue]];
+                    }
+                    else
+                    {
+                        if (maxCount %2 == 0)
+                        {
+                            foodTotalUnit = [NSString stringWithFormat:@"%d%@",(int)(maxCount*0.5f),singleUnitName];
+                        }
+                        else
+                        {
+                            foodTotalUnit = [NSString stringWithFormat:@"%.1f%@",maxCount*0.5f,singleUnitName];
+                        }
+                        
+                    }
+                }
+                NGRecommendFoodView *foodView = [[NGRecommendFoodView alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*135, 80, 120) foodName:foodName foodPic:picturePath foodAmount:foodTotalUnit];
+                foodView.touchButton.tag = 10+i;
+                [foodView.touchButton addTarget:self action:@selector(foodClicked:) forControlEvents:UIControlEventTouchUpInside];
+                
+                [self.backView addSubview:foodView];
             }
-        }
-        NGRecommendFoodView *foodView = [[NGRecommendFoodView alloc]initWithFrame:CGRectMake(startX, startY+(floor-1)*135, 80, 120) foodName:foodName foodPic:picturePath foodAmount:foodTotalUnit];
-        foodView.touchButton.tag = 10+i;
-        [foodView.touchButton addTarget:self action:@selector(foodClicked:) forControlEvents:UIControlEventTouchUpInside];
-        
-        [self.backView addSubview:foodView];
-    }
-    self.contentScrollView.hidden = NO;
+            self.contentScrollView.hidden = NO;
+            [HUD hide:YES];
+        });
+    });
 //    [self.listView reloadData];
 //    [HUD hide:YES];
 //    self.listView.hidden = NO;
@@ -232,5 +241,10 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+#pragma mark MBProgressHUDDelegate methods
 
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+    HUD.hidden = YES;
+}
 @end

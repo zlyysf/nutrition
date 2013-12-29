@@ -16,8 +16,10 @@
 #import "LZKeyboardToolBar.h"
 #import "NGHealthReportViewController.h"
 #import "LZRecommendFood.h"
-@interface NGDiagnoseViewController ()<NGDiagnosesViewDelegate,LZKeyboardToolBarDelegate,UITextViewDelegate,UITextFieldDelegate>
+#import "MBProgressHUD.h"
+@interface NGDiagnoseViewController ()<NGDiagnosesViewDelegate,LZKeyboardToolBarDelegate,MBProgressHUDDelegate,UITextViewDelegate,UITextFieldDelegate>
 {
+    MBProgressHUD *HUD;
     BOOL isChinese;
 }
 @property (strong,nonatomic) UITextField *currentTextField;
@@ -25,10 +27,12 @@
 @property (strong,nonatomic) NSMutableDictionary *userInputValueDict;
 @property (strong,nonatomic) NSArray *symptomTypeRows;
 @property (assign,nonatomic)BOOL needRefresh;
+@property (assign,nonatomic)BOOL needClearState;
+@property (strong,nonatomic)NSMutableDictionary *symptomRowHeightDict;
 @end
 
 @implementation NGDiagnoseViewController
-@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField,userInputValueDict,userSelectedSymptom,needRefresh,symptomTypeRows;
+@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField,userInputValueDict,userSelectedSymptom,needRefresh,symptomTypeRows,symptomRowHeightDict,needClearState;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -43,12 +47,17 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"jiankangjilu_c_title", @"页面的标题：健康记录");
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
-    [headerView setBackgroundColor:[UIColor clearColor]];
+    [headerView setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 4, 280, 21)];
     [label setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0f]];
     [label setFont:[UIFont systemFontOfSize:14]];
     [label setText:NSLocalizedString(@"jiankangjilu_c_header", @"页面表头：今天哪里不舒服吗？点击记录一下吧。")];
-    [label setBackgroundColor:[UIColor clearColor]];
+    symptomRowHeightDict = [[NSMutableDictionary alloc]init];
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    HUD.hidden = YES;
+    HUD.delegate = self;
+    [label setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     [headerView addSubview:label];
     self.listView.tableHeaderView = headerView;
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
@@ -59,10 +68,74 @@
     isChinese =[LZUtility isCurrentLanguageChinese];
     userSelectedSymptom = [[NSMutableArray alloc]init];
     needRefresh = NO;
+    needClearState = NO;
     [self refresh];
     
     	// Do any additional setup after loading the view.
 }
+-(void)clearState
+{
+    needClearState = NO;
+    for (NSString *key in [symptomRowsDict allKeys])
+    {
+        NSArray *symptomIdRelatedArray = [symptomRowsDict objectForKey:key];
+        NSMutableArray *symptomState = [NSMutableArray array];
+//        float height =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray]+100;
+//        [symptomRowHeightDict setObject:[NSNumber numberWithFloat:height] forKey:key];
+        for (int i = 0 ; i< [symptomIdRelatedArray count]; i++)
+        {
+            [symptomState addObject:[NSNumber numberWithBool:NO]];
+        }
+        [symptomStateDict setObject:symptomState forKey:key];
+    }
+    
+    [self.userSelectedSymptom removeAllObjects];
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    userInputValueDict = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"",@"note",@"",@"weight",@"",@"heat",@"",@"heartbeat",@"",@"highpressure",@"",@"lowpressure", nil];
+    [self.listView reloadData];
+
+}
+-(void)refresh
+{
+    
+    needRefresh = NO;
+    needClearState = NO;
+    LZDataAccess *da = [LZDataAccess singleton];
+    NSNumber *userSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];
+    if ([userSex intValue]==0)
+    {
+        symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_male];
+    }
+    else
+    {
+        symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_female];
+    }
+    
+    symptomTypeIdArray = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SymptomTypeId andDictionaryArray:symptomTypeRows];
+    NSLog(@"symptomTypeIds=%@",[LZUtility getObjectDescription:symptomTypeIdArray andIndent:0] );
+    symptomRowsDict = [da getSymptomRowsByTypeDict_BySymptomTypeIds:symptomTypeIdArray];
+    
+    symptomStateDict = [NSMutableDictionary dictionary];
+    for (NSString *key in [symptomRowsDict allKeys])
+    {
+        NSArray *symptomIdRelatedArray = [symptomRowsDict objectForKey:key];
+        NSMutableArray *symptomState = [NSMutableArray array];
+        float height =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray]+100;
+        [symptomRowHeightDict setObject:[NSNumber numberWithFloat:height] forKey:key];
+        for (int i = 0 ; i< [symptomIdRelatedArray count]; i++)
+        {
+            [symptomState addObject:[NSNumber numberWithBool:NO]];
+        }
+        [symptomStateDict setObject:symptomState forKey:key];
+    }
+    
+    [self.userSelectedSymptom removeAllObjects];
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+    userInputValueDict = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"",@"note",@"",@"weight",@"",@"heat",@"",@"heartbeat",@"",@"highpressure",@"",@"lowpressure", nil];
+    [self.listView reloadData];
+    
+}
+
 -(void)getHealthReport
 {
     if(self.currentTextField)
@@ -73,7 +146,9 @@
     {
         [self.currentTextView resignFirstResponder];
     }
-
+    HUD.hidden = NO;
+    [HUD show:YES];
+    [self.navigationItem.rightBarButtonItem setEnabled:NO];
     //根据状态dict 得到用户选的症状
 //    NSMutableArray *userSelectedSymptom = [[NSMutableArray alloc]init];//需保存数据
 //    for (NSString *symptomId in [symptomStateDict allKeys])
@@ -211,20 +286,29 @@
     
     
     //根据症状获得用户缺少的营养元素
-    NSArray *lackNutritionArray =  [da getSymptomNutrientDistinctIds_BySymptomIds:userSelectedSymptom];//需保存数据
+    NSArray *lackNutritionArray = [[NSArray alloc]init];
+    NSMutableDictionary * recommendedFoods = [[NSMutableDictionary alloc]init];
+    if (![userSelectedSymptom count]==0)
+    {
+        lackNutritionArray =  [da getSymptomNutrientDistinctIds_BySymptomIds:userSelectedSymptom];//需保存数据
+        
+        //根据缺少元素得到推荐的食物
+        NSNumber *paramSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];
+        NSNumber *paramAge = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserAgeKey];
+        NSNumber *paramWeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserWeightKey];
+        NSNumber *paramActivity = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserActivityLevelKey];
+        NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                                  paramSex,ParamKey_sex, paramAge,ParamKey_age,
+                                  paramWeight,ParamKey_weight, paramHeight,ParamKey_height,
+                                  paramActivity,ParamKey_activityLevel, nil];
+        //NSArray *nutrientIds = [LZRecommendFood getCustomNutrients:nil];
+        LZRecommendFood *rf = [[LZRecommendFood alloc]init];
+       recommendedFoods = [rf getSingleNutrientRichFoodWithAmount_forNutrients:lackNutritionArray withUserInfo:userInfo andOptions:nil];//需保存数据
+    }
     
-    //根据缺少元素得到推荐的食物
-    NSNumber *paramSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];
-    NSNumber *paramAge = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserAgeKey];
-    NSNumber *paramWeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserWeightKey];
-    NSNumber *paramActivity = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserActivityLevelKey];
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              paramSex,ParamKey_sex, paramAge,ParamKey_age,
-                              paramWeight,ParamKey_weight, paramHeight,ParamKey_height,
-                              paramActivity,ParamKey_activityLevel, nil];
-    NSArray *nutrientIds = [LZRecommendFood getCustomNutrients:nil];
-    LZRecommendFood *rf = [[LZRecommendFood alloc]init];
-    NSMutableDictionary * recommendedFoods = [rf getSingleNutrientRichFoodWithAmount_forNutrients:nutrientIds withUserInfo:userInfo andOptions:nil];//需保存数据
+    
+    
+
     
     //把保存数据封装，判断今天是否保存过了，如果还没有，则自动保存，如果保存过了，传递给reportcontroller，由用户选择是否再次保存
         //1. 封装数据
@@ -349,7 +433,9 @@
             healthReportViewController.attentionArray = distinctSuggestionIds;
             healthReportViewController.recommendFoodDict = recommendedFoods;
             healthReportViewController.dataToSave = dataToSave;
-            needRefresh = YES;
+            needClearState = YES;
+            [HUD hide:YES];
+            [self.navigationItem.rightBarButtonItem setEnabled:YES];
             [self.navigationController pushViewController:healthReportViewController animated:YES];
         
         });
@@ -361,41 +447,6 @@
 {
     needRefresh = YES;
 }
--(void)refresh
-{
-    needRefresh = NO;
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSNumber *userSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];
-    if ([userSex intValue]==0)
-    {
-        symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_male];
-    }
-    else
-    {
-        symptomTypeRows = [da getSymptomTypeRows_withForSex:ForSex_female];
-    }
-    
-    symptomTypeIdArray = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SymptomTypeId andDictionaryArray:symptomTypeRows];
-    NSLog(@"symptomTypeIds=%@",[LZUtility getObjectDescription:symptomTypeIdArray andIndent:0] );
-    symptomRowsDict = [da getSymptomRowsByTypeDict_BySymptomTypeIds:symptomTypeIdArray];
-    
-    symptomStateDict = [NSMutableDictionary dictionary];
-    for (NSString *key in [symptomRowsDict allKeys])
-    {
-        NSArray *symptomIdRelatedArray = [symptomRowsDict objectForKey:key];
-        NSMutableArray *symptomState = [NSMutableArray array];
-        for (int i = 0 ; i< [symptomIdRelatedArray count]; i++)
-        {
-            [symptomState addObject:[NSNumber numberWithBool:NO]];
-        }
-        [symptomStateDict setObject:symptomState forKey:key];
-    }
-    [self.userSelectedSymptom removeAllObjects];
-    [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    userInputValueDict = [[NSMutableDictionary alloc]initWithObjectsAndKeys:@"",@"note",@"",@"weight",@"",@"heat",@"",@"heartbeat",@"",@"highpressure",@"",@"lowpressure", nil];
-    [self.listView reloadData];
-
-}
 -(void)viewWillAppear:(BOOL)animated
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
@@ -403,6 +454,10 @@
     if (needRefresh)
     {
         [self refresh];
+    }
+    else if(needClearState)
+    {
+        [self clearState];
     }
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
 }
@@ -672,9 +727,18 @@
     else
     {
         NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
-        NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
-        float height =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray]+100;
-        return height;
+        NSNumber *height = [self.symptomRowHeightDict objectForKey:symptomTypeId];
+        if (height != nil)
+        {
+            return [height floatValue];
+        }
+        else
+        {
+            NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
+            float height =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray]+100;
+            [self.symptomRowHeightDict setObject:[NSNumber numberWithFloat:height] forKey:symptomTypeId];
+            return height;
+        }
     }
 }
 #pragma mark- NGDiagnosesViewDelegate
@@ -823,5 +887,11 @@
     {
         [self.currentTextView resignFirstResponder];
     }
+}
+#pragma mark MBProgressHUDDelegate methods
+
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+    HUD.hidden = YES;
 }
 @end

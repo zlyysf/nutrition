@@ -296,15 +296,6 @@
         }
     }
     float progress = [percent floatValue]>1.f ? 1.f :[percent floatValue];
-    float radius;
-    if (progress >0.03 )
-    {
-        radius = 4;
-    }
-    else
-    {
-        radius = 2;
-    }
     [cell.supplyProgressView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
     [cell.supplyProgressView.layer setBorderWidth:0.5f];
     [cell.supplyProgressView drawProgressForRect:kProgressBarRect backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:0.f fillRadius:0.f];

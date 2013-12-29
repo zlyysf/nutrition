@@ -76,8 +76,8 @@
         }
         else
         {
-            [label setBackgroundColor:[UIColor clearColor]];
-            [label.layer setBorderColor:[UIColor clearColor].CGColor];
+            [label setBackgroundColor:[UIColor whiteColor]];
+            [label.layer setBorderColor:[UIColor whiteColor].CGColor];
         }
         [label setTextColor:[UIColor blackColor]];
         [label setText:text];

@@ -156,11 +156,7 @@
                 NSDictionary *illnessDict = [self.commonDiseaseArray objectAtIndex:i];
                 NSString *illnessName =[illnessDict objectForKey:nameKey];
      
-                LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, 34+i*(DiseaseItemLabelHeight+DiseaseItemMargin), 300, DiseaseItemLabelHeight+DiseaseItemMargin)];
-                [cell.backView addSubview:illnessButton];
-                illnessButton.customData = [NSNumber numberWithInt:i];
-                [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-                [illnessButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
+               
 //                [illnessButton setContentHorizontalAlignment:UIControlContentHorizontalAlignmentLeft];
 //                [illnessButton.titleLabel setFont:[UIFont systemFontOfSize:22]];
 //                [illnessButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
@@ -170,15 +166,21 @@
                 [illnessNameLabel setFont:[UIFont systemFontOfSize:22]];
                 [illnessNameLabel setTextColor:[UIColor blackColor]];
                 [illnessNameLabel setText:illnessName];
-                [illnessNameLabel setBackgroundColor:[UIColor clearColor]];
+                [illnessNameLabel setBackgroundColor:[UIColor whiteColor]];
                 [cell.backView addSubview:illnessNameLabel];
                 
                 UIImageView *arrowImage = [[UIImageView alloc]initWithFrame:CGRectMake(DiseaseDetailArrowStartX, 0, 20, 20)];
                 [cell.backView addSubview:arrowImage];
-                CGPoint potentialLabelCenter = illnessButton.center;
+                CGPoint potentialLabelCenter = illnessNameLabel.center;
                 CGPoint arrowCenter = CGPointMake(arrowImage.center.x, potentialLabelCenter.y);
                 arrowImage.center = arrowCenter;
                 [arrowImage setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
+                
+                LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, 34+i*(DiseaseItemLabelHeight+DiseaseItemMargin), 300, DiseaseItemLabelHeight+DiseaseItemMargin)];
+                [cell.backView addSubview:illnessButton];
+                illnessButton.customData = [NSNumber numberWithInt:i];
+                [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [illnessButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
             }
 
             return cell;

@@ -22,7 +22,7 @@
 #define BorderColor [UIColor lightGrayColor].CGColor
 
 #define AttentionItemLabelWidth 240
-#define AttentionItemOrderlabelWidth 15
+#define AttentionItemOrderlabelWidth 25
 #define AttentionItemMargin 5
 #define BigLabelFont [UIFont systemFontOfSize:22.f]
 #define SmallLabelFont [UIFont systemFontOfSize:14.f]
@@ -608,11 +608,7 @@
             float startY = 32;
             for (int i= 0;i< [self.illnessArray count];i++)
             {
-                LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, startY, 300, 36)];
-                illnessButton.customData =[NSNumber numberWithInt:i];
-                [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
-                [illnessButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
-                [backView addSubview:illnessButton];
+                
                 
                 UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(40, startY, 172, 36)];
                 [illnessNameLabel setFont:BigLabelFont];
@@ -620,13 +616,18 @@
                 NSDictionary *illnessDict = [self.illnessArray objectAtIndex:i];
                 NSString *illnessName = [illnessDict objectForKey:illnessNameKey];
                 [illnessNameLabel setText:illnessName];
-                [illnessNameLabel setBackgroundColor:[UIColor clearColor]];
+                [illnessNameLabel setBackgroundColor:[UIColor whiteColor]];
                 [backView addSubview:illnessNameLabel];
                 
                 UIImageView *detailArrow = [[UIImageView alloc]initWithFrame:CGRectMake(265, startY+8, 20, 20)];
                 [detailArrow setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
                 [backView addSubview:detailArrow];
                 
+                LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, startY, 300, 36)];
+                illnessButton.customData =[NSNumber numberWithInt:i];
+                [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
+                [illnessButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
+                [backView addSubview:illnessButton];
                 startY += 50;
 
             }
@@ -688,15 +689,7 @@
         return cell;
     }
 }
--(void)setBgColorForButton:(UIButton*)sender
-{
-    [sender setBackgroundColor:ItemSelectedColor];
-}
 
--(void)clearBgColorForButton:(UIButton*)sender
-{
-    [sender setBackgroundColor:[UIColor clearColor]];
-}
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 6;
