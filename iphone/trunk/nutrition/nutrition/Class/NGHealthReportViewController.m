@@ -294,35 +294,39 @@
         
         
         //2.判断
+        
         NSDictionary *recordData = [da getUserRecordSymptomDataByDayLocal:dayLocal];
-        BOOL isFirstSave;
-        if (recordData == nil || [[recordData allKeys]count]==0)
+        BOOL isFirstSave = NO;
+        if (!isOnlyDisplay)
         {
-            isFirstSave = YES;
-            //[self.navigationItem.rightBarButtonItem setEnabled:NO];
-            //没保存过
-            [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
-            [[NSNotificationCenter defaultCenter]postNotificationName:Notification_HistoryUpdatedKey object:nil];
-            
-            //to sync to remote parse service
-            PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
-            [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-                NSMutableString *msg = [NSMutableString string];
-                if (succeeded){
-                    [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
-                    [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
-                }else{
-                    [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
-                }
-                NSLog(@"when insertUserRecordSymptom_withDayLocal, %@",msg);
-            }];//saveInBackgroundWithBlock
-        }
-        else
-        {
-            isFirstSave = NO;//[self.navigationItem.rightBarButtonItem setEnabled:YES];
+            if (recordData == nil || [[recordData allKeys]count]==0)
+            {
+                isFirstSave = YES;
+                //[self.navigationItem.rightBarButtonItem setEnabled:NO];
+                //没保存过
+                [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+                [[NSNotificationCenter defaultCenter]postNotificationName:Notification_HistoryUpdatedKey object:nil];
+                
+                //to sync to remote parse service
+                PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+                [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+                    NSMutableString *msg = [NSMutableString string];
+                    if (succeeded){
+                        [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
+                        [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
+                    }else{
+                        [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
+                    }
+                    NSLog(@"when insertUserRecordSymptom_withDayLocal, %@",msg);
+                }];//saveInBackgroundWithBlock
+            }
+            else
+            {
+                isFirstSave = NO;//[self.navigationItem.rightBarButtonItem setEnabled:YES];
+            }
         }
         self.dataToSave = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:dayLocal],@"dayLocal" ,today,@"date",InputNameValuePairsData,@"InputNameValuePairsData",note,@"note",CalculateNameValuePairsData,@"CalculateNameValuePairsData",nil];
-                if (self.illnessArray != nil && [self.illnessArray count]!= 0)
+        if (self.illnessArray != nil && [self.illnessArray count]!= 0)
         {
             illnessCellHeight = [self.illnessArray count]*50+35;
         }
@@ -355,13 +359,17 @@
             [self.listView reloadData];
             [HUD hide:YES];
             self.listView.hidden = NO;
-            if (isFirstSave) {
-                [self.navigationItem.rightBarButtonItem setEnabled:NO];
-            }
-            else
+            if (!isOnlyDisplay)
             {
-                [self.navigationItem.rightBarButtonItem setEnabled:YES];
+                if (isFirstSave) {
+                    [self.navigationItem.rightBarButtonItem setEnabled:NO];
+                }
+                else
+                {
+                    [self.navigationItem.rightBarButtonItem setEnabled:YES];
+                }
             }
+            
         });
     });
 

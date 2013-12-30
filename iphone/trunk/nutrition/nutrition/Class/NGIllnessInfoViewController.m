@@ -8,7 +8,7 @@
 
 #import "NGIllnessInfoViewController.h"
 
-@interface NGIllnessInfoViewController ()
+@interface NGIllnessInfoViewController ()<UIWebViewDelegate>
 
 @end
 
@@ -26,6 +26,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.contentWebView.delegate = self;
 	// Do any additional setup after loading the view.
 
 }
@@ -35,6 +36,26 @@
     NSURLRequest *contentRequest = [NSURLRequest requestWithURL:url];
     [self.contentWebView loadRequest:contentRequest];
 }
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return YES;
+}
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:YES];
+    NSLog(@"didStart");
+}
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+    NSLog(@"didFinish");
+}
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [[UIApplication sharedApplication]setNetworkActivityIndicatorVisible:NO];
+    NSLog(@"error %@",[error description]);
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
