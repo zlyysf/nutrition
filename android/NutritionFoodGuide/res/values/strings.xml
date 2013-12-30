@@ -109,5 +109,10 @@
     <string name="feedbackEmailTitle">用户意见反馈</string>
     <string name="feedbackEmailChooseSender">选择邮件发送程序：</string>
 
+    <string name="ActivityLevelDescription0">每日仅做一些轻度运动，如散步，购物，做家务等。</string>
+    <string name="ActivityLevelDescription1">每日做大概30分钟中等运动，如快速步行，平地骑车，跳交谊舞等。</string>
+    <string name="ActivityLevelDescription2">每日做大概60分钟中等运动；或30分钟的强度运动，如中速跑步，爬山，打羽毛球等。</string>
+    <string name="ActivityLevelDescription3">每日做大概45~60分钟的剧烈运动，如快跑，游泳，打篮球等。</string>
+    
 
 </resources>

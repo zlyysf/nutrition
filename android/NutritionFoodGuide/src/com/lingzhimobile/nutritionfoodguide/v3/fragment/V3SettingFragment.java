@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.*;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 
 
 import com.lingzhimobile.nutritionfoodguide.Constants;
@@ -25,9 +26,11 @@ public class V3SettingFragment extends V3BaseHeadFragment {
 
     Date m_birthday;
     
-    TextView birthdayTextView;
+    TextView birthdayTextView, m_tvActivityLevelDescription;
     EditText heightTextView, weightTextView;
     RadioGroup genderRadioGroup, intensityRadioGroup;
+    RadioButton maleRadioButton, femaleRadioButton, intensity1RadioButton, intensity2RadioButton, intensity3RadioButton, intensity4RadioButton;
+    
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,14 @@ public class V3SettingFragment extends V3BaseHeadFragment {
         weightTextView = (EditText) view.findViewById(R.id.weightTextView);
         genderRadioGroup = (RadioGroup) view.findViewById(R.id.genderRadioGroup);
         intensityRadioGroup = (RadioGroup) view.findViewById(R.id.intensityRadioGroup);
+        maleRadioButton = (RadioButton) view.findViewById(R.id.maleRadioButton);
+        femaleRadioButton = (RadioButton) view.findViewById(R.id.femaleRadioButton);
+        intensity1RadioButton = (RadioButton) view.findViewById(R.id.intensity1RadioButton);
+        intensity2RadioButton = (RadioButton) view.findViewById(R.id.intensity2RadioButton);
+        intensity3RadioButton = (RadioButton) view.findViewById(R.id.intensity3RadioButton);
+        intensity4RadioButton = (RadioButton) view.findViewById(R.id.intensity4RadioButton);
+        
+        m_tvActivityLevelDescription = (TextView) view.findViewById(R.id.tvActivityLevelDescription);
         
         birthdayTextView.setOnClickListener(new View.OnClickListener() {
 			
@@ -56,6 +67,24 @@ public class V3SettingFragment extends V3BaseHeadFragment {
 				DatePickerDialog DatePickerDialog1 = new DatePickerDialog(getActivity(),DatePickerDialog_OnDateSetListener1,
 						cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH));
 				DatePickerDialog1.show();
+			}
+		});
+        
+        intensityRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if (checkedId==R.id.intensity1RadioButton){
+					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription0);
+				}else if (checkedId==R.id.intensity2RadioButton){
+					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription1);
+				}else if (checkedId==R.id.intensity3RadioButton){
+					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription2);
+				}else if (checkedId==R.id.intensity4RadioButton){
+					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription3);
+				}
+					
+				
 			}
 		});
         
@@ -82,6 +111,23 @@ public class V3SettingFragment extends V3BaseHeadFragment {
                 .toString());
         genderRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_sex));
         intensityRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_activityLevel));
+        
+        Integer intObj_sex = (Integer)userInfo.get(Constants.ParamKey_sex);
+		Integer intObj_activityLevel = (Integer)userInfo.get(Constants.ParamKey_activityLevel);
+        if (Constants.Value_sex_female == intObj_sex.intValue()){
+        	femaleRadioButton.setChecked(true);
+		}else{
+			maleRadioButton.setChecked(true);
+		}
+		if (Constants.Value_activityLevel_middle == intObj_activityLevel.intValue()){
+			intensity1RadioButton.setChecked(true);
+		}else if (Constants.Value_activityLevel_strong == intObj_activityLevel.intValue()){
+			intensity2RadioButton.setChecked(true);
+		}else if (Constants.Value_activityLevel_veryStrong == intObj_activityLevel.intValue()){
+			intensity3RadioButton.setChecked(true);
+		}else {
+			intensity4RadioButton.setChecked(true);
+		}
 
     }
 
@@ -98,8 +144,25 @@ public class V3SettingFragment extends V3BaseHeadFragment {
                         Double.parseDouble(heightTextView.getText().toString()));
                 userInfo.put(Constants.ParamKey_weight,
                         Double.parseDouble(weightTextView.getText().toString()));
-                userInfo.put(Constants.ParamKey_sex, genderRadioGroup.getCheckedRadioButtonId());
-                userInfo.put(Constants.ParamKey_activityLevel, intensityRadioGroup.getCheckedRadioButtonId());
+                
+                int sex = Constants.Value_sex_male;
+            	if (femaleRadioButton.isChecked()){
+            		sex = Constants.Value_sex_female;
+            	}
+                userInfo.put(Constants.ParamKey_sex, sex);
+                
+                
+                int activityLevel = Constants.Value_activityLevel_light;
+                if (intensity1RadioButton.isChecked()){
+                	activityLevel = Constants.Value_activityLevel_light;
+                }else if (intensity2RadioButton.isChecked()){
+                	activityLevel = Constants.Value_activityLevel_middle;
+                }else if (intensity3RadioButton.isChecked()){
+                	activityLevel = Constants.Value_activityLevel_strong;
+                }else if (intensity4RadioButton.isChecked()){
+                	activityLevel = Constants.Value_activityLevel_veryStrong;
+                }
+                userInfo.put(Constants.ParamKey_activityLevel, activityLevel);
                 StoredConfigTool.saveUserInfo(getActivity(), userInfo);
             }
         });
