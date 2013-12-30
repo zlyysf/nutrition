@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -272,8 +273,9 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 		    	HashMap<String, Object> symptomRow = SymptomRows.get(i);
 		        String symptomId = (String) symptomRow.get(Constants.COLUMN_NAME_SymptomId);
 		        View cellView = getActivity().getLayoutInflater().inflate(R.layout.v3_grid_cell_symptom, null);
+		        View ll = (LinearLayout) cellView.findViewById(R.id.ll);
 		        CheckBox cb = (CheckBox) cellView.findViewById(R.id.cbSymptom);
-		        changeCheckboxBackgroundWithSelector(getActivity(), cb, checkboxColorNormalResId, checkboxColorCheckedResIds[position%checkboxColorCheckedResIds.length]);
+		        changeCheckboxBackgroundWithSelector(getActivity(), ll, checkboxColorNormalResId, checkboxColorCheckedResIds[position%checkboxColorCheckedResIds.length]);
 		        cb.setText(symptomId);
 		        diagnoseFlow.addView(cellView);
 		        
@@ -328,14 +330,14 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 
 	
 	//http://stackoverflow.com/questions/8308871/define-selector-in-code
-	static void changeCheckboxBackgroundWithSelector(Activity curActv, CompoundButton cb, int normalColorResId, int checkedColorResId){
+	static void changeCheckboxBackgroundWithSelector(Activity curActv, View cb, int normalColorResId, int checkedColorResId){
 //		ColorDrawable normalColorDrawable = new ColorDrawable(curActv.getResources().getColor(normalColorResId));
 //		ColorDrawable checkedColorDrawable = new ColorDrawable(curActv.getResources().getColor(checkedColorResId));
 //		StateListDrawable statesDrawable = new StateListDrawable();
 //		statesDrawable.addState(new int[] {android.R.attr.state_checked},checkedColorDrawable);
 //		statesDrawable.addState(new int[] { },normalColorDrawable);
 		
-		final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
+		final float[] roundedCorners = new float[] { 30, 30, 30, 30, 30, 30, 30, 30 };
 		RoundRectShape roundRectShape1 = new RoundRectShape(roundedCorners, null,null);
 		
 		ShapeDrawable roundShape_checkedColor = new ShapeDrawable(roundRectShape1);

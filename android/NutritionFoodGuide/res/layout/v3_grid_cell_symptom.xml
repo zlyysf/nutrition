@@ -2,22 +2,29 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:background="@drawable/v3_shape_diagnose_item"
-    android:orientation="vertical" >
+    android:layout_margin="30dp"
+    android:orientation="vertical"
+    android:paddingBottom="10dp"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="10dp" >
 
-    <CheckBox
-        android:id="@+id/cbSymptom"
-        style="@style/v3_diagnose_content_text"
+    <LinearLayout
+        android:id="@+id/ll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:layout_margin="5dp"
-        android:layout_weight="0"
-        
-        android:button="@null"
-        android:gravity="center"
-        android:text="aaaaaaaaaaa"
-        android:textColor="@color/black" />
+        android:addStatesFromChildren="true" >
+
+        <CheckBox
+            android:id="@+id/cbSymptom"
+            style="@style/v3_diagnose_content_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:button="@null"
+            android:gravity="center"
+            android:text="aaaaaaaaaaa"
+            android:textColor="@color/black" />
+    </LinearLayout>
 
 </LinearLayout>
