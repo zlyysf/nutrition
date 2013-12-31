@@ -119,21 +119,21 @@ const float TickIntervalHeartbeat = 5.0;
     }
     else if (self.scatterType == ScatterTypeBMI) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(34.2)];
-//        xOrthogonalCoordinate = 21;
-//        yMaxTick = 22.63;
         CPTPlotRange *yRange = [self yRange];
         xOrthogonalCoordinate = yRange.locationDouble;
         yMaxTick = yRange.locationDouble + yRange.lengthDouble + 0.1;
     }
     else if (self.scatterType == ScatterTypeWeight) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
-        xOrthogonalCoordinate = 45;
-        yMaxTick = 85.8;
+        CPTPlotRange *yRange = [self yRange];
+        xOrthogonalCoordinate = yRange.locationDouble;
+        yMaxTick = yRange.locationDouble + yRange.lengthDouble + 1;
     }
     else if (self.scatterType == ScatterTypeTemperature) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
-        xOrthogonalCoordinate = 34;
-        yMaxTick = 42.15;
+        CPTPlotRange *yRange = [self yRange];
+        xOrthogonalCoordinate = yRange.locationDouble;
+        yMaxTick = yRange.locationDouble + yRange.lengthDouble + 0.2;
     }
     else if (self.scatterType == ScatterTypeBP) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.0) length:CPTDecimalFromFloat(33.7)];
@@ -142,8 +142,9 @@ const float TickIntervalHeartbeat = 5.0;
     }
     else if (self.scatterType == ScatterTypeHeartbeat) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
-        xOrthogonalCoordinate = 40;
-        yMaxTick = 81;
+        CPTPlotRange *yRange = [self yRange];
+        xOrthogonalCoordinate = yRange.locationDouble;
+        yMaxTick = yRange.locationDouble + yRange.lengthDouble + 1;
     }
     else {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(33.5)];
@@ -532,9 +533,75 @@ const float TickIntervalHeartbeat = 5.0;
             break;
         case ScatterTypeWeight:
             if (self.dataForPlot.count == 0) {
-                minValue = 19.5;
-                maxValue = 23.5;
+                minValue = 45.0;
+                maxValue = 85.0;
             }
+            else {
+                float floorValue = floor(minValue);
+                float ceilValue = ceil(maxValue);
+                int quotient = (int)floorValue / 10;
+                int remainder = (int)floorValue % 10;
+                if (remainder > TickIntervalNI) {
+                    floorValue = quotient * 10 + TickIntervalNI;
+                }
+                else
+                    floorValue = quotient * 10;
+                quotient = (int)ceilValue / 10;
+                remainder = (int)ceilValue % 10;
+                if (remainder > TickIntervalNI) {
+                    ceilValue = (quotient + 1) * 10;
+                }
+                else
+                    ceilValue = quotient * 10 + TickIntervalWeight;
+                int num = (ceilValue - floorValue) / TickIntervalWeight;
+                if (num < gridLineNum) {
+                    floorValue -= ((gridLineNum - num) / 2) * TickIntervalWeight;
+                    ceilValue += ((gridLineNum -num) - (gridLineNum - num) / 2) * TickIntervalWeight;
+                }
+                minValue = floorValue;
+                maxValue = ceilValue;
+            }
+            break;
+        case ScatterTypeTemperature:
+            if (minValue > 34.0 || self.dataForPlot.count == 0) {
+                minValue = 34.0;
+            }
+            else {
+                minValue = floor(minValue);
+            }
+            maxValue = 42.0;
+            break;
+        case ScatterTypeHeartbeat:
+            if (self.dataForPlot.count == 0) {
+                minValue = 40.0;
+                maxValue = 80.0;
+            }
+            else {
+                float floorValue = floor(minValue);
+                float ceilValue = ceil(maxValue);
+                int quotient = (int)floorValue / 10;
+                int remainder = (int)floorValue % 10;
+                if (remainder > TickIntervalHeartbeat) {
+                    floorValue = quotient * 10 + TickIntervalHeartbeat;
+                }
+                else
+                    floorValue = quotient * 10;
+                quotient = (int)ceilValue / 10;
+                remainder = (int)ceilValue % 10;
+                if (remainder > TickIntervalHeartbeat) {
+                    ceilValue = (quotient + 1) * 10;
+                }
+                else
+                    ceilValue = quotient * 10 + TickIntervalHeartbeat;
+                int num = (ceilValue - floorValue) / TickIntervalHeartbeat;
+                if (num < gridLineNum) {
+                    floorValue -= ((gridLineNum - num) / 2) * TickIntervalHeartbeat;
+                    ceilValue += ((gridLineNum -num) - (gridLineNum - num) / 2) * TickIntervalHeartbeat;
+                }
+                minValue = floorValue;
+                maxValue = ceilValue;
+            }
+            break;
         default:
             break;
     }
