@@ -61,7 +61,9 @@
 	        <EditText
 	            android:id="@+id/heightTextView"
 	            style="@style/v3_user_profile_text"
+	            android:inputType="number"
 	            android:text="160" >
+
 	        </EditText>
 	        
 	        <TextView
@@ -95,7 +97,9 @@
 	        <EditText
 	            android:id="@+id/weightTextView"
 	            style="@style/v3_user_profile_text"
+	            android:inputType="number"
 	            android:text="50" >
+
 	        </EditText>
 	        
 	        <TextView

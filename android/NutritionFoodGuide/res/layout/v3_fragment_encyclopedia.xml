@@ -20,226 +20,264 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_border_user_profile"
                 android:orientation="vertical" >
 
-                <TextView
-                    style="@style/v3_table_name_text"
-                    android:text="营养" />
-
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
+                    android:background="@color/v3_encyclopedia_headerlabel"
+                    android:orientation="vertical" >
 
-                    <TextView
-                        style="@style/v3_table_name_text"
-                        android:text="维生素" />
-
-                    <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <TableRow>
-
-                            <TextView
-                                android:id="@+id/tvNutrientVitamin1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="A" >
-                            </TextView>
-
-                            <TextView
-                                android:id="@+id/tvNutrientVitamin2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="B2" >
-                            </TextView>
-
-                            <TextView
-                                android:id="@+id/tvNutrientVitamin3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="B6" >
-                            </TextView>
-
-                            <TextView
-                                android:id="@+id/tvNutrientVitamin4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="B9" >
-                            </TextView>
-                        </TableRow>
-
-                        <TableRow>
-
-                            <TextView
-                                android:id="@+id/tvNutrientVitamin5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="B12" >
-                            </TextView>
-
-                            <TextView
-                                android:id="@+id/tvNutrientVitamin6"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="C" >
-                            </TextView>
-
-                            <TextView
-                                android:id="@+id/tvNutrientVitamin7"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="D" >
-                            </TextView>
-
-                            <TextView
-                                android:id="@+id/tvNutrientVitamin8"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="E" >
-                            </TextView>
-                        </TableRow>
-                    </TableLayout>
+	                <TextView
+	                    style="@style/v3_encyclopedia_headerlabel"
+	                    android:text="营养" />
                 </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                
+                <TableLayout
+		            android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
 
-                    <TextView
-                        style="@style/v3_table_name_text"
-                        android:text="矿物质" />
+                    >
+<!-- 
+no use of http://stackoverflow.com/questions/11538937/two-columns-layout-with-first-column-wrap-content-second-fill-parent
+it seems this way ok . but only worked once.
+    http://androidadvice.blogspot.com/2010/10/tablelayout-columns-equal-width.html
+        Perfect! width=0 and weight=1 did the job. Also without stretchColumns="1".
+ -->
+                    <ImageView
+				            android:layout_width="match_parent"
+				        	android:layout_height="1px"
+				            android:background="@drawable/gray_horizon_line_2x"
+			            >
+			        </ImageView>
 
-                    <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
+		            <TableRow
+		                android:layout_width="match_parent"
+		                android:layout_height="wrap_content"
+		                android:padding="0dp" >
 
-                        <TableRow>
 
-                            <TextView
-                                android:id="@+id/tvNutrientMineral1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="铁" >
-                            </TextView>
+		                
+		                <TextView
+		                        style="@style/v3_encyclopedia_level2label"
+		                        android:text="维生素" />
+	                    
+	                    <LinearLayout
+		                    android:layout_width="match_parent"
+		                    android:layout_height="wrap_content"
+		                    android:layout_weight="1"
+		                    android:layout_margin="5dp"
+		                    android:orientation="vertical" >
+		                    <LinearLayout
+			                    android:layout_width="match_parent"
+			                    android:layout_height="wrap_content"
+			                    android:orientation="horizontal" >
+			                    <TextView
+	                                android:id="@+id/tvNutrientVitamin1"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="A" >
+	                            </TextView>
+	
+	                            <TextView
+	                                android:id="@+id/tvNutrientVitamin2"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="B2" >
+	                            </TextView>
+	
+	                            <TextView
+	                                android:id="@+id/tvNutrientVitamin3"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="B6" >
+	                            </TextView>
+	
+	                            <TextView
+	                                android:id="@+id/tvNutrientVitamin4"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="B9" >
+	                            </TextView>
+		                    </LinearLayout>
+		                    <LinearLayout
+			                    android:layout_width="match_parent"
+			                    android:layout_height="wrap_content"
+			                    android:orientation="horizontal" >
+			                    <TextView
+	                                android:id="@+id/tvNutrientVitamin5"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="B12" >
+	                            </TextView>
+	
+	                            <TextView
+	                                android:id="@+id/tvNutrientVitamin6"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="C" >
+	                            </TextView>
+	
+	                            <TextView
+	                                android:id="@+id/tvNutrientVitamin7"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="D" >
+	                            </TextView>
+	
+	                            <TextView
+	                                android:id="@+id/tvNutrientVitamin8"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="E" >
+	                            </TextView>
+		                    </LinearLayout>
+	                    </LinearLayout>
+		            </TableRow>
+		            <ImageView
+			            android:layout_width="match_parent"
+			        	android:layout_height="1px"
+			            android:background="@drawable/gray_horizon_line_2x"
+			            >
+			        </ImageView>
+		            <TableRow
+		                android:layout_width="match_parent"
+		                android:layout_height="wrap_content" >
+	                    
 
-                            <TextView
-                                android:id="@+id/tvNutrientMineral2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="钙" >
-                            </TextView>
+		                <TextView
+		                        style="@style/v3_encyclopedia_level2label"
+		                        android:text="矿物质" />
 
-                            <TextView
-                                android:id="@+id/tvNutrientMineral3"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="镁" >
-                            </TextView>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="ph"
-                                android:visibility="invisible" >
-                            </TextView>
-                        </TableRow>
-
-                        <TableRow>
-
-                            <TextView
-                                android:id="@+id/tvNutrientMineral4"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="钾" >
-                            </TextView>
-
-                            <TextView
-                                android:id="@+id/tvNutrientMineral5"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="锌" >
-                            </TextView>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="ph"
-                                android:visibility="invisible" >
-                            </TextView>
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="ph"
-                                android:visibility="invisible" >
-                            </TextView>
-                        </TableRow>
-                    </TableLayout>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal" >
-
-                    <TextView
-                        style="@style/v3_table_name_text"
-                        android:text="others"
-                        android:visibility="invisible" />
-
-                    <TableLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" >
-
-                        <TableRow>
-
-                            <TextView
-                                android:id="@+id/tvNutrientMacro1"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="蛋白质" >
-                            </TextView>
-
-                            <TextView
-                                android:id="@+id/tvNutrientMacro2"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:text="纤维" >
-                            </TextView>
-                        </TableRow>
-                    </TableLayout>
-                </LinearLayout>
+	                    
+	                    <LinearLayout
+		                    android:layout_width="match_parent"
+		                    android:layout_height="wrap_content"
+		                    android:layout_weight="1"
+		                    android:layout_margin="5dp"
+		                    android:orientation="vertical" >
+		                    <LinearLayout
+			                    android:layout_width="match_parent"
+			                    android:layout_height="wrap_content"
+			                    android:orientation="horizontal" >
+			                    <TextView
+	                                android:id="@+id/tvNutrientMineral1"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="铁" >
+	                            </TextView>
+	
+	                            <TextView
+	                                android:id="@+id/tvNutrientMineral2"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="钙" >
+	                            </TextView>
+	
+	                            <TextView
+	                                android:id="@+id/tvNutrientMineral3"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="镁" >
+	                            </TextView>
+	
+	                            <TextView
+	                                style="@style/v3_nutrient_button"
+	                                android:text="ph"
+	                                android:visibility="invisible" >
+	                            </TextView>
+		                    </LinearLayout>
+		                    <LinearLayout
+			                    android:layout_width="match_parent"
+			                    android:layout_height="wrap_content"
+			                    android:orientation="horizontal" >
+			                    <TextView
+	                                android:id="@+id/tvNutrientMineral4"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="钾" >
+	                            </TextView>
+	
+	                            <TextView
+	                                android:id="@+id/tvNutrientMineral5"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="锌" >
+	                            </TextView>
+	
+	                            <TextView
+	                                style="@style/v3_nutrient_button"
+	                                android:text="ph"
+	                                android:visibility="invisible" >
+	                            </TextView>
+	
+	                            <TextView
+	                                style="@style/v3_nutrient_button"
+	                                android:text="ph"
+	                                android:visibility="invisible" >
+	                            </TextView>
+		                    </LinearLayout>
+	                    </LinearLayout>
+		            </TableRow>
+		            <ImageView
+			            android:layout_width="match_parent"
+			        	android:layout_height="1px"
+			            android:background="@drawable/gray_horizon_line_2x"
+			            >
+			        </ImageView>
+		            <TableRow
+		                android:layout_width="match_parent"
+		                android:layout_height="wrap_content" >
+	                    
+		                <TextView
+		                        style="@style/v3_encyclopedia_level2label"
+		                        android:text=""
+		                        android:visibility="invisible" />
+	                    
+	                    
+	                    <LinearLayout
+		                    android:layout_width="match_parent"
+		                    android:layout_height="wrap_content"
+		                    android:layout_weight="1"
+		                    android:layout_margin="5dp"
+		                    android:orientation="vertical" >
+		                    <LinearLayout
+			                    android:layout_width="match_parent"
+			                    android:layout_height="wrap_content"
+			                    android:orientation="horizontal" >
+			                    <TextView
+	                                android:id="@+id/tvNutrientMacro1"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="蛋白质" >
+	                            </TextView>
+	
+	                            <TextView
+	                                android:id="@+id/tvNutrientMacro2"
+	                                style="@style/v3_nutrient_button"
+	                                android:text="纤维" >
+	                            </TextView>
+		                    </LinearLayout>
+	                    </LinearLayout>
+		            </TableRow>
+		        </TableLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_border_user_profile"
                 android:orientation="vertical" >
 
-                <TextView
-                    style="@style/v3_table_name_text"
-                    android:text="食物" />
+                <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:background="@color/v3_encyclopedia_headerlabel"
+	                android:orientation="vertical" >
+	                <TextView
+	                    style="@style/v3_encyclopedia_headerlabel"
+	                    android:text="食物" />
+                </LinearLayout>
+                <LinearLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:orientation="horizontal" >
+			        <ImageView
+			            android:layout_width="match_parent"
+			        	android:layout_height="1px"
+			            android:background="@drawable/gray_horizon_line_2x"
+			            >
+			        </ImageView>
+			    </LinearLayout>
 
                 <com.lingzhimobile.nutritionfoodguide.GridViewExpandHeight
                     android:id="@+id/gvFoodType"
@@ -260,11 +298,31 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:background="@drawable/bg_border_user_profile"
                 android:orientation="vertical" >
 
-                <TextView
-                    style="@style/v3_table_name_text"
-                    android:text="常见疾病" />
+                <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:background="@color/v3_encyclopedia_headerlabel"
+	                android:orientation="vertical" >
+	                <TextView
+	                    style="@style/v3_encyclopedia_headerlabel"
+	                    android:text="常见疾病" />
+                </LinearLayout>
+                
+                <LinearLayout
+			        android:layout_width="match_parent"
+			        android:layout_height="wrap_content"
+			        android:orientation="horizontal" >
+			        <ImageView
+			            android:layout_width="match_parent"
+			        	android:layout_height="1px"
+			            android:background="@drawable/gray_horizon_line_2x"
+			            >
+			        </ImageView>
+			    </LinearLayout>
 
                 <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
                     android:id="@+id/lvIllness"

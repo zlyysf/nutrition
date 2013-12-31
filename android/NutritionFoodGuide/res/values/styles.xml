@@ -77,16 +77,51 @@
         <item name="android:layout_height">wrap_content</item>
     </style>
     
-    <style name="v3_user_profile_label">
-        <item name="android:minWidth">60dp</item>
-        <item name="android:minHeight">60dp</item>
-        <item name="android:layout_width">wrap_content</item>
+    <style name="v3_nutrient_button" >
+        <item name="android:minWidth">40dp</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical|center_horizontal</item>
+        <item name="android:gravity">center_vertical|center_horizontal</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_margin">5dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+    <style name="v3_label" >
+        <item name="android:minWidth">40dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical|left</item>
+        <item name="android:gravity">center_vertical|left</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+    <style name="v3_encyclopedia_level2label" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_vertical|left</item>
         <item name="android:gravity">center_vertical|left</item>
         <item name="android:layout_weight">0</item>
         <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
         <item name="android:textSize">14sp</item>
+
+    </style>
+    <style name="v3_encyclopedia_headerlabel" parent="@style/v3_label">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+    </style>
+    
+    <style name="v3_user_profile_label" parent="@style/v3_label">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:minWidth">60dp</item>
+        <item name="android:minHeight">60dp</item>
     </style>
     <style name="v3_user_profile_text">
         <item name="android:layout_width">60dp</item>

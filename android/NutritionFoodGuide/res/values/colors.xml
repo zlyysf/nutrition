@@ -2,6 +2,8 @@
 <resources>
     <!-- http://www.w3schools.com/html/html_colors.asp -->
     
+    <color name="v3_encyclopedia_headerlabel">#ecf0e8</color>
+    
     <color name="userInfoNormalFontColor">#575757</color>
     <color name="border_gray">#c2c2c2</color>
     <color name="nutrientRowClickBackgroundGray">#b7a99a</color>
@@ -52,6 +54,23 @@
     <drawable name="nutrientProtein">#bbc204</drawable>
     <drawable name="pink">#fc7cb3</drawable>
     <drawable name="progressBarBg">#c2c2c2</drawable>
+    
+    <color name="v3_nutrientVA">#afffae</color>
+    <color name="v3_nutrientVC">#f5ff9b</color>
+    <color name="v3_nutrientVD">#99ffff</color>
+    <color name="v3_nutrientVE">#ffcc99</color>
+    <color name="v3_nutrientVB2">#ebffc2</color>
+    <color name="v3_nutrientVB6">#bfa3ff</color>
+    <color name="v3_nutrientVB9">#eedbff</color>
+    <color name="v3_nutrientVB12">#f49ca7</color>
+    <color name="v3_nutrientCalcium">#e29fef</color>
+    <color name="v3_nutrientIron">#ff9999</color>
+    <color name="v3_nutrientZinc">#ccc1ff</color>
+    <color name="v3_nutrientMagnesium">#99ccff</color>
+    <color name="v3_nutrientPotassium">#c2f4b7</color>
+    <color name="v3_nutrientFiber">#b6fdd9</color>
+    <color name="v3_nutrientProtein">#ffa5d0</color>
+    <color name="v3_addClickEffect">#45000000</color>
 
     <color name="green">#7700ff00</color>
     <color name="gray">#eae9e4</color>

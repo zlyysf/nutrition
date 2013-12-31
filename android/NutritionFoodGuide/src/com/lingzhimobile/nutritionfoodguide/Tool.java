@@ -13,6 +13,7 @@ import org.json.*;
 
 
 import android.R.bool;
+import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.app.ActivityManager.RunningTaskInfo;
@@ -23,16 +24,17 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.database.*;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.Path;
-import android.graphics.drawable.Drawable;
+import android.graphics.*;
+import android.graphics.drawable.*;
+import android.graphics.drawable.shapes.*;
 import android.os.DropBoxManager.Entry;
 import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.*;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 public class Tool {
 	static final String LogTag = "Tool";
@@ -1563,6 +1565,38 @@ public class Tool {
 		webView1.setWebViewClient(MyWebViewClient1);//防止在 loadUrl 弹出选择系统中的浏览器的界面 http://www.myexception.cn/web/971082.html
     	
 		//另外需要在各个activity中设置 onKeyDown 处理back键
+	}
+	
+	public static void changeBackground_NutritionButton(Activity curActv, View vwNutrition, String nutrientId){
+		HashMap<String, Integer> nutrientColorMapping = NutritionTool.getNutrientColorMapping();
+		Integer nutrientColorResId = nutrientColorMapping.get(nutrientId);
+		final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
+		RoundRectShape RoundRectShape1 = new RoundRectShape(roundedCorners, null,null);
+		ShapeDrawable ShapeDrawable1 = new ShapeDrawable(RoundRectShape1);
+//		ShapeDrawable1.getPaint().setColor(Color.parseColor("#FF0000"));
+		ShapeDrawable1.getPaint().setColor(curActv.getResources().getColor(nutrientColorResId));
+		
+		ShapeDrawable ShapeDrawable2 = new ShapeDrawable(RoundRectShape1);
+		ShapeDrawable2.getPaint().setColor(curActv.getResources().getColor(R.color.v3_addClickEffect));
+		
+		Drawable[] layers = new Drawable[2];
+		layers[0] = ShapeDrawable1;
+		layers[1] = ShapeDrawable2;
+		LayerDrawable layerDrawable1 = new LayerDrawable(layers);
+
+		StateListDrawable states = new StateListDrawable();
+		states.addState(new int[] {android.R.attr.state_pressed}, layerDrawable1);
+			
+		states.addState(new int[] { }, ShapeDrawable1);
+
+		if (Tool.getVersionOfAndroidSDK() >= 16){//运行时获取Android API版本来判断
+			vwNutrition.setBackground(states);//android 2.3 not have this method
+		}else{
+			vwNutrition.setBackgroundDrawable(states);//deprecated in API level 16.
+		}
+//		
+		
+
 	}
 }
 
