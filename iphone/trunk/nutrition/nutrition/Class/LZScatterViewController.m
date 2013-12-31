@@ -11,6 +11,13 @@
 #define BLUE_PLOT_IDENTIFIER @"BluePlot"
 #define GREEN_PLOT_IDENTIFIER @"GreenPlot"
 
+const float TickIntervalNI = 5.0;
+const float TickIntervalBMI = 0.5;
+const float TickIntervalWeight = 5.0;
+const float TickIntervalTemperature = 1.0;
+const float TickIntervalBP = 20.0;
+const float TickIntervalHeartbeat = 5.0;
+
 @interface LZScatterViewController ()
 
 //@property (nonatomic, strong) CPTGraphHostingView *hostView;
@@ -108,22 +115,25 @@
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.0) length:CPTDecimalFromFloat(33.7)];
         CPTPlotRange *yRange = [self yRange];
         xOrthogonalCoordinate = yRange.locationDouble;
-        yMaxTick = yRange.locationDouble + yRange.lengthDouble;
+        yMaxTick = yRange.locationDouble + yRange.lengthDouble + 1;
     }
     else if (self.scatterType == ScatterTypeBMI) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(34.2)];
-        xOrthogonalCoordinate = 21;
-        yMaxTick = 22.62;
+//        xOrthogonalCoordinate = 21;
+//        yMaxTick = 22.63;
+        CPTPlotRange *yRange = [self yRange];
+        xOrthogonalCoordinate = yRange.locationDouble;
+        yMaxTick = yRange.locationDouble + yRange.lengthDouble + 0.1;
     }
     else if (self.scatterType == ScatterTypeWeight) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
         xOrthogonalCoordinate = 45;
-        yMaxTick = 85.5;
+        yMaxTick = 85.8;
     }
     else if (self.scatterType == ScatterTypeTemperature) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
         xOrthogonalCoordinate = 34;
-        yMaxTick = 42.1;
+        yMaxTick = 42.15;
     }
     else if (self.scatterType == ScatterTypeBP) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.0) length:CPTDecimalFromFloat(33.7)];
@@ -293,7 +303,7 @@
         [yFormatter setMaximumFractionDigits:1];
         y.labelFormatter = yFormatter;
         
-        y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
+        y.majorIntervalLength = CPTDecimalFromFloat(TickIntervalNI);   // Major tick interval
         //y.minorTicksPerInterval = 0;    // Count of minor ticks between 2 major ticks
         
         //y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(60) length:CPTDecimalFromFloat(40.5)];
@@ -313,7 +323,7 @@
         [yFormatter setMinimumFractionDigits:1];
         y.labelFormatter = yFormatter;
         
-        y.majorIntervalLength = CPTDecimalFromString(@"0.2");   // Major tick interval
+        y.majorIntervalLength = CPTDecimalFromFloat(TickIntervalBMI);   // Major tick interval
         
     }
     else if (self.scatterType == ScatterTypeWeight) {
@@ -325,7 +335,7 @@
         [yFormatter setMaximumFractionDigits:1];
         y.labelFormatter = yFormatter;
         
-        y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
+        y.majorIntervalLength = CPTDecimalFromFloat(TickIntervalWeight);   // Major tick interval
         
     }
     else if (self.scatterType == ScatterTypeTemperature) {
@@ -338,7 +348,7 @@
         //[yFormatter setMinimumFractionDigits:1];
         y.labelFormatter = yFormatter;
         
-        y.majorIntervalLength = CPTDecimalFromString(@"1");   // Major tick interval
+        y.majorIntervalLength = CPTDecimalFromFloat(TickIntervalTemperature); // Major tick interval
     }
     else if (self.scatterType == ScatterTypeBP) {
         //y.visibleRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(60) length:CPTDecimalFromFloat(142)];
@@ -348,7 +358,7 @@
         [yFormatter setMaximumFractionDigits:1];
         y.labelFormatter = yFormatter;
         
-        y.majorIntervalLength = CPTDecimalFromString(@"20");   // Major tick interval
+        y.majorIntervalLength = CPTDecimalFromFloat(TickIntervalBP);   // Major tick interval
         //y.minorTicksPerInterval = 2;    // Count of minor ticks between 2 major ticks
     }
     else if (self.scatterType == ScatterTypeHeartbeat) {
@@ -360,7 +370,7 @@
         [yFormatter setMaximumFractionDigits:1];
         y.labelFormatter = yFormatter;
         
-        y.majorIntervalLength = CPTDecimalFromString(@"5");   // Major tick interval
+        y.majorIntervalLength = CPTDecimalFromFloat(TickIntervalHeartbeat);   // Major tick interval
         //y.minorTicksPerInterval = 1;    // Count of minor ticks between 2 major ticks
         
     }
@@ -463,6 +473,7 @@
 #pragma mark Calculate the Y range
 - (CPTPlotRange *)yRange
 {
+    static int gridLineNum = 8;
     float minValue = 0;
     float maxValue = 0;
     for (NSUInteger i = 0; i < self.dataForPlot.count; i++) {
@@ -488,15 +499,42 @@
             else {
                 int quotient = (int)minValue / 10;
                 int remainder = (int)minValue % 10;
-                if (remainder > 5) {
-                    minValue = quotient * 10 + 5;
+                if (remainder > TickIntervalNI) {
+                    minValue = quotient * 10 + TickIntervalNI;
                 }
                 else
                     minValue = quotient * 10;
             }
-            maxValue = 101.0;
+            maxValue = 100.0;
             break;
-            
+        case ScatterTypeBMI:
+            if (self.dataForPlot.count == 0) {
+                minValue = 19.5;
+                maxValue = 23.5;
+            }
+            else {
+                float floorValue = floor(minValue);
+                if (minValue - floorValue >= TickIntervalBMI) {
+                    floorValue += TickIntervalBMI;
+                }
+                float ceilValue = ceil(maxValue);
+                if (ceilValue - maxValue >= TickIntervalBMI) {
+                    ceilValue -= TickIntervalBMI;
+                }
+                int num = (ceilValue - floorValue) / TickIntervalBMI;
+                if (num < gridLineNum) {
+                    floorValue -= ((gridLineNum - num) / 2) * TickIntervalBMI;
+                    ceilValue += ((gridLineNum -num) - (gridLineNum - num) / 2) * TickIntervalBMI;
+                }
+                minValue = floorValue;
+                maxValue = ceilValue;
+            }
+            break;
+        case ScatterTypeWeight:
+            if (self.dataForPlot.count == 0) {
+                minValue = 19.5;
+                maxValue = 23.5;
+            }
         default:
             break;
     }
