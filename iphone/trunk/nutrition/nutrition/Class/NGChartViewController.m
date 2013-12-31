@@ -268,7 +268,6 @@
                 }
                 int randomValue = lowerBound + arc4random() % (upperBound - lowerBound);
                 NSNumber *y = [NSNumber numberWithFloat:randomValue];
-                NSLog(@"%@", y);
                 if (i == 0) {
                     [lbpArray addObject:[NSMutableDictionary dictionaryWithObjectsAndKeys:x, @"x", y, @"y", nil]];
                 }
@@ -292,35 +291,30 @@
                 int upperBound = 23;
                 float randomValue = lowerBound + arc4random() % (upperBound - lowerBound) + 0.2f;
                 y = [NSNumber numberWithFloat:randomValue];
-                NSLog(@"%@", y);
             }
             else if (currentScatterType == ScatterTypeTemperature) {
                 int lowerBound = 36.5;
                 int upperBound = 37.5;
                 float randomValue = lowerBound + arc4random() % (upperBound - lowerBound) + 0.2f;
                 y = [NSNumber numberWithFloat:randomValue];
-                NSLog(@"%@", y);
             }
             else if (currentScatterType == ScatterTypeNI) {
                 int lowerBound = 80;
                 int upperBound = 90;
                 float randomValue = lowerBound + arc4random() % (upperBound - lowerBound);
                 y = [NSNumber numberWithFloat:randomValue];
-                NSLog(@"%@", y);
             }
             else if (currentScatterType == ScatterTypeHeartbeat) {
                 int lowerBound = 50;
                 int upperBound = 70;
                 float randomValue = lowerBound + arc4random() % (upperBound - lowerBound);
                 y = [NSNumber numberWithFloat:randomValue];
-                NSLog(@"%@", y);
             }
             else if (currentScatterType == ScatterTypeWeight) {
                 int lowerBound = 65;
                 int upperBound = 70;
                 float randomValue = lowerBound + arc4random() % (upperBound - lowerBound);
                 y = [NSNumber numberWithFloat:randomValue];
-                NSLog(@"%@", y);
             }
             else
                 y = [NSNumber numberWithInt:5 + i * 5];
