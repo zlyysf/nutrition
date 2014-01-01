@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface NGNoteCell : UITableViewCell
+#import "LZEmptyClassCell.h"
+@interface NGNoteCell : LZEmptyClassCell
 @property (strong, nonatomic) IBOutlet UILabel *headerNameLabel;
 @property (strong, nonatomic) IBOutlet UITextView *noteTextView;
 @property (strong, nonatomic) IBOutlet UIView *backView;

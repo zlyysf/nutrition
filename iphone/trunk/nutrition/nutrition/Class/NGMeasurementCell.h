@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-
-@interface NGMeasurementCell : UITableViewCell
+#import "LZEmptyClassCell.h"
+@interface NGMeasurementCell : LZEmptyClassCell
 @property (strong, nonatomic) IBOutlet UILabel *headerNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *heatLabel;
 @property (strong, nonatomic) IBOutlet UILabel *weightLabel;

@@ -115,8 +115,8 @@
     {
         NSArray *symptomIdRelatedArray = [symptomRowsDict objectForKey:key];
         NSMutableArray *symptomState = [NSMutableArray array];
-        float height =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray]+100;
-        [symptomRowHeightDict setObject:[NSNumber numberWithFloat:height] forKey:key];
+        NSArray * heightArray =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray];
+        [symptomRowHeightDict setObject:heightArray forKey:key];
         for (int i = 0 ; i< [symptomIdRelatedArray count]; i++)
         {
             [symptomState addObject:[NSNumber numberWithBool:NO]];
@@ -227,12 +227,13 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(float)calculateHeightForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray
+-(NSArray *)calculateHeightForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray
 {
     float totalHeight = 0;
     CGRect previousFrame = CGRectZero;
     BOOL gotPreviousFrame = NO;
     NSString *queryKey;
+    NSMutableArray *heightArray = [[NSMutableArray alloc]init];
     if (isChinese) {
         queryKey =@"SymptomNameCn";
     }
@@ -247,6 +248,7 @@
         CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
         textSize.width += horizonPadding*2;
         textSize.height += verticalPadding*2;
+        [heightArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:textSize.width],@"TextSizeWidth",[NSNumber numberWithFloat:textSize.height],@"TextSizeHeight", nil]];
         //UILabel *label = nil;
         CGRect labelFrame;
         if (!gotPreviousFrame) {
@@ -284,7 +286,8 @@
 //        [label.layer setBorderWidth: BORDER_WIDTH];
 //        [self addSubview:label];
     }
-    return totalHeight;
+    [heightArray insertObject:[NSNumber numberWithFloat:totalHeight] atIndex:0];
+    return heightArray;
 }
 - (void)keyboardWillShow:(NSNotification *)notification {
 	
@@ -350,31 +353,45 @@
     if (indexPath.section == 1)
     {
         NGMeasurementCell *cell =(NGMeasurementCell*) [self.listView dequeueReusableCellWithIdentifier:@"NGMeasurementCell"];
-        [cell.headerNameLabel setBackgroundColor:[UIColor colorWithRed:198/255.f green:212/255.f blue:239/255.f alpha:1.0f]];
-        [cell.headerNameLabel.layer setBorderWidth:0.5f];
-        [cell.backView.layer setBorderWidth:0.5f];
-        [cell.headerNameLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        cell.headerNameLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"jiankangjilu_c_shenglizhibiao", @"指标栏标题：生理指标") ];
-        cell.heatLabel.text = NSLocalizedString(@"jiankangjilu_c_tiwen", @"体温项标题：体温");
-        cell.weightLabel.text = NSLocalizedString(@"jiankangjilu_c_tizhong", @"体重项标题：体重");
-        cell.heartbeatLabel.text = NSLocalizedString(@"jiangkangjilu_c_xintiao", @"心跳项标题：心跳");
-        cell.highpressureLabel.text = NSLocalizedString(@"jiankangjilu_c_gaoya", @"高压项标题：高压");
-        cell.lowpressureLabel.text = NSLocalizedString(@"jiankangjilu_c_diya", @"低压项标题：低压");
-        
-        if (isChinese) {
-            cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_gongjin", @"体重项单位：公斤");
-            cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_sheshidu", @"体温项单位：摄氏度");
-        }
-        else
+        if (!cell.hasLoaded)
         {
-            cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_bang", @"体重项单位：磅");
-            cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_huashidu", @"体温项单位：华氏度");
+            [cell.headerNameLabel setBackgroundColor:[UIColor colorWithRed:198/255.f green:212/255.f blue:239/255.f alpha:1.0f]];
+            [cell.headerNameLabel.layer setBorderWidth:0.5f];
+            [cell.backView.layer setBorderWidth:0.5f];
+            [cell.headerNameLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+            [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+            cell.headerNameLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"jiankangjilu_c_shenglizhibiao", @"指标栏标题：生理指标") ];
+            cell.heatLabel.text = NSLocalizedString(@"jiankangjilu_c_tiwen", @"体温项标题：体温");
+            cell.weightLabel.text = NSLocalizedString(@"jiankangjilu_c_tizhong", @"体重项标题：体重");
+            cell.heartbeatLabel.text = NSLocalizedString(@"jiangkangjilu_c_xintiao", @"心跳项标题：心跳");
+            cell.highpressureLabel.text = NSLocalizedString(@"jiankangjilu_c_gaoya", @"高压项标题：高压");
+            cell.lowpressureLabel.text = NSLocalizedString(@"jiankangjilu_c_diya", @"低压项标题：低压");
+            
+            if (isChinese) {
+                cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_gongjin", @"体重项单位：公斤");
+                cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_sheshidu", @"体温项单位：摄氏度");
+            }
+            else
+            {
+                cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_bang", @"体重项单位：磅");
+                cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_huashidu", @"体温项单位：华氏度");
+            }
+            
+            cell.heartbeatUnitLabel.text = NSLocalizedString(@"jaingkanjilu_c_xintiaodanwei", @"心跳项单位：次/分钟");
+            cell.highpressureUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_xueyadanwei", @"血压项单位：毫米水银");
+            cell.lowpressureUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_xueyadanwei", @"血压项单位：毫米水银");
+            cell.heatTextField.delegate = self;
+            cell.weightTextField.delegate = self;
+            cell.heartbeatTextField.delegate = self;
+            cell.highpressureTextField.delegate = self;
+            cell.lowpressureTextField.delegate = self;
+            cell.heatTextField.tag = 101;
+            cell.weightTextField.tag = 102;
+            cell.heartbeatTextField.tag = 103;
+            cell.highpressureTextField.tag = 104;
+            cell.lowpressureTextField.tag = 105;
+            cell.hasLoaded = YES;
         }
-        
-        cell.heartbeatUnitLabel.text = NSLocalizedString(@"jaingkanjilu_c_xintiaodanwei", @"心跳项单位：次/分钟");
-        cell.highpressureUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_xueyadanwei", @"血压项单位：毫米水银");
-        cell.lowpressureUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_xueyadanwei", @"血压项单位：毫米水银");
         NSString *weight = [self.userInputValueDict objectForKey:@"weight"];
         NSString *heat = [self.userInputValueDict objectForKey:@"heat"];
         NSString *heartbeat = [self.userInputValueDict objectForKey:@"heartbeat"];
@@ -385,38 +402,32 @@
         cell.heartbeatTextField.text = heartbeat;
         cell.highpressureTextField.text = highpressure;
         cell.lowpressureTextField.text = lowpressure;
-        cell.heatTextField.delegate = self;
-        cell.weightTextField.delegate = self;
-        cell.heartbeatTextField.delegate = self;
-        cell.highpressureTextField.delegate = self;
-        cell.lowpressureTextField.delegate = self;
-        cell.heatTextField.tag = 101;
-        cell.weightTextField.tag = 102;
-        cell.heartbeatTextField.tag = 103;
-        cell.highpressureTextField.tag = 104;
-        cell.lowpressureTextField.tag = 105;
+        
         return cell;
     }
     else if (indexPath.section == 2)
     {
         NGNoteCell *cell = (NGNoteCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGNoteCell"];
-        [cell.headerNameLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:171/255.f blue:162/255.f alpha:1.0f]];
-        cell.noteTextView.tag = 106;
-        [cell.headerNameLabel.layer setBorderWidth:0.5f];
-        [cell.backView.layer setBorderWidth:0.5f];
-        [cell.headerNameLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
-        [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+        if (!cell.hasLoaded) {
+            [cell.headerNameLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:171/255.f blue:162/255.f alpha:1.0f]];
+            cell.noteTextView.tag = 106;
+            [cell.headerNameLabel.layer setBorderWidth:0.5f];
+            [cell.backView.layer setBorderWidth:0.5f];
+            [cell.headerNameLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+            [cell.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+            cell.headerNameLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"jiankangjilu_c_biji", @"笔记栏标题：笔记")];;
+            cell.noteTextView.delegate = self;
+            cell.hasLoaded = YES;
+        }
         NSString *note = [self.userInputValueDict objectForKey:@"note"];
         cell.noteTextView.text = note;
-        cell.headerNameLabel.text = [NSString stringWithFormat:@"  %@",NSLocalizedString(@"jiankangjilu_c_biji", @"笔记栏标题：笔记")];;
-        cell.noteTextView.delegate = self;
+        
         return cell;
     }
     else
     {
         NGDiagnoseCell *cell = (NGDiagnoseCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGDiagnoseCell"];
         //NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
-        
         NSDictionary *symptomDict = [symptomTypeRows objectAtIndex:indexPath.row];
         NSString *symptomTypeId = [symptomDict objectForKey:COLUMN_NAME_SymptomTypeId];
         UIColor *selectColor = [LZUtility getSymptomTypeColorForId:symptomTypeId];
@@ -434,10 +445,12 @@
         cell.nameLabel.backgroundColor = selectColor;
         cell.nameLabel.layer.borderWidth = 0.5f;
         cell.nameLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        
+        NSArray *heightArray = [self.symptomRowHeightDict objectForKey:symptomTypeId];
         NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
         NSMutableArray *itemStateArray = [self.symptomStateDict objectForKey:symptomTypeId];
-        float height = [cell.diagnosesView displayForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray selectedColor:selectColor itemStateArray:itemStateArray isChinese:isChinese];
+        [cell.diagnosesView displayForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray selectedColor:selectColor itemStateArray:itemStateArray heightArray:heightArray isChinese:isChinese];
+        
+        float height = [(NSNumber*)[heightArray objectAtIndex:0] floatValue];
         cell.backView.frame =CGRectMake(10, 0, 300, height+80);
         cell.diagnosesView.frame = CGRectMake(10, 55, 280, height);
         cell.diagnosesView.cellIndex = indexPath;
@@ -458,17 +471,18 @@
     else
     {
         NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
-        NSNumber *height = [self.symptomRowHeightDict objectForKey:symptomTypeId];
-        if (height != nil)
+        NSArray *heightArray = [self.symptomRowHeightDict objectForKey:symptomTypeId];
+        if (heightArray != nil && [heightArray count]!= 0)
         {
-            return [height floatValue];
+            return [(NSNumber*)[heightArray objectAtIndex:0] floatValue]+100;
         }
         else
         {
             NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
-            float height =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray]+100;
-            [self.symptomRowHeightDict setObject:[NSNumber numberWithFloat:height] forKey:symptomTypeId];
-            return height;
+            
+            NSArray* newHeightArray =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray];
+            [self.symptomRowHeightDict setObject:newHeightArray forKey:symptomTypeId];
+            return [(NSNumber*)[newHeightArray objectAtIndex:0] floatValue]+100;
         }
     }
 }

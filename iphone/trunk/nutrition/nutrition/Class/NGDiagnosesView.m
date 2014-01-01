@@ -18,14 +18,14 @@
     }
     return self;
 }
--(float)displayForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray selectedColor:(UIColor *)color itemStateArray:(NSMutableArray *)stateArray isChinese:(BOOL)isChinese
+-(void)displayForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray selectedColor:(UIColor *)color itemStateArray:(NSMutableArray *)stateArray heightArray:(NSArray *)heightArray isChinese:(BOOL)isChinese;
 {
     for (UILabel *subview in [self subviews]) {
         [subview removeFromSuperview];
     }
     self.selectColor = color;
     self.itemStateArray = stateArray;
-    float totalHeight = 0;
+    //float totalHeight = 0;
     CGRect previousFrame = CGRectZero;
     BOOL gotPreviousFrame = NO;
     NSString *queryKey;
@@ -39,21 +39,23 @@
     for (int i =0;i< [textArray count];i++)
     {
         NSDictionary *symptomDict = [textArray objectAtIndex:i];
-        
+        NSDictionary *textSizeDict = [heightArray objectAtIndex:i+1];
         NSString *text = [symptomDict objectForKey:queryKey];
-        CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
-        textSize.width += horizonPadding*2;
-        textSize.height += verticalPadding*2;
+        NSNumber *sizeWidth = [textSizeDict objectForKey:@"TextSizeWidth"];
+        NSNumber *sizeHeight = [textSizeDict objectForKey:@"TextSizeHeight"];
+        CGSize textSize = CGSizeMake([sizeWidth floatValue], [sizeHeight floatValue]);//[text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        //textSize.width += horizonPadding*2;
+        //textSize.height += verticalPadding*2;
         UILabel *label = nil;
         if (!gotPreviousFrame) {
             label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, textSize.width, textSize.height)];
             //labelFrame =CGRectMake(0, 0, textSize.width, textSize.height);
-            totalHeight = textSize.height;
+            //totalHeight = textSize.height;
         } else {
             CGRect newRect = CGRectZero;
             if (previousFrame.origin.x + previousFrame.size.width + textSize.width + imageMargin > maxWidth) {
                 newRect.origin = CGPointMake(0, previousFrame.origin.y + previousFrame.size.height + bottomMargin);
-                totalHeight += textSize.height + bottomMargin;
+                //totalHeight += textSize.height + bottomMargin;
             } else {
                 newRect.origin = CGPointMake(previousFrame.origin.x + previousFrame.size.width + imageMargin, previousFrame.origin.y);
             }
@@ -90,7 +92,7 @@
 
         [self addSubview:label];
     }
-    return totalHeight;
+    //return totalHeight;
 }
 -(void)userTappedDiagnose:(UITapGestureRecognizer*)sender
 {
