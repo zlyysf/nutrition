@@ -291,17 +291,24 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
             String illnessCaption = (String)illnessRow.get(Constants.COLUMN_NAME_IllnessNameCn);
             tvIllness.setText(illnessCaption);
             
-            OnClickListenerInListItem_illness OnClickListenerInListItem_illness1 = (OnClickListenerInListItem_illness)tvIllness.getTag();
+            LinearLayout llIllness = (LinearLayout)convertView.findViewById(R.id.llIllness);
+            OnClickListenerInListItem_illness OnClickListenerInListItem_illness1 = (OnClickListenerInListItem_illness)llIllness.getTag();
             if (OnClickListenerInListItem_illness1==null){
             	OnClickListenerInListItem_illness1 = new OnClickListenerInListItem_illness();
             	OnClickListenerInListItem_illness1.initInputData(position);
-            	tvIllness.setOnClickListener(OnClickListenerInListItem_illness1);
-            	tvIllness.setTag(OnClickListenerInListItem_illness1);
+            	llIllness.setOnClickListener(OnClickListenerInListItem_illness1);
+            	llIllness.setTag(OnClickListenerInListItem_illness1);
             }else{
             	OnClickListenerInListItem_illness1.initInputData(position);
             }
             
             return convertView;
+        }
+        
+        //disable click . http://stackoverflow.com/questions/13146652/how-to-disable-clicking-on-listview-in-android
+        @Override
+        public boolean isEnabled(int position) {
+            return false;
         }
 
     }

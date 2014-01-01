@@ -27,6 +27,9 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="1px"
+				    android:layout_marginLeft="1px"
+				    android:layout_marginRight="1px"
                     android:background="@color/v3_encyclopedia_headerlabel"
                     android:orientation="vertical" >
 
@@ -261,6 +264,9 @@ it seems this way ok . but only worked once.
                 <LinearLayout
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
+	                android:layout_marginTop="1px"
+				    android:layout_marginLeft="1px"
+				    android:layout_marginRight="1px"
 	                android:background="@color/v3_encyclopedia_headerlabel"
 	                android:orientation="vertical" >
 	                <TextView
@@ -305,6 +311,9 @@ it seems this way ok . but only worked once.
                 <LinearLayout
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
+				    android:layout_marginTop="1px"
+				    android:layout_marginLeft="1px"
+				    android:layout_marginRight="1px"
 	                android:background="@color/v3_encyclopedia_headerlabel"
 	                android:orientation="vertical" >
 	                <TextView
@@ -327,7 +336,17 @@ it seems this way ok . but only worked once.
                 <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
                     android:id="@+id/lvIllness"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+
+                    android:listSelector="@android:color/transparent" >
+
+<!-- http://gushedaoren.blog.163.com/blog/static/1736634052012117112723843/   ok
+  
+  
+  http://hi.baidu.com/kabike/item/29ec421e66ea714be75e0693  ok
+  android:listSelector="@android:color/transparent" 
+-->
                 </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
             </LinearLayout>
         </LinearLayout>
