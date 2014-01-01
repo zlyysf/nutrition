@@ -245,7 +245,7 @@
                                                     <rect key="frame" x="10" y="10" width="300" height="188"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <subviews>
-                                                        <view contentMode="scaleToFill" id="KdP-qF-G7e" customClass="NGDiagnosesView">
+                                                        <view contentMode="scaleToFill" id="KdP-qF-G7e">
                                                             <rect key="frame" x="10" y="38" width="280" height="124"/>
                                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>

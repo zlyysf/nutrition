@@ -7,10 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "NGDiagnosesView.h"
 @interface NGDiagnoseCell : UITableViewCell
 @property (strong, nonatomic) IBOutlet UILabel *nameLabel;
 @property (strong, nonatomic) IBOutlet UIView *backView;
 
-@property (strong, nonatomic) IBOutlet NGDiagnosesView *diagnosesView;
+@property (strong, nonatomic) IBOutlet UIView *diagnosesView;
 @end

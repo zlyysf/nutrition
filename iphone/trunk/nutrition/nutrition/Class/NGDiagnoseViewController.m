@@ -16,7 +16,8 @@
 #import "LZKeyboardToolBar.h"
 #import "NGHealthReportViewController.h"
 #import "LZRecommendFood.h"
-@interface NGDiagnoseViewController ()<NGDiagnosesViewDelegate,LZKeyboardToolBarDelegate,UITextViewDelegate,UITextFieldDelegate>
+#import "NGDiagnoseLabel.h"
+@interface NGDiagnoseViewController ()<LZKeyboardToolBarDelegate,UITextViewDelegate,UITextFieldDelegate>
 {
     BOOL isChinese;
 }
@@ -27,10 +28,11 @@
 @property (assign,nonatomic)BOOL needRefresh;
 @property (assign,nonatomic)BOOL needClearState;
 @property (strong,nonatomic)NSMutableDictionary *symptomRowHeightDict;
+@property (nonatomic,strong) NSMutableDictionary *diagnoseViewDict;
 @end
 
 @implementation NGDiagnoseViewController
-@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField,userInputValueDict,userSelectedSymptom,needRefresh,symptomTypeRows,symptomRowHeightDict,needClearState;
+@synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField,userInputValueDict,userSelectedSymptom,needRefresh,symptomTypeRows,symptomRowHeightDict,needClearState,diagnoseViewDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -51,7 +53,7 @@
     [label setFont:[UIFont systemFontOfSize:14]];
     [label setText:NSLocalizedString(@"jiankangjilu_c_header", @"页面表头：今天哪里不舒服吗？点击记录一下吧。")];
     symptomRowHeightDict = [[NSMutableDictionary alloc]init];
-
+    diagnoseViewDict = [[NSMutableDictionary alloc]init];
     [label setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     [headerView addSubview:label];
     self.listView.tableHeaderView = headerView;
@@ -115,8 +117,8 @@
     {
         NSArray *symptomIdRelatedArray = [symptomRowsDict objectForKey:key];
         NSMutableArray *symptomState = [NSMutableArray array];
-        NSArray * heightArray =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray];
-        [symptomRowHeightDict setObject:heightArray forKey:key];
+        NSNumber* heightNum =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray typeId:key];
+        [symptomRowHeightDict setObject:heightNum forKey:key];
         for (int i = 0 ; i< [symptomIdRelatedArray count]; i++)
         {
             [symptomState addObject:[NSNumber numberWithBool:NO]];
@@ -227,13 +229,15 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(NSArray *)calculateHeightForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray
+-(NSNumber *)calculateHeightForFont:(UIFont *)font maxWidth:(float)maxWidth horizonPadding:(float)horizonPadding verticalPadding:(float)verticalPadding imageMargin:(float)imageMargin bottomMargin:(float)bottomMargin textArray:(NSArray *)textArray typeId:(NSString*)typeId
 {
+    
     float totalHeight = 0;
     CGRect previousFrame = CGRectZero;
     BOOL gotPreviousFrame = NO;
     NSString *queryKey;
-    NSMutableArray *heightArray = [[NSMutableArray alloc]init];
+    //NSMutableArray *heightArray = [[NSMutableArray alloc]init];
+    UIView *diagnoseView = [[UIView alloc]initWithFrame:CGRectZero];
     if (isChinese) {
         queryKey =@"SymptomNameCn";
     }
@@ -242,18 +246,19 @@
         queryKey = @"SymptomNameEn";
     }
 
-    for (NSDictionary *symptomDict in textArray)
+    for (int i =0;i< [textArray count];i++)
     {
+        NSDictionary *symptomDict = [textArray objectAtIndex:i];
         NSString *text = [symptomDict objectForKey:queryKey];
         CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
         textSize.width += horizonPadding*2;
         textSize.height += verticalPadding*2;
-        [heightArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:textSize.width],@"TextSizeWidth",[NSNumber numberWithFloat:textSize.height],@"TextSizeHeight", nil]];
+        //[heightArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:textSize.width],@"TextSizeWidth",[NSNumber numberWithFloat:textSize.height],@"TextSizeHeight", nil]];
         //UILabel *label = nil;
-        CGRect labelFrame;
+        NGDiagnoseLabel *label = nil;
         if (!gotPreviousFrame) {
             //label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, textSize.width, textSize.height)];
-            labelFrame =CGRectMake(0, 0, textSize.width, textSize.height);
+            label = [[NGDiagnoseLabel alloc] initWithFrame:CGRectMake(0, 0, textSize.width, textSize.height)];
             totalHeight = textSize.height;
         } else {
             CGRect newRect = CGRectZero;
@@ -264,30 +269,35 @@
                 newRect.origin = CGPointMake(previousFrame.origin.x + previousFrame.size.width + imageMargin, previousFrame.origin.y);
             }
             newRect.size = textSize;
-            labelFrame = newRect;
+            label = [[NGDiagnoseLabel alloc] initWithFrame:newRect];
             //label = [[UILabel alloc] initWithFrame:newRect];
         }
-        previousFrame = labelFrame;
+        previousFrame = label.frame;
         gotPreviousFrame = YES;
-//        [label setFont:[UIFont systemFontOfSize:FONT_SIZE]];
-//        if (!lblBackgroundColor) {
-//            [label setBackgroundColor:BACKGROUND_COLOR];
-//        } else {
-//            [label setBackgroundColor:lblBackgroundColor];
-//        }
-//        [label setTextColor:TEXT_COLOR];
-//        [label setText:text];
-//        [label setTextAlignment:UITextAlignmentCenter];
-//        [label setShadowColor:TEXT_SHADOW_COLOR];
-//        [label setShadowOffset:TEXT_SHADOW_OFFSET];
-//        [label.layer setMasksToBounds:YES];
-//        [label.layer setCornerRadius:CORNER_RADIUS];
-//        [label.layer setBorderColor:BORDER_COLOR];
-//        [label.layer setBorderWidth: BORDER_WIDTH];
-//        [self addSubview:label];
+        [label setFont:font];
+        label.userInteractionEnabled = YES;
+        UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(userTappedDiagnose:)];
+        [label addGestureRecognizer:tap];
+        label.numberOfLines = 0;
+
+        [label setBackgroundColor:[UIColor whiteColor]];
+        [label.layer setBorderColor:[UIColor whiteColor].CGColor];
+        [label setTextColor:[UIColor blackColor]];
+        [label setText:text];
+        [label setTextAlignment:UITextAlignmentCenter];
+        [label.layer setMasksToBounds:YES];
+        [label.layer setCornerRadius:5];
+        label.tag = i+10;
+        label.customTag = typeId;
+        
+        [label.layer setBorderWidth: 0.5f];
+        
+        [diagnoseView addSubview:label];
     }
-    [heightArray insertObject:[NSNumber numberWithFloat:totalHeight] atIndex:0];
-    return heightArray;
+    [diagnoseView setFrame:CGRectMake(10, 10, 280, totalHeight) ];
+    [self.diagnoseViewDict setObject:diagnoseView forKey:typeId];
+    //[heightArray insertObject:[NSNumber numberWithFloat:totalHeight] atIndex:0];
+    return [NSNumber numberWithFloat:totalHeight];
 }
 - (void)keyboardWillShow:(NSNotification *)notification {
 	
@@ -427,9 +437,13 @@
     else
     {
         NGDiagnoseCell *cell = (NGDiagnoseCell*)[self.listView dequeueReusableCellWithIdentifier:@"NGDiagnoseCell"];
-        //NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
+        NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
         NSDictionary *symptomDict = [symptomTypeRows objectAtIndex:indexPath.row];
-        NSString *symptomTypeId = [symptomDict objectForKey:COLUMN_NAME_SymptomTypeId];
+        //NSString *symptomTypeId = [symptomDict objectForKey:COLUMN_NAME_SymptomTypeId];
+        for (UIView *subv in [cell.diagnosesView subviews])
+        {
+            [subv removeFromSuperview];
+        }
         UIColor *selectColor = [LZUtility getSymptomTypeColorForId:symptomTypeId];
         NSString *queryKey;
         if (isChinese)
@@ -440,21 +454,37 @@
         {
             queryKey = @"SymptomTypeNameEn";
         }
+        UIView *diagnoseView = [self.diagnoseViewDict objectForKey:symptomTypeId];
+        
         NSString *typeStr = [symptomDict objectForKey:queryKey];
         cell.nameLabel.text =[NSString stringWithFormat:@"  %@",typeStr];
         cell.nameLabel.backgroundColor = selectColor;
         cell.nameLabel.layer.borderWidth = 0.5f;
         cell.nameLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
-        NSArray *heightArray = [self.symptomRowHeightDict objectForKey:symptomTypeId];
-        NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
+        NSNumber *heightNum = [self.symptomRowHeightDict objectForKey:symptomTypeId];
         NSMutableArray *itemStateArray = [self.symptomStateDict objectForKey:symptomTypeId];
-        [cell.diagnosesView displayForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray selectedColor:selectColor itemStateArray:itemStateArray heightArray:heightArray isChinese:isChinese];
+        for (int i=0; i<[itemStateArray count] ; i++)
+        {
+            NSNumber *state = [itemStateArray objectAtIndex:i];
+            NGDiagnoseLabel *label = (NGDiagnoseLabel*)[diagnoseView viewWithTag:i+10];
+            if ([state boolValue])
+            {
+                [label setBackgroundColor:selectColor];
+                [label.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+            }
+            else
+            {
+                [label setBackgroundColor:[UIColor whiteColor]];
+                [label.layer setBorderColor:[UIColor whiteColor].CGColor];
+            }
+
+        }
         
-        float height = [(NSNumber*)[heightArray objectAtIndex:0] floatValue];
+        float height = [heightNum floatValue];
         cell.backView.frame =CGRectMake(10, 0, 300, height+80);
         cell.diagnosesView.frame = CGRectMake(10, 55, 280, height);
-        cell.diagnosesView.cellIndex = indexPath;
-        cell.diagnosesView.delegate = self;
+        [cell.diagnosesView addSubview:diagnoseView];
+        [diagnoseView setFrame:CGRectMake(0, 0, 280, height)];
         //cell.diagnosesView.backgroundColor = [UIColor blueColor];
         cell.backView.layer.borderWidth = 0.5f;
         cell.backView.layer.borderColor = [UIColor lightGrayColor].CGColor;
@@ -471,28 +501,46 @@
     else
     {
         NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
-        NSArray *heightArray = [self.symptomRowHeightDict objectForKey:symptomTypeId];
-        if (heightArray != nil && [heightArray count]!= 0)
+        NSNumber *heightNum = [self.symptomRowHeightDict objectForKey:symptomTypeId];
+        if (heightNum != nil)
         {
-            return [(NSNumber*)[heightArray objectAtIndex:0] floatValue]+100;
+            return [heightNum floatValue]+100;
         }
         else
         {
             NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
             
-            NSArray* newHeightArray =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray];
-            [self.symptomRowHeightDict setObject:newHeightArray forKey:symptomTypeId];
-            return [(NSNumber*)[newHeightArray objectAtIndex:0] floatValue]+100;
+            NSNumber* newHeight =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray typeId:symptomTypeId];
+            [self.symptomRowHeightDict setObject:newHeight forKey:symptomTypeId];
+            return [newHeight floatValue]+100;
         }
     }
 }
-#pragma mark- NGDiagnosesViewDelegate
--(void)ItemState:(BOOL )state tag:(int)tag forIndexPath:(NSIndexPath *)indexPath
+-(void)userTappedDiagnose:(UITapGestureRecognizer*)sender
 {
-    NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
-    NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
+    NGDiagnoseLabel *label = (NGDiagnoseLabel *)sender.view;
+    int tag = label.tag-10;
+    NSString *typeId = (NSString*)label.customTag;
+    UIColor *selectColor = [LZUtility getSymptomTypeColorForId:typeId];
+    NSMutableArray *itemStateArray = [self.symptomStateDict objectForKey:typeId];
+    NSNumber *state = [itemStateArray objectAtIndex:tag];
+    NSNumber *newState;
+    if ([state boolValue])
+    {
+        newState = [NSNumber numberWithBool:NO];
+        [label setBackgroundColor:[UIColor clearColor]];
+        [label.layer setBorderColor:[UIColor clearColor].CGColor];
+    }
+    else
+    {
+        newState = [NSNumber numberWithBool:YES];
+        [label setBackgroundColor:selectColor];
+        [label.layer setBorderColor:[UIColor lightGrayColor].CGColor];
+    }
+    [itemStateArray replaceObjectAtIndex:tag withObject:newState];
+    NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:typeId];
     NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:tag];
-
+    
     NSString *text = [symptomDict objectForKey:@"SymptomId"];
     if (state)
     {
@@ -503,17 +551,12 @@
         [self.userSelectedSymptom removeObject:text];
     }
     [self checkSubmitItemEnableState];
-//    if ([self.userSelectedSymptom count]!= 0)
+//    if (self.delegate && [self.delegate respondsToSelector:@selector(ItemState:tag:forIndexPath:)])
 //    {
-//        [self.navigationItem.rightBarButtonItem setEnabled:YES];
+//        [self.delegate ItemState:[newState boolValue] tag:tag forIndexPath:self.cellIndex];
 //    }
-//    else
-//    {
-//        [self.navigationItem.rightBarButtonItem setEnabled:NO];
-//    }
-    
-    
 }
+
 #pragma mark- UITextFieldDelegate
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField        // return NO to disallow editing.
 {

@@ -191,7 +191,6 @@
 		5FF08A9D1850A5AD00A954C8 /* fork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF08A9B1850A5AD00A954C8 /* fork@2x.png */; };
 		5FF08A9E1850A5AD00A954C8 /* history@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF08A9C1850A5AD00A954C8 /* history@2x.png */; };
 		5FF593D5183DBB970011CEA3 /* NGDiagnoseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */; };
-		5FF593D8183DBC210011CEA3 /* NGDiagnosesView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */; };
 		5FF593DD183E01B60011CEA3 /* 体温计@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593D9183E01B60011CEA3 /* 体温计@2x.png */; };
 		5FF593DE183E01B60011CEA3 /* 体重@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593DA183E01B60011CEA3 /* 体重@2x.png */; };
 		5FF593DF183E01B60011CEA3 /* 心跳@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593DB183E01B60011CEA3 /* 心跳@2x.png */; };
@@ -205,6 +204,7 @@
 		5FF6320417718E100068CBFE /* LZNutrientionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF6320117718E0F0068CBFE /* LZNutrientionManager.m */; };
 		5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
 		5FF8473D1758546900DEA6DE /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8473B1758546900DEA6DE /* README.mdown */; };
+		5FF9D9F01874389500F6A525 /* NGDiagnoseLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF9D9EF1874389500F6A525 /* NGDiagnoseLabel.m */; };
 		FC1D1C27185EF0F500911A6C /* LZKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC1D1C26185EF0F500911A6C /* LZKeychainManager.m */; };
 		FCEE441D1851FC24008329AF /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCEE441C1851FC24008329AF /* libCorePlot-CocoaTouch.a */; };
 		FCEE44201851FC98008329AF /* LZScatterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCEE441F1851FC98008329AF /* LZScatterViewController.m */; };
@@ -493,8 +493,6 @@
 		5FF08A9C1850A5AD00A954C8 /* history@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "history@2x.png"; path = "nutrition/Resource/history@2x.png"; sourceTree = "<group>"; };
 		5FF593D3183DBB970011CEA3 /* NGDiagnoseCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDiagnoseCell.h; path = nutrition/Class/NGDiagnoseCell.h; sourceTree = "<group>"; };
 		5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnoseCell.m; path = nutrition/Class/NGDiagnoseCell.m; sourceTree = "<group>"; };
-		5FF593D6183DBC210011CEA3 /* NGDiagnosesView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDiagnosesView.h; path = nutrition/Class/NGDiagnosesView.h; sourceTree = "<group>"; };
-		5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnosesView.m; path = nutrition/Class/NGDiagnosesView.m; sourceTree = "<group>"; };
 		5FF593D9183E01B60011CEA3 /* 体温计@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "体温计@2x.png"; path = "nutrition/Resource/体温计@2x.png"; sourceTree = "<group>"; };
 		5FF593DA183E01B60011CEA3 /* 体重@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "体重@2x.png"; path = "nutrition/Resource/体重@2x.png"; sourceTree = "<group>"; };
 		5FF593DB183E01B60011CEA3 /* 心跳@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "心跳@2x.png"; path = "nutrition/Resource/心跳@2x.png"; sourceTree = "<group>"; };
@@ -522,6 +520,8 @@
 		5FF847391758546900DEA6DE /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MBProgressHUD.h; path = nutrition/MBProgressHUD/MBProgressHUD.h; sourceTree = "<group>"; };
 		5FF8473A1758546900DEA6DE /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MBProgressHUD.m; path = nutrition/MBProgressHUD/MBProgressHUD.m; sourceTree = "<group>"; };
 		5FF8473B1758546900DEA6DE /* README.mdown */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = README.mdown; path = nutrition/MBProgressHUD/README.mdown; sourceTree = "<group>"; };
+		5FF9D9EE1874389500F6A525 /* NGDiagnoseLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDiagnoseLabel.h; path = nutrition/Class/NGDiagnoseLabel.h; sourceTree = "<group>"; };
+		5FF9D9EF1874389500F6A525 /* NGDiagnoseLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDiagnoseLabel.m; path = nutrition/Class/NGDiagnoseLabel.m; sourceTree = "<group>"; };
 		FC1D1C25185EF0F500911A6C /* LZKeychainManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZKeychainManager.h; path = nutrition/Class/LZKeychainManager.h; sourceTree = "<group>"; };
 		FC1D1C26185EF0F500911A6C /* LZKeychainManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZKeychainManager.m; path = nutrition/Class/LZKeychainManager.m; sourceTree = "<group>"; };
 		FCEE43D21851FC23008329AF /* CorePlot-CocoaTouch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CorePlot-CocoaTouch.h"; sourceTree = "<group>"; };
@@ -966,10 +966,10 @@
 		5F7F71F31840C91300724397 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				5FF593D6183DBC210011CEA3 /* NGDiagnosesView.h */,
-				5FF593D7183DBC210011CEA3 /* NGDiagnosesView.m */,
 				5F7F71FA1840EAC000724397 /* NGRecommendFoodView.h */,
 				5F7F71FB1840EAC000724397 /* NGRecommendFoodView.m */,
+				5FF9D9EE1874389500F6A525 /* NGDiagnoseLabel.h */,
+				5FF9D9EF1874389500F6A525 /* NGDiagnoseLabel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1546,12 +1546,12 @@
 				FC1D1C27185EF0F500911A6C /* LZKeychainManager.m in Sources */,
 				5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */,
 				5FE436CE175F29D5003947ED /* LZKeyboardToolBar.m in Sources */,
+				5FF9D9F01874389500F6A525 /* NGDiagnoseLabel.m in Sources */,
 				5F746C081769EB9A00E68D0E /* LZReviewAppManager.m in Sources */,
 				5F7F71FC1840EAC000724397 /* NGRecommendFoodView.m in Sources */,
 				5FF631DF17702D630068CBFE /* GADMasterViewController.m in Sources */,
 				5FF593D5183DBB970011CEA3 /* NGDiagnoseCell.m in Sources */,
 				5FF6320417718E100068CBFE /* LZNutrientionManager.m in Sources */,
-				5FF593D8183DBC210011CEA3 /* NGDiagnosesView.m in Sources */,
 				5FF08A9718506A9800A954C8 /* NGFoodListViewController.m in Sources */,
 				5FCC5BEB17AA30A600796B24 /* LZDebugSettingsViewController.m in Sources */,
 				5F90D80317AF8873000AEC06 /* mongoose.c in Sources */,
