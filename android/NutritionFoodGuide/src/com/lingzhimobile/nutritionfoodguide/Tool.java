@@ -277,11 +277,12 @@ public class Tool {
 			String colName = colNames[i];
 			int colIdx = cs.getColumnIndex(colName);
 			String colValStr = cs.getString(colIdx);
-			
 			if ( Cursor.FIELD_TYPE_STRING == cs.getType(colIdx) ){
 				hmRow.put(colName, colValStr);
 			}else{
 				if (Constants.COLUMN_NAME_NDB_No.equalsIgnoreCase(colName) || Constants.COLUMN_NAME_FoodId.equalsIgnoreCase(colName)){
+					hmRow.put(colName, colValStr);
+				}else if (colValStr==null){
 					hmRow.put(colName, colValStr);
 				}else{
 					Object colValObj = null;
