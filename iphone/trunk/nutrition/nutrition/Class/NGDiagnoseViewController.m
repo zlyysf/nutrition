@@ -143,7 +143,10 @@
     {
         [self.currentTextView resignFirstResponder];
     }
-
+    if (![self checkSubmitItemEnableState])
+    {
+        return;
+    }
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
     NGHealthReportViewController *healthReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGHealthReportViewController"];
     NSMutableArray *symptomsByTypeArray = [[NSMutableArray alloc]init];
@@ -202,7 +205,7 @@
 //    [MobClick endLogPageView:UmengPathGeRenXinXi];
 }
 
--(void)checkSubmitItemEnableState
+-(BOOL)checkSubmitItemEnableState
 {
     BOOL hasInput = NO;
     for (NSString *key in [self.userInputValueDict allKeys])
@@ -217,10 +220,12 @@
     if (hasInput || [self.userSelectedSymptom count]!= 0)
     {
         [self.navigationItem.rightBarButtonItem setEnabled:YES];
+        return YES;
     }
     else
     {
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
+        return NO;
     }
 
 }
@@ -440,9 +445,10 @@
         NSString *symptomTypeId = [self.symptomTypeIdArray objectAtIndex:indexPath.row];
         NSDictionary *symptomDict = [symptomTypeRows objectAtIndex:indexPath.row];
         //NSString *symptomTypeId = [symptomDict objectForKey:COLUMN_NAME_SymptomTypeId];
-        for (UIView *subv in [cell.diagnosesView subviews])
+        UIView *viewToRemove = [cell.backView viewWithTag:1];
+        if (viewToRemove!= nil)
         {
-            [subv removeFromSuperview];
+            [viewToRemove removeFromSuperview];
         }
         UIColor *selectColor = [LZUtility getSymptomTypeColorForId:symptomTypeId];
         NSString *queryKey;
@@ -463,6 +469,7 @@
         cell.nameLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
         NSNumber *heightNum = [self.symptomRowHeightDict objectForKey:symptomTypeId];
         NSMutableArray *itemStateArray = [self.symptomStateDict objectForKey:symptomTypeId];
+        NSLog(@"begin state");
         for (int i=0; i<[itemStateArray count] ; i++)
         {
             NSNumber *state = [itemStateArray objectAtIndex:i];
@@ -482,10 +489,10 @@
         
         float height = [heightNum floatValue];
         cell.backView.frame =CGRectMake(10, 0, 300, height+80);
-        cell.diagnosesView.frame = CGRectMake(10, 55, 280, height);
-        [cell.diagnosesView addSubview:diagnoseView];
-        [diagnoseView setFrame:CGRectMake(0, 0, 280, height)];
-        //cell.diagnosesView.backgroundColor = [UIColor blueColor];
+        
+        [cell.backView addSubview:diagnoseView];
+        [diagnoseView setFrame:CGRectMake(10, 55, 280, height)];
+        diagnoseView.tag = 1;
         cell.backView.layer.borderWidth = 0.5f;
         cell.backView.layer.borderColor = [UIColor lightGrayColor].CGColor;
         return cell;
@@ -542,7 +549,7 @@
     NSDictionary *symptomDict = [symptomIdRelatedArray objectAtIndex:tag];
     
     NSString *text = [symptomDict objectForKey:@"SymptomId"];
-    if (state)
+    if ([newState boolValue])
     {
         [self.userSelectedSymptom addObject:text];
     }

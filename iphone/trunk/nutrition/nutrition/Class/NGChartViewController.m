@@ -16,11 +16,12 @@
 @property (nonatomic,strong)NSArray *distinctMonthsArray;
 @property (nonatomic,assign)int totalPage;
 @property (nonatomic,strong)NSMutableDictionary *historyDict;
+@property (nonatomic,assign)CGRect contentRect;
 
 @end
 
 @implementation NGChartViewController
-@synthesize chart1Controller,chart2Controller,chart3Controller,currentPage,currentScatterType,totalPage,historyDict,distinctMonthsArray;
+@synthesize chart1Controller,chart2Controller,chart3Controller,currentPage,currentScatterType,totalPage,historyDict,distinctMonthsArray,contentRect;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -34,7 +35,7 @@
 {
     [super viewDidLoad];
     CGSize screenSize = [UIScreen mainScreen].bounds.size;
-    CGRect contentRect = CGRectMake(0, 0, screenSize.width, screenSize.height - 64-49-self.contentTypeChangeControl.frame.size.height);
+    contentRect = CGRectMake(0, 0, screenSize.width, screenSize.height - 64-49-self.contentTypeChangeControl.frame.size.height);
     chart1Controller = [[LZScatterViewController alloc]init];
     [chart1Controller configureScatterView:contentRect];
     
@@ -86,8 +87,8 @@
         int lastMonth = [last intValue]%100;
         totalPage =(lastYear - firstYear)*12+lastMonth-firstMonth+1;
         currentPage = totalPage-1;
-        CGFloat height = self.contentScrollView.frame.size.height;
-        [self.contentScrollView setContentSize:CGSizeMake(totalPage*320, height)];
+        //CGFloat height = self.contentScrollView.frame.size.height;
+        [self.contentScrollView setContentSize:CGSizeMake(totalPage*320, contentRect.size.height)];
     }
     [self displayContentForPage:currentPage];
 }
