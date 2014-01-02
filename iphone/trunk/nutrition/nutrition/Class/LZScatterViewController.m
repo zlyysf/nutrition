@@ -137,8 +137,9 @@ const float TickIntervalHeartbeat = 5.0;
     }
     else if (self.scatterType == ScatterTypeBP) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.0) length:CPTDecimalFromFloat(33.7)];
-        xOrthogonalCoordinate = 60;
-        yMaxTick = 202;
+        CPTPlotRange *yRange = [self yRange];
+        xOrthogonalCoordinate = yRange.locationDouble;
+        yMaxTick = yRange.locationDouble + yRange.lengthDouble + 4;
     }
     else if (self.scatterType == ScatterTypeHeartbeat) {
         plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
@@ -477,18 +478,35 @@ const float TickIntervalHeartbeat = 5.0;
     static int gridLineNum = 8;
     float minValue = 0;
     float maxValue = 0;
-    for (NSUInteger i = 0; i < self.dataForPlot.count; i++) {
-        float value = [self.dataForPlot[i][@"y"] floatValue];
-        if (i == 0) {
-            minValue = value;
-            maxValue = value;
-        }
-        else {
-            if (value < minValue) {
-                minValue = value;
+    int minBPValue = 0;
+    int maxBPValue = 0;
+    if (self.scatterType == ScatterTypeBP) {
+        for (NSArray *bpValues in self.dataForPlot) {
+            for (NSDictionary *valuePair in bpValues) {
+                int value = [valuePair[@"y"] intValue];
+                if (value < minBPValue || minBPValue == 0) {
+                    minBPValue = value;
+                }
+                if (value > maxValue || maxBPValue == 0) {
+                    maxBPValue = value;
+                }
             }
-            if (value > maxValue) {
+        }
+    }
+    else {
+        for (NSUInteger i = 0; i < self.dataForPlot.count; i++) {
+            float value = [self.dataForPlot[i][@"y"] floatValue];
+            if (i == 0) {
+                minValue = value;
                 maxValue = value;
+            }
+            else {
+                if (value < minValue) {
+                    minValue = value;
+                }
+                if (value > maxValue) {
+                    maxValue = value;
+                }
             }
         }
     }
@@ -570,6 +588,39 @@ const float TickIntervalHeartbeat = 5.0;
                 minValue = floor(minValue);
             }
             maxValue = 42.0;
+            break;
+        case ScatterTypeBP:
+            if (minBPValue == 0 || maxBPValue == 0) {
+                minValue = 60.0;
+                maxValue = 220.0;
+            }
+            else {
+                int quotient = minBPValue / 10;
+                int remainder = quotient % 2;
+                if (remainder == 0) {
+                    minBPValue = quotient * 10;
+                }
+                else {
+                    minBPValue = (quotient - 1) * 10;
+                }
+                
+                quotient = maxBPValue / (int)TickIntervalBP;
+                remainder = maxBPValue % (int)TickIntervalBP;
+                if (remainder > 0) {
+                    maxBPValue = (quotient + 1) * TickIntervalBP;
+                }
+                int num = (maxBPValue - minBPValue) / TickIntervalBP;
+                if (num < gridLineNum) {
+                    minBPValue -= ((gridLineNum - num) / 2) * TickIntervalBP;
+                    maxBPValue += ((gridLineNum -num) - (gridLineNum - num) / 2) * TickIntervalBP;
+                }
+                if (minBPValue <= 0) {
+                    minValue = 60.0;
+                }
+                else
+                    minValue = minBPValue;
+                maxValue = maxBPValue;
+            }
             break;
         case ScatterTypeHeartbeat:
             if (self.dataForPlot.count == 0) {
