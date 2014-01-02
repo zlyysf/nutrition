@@ -337,7 +337,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 //		statesDrawable.addState(new int[] {android.R.attr.state_checked},checkedColorDrawable);
 //		statesDrawable.addState(new int[] { },normalColorDrawable);
 		
-		final float[] roundedCorners = new float[] { 30, 30, 30, 30, 30, 30, 30, 30 };
+		final float[] roundedCorners = new float[] { 11, 11, 11, 11, 11, 11, 11, 11 };
 		RoundRectShape roundRectShape1 = new RoundRectShape(roundedCorners, null,null);
 		
 		ShapeDrawable roundShape_checkedColor = new ShapeDrawable(roundRectShape1);

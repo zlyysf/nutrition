@@ -1570,7 +1570,7 @@ public class Tool {
 	public static void changeBackground_NutritionButton(Activity curActv, View vwNutrition, String nutrientId){
 		HashMap<String, Integer> nutrientColorMapping = NutritionTool.getNutrientColorMapping();
 		Integer nutrientColorResId = nutrientColorMapping.get(nutrientId);
-		final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
+		final float[] roundedCorners = new float[] { 11, 11, 11, 11, 11, 11, 11, 11 };
 		RoundRectShape RoundRectShape1 = new RoundRectShape(roundedCorners, null,null);
 		ShapeDrawable ShapeDrawable1 = new ShapeDrawable(RoundRectShape1);
 //		ShapeDrawable1.getPaint().setColor(Color.parseColor("#FF0000"));
