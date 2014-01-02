@@ -13,6 +13,7 @@
     <color name="radioAsTabBgColor2">#3daf2d</color>
     <color name="buttonsBarInFoodCombination">#5af4f2ec</color>  <!--65%透明度 --> 
     <color name="halfTransparentBlack">#80000000</color>
+    <color name="fourtyTransparentBlack">#99000000</color> <!-- 40% -->
     
     <color name="spinnerItemTimeTypeBg">#f366c13e</color> <!--不透明度95% f366c13e   -->
     <color name="spinnerItemTimeTypeBgPressedAdd">#800f941a</color> <!--不透明度50% --> 
