@@ -354,7 +354,7 @@ public class TestCaseDA {
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(61));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(80));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(140));
-		    Object[] Symptoms = new Object[]{"头晕","易流泪"};
+		    Object[] Symptoms = new Object[]{"头晕","视觉模糊"};
 		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
 		    ArrayList<Object> SymptomsByType = new ArrayList<Object>();
 		    
@@ -421,7 +421,7 @@ public class TestCaseDA {
 		    
 		    ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
 		    ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"夜尿","多尿"});
-		    typeAndSymptoms1.add("排泄");
+		    typeAndSymptoms1.add("消化");
 		    typeAndSymptoms1.add(SymptomsOfType1);
 		    SymptomsByType.add(typeAndSymptoms1);
 		    
@@ -667,7 +667,7 @@ public class TestCaseDA {
             ArrayList<Object> SymptomsByType = new ArrayList<Object>();
             
             ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
-            ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"松动","脱落"});
+            ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"牙齿松动","牙齿脱落"});
             typeAndSymptoms1.add("牙齿");
             typeAndSymptoms1.add(SymptomsOfType1);
             SymptomsByType.add(typeAndSymptoms1);
@@ -723,7 +723,7 @@ public class TestCaseDA {
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(70));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(75));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(135));
-		    Object[] Symptoms = new Object[]{"脸下垂","易疲劳"};
+		    Object[] Symptoms = new Object[]{"脸下垂","眼睛易疲劳"};
 		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             ArrayList<Object> SymptomsByType = new ArrayList<Object>();
             
@@ -784,18 +784,18 @@ public class TestCaseDA {
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(73));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(78));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(138));
-		    Object[] Symptoms = new Object[]{"脸抽搐","浑浊"};
+		    Object[] Symptoms = new Object[]{"脸抽搐","眼球浑浊"};
 		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             ArrayList<Object> SymptomsByType = new ArrayList<Object>();
             
             ArrayList<Object> typeAndSymptoms1 = new ArrayList<Object>();
-            ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"胸闷","左下或下腹痛"});
+            ArrayList<String> SymptomsOfType1 = Tool.convertFromArrayToList(new String[]{"胸闷","下腹痛"});
             typeAndSymptoms1.add("胸腹腔");
             typeAndSymptoms1.add(SymptomsOfType1);
             SymptomsByType.add(typeAndSymptoms1);
             
             ArrayList<Object> typeAndSymptoms2 = new ArrayList<Object>();
-            ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"松弛","皮肤干燥","皱纹","伤口不愈合"});
+            ArrayList<String> SymptomsOfType2 = Tool.convertFromArrayToList(new String[]{"皮肤松弛","皮肤干燥","皮肤皱纹","伤口不愈合"});
             typeAndSymptoms2.add("皮肤");
             typeAndSymptoms2.add(SymptomsOfType2);
             SymptomsByType.add(typeAndSymptoms2);
@@ -845,7 +845,7 @@ public class TestCaseDA {
 		    InputNameValuePairsData.put(Constants.Key_HeartRate, Integer.valueOf(73));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureLow, Integer.valueOf(78));
 		    InputNameValuePairsData.put(Constants.Key_BloodPressureHigh, Integer.valueOf(138));
-		    Object[] Symptoms = new Object[]{"老年斑","发红发痒"};
+		    Object[] Symptoms = new Object[]{"老年斑","眼睛发红发痒"};
 		    InputNameValuePairsData.put(Constants.Key_Symptoms, Symptoms);
             ArrayList<Object> SymptomsByType = new ArrayList<Object>();
             
