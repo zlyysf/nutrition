@@ -217,6 +217,7 @@
     [workRe convertExcelToSqlite_TranslationItem];
     
     [workRe convertExcelToSqlite_SimptomNutrientIllnessSummarySheet];
+    [workRe checkIllnessInferenceTxtdoc];
 ////    [workRe convertExcelToSqlite_IllnessSuggestionTxtdoc];
     
     [db generateTableAndData_Food_Supply_DRI_Common_withIfNeedClearTable:true];
