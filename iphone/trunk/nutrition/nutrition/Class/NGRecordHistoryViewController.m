@@ -470,9 +470,9 @@
     //加标题栏 包括日期和星期
     UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 7, 120, 24)];
     [cell.backView addSubview:dateLabel];
-    [dateLabel setFont:[UIFont boldSystemFontOfSize:20]];
+    [dateLabel setFont:[UIFont systemFontOfSize:20]];
     [dateLabel setBackgroundColor:[UIColor clearColor]];
-    dateLabel.text = [NSString stringWithFormat:@"%d月%d日",month,day];
+    dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"lishi_c_riqi", @"历史页日期：%d月%d日"),month,day];
     
     UILabel *weekLabel = [[UILabel alloc]initWithFrame:CGRectMake(225, 10, 65, 21)];
     weekLabel.text =[self week:week];
@@ -497,6 +497,7 @@
     float startX;
     int perRowCount = 5;
     float startY = 40;
+    int delta = 0;
     for (int i=0; i< totalItemCount; i++)
     {
         
@@ -505,7 +506,11 @@
             startY += 40;
             floor+=1;
         }
-        startX = 10+(i-(floor-1)*perRowCount)*70;
+        if (i>0)
+        {
+            delta = -20;
+        }
+        startX = 10+(i-(floor-1)*perRowCount)*70+delta;
         
         if(i == 0)
         {
@@ -518,7 +523,7 @@
             [healthLabel.layer setBorderWidth:0.5f];
             [healthLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             //255,228,38
-            [healthLabel setBackgroundColor:[UIColor colorWithRed:255/255.f green:228/255.f blue:38/255.f alpha:0.4f]];
+            [healthLabel setBackgroundColor:[UIColor colorWithRed:255/255.f green:208/255.f blue:204/255.f alpha:1.0f]];
             [cell.backView addSubview:healthLabel];
         }
         else
@@ -883,24 +888,24 @@
     NSString*weekStr=nil;
     if(week==1)
     {
-        weekStr=@"周日";
+        weekStr=NSLocalizedString(@"lishi_c_zhouri", @"历史页周日：周日");
     }else if(week==2){
-        weekStr=@"周一";
+        weekStr=NSLocalizedString(@"lishi_c_zhouyi", @"历史页周日：周一");
         
     }else if(week==3){
-        weekStr=@"周二";
+        weekStr=NSLocalizedString(@"lishi_c_zhouer", @"历史页周日：周二");
         
     }else if(week==4){
-        weekStr=@"周三";
+        weekStr=NSLocalizedString(@"lishi_c_zhousan", @"历史页周日：周三");
         
     }else if(week==5){
-        weekStr=@"周四";
+        weekStr=NSLocalizedString(@"lishi_c_zhousi", @"历史页周日：周四");
         
     }else if(week==6){
-        weekStr=@"周五";
+        weekStr=NSLocalizedString(@"lishi_c_zhouwu", @"历史页周日：周五");
         
     }else if(week==7){
-        weekStr=@"周六";
+        weekStr=NSLocalizedString(@"lishi_c_zhouliu", @"历史页周日：周六");
         
     }
     return weekStr;

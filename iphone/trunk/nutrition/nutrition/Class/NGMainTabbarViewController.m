@@ -35,7 +35,7 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
     NGDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGDiagnoseViewController"];
     UINavigationController *nav = [[ UINavigationController alloc] initWithRootViewController:diagnoseViewController];
-    UITabBarItem *diagnoseItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"jiankangjilu_c_title", @"页面标题：健康记录") image:[UIImage imageNamed:@"clinic-50.png"] tag:0];
+    UITabBarItem *diagnoseItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"jiankangjilu_c_title", @"页面标题：养生") image:[UIImage imageNamed:@"clinic-50.png"] tag:0];
     nav.tabBarItem = diagnoseItem;
     
     NGRecordHistoryViewController *recordHistoryViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGRecordHistoryViewController"];
@@ -45,7 +45,7 @@
     
     NGChartViewController *chartViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGChartViewController"];
     UINavigationController *nav2 = [[ UINavigationController alloc] initWithRootViewController:chartViewController];
-    UITabBarItem *chartItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"tubiao_c_title", @"页面标题：图表") image:[UIImage imageNamed:@"line_chart-50.png"] tag:2];
+    UITabBarItem *chartItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"tubiao_c_title", @"页面标题：曲线") image:[UIImage imageNamed:@"line_chart-50.png"] tag:2];
     nav2.tabBarItem = chartItem;
     
     NGCyclopediaViewController *cyclopediaViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGCyclopediaViewController"];

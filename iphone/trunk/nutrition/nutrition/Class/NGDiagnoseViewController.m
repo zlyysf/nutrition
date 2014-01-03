@@ -45,20 +45,25 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"jiankangjilu_c_title", @"页面的标题：健康记录");
-    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 30)];
+    self.navigationItem.title = NSLocalizedString(@"jiankangjilu_c_navtitle", @"页面的标题：选择症状");
+    NSString *headerMessage =NSLocalizedString(@"jiankangjilu_c_header", @"页面表头：选择您今天的症状，然后点击查看养生报告。");
+    CGSize headerSize = [headerMessage sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(280, 999) lineBreakMode:UILineBreakModeWordWrap];
+
+    UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, headerSize.height+10)];
     [headerView setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 4, 280, 21)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, headerSize.width, headerSize.height)];
     [label setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0f]];
     [label setFont:[UIFont systemFontOfSize:14]];
-    [label setText:NSLocalizedString(@"jiankangjilu_c_header", @"页面表头：今天哪里不舒服吗？点击记录一下吧。")];
+    [label setNumberOfLines:0];
+    [label setLineBreakMode:UILineBreakModeWordWrap];
+    [label setText:headerMessage];
     symptomRowHeightDict = [[NSMutableDictionary alloc]init];
     diagnoseViewDict = [[NSMutableDictionary alloc]init];
     [label setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     [headerView addSubview:label];
     self.listView.tableHeaderView = headerView;
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
-    UIBarButtonItem *submitItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"jiankangjilu_c_tijiao", @"页面提交按钮：提交") style:UIBarButtonItemStyleBordered target:self action:@selector(getHealthReport)];
+    UIBarButtonItem *submitItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"jiankangjilu_c_chakan", @"页面查看按钮：查看") style:UIBarButtonItemStyleBordered target:self action:@selector(getHealthReport)];
     [submitItem setEnabled:NO];
     self.navigationItem.rightBarButtonItem = submitItem;
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(userInfoChanged:) name:Notification_SettingsChangedKey object:nil];
@@ -117,7 +122,7 @@
     {
         NSArray *symptomIdRelatedArray = [symptomRowsDict objectForKey:key];
         NSMutableArray *symptomState = [NSMutableArray array];
-        NSNumber* heightNum =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray typeId:key];
+        NSNumber* heightNum =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:10 verticalPadding:7 imageMargin:10 bottomMargin:25 textArray:symptomIdRelatedArray typeId:key];
         [symptomRowHeightDict setObject:heightNum forKey:key];
         for (int i = 0 ; i< [symptomIdRelatedArray count]; i++)
         {
@@ -256,8 +261,10 @@
         NSDictionary *symptomDict = [textArray objectAtIndex:i];
         NSString *text = [symptomDict objectForKey:queryKey];
         CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        NSLog(@"begin%f",textSize.height);
         textSize.width += horizonPadding*2;
         textSize.height += verticalPadding*2;
+        NSLog(@"after%f",textSize.height);
         //[heightArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:textSize.width],@"TextSizeWidth",[NSNumber numberWithFloat:textSize.height],@"TextSizeHeight", nil]];
         //UILabel *label = nil;
         NGDiagnoseLabel *label = nil;
@@ -277,6 +284,7 @@
             label = [[NGDiagnoseLabel alloc] initWithFrame:newRect];
             //label = [[UILabel alloc] initWithFrame:newRect];
         }
+        NSLog(@"%f,%f",label.frame.size.width,label.frame.size.height);
         previousFrame = label.frame;
         gotPreviousFrame = YES;
         [label setFont:font];
@@ -285,17 +293,14 @@
         [label addGestureRecognizer:tap];
         label.numberOfLines = 0;
 
-        [label setBackgroundColor:[UIColor whiteColor]];
-        [label.layer setBorderColor:[UIColor whiteColor].CGColor];
         [label setTextColor:[UIColor blackColor]];
         [label setText:text];
+        [label setOpaque:YES];
         [label setTextAlignment:UITextAlignmentCenter];
         [label.layer setMasksToBounds:YES];
         [label.layer setCornerRadius:5];
         label.tag = i+10;
         label.customTag = typeId;
-        
-        [label.layer setBorderWidth: 0.5f];
         
         [diagnoseView addSubview:label];
     }
@@ -477,12 +482,10 @@
             if ([state boolValue])
             {
                 [label setBackgroundColor:selectColor];
-                [label.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             }
             else
             {
-                [label setBackgroundColor:[UIColor whiteColor]];
-                [label.layer setBorderColor:[UIColor whiteColor].CGColor];
+                [label setBackgroundColor:[UIColor clearColor]];
             }
 
         }
@@ -517,7 +520,7 @@
         {
             NSArray *symptomIdRelatedArray = [self.symptomRowsDict objectForKey:symptomTypeId];
             
-            NSNumber* newHeight =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:6 verticalPadding:4 imageMargin:14 bottomMargin:25 textArray:symptomIdRelatedArray typeId:symptomTypeId];
+            NSNumber* newHeight =[self calculateHeightForFont:[UIFont systemFontOfSize:14] maxWidth:280 horizonPadding:10 verticalPadding:7 imageMargin:10 bottomMargin:25 textArray:symptomIdRelatedArray typeId:symptomTypeId];
             [self.symptomRowHeightDict setObject:newHeight forKey:symptomTypeId];
             return [newHeight floatValue]+100;
         }

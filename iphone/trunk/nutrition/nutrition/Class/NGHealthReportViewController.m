@@ -25,7 +25,7 @@
 
 #define AttentionItemLabelWidth 240
 #define AttentionItemOrderlabelWidth 25
-#define AttentionItemMargin 5
+#define AttentionItemMargin 8
 #define BigLabelFont [UIFont systemFontOfSize:22.f]
 #define SmallLabelFont [UIFont systemFontOfSize:14.f]
 #define MaxDisplayFoodCount 5
@@ -81,7 +81,7 @@
     HUD.delegate = self;
     self.listView.hidden = YES;
     selectedImage = [LZUtility createImageWithColor:ItemSelectedColor imageSize:CGSizeMake(300, 54)];
-    self.title = NSLocalizedString(@"jiankangbaogao_c_title", @"页面标题：健康报告");
+    self.title = NSLocalizedString(@"jiankangbaogao_c_title", @"页面标题：养生报告");
     	// Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
@@ -414,23 +414,23 @@
         {
             textSize.width = 40;
         }
-        textSize.width += 6*2;
-        textSize.height += 4*2;
+        textSize.width += 10*2;
+        textSize.height += 7*2;
         LZCustomDataButton *nutritionNameButton;
         UIColor *backColor =[LZUtility getNutrientColorForNutrientId:nutritionId];
         
         if (!gotPreviousFrame) {
-            nutritionNameButton = [[LZCustomDataButton alloc] initWithFrame:CGRectMake(10, startY, textSize.width, textSize.height)];
+            nutritionNameButton = [[LZCustomDataButton alloc] initWithFrame:CGRectMake(20, startY, textSize.width, textSize.height)];
             
             //labelFrame =CGRectMake(0, 0, textSize.width, textSize.height);
             totalHeight = textSize.height;
         } else {
             CGRect newRect = CGRectZero;
-            if (previousFrame.origin.x + previousFrame.size.width + textSize.width + 14 > 280) {
-                newRect.origin = CGPointMake(10, previousFrame.origin.y + previousFrame.size.height + 15);
+            if (previousFrame.origin.x + previousFrame.size.width + textSize.width + 10 > 270) {
+                newRect.origin = CGPointMake(20, previousFrame.origin.y + previousFrame.size.height + 15);
                 totalHeight += textSize.height + 15;
             } else {
-                newRect.origin = CGPointMake(previousFrame.origin.x + previousFrame.size.width + 14, previousFrame.origin.y);
+                newRect.origin = CGPointMake(previousFrame.origin.x + previousFrame.size.width + 10, previousFrame.origin.y);
             }
             newRect.size = textSize;
             nutritionNameButton = [[LZCustomDataButton alloc] initWithFrame:newRect];
@@ -960,7 +960,7 @@
             UILabel *headerLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 20)];
             [headerLabel setFont:SmallLabelFont];
             [headerLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:10.f]];
-            [headerLabel setText:NSLocalizedString(@"jiankangbaogao_c_zhuyishixiang", @"注意事项项标题：注意事项")];
+            [headerLabel setText:NSLocalizedString(@"jiankangbaogao_c_yangshengtieshi", @"养生贴士项标题：养生贴士")];
             [backView addSubview:headerLabel];
             NSString *suggestionQueryKey;
             if (isChinese)
@@ -982,7 +982,6 @@
                 [orderLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0f]];
                 [orderLabel setFont:SmallLabelFont];
                 [orderLabel setText:[NSString stringWithFormat:@"%d",k]];
-                [orderLabel setTextColor:[UIColor blackColor]];
                 [backView addSubview:orderLabel];
                 
                 UILabel *attentionItemLabel = [[UILabel  alloc]initWithFrame:CGRectMake(40,startY, textSize.width, textSize.height)];

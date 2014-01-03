@@ -20,9 +20,9 @@
 #import "NGIllnessInfoViewController.h"
 #import "NGNutritionInfoViewController.h"
 #define DiseaseItemTopMargin 10
-#define DiseaseItemMargin 9
-#define DiseaseItemBottomMarigin 40
-#define DiseaseItemLabelHeight 36
+#define DiseaseItemMargin 10
+#define DiseaseItemBottomMarigin 30
+#define DiseaseItemLabelHeight 30
 #define DiseaseItemLabelStartX 70
 #define DiseaseDetailArrowStartX 261
 #define FoodItemMargin 20
@@ -163,7 +163,7 @@
 //                [illnessButton setTitle:illnessName forState:UIControlStateNormal];
 
                 UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(DiseaseItemLabelStartX, 30+DiseaseItemTopMargin+i*(DiseaseItemLabelHeight+DiseaseItemMargin), 160, DiseaseItemLabelHeight)];
-                [illnessNameLabel setFont:[UIFont systemFontOfSize:22]];
+                [illnessNameLabel setFont:[UIFont systemFontOfSize:17]];
                 [illnessNameLabel setTextColor:[UIColor blackColor]];
                 [illnessNameLabel setText:illnessName];
                 [illnessNameLabel setBackgroundColor:[UIColor whiteColor]];
