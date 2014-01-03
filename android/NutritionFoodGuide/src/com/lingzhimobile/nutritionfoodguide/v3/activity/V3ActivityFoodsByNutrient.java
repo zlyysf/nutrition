@@ -119,7 +119,8 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
         DataAccess da = DataAccess.getSingleton(this);
         m_foodsData = da.getRichNutritionFoodForNutrient(mNutrientId, mToSupplyNutrientAmount, false);
         
-        m_tvNutrientFoods.setText(Tool.getStringFromIdWithParams(getResources(), R.string.chooseRichFood,new String[]{nutrientCaption}));
+        String s1 = Tool.getStringFromIdWithParams(getResources(), R.string.v3_chooseRichFood,new String[]{nutrientCaption});
+        m_tvNutrientFoods.setText(s1);
         
 	}
 	void setViewEventHandlers(){
@@ -155,7 +156,7 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 //			m_llRightTab.setVisibility(View.GONE);
 //		}
 		
-		m_rbDescription.setChecked(true);
+		m_rbFoods.setChecked(true);
 		switchViews();
 
 	}

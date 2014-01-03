@@ -3,7 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/v3_app_bg"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    >
+
 
     <include
         android:id="@+id/titleLayout"
@@ -13,7 +15,9 @@
 	    android:id="@+id/llFoods"
 	    android:layout_width="match_parent"
 	    android:layout_height="match_parent"
+	    android:layout_margin="10dip"
 	    android:orientation="vertical" 
+	    android:background="@drawable/bg_border_user_profile"
 	    >
 	    <ScrollView
 	        android:layout_width="match_parent"
@@ -24,11 +28,18 @@
 	            android:orientation="vertical" >
 	            
 	            <TextView
-				    android:id="@+id/tvNutrientFoods"
-				    android:layout_width="match_parent"
-				    android:layout_height="wrap_content"
-				    android:text="textview1"
-				    android:textColor="@color/black" />
+	                android:id="@+id/tvNutrientFoods"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="1px"
+	                android:layout_marginRight="1px"
+	                android:layout_marginTop="1px"
+	                android:background="#f3dcb7"
+	                android:gravity="center_vertical"
+	                android:minHeight="30dp"
+	                android:paddingLeft="10dp"
+	                android:text="textview1"
+	                android:textColor="@color/v3_content" />
 	
 	            <com.lingzhimobile.nutritionfoodguide.GridViewExpandHeight
 	                    android:id="@+id/gridView1"

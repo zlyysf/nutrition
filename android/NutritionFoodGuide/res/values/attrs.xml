@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>    
+
+	
+	<declare-styleable name="LayoutSquareVariety">
+        <attr name="time" format="float"/>
+        <attr name="offset" format="dimension"/>
+    </declare-styleable>
+</resources>

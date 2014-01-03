@@ -63,7 +63,8 @@
     <string name="youNeededNutrients">您需要补充的营养元素</string>
     <string name="weCanRecommend1InSum">我们可以继续为您推荐富含以上营养元素的食物</string>
     
-    <string name="chooseRichFood">下列是富含%s的食物，克数代表一天的推荐量。</string>
+    <string name="chooseRichFood">以下是富含%s的食物和每日推荐量</string>
+    <string name="v3_chooseRichFood">以下是富含%s的食物和每日推荐量</string>
     <string name="chooseNutrientsExplain">哪些营养素是您重点关注且是不能缺少的，请选择：</string>
     
     <string name="noFoodCombinationListForNow">暂无膳食清单</string>
