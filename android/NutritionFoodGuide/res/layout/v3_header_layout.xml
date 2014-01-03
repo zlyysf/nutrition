@@ -3,21 +3,23 @@
     android:id="@+id/titleLayout"
     android:layout_width="match_parent"
     android:layout_height="44dp"
-    
     android:background="@color/v3_header_bg"
-    android:orientation="horizontal" >
+    android:orientation="horizontal"
+     >
 
     <Button
         android:id="@+id/leftButton"
-        android:layout_marginLeft="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_centerInParent="true"
+        android:layout_marginLeft="10dp"
         android:background="@null"
+        android:drawableLeft="@drawable/v3_back_arrow_navbutton"
         android:text="LeftBtn"
-        android:textColor="@color/v3_title_normal_font"
+        android:textColor="@color/v3_navbutton_textcolor"
         android:textSize="17sp" />
+
 
     <TextView
         android:id="@+id/titleText"
@@ -36,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerInParent="true"
-        android:textColor="@color/v3_title_normal_font"
+        android:textColor="@color/v3_navbutton_textcolor"
         android:textSize="17sp"
         android:background="@null"
         android:text="RightBtn" />
