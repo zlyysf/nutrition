@@ -553,14 +553,18 @@
 }
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
-    CGSize pageSize = scrollView.frame.size;
-    currentPage = floor(scrollView.contentOffset.x / pageSize.width);
-    if (currentPage < 0 || currentPage >= totalPage)
+    if (scrollView == self.contentScrollView)
     {
-        return;
+        CGSize pageSize = scrollView.frame.size;
+        int page = floor(scrollView.contentOffset.x / pageSize.width);
+        if (page < 0 || page >= totalPage || page == currentPage)
+        {
+            return;
+        }
+        currentPage = page;
+        [self displayContentForPage:currentPage];
     }
-    [self displayContentForPage:currentPage];
-    //[self.photoScrollView setContentOffset:CGPointMake(self.view.bounds.size.width  * currentPhotoIndex, 0)];
+        //[self.photoScrollView setContentOffset:CGPointMake(self.view.bounds.size.width  * currentPhotoIndex, 0)];
 }
 
 @end

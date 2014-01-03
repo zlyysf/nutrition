@@ -390,11 +390,15 @@
             if (isChinese) {
                 cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_gongjin", @"体重项单位：公斤");
                 cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_sheshidu", @"体温项单位：摄氏度");
+                cell.weightTextField.placeholder = @"76";
+                cell.heatTextField.placeholder = @"37";
             }
             else
             {
                 cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_bang", @"体重项单位：磅");
                 cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_huashidu", @"体温项单位：华氏度");
+                cell.weightTextField.placeholder = @"35";
+                cell.heatTextField.placeholder = @"99";
             }
             
             cell.heartbeatUnitLabel.text = NSLocalizedString(@"jaingkanjilu_c_xintiaodanwei", @"心跳项单位：次/分钟");

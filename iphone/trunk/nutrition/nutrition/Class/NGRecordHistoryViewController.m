@@ -28,11 +28,12 @@
 @property (nonatomic,strong)NSMutableArray *table3DataSource;
 @property (nonatomic,strong)NSDictionary *symptomRowsDict;
 @property (nonatomic,strong)NSArray *symptomTypeRows;
+@property (nonatomic,strong) UILabel *recordEmptyDisplayLabel;
 @end
 
 @implementation NGRecordHistoryViewController
 //@synthesize cycleView;
-@synthesize distinctMonthsArray,currentPage,historyDict,totalPage,table1DataSource,table2DataSource,table3DataSource,symptomRowsDict,symptomTypeRows;
+@synthesize distinctMonthsArray,currentPage,historyDict,totalPage,table1DataSource,table2DataSource,table3DataSource,symptomRowsDict,symptomTypeRows,recordEmptyDisplayLabel;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -139,17 +140,42 @@
     {
         [view removeFromSuperview];
     }
+    if (self.recordEmptyDisplayLabel != nil && self.recordEmptyDisplayLabel.superview)
+    {
+        [self.recordEmptyDisplayLabel removeFromSuperview];
+    }
     if (totalPage == 1)
     {
         [self.navigationItem.leftBarButtonItem setEnabled:NO];
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
         if ([distinctMonthsArray count]==0)//empty
         {
-            NSCalendar* calendar = [NSCalendar currentCalendar];
-            NSDate *todayDate = [NSDate date];
-            unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit;
-            NSDateComponents* comp1 = [calendar components:unitFlags fromDate:todayDate];
-            self.navigationItem.title = [NSString stringWithFormat:@"%d.%d",comp1.year,comp1.month];
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSCalendar* calendar = [NSCalendar currentCalendar];
+                NSDate *todayDate = [NSDate date];
+                unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit;
+                NSDateComponents* comp1 = [calendar components:unitFlags fromDate:todayDate];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    
+                    self.navigationItem.title = [NSString stringWithFormat:@"%d.%d",comp1.year,comp1.month];
+                    if (self.recordEmptyDisplayLabel == nil)
+                    {
+                        self.recordEmptyDisplayLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 300, 30)];
+                        [self.recordEmptyDisplayLabel setText:NSLocalizedString(@"lishi_c_wulishi", @"历史页为空提示：无历史记录!")];
+                        
+                        [self.recordEmptyDisplayLabel setTextColor:[UIColor colorWithRed:125/255.f green:125/255.f blue:125/255.f alpha:1.0f]];
+                        [self.recordEmptyDisplayLabel setFont:[UIFont systemFontOfSize:17]];
+                    }
+                    else
+                    {
+                        [self.view addSubview:self.recordEmptyDisplayLabel];
+                        self.recordEmptyDisplayLabel.center = self.view.center;
+                    }
+                });
+            });
+            
+            
+            
         }
         else
         {
@@ -935,11 +961,13 @@
     if (scrollView == self.contentScrollView)
     {
         CGSize pageSize = scrollView.frame.size;
-        currentPage = floor(scrollView.contentOffset.x / pageSize.width);
-        if (currentPage < 0 || currentPage >= totalPage)
+        int page = floor(scrollView.contentOffset.x / pageSize.width);
+        
+        if (page < 0 || page >= totalPage || page == currentPage)
         {
             return;
         }
+        currentPage = page;
         [self displayContentForPage:currentPage];
     }
     
