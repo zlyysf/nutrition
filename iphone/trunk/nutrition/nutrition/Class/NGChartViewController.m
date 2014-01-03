@@ -116,6 +116,12 @@
             unsigned unitFlags = NSYearCalendarUnit | NSMonthCalendarUnit;
             NSDateComponents* comp1 = [calendar components:unitFlags fromDate:todayDate];
             self.navigationItem.title = [NSString stringWithFormat:@"%d.%d",comp1.year,comp1.month];
+            [self.contentScrollView addSubview:self.chart1Controller.view];
+            [self.chart1Controller.view setFrame:CGRectMake(0, 0, 320,height )];
+//            NSNumber *startLocal = [distinctMonthsArray objectAtIndex:0];
+//            self.navigationItem.title = [NSString stringWithFormat:@"%d.%d",[startLocal intValue]/100,[startLocal intValue]%100];
+            self.chart1Controller.dataForPlot = nil;//[self getDataSourceForMonthLocal:[startLocal intValue]];
+            [self.chart1Controller reloadData];
         }
         else
         {

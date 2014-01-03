@@ -162,9 +162,12 @@
                     {
                         self.recordEmptyDisplayLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 20, 300, 30)];
                         [self.recordEmptyDisplayLabel setText:NSLocalizedString(@"lishi_c_wulishi", @"历史页为空提示：无历史记录!")];
-                        
                         [self.recordEmptyDisplayLabel setTextColor:[UIColor colorWithRed:125/255.f green:125/255.f blue:125/255.f alpha:1.0f]];
                         [self.recordEmptyDisplayLabel setFont:[UIFont systemFontOfSize:17]];
+                        [self.recordEmptyDisplayLabel setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
+                        [self.recordEmptyDisplayLabel setTextAlignment:UITextAlignmentCenter];
+                        [self.view addSubview:self.recordEmptyDisplayLabel];
+                        self.recordEmptyDisplayLabel.center = self.view.center;
                     }
                     else
                     {
