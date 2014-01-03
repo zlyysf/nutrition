@@ -8,6 +8,9 @@
     <color name="v3_title_normal_font">#437147</color>
     <color name="v3_title_click_font">#40437147</color>
     
+    <color name="v3_label">#666666</color>
+    <color name="v3_content">#000000</color>
+    
     <color name="userInfoNormalFontColor">#575757</color>
     <color name="border_gray">#c2c2c2</color>
     <color name="nutrientRowClickBackgroundGray">#b7a99a</color>
