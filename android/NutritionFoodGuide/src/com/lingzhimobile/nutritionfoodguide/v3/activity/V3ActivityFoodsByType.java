@@ -69,9 +69,13 @@ public class V3ActivityFoodsByType extends V3BaseActivity {
 	void initViewsContent(){
 		Intent paramIntent = getIntent();
         mFoodCnType =  paramIntent.getStringExtra(Constants.COLUMN_NAME_CnType);
+        
+        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        if (prevActvTitle!=null)
+        	m_btnBack.setText(prevActvTitle);
 
-//		m_currentTitle = mFoodCnType;
-		m_tvTitle.setText(mFoodCnType);
+		m_currentTitle = mFoodCnType;
+		m_tvTitle.setText(m_currentTitle);
         
         DataAccess da = DataAccess.getSingleton(this);
         m_foodsData = da.getFoodsByShowingPart(null,null,mFoodCnType);
@@ -91,10 +95,10 @@ public class V3ActivityFoodsByType extends V3BaseActivity {
 	}
     
 	static class ListAdapterForFood extends BaseAdapter{
-		Activity m_thisActivity;
+		V3BaseActivity m_thisActivity;
 		ArrayList<HashMap<String, Object>> m_foodsData;
 		
-		public ListAdapterForFood(Activity thisActivity, ArrayList<HashMap<String, Object>> foodsData){
+		public ListAdapterForFood(V3BaseActivity thisActivity, ArrayList<HashMap<String, Object>> foodsData){
 			m_thisActivity = thisActivity;
 			m_foodsData = foodsData;
 		}
@@ -148,10 +152,10 @@ public class V3ActivityFoodsByType extends V3BaseActivity {
 	}//ListAdapterForFood
 	
 	static class OnClickListenerForInputFoodAmount extends OnClickListenerInListItem{
-		Activity m_thisActivity;
+		V3BaseActivity m_thisActivity;
 		ListAdapterForFood m_listAdapter;
 
-		public OnClickListenerForInputFoodAmount(Activity thisActivity, ListAdapterForFood listAdapter){
+		public OnClickListenerForInputFoodAmount(V3BaseActivity thisActivity, ListAdapterForFood listAdapter){
 			m_thisActivity = thisActivity;
 			m_listAdapter = listAdapter;
 		}
@@ -163,6 +167,7 @@ public class V3ActivityFoodsByType extends V3BaseActivity {
 			String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
 			Log.d(LogTag, "OnClickListenerForInputFoodAmount foodId="+foodId+", foodName="+foodName);
 			Intent intent1 = new Intent(m_thisActivity, ActivityFoodNutrition.class);
+			intent1.putExtra(Constants.IntentParamKey_BackButtonTitle, m_thisActivity.getCurrentTitle());
 			intent1.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
 			m_thisActivity.startActivity(intent1);
 		}

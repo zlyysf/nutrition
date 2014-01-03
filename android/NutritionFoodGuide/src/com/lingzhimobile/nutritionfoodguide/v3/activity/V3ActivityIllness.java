@@ -66,10 +66,12 @@ public class V3ActivityIllness extends V3BaseActivity {
 	}
     
     void initViewsContent(){
-    	Intent intent = getIntent();
-        m_IllnessId = intent.getStringExtra(Constants.COLUMN_NAME_IllnessId);
+    	Intent paramIntent = getIntent();
+        m_IllnessId = paramIntent.getStringExtra(Constants.COLUMN_NAME_IllnessId);
         
-        
+        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        if (prevActvTitle!=null)
+        	m_btnBack.setText(prevActvTitle);
     }
     
     void setViewEventHandlers(){
@@ -87,7 +89,9 @@ public class V3ActivityIllness extends V3BaseActivity {
     	HashMap<String, HashMap<String, Object>> illnessInfoDict2Level = GlobalVar.getAllIllness2LevelDict(this);
     	HashMap<String, Object> illnessInfo = illnessInfoDict2Level.get(m_IllnessId);
     	String illnessCaption = (String)illnessInfo.get(Constants.COLUMN_NAME_IllnessNameCn);
-    	m_tvTitle.setText(illnessCaption);
+    	
+    	m_currentTitle = illnessCaption;
+        m_tvTitle.setText(m_currentTitle);
     	
     	String url = (String)illnessInfo.get(Constants.COLUMN_NAME_UrlCn);
     	m_webView1.loadUrl(url);

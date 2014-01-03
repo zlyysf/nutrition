@@ -77,6 +77,8 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     HashMap<String, Double> m_DRIsDict ;
     Activity m_activity;
 
+
+	TextView m_tvTitle;
     ArrayList<TextView> m_tvNutrientVitaminList, m_tvNutrientMineralList, m_tvNutrientMacroList;
     GridView m_gvFoodType;
     
@@ -108,6 +110,13 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     void initViewHandles(View topView){
 
     	initHeaderLayout(topView);
+    	
+    	
+    	m_tvTitle = (TextView) topView.findViewById(R.id.titleText);
+    	Button btn1 = (Button) topView.findViewById(R.id.leftButton);
+    	btn1.setVisibility(View.GONE);
+    	btn1 = (Button) topView.findViewById(R.id.rightButton);
+    	btn1.setVisibility(View.GONE);
         
         TextView tvNutrientVitamin1 = (TextView)topView.findViewById(R.id.tvNutrientVitamin1);
         TextView tvNutrientVitamin2 = (TextView)topView.findViewById(R.id.tvNutrientVitamin2);
@@ -150,6 +159,9 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 
 	}
     void initViewsContent(){
+    	m_currentTitle = getResources().getString(R.string.tabCaption_encyclopedia);
+        m_tvTitle.setText(m_currentTitle);
+        
     	m_DRIsDict = NutritionTool.getDRIsDictOfCurrentUser(getActivity(), null);
     }
     void setViewEventHandlers(){
@@ -170,7 +182,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 //				Log.d(LogTag, "onItemClick "+foodCnType);
 				
 				Intent intent = new Intent(getActivity(), V3ActivityFoodsByType.class);
-//				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
+				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 //				intent.putExtra(Constants.IntentParamKey_InvokerType, mInvokerType);
 				intent.putExtra(Constants.COLUMN_NAME_CnType, foodTypeId);
 //				startActivityForResult(intent,IntentRequestCode_ActivitySearchFoodWithClass);
@@ -255,7 +267,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 				HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(getActivity());
 				HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientId);
 				Intent intent = new Intent(getActivity(), V3ActivityFoodsByNutrient.class);
-//				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
+				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 //				intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromNutrients);
 				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
 				intent.putExtra(Constants.Key_Amount, m_DRIsDict.get(nutrientId).doubleValue());
@@ -319,6 +331,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     		HashMap<String, Object> illnessRow = m_illnessRowList.get(m_rowPos);
     		String illnessId = (String)illnessRow.get(Constants.COLUMN_NAME_IllnessId);
     		Intent intent = new Intent(m_activity, V3ActivityIllness.class);
+    		intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 			intent.putExtra(Constants.COLUMN_NAME_IllnessId, illnessId);
 			startActivity(intent);
 		}

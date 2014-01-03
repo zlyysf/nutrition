@@ -31,6 +31,8 @@ public class V3SettingFragment extends V3BaseHeadFragment {
     RadioGroup genderRadioGroup, intensityRadioGroup;
     RadioButton maleRadioButton, femaleRadioButton, intensity1RadioButton, intensity2RadioButton, intensity3RadioButton, intensity4RadioButton;
     
+    Button m_btnSave;
+	TextView m_tvTitle;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +45,14 @@ public class V3SettingFragment extends V3BaseHeadFragment {
         View view = inflater.inflate(R.layout.v3_fragment_setting, container,
                 false);
         initHeaderLayout(view);
+        
+        m_tvTitle = (TextView) view.findViewById(R.id.titleText);
+        m_tvTitle.setText(R.string.tabCaption_info);
+    	m_btnSave = (Button) view.findViewById(R.id.rightButton);
+    	m_btnSave.setText(R.string.save);
+    	Button leftButton = (Button) view.findViewById(R.id.leftButton);
+    	leftButton.setVisibility(View.GONE);
+    	
         birthdayTextView = (TextView) view.findViewById(R.id.birthdayTextView);
         heightTextView = (EditText) view.findViewById(R.id.heightTextView);
         weightTextView = (EditText) view.findViewById(R.id.weightTextView);

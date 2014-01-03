@@ -36,6 +36,12 @@
     <string name="title_userinfo">个人</string>
     <string name="title_setting">设置</string>
     
+    <string name="tabCaption_health_maintenance">养生</string>
+    <string name="tabCaption_history">历史</string>
+    <string name="tabCaption_graph">曲线</string>
+    <string name="tabCaption_encyclopedia">百科</string>
+    <string name="tabCaption_info">信息</string>
+    
     <string name="title_addfood_tolist_ornew">添加食物</string>
     <string name="title_food_combination">营养搭配</string>
     <string name="title_search_food">食物</string>

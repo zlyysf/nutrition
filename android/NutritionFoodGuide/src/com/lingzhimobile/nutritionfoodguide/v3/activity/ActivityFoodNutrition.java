@@ -78,6 +78,10 @@ public class ActivityFoodNutrition extends V3BaseActivity {
 	void initViewsContent(){
 		Intent paramIntent = getIntent();
 		m_foodId =  paramIntent.getStringExtra(Constants.COLUMN_NAME_NDB_No);
+		
+		String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        if (prevActvTitle!=null)
+        	m_btnBack.setText(prevActvTitle);
 	}
 	void setViewEventHandlers(){
 		m_btnBack.setOnClickListener(new OnClickListener() {

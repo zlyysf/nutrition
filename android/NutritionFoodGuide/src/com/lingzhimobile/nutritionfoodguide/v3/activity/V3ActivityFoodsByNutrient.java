@@ -109,8 +109,8 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
         HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(this);
         m_nutrientInfo = nutrientInfoDict2Level.get(mNutrientId);
         String nutrientCaption = (String)m_nutrientInfo.get(Constants.COLUMN_NAME_NutrientCnCaption);
-//        m_currentTitle = mNutrientCnCaption;
-        m_tvTitle.setText(nutrientCaption);
+        m_currentTitle = nutrientCaption;
+        m_tvTitle.setText(m_currentTitle);
         
         String url = (String)m_nutrientInfo.get(Constants.COLUMN_NAME_UrlCn);
         Tool.setWebViewBasicHere(m_webView1);
@@ -172,7 +172,7 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 	
     static class ListAdapterForFood_fromNutrient extends ListAdapterForFood{
 
-		public ListAdapterForFood_fromNutrient(Activity thisActivity, ArrayList<HashMap<String, Object>> foodsData) {
+		public ListAdapterForFood_fromNutrient(V3BaseActivity thisActivity, ArrayList<HashMap<String, Object>> foodsData) {
 			super(thisActivity, foodsData);
 		}
 		

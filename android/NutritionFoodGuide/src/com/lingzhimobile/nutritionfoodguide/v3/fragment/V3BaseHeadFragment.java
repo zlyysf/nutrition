@@ -9,6 +9,8 @@ import com.lingzhimobile.nutritionfoodguide.R;
 
 public abstract class V3BaseHeadFragment extends Fragment {
 
+	protected String m_currentTitle;
+	
     public Button leftButton, rightButton;
     public TextView title;
 
