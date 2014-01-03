@@ -542,8 +542,8 @@ const float TickIntervalHeartbeat = 5.0;
                 }
                 int num = (ceilValue - floorValue) / TickIntervalBMI;
                 if (num < gridLineNum) {
-                    floorValue -= ((gridLineNum - num) / 2) * TickIntervalBMI;
-                    ceilValue += ((gridLineNum -num) - (gridLineNum - num) / 2) * TickIntervalBMI;
+                    floorValue -= ((gridLineNum -num) - (gridLineNum - num) / 2) * TickIntervalBMI;
+                    ceilValue += ((gridLineNum - num) / 2) * TickIntervalBMI;
                 }
                 minValue = floorValue;
                 maxValue = ceilValue;
@@ -559,22 +559,24 @@ const float TickIntervalHeartbeat = 5.0;
                 float ceilValue = ceil(maxValue);
                 int quotient = (int)floorValue / 10;
                 int remainder = (int)floorValue % 10;
-                if (remainder > TickIntervalNI) {
-                    floorValue = quotient * 10 + TickIntervalNI;
+                if (remainder > TickIntervalWeight) {
+                    floorValue = quotient * 10 + TickIntervalWeight;
                 }
                 else
                     floorValue = quotient * 10;
                 quotient = (int)ceilValue / 10;
                 remainder = (int)ceilValue % 10;
-                if (remainder > TickIntervalNI) {
+                if (remainder > TickIntervalWeight) {
                     ceilValue = (quotient + 1) * 10;
                 }
+                else if (remainder == 0)
+                    ceilValue = quotient * 10;
                 else
                     ceilValue = quotient * 10 + TickIntervalWeight;
                 int num = (ceilValue - floorValue) / TickIntervalWeight;
                 if (num < gridLineNum) {
                     floorValue -= ((gridLineNum - num) / 2) * TickIntervalWeight;
-                    ceilValue += ((gridLineNum -num) - (gridLineNum - num) / 2) * TickIntervalWeight;
+                    ceilValue += ((gridLineNum - num) - (gridLineNum - num) / 2) * TickIntervalWeight;
                 }
                 minValue = floorValue;
                 maxValue = ceilValue;
@@ -642,6 +644,8 @@ const float TickIntervalHeartbeat = 5.0;
                 if (remainder > TickIntervalHeartbeat) {
                     ceilValue = (quotient + 1) * 10;
                 }
+                else if (remainder == 0)
+                    ceilValue = quotient * 10;
                 else
                     ceilValue = quotient * 10 + TickIntervalHeartbeat;
                 int num = (ceilValue - floorValue) / TickIntervalHeartbeat;
