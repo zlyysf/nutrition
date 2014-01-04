@@ -503,7 +503,7 @@
     [dateLabel setBackgroundColor:[UIColor clearColor]];
     dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"lishi_c_riqi", @"历史页日期：%d月%d日"),month,day];
     
-    UILabel *weekLabel = [[UILabel alloc]initWithFrame:CGRectMake(225, 10, 65, 21)];
+    UILabel *weekLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 10, 80, 21)];
     weekLabel.text =[self week:week];
     weekLabel.textAlignment = UITextAlignmentRight;
     [weekLabel setFont:[UIFont systemFontOfSize:14]];
