@@ -83,7 +83,7 @@
 //}
 -(void)datepickerChanged
 {
-    NSLog(@"value changed");
+    //NSLog(@"value changed");
     self.currentDate = self.birthdayPicker.date;
     if (currentDate == nil)
     {
@@ -172,7 +172,7 @@
     if (self.currentDate != nil)
     {
         int userAge = [LZUtility calculateAgeAccordingToTheBirthdate:self.currentDate];
-        NSLog(@"%d",userAge);
+        //NSLog(@"%d",userAge);
         [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithInt:userAge] forKey:LZUserAgeKey];
         [[NSUserDefaults standardUserDefaults]setObject:self.currentDate forKey:LZUserBirthKey];
     }

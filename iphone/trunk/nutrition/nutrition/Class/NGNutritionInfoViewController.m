@@ -219,7 +219,7 @@
     
     int tag = sender.tag-10;
     NSDictionary *foodInfo = [foodArray objectAtIndex:tag];
-    NSLog(@"%@",foodInfo);
+    //NSLog(@"%@",foodInfo);
     NSString *foodQueryKey;
     if (isChinese)
     {

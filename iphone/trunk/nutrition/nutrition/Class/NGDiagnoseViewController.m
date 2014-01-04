@@ -114,7 +114,7 @@
     }
     
     symptomTypeIdArray = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SymptomTypeId andDictionaryArray:symptomTypeRows];
-    NSLog(@"symptomTypeIds=%@",[LZUtility getObjectDescription:symptomTypeIdArray andIndent:0] );
+    //NSLog(@"symptomTypeIds=%@",[LZUtility getObjectDescription:symptomTypeIdArray andIndent:0] );
     symptomRowsDict = [da getSymptomRowsByTypeDict_BySymptomTypeIds:symptomTypeIdArray];
     
     symptomStateDict = [NSMutableDictionary dictionary];
@@ -261,10 +261,10 @@
         NSDictionary *symptomDict = [textArray objectAtIndex:i];
         NSString *text = [symptomDict objectForKey:queryKey];
         CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
-        NSLog(@"begin%f",textSize.height);
+        //NSLog(@"begin%f",textSize.height);
         textSize.width += horizonPadding*2;
         textSize.height += verticalPadding*2;
-        NSLog(@"after%f",textSize.height);
+        //NSLog(@"after%f",textSize.height);
         //[heightArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:textSize.width],@"TextSizeWidth",[NSNumber numberWithFloat:textSize.height],@"TextSizeHeight", nil]];
         //UILabel *label = nil;
         NGDiagnoseLabel *label = nil;
@@ -284,7 +284,7 @@
             label = [[NGDiagnoseLabel alloc] initWithFrame:newRect];
             //label = [[UILabel alloc] initWithFrame:newRect];
         }
-        NSLog(@"%f,%f",label.frame.size.width,label.frame.size.height);
+        //NSLog(@"%f,%f",label.frame.size.width,label.frame.size.height);
         previousFrame = label.frame;
         gotPreviousFrame = YES;
         [label setFont:font];
@@ -478,7 +478,7 @@
         cell.nameLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
         NSNumber *heightNum = [self.symptomRowHeightDict objectForKey:symptomTypeId];
         NSMutableArray *itemStateArray = [self.symptomStateDict objectForKey:symptomTypeId];
-        NSLog(@"begin state");
+        //NSLog(@"begin state");
         for (int i=0; i<[itemStateArray count] ; i++)
         {
             NSNumber *state = [itemStateArray objectAtIndex:i];

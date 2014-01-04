@@ -137,7 +137,7 @@
     }
 }
 - (IBAction)stepperChanged:(UIStepper *)sender {
-    NSLog(@"stepperChanged");
+    //NSLog(@"stepperChanged");
     if (isUsingUnitDisplay)
     {
         currentValue = sender.value *unitPerValue;
@@ -182,7 +182,7 @@
     }
     
     [self displayNutrientUI];
-    NSLog(@"segmentChanged");
+    //NSLog(@"segmentChanged");
 }
 
 -(void)displayNutrientUI

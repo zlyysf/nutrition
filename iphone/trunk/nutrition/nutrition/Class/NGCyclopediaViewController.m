@@ -380,7 +380,7 @@
 -(void)nutritionButtonClicked:(LZCustomDataButton *)sender
 {
     NSString *nutritionId = (NSString *)sender.customData;
-    NSLog(@"%@",nutritionId);
+    //NSLog(@"%@",nutritionId);
     LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
     NSDictionary *dict = [nm getNutritionInfo:nutritionId];
     NSString *captionKey;

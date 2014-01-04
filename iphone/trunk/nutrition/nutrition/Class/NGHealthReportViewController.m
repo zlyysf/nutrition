@@ -317,7 +317,7 @@
                     }else{
                         [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
                     }
-                    NSLog(@"when insertUserRecordSymptom_withDayLocal, %@",msg);
+                    //NSLog(@"when insertUserRecordSymptom_withDayLocal, %@",msg);
                 }];//saveInBackgroundWithBlock
             }
             else
@@ -597,7 +597,7 @@
                 }else{
                     [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
                 }
-                NSLog(@"when updateUserRecordSymptom_withDayLocal, %@",msg);
+                //NSLog(@"when updateUserRecordSymptom_withDayLocal, %@",msg);
             }];//saveInBackgroundWithBlock
         }
     }
@@ -737,7 +737,7 @@
 -(void)nutritionButtonClicked:(LZCustomDataButton*)sender
 {
     NSString *nutritionId = (NSString *)sender.customData;
-    NSLog(@"%@",nutritionId);
+    //NSLog(@"%@",nutritionId);
     LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
     NSDictionary *dict = [nm getNutritionInfo:nutritionId];
     NSString *captionKey;

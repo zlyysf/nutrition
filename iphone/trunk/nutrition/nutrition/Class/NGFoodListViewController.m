@@ -122,7 +122,7 @@
     singleFoodViewController.title = foodName;
     singleFoodViewController.foodInfoDict = foodAtr;
     [self.navigationController pushViewController:singleFoodViewController animated:YES];
-    NSLog(@"%@",foodAtr);
+    //NSLog(@"%@",foodAtr);
 }
 - (void)didReceiveMemoryWarning
 {

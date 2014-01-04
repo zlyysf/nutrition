@@ -470,7 +470,7 @@
 -(void)didChangeToPage:(NSInteger)index
 {
     currentPage = index;
-    NSLog(@"did change to %d",index);
+    //NSLog(@"did change to %d",index);
 }
 -(NSArray *)getArrayForType:(ScatterType)scatterType data:(NSArray *)data
 {
