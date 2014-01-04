@@ -165,6 +165,9 @@ public class ActivityFoodNutrition extends V3BaseActivity {
 			
 			Double dObj_supplyRate = (Double)nutrientData.get(Constants.Key_supplyNutrientRate);
 			int supplyPercent = (int) Math.round( dObj_supplyRate.doubleValue() * 100 );
+			Double dObj_nutrientTotalDRI = (Double)nutrientData.get(Constants.Key_nutrientTotalDRI);
+			String enUnit = (String)nutrientData.get(Constants.Key_Unit);
+			
 			TextView tvNutrient = (TextView)convertView.findViewById(R.id.tvNutrient);
 			tvNutrient.setText(nutrientCaption);
 //			LinearLayout llNutrient = (LinearLayout)convertView.findViewById(R.id.llNutrient);
@@ -173,7 +176,8 @@ public class ActivityFoodNutrition extends V3BaseActivity {
 			ProgressBar pbSupplyPercent = (ProgressBar)convertView.findViewById(R.id.pbSupplyPercent);
 
 			TextView tvSupplyPercent = (TextView)convertView.findViewById(R.id.tvSupplyPercent);
-			tvSupplyPercent.setText(supplyPercent+"%");
+			String sSupply = supplyPercent+"%" + "/" +dObj_nutrientTotalDRI.intValue() +enUnit;
+			tvSupplyPercent.setText(sSupply);
 			pbSupplyPercent.setProgress(supplyPercent);
 
 			HashMap<String, Integer> NutrientColorMapping1 = NutritionTool.getNutrientColorMapping();
