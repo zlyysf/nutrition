@@ -21,9 +21,21 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 public class ToolParse {
 	static final String LogTag = "ToolParse";
+	
+	public static abstract class SaveCallbackClass extends SaveCallback {
+		ParseObject m_parseObj;
+		public SaveCallbackClass(ParseObject parseObj){
+			m_parseObj = parseObj;
+		}
+		
+		public ParseObject getParseObject(){
+			return m_parseObj;
+		}
+	}
 	
 	public static ParseObject newParseObjectByCurrentDeviceForUserRecord(Context ctx, String fileContent){
 		ParseObject parseObj = new ParseObject(Constants.ParseObject_UserRecord);
@@ -77,13 +89,27 @@ public class ToolParse {
 		
 		JSONObject jsonObj_inputNameValuePairsData = Tool.HashMapToJsonObject(inputNameValuePairsData);
 		String jsonString_inputNameValuePairs = jsonObj_inputNameValuePairsData.toString();
-		parseObj.put(Constants.COLUMN_NAME_inputNameValuePairs, jsonString_inputNameValuePairs);
+		if (jsonString_inputNameValuePairs!=null){
+			parseObj.put(Constants.COLUMN_NAME_inputNameValuePairs, jsonString_inputNameValuePairs);
+		}else{
+			parseObj.put(Constants.COLUMN_NAME_inputNameValuePairs, "");
+		}
 		
-		parseObj.put(Constants.COLUMN_NAME_Note, Note);
+		
+		if (Note != null){
+			parseObj.put(Constants.COLUMN_NAME_Note, Note);
+		}else{
+			parseObj.put(Constants.COLUMN_NAME_Note, "");
+		}
 		
 		JSONObject jsonObj_calculateNameValuePairsData = Tool.HashMapToJsonObject(calculateNameValuePairsData);
 		String jsonString_calculateNameValuePairs = jsonObj_calculateNameValuePairsData.toString();
-		parseObj.put(Constants.COLUMN_NAME_calculateNameValuePairs, jsonString_calculateNameValuePairs);
+		if (jsonString_calculateNameValuePairs!=null){
+			parseObj.put(Constants.COLUMN_NAME_calculateNameValuePairs, jsonString_calculateNameValuePairs);
+		}else{
+			parseObj.put(Constants.COLUMN_NAME_calculateNameValuePairs, "");
+		}
+		
 		
 		return parseObj;
 	}

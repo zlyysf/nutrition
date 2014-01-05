@@ -28,6 +28,9 @@ import android.widget.TextView;
 
 import com.lingzhimobile.nutritionfoodguide.*;
 import com.lingzhimobile.nutritionfoodguide.v3.fragment.*;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.SaveCallback;
 
 public class V3ActivityReport extends V3BaseActivity {
 	
@@ -316,6 +319,7 @@ public class V3ActivityReport extends V3BaseActivity {
     }
     
     void save(){
+    	Log.d(LogTag, "save enter");
 //    	Calendar calendarNow = Calendar.getInstance();
 //    	int year = calendarNow.get(Calendar.YEAR);    //获取年
 //    	int month = calendarNow.get(Calendar.MONTH) + 1; 
@@ -354,6 +358,24 @@ public class V3ActivityReport extends V3BaseActivity {
 	    }else{
 	    	da.updateUserRecordSymptom_withDayLocal(dayLocal, updateTime, InputNameValuePairsData, m_note, CalculateNameValuePairsData);
 	    }
+	    
+	    ParseObject parseObj = ToolParse.getToSaveParseObject_UserRecordSymptom(this, dayLocal, updateTime, InputNameValuePairsData, m_note, CalculateNameValuePairsData);
+	    parseObj.saveInBackground(new ToolParse.SaveCallbackClass(parseObj) {
+			@Override
+			public void done(ParseException e) {
+				ParseObject parseObj = getParseObject();
+				int dayLocal = parseObj.getInt(Constants.COLUMN_NAME_DayLocal);
+				
+				String msg;
+				if (e != null){
+					msg = "ERR: "+e.getMessage();
+				}else{
+					msg = "Save OK."+ parseObj.getObjectId();
+				}
+				Log.d(LogTag, "parseObj.saveInBackground msg:"+msg);
+				StoredConfigTool.saveParseObjectInfo_CurrentUserRecordSymptom(V3ActivityReport.this, parseObj.getObjectId(), dayLocal);
+			}
+		});//saveInBackground
     }
 
     class GetDiseaseAttentionTask extends AsyncTask<Void, Void, Void> {
