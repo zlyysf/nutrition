@@ -13,10 +13,12 @@
 #import "LZConstants.h"
 #import "LZNutrientionManager.h"
 #import "NGHealthReportViewController.h"
+#import "MBProgressHUD.h"
 #define MAXNutritonDisplayCount 3
-@interface NGRecordHistoryViewController ()
+@interface NGRecordHistoryViewController ()<MBProgressHUDDelegate>
 {
     BOOL isChinese;
+    MBProgressHUD *HUD;
 }
 //@property (nonatomic,strong)NGCycleScrollView* cycleView;
 @property (nonatomic,strong)NSArray *distinctMonthsArray;
@@ -56,6 +58,10 @@
     self.listView1.tableFooterView = footerView;
     self.listView2.tableFooterView = footerView;
     self.listView3.tableFooterView = footerView;
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    [HUD show:YES];
+    HUD.delegate = self;
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"left.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltoprevious)];
     [leftItem setEnabled:NO];
     self.navigationItem.leftBarButtonItem = leftItem;
@@ -80,7 +86,7 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
@@ -129,6 +135,7 @@
         [self.contentScrollView setContentSize:CGSizeMake(totalPage*320, height)];
     }
     [self displayContentForPage:currentPage];
+    [HUD hide:YES];
 }
 -(void)displayContentForPage:(int)page
 {
@@ -976,5 +983,10 @@
     
     //[self.photoScrollView setContentOffset:CGPointMake(self.view.bounds.size.width  * currentPhotoIndex, 0)];
 }
+#pragma mark MBProgressHUDDelegate methods
 
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+    HUD.hidden = YES;
+}
 @end

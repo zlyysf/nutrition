@@ -29,6 +29,15 @@
 
 -(void)setBMIValue:(double)bmiValue
 {
+    [self.level1Label setTextColor:LevelNormalColor];
+    [self.level2Label setTextColor:LevelNormalColor];
+    [self.level3Label setTextColor:LevelNormalColor];
+    [self.level4Label setTextColor:LevelNormalColor];
+    [self.level1Label setBackgroundColor:[UIColor whiteColor]];
+    [self.level2Label setBackgroundColor:[UIColor whiteColor]];
+    [self.level3Label setBackgroundColor:[UIColor whiteColor]];
+    [self.level4Label setBackgroundColor:[UIColor whiteColor]];
+    
     if (bmiValue<18.5)
     {
         [self.level1Label setTextColor:LevelHighlightColor];
@@ -49,7 +58,7 @@
     {
 //        [self.level1Label setTextColor:LevelNormalColor];
 //        [self.level2Label setTextColor:LevelHighlightColor];
-        [self.level3Label setTextColor:LevelNormalColor];
+        [self.level3Label setTextColor:LevelHighlightColor];
         [self.level3Label setBackgroundColor:[UIColor colorWithRed:263/255.f green:232/255.f blue:81/255.f alpha:1.0f]];
 //        [self.level4Label setTextColor:LevelNormalColor];
     }
@@ -58,7 +67,7 @@
 //        [self.level1Label setTextColor:LevelHighlightColor];
 //        [self.level2Label setTextColor:LevelNormalColor];
 //        [self.level3Label setTextColor:LevelNormalColor];
-        [self.level4Label setTextColor:LevelNormalColor];
+        [self.level4Label setTextColor:LevelHighlightColor];
         [self.level4Label setBackgroundColor:[UIColor colorWithRed:227/255.f green:103/255.f blue:110/255.f alpha:1.0f]];
     }
 }
