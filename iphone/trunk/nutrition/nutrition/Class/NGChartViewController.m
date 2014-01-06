@@ -10,7 +10,12 @@
 #import "LZDataAccess.h"
 #import "LZUtility.h"
 #import "LZConstants.h"
-@interface NGChartViewController ()
+#import "MBProgressHUD.h"
+@interface NGChartViewController ()<MBProgressHUDDelegate>
+{
+    MBProgressHUD *HUD;
+}
+@property (nonatomic,assign)BOOL isFirstLoad;
 @property (nonatomic, assign)int currentPage;
 @property (nonatomic, assign) ScatterType currentScatterType;
 @property (nonatomic,strong)NSArray *distinctMonthsArray;
@@ -21,7 +26,7 @@
 @end
 
 @implementation NGChartViewController
-@synthesize chart1Controller,chart2Controller,chart3Controller,currentPage,currentScatterType,totalPage,historyDict,distinctMonthsArray,contentRect;
+@synthesize chart1Controller,chart2Controller,chart3Controller,currentPage,currentScatterType,totalPage,historyDict,distinctMonthsArray,contentRect,isFirstLoad;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -44,24 +49,41 @@
     
     chart3Controller = [[LZScatterViewController alloc]init];
     [chart3Controller configureScatterView:contentRect];
+    HUD = [[MBProgressHUD alloc] initWithView:self.view];
+    [self.view addSubview:HUD];
+    [HUD show:YES];
+    HUD.delegate = self;
     self.title = NSLocalizedString(@"tubiao_c_title", @"页面标题：图表");
 	// Do any additional setup after loading the view.
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"left.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltoprevious)];
+    [leftItem setEnabled:NO];
     self.navigationItem.leftBarButtonItem = leftItem;
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"right.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltonext)];
+    [rightItem setEnabled:NO];
     self.navigationItem.rightBarButtonItem = rightItem;
+    self.historyDict = [[NSMutableDictionary alloc]init];
+    
     [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_c_yingyang", @"营养项标题：营养") forSegmentAtIndex:0];
     [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_c_tizhi", @"体质项标题：体质") forSegmentAtIndex:1];
     [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_c_tizhong", @"体重项标题：体重") forSegmentAtIndex:2];
     [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_c_tiwen", @"体温项标题：体温") forSegmentAtIndex:3];
     [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_c_xueya", @"血压项标题：血压") forSegmentAtIndex:4];
     [self.contentTypeChangeControl setTitle:NSLocalizedString(@"tubiao_c_xintiao", @"心跳项标题：心跳") forSegmentAtIndex:5];
-    [self initialize];
+    isFirstLoad = YES;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(historyUpdated:) name: Notification_HistoryUpdatedKey object:nil];
 }
 -(void)historyUpdated:(NSNotification *)notification
 {
     [self initialize];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    if (isFirstLoad)
+    {
+        isFirstLoad = NO;
+        [self initialize];
+    }
+    
 }
 -(void)initialize
 {
@@ -93,13 +115,13 @@
     [self displayContentForPage:currentPage];
 }
 -(void)displayContentForPage:(int)page
-{
+{ 
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
     chart1Controller.scatterType = currentScatterType;
     chart2Controller.scatterType = currentScatterType;
     chart3Controller.scatterType = currentScatterType;
-    [self.contentScrollView setContentOffset:CGPointMake(currentPage*320, 0) animated:YES];
+    [self.contentScrollView setContentOffset:CGPointMake(currentPage*320, 0) animated:NO];
     CGFloat height =self.contentScrollView.frame.size.height;
     for (UIView *view in self.contentScrollView.subviews)
     {
@@ -253,6 +275,7 @@
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
         }
     }
+    [HUD hide:YES];
 }
 
 - (NSArray *)plotDataSourceForTesting
@@ -339,7 +362,7 @@
     NSArray *data = [self.historyDict objectForKey:key];
     if (data != nil && [data count]!= 0)
     {
-        return data;
+        return [self getArrayForType:currentScatterType data:data];
     }
     else
     {
@@ -572,5 +595,10 @@
     }
         //[self.photoScrollView setContentOffset:CGPointMake(self.view.bounds.size.width  * currentPhotoIndex, 0)];
 }
+#pragma mark MBProgressHUDDelegate methods
 
+- (void)hudWasHidden:(MBProgressHUD *)hud {
+	// Remove HUD from screen when the HUD was hidded
+    HUD.hidden = YES;
+}
 @end

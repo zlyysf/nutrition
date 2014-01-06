@@ -141,7 +141,7 @@
 {
     [self.navigationItem.leftBarButtonItem setEnabled:NO];
     [self.navigationItem.rightBarButtonItem setEnabled:NO];
-    [self.contentScrollView setContentOffset:CGPointMake(currentPage*320, 0) animated:YES];
+    [self.contentScrollView setContentOffset:CGPointMake(currentPage*320, 0) animated:NO];
     CGFloat height =self.contentScrollView.frame.size.height;
     for (UIView *view in self.contentScrollView.subviews)
     {
