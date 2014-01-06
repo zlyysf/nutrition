@@ -200,7 +200,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     		String[] cnEnParts = Tool.splitNutrientTitleToCnEn(nutrientCaption);
     		tvNutrientVitamin.setText(cnEnParts[cnEnParts.length-1]);
     		tvNutrientVitamin.setTag(nutrientId);
-    		Tool.changeBackground_NutritionButton(getActivity(), tvNutrientVitamin, nutrientId);
+    		Tool.changeBackground_NutritionButton(getActivity(), tvNutrientVitamin, nutrientId, true);
     	}
     	for(int i=0; i<nutrients_mineral.length; i++){
     		String nutrientId = nutrients_mineral[i];
@@ -209,7 +209,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     		String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
     		tvNutrient.setText(nutrientCaption);
     		tvNutrient.setTag(nutrientId);
-    		Tool.changeBackground_NutritionButton(getActivity(), tvNutrient, nutrientId);
+    		Tool.changeBackground_NutritionButton(getActivity(), tvNutrient, nutrientId, true);
     	}
     	for(int i=0; i<nutrients_macro.length; i++){
     		String nutrientId = nutrients_macro[i];
@@ -218,7 +218,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     		String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
     		tvNutrient.setText(nutrientCaption);
     		tvNutrient.setTag(nutrientId);
-    		Tool.changeBackground_NutritionButton(getActivity(), tvNutrient, nutrientId);
+    		Tool.changeBackground_NutritionButton(getActivity(), tvNutrient, nutrientId, true);
     	}
     	
     	DataAccess da = DataAccess.getSingleton(getActivity());

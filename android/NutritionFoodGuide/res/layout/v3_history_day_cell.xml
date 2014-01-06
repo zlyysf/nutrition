@@ -57,33 +57,32 @@
 	        android:id="@+id/nutrientLinearLayout"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
+	        android:paddingLeft="20dp"
+	        android:paddingTop="5dp"
+	        android:paddingBottom="5dp"
 	        android:orientation="horizontal" >
 	
 	        <TextView
 	            android:id="@+id/nutrient1TextView"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
+	            style="@style/v3_nutrient_label"
 	            android:text="v1" />
+
 	
 	        <TextView
 	            android:id="@+id/nutrient2TextView"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="20dp"
+	            style="@style/v3_nutrient_label"
 	            android:text="v2" />
 	
 	        <TextView
 	            android:id="@+id/nutrient3TextView"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="20dp"
+	            style="@style/v3_nutrient_label"
+	            
 	            android:text="v3" />
 	
 	        <TextView
 	            android:id="@+id/nutrient4TextView"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="20dp"
+	            style="@style/v3_nutrient_label"
+	            
 	            android:text="v4" />
 	    </LinearLayout>
 	
@@ -178,20 +177,13 @@
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical" >
 	
-	        <LinearLayout
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
-	            android:orientation="horizontal" >
-	
-	            <TextView
-	                style="@style/v3_table_name_text"
+	        <TextView
+	                style="@style/v3_history_item_label"
 	                android:text="症状" />
-	        </LinearLayout>
 	
 	        <TextView
 	            android:id="@+id/tvSymptoms"
-	            android:layout_width="match_parent"
-	            android:layout_height="wrap_content"
+	            style="@style/v3_history_item_text"
 	            android:text="Symptoms" />
 	    </LinearLayout>
 	
@@ -316,16 +308,16 @@
 	    <LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="horizontal" >
-	
+	        android:orientation="vertical" >
+	        
 	        <TextView
-	            style="@style/v3_table_name_text"
-	            android:text="笔记" />
+	                style="@style/v3_history_item_label"
+	                android:text="笔记" />
+
 	
 	        <TextView
 	            android:id="@+id/noteTextView"
-	            android:layout_width="wrap_content"
-	            android:layout_height="wrap_content"
+	            style="@style/v3_history_item_text"
 	            android:text="灰尘太大" />
 	    </LinearLayout>
 	

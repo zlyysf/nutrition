@@ -258,7 +258,7 @@ public class HistoryDayAdapter extends BaseAdapter {
 //        		tvSymptoms1.setText(symptomsStr1);
 //        	}
 //        }
-
+        
         HashMap<String, Object> lackNutrientsAndFoods = (HashMap<String, Object>) calculateNameValuePairs.get(Constants.Key_LackNutrientsAndFoods);
         ArrayList<String> nutrientIdList = Tool.getKeysFromHashMap(lackNutrientsAndFoods);
         for(int i = 0;i< nutrientTextViews.length;i++){
@@ -268,6 +268,7 @@ public class HistoryDayAdapter extends BaseAdapter {
             	HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientId);
             	String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
                 nutrientTextViews[i].setText(nutrientCaption);
+                Tool.changeBackground_NutritionButton(mContext, nutrientTextViews[i], nutrientId, false);
             } else {
                 nutrientTextViews[i].setVisibility(View.INVISIBLE);
             }

@@ -1568,7 +1568,7 @@ public class Tool {
 		//另外需要在各个activity中设置 onKeyDown 处理back键
 	}
 	
-	public static void changeBackground_NutritionButton(Activity curActv, View vwNutrition, String nutrientId){
+	public static void changeBackground_NutritionButton(Context curActv, View vwNutrition, String nutrientId, boolean needBgEffect){
 		HashMap<String, Integer> nutrientColorMapping = NutritionTool.getNutrientColorMapping();
 		Integer nutrientColorResId = nutrientColorMapping.get(nutrientId);
 		final float[] roundedCorners = new float[] { 11, 11, 11, 11, 11, 11, 11, 11 };
@@ -1586,7 +1586,10 @@ public class Tool {
 		LayerDrawable layerDrawable1 = new LayerDrawable(layers);
 
 		StateListDrawable states = new StateListDrawable();
-		states.addState(new int[] {android.R.attr.state_pressed}, layerDrawable1);
+		if (needBgEffect){
+			states.addState(new int[] {android.R.attr.state_pressed}, layerDrawable1);
+		}
+		
 			
 		states.addState(new int[] { }, ShapeDrawable1);
 
