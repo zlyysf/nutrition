@@ -49,6 +49,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
             R.color.v3_psychology, R.color.v3_male, R.color.v3_female };
 	static final int checkboxColorNormalResId = R.color.white;
 	
+	TextView m_tvTitle;
 	Button m_btnSubmit;
 	EditText m_etNote, m_etBodyTemperature, m_etWeight, m_etHeartRate, m_etBloodPressureHigh, m_etBloodPressureLow;
 	ListView m_listView1;
@@ -79,7 +80,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        initViewsContent();
+        
     }
 
 	@Override
@@ -88,14 +89,18 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 	    View view = inflater.inflate(R.layout.v3_fragment_diagnose, container, false);
 	    initHeaderLayout(view);
         initViewHandles(inflater, view);
+        initViewsContent();
         setViewEventHandlers();
         setViewsContent();
         return view;
     }
 
     void initViewHandles(LayoutInflater inflater, View view){
+    	m_tvTitle = (TextView) view.findViewById(R.id.titleText);
         leftButton = (Button) view.findViewById(R.id.leftButton);
+//        leftButton.setVisibility(View.INVISIBLE);
         rightButton = (Button) view.findViewById(R.id.rightButton);
+        rightButton.setText("查看");
         m_btnSubmit = rightButton;
         m_listView1 = (ListView)view.findViewById(R.id.listView1);
         View headerView = inflater.inflate(R.layout.v3_symptom_header, null, false);
@@ -107,12 +112,14 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
         m_etBloodPressureHigh = (EditText)footerView.findViewById(R.id.etBloodPressureHigh);
         m_etBloodPressureLow = (EditText)footerView.findViewById(R.id.etBloodPressureLow);
         
-
         m_listView1.addHeaderView(headerView);
         m_listView1.addFooterView(footerView);
 	}
     
 	void initViewsContent(){
+		m_currentTitle = "选择症状";
+		m_tvTitle.setText(m_currentTitle);
+		
 	    DataAccess da = DataAccess.getSingleton(getActivity());
         
         m_symptomTypeRows = da.getSymptomTypeRows_withForSex(Constants.ForSex_male);
@@ -168,14 +175,6 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
             	}
             	Log.d(LogTag, "selectedSymptomIds="+selectedSymptomIds);
             	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
-            	
                 Intent intent = new Intent(getActivity(), V3ActivityReport.class);
                 if (selectedSymptomIds!=null && selectedSymptomIds.size()>0){
                 	intent.putStringArrayListExtra(Constants.COLUMN_NAME_SymptomId, selectedSymptomIds);
@@ -227,6 +226,8 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
                 	String jsonString_symptomIdsByType = jsonAry_symptomIdsByType.toString();
                    	intent.putExtra(Constants.Key_SymptomsByType, jsonString_symptomIdsByType);
                 }
+                
+                intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 
                 getActivity().startActivity(intent);
             }
@@ -362,6 +363,6 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 
     @Override
     protected void setHeader() {
-        title.setText("选择症状");
+        
     }
 }

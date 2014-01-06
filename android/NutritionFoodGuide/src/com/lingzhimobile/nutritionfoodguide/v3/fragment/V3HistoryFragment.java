@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
@@ -39,6 +40,14 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.v3_fragment_history, container, false);
         initHeaderLayout(view);
+        
+
+        Drawable nextDrawable = getResources().getDrawable(R.drawable.v3_next_bg);
+        nextDrawable.setBounds(0, 0, 27, 45);
+        rightButton.setCompoundDrawables(null, null, nextDrawable, null);
+        leftButton.setText("");
+        rightButton.setText("");
+
         monthViewPager = (ViewPager) view.findViewById(R.id.historyViewPager);
         monthAdapter = new HistoryMonthAdapter(getChildFragmentManager(), monthList);
         monthViewPager.setAdapter(monthAdapter);

@@ -39,7 +39,7 @@ public class V3ActivityReport extends V3BaseActivity {
 	final static int c_nutrientFoodCountLimit = 5;
 
     // widgets
-	Button m_btnSave;
+	Button m_btnSave, m_btnBack;
 	ListView m_lvehIllness, m_lvehSuggestion;
 	
     ListView elementFoodListView;
@@ -108,6 +108,10 @@ public class V3ActivityReport extends V3BaseActivity {
     
     void initViewHandles(){
         m_btnSave = (Button) findViewById(R.id.rightButton);
+        m_btnSave.setText(R.string.save);
+        m_btnBack = (Button) findViewById(R.id.leftButton);
+        TextView tvTitle = (TextView)findViewById(R.id.titleText);
+        tvTitle.setText("养生报告");
         bmiTextView = (TextView) findViewById(R.id.bmiTextView);
         healthTextView = (TextView) findViewById(R.id.healthTextView);
         elementFoodListView = (ListView) findViewById(R.id.elementFoodListView);
@@ -139,6 +143,11 @@ public class V3ActivityReport extends V3BaseActivity {
     
     void getInputParams() {
     	Intent intent = getIntent();
+    	
+    	String prevActvTitle = intent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        if (prevActvTitle!=null)
+        	m_btnBack.setText(prevActvTitle);
+        
         m_SymptomIdList = intent.getStringArrayListExtra(Constants.COLUMN_NAME_SymptomId);
         m_symptomIds = Tool.convertToStringArray(m_SymptomIdList);
         

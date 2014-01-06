@@ -132,13 +132,18 @@
 	        </TextView>
 	
 	        <com.makeramen.segmented.SegmentedRadioGroup
+	            xmlns:ca="http://schemas.android.com/apk/res/com.lingzhimobile.nutritionfoodguide"
 	            android:id="@+id/genderRadioGroup"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
 	            android:layout_marginRight="10dip"
 	            android:layout_weight="1"
 	            android:checkedButton="@+id/maleRadioButton"
-	            android:orientation="horizontal" >
+	            android:orientation="horizontal" 
+	            ca:segment_radio_left = "@drawable/v3_radiotab_left_bg"
+            	ca:segment_radio_middle = "@drawable/v3_radiotab_mid_bg"
+            	ca:segment_radio_right = "@drawable/v3_radiotab_right_bg"
+	            >
 	
 	            <RadioButton
 	                android:id="@+id/maleRadioButton"
@@ -197,6 +202,7 @@
 		        android:orientation="vertical" >
 	
 		        <com.makeramen.segmented.SegmentedRadioGroup
+		            xmlns:ca="http://schemas.android.com/apk/res/com.lingzhimobile.nutritionfoodguide"
 		            android:id="@+id/intensityRadioGroup"
 		            android:layout_width="match_parent"
 		            android:layout_height="wrap_content"
@@ -204,7 +210,11 @@
 		            android:layout_marginTop="10dip"
 		            android:layout_marginBottom="10dip"
 		            android:checkedButton="@+id/intensity1RadioButton"
-		            android:orientation="horizontal" >
+		            android:orientation="horizontal" 
+		            ca:segment_radio_left = "@drawable/v3_radiotab_left_bg"
+	            	ca:segment_radio_middle = "@drawable/v3_radiotab_mid_bg"
+	            	ca:segment_radio_right = "@drawable/v3_radiotab_right_bg"
+		            >
 		
 		            <RadioButton
 		                android:id="@+id/intensity1RadioButton"

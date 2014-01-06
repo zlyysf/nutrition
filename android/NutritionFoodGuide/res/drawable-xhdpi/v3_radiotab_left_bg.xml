@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item android:state_checked="true" android:drawable="@drawable/v3_radiotab_left_clicked"></item>
+    <item android:state_checked="false" android:drawable="@drawable/v3_radiotab_left_normal" ></item>
+    
+   
+</selector>
