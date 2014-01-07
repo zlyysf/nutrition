@@ -45,7 +45,7 @@ public class V3ActivityReport extends V3BaseActivity {
     ListView elementFoodListView;
 //    ListView diseaseAttentionListView;
     LinearLayout attentionLinearLayout;
-    TextView bmiTextView, healthTextView;
+    TextView bmiTextView, healthTextView, m_tvBmiTooLight, m_tvBmiNormal, m_tvBmiTooWeight, m_tvBmiFat;
 
     ArrayList<String> m_SymptomIdList;
     String[] m_symptomIds;
@@ -113,6 +113,10 @@ public class V3ActivityReport extends V3BaseActivity {
         TextView tvTitle = (TextView)findViewById(R.id.titleText);
         tvTitle.setText("养生报告");
         bmiTextView = (TextView) findViewById(R.id.bmiTextView);
+        m_tvBmiTooLight =  (TextView) findViewById(R.id.tvBmiTooLight);
+        m_tvBmiNormal =  (TextView) findViewById(R.id.tvBmiNormal);
+        m_tvBmiTooWeight =  (TextView) findViewById(R.id.tvBmiTooWeight);
+        m_tvBmiFat =  (TextView) findViewById(R.id.tvBmiFat);
         healthTextView = (TextView) findViewById(R.id.healthTextView);
         elementFoodListView = (ListView) findViewById(R.id.elementFoodListView);
 //        diseaseAttentionListView = (ListView) findViewById(R.id.diseaseAttentionListView);
@@ -219,6 +223,15 @@ public class V3ActivityReport extends V3BaseActivity {
     	if (weight==0)
     		weight = weightObj.doubleValue();
     	m_BMI = Tool.getBMI_withWeight(weight, heightObj.doubleValue());
+    	if (m_BMI < 18.5){
+    		m_tvBmiTooLight.setBackgroundResource(R.drawable.v3_border_bmi_toolight_bg);
+    	}else if  (m_BMI <= 25){
+    		m_tvBmiNormal.setBackgroundResource(R.drawable.v3_border_bmi_normal_bg);
+    	}else if  (m_BMI <= 30){
+    		m_tvBmiTooWeight.setBackgroundResource(R.drawable.v3_border_bmi_tooweight_bg);
+    	}else{
+    		m_tvBmiFat.setBackgroundResource(R.drawable.v3_border_bmi_fat_bg);
+    	}
     	
     	m_HealthMark = 100;
     	if (m_symptomIds!=null && m_symptomIds.length>0){

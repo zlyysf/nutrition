@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">   
+	<item>   
+	      <shape>   
+	            <solid android:color="@color/silver" />   
+	      </shape>   
+	</item>   
+
+	<item android:top="1px" android:bottom="1px">   
+	     <shape>   
+	           <solid android:color="@color/v3_bmi_un_normal" />  
+	             
+	           <padding android:bottom="1dp"  
+	                android:left="1dp"  
+	                android:right="1dp"  
+	                android:top="1dp" />  
+	     </shape>       
+	</item>  
+</layer-list>
+
+
+

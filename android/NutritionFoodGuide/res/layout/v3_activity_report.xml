@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@color/v3_app_bg"
+    
     android:orientation="vertical" >
 
     <include
@@ -21,41 +22,49 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/wheat"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" >
-
+                android:layout_margin="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                >
                 <TextView
-                    style="@style/v3_table_name_text"
+                    style="@style/v3_report_label"
                     android:text="健康指数" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="89"
-                    android:id="@+id/healthTextView"
-                    android:textAppearance="?android:attr/textAppearanceLarge" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="/100" />
+                <LinearLayout
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginLeft="30dp"
+	                android:orientation="horizontal"
+	                >
+	                <TextView
+	                    android:id="@+id/healthTextView"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="bottom|left"
+	                    android:text="89"
+	                    android:textColor="@color/v3_content"
+	                    android:textSize="40dp"
+	                    android:textStyle="bold" />
+	                <TextView
+	                    style="@style/v3_label"
+	                    android:layout_gravity="bottom|left"
+	                    android:text="/100" />
+                </LinearLayout>
             </LinearLayout>
             
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:background="@color/wheat"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" >
+                android:layout_margin="10dp"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                >
 
                 <TextView
-                    android:layout_gravity="center_vertical"
-                    style="@style/v3_table_name_text"
+                    style="@style/v3_report_label"
                     android:text="体质指数" />
 
                 <LinearLayout
@@ -64,22 +73,135 @@
                     android:orientation="vertical" >
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:id="@+id/bmiTextView"
-                        android:text="25.1" />
+	                    android:id="@+id/bmiTextView"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="left"
+	                    android:layout_marginLeft="30dp"
+	                    android:text="25.1"
+	                    android:textColor="@color/v3_content"
+	                    android:textSize="40dp"
+	                    android:textStyle="bold" />
+                        />
 
-                    <SeekBar
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:progress="50" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="超重了" />
+					<LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginRight="10dp"
+	                    android:orientation="horizontal" >
+
+	                    <TextView
+	                        android:id="@+id/tvBmiTooLight"
+	                        style="@style/v3_bmidescription_label"
+	                        
+	                        android:layout_weight="1"
+	                        android:background="@drawable/v3_border_leftpart_bg"
+	                        android:text="过轻" />
+	                    <!--  
+	                    	android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:layout_gravity="top"
+	                        android:gravity="center_horizontal|top"
+	                        android:textSize="14sp"
+	                        android:textColor="@color/v3_label"
+	                    -->
+	                    <ImageView
+	                        android:layout_width="1px"
+	                        android:layout_height="30dp"
+	                        android:layout_weight="0"
+	                        android:background="@drawable/gray_vertical_line_2x" />
+
+	                    <TextView
+	                        android:id="@+id/tvBmiNormal"
+	                        
+	                        style="@style/v3_bmidescription_label"
+
+	                        android:layout_weight="1"
+	                        android:background="@drawable/v3_border_midpart_bg"
+	                        android:text="正常" />
+	                    <ImageView
+	                        android:layout_width="1px"
+	                        android:layout_height="30dp"
+	                        android:layout_weight="0"
+	                        android:background="@drawable/gray_vertical_line_2x" />
+	                    <TextView
+	                        android:id="@+id/tvBmiTooWeight"
+	                        
+	                        style="@style/v3_bmidescription_label"
+
+	                        android:background="@drawable/v3_border_midpart_bg"
+	                        android:layout_weight="1"
+	                        android:text="过重" />
+	                    <ImageView
+	                        android:layout_width="1px"
+	                        android:layout_height="30dp"
+	                        android:layout_weight="0"
+	                        android:background="@drawable/gray_vertical_line_2x" />
+	                    <TextView
+	                        android:id="@+id/tvBmiFat"
+	                        
+	                        style="@style/v3_bmidescription_label"
+
+	                        android:layout_weight="1"
+	                        android:background="@drawable/v3_border_rightpart_bg"
+	                        android:text="肥胖" />
+                    </LinearLayout>
+                    
+					<LinearLayout
+	                    android:layout_width="match_parent"
+	                    android:layout_height="wrap_content"
+	                    android:orientation="horizontal" >
+
+	                    <TextView
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="99"
+	                        android:layout_gravity="top"
+	                        android:text="" />
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="0"
+	                        android:layout_gravity="top"
+	                        android:text="18.5" />
+
+	                    <TextView
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="100"
+	                        android:layout_gravity="top"
+	                        android:text="" />
+						<TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="0"
+	                        android:layout_gravity="top"
+	                        android:text="25" />
+						
+	                    <TextView
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="100"
+	                        android:layout_gravity="top"
+	                        android:text="" />
+	                    <TextView
+	                        android:layout_width="wrap_content"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="0"
+	                        android:layout_gravity="top"
+	                        android:text="30" />
+	                    
+	                    <TextView
+	                        android:layout_width="match_parent"
+	                        android:layout_height="wrap_content"
+	                        android:layout_weight="95"
+	                        android:layout_gravity="top"
+	                        android:text="" />
+                    </LinearLayout>
+
+
                 </LinearLayout>
             </LinearLayout>
 
@@ -90,7 +212,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@color/wheat"
+                android:background="@color/white"
                 android:orientation="vertical" >
             </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
 
@@ -105,29 +227,50 @@
             </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
             -->
             
-            <TextView
-                    style="@style/v3_table_name_text"
-                    android:text="潜在疾病" />
-            <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
-                android:id="@+id/lvehIllness"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@color/wheat"
-                android:orientation="vertical" >
-            </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
             
-            <TextView
-                    style="@style/v3_table_name_text"
-                    android:text="调养办法" />
-            <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
-                android:id="@+id/lvehSuggestion"
+	            <TextView
+	                    style="@style/v3_table_name_text"
+	                    android:text="潜在疾病" />
+	            <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
+	                android:id="@+id/lvehIllness"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_margin="5dp"
+	                android:background="@color/wheat"
+	                android:orientation="vertical" >
+	            </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
+            
+            </LinearLayout>
+            
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:background="@color/wheat"
-                android:orientation="vertical" >
-            </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
+            
+	            <TextView
+	                    style="@style/v3_table_name_text"
+	                    android:text="调养办法" />
+	            <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
+	                android:id="@+id/lvehSuggestion"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_margin="5dp"
+	                android:background="@color/wheat"
+	                android:orientation="vertical" >
+	            </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

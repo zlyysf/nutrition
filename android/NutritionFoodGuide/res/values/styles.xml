@@ -132,6 +132,19 @@
         <item name="android:layout_marginBottom">10dp</item>
     </style>
     
+    
+    <style name="v3_bmidescription_label" >>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:gravity">center_horizontal|top</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/v3_label</item>
+    </style>
+    <style name="v3_report_label" parent="@style/v3_label">
+        <item name="android:layout_width">match_parent</item>
+    </style>
+    
     <style name="v3_history_item_label" parent="@style/v3_label">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginTop">5dp</item>
