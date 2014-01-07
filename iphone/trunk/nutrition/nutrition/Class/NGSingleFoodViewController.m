@@ -250,11 +250,11 @@
     NSString *queryKey;
     if (isChinese)
     {
-        queryKey = @"NutrientCnCaption";
+        queryKey = @"IconTitleCn";
     }
     else
     {
-        queryKey = @"NutrientEnCaption";
+        queryKey = @"IconTitleEn";
     }
     LZNutrientionManager *nm = [LZNutrientionManager SharedInstance];
     NSDictionary *dict = [nm getNutritionInfo:nutrientId];
