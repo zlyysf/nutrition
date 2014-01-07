@@ -1041,10 +1041,10 @@
                                                 <rect key="frame" x="85" y="333" width="210" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <segments>
-                                                    <segment title=""/>
-                                                    <segment title=""/>
-                                                    <segment title=""/>
-                                                    <segment title=""/>
+                                                    <segment title="" width="60"/>
+                                                    <segment title="" width="44"/>
+                                                    <segment title="" width="44"/>
+                                                    <segment title="" width="60"/>
                                                 </segments>
                                                 <color key="tintColor" red="0.02209565816" green="0.24290497450000001" blue="0.015916841760000001" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>

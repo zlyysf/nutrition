@@ -559,7 +559,7 @@
             [healthLabel.layer setBorderWidth:0.5f];
             [healthLabel.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             //255,228,38
-            [healthLabel setBackgroundColor:[UIColor colorWithRed:255/255.f green:208/255.f blue:204/255.f alpha:1.0f]];
+            [healthLabel setBackgroundColor:[UIColor whiteColor]];
             [cell.backView addSubview:healthLabel];
         }
         else
@@ -604,7 +604,7 @@
             NSArray *symptomIds = [aSymptomType objectAtIndex:1];
             [namesArray addObjectsFromArray:[self getSymptomNamesForTypeId:typeId symptomId:symptomIds]];
         }
-        NSString *text = [namesArray componentsJoinedByString:@","];
+        NSString *text = [namesArray componentsJoinedByString:@", "];
         CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(270, 9999) lineBreakMode:UILineBreakModeWordWrap];
         UILabel *textLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, startY, textSize.width, textSize.height)];
         textLabel.numberOfLines = 0;
@@ -694,30 +694,30 @@
     return symptomNames ;
     
 }
--(NSString *)getIllnessText:(NSArray *)illnessIds
-{
-    LZDataAccess *da = [LZDataAccess singleton];
-    NSArray *illnessArray = [da getIllness_ByIllnessIds:illnessIds];
-    NSMutableArray *namesArray = [[NSMutableArray alloc]init];
-    NSString *queryKey;
-    if (isChinese)
-    {
-        queryKey =@"IllnessNameCn";
-    }
-    else
-    {
-        queryKey =@"IllnessNameEn";
-    }
-    for (NSDictionary *illnessDict in illnessArray)
-    {
-        NSString *illnessName =[illnessDict objectForKey:queryKey];
-
-        [namesArray addObject:illnessName];
-    }
-    return [namesArray componentsJoinedByString:@","];
-    
-    
-}
+//-(NSString *)getIllnessText:(NSArray *)illnessIds
+//{
+//    LZDataAccess *da = [LZDataAccess singleton];
+//    NSArray *illnessArray = [da getIllness_ByIllnessIds:illnessIds];
+//    NSMutableArray *namesArray = [[NSMutableArray alloc]init];
+//    NSString *queryKey;
+//    if (isChinese)
+//    {
+//        queryKey =@"IllnessNameCn";
+//    }
+//    else
+//    {
+//        queryKey =@"IllnessNameEn";
+//    }
+//    for (NSDictionary *illnessDict in illnessArray)
+//    {
+//        NSString *illnessName =[illnessDict objectForKey:queryKey];
+//
+//        [namesArray addObject:illnessName];
+//    }
+//    return [namesArray componentsJoinedByString:@","];
+//    
+//    
+//}
 -(NSString *)getNutritionName:(NSString *)nutritionId
 {
     LZNutrientionManager*nm = [LZNutrientionManager SharedInstance];
@@ -842,7 +842,7 @@
             NSArray *symptomIds = [aSymptomType objectAtIndex:1];
             [namesArray addObjectsFromArray:[self getSymptomNamesForTypeId:typeId symptomId:symptomIds]];
         }
-        NSString *text = [namesArray componentsJoinedByString:@","];
+        NSString *text = [namesArray componentsJoinedByString:@", "];
         CGSize textSize = [text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(270, 9999) lineBreakMode:UILineBreakModeWordWrap];
         part1Height = textSize.height+55;
     }

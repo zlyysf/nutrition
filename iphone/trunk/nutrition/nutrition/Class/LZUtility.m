@@ -527,7 +527,7 @@
                                 [UIColor colorWithRed:236/255.f green:170/255.f blue:0/255.f alpha:1.0f],@"Niacin_(mg)",
                                 [UIColor colorWithRed:94/255.f green:24/255.f blue:255/255.f alpha:0.4f],@"Vit_B6_(mg)",
                                 [UIColor colorWithRed:212/255.f green:164/255.f blue:255/255.f alpha:0.4f],@"Folate_Tot_(µg)",
-                                [UIColor colorWithRed:244/255.f green:156/255.f blue:167/255.f alpha:0.4f],@"Vit_B12_(µg)",
+                                [UIColor colorWithRed:244/255.f green:156/255.f blue:167/255.f alpha:1.0f],@"Vit_B12_(µg)",
                                 [UIColor colorWithRed:185/255.f green:52/255.f blue:12/255.f alpha:1.0f],@"Panto_Acid_mg)",
                                 [UIColor colorWithRed:182/255.f green:16/255.f blue:214/255.f alpha:0.4f],@"Calcium_(mg)",
                                 [UIColor colorWithRed:200/255.f green:56/255.f blue:242/255.f alpha:1.0f],@"Copper_(mg)",

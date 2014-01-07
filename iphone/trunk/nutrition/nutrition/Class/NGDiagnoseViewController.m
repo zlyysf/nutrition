@@ -51,7 +51,7 @@
 
     UIView *headerView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, headerSize.height+10)];
     [headerView setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
-    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, headerSize.width, headerSize.height)];
+    UILabel *label = [[UILabel alloc]initWithFrame:CGRectMake(20, 5, (int)headerSize.width+1, headerSize.height)];
     [label setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0f]];
     [label setFont:[UIFont systemFontOfSize:14]];
     [label setNumberOfLines:0];
@@ -260,8 +260,9 @@
     {
         NSDictionary *symptomDict = [textArray objectAtIndex:i];
         NSString *text = [symptomDict objectForKey:queryKey];
-        CGSize textSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
+        CGSize originTextSize = [text sizeWithFont:font constrainedToSize:CGSizeMake(maxWidth, 9999) lineBreakMode:UILineBreakModeWordWrap];
         //NSLog(@"begin%f",textSize.height);
+        CGSize textSize = CGSizeMake((int)originTextSize.width, (int)originTextSize.height);
         textSize.width += horizonPadding*2;
         textSize.height += verticalPadding*2;
         //NSLog(@"after%f",textSize.height);
@@ -296,6 +297,7 @@
         [label setTextColor:[UIColor blackColor]];
         [label setText:text];
         [label setOpaque:YES];
+        [label setBackgroundColor:[UIColor whiteColor]];
         [label setTextAlignment:UITextAlignmentCenter];
         [label.layer setMasksToBounds:YES];
         [label.layer setCornerRadius:5];
@@ -489,7 +491,7 @@
             }
             else
             {
-                [label setBackgroundColor:[UIColor clearColor]];
+                [label setBackgroundColor:[UIColor whiteColor]];
             }
 
         }

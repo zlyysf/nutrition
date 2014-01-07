@@ -23,7 +23,7 @@
 #define DiseaseItemMargin 10
 #define DiseaseItemBottomMarigin 30
 #define DiseaseItemLabelHeight 30
-#define DiseaseItemLabelStartX 70
+#define DiseaseItemLabelStartX 20
 #define DiseaseDetailArrowStartX 261
 #define FoodItemMargin 20
 @interface NGCyclopediaViewController ()
@@ -162,7 +162,7 @@
 //                [illnessButton setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
 //                [illnessButton setTitle:illnessName forState:UIControlStateNormal];
 
-                UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(DiseaseItemLabelStartX, 30+DiseaseItemTopMargin+i*(DiseaseItemLabelHeight+DiseaseItemMargin), 160, DiseaseItemLabelHeight)];
+                UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(DiseaseItemLabelStartX, 30+DiseaseItemTopMargin+i*(DiseaseItemLabelHeight+DiseaseItemMargin), 230, DiseaseItemLabelHeight)];
                 [illnessNameLabel setFont:[UIFont systemFontOfSize:17]];
                 [illnessNameLabel setTextColor:[UIColor blackColor]];
                 [illnessNameLabel setText:illnessName];

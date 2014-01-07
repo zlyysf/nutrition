@@ -108,6 +108,13 @@
     [self.activitySegmentControll setTitle:[levelArray objectAtIndex:1] forSegmentAtIndex:1];
     [self.activitySegmentControll setTitle:[levelArray objectAtIndex:2] forSegmentAtIndex:2];
     [self.activitySegmentControll setTitle:[levelArray objectAtIndex:3] forSegmentAtIndex:3];
+    if (isChinese)
+    {
+        for (int i =0; i<4; i++)
+        {
+            [self.activitySegmentControll setWidth:52 forSegmentAtIndex:i];
+        }
+    }
         NSNumber *userSex = [[NSUserDefaults standardUserDefaults] objectForKey:LZUserSexKey];
     [self.sexSegmentControll setSelectedSegmentIndex:[userSex intValue]];
     [self displayActivityLevelDiscription];
