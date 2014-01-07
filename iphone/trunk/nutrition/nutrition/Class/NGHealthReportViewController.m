@@ -491,6 +491,7 @@
         NSString *nutritionId = [self.lackNutritionArray objectAtIndex:i];
         NSDictionary *dict = [nm getNutritionInfo:nutritionId];
         NSString *nutritionName = [dict objectForKey:queryKey];
+        NSString *convertedString = [LZUtility getNutritionNameInfo:nutritionName isChinese:isChinese];
         NSArray *recommendFood = [self.recommendFoodDict objectForKey:nutritionId];
         UIScrollView *foodScrollView = [[UIScrollView alloc]initWithFrame:CGRectMake(0, startY, 300, 120)];
         [recommendFoodView addSubview:foodScrollView];
@@ -500,7 +501,7 @@
         UILabel *nutritionNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 16, 120)];
         nutritionNameLabel.numberOfLines = 0;
         [nutritionNameLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0f]];
-        [nutritionNameLabel setText:nutritionName];
+        [nutritionNameLabel setText:convertedString];
         [nutritionNameLabel setFont:SmallLabelFont];
         [nutritionNameLabel setTextAlignment:UITextAlignmentCenter];
         [foodScrollView addSubview:nutritionNameLabel];

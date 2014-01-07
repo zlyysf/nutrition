@@ -1322,7 +1322,7 @@
     }
     else
     {
-        NSArray *nameArray = [name componentsSeparatedByString:@" "];
+        NSArray *nameArray = [name componentsSeparatedByString:@","];
         if ([nameArray count]==2)
         {
             return [nameArray objectAtIndex:1];

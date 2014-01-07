@@ -613,8 +613,9 @@
         [textLabel setText:text];
         [cell.backView addSubview:textLabel];
         startY += textSize.height;
+        startY +=20;
     }
-    startY +=20;
+    
     NSString *note = [record objectForKey:@"Note"];
     if (note != nil && [note length]>0)
     {
