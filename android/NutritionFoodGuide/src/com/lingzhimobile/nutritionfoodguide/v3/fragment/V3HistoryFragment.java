@@ -41,6 +41,10 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
         View view = inflater.inflate(R.layout.v3_fragment_history, container, false);
         initHeaderLayout(view);
         
+        Drawable prevDrawable = getResources().getDrawable(R.drawable.v3_prev_bg);
+        prevDrawable.setBounds(0, 0, 27, 45);
+        leftButton.setCompoundDrawables(prevDrawable, null, null, null);
+
 
         Drawable nextDrawable = getResources().getDrawable(R.drawable.v3_next_bg);
         nextDrawable.setBounds(0, 0, 27, 45);
