@@ -145,6 +145,32 @@
         <item name="android:layout_width">match_parent</item>
     </style>
     
+    <style name="v3_label_suggestion_rowpos">
+        <item name="android:minWidth">20dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:gravity">right|top</item>
+        <item name="android:layout_weight">0</item>
+        <item name="android:layout_marginLeft">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/v3_label</item>
+    </style>
+    <style name="v3_text_suggestion_rowpos">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">10dp</item>
+        <item name="android:layout_marginRight">10dp</item>
+        <item name="android:layout_marginBottom">10dp</item>
+        <item name="android:layout_gravity">top</item>
+        <item name="android:gravity">left|top</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/v3_content</item>
+    </style>
+    
     <style name="v3_history_item_label" parent="@style/v3_label">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_marginTop">5dp</item>

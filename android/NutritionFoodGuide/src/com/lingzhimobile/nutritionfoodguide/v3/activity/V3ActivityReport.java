@@ -642,6 +642,7 @@ public class V3ActivityReport extends V3BaseActivity {
                 convertView = getLayoutInflater().inflate(R.layout.v3_row_suggestion, null);
             }
             TextView tvSuggestion = (TextView) convertView.findViewById(R.id.tvSuggestion);
+            TextView tvRowPos = (TextView) convertView.findViewById(R.id.tvRowPos);
             
             String suggestionId = m_suggestionDistinctIdList.get(position);
             HashMap<String, Object> suggestionInfo = m_suggestionInfoDict2Level.get(suggestionId);
@@ -649,6 +650,7 @@ public class V3ActivityReport extends V3BaseActivity {
             String suggestionTxt = (String)suggestionInfo.get(Constants.COLUMN_NAME_SuggestionCn);
             
             tvSuggestion.setText(suggestionTxt);
+            tvRowPos.setText((position+1)+"");
 
             return convertView;
         }

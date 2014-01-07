@@ -230,21 +230,24 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" >
-            
-	            <TextView
-	                    style="@style/v3_table_name_text"
-	                    android:text="潜在疾病" />
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                >
+                <TextView
+                    style="@style/v3_report_label"
+                    android:text="潜在疾病" />
+
 	            <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
 	                android:id="@+id/lvehIllness"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
 	                android:layout_margin="5dp"
-	                android:background="@color/wheat"
+	                android:divider="@null"
+	                android:listSelector="@android:color/transparent"
+	                android:cacheColorHint="#00000000" 
 	                android:orientation="vertical" >
 	            </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
             
@@ -253,24 +256,28 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" >
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                >
             
 	            <TextView
-	                    style="@style/v3_table_name_text"
-	                    android:text="调养办法" />
+	                    style="@style/v3_report_label"
+	                    android:text="养生贴士" />
 	            <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
 	                android:id="@+id/lvehSuggestion"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:layout_margin="5dp"
-	                android:background="@color/wheat"
+	                android:layout_margin="10dp"
+	                android:divider="@null"
+	                android:listSelector="@android:color/transparent"
+	                android:cacheColorHint="#00000000" 
 	                android:orientation="vertical" >
 	            </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
             </LinearLayout>
+            
         </LinearLayout>
     </ScrollView>
 
