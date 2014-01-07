@@ -108,47 +108,43 @@ const float TickIntervalHeartbeat = 5.0;
 {
     CPTXYPlotSpace * plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
     //plotSpace.allowsUserInteraction = YES;
+    
+    plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.2) length:CPTDecimalFromFloat(34.2)];
+    
     float yPercentUnderX = 0.06;
     float xOrthogonalCoordinate;
     float yMaxTick;
     if (self.scatterType == ScatterTypeNI) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.0) length:CPTDecimalFromFloat(33.7)];
         CPTPlotRange *yRange = [self yRange];
         xOrthogonalCoordinate = yRange.locationDouble;
         yMaxTick = yRange.locationDouble + yRange.lengthDouble + 1;
     }
     else if (self.scatterType == ScatterTypeBMI) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(34.2)];
         CPTPlotRange *yRange = [self yRange];
         xOrthogonalCoordinate = yRange.locationDouble;
         yMaxTick = yRange.locationDouble + yRange.lengthDouble + 0.1;
     }
     else if (self.scatterType == ScatterTypeWeight) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
         CPTPlotRange *yRange = [self yRange];
         xOrthogonalCoordinate = yRange.locationDouble;
         yMaxTick = yRange.locationDouble + yRange.lengthDouble + 1;
     }
     else if (self.scatterType == ScatterTypeTemperature) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
         CPTPlotRange *yRange = [self yRange];
         xOrthogonalCoordinate = yRange.locationDouble;
         yMaxTick = yRange.locationDouble + yRange.lengthDouble + 0.2;
     }
     else if (self.scatterType == ScatterTypeBP) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.0) length:CPTDecimalFromFloat(33.7)];
         CPTPlotRange *yRange = [self yRange];
         xOrthogonalCoordinate = yRange.locationDouble;
         yMaxTick = yRange.locationDouble + yRange.lengthDouble + 4;
     }
     else if (self.scatterType == ScatterTypeHeartbeat) {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-1.4) length:CPTDecimalFromFloat(33.1)];
         CPTPlotRange *yRange = [self yRange];
         xOrthogonalCoordinate = yRange.locationDouble;
         yMaxTick = yRange.locationDouble + yRange.lengthDouble + 1;
     }
     else {
-        plotSpace.xRange = [CPTPlotRange plotRangeWithLocation:CPTDecimalFromFloat(-2.5) length:CPTDecimalFromFloat(33.5)];
         xOrthogonalCoordinate = 0;
         yMaxTick = 100;
     }
