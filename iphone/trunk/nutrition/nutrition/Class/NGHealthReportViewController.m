@@ -182,8 +182,10 @@
         }
         
         //根据潜在疾病得到注意事项,新的数据格式
-        self.attentionArray = [da getIllnessSuggestionsDistinct_ByIllnessIds:potentialArray];
-        
+        if (potentialArray != nil && [potentialArray count]!=0)
+        {
+            self.attentionArray = [da getIllnessSuggestionsDistinct_ByIllnessIds:potentialArray];
+        }
         
         //根据症状获得用户缺少的营养元素
         self.lackNutritionArray = [[NSArray alloc]init];

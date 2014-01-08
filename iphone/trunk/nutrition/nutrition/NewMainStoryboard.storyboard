@@ -1071,7 +1071,7 @@
                                                     <action selector="sexChanged:" destination="D4K-QU-mXC" eventType="valueChanged" id="V2x-dj-Wht"/>
                                                 </connections>
                                             </segmentedControl>
-                                            <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" id="yuZ-D0-80e">
+                                            <textField clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" id="yuZ-D0-80e">
                                                 <rect key="frame" x="85" y="178" width="40" height="20"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
