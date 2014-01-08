@@ -48,8 +48,8 @@
 @property (strong, nonatomic) NSArray *attentionArray;
 @property (strong, nonatomic) NSDictionary *recommendFoodDict;
 @property (strong,nonatomic)NSDictionary *dataToSave;
-@property (assign, nonatomic)double BMIValue;
-@property (assign, nonatomic)double HealthValue;
+
+
 @property (nonatomic,strong)UIBarButtonItem *saveItem;
 @property (nonatomic,assign)BOOL isRecommendViewDone;
 @property (nonatomic,assign)BOOL isLackNutritionViewDone;
@@ -105,11 +105,15 @@
         
         //根据症状获得症状健康分值
         LZDataAccess *da = [LZDataAccess singleton];
-        double symptomScore = [da getSymptomHealthMarkSum_BySymptomIds:userSelectedSymptom];
-        self.HealthValue = 100 - symptomScore;//需保存数据
-        if (self.HealthValue<Config_nearZero)
+
+        if (!isOnlyDisplay)
         {
-            self.HealthValue = 0;
+            double symptomScore = [da getSymptomHealthMarkSum_BySymptomIds:userSelectedSymptom];
+            self.HealthValue = 100 - symptomScore;//需保存数据
+            if (self.HealthValue<Config_nearZero)
+            {
+                self.HealthValue = 0;
+            }
         }
         
         //根据症状和测量数据得到用户的潜在疾病和BMI值
@@ -122,42 +126,35 @@
         NSNumber *userWeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserWeightKey];
         NSNumber *paramHeight = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserHeightKey];
         NSMutableDictionary *measureData = [[NSMutableDictionary alloc]init];
-        if ([weight length] == 0 || [weight doubleValue]<=0)
+        if (!isOnlyDisplay)
         {
-            NSNumber *newWeight;
-            if (isChinese)
+            if ([weight length] == 0 || [weight doubleValue]<=0)
             {
-                newWeight = [NSNumber numberWithDouble:[userWeight doubleValue]];
+                self.BMIValue = [LZUtility getBMI_withWeight:[userWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
             }
             else
             {
-                double convertedWeight = (double)([userWeight doubleValue]/kKGConvertLBRatio);
-                newWeight = [NSNumber numberWithDouble:convertedWeight];
+                NSNumber *newWeight;
+                if (isChinese)
+                {
+                    newWeight = [NSNumber numberWithDouble:[weight doubleValue]];
+                }
+                else
+                {
+                    double convertedWeight = (double)([weight doubleValue]/kKGConvertLBRatio);
+                    newWeight = [NSNumber numberWithDouble:convertedWeight];
+                }
+                
+                [measureData setObject:newWeight forKey:Key_Weight];
+                
+                self.BMIValue = [LZUtility getBMI_withWeight:[newWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
+                if (!isOnlyDisplay)
+                {
+                    [[NSUserDefaults standardUserDefaults]setObject:newWeight forKey:LZUserWeightKey];
+                    [[NSUserDefaults standardUserDefaults]synchronize];
+                }
             }
-            [measureData setObject:newWeight forKey:Key_Weight];
-            self.BMIValue = [LZUtility getBMI_withWeight:[userWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
-        }
-        else
-        {
-            NSNumber *newWeight;
-            if (isChinese)
-            {
-                newWeight = [NSNumber numberWithDouble:[weight doubleValue]];
-            }
-            else
-            {
-                double convertedWeight = (double)([weight doubleValue]/kKGConvertLBRatio);
-                newWeight = [NSNumber numberWithDouble:convertedWeight];
-            }
-            
-            [measureData setObject:newWeight forKey:Key_Weight];
-            
-            self.BMIValue = [LZUtility getBMI_withWeight:[newWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
-            if (!isOnlyDisplay)
-            {
-                [[NSUserDefaults standardUserDefaults]setObject:newWeight forKey:LZUserWeightKey];
-                [[NSUserDefaults standardUserDefaults]synchronize];
-            }
+
         }
         //2.计算潜在疾病
         

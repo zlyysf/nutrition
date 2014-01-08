@@ -16,4 +16,6 @@
 @property (strong, nonatomic) IBOutlet UITableView *listView;
 @property (strong, nonatomic) NSArray *symptomsByTypeArray;
 @property (assign,nonatomic)BOOL isOnlyDisplay;
+@property (assign, nonatomic)double BMIValue;
+@property (assign, nonatomic)double HealthValue;
 @end

@@ -108,6 +108,7 @@
 
 -(void)historyUpdated:(NSNotification *)notification
 {
+    [self.navigationController popToRootViewControllerAnimated:NO];
     [self initialize];
 }
 -(void)initialize
@@ -408,7 +409,9 @@
     }
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
     NGHealthReportViewController *healthReportViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGHealthReportViewController"];
-
+    NSDictionary *calculateNameValuePairs = [record objectForKey:@"calculateNameValuePairs"];
+    NSNumber *bmiValue = [calculateNameValuePairs objectForKey:Key_BMI];
+    NSNumber *healthValue = [calculateNameValuePairs objectForKey:Key_HealthMark];
     NSDictionary *InputNameValuePairsData = [record objectForKey:@"inputNameValuePairs"];
     NSMutableDictionary *userInputValueDict = [[NSMutableDictionary alloc]init];
     NSNumber *temperature = [InputNameValuePairsData objectForKey:Key_BodyTemperature];
@@ -462,6 +465,8 @@
 //    }
 
     healthReportViewController.userInputValueDict = userInputValueDict;
+    healthReportViewController.BMIValue = [bmiValue doubleValue];
+    healthReportViewController.HealthValue = [healthValue doubleValue];
     healthReportViewController.userSelectedSymptom = [InputNameValuePairsData objectForKey:Key_Symptoms];
     healthReportViewController.symptomsByTypeArray = [InputNameValuePairsData objectForKey:Key_SymptomsByType];
     healthReportViewController.isOnlyDisplay = YES;
