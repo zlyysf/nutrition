@@ -50,10 +50,13 @@
 @property (strong,nonatomic)NSDictionary *dataToSave;
 @property (assign, nonatomic)double BMIValue;
 @property (assign, nonatomic)double HealthValue;
+@property (nonatomic,strong)UIBarButtonItem *saveItem;
+@property (nonatomic,assign)BOOL isRecommendViewDone;
+@property (nonatomic,assign)BOOL isLackNutritionViewDone;
 @end
 
 @implementation NGHealthReportViewController
-@synthesize lackNutritionArray,potentialArray,attentionArray,isFirstLoad,recommendFoodDict,dataToSave,selectedImage,illnessArray,illnessCellHeight,lackNutritonCellHeight,recommendFoodCellHeight,suggestionCellHeight,recommendFoodView,lackNutritionFoodView,userInputValueDict,userSelectedSymptom,symptomsByTypeArray,isOnlyDisplay;
+@synthesize lackNutritionArray,potentialArray,attentionArray,isFirstLoad,recommendFoodDict,dataToSave,selectedImage,illnessArray,illnessCellHeight,lackNutritonCellHeight,recommendFoodCellHeight,suggestionCellHeight,recommendFoodView,lackNutritionFoodView,userInputValueDict,userSelectedSymptom,symptomsByTypeArray,isOnlyDisplay,saveItem,isLackNutritionViewDone,isRecommendViewDone;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -68,12 +71,12 @@
     [super viewDidLoad];
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     isFirstLoad = YES;
+    isRecommendViewDone = NO;
+    isLackNutritionViewDone = NO;
     isChinese = [LZUtility isCurrentLanguageChinese];
     if (!isOnlyDisplay)
     {
-        UIBarButtonItem *saveItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"jiankangbaogao_c_baocun", @"保存按钮：保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveRecord:)];
-        [saveItem setEnabled:NO];
-        self.navigationItem.rightBarButtonItem = saveItem;
+        saveItem = [[UIBarButtonItem alloc]initWithTitle:NSLocalizedString(@"jiankangbaogao_c_baocun", @"保存按钮：保存") style:UIBarButtonItemStyleBordered target:self action:@selector(saveRecord:)];
     }
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
@@ -97,7 +100,7 @@
 -(void)displayReport
 {
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^(void){
-        
+    
         NSString *note = [self.userInputValueDict objectForKey:@"note"];//需保存数据
         
         //根据症状获得症状健康分值
@@ -121,6 +124,17 @@
         NSMutableDictionary *measureData = [[NSMutableDictionary alloc]init];
         if ([weight length] == 0 || [weight doubleValue]<=0)
         {
+            NSNumber *newWeight;
+            if (isChinese)
+            {
+                newWeight = [NSNumber numberWithDouble:[userWeight doubleValue]];
+            }
+            else
+            {
+                double convertedWeight = (double)([userWeight doubleValue]/kKGConvertLBRatio);
+                newWeight = [NSNumber numberWithDouble:convertedWeight];
+            }
+            [measureData setObject:newWeight forKey:Key_Weight];
             self.BMIValue = [LZUtility getBMI_withWeight:[userWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
         }
         else
@@ -135,10 +149,15 @@
                 double convertedWeight = (double)([weight doubleValue]/kKGConvertLBRatio);
                 newWeight = [NSNumber numberWithDouble:convertedWeight];
             }
-            [[NSUserDefaults standardUserDefaults]setObject:newWeight forKey:LZUserWeightKey];
+            
             [measureData setObject:newWeight forKey:Key_Weight];
-            [[NSUserDefaults standardUserDefaults]synchronize];
+            
             self.BMIValue = [LZUtility getBMI_withWeight:[newWeight doubleValue] andHeight:([paramHeight doubleValue]/100.f)];
+            if (!isOnlyDisplay)
+            {
+                [[NSUserDefaults standardUserDefaults]setObject:newWeight forKey:LZUserWeightKey];
+                [[NSUserDefaults standardUserDefaults]synchronize];
+            }
         }
         //2.计算潜在疾病
         
@@ -358,11 +377,15 @@
             {
                 recommendFoodCellHeight = 0;
             }
+            
+        //dispatch_sync(dispatch_get_main_queue(), ^{
             [self.listView reloadData];
             [HUD hide:YES];
             self.listView.hidden = NO;
+
             if (!isOnlyDisplay)
             {
+                self.navigationItem.rightBarButtonItem = self.saveItem;
                 if (isFirstSave) {
                     [self.navigationItem.rightBarButtonItem setEnabled:NO];
                 }
@@ -371,8 +394,8 @@
                     [self.navigationItem.rightBarButtonItem setEnabled:YES];
                 }
             }
-            
-        });
+            });
+        
     });
 
 }
@@ -458,6 +481,7 @@
 
     lackNutritonCellHeight = totalHeight+45;
     [lackNutritionFoodView setFrame:CGRectMake(10, 0, 300, lackNutritonCellHeight)];
+    isLackNutritionViewDone = YES;
 
 }
 
@@ -570,6 +594,7 @@
         }
         
     }
+    isRecommendViewDone = YES;
 
 }
 -(void)saveRecord:(id)sender
@@ -844,13 +869,15 @@
             [cell.backView.layer setBorderWidth:0.5f];
             cell.headerLabel.text = NSLocalizedString(@"jiankangbaogao_c_jiankangzhishu", @"健康指数栏标题：健康指数");
             //12,56,78 3,42,40,20
-            cell.hasLoaded = YES;
+            
+            
         }
         NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.HealthValue];
         CGSize textSize = [scoreText sizeWithFont:[UIFont boldSystemFontOfSize:40.f] constrainedToSize:CGSizeMake(300, 9999) lineBreakMode:UILineBreakModeWordWrap];
         [cell.healthScoreLabel setFrame:CGRectMake(40, 35, textSize.width, 35)];
         [cell.fullPercentLabel setFrame:CGRectMake(40+textSize.width, 50, 40, 20)];
         cell.healthScoreLabel.text = scoreText;
+        cell.hasLoaded = YES;
 
         return cell;
     }
@@ -872,25 +899,26 @@
         NSString *scoreText =[LZUtility getAccurateStringWithDecimal:self.BMIValue];
         cell.bmiValueLabel.text = scoreText;
         [cell setBMIValue:self.BMIValue];
+
         return cell;
     }
     else if (indexPath.section == 2)
     {
         LZEmptyClassCell *cell = (LZEmptyClassCell*)[tableView dequeueReusableCellWithIdentifier:@"NGLackNutritonCell"];
-        if (!cell.hasLoaded)
+        if (isLackNutritionViewDone)
         {
             [cell.contentView addSubview:lackNutritionFoodView];
-            cell.hasLoaded = YES;
+            isLackNutritionViewDone = NO;
         }
         return cell;
     }
     else if (indexPath.section == 3)
     {
         LZEmptyClassCell *cell = (LZEmptyClassCell*)[tableView dequeueReusableCellWithIdentifier:@"NGRecommendCell"];
-        if (!cell.hasLoaded)
+        if (isRecommendViewDone)
         {
             [cell.contentView addSubview:recommendFoodView];
-            cell.hasLoaded = YES;
+            isRecommendViewDone = NO;
         }
         return cell;
     }
@@ -904,6 +932,7 @@
             [backView.layer setBorderColor:BorderColor];
             [backView.layer setBorderWidth:0.5f];
             [cell.contentView addSubview:backView];
+            backView.tag = 1;
             
             UILabel *headerLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 20)];
             [headerLabel setFont:SmallLabelFont];
@@ -922,7 +951,6 @@
             float startY = 32;
             for (int i= 0;i< [self.illnessArray count];i++)
             {
-                
                 
                 UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(40, startY, 172, 36)];
                 [illnessNameLabel setFont:BigLabelFont];
@@ -947,6 +975,11 @@
             }
             cell.hasLoaded = YES;
         }
+        else
+        {
+            UIView *backView = (UIView*)[cell.contentView viewWithTag:1];
+            [backView setFrame:CGRectMake(10, 0, 300, illnessCellHeight)];
+        }
         return cell;
     }
     else
@@ -959,6 +992,7 @@
             [backView.layer setBorderColor:BorderColor];
             [backView.layer setBorderWidth:0.5f];
             [cell.contentView addSubview:backView];
+            backView.tag = 1;
             
             UILabel *headerLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 5, 200, 20)];
             [headerLabel setFont:SmallLabelFont];
@@ -998,6 +1032,11 @@
                 k+=1;
             }
             cell.hasLoaded = YES;
+        }
+        else
+        {
+            UIView *backView = (UIView*)[cell.contentView viewWithTag:1];
+            [backView setFrame:CGRectMake(10, 0, 300, suggestionCellHeight)];
         }
         return cell;
     }
