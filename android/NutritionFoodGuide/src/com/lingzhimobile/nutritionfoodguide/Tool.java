@@ -1576,9 +1576,11 @@ public class Tool {
 		ShapeDrawable ShapeDrawable1 = new ShapeDrawable(RoundRectShape1);
 //		ShapeDrawable1.getPaint().setColor(Color.parseColor("#FF0000"));
 		ShapeDrawable1.getPaint().setColor(curActv.getResources().getColor(nutrientColorResId));
+		ShapeDrawable1.setPadding(16, 14, 16, 14);
 		
 		ShapeDrawable ShapeDrawable2 = new ShapeDrawable(RoundRectShape1);
 		ShapeDrawable2.getPaint().setColor(curActv.getResources().getColor(R.color.v3_addClickEffect));
+		ShapeDrawable2.setPadding(16, 14, 16, 14);
 		
 		Drawable[] layers = new Drawable[2];
 		layers[0] = ShapeDrawable1;

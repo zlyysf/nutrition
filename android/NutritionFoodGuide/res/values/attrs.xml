@@ -6,4 +6,8 @@
         <attr name="time" format="float"/>
         <attr name="offset" format="dimension"/>
     </declare-styleable>
+    
+	<declare-styleable name="TextViewSimpleVertical">
+        <attr name="textVertical" format="string"/>
+    </declare-styleable>
 </resources>

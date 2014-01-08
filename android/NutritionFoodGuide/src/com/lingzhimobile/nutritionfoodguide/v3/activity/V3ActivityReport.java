@@ -46,6 +46,7 @@ public class V3ActivityReport extends V3BaseActivity {
 //    ListView diseaseAttentionListView;
     LinearLayout attentionLinearLayout;
     TextView bmiTextView, healthTextView, m_tvBmiTooLight, m_tvBmiNormal, m_tvBmiTooWeight, m_tvBmiFat;
+    ArrayList<TextView> m_tvNutrients;
 
     ArrayList<String> m_SymptomIdList;
     String[] m_symptomIds;
@@ -120,6 +121,16 @@ public class V3ActivityReport extends V3BaseActivity {
         healthTextView = (TextView) findViewById(R.id.healthTextView);
         elementFoodListView = (ListView) findViewById(R.id.elementFoodListView);
 //        diseaseAttentionListView = (ListView) findViewById(R.id.diseaseAttentionListView);
+        
+        TextView tvNutrient1 = (TextView) findViewById(R.id.tvNutrient1);
+        TextView tvNutrient2 = (TextView) findViewById(R.id.tvNutrient2);
+        TextView tvNutrient3 = (TextView) findViewById(R.id.tvNutrient3);
+        TextView tvNutrient4 = (TextView) findViewById(R.id.tvNutrient4);
+        m_tvNutrients = new ArrayList<TextView>();
+        m_tvNutrients.add(tvNutrient1);
+        m_tvNutrients.add(tvNutrient2);
+        m_tvNutrients.add(tvNutrient3);
+        m_tvNutrients.add(tvNutrient4);
         
         m_lvehIllness = (ListView) findViewById(R.id.lvehIllness);
         m_lvehSuggestion = (ListView) findViewById(R.id.lvehSuggestion);
@@ -256,6 +267,21 @@ public class V3ActivityReport extends V3BaseActivity {
     			m_FoodsByNutrient.put(nutrientId, foods2);
     		}//for i
     	}
+    	
+    	int lenOfNutrientIds = m_nutrientIds==null? 0 : m_nutrientIds.length;
+    	for(int i = 0;i< m_tvNutrients.size();i++){
+    		TextView tvNutrient = m_tvNutrients.get(i);
+            if ( i < lenOfNutrientIds){
+            	tvNutrient.setVisibility(View.VISIBLE);
+            	String nutrientId = m_nutrientIds[i];
+            	HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
+            	String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
+            	m_tvNutrients.get(i).setText(nutrientCaption);
+                Tool.changeBackground_NutritionButton(V3ActivityReport.this, tvNutrient, nutrientId, false);
+            } else {
+            	tvNutrient.setVisibility(View.INVISIBLE);
+            }
+        }
     	
     	m_illnessIdList = Tool.inferIllnesses_withSymptoms(m_SymptomIdList, m_measureHm);
     	if (m_illnessIdList != null && m_illnessIdList.size()>0 ){
@@ -509,8 +535,9 @@ public class V3ActivityReport extends V3BaseActivity {
             ArrayList<HashMap<String, Object>> nutrientFoods = m_FoodsByNutrient.get(nutrientId);
             
             
-            TextView elementTextView = (TextView) convertView.findViewById(R.id.nutrientTextView);
-            elementTextView.setText(nutrientCaption);
+            TextViewSimpleVertical tvvNutrient = (TextViewSimpleVertical) convertView.findViewById(R.id.tvvNutrient);
+            tvvNutrient.setTextVertical(nutrientCaption);
+
 
             LinearLayout recommendViewPager = (LinearLayout) convertView.findViewById(R.id.recommendViewPager);
             recommendViewPager.removeAllViews();

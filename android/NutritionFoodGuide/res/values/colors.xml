@@ -11,6 +11,8 @@
     <color name="v3_label">#666666</color>
     <color name="v3_content">#000000</color>
     
+    <color name="v3_foodtext_black_bg">#050504</color>
+    
     <color name="v3_bmi_normal">#8cd779</color>
     <color name="v3_bmi_fat">#e3676e</color>
     <color name="v3_bmi_un_normal">#ece851</color>
