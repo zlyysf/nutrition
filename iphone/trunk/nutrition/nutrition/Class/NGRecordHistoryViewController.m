@@ -175,7 +175,7 @@
                         [self.recordEmptyDisplayLabel setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
                         [self.recordEmptyDisplayLabel setTextAlignment:UITextAlignmentCenter];
                         [self.view addSubview:self.recordEmptyDisplayLabel];
-                        self.recordEmptyDisplayLabel.center = self.view.center;
+                        self.recordEmptyDisplayLabel.center = self.contentScrollView.center;
                     }
                     else
                     {
