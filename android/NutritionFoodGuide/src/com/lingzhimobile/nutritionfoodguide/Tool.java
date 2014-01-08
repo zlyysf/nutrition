@@ -498,14 +498,26 @@ public class Tool {
 		return dataColGroupedHm;
 	}
 	
-	public static ArrayList<String> getKeysFromHashMap(HashMap<String, Object> hm){
+//	public static ArrayList<String> getKeysFromHashMap(HashMap<String, Object> hm){
+//		if (hm==null)
+//			return null;
+//		ArrayList<String> keys = new ArrayList<String>();
+//		Iterator<Map.Entry<String, Object>> iter = hm.entrySet().iterator();
+//		while (iter.hasNext()) {
+//			Map.Entry<String, Object> entry = iter.next();
+//    		String key = entry.getKey();
+//    		keys.add(key);
+//		}
+//		return keys;
+//	}
+	public static ArrayList<String> getKeysFromHashMap(HashMap hm){
 		if (hm==null)
 			return null;
 		ArrayList<String> keys = new ArrayList<String>();
-		Iterator<Map.Entry<String, Object>> iter = hm.entrySet().iterator();
+		Iterator iter = hm.entrySet().iterator();
 		while (iter.hasNext()) {
-			Map.Entry<String, Object> entry = iter.next();
-    		String key = entry.getKey();
+			Map.Entry entry = (Map.Entry)iter.next();
+    		String key = (String)entry.getKey();
     		keys.add(key);
 		}
 		return keys;

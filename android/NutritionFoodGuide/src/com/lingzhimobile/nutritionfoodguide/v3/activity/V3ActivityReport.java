@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import android.R.bool;
 import android.R.integer;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -56,6 +57,7 @@ public class V3ActivityReport extends V3BaseActivity {
     int m_HeartRate, m_BloodPressureLow, m_BloodPressureHigh;
     HashMap<String, Object> m_measureHm;
     String m_note;
+    int m_dayLocal;
     
     HashMap<String, Double> m_DRIsDict;
     HashMap<String, HashMap<String, Object>> m_nutrientInfoDict2Level;
@@ -64,6 +66,7 @@ public class V3ActivityReport extends V3BaseActivity {
     ArrayList<String> m_nutrientIdList;
     String[] m_nutrientIds;
     HashMap<String, ArrayList<HashMap<String, Object>>> m_FoodsByNutrient;
+    HashMap<String, HashMap<String, Double>> m_FoodAndAmountByNutrientData;
     ArrayList<String> m_illnessIdList ;
     HashMap<String, HashMap<String, Object>> m_illnessInfoDict2Level;
     ArrayList<String> m_suggestionDistinctIdList;
@@ -72,6 +75,7 @@ public class V3ActivityReport extends V3BaseActivity {
     
     HashMap<String, ArrayList<HashMap<String, Object>>> m_suggestionsByIllnessHm;
     
+    boolean m_IsShowingData = false;
     boolean m_alreadyExistDataRow = false;
 
 //    List<String> nutrientList = new ArrayList<String>();
@@ -137,7 +141,97 @@ public class V3ActivityReport extends V3BaseActivity {
 	}
     
     void initViewsContent(){
-    	getInputParams();
+    	Intent intent = getIntent();
+    	
+    	String prevActvTitle = intent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
+        if (prevActvTitle!=null)
+        	m_btnBack.setText(prevActvTitle);
+        
+        m_IsShowingData = intent.getBooleanExtra(Constants.IntentParamKey_IsShowingData, false);
+        m_nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(this);
+        if (!m_IsShowingData){
+        	m_SymptomIdList = intent.getStringArrayListExtra(Constants.COLUMN_NAME_SymptomId);
+            m_symptomIds = Tool.convertToStringArray(m_SymptomIdList);
+            
+            m_BodyTemperature = intent.getDoubleExtra(Constants.Key_BodyTemperature,0);
+            m_Weight = intent.getDoubleExtra(Constants.Key_Weight,0);
+            m_HeartRate = intent.getIntExtra(Constants.Key_HeartRate, 0);
+            m_BloodPressureLow = intent.getIntExtra(Constants.Key_BloodPressureLow, 0);
+            m_BloodPressureHigh = intent.getIntExtra(Constants.Key_BloodPressureHigh, 0);
+            
+            m_note = intent.getStringExtra(Constants.COLUMN_NAME_Note);
+            
+            m_measureHm = new HashMap<String, Object>();
+            if (m_BodyTemperature > 0)
+            	m_measureHm.put(Constants.Key_BodyTemperature, m_BodyTemperature);
+            if (m_Weight > 0)
+            	m_measureHm.put(Constants.Key_Weight, m_Weight);
+            if (m_HeartRate>0)
+            	m_measureHm.put(Constants.Key_HeartRate, m_HeartRate);
+            if (m_BloodPressureLow>0)
+            	m_measureHm.put(Constants.Key_BloodPressureLow, m_BloodPressureLow);
+            if (m_BloodPressureHigh>0)
+            	m_measureHm.put(Constants.Key_BloodPressureHigh, m_BloodPressureHigh);
+            
+            m_SymptomsByType_str = intent.getStringExtra(Constants.Key_SymptomsByType);
+            if (m_SymptomsByType_str!=null && m_SymptomsByType_str.length()>0){
+            	try {
+        			m_SymptomsByType = Tool.JsonToArrayList(new JSONArray(m_SymptomsByType_str));
+        			Log.d(LogTag, "m_SymptomsByType="+m_SymptomsByType);
+        		} catch (JSONException e) {
+        			Log.e(LogTag, "new JSONArray string Err"+e.getMessage(),e);
+        			throw new RuntimeException(e);
+        		}
+            }else{
+            	m_SymptomsByType = null;
+            }
+            
+            calculate();
+        }else{
+        	m_dayLocal = intent.getIntExtra(Constants.COLUMN_NAME_DayLocal, 0);
+        	HashMap<String, Object> row = da.getUserRecordSymptomDataByDayLocal(m_dayLocal);
+//        	assert(row!=null);
+        	HashMap<String, Object> InputNameValuePairsData = (HashMap<String, Object>)row.get(Constants.COLUMN_NAME_inputNameValuePairs);
+        	HashMap<String, Object> CalculateNameValuePairsData = (HashMap<String, Object>)row.get(Constants.COLUMN_NAME_calculateNameValuePairs);
+        	
+        	m_SymptomIdList = (ArrayList<String>)InputNameValuePairsData.get(Constants.Key_Symptoms);
+        	m_symptomIds = Tool.convertToStringArray(m_SymptomIdList);
+        	m_SymptomsByType = (ArrayList<Object>)InputNameValuePairsData.get(Constants.Key_SymptomsByType);
+    	    Double obj_BodyTemperature = Double.parseDouble(""+ InputNameValuePairsData.get(Constants.Key_BodyTemperature));
+    	    m_BodyTemperature = obj_BodyTemperature==null? 0 : obj_BodyTemperature.doubleValue();
+    	    Double obj_Weight = Double.parseDouble(""+ InputNameValuePairsData.get(Constants.Key_Weight));
+    	    m_Weight = (obj_Weight==null)? 0 : obj_Weight.doubleValue();
+    	    Integer obj_HeartRate = (Integer)InputNameValuePairsData.get(Constants.Key_HeartRate);
+    	    m_HeartRate = (obj_HeartRate==null)? 0 : obj_HeartRate.intValue();
+    	    Integer obj_BloodPressureLow = (Integer)InputNameValuePairsData.get(Constants.Key_BloodPressureLow);
+    	    m_BloodPressureLow = (obj_BloodPressureLow==null) ? 0 : obj_BloodPressureLow.intValue();
+    	    Integer obj_BloodPressureHigh = (Integer)InputNameValuePairsData.get(Constants.Key_BloodPressureHigh);
+    	    m_BloodPressureHigh = (obj_BloodPressureHigh==null) ? 0 : obj_BloodPressureHigh.intValue();
+        	
+    	    Double obj_BMI = Double.parseDouble(""+ CalculateNameValuePairsData.get(Constants.Key_BMI));
+    	    m_BMI = (obj_BMI==null)? 0 : obj_BMI.doubleValue();
+    	    Double obj_HealthMark = Double.parseDouble(""+ CalculateNameValuePairsData.get(Constants.Key_HealthMark));
+    	    m_HealthMark = (obj_HealthMark==null)? 0 : obj_HealthMark.doubleValue();
+    	    
+    	    m_FoodAndAmountByNutrientData = (HashMap<String, HashMap<String, Double>>)CalculateNameValuePairsData.get(Constants.Key_LackNutrientsAndFoods);
+    	    if (m_FoodAndAmountByNutrientData != null){
+    	    	m_nutrientIdList = new ArrayList<String>();
+    	    	
+    	    	Iterator<Map.Entry<String, HashMap<String, Double>>> iter = m_FoodAndAmountByNutrientData.entrySet().iterator();
+        		while (iter.hasNext()) {
+        			Map.Entry<String, HashMap<String, Double>> entry = iter.next();
+    	    		String nutrientId = entry.getKey();
+    	    		HashMap<String, Double> foodAndAmountHm = entry.getValue();
+    	    		m_nutrientIdList.add(nutrientId);
+        		}
+        		m_nutrientIds= Tool.convertToStringArray(m_nutrientIdList);
+    	    }
+    	    
+//    	    HashMap<String, ArrayList<String>> InferIllnessesAndSuggestions = CalculateNameValuePairsData.get(Constants.Key_InferIllnessesAndSuggestions);
+    	    
+    	    m_illnessIdList = (ArrayList<String>)CalculateNameValuePairsData.get(Constants.Key_IllnessIds);
+    	    m_suggestionDistinctIdList = (ArrayList<String>)CalculateNameValuePairsData.get(Constants.Key_distinctSuggestionIds);
+        }
         
     }
     
@@ -151,55 +245,14 @@ public class V3ActivityReport extends V3BaseActivity {
     }
     
     void setViewsContent(){
-    	calculate();
+    	if (m_IsShowingData){
+    		m_btnSave.setVisibility(View.INVISIBLE);
+    	}
     	show();
     }
     
     
-    void getInputParams() {
-    	Intent intent = getIntent();
-    	
-    	String prevActvTitle = intent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
-        if (prevActvTitle!=null)
-        	m_btnBack.setText(prevActvTitle);
-        
-        m_SymptomIdList = intent.getStringArrayListExtra(Constants.COLUMN_NAME_SymptomId);
-        m_symptomIds = Tool.convertToStringArray(m_SymptomIdList);
-        
-        m_BodyTemperature = intent.getDoubleExtra(Constants.Key_BodyTemperature,0);
-        m_Weight = intent.getDoubleExtra(Constants.Key_Weight,0);
-        m_HeartRate = intent.getIntExtra(Constants.Key_HeartRate, 0);
-        m_BloodPressureLow = intent.getIntExtra(Constants.Key_BloodPressureLow, 0);
-        m_BloodPressureHigh = intent.getIntExtra(Constants.Key_BloodPressureHigh, 0);
-        
-        m_note = intent.getStringExtra(Constants.COLUMN_NAME_Note);
-        
-        m_measureHm = new HashMap<String, Object>();
-        if (m_BodyTemperature > 0)
-        	m_measureHm.put(Constants.Key_BodyTemperature, m_BodyTemperature);
-        if (m_Weight > 0)
-        	m_measureHm.put(Constants.Key_Weight, m_Weight);
-        if (m_HeartRate>0)
-        	m_measureHm.put(Constants.Key_HeartRate, m_HeartRate);
-        if (m_BloodPressureLow>0)
-        	m_measureHm.put(Constants.Key_BloodPressureLow, m_BloodPressureLow);
-        if (m_BloodPressureHigh>0)
-        	m_measureHm.put(Constants.Key_BloodPressureHigh, m_BloodPressureHigh);
-        
-        m_SymptomsByType_str = intent.getStringExtra(Constants.Key_SymptomsByType);
-        if (m_SymptomsByType_str!=null && m_SymptomsByType_str.length()>0){
-        	try {
-    			m_SymptomsByType = Tool.JsonToArrayList(new JSONArray(m_SymptomsByType_str));
-    			Log.d(LogTag, "m_SymptomsByType="+m_SymptomsByType);
-    		} catch (JSONException e) {
-    			Log.e(LogTag, "new JSONArray string Err"+e.getMessage(),e);
-    			throw new RuntimeException(e);
-    		}
-        }else{
-        	m_SymptomsByType = null;
-        }
-        
-    }
+
     
     ArrayList<HashMap<String, Object>> getRandItemWithGivenCount(int count, ArrayList<HashMap<String, Object>> items){
     	if (items == null || items.size()<=count)
@@ -225,24 +278,13 @@ public class V3ActivityReport extends V3BaseActivity {
     	HashMap<String, Object> hmUserInfo = StoredConfigTool.getUserInfo(this);
     	m_DRIsDict = da.getStandardDRIs_withUserInfo(hmUserInfo, null);
     	
-    	
     	m_BMI = 0;
-    	
     	Double heightObj = (Double)hmUserInfo.get(Constants.ParamKey_height);
     	Double weightObj = (Double)hmUserInfo.get(Constants.ParamKey_weight);
     	double weight = m_Weight;
     	if (weight==0)
     		weight = weightObj.doubleValue();
     	m_BMI = Tool.getBMI_withWeight(weight, heightObj.doubleValue());
-    	if (m_BMI < 18.5){
-    		m_tvBmiTooLight.setBackgroundResource(R.drawable.v3_border_bmi_toolight_bg);
-    	}else if  (m_BMI <= 25){
-    		m_tvBmiNormal.setBackgroundResource(R.drawable.v3_border_bmi_normal_bg);
-    	}else if  (m_BMI <= 30){
-    		m_tvBmiTooWeight.setBackgroundResource(R.drawable.v3_border_bmi_tooweight_bg);
-    	}else{
-    		m_tvBmiFat.setBackgroundResource(R.drawable.v3_border_bmi_fat_bg);
-    	}
     	
     	m_HealthMark = 100;
     	if (m_symptomIds!=null && m_symptomIds.length>0){
@@ -255,8 +297,6 @@ public class V3ActivityReport extends V3BaseActivity {
         	m_nutrientIds = Tool.convertToStringArray(m_nutrientIdList);
     	}
     	
-    	m_nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(this);
-    	
     	if (m_nutrientIds!=null && m_nutrientIds.length>0){
     		m_FoodsByNutrient = new HashMap<String, ArrayList<HashMap<String,Object>>>();
     		for(int i=0; i<m_nutrientIds.length; i++){
@@ -268,6 +308,29 @@ public class V3ActivityReport extends V3BaseActivity {
     		}//for i
     	}
     	
+    	m_illnessIdList = Tool.inferIllnesses_withSymptoms(m_SymptomIdList, m_measureHm);
+    	
+    	if (!m_alreadyExistDataRow){
+    		save();
+    	}
+    }
+    
+    void show(){
+		String bmiStr = String.format("%3.1f", m_BMI);
+		bmiTextView.setText(bmiStr);
+		
+		if (m_BMI < 18.5){
+    		m_tvBmiTooLight.setBackgroundResource(R.drawable.v3_border_bmi_toolight_bg);
+    	}else if  (m_BMI <= 25){
+    		m_tvBmiNormal.setBackgroundResource(R.drawable.v3_border_bmi_normal_bg);
+    	}else if  (m_BMI <= 30){
+    		m_tvBmiTooWeight.setBackgroundResource(R.drawable.v3_border_bmi_tooweight_bg);
+    	}else{
+    		m_tvBmiFat.setBackgroundResource(R.drawable.v3_border_bmi_fat_bg);
+    	}
+		  
+		healthTextView.setText(String.valueOf(m_HealthMark));
+		
     	int lenOfNutrientIds = m_nutrientIds==null? 0 : m_nutrientIds.length;
     	for(int i = 0;i< m_tvNutrients.size();i++){
     		TextView tvNutrient = m_tvNutrients.get(i);
@@ -283,7 +346,6 @@ public class V3ActivityReport extends V3BaseActivity {
             }
         }
     	
-    	m_illnessIdList = Tool.inferIllnesses_withSymptoms(m_SymptomIdList, m_measureHm);
     	if (m_illnessIdList != null && m_illnessIdList.size()>0 ){
     		ArrayList<HashMap<String, Object>> illnessRows = da.getIllness_ByIllnessIds(m_illnessIdList);
     		m_illnessInfoDict2Level = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_IllnessId,illnessRows);
@@ -300,17 +362,6 @@ public class V3ActivityReport extends V3BaseActivity {
     		m_suggestionInfoDict2Level = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_SuggestionId,suggestionDistinctRowList);
     		
     	}
-    	
-    	if (!m_alreadyExistDataRow){
-    		save();
-    	}
-    }
-    
-    void show(){
-		String bmiStr = String.format("%3.1f", m_BMI);
-		bmiTextView.setText(bmiStr);
-		  
-		healthTextView.setText(String.valueOf(m_HealthMark));
 		
 		nutrientFoodAdapter = new NutrientFoodAdapter();
 		elementFoodListView.setAdapter(nutrientFoodAdapter);
@@ -532,30 +583,50 @@ public class V3ActivityReport extends V3BaseActivity {
             HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
             String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
             
-            ArrayList<HashMap<String, Object>> nutrientFoods = m_FoodsByNutrient.get(nutrientId);
-            
-            
             TextViewSimpleVertical tvvNutrient = (TextViewSimpleVertical) convertView.findViewById(R.id.tvvNutrient);
             tvvNutrient.setTextVertical(nutrientCaption);
 
-
             LinearLayout recommendViewPager = (LinearLayout) convertView.findViewById(R.id.recommendViewPager);
             recommendViewPager.removeAllViews();
-            if (nutrientFoods!=null && nutrientFoods.size()>0) {
-                for(int i=0; i<nutrientFoods.size(); i++){
-                	HashMap<String, Object> food = nutrientFoods.get(i);
-                	String foodName = (String)food.get(Constants.COLUMN_NAME_CnCaption);
-                	Double foodAmount = (Double)food.get(Constants.Key_Amount);
-                	View viewPager = getLayoutInflater().inflate(R.layout.v3_recomment_food_cell, null);
-                    TextView foodNameTextView = (TextView) viewPager.findViewById(R.id.foodNameTextView);
-                    TextView foodCountTextView = (TextView) viewPager.findViewById(R.id.foodCountTextView);
-                    ImageView ivFood = (ImageView) viewPager.findViewById(R.id.ivFood);
-                    foodNameTextView.setText(foodName);
-                    foodCountTextView.setText(foodAmount.intValue()+"g");
-                    ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));
-                    recommendViewPager.addView(viewPager);
+            if (!m_IsShowingData){
+            	ArrayList<HashMap<String, Object>> nutrientFoods = m_FoodsByNutrient.get(nutrientId);
+                if (nutrientFoods!=null && nutrientFoods.size()>0) {
+                    for(int i=0; i<nutrientFoods.size(); i++){
+                    	HashMap<String, Object> food = nutrientFoods.get(i);
+                    	String foodName = (String)food.get(Constants.COLUMN_NAME_CnCaption);
+                    	Double foodAmount = (Double)food.get(Constants.Key_Amount);
+                    	View viewPager = getLayoutInflater().inflate(R.layout.v3_recomment_food_cell, null);
+                        TextView foodNameTextView = (TextView) viewPager.findViewById(R.id.foodNameTextView);
+                        TextView foodCountTextView = (TextView) viewPager.findViewById(R.id.foodCountTextView);
+                        ImageView ivFood = (ImageView) viewPager.findViewById(R.id.ivFood);
+                        foodNameTextView.setText(foodName);
+                        foodCountTextView.setText(foodAmount.intValue()+"g");
+                        ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));
+                        recommendViewPager.addView(viewPager);
+                    }
+                }
+            }else{
+            	HashMap<String, Double> FoodAndAmountHm = m_FoodAndAmountByNutrientData.get(nutrientId);
+                HashMap<String, HashMap<String, Object>> AllFood2LevelDict = GlobalVar.getAllFood2LevelDict(V3ActivityReport.this);
+                ArrayList<String> foodIds = Tool.getKeysFromHashMap(FoodAndAmountHm);
+                if (foodIds!=null && foodIds.size()>0){
+                	for(int i=0; i<foodIds.size(); i++){
+                		String foodId = foodIds.get(i);
+                		HashMap<String, Object> food = AllFood2LevelDict.get(foodId);
+                		String foodName = (String)food.get(Constants.COLUMN_NAME_CnCaption);
+                    	Double foodAmount = Double.parseDouble(""+ FoodAndAmountHm.get(foodId));
+                    	View viewPager = getLayoutInflater().inflate(R.layout.v3_recomment_food_cell, null);
+                        TextView foodNameTextView = (TextView) viewPager.findViewById(R.id.foodNameTextView);
+                        TextView foodCountTextView = (TextView) viewPager.findViewById(R.id.foodCountTextView);
+                        ImageView ivFood = (ImageView) viewPager.findViewById(R.id.ivFood);
+                        foodNameTextView.setText(foodName);
+                        foodCountTextView.setText(foodAmount.intValue()+"g");
+                        ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));
+                        recommendViewPager.addView(viewPager);
+                	}
                 }
             }
+            
 
             return convertView;
         }

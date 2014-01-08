@@ -327,6 +327,8 @@ public class Constants {
 	public static final String InvokerType_FromFoodCombination = "FromFoodCombination";
 	public static final String InvokerType_FromDiagnoseResultNutrients = "FromDiagnoseResultNutrients";
 	
+	public static final String IntentParamKey_IsShowingData = "IsShowingData";
+	
 	public static final int MessageID_OK = 1;
 	
 	public static final String Email_feedback ="supportAndroid@lingzhimobile.com" ;

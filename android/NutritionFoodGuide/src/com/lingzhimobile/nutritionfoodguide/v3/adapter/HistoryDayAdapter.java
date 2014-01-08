@@ -13,6 +13,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.GlobalVar;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.Tool;
+import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityReport;
 
 public class HistoryDayAdapter extends BaseAdapter {
 	
@@ -63,6 +65,7 @@ public class HistoryDayAdapter extends BaseAdapter {
 
         HashMap<String, Object> dataRow = getItem(position);
 
+        LinearLayout llItemByDay = (LinearLayout)convertView.findViewById(R.id.llItemByDay);
         TextView dayTextView = (TextView) convertView.findViewById(R.id.dayTextView);
         TextView weekdayTextView = (TextView) convertView.findViewById(R.id.weekdayTextView);
 //        TextView bmiTextView = (TextView) convertView.findViewById(R.id.bmiTextView);
@@ -273,8 +276,27 @@ public class HistoryDayAdapter extends BaseAdapter {
                 nutrientTextViews[i].setVisibility(View.INVISIBLE);
             }
         }
+        
+        llItemByDay.setOnClickListener(new DayRecordOnClickListener(dayLocal));
 
         return convertView;
+    }
+    
+    class DayRecordOnClickListener implements View.OnClickListener{
+    	int m_dayLocal;
+    	public DayRecordOnClickListener(int dayLocal){
+    		m_dayLocal = dayLocal;
+    	}
+
+		@Override
+		public void onClick(View v) {
+			Intent intent1 = new Intent(mContext, V3ActivityReport.class);
+			intent1.putExtra(Constants.IntentParamKey_IsShowingData, true);
+			intent1.putExtra(Constants.COLUMN_NAME_DayLocal, m_dayLocal);
+			mContext.startActivity(intent1);
+			
+		}
+    	
     }
 
 }
