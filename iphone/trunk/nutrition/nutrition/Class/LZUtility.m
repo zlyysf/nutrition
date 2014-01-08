@@ -568,6 +568,8 @@
                                 [UIColor colorWithRed:235/255.f green:224/255.f blue:218/255.f alpha:1.0f],@"心理",
                                 [UIColor colorWithRed:181/255.f green:213/255.f blue:224/255.f alpha:1.0f],@"男性",
                                 [UIColor colorWithRed:243/255.f green:213/255.f blue:223/255.f alpha:1.0f],@"女性",
+                                [UIColor colorWithRed:207/255.f green:236/255.f blue:217/255.f alpha:1.0f],@"排泄",
+                                [UIColor colorWithRed:244/255.f green:241/255.f blue:151/255.f alpha:1.0f],@"手足",
                                 nil];
     UIColor *tintColor = [colorDict objectForKey:typeId];
     if (tintColor == nil)

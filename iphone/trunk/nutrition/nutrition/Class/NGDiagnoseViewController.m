@@ -399,7 +399,7 @@
             {
                 cell.weightUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_bang", @"体重项单位：磅");
                 cell.heatUnitLabel.text = NSLocalizedString(@"jiankangjilu_c_huashidu", @"体温项单位：华氏度");
-                cell.weightTextField.placeholder = @"35";
+                cell.weightTextField.placeholder = @"168";
                 cell.heatTextField.placeholder = @"99";
             }
             
