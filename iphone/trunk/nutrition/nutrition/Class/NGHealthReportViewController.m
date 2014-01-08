@@ -346,7 +346,7 @@
         self.dataToSave = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:dayLocal],@"dayLocal" ,today,@"date",InputNameValuePairsData,@"InputNameValuePairsData",note,@"note",CalculateNameValuePairsData,@"CalculateNameValuePairsData",nil];
         if (self.illnessArray != nil && [self.illnessArray count]!= 0)
         {
-            illnessCellHeight = [self.illnessArray count]*50+35;
+            illnessCellHeight = [self.illnessArray count]*40+35;
         }
         else
         {
@@ -442,17 +442,17 @@
         UIColor *backColor =[LZUtility getNutrientColorForNutrientId:nutritionId];
         
         if (!gotPreviousFrame) {
-            nutritionNameButton = [[LZCustomDataButton alloc] initWithFrame:CGRectMake(20, startY, textSize.width, textSize.height)];
+            nutritionNameButton = [[LZCustomDataButton alloc] initWithFrame:CGRectMake(35, startY, textSize.width, textSize.height)];
             
             //labelFrame =CGRectMake(0, 0, textSize.width, textSize.height);
             totalHeight = textSize.height;
         } else {
             CGRect newRect = CGRectZero;
-            if (previousFrame.origin.x + previousFrame.size.width + textSize.width + 10 > 270) {
-                newRect.origin = CGPointMake(20, previousFrame.origin.y + previousFrame.size.height + 15);
+            if (previousFrame.origin.x + previousFrame.size.width + textSize.width + 14 > 255) {
+                newRect.origin = CGPointMake(35, previousFrame.origin.y + previousFrame.size.height + 15);
                 totalHeight += textSize.height + 15;
             } else {
-                newRect.origin = CGPointMake(previousFrame.origin.x + previousFrame.size.width + 10, previousFrame.origin.y);
+                newRect.origin = CGPointMake(previousFrame.origin.x + previousFrame.size.width + 14, previousFrame.origin.y);
             }
             newRect.size = textSize;
             nutritionNameButton = [[LZCustomDataButton alloc] initWithFrame:newRect];
@@ -949,8 +949,8 @@
             for (int i= 0;i< [self.illnessArray count];i++)
             {
                 
-                UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(40, startY, 172, 36)];
-                [illnessNameLabel setFont:BigLabelFont];
+                UILabel *illnessNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(20, startY, 230, 30)];
+                [illnessNameLabel setFont:[UIFont systemFontOfSize:17.f]];
                 [illnessNameLabel setTextColor:[UIColor blackColor]];
                 NSDictionary *illnessDict = [self.illnessArray objectAtIndex:i];
                 NSString *illnessName = [illnessDict objectForKey:illnessNameKey];
@@ -962,12 +962,12 @@
                 [detailArrow setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
                 [backView addSubview:detailArrow];
                 
-                LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, startY, 300, 36)];
+                LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, startY, 300, 30)];
                 illnessButton.customData =[NSNumber numberWithInt:i];
                 [illnessButton addTarget:self action:@selector(illnessButtonClicked:) forControlEvents:UIControlEventTouchUpInside];
                 [illnessButton setBackgroundImage:selectedImage forState:UIControlStateHighlighted];
                 [backView addSubview:illnessButton];
-                startY += 50;
+                startY += 40;
 
             }
             cell.hasLoaded = YES;
