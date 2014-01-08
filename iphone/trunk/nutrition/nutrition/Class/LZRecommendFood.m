@@ -188,7 +188,7 @@
     BOOL needUseFoodLimitTableWhenCal = TRUE;
     
     uint randSeed = arc4random();
-    NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%d",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
+    //NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%d",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
     
     if(options != nil){
         NSNumber *nmFlag_notAllowSameFood = [options objectForKey:@"notAllowSameFood"];
@@ -494,8 +494,8 @@
         }//对每个食物计算补当前营养素的情况
     }//while (nutrientNameDictToCal.allKeys.count>0)
     
-    NSLog(@"recommendFoodForEnoughNuitrition foodSupplyNutrientSeqs=\n%@",foodSupplyNutrientSeqs);
-    NSLog(@"recommendFoodForEnoughNuitrition nutrientSupplyDict=\n%@, recommendFoodAmountDict=\n%@",nutrientSupplyDict,recommendFoodAmountDict);
+    //NSLog(@"recommendFoodForEnoughNuitrition foodSupplyNutrientSeqs=\n%@",foodSupplyNutrientSeqs);
+    //NSLog(@"recommendFoodForEnoughNuitrition nutrientSupplyDict=\n%@, recommendFoodAmountDict=\n%@",nutrientSupplyDict,recommendFoodAmountDict);
     
     NSMutableDictionary *retDict = [NSMutableDictionary dictionaryWithCapacity:5];
     [retDict setObject:DRIsDict forKey:@"DRI"];//nutrient name as key, also column name
@@ -659,7 +659,6 @@
 //            needUseFoodLimitTableWhenCal = [nmFlag_needUseFoodLimitTableWhenCal boolValue];
 //    }
 //
-//    NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%u",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
 //    srandom(randSeed);
 //    
 //    int defFoodUpperLimit = Config_foodUpperLimit; // 1000 g
@@ -731,7 +730,6 @@
 //    //到这里，要计算的营养素含在nutrientNameAryToCal 和 nutrientArrayLastCal 中了
 //
 //    logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal begin, cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","] ];
-//    NSLog(@"%@",logMsg);
 //    calculationLog = [NSMutableArray array];
 //    [calculationLog addObject:@"nutrientNameAryToCal begin,cnt="];
 //    [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
@@ -820,14 +818,12 @@
 //                if (toAdd <= Config_nearZero){
 //                    [nutrientNameAryToCal removeObjectAtIndex:i];
 //                    logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
-//                    NSLog(@"%@",logMsg);
 //                    calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
 //                    [calculationLogs addObject:calculationLog];
 //                }
 //            }
 //            if (nutrientNameAryToCal.count > 0){
 //                logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal cal-ing,cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","]];
-//                NSLog(@"%@",logMsg);
 //                calculationLog = [NSMutableArray array];
 //                [calculationLog addObject:@"nutrientNameAryToCal cal-ing,cnt="];
 //                [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
@@ -852,11 +848,9 @@
 //                        idxOfNutrientNameToCal = i;
 //                    }
 //                }
-//                NSLog(@"%@",[calculationLog componentsJoinedByString:@","]);
 //                [calculationLogs addObject:calculationLog];
 //
 //                logMsg = [NSMutableString stringWithFormat:@"maxLackNutrientName=%@, maxNutrientLackRatio=%.2f, idxOfNutrientNameToCal=%d",maxLackNutrientName,maxNutrientLackRatio,idxOfNutrientNameToCal];
-//                NSLog(@"%@",logMsg);
 //                calculationLog = [NSMutableArray array];
 //                [calculationLog addObject:@"maxLackNutrientName="];
 //                [calculationLog addObject:maxLackNutrientName];
@@ -884,7 +878,6 @@
 //                    if (toAdd <= Config_nearZero){
 //                        [nutrientArrayLastCal removeObjectAtIndex:i];
 //                        logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
-//                        NSLog(@"%@",logMsg);
 //                        calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
 //                        [calculationLogs addObject:calculationLog];
 //                    }
@@ -976,7 +969,6 @@
 //            }
 //            if (food==nil){//这个营养素把所有能补的食物都用到上限了，不能再对它进行计算了
 //                logMsg = [NSMutableString stringWithFormat:@"no more proper food for the nutrient:%@,%d,%@",nutrientNameToCal,idxOfNutrientNameToCal,typeOfNutrientNamesToCal];
-//                NSLog(@"%@",logMsg);
 //                calculationLog = [NSMutableArray array];
 //                [calculationLog addObject:@"no more proper food for the nutrient:"];
 //                [calculationLog addObject:nutrientNameToCal];
@@ -1058,7 +1050,6 @@
 //            [foodSupplyNutrientSeq addObject:[food objectForKey:@"Shrt_Desc"]];
 //            [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];
 //            logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-//            NSLog(@"%@",logMsg);
 //            calculationLog = [NSMutableArray array];
 //            [calculationLog addObject:@"supply food:"];
 //            [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
@@ -1071,7 +1062,6 @@
 //            }else{
 //                //这个营养素已经补足，可以到外层循环计算下一个营养素了。
 //                logMsg = [NSMutableString stringWithFormat:@"food supply Full, remove %@, %d, %@",nutrientNameToCal,idxOfNutrientNameToCal,typeOfNutrientNamesToCal];
-//                NSLog(@"%@",logMsg);
 //                calculationLog = [NSMutableArray array];
 //                [calculationLog addObject:@"food supply Full, remove "];
 //                [calculationLog addObject:nutrientNameToCal];
@@ -1096,9 +1086,7 @@
 //        //}//while ////选取一个食物，来补当前营养素
 //    }//while (nutrientNameAryToCal.count > 0)
 //    
-//    NSLog(@"recommendFoodForEnoughNuitrition foodSupplyNutrientSeqs=\n%@",foodSupplyNutrientSeqs);
-//    NSLog(@"recommendFoodForEnoughNuitrition nutrientSupplyDict=\n%@, recommendFoodAmountDict=\n%@",nutrientSupplyDict,recommendFoodAmountDict);
-//    
+//
 //    NSMutableDictionary *retDict = [NSMutableDictionary dictionaryWithCapacity:5];
 //    [retDict setObject:DRIsDict forKey:@"DRI"];//nutrient name as key, also column name
 //    [retDict setObject:nutrientInitialSupplyDict forKey:@"nutrientInitialSupplyDict"];
@@ -1236,7 +1224,7 @@
             needUseFoodLimitTableWhenCal = [nmFlag_needUseFoodLimitTableWhenCal boolValue];
     }
     
-    NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%u",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
+    //NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%u",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
     srandom(randSeed);
     
     int defFoodUpperLimit = Config_foodUpperLimit; // 1000 g
@@ -1305,7 +1293,7 @@
     
     
     logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal begin, cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","] ];
-    NSLog(@"%@",logMsg);
+    //NSLog(@"%@",logMsg);
     calculationLog = [NSMutableArray array];
     [calculationLog addObject:@"nutrientNameAryToCal begin,cnt="];
     [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
@@ -1394,14 +1382,14 @@
                 if (toAdd <= Config_nearZero){
                     [nutrientNameAryToCal removeObjectAtIndex:i];
                     logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
-                    NSLog(@"%@",logMsg);
+                    //NSLog(@"%@",logMsg);
                     calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
                     [calculationLogs addObject:calculationLog];
                 }
             }
             if (nutrientNameAryToCal.count > 0){
                 logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal cal-ing,cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","]];
-                NSLog(@"%@",logMsg);
+                //NSLog(@"%@",logMsg);
                 calculationLog = [NSMutableArray array];
                 [calculationLog addObject:@"nutrientNameAryToCal cal-ing,cnt="];
                 [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
@@ -1426,11 +1414,11 @@
                         idxOfNutrientNameToCal = i;
                     }
                 }
-                NSLog(@"%@",[calculationLog componentsJoinedByString:@","]);
+                //NSLog(@"%@",[calculationLog componentsJoinedByString:@","]);
                 [calculationLogs addObject:calculationLog];
                 
                 logMsg = [NSMutableString stringWithFormat:@"maxLackNutrientName=%@, maxNutrientLackRatio=%.2f, idxOfNutrientNameToCal=%d",maxLackNutrientName,maxNutrientLackRatio,idxOfNutrientNameToCal];
-                NSLog(@"%@",logMsg);
+                //NSLog(@"%@",logMsg);
                 calculationLog = [NSMutableArray array];
                 [calculationLog addObject:@"maxLackNutrientName="];
                 [calculationLog addObject:maxLackNutrientName];
@@ -1458,7 +1446,7 @@
                     if (toAdd <= Config_nearZero){
                         [nutrientArrayLastCal removeObjectAtIndex:i];
                         logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
-                        NSLog(@"%@",logMsg);
+                        //NSLog(@"%@",logMsg);
                         calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
                         [calculationLogs addObject:calculationLog];
                     }
@@ -1550,7 +1538,7 @@
         }
         if (food==nil){//这个营养素把所有能补的食物都用到上限了，不能再对它进行计算了
             logMsg = [NSMutableString stringWithFormat:@"no more proper food for the nutrient:%@,%d,%@",nutrientNameToCal,idxOfNutrientNameToCal,typeOfNutrientNamesToCal];
-            NSLog(@"%@",logMsg);
+            //NSLog(@"%@",logMsg);
             calculationLog = [NSMutableArray array];
             [calculationLog addObject:@"no more proper food for the nutrient:"];
             [calculationLog addObject:nutrientNameToCal];
@@ -1632,7 +1620,7 @@
         [foodSupplyNutrientSeq addObject:[food objectForKey:@"Shrt_Desc"]];
         [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];
         logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-        NSLog(@"%@",logMsg);
+        //NSLog(@"%@",logMsg);
         calculationLog = [NSMutableArray array];
         [calculationLog addObject:@"supply food:"];
         [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
@@ -1645,7 +1633,7 @@
         }else{
             //这个营养素已经补足，可以到外层循环计算下一个营养素了。
             logMsg = [NSMutableString stringWithFormat:@"food supply Full, remove %@, %d, %@",nutrientNameToCal,idxOfNutrientNameToCal,typeOfNutrientNamesToCal];
-            NSLog(@"%@",logMsg);
+            //NSLog(@"%@",logMsg);
             calculationLog = [NSMutableArray array];
             [calculationLog addObject:@"food supply Full, remove "];
             [calculationLog addObject:nutrientNameToCal];
@@ -1670,8 +1658,8 @@
         //}//while ////选取一个食物，来补当前营养素
     }//while (nutrientNameAryToCal.count > 0)
     
-    NSLog(@"recommendFoodForEnoughNuitrition foodSupplyNutrientSeqs=\n%@",foodSupplyNutrientSeqs);
-    NSLog(@"recommendFoodForEnoughNuitrition nutrientSupplyDict=\n%@, recommendFoodAmountDict=\n%@",nutrientSupplyDict,recommendFoodAmountDict);
+    //NSLog(@"recommendFoodForEnoughNuitrition foodSupplyNutrientSeqs=\n%@",foodSupplyNutrientSeqs);
+    //NSLog(@"recommendFoodForEnoughNuitrition nutrientSupplyDict=\n%@, recommendFoodAmountDict=\n%@",nutrientSupplyDict,recommendFoodAmountDict);
     
     NSMutableDictionary *retDict = [NSMutableDictionary dictionaryWithCapacity:5];
     [retDict setObject:DRIsDict forKey:@"DRI"];//nutrient name as key, also column name
@@ -1846,7 +1834,7 @@
             [options setObject:[NSNumber numberWithUnsignedInt:randSeed] forKey:LZSettingKey_randSeedOut];
     }
     
-    NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%u",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
+    //NSLog(@"in recommendFoodForEnoughNuitritionWithPreIntake, randSeed=%u",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
     srandom(randSeed);
     
     int defFoodUpperLimit = Config_foodUpperLimit; // 1000 g
@@ -1871,7 +1859,7 @@
     //到这里，要计算的营养素含在nutrientNameAryToCal 和 nutrientArrayLastCal 中了
 
     logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCalTotalOriginal, cnt=%d, %@",nutrientNameAryToCalTotalOriginal.count, [nutrientNameAryToCalTotalOriginal componentsJoinedByString:@","] ];
-    NSLog(@"%@",logMsg);
+    //NSLog(@"%@",logMsg);
     calculationLog = [NSMutableArray array];
     [calculationLog addObject:@"nutrientNameAryToCalTotalOriginal begin,cnt="];
     [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCalTotalOriginal.count]];
@@ -1916,14 +1904,14 @@
                 if (toAdd <= Config_nearZero){
                     [nutrientNameAryToCal removeObjectAtIndex:i];
                     logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
-                    NSLog(@"%@",logMsg);
+                    //NSLog(@"%@",logMsg);
                     calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
                     [calculationLogs addObject:calculationLog];
                 }
             }
             if (nutrientNameAryToCal.count > 0){
                 logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal cal-ing,cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","]];
-                NSLog(@"%@",logMsg);
+                //NSLog(@"%@",logMsg);
                 calculationLog = [NSMutableArray array];
                 [calculationLog addObject:@"nutrientNameAryToCal cal-ing,cnt="];
                 [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
@@ -1948,11 +1936,11 @@
                         idxOfNutrientNameToCal = i;
                     }
                 }
-                NSLog(@"%@",[calculationLog componentsJoinedByString:@","]);
+                //NSLog(@"%@",[calculationLog componentsJoinedByString:@","]);
                 [calculationLogs addObject:calculationLog];
                 
                 logMsg = [NSMutableString stringWithFormat:@"maxLackNutrientName=%@, maxNutrientLackRatio=%.2f, idxOfNutrientNameToCal=%d",maxLackNutrientName,maxNutrientLackRatio,idxOfNutrientNameToCal];
-                NSLog(@"%@",logMsg);
+                //NSLog(@"%@",logMsg);
                 calculationLog = [NSMutableArray array];
                 [calculationLog addObject:@"maxLackNutrientName="];
                 [calculationLog addObject:maxLackNutrientName];
@@ -1980,7 +1968,7 @@
                     if (toAdd <= Config_nearZero){
                         [nutrientArrayLastCal removeObjectAtIndex:i];
                         logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
-                        NSLog(@"%@",logMsg);
+                        //NSLog(@"%@",logMsg);
                         calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
                         [calculationLogs addObject:calculationLog];
                     }
@@ -2085,7 +2073,7 @@
         }
         if (food==nil){//这个营养素把所有能补的食物都用到上限了，不能再对它进行计算了
             logMsg = [NSMutableString stringWithFormat:@"no more proper food for the nutrient:%@,%d,%@",nutrientNameToCal,idxOfNutrientNameToCal,typeOfNutrientNamesToCal];
-            NSLog(@"%@",logMsg);
+            //NSLog(@"%@",logMsg);
             calculationLog = [NSMutableArray array];
             [calculationLog addObject:@"no more proper food for the nutrient:"];
             [calculationLog addObject:nutrientNameToCal];
@@ -2162,7 +2150,7 @@
         [foodSupplyNutrientSeq addObject:[food objectForKey:@"Shrt_Desc"]];
         [foodSupplyNutrientSeq addObject:[NSNumber numberWithDouble:maxNutrientLackRatio]];
         logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-        NSLog(@"%@",logMsg);
+        //NSLog(@"%@",logMsg);
         calculationLog = [NSMutableArray array];
         [calculationLog addObject:@"supply food:"];
         [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
@@ -2175,7 +2163,7 @@
         }else{
             //这个营养素已经补足，可以到外层循环计算下一个营养素了。
             logMsg = [NSMutableString stringWithFormat:@"food supply Full, remove %@, %d, %@",nutrientNameToCal,idxOfNutrientNameToCal,typeOfNutrientNamesToCal];
-            NSLog(@"%@",logMsg);
+            //NSLog(@"%@",logMsg);
             calculationLog = [NSMutableArray array];
             [calculationLog addObject:@"food supply Full, remove "];
             [calculationLog addObject:nutrientNameToCal];
@@ -2200,8 +2188,8 @@
         //}//while ////选取一个食物，来补当前营养素
     }//while (nutrientNameAryToCal.count > 0)
     
-    NSLog(@"recommendFoodForEnoughNuitrition foodSupplyNutrientSeqs=\n%@",foodSupplyNutrientSeqs);
-    NSLog(@"recommendFoodForEnoughNuitrition nutrientSupplyDict=\n%@, recommendFoodAmountDict=\n%@",nutrientSupplyDict,recommendFoodAmountDict);
+    //NSLog(@"recommendFoodForEnoughNuitrition foodSupplyNutrientSeqs=\n%@",foodSupplyNutrientSeqs);
+    //NSLog(@"recommendFoodForEnoughNuitrition nutrientSupplyDict=\n%@, recommendFoodAmountDict=\n%@",nutrientSupplyDict,recommendFoodAmountDict);
     
     NSMutableDictionary *retDict = [NSMutableDictionary dictionaryWithCapacity:5];
     [retDict setObject:DRIsDict forKey:Key_DRI];//nutrient name as key, also column name
@@ -2238,7 +2226,7 @@
  */
 -(NSMutableDictionary*)mergeSomeSameClassFoodForRecommend1personDay:(NSMutableDictionary *)recommendResult
 {
-    NSLog(@"mergeSomeSameClassFoodForRecommend1personDay enter");
+    //NSLog(@"mergeSomeSameClassFoodForRecommend1personDay enter");
     
     NSDictionary *DRIsDict = [recommendResult objectForKey:@"DRI"];//nutrient name as key, also column name
 //    NSDictionary *nutrientInitialSupplyDict = [recommendResult objectForKey:@"nutrientInitialSupplyDict"];
@@ -2389,7 +2377,7 @@
                             maxLocalFoodAmount = dNeedFoodAmountForTheNutrient;
                     }else{
                         foodCoverAllLackNutrient = FALSE;//这表明同类食物各自所含的营养素也还有较大差别，存在有些营养素这个食物有另一个食物没有的问题，而不是含量高低的问题。注意这里需要分类极其细化.
-                        NSLog(@"WARNING: foodCoverAllLackNutrient = FALSE, %@, %@", foodIdOfClassify, [foodInfo objectForKey:COLUMN_NAME_CnCaption]);
+                        //NSLog(@"WARNING: foodCoverAllLackNutrient = FALSE, %@, %@", foodIdOfClassify, [foodInfo objectForKey:COLUMN_NAME_CnCaption]);
                         break;
                     }
                 }//if (toAdd > Config_nearZero)
@@ -2410,11 +2398,11 @@
             }
         }//for(int i=0; i<foodIdsOfClassify.count; i++)
         if (minAmountFoodId==nil){//说明这类的这几个食物所含营养素各有差别，单个食物不能补足欠缺
-            NSLog(@"WARNING: goodFoodId==nil, %@", foodClassify);
+            //NSLog(@"WARNING: goodFoodId==nil, %@", foodClassify);
             continue;
         }else{//goodFoodId exist
             assert(oneSupplyAllFoodIdAry.count>0);
-            NSLog(@"in mergeSomeSameClassFoodForRecommend1personDay,toMergeClassify=%@, oneSupplyAllFoodIdAry=%@, oneSupplyAllFoodAmountAry=%@",foodClassify, oneSupplyAllFoodIdAry,oneSupplyAllFoodAmountAry);
+            //NSLog(@"in mergeSomeSameClassFoodForRecommend1personDay,toMergeClassify=%@, oneSupplyAllFoodIdAry=%@, oneSupplyAllFoodAmountAry=%@",foodClassify, oneSupplyAllFoodIdAry,oneSupplyAllFoodAmountAry);
             //这里使用所需最少量的那个食物加回到推荐集合中，以补足同类食物消去后所缺的营养,注意这里的营养使用全集
             [recommendFoodAmountDict2 setObject:[NSNumber numberWithDouble:dMinFoodAmount] forKey:minAmountFoodId];
             NSDictionary *goodFoodInfo = [originalFoodAttrOfClassifyDict objectForKey:minAmountFoodId];
@@ -2436,7 +2424,7 @@
         }
     }//for( int a=0; a<classifyToMergeAry.count; a++)
     
-    NSLog(@"in mergeSomeSameClassFoodForRecommend1personDay,mergeLogs=\n%@",mergeLogs);
+    //NSLog(@"in mergeSomeSameClassFoodForRecommend1personDay,mergeLogs=\n%@",mergeLogs);
     
     [recommendResult setObject:recommendFoodAmountDict2 forKey:@"FoodAmount"];//food NO as key
     [recommendResult setObject:recommendFoodAttrDict2 forKey:@"FoodAttr"];//food NO as key
@@ -2596,7 +2584,7 @@
 
 -(NSMutableDictionary*)formatFoodsStandardContentForUI
 {
-    NSLog(@"formatFoodsStandardContentForUI enter");
+    //NSLog(@"formatFoodsStandardContentForUI enter");
     
     NSArray *customNutrients = [self.class getCustomNutrients:nil];
     LZDataAccess *da = [LZDataAccess singleton];
@@ -2634,14 +2622,14 @@
     [formatResult setValue:foodinfoDict forKey:@"foodinfoDict"];
     [formatResult setValue:foodStandardNutrientsDataDict forKey:@"foodStandardNutrientsDataDict"];
     
-    NSLog(@"formatFoodsStandardContentForUI exit, result=%@",formatResult);
+    //NSLog(@"formatFoodsStandardContentForUI exit, result=%@",formatResult);
     return formatResult;
 }
 
 
 -(NSMutableDictionary*)formatRecommendResultForUI:(NSMutableDictionary *)recommendResult
 {
-    NSLog(@"formatRecommendResultForUI enter");
+    //NSLog(@"formatRecommendResultForUI enter");
     
     NSDictionary *DRIsDict = [recommendResult objectForKey:@"DRI"];//nutrient name as key, also column name
 //    NSDictionary *nutrientInitialSupplyDict = [recommendResult objectForKey:@"nutrientInitialSupplyDict"];
@@ -2792,14 +2780,14 @@
         [formatResult setValue:recommendFoodNutrientInfoAryDictDict forKey:Key_recommendFoodNutrientInfoAryDictDict];
     }
     
-    NSLog(@"formatRecommendResultForUI exit, result=%@",formatResult);
+    //NSLog(@"formatRecommendResultForUI exit, result=%@",formatResult);
     return formatResult;
 }
 
 
 -(NSMutableDictionary*)formatTakenResultForUI:(NSMutableDictionary *)takenResult
 {
-    NSLog(@"formatTakenResultForUI enter");
+    //NSLog(@"formatTakenResultForUI enter");
     
     NSDictionary *DRIsDict = [takenResult objectForKey:@"DRI"];//nutrient name as key, also column name
     NSDictionary *nutrientInitialSupplyDict = [takenResult objectForKey:@"nutrientInitialSupplyDict"];
@@ -2954,7 +2942,7 @@
         
         [formatResult setValue:takenFoodNutrientInfoAryDictDict forKey:Key_takenFoodNutrientInfoAryDictDict];
     }
-    NSLog(@"formatTakenResultForUI exit, result=%@",formatResult);
+    //NSLog(@"formatTakenResultForUI exit, result=%@",formatResult);
     return formatResult;
 }
 
@@ -2962,7 +2950,7 @@
 
 -(NSMutableDictionary*)formatDRIForUI:(NSMutableDictionary *)data
 {
-    NSLog(@"formatDRIForUI enter");
+    //NSLog(@"formatDRIForUI enter");
     
     NSDictionary *DRIsDict = [data objectForKey:Key_DRI];//nutrient name as key, also column name
     NSDictionary *options = [data objectForKey:@"optionsDict"];
@@ -2993,7 +2981,7 @@
     }
     [formatResult setValue:nutrientsInfoOfDRI forKey:@"nutrientsInfoOfDRI"];
         
-    NSLog(@"formatDRIForUI exit, result=%@",formatResult);
+    //NSLog(@"formatDRIForUI exit, result=%@",formatResult);
     return formatResult;
 }
 
@@ -3009,7 +2997,7 @@
  */
 -(NSMutableDictionary*)calculateGiveFoodsSupplyNutrientAndFormatForUI:(NSDictionary *)paramsDict
 {
-    NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI enter");
+    //NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI enter");
     
     NSDictionary *DRIsDict = [paramsDict objectForKey:Key_DRI];//nutrient name as key, also column name
     NSDictionary *userInfo = [paramsDict objectForKey:Key_userInfo];
@@ -3180,7 +3168,7 @@
     
     [formatResult setValue:givenFoodAttrDict2Level forKey:Key_givenFoodAttrDict2Level];
     
-    NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI exit, result=%@",formatResult);
+    //NSLog(@"calculateGiveFoodsSupplyNutrientAndFormatForUI exit, result=%@",formatResult);
     return formatResult;
 }
 
@@ -3192,7 +3180,7 @@
  */
 -(NSMutableArray*)calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI:(NSMutableDictionary *)inOutParamsDict
 {
-    NSLog(@"calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI enter");
+    //NSLog(@"calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI enter");
     
     NSDictionary *DRIsDict = [inOutParamsDict objectForKey:Key_DRI];//nutrient name as key, also column name
     NSDictionary *userInfo = [inOutParamsDict objectForKey:Key_userInfo];
@@ -3282,7 +3270,7 @@
         [supplyNutrientInfoArray addObject:supplyNutrientInfo];
     }//for j
     
-    NSLog(@"calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI return:%@",supplyNutrientInfoArray);
+    //NSLog(@"calculateGiveStaticFoodsDynamicFoodSupplyNutrientAndFormatForUI return:%@",supplyNutrientInfoArray);
     return supplyNutrientInfoArray;
 }
 
@@ -3296,7 +3284,7 @@
  */
 -(NSMutableArray*)calculateGiveFoodSupplyNutrientAndFormatForUI:(NSMutableDictionary *)inOutParamsDict
 {
-    NSLog(@"calculateGiveFoodSupplyNutrientAndFormatForUI enter");
+    //NSLog(@"calculateGiveFoodSupplyNutrientAndFormatForUI enter");
     
     NSDictionary *foodAttrs = [inOutParamsDict objectForKey:@"FoodAttrs"];
     NSNumber *nmFoodAmount = [inOutParamsDict objectForKey:@"FoodAmount"];
@@ -3382,7 +3370,7 @@
  */
 -(NSArray*) generateData2D_RecommendFoodForEnoughNuitrition:(NSDictionary*)recmdDict
 {
-    NSLog(@"formatCsv_RecommendFoodForEnoughNuitrition enter");
+    //NSLog(@"formatCsv_RecommendFoodForEnoughNuitrition enter");
     
     NSDictionary *DRIsDict = [recmdDict objectForKey:@"DRI"];//nutrient name as key, also column name
     NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
@@ -3904,7 +3892,7 @@
 
 -(NSMutableString *) convert2DArrayToText:(NSArray*)ary2D
 {
-    NSLog(@"convert2DArrayToText enter");
+    //NSLog(@"convert2DArrayToText enter");
     NSMutableString *rowsStr = [NSMutableString stringWithCapacity:1000*1000];
     for(int i=0; i<ary2D.count; i++){
         NSArray *ary1D = ary2D[i];
@@ -3937,7 +3925,6 @@
         }//for j
         [rowsStr appendString:rowStr];
     }//for i
-    //NSLog(@"convert2DArrayToText ret:\n%@",rowsStr);
     return rowsStr;
 }
 
@@ -3949,7 +3936,7 @@
  */
 -(NSMutableString*) generateHtml_RecommendFoodForEnoughNuitrition:(NSDictionary*)recmdDict
 {
-    NSLog(@"generateHtml_RecommendFoodForEnoughNuitrition enter");
+    //NSLog(@"generateHtml_RecommendFoodForEnoughNuitrition enter");
     
 //    NSDictionary *DRIsDict = [recmdDict objectForKey:@"DRI"];//nutrient name as key, also column name
 //    NSDictionary *nutrientSupplyDict = [recmdDict objectForKey:@"NutrientSupply"];//nutrient name as key, also column name
@@ -4645,7 +4632,7 @@
             [options setObject:[NSNumber numberWithUnsignedInt:randSeed] forKey:LZSettingKey_randSeedOut];
     }
     
-    NSLog(@"in recommendFoodBySmallIncrementWithPreIntake, randSeed=%u",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
+    //NSLog(@"in recommendFoodBySmallIncrementWithPreIntake, randSeed=%u",randSeed);//如果某次情况需要调试，通过这个seed的设置应该可以重复当时情况
     srandom(randSeed);
     
     int defFoodIncreaseUnit = Config_defaultFoodIncreaseUnit;
@@ -4665,7 +4652,7 @@
     NSMutableArray *originalNutrientNameAryToCal = normalNutrientsToCal;
 
     logMsg = [NSMutableString stringWithFormat:@"normalNutrientsToCal, cnt=%d, %@",normalNutrientsToCal.count, [normalNutrientsToCal componentsJoinedByString:@","] ];
-    NSLog(@"%@",logMsg);
+    //NSLog(@"%@",logMsg);
     calculationLog = [NSMutableArray array];
     [calculationLog addObject:@"normalNutrientsToCal begin,cnt="];
     [calculationLog addObject: [NSNumber numberWithInt:normalNutrientsToCal.count]];
@@ -4784,7 +4771,7 @@
                 [foodSupplyNutrientSeq addObject:@""];
                 [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
                 logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-                NSLog(@"%@",logMsg);
+                //NSLog(@"%@",logMsg);
                 calculationLog = [NSMutableArray array];
                 [calculationLog addObject:@"supply food:"];
                 [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
@@ -4825,7 +4812,7 @@
                     [foodSupplyNutrientSeq addObject:FoodClassify_shucai];
                     [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
                     logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-                    NSLog(@"%@",logMsg);
+                    //NSLog(@"%@",logMsg);
                     calculationLog = [NSMutableArray array];
                     [calculationLog addObject:@"supply food:"];
                     [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
@@ -4854,7 +4841,7 @@
                     [foodSupplyNutrientSeq addObject:FoodClassify_shuiguo];
                     [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
                     logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-                    NSLog(@"%@",logMsg);
+                    //NSLog(@"%@",logMsg);
                     calculationLog = [NSMutableArray array];
                     [calculationLog addObject:@"supply food:"];
                     [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
@@ -4884,14 +4871,14 @@
                     if ([nmDRIul doubleValue]>0)
                         [nutrientNameAryToUpperLimit addObject:nutrientName];
                     logMsg = [NSMutableString stringWithFormat:@"Already Full for %@, removed",nutrientName ];
-                    NSLog(@"%@",logMsg);
+                    //NSLog(@"%@",logMsg);
                     calculationLog = [NSMutableArray arrayWithObjects:logMsg, nil];
                     [calculationLogs addObject:calculationLog];
                 }
             }
             if (nutrientNameAryToCal.count > 0){
                 logMsg = [NSMutableString stringWithFormat:@"nutrientNameAryToCal cal-ing,cnt=%d, %@",nutrientNameAryToCal.count, [nutrientNameAryToCal componentsJoinedByString:@","]];
-                NSLog(@"%@",logMsg);
+                //NSLog(@"%@",logMsg);
                 calculationLog = [NSMutableArray array];
                 [calculationLog addObject:@"nutrientNameAryToCal cal-ing,cnt="];
                 [calculationLog addObject: [NSNumber numberWithInt:nutrientNameAryToCal.count]];
@@ -4916,11 +4903,11 @@
                         idxOfNutrientNameToCal = i;
                     }
                 }
-                NSLog(@"%@",[calculationLog componentsJoinedByString:@","]);
+                //NSLog(@"%@",[calculationLog componentsJoinedByString:@","]);
                 [calculationLogs addObject:calculationLog];
                 
                 logMsg = [NSMutableString stringWithFormat:@"maxLackNutrientName=%@, maxNutrientLackRatio=%.2f, idxOfNutrientNameToCal=%d",maxLackNutrientName,maxNutrientLackRatio,idxOfNutrientNameToCal];
-                NSLog(@"%@",logMsg);
+                //NSLog(@"%@",logMsg);
                 calculationLog = [NSMutableArray array];
                 [calculationLog addObject:@"maxLackNutrientName="];
                 [calculationLog addObject:maxLackNutrientName];
@@ -5185,7 +5172,7 @@
         [foodSupplyNutrientSeq addObject:foundFoodWay];
         [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
         logMsg = [NSMutableString stringWithFormat:@"supply food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-        NSLog(@"%@",logMsg);
+        //NSLog(@"%@",logMsg);
         calculationLog = [NSMutableArray array];
         [calculationLog addObject:@"supply food:"];
         [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
@@ -5198,8 +5185,8 @@
         assert([nmRecAmount doubleValue]>0);
     }
     
-    NSLog(@"recommendFoodForEnoughNuitrition foodSupplyNutrientSeqs=\n%@",foodSupplyNutrientSeqs);
-    NSLog(@"recommendFoodForEnoughNuitrition nutrientSupplyDict=\n%@, recommendFoodAmountDict=\n%@",nutrientSupplyDict,recommendFoodAmountDict);
+    //NSLog(@"recommendFoodForEnoughNuitrition foodSupplyNutrientSeqs=\n%@",foodSupplyNutrientSeqs);
+    //NSLog(@"recommendFoodForEnoughNuitrition nutrientSupplyDict=\n%@, recommendFoodAmountDict=\n%@",nutrientSupplyDict,recommendFoodAmountDict);
     
     NSMutableDictionary *retDict = [NSMutableDictionary dictionaryWithCapacity:5];
     [retDict setObject:DRIsDict forKey:Key_DRI];//nutrient name as key, also column name
@@ -5480,7 +5467,7 @@
                         [foodSupplyNutrientSeq addObject:nutrientExceedType];
                         [foodSupplyNutrientSeqs addObject:foodSupplyNutrientSeq];
                         logMsg = [NSMutableString stringWithFormat:@"reduce food:%@", [foodSupplyNutrientSeq componentsJoinedByString:@" , "]];
-                        NSLog(@"%@",logMsg);
+                        //NSLog(@"%@",logMsg);
                         calculationLog = [NSMutableArray array];
                         [calculationLog addObject:@"reduce food"];
                         [calculationLog addObjectsFromArray:foodSupplyNutrientSeq];
@@ -5521,7 +5508,7 @@
  */
 -(NSArray*) generateTableFoodSupplyNutrient_RecommendFoodBySmallIncrement:(NSDictionary*)recmdDict
 {
-    NSLog(@"generateTableFoodSupplyNutrient_RecommendFoodBySmallIncrement enter");
+    //NSLog(@"generateTableFoodSupplyNutrient_RecommendFoodBySmallIncrement enter");
     
     NSDictionary *DRIsDict = [recmdDict objectForKey:Key_DRI];//nutrient name as key, also column name
     NSDictionary *DRIULsDict = [recmdDict objectForKey:Key_DRIUL];
@@ -5856,7 +5843,7 @@
  */
 -(NSArray*) generateTableFoodSmallIncrementSupplyNutrient:(NSDictionary*)recmdDict
 {
-    NSLog(@"generateTableFoodSmallIncrementSupplyNutrient enter");
+    //NSLog(@"generateTableFoodSmallIncrementSupplyNutrient enter");
     
     NSDictionary *DRIsDict = [recmdDict objectForKey:Key_DRI];//nutrient name as key, also column name
     NSDictionary *DRIULsDict = [recmdDict objectForKey:Key_DRIUL];
@@ -6149,7 +6136,7 @@
 
 -(NSArray*) generateData3D_RecommendFoodBySmallIncrement:(NSDictionary*)recmdDict
 {
-    NSLog(@"generateData3D_RecommendFoodBySmallIncrement enter");
+    //NSLog(@"generateData3D_RecommendFoodBySmallIncrement enter");
     
     NSDictionary *DRIsDict = [recmdDict objectForKey:Key_DRI];//nutrient name as key, also column name
     NSDictionary *DRIULsDict = [recmdDict objectForKey:Key_DRIUL];
@@ -6339,7 +6326,7 @@
 
 -(NSMutableString*) generateHtml_RecommendFoodBySmallIncrement:(NSDictionary*)recmdDict
 {
-    NSLog(@"generateHtml_RecommendFoodBySmallIncrement enter");
+    //NSLog(@"generateHtml_RecommendFoodBySmallIncrement enter");
 
     NSMutableString *strHtml = [NSMutableString stringWithCapacity:1000*1000];
     [strHtml appendString:@"<style>\n"];
@@ -6359,7 +6346,7 @@
 
 -(NSMutableString*) generateHtml_RecommendFood4SupplyAsPossible:(NSDictionary*)recmdDict
 {
-    NSLog(@"generateHtml_RecommendFood4SupplyAsPossible enter");
+    //NSLog(@"generateHtml_RecommendFood4SupplyAsPossible enter");
     return [self generateHtml_RecommendFoodBySmallIncrement:recmdDict];
 }
 
@@ -6390,7 +6377,7 @@
         }//for j
         [nutrientWithFoodAndAmountsDict setObject:gotFoods forKey:nutrientId];
     }//for i
-    NSLog(@"getSingleNutrientRichFoodWithAmount_forNutrients ret:\n%@",[LZUtility getObjectDescription:nutrientWithFoodAndAmountsDict andIndent:0]);
+    //NSLog(@"getSingleNutrientRichFoodWithAmount_forNutrients ret:\n%@",[LZUtility getObjectDescription:nutrientWithFoodAndAmountsDict andIndent:0]);
     return nutrientWithFoodAndAmountsDict;
 }
 

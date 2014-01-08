@@ -175,11 +175,9 @@
 
 +(NSString *) convert2DArrayToCsv: (NSString *)csvFileName withData:(NSArray*)ary2D
 {
-    NSLog(@"convert2DArrayToCsv enter");
     NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *csvFilePath = [documentsDirectory stringByAppendingPathComponent:csvFileName];
-    NSLog(@"csvFilePath=%@",csvFilePath);
     
     NSMutableData *writer = [[NSMutableData alloc] init];
     for(int i=0; i<ary2D.count; i++){
@@ -248,8 +246,6 @@
 
 +(NSMutableString *) convert2DArrayToHtmlTable:(NSArray*)ary2D withColumnNames:(NSArray*)columnNames
 {
-    NSLog(@"convert2DArrayToHtmlTable enter");
-    
     NSMutableString *strTable = nil;
     if (ary2D == nil || ary2D.count == 0){
         strTable = [NSMutableString stringWithString:@"<div>NONE</div>"];
@@ -310,8 +306,6 @@
 
 +(NSMutableString *) convert3DArrayToHtmlTables:(NSArray*)ary3D
 {
-    NSLog(@"convert3DArrayToHtmlTables enter");
-    
     NSMutableString *strTables = nil;
     if (ary3D == nil || ary3D.count == 0){
         strTables = [NSMutableString stringWithString:@"<div>NONE</div>"];
@@ -351,13 +345,13 @@
     if ([defFileManager fileExistsAtPath:destFilePath]){
         [defFileManager removeItemAtPath:destFilePath error:&err];
         if (err != nil){
-            NSLog(@"copyResourceToDocumentWithResFileName, defFileManager removeItemAtPath err=%@",err);
+            //NSLog(@"copyResourceToDocumentWithResFileName, defFileManager removeItemAtPath err=%@",err);
         }
     }
     
     [defFileManager copyItemAtPath:originDBPath toPath:destFilePath error:&err];
     if (err != nil){
-        NSLog(@"copyResourceToDocumentWithResFileName, defFileManager copyItemAtPath err=%@",err);
+        //NSLog(@"copyResourceToDocumentWithResFileName, defFileManager copyItemAtPath err=%@",err);
         return nil;
     }
     return destFilePath;
@@ -738,7 +732,6 @@
 +(BOOL)isUseUnitDisplay:(NSNumber *)totalWeight unitWeight:(NSNumber *)singleWeight
 {
     float result = fmodf([totalWeight floatValue]*2, [singleWeight floatValue]);
-    NSLog(@"result %f",result);
     if (result < Config_nearZero)
     {
         return YES;
@@ -822,7 +815,6 @@
         hud.animationType = MBProgressHUDAnimationZoomIn;
         [hud show:NO];
         [hud hide:YES afterDelay:0.4f];
-        //NSLog(@"%@",[UIApplication sharedApplication].keyWindow.subviews);
     }
 
 }
@@ -1666,7 +1658,6 @@
         }else{
             [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
         }
-        NSLog(@"Test_saveParseObj %@",msg);
 	}];
 }
 
@@ -1695,7 +1686,6 @@ PFObject *g_parseObjUserRecord=nil;
                             NSString* strData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
                             [msg appendFormat:@"PFFile.getDataInBackgroundWithBlock OK. data=%@",strData];
                         }
-                        NSLog(@"Test_getParseObj fileGet %@",msg);
                     }];
                 }else{
                     [msg appendFormat:@" but file is null"];
@@ -1704,7 +1694,6 @@ PFObject *g_parseObjUserRecord=nil;
         }else{
             [msg appendFormat:@"pQuery findObjectsInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
         }
-        NSLog(@"Test_getParseObj query:%@",msg);
     }];
 }
 
@@ -1712,7 +1701,6 @@ PFObject *g_parseObjUserRecord=nil;
 {
     PFObject *parseObjUserRecord = g_parseObjUserRecord;
     if (parseObjUserRecord==nil){
-        NSLog(@"Test_updateParseObj global var== nil");
         return;
     }
     NSString *s1 = @"333汇集国内外重大时事、热点聚焦、包括国内、国际、军事、财经各类重大突发新闻，超大资讯量二十四小时滚动更新（150-180条/月），让您第一时间得到最新消息。";
@@ -1725,7 +1713,6 @@ PFObject *g_parseObjUserRecord=nil;
         }else{
             [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
         }
-        NSLog(@"Test_updateParseObj %@",msg);
 	}];
 }
 
@@ -1886,7 +1873,6 @@ PFObject *g_parseObjUserRecord=nil;
             [[NSUserDefaults standardUserDefaults]setBool:YES forKey:LZSettingKey_alreadyLoadFromRemote];
             [[NSUserDefaults standardUserDefaults]synchronize];
         }
-        NSLog(@"syncRemoteDataToLocal_withJustCallback %@",msg);
         
         if (justCallback!=nil){
             justCallback(succeeded);

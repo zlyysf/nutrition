@@ -32,13 +32,13 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:cDbFile];
 //    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
-    NSLog(@"dbFilePath=%@",filePath);
+    //NSLog(@"dbFilePath=%@",filePath);
     return filePath;
 }
 
 + (NSString *)srcResourceDbFilePath {
     NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
-    NSLog(@"dbFilePath=%@",filePath);
+    //NSLog(@"dbFilePath=%@",filePath);
     return filePath;
 }
 
@@ -59,12 +59,12 @@
 
         BOOL fileExists,isDir;
         fileExists = [defFileManager fileExistsAtPath:dbFilePath isDirectory:&isDir];
-        NSLog(@"initDB, dbFilePath exist=%d",fileExists);
+        //NSLog(@"initDB, dbFilePath exist=%d",fileExists);
         if (!fileExists){
             NSError *err = nil;
             [defFileManager copyItemAtPath:srcResourceDbFilePath toPath:dbFilePath error:&err];
             if (err != nil){
-                NSLog(@"initDB, fail to copy srcResourceDbFilePath to dbFilePath, %@",err);
+                //NSLog(@"initDB, fail to copy srcResourceDbFilePath to dbFilePath, %@",err);
                 return nil;
             }
             [[NSUserDefaults standardUserDefaults]setBool:YES forKey:flagKey];
@@ -75,17 +75,17 @@
             //if exist older db, need remove it then copy new one            
             
             BOOL flagExists = [[NSUserDefaults standardUserDefaults]boolForKey:flagKey];
-            NSLog(@"initDB, flag %@=%d",flagKey,fileExists);
+            //NSLog(@"initDB, flag %@=%d",flagKey,fileExists);
             if (!flagExists) {
                 NSError *err = nil;
                 [defFileManager removeItemAtPath:dbFilePath error:&err];
                 if (err != nil){
-                    NSLog(@"initDB, fail to remove dbFilePath, %@",err);
+                    //NSLog(@"initDB, fail to remove dbFilePath, %@",err);
                     return nil;
                 }
                 [defFileManager copyItemAtPath:srcResourceDbFilePath toPath:dbFilePath error:&err];
                 if (err != nil){
-                    NSLog(@"initDB , fail to copy srcResourceDbFilePath to dbFilePath, %@",err);
+                    //NSLog(@"initDB , fail to copy srcResourceDbFilePath to dbFilePath, %@",err);
                     return nil;
                 }
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:flagKey];
@@ -118,7 +118,7 @@
     BOOL fileExists;
     fileExists = [defFileManager fileExistsAtPath:dbFilePath];
     if (!fileExists){
-        NSLog(@"openDB_withFilePath, file not Exists, %@", dbFilePath);
+        //NSLog(@"openDB_withFilePath, file not Exists, %@", dbFilePath);
         return;
     }
     
@@ -126,7 +126,7 @@
     if (![dbfm open]) {
         [dbfm close];
         dbfm = nil;
-        NSLog(@"openDB_withFilePath, FMDatabase databaseWithPath failed, %@", dbFilePath);
+        //NSLog(@"openDB_withFilePath, FMDatabase databaseWithPath failed, %@", dbFilePath);
     }
 }
 -(void)closeDB
@@ -321,7 +321,7 @@
         }
     }
     
-    NSLog(@"getStandardUL : energyStandard : %d \n Carbohydrt : %d \n Fat : %d \n Protein : %d",energyUL,carbohydrtUL,fatUL,proteinUL);
+    //NSLog(@"getStandardUL : energyStandard : %d \n Carbohydrt : %d \n Fat : %d \n Protein : %d",energyUL,carbohydrtUL,fatUL,proteinUL);
     NSDictionary *ULResult = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:energyUL],@"Energ_Kcal",[NSNumber numberWithInt:carbohydrtUL],@"Carbohydrt_(g)",[NSNumber numberWithInt:fatUL],@"Lipid_Tot_(g)",[NSNumber numberWithInt:proteinUL],@"Protein_(g)",nil];
     return ULResult;
 }
@@ -529,7 +529,7 @@
     }
     
     proteinStandard =(int)( weight*proteinFactor+0.5);
-    NSLog(@"getStandardDRIForSex ret: energyStandard : %d \n Carbohydrt : %d \n Fat : %d \n Protein : %d",energyStandard,carbohydrtStandard,fatStandard,proteinStandard);
+    //NSLog(@"getStandardDRIForSex ret: energyStandard : %d \n Carbohydrt : %d \n Fat : %d \n Protein : %d",energyStandard,carbohydrtStandard,fatStandard,proteinStandard);
     NSDictionary *standardResult = [[NSDictionary alloc]initWithObjectsAndKeys:[NSNumber numberWithInt:energyStandard],@"Energ_Kcal",[NSNumber numberWithInt:carbohydrtStandard],@"Carbohydrt_(g)",[NSNumber numberWithInt:fatStandard],@"Lipid_Tot_(g)",[NSNumber numberWithInt:proteinStandard],@"Protein_(g)",nil];
     return standardResult;
 }
@@ -551,7 +551,7 @@
         ret = [self letDRIConsiderLoss:ret];
     }
     
-    NSLog(@"getStandardDRIs ret:\n%@",ret);
+    //NSLog(@"getStandardDRIs ret:\n%@",ret);
     return ret;
 }
 -(NSDictionary*)getStandardDRIULs:(int)sex age:(int)age weight:(float)weight height:(float)height activityLevel:(int)activityLevel considerLoss:(BOOL)needConsiderLoss
@@ -568,7 +568,7 @@
         ret = [self letDRIULConsiderLoss:ret];
     }
     
-    NSLog(@"getStandardDRIULs ret:\n%@",ret);
+    //NSLog(@"getStandardDRIULs ret:\n%@",ret);
     return ret;
 }
 
@@ -640,7 +640,7 @@
     }
     NSMutableDictionary *retDRI = personDRIs;
     
-    NSLog(@"getAbstractPersonDRIsWithConsiderLoss ret:\n%@",retDRI);
+    //NSLog(@"getAbstractPersonDRIsWithConsiderLoss ret:\n%@",retDRI);
     return retDRI;
 }
 -(NSDictionary*)getAbstractPersonDRIULsWithConsiderLoss : (BOOL)needConsiderLoss
@@ -658,7 +658,7 @@
     }
     NSMutableDictionary *retDRI = personDRIs;
     
-    NSLog(@"getAbstractPersonDRIULsWithConsiderLoss ret:\n%@",retDRI);
+    //NSLog(@"getAbstractPersonDRIULsWithConsiderLoss ret:\n%@",retDRI);
     return retDRI;
 }
 
@@ -684,7 +684,7 @@
         
         [DRIdict2 setObject:[NSNumber numberWithDouble:driV2] forKey:key];
     }
-    NSLog(@"letDRIConsiderLoss ret:\n%@",DRIdict2);
+    //NSLog(@"letDRIConsiderLoss ret:\n%@",DRIdict2);
     return DRIdict2;
 }
 -(NSMutableDictionary*)letDRIULConsiderLoss:(NSMutableDictionary*)DRIdict
@@ -710,7 +710,7 @@
         
         [DRIdict2 setObject:[NSNumber numberWithDouble:driV2] forKey:key];
     }
-    NSLog(@"letDRIConsiderLoss ret:\n%@",DRIdict2);
+    //NSLog(@"letDRIConsiderLoss ret:\n%@",DRIdict2);
     return DRIdict2;
 }
 
@@ -745,7 +745,7 @@
     NSMutableDictionary *retDict = [NSMutableDictionary dictionaryWithDictionary:rowDict];
     [retDict removeObjectForKey:@"Start"];
     [retDict removeObjectForKey:@"End"];
-    NSLog(@"getDRIbyGender ret:\n%@",retDict);
+    //NSLog(@"getDRIbyGender ret:\n%@",retDict);
     return retDict;
 }
 
@@ -782,7 +782,7 @@
  */
 -(NSArray *)getRichFoodForNutrientAmount_withNutrient:(NSString *)nutrientAsColumnName andNutrientSupplyAmount:(double)nutrientSupplyAmount andTopN:(int)topN andIfNeedCustomDefinedFoods:(BOOL)ifNeedCustomDefinedFoods andUpperLimitType:(NSString*)upperLimitType
 {
-    NSLog(@"getRichFoodForNutrientAmount_withNutrient enter");
+    //NSLog(@"getRichFoodForNutrientAmount_withNutrient enter");
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
     //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
     [sqlStr appendString:@"SELECT F.*,CnCaption,FoodNameEn,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight, "];
@@ -827,13 +827,13 @@
             //do nothing, then get will obtain nil, though should not
         }
     }
-    NSLog(@"getRichNutritionFood2_withAmount_ForNutrient ret:\n%@",foods);
+    //NSLog(@"getRichNutritionFood2_withAmount_ForNutrient ret:\n%@",foods);
     return foods;
 }
 
 -(NSArray *) getRichNutritionFood2:(NSString *)nutrientAsColumnName
 {
-    NSLog(@"getRichNutritionFood2 enter");
+    //NSLog(@"getRichNutritionFood2 enter");
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
     //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
     [sqlStr appendString:@"SELECT F.*,CnCaption,FoodNameEn,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight "];
@@ -896,7 +896,7 @@
  */
 -(NSArray *) getRichNutritionFood:(NSString *)nutrientAsColumnName andIncludeFoodClass:(NSString*)includeFoodClass andExcludeFoodClass:(NSString*)excludeFoodClass andIncludeFoodIds:(NSArray*)includeFoodIds  andExcludeFoodIds:(NSArray*)excludeFoodIds andTopN:(int)topN andIfNeedCustomDefinedFoods:(BOOL) ifNeedCustomDefinedFoods
 {
-    NSLog(@"getRichNutritionFood enter");
+    //NSLog(@"getRichNutritionFood enter");
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*1];
     //看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
     [sqlStr appendString:@"SELECT F.*,CnCaption,FoodNameEn,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight, "];
@@ -1010,7 +1010,7 @@
 
 -(NSArray *) getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient:(NSString *)nutrientAsColumnName andGivenFoodIds:(NSArray*)givenFoodIds andIfNeedCustomDefinedFoods:(BOOL) ifNeedCustomDefinedFoods
 {
-    NSLog(@"getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient enter");
+    //NSLog(@"getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient enter");
     if (givenFoodIds.count == 0)
         return nil;
     return [self getRichNutritionFood:nutrientAsColumnName andIncludeFoodClass:nil andExcludeFoodClass:nil andIncludeFoodIds:givenFoodIds andExcludeFoodIds:nil andTopN:0 andIfNeedCustomDefinedFoods:ifNeedCustomDefinedFoods];
@@ -1107,7 +1107,7 @@
         [foodIdAry addObject:foodId];
     }
 
-    NSLog(@"getFoodIdsByFilters_withIncludeFoodClass ret:\n%@",foodIdAry);
+    //NSLog(@"getFoodIdsByFilters_withIncludeFoodClass ret:\n%@",foodIdAry);
     return foodIdAry;
 }
 
@@ -1256,7 +1256,7 @@
 
 -(NSArray *) getAllFood
 {
-    NSLog(@"getAllFood begin");
+    //NSLog(@"getAllFood begin");
 //    NSString *query = @""
 //    "SELECT FNC.*,P.PicPath FROM FoodNutritionCustom FNC LEFT OUTER JOIN FoodPicPath P ON FNC.NDB_No=P.NDB_No"
 //    " ORDER BY CnType, NDB_No"
@@ -1279,7 +1279,7 @@
  */
 -(NSArray *)getFoodAttributesByIds:(NSArray *)idAry
 {
-    NSLog(@"getFoodAttributesByIds begin");
+    //NSLog(@"getFoodAttributesByIds begin");
     if (idAry==nil || idAry.count ==0)
         return nil;
 
@@ -1291,7 +1291,7 @@
 
 -(NSArray *) getFoodsByColumnValuePairFilter_withColumnValuePairs_equal:(NSArray*)columnValuePairs_equal andColumnValuesPairs_equal:(NSArray*)columnValuesPairs_equal andColumnValuePairs_like:(NSArray*)columnValuePairs_like andColumnValuesPairs_like:(NSArray*)columnValuesPairs_like
 {
-    NSLog(@"getFoodsByColumnValuePairFilter_withColumnValuePairs_equal enter");
+    //NSLog(@"getFoodsByColumnValuePairFilter_withColumnValuePairs_equal enter");
     //    if (includeFoodClass == nil && excludeFoodClass == nil)
     //        return nil;
     NSMutableString *sqlStr = [self getSql_SelectFoodMainPart];
@@ -1366,14 +1366,14 @@
                              nil];
     NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:false],@"varBeParamWay", nil];
     NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:nil andOptions:localOptions];
-    NSLog(@"getFoodsByColumnValuePairFilter_withColumnValuePairs_equal return:\n%@",[LZUtility getObjectDescription:dataAry andIndent:0]);
+    //NSLog(@"getFoodsByColumnValuePairFilter_withColumnValuePairs_equal return:\n%@",[LZUtility getObjectDescription:dataAry andIndent:0]);
     return dataAry;
 }
 
 
 -(NSArray *) getFoodsByShowingPart:(NSString*)cnNamePart andEnNamePart:(NSString*)enNamePart andCnType:(NSString*)cnType
 {
-    NSLog(@"getFoodsByShowingPart enter, cnNamePart=%@, enNamePart=%@, cnType=%@",cnNamePart,enNamePart,cnType);
+    //NSLog(@"getFoodsByShowingPart enter, cnNamePart=%@, enNamePart=%@, cnType=%@",cnNamePart,enNamePart,cnType);
     NSMutableArray* columnValuePairs_like = [NSMutableArray arrayWithCapacity:2];
     if (cnNamePart.length > 0){
         [columnValuePairs_like addObject:[NSArray arrayWithObjects:COLUMN_NAME_CnCaption,cnNamePart, nil]];
@@ -1396,7 +1396,7 @@
     NSString *orderByPart = @" ORDER BY CnType";
     NSArray * dataAry = [self getRowsByQuery:sqlStr andFilters:nil andWhereExistInQuery:false andAfterWherePart:orderByPart andOptions:nil];
     NSArray * valAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:@"CnType" andDictionaryArray:dataAry];
-    NSLog(@"getFoodCnTypes ret: %@",[LZUtility getObjectDescription:valAry andIndent:0] );
+    //NSLog(@"getFoodCnTypes ret: %@",[LZUtility getObjectDescription:valAry andIndent:0] );
     return valAry;
 }
 
@@ -1406,7 +1406,7 @@
  */
 -(NSMutableDictionary*)getNutrientInfoAs2LevelDictionary_withNutrientIds:(NSArray*)nutrientIds
 {
-    NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds enter, nutrientIds=%@",[nutrientIds debugDescription]);
+    //NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds enter, nutrientIds=%@",[nutrientIds debugDescription]);
     
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
     [sqlStr appendString:@"SELECT * FROM NutritionInfo"];
@@ -1426,13 +1426,13 @@
     NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
     NSMutableDictionary *dic2Level = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:@"NutrientID" andDicArray:dataAry];
 
-    NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds ret:\n%@",dic2Level);
+    //NSLog(@"getNutrientInfoAs2LevelDictionary_withNutrientIds ret:\n%@",dic2Level);
     return dic2Level;
 }
 
 -(NSDictionary*)getNutrientInfo:(NSString*)nutrientId
 {
-    NSLog(@"getNutrientInfo begin");
+    //NSLog(@"getNutrientInfo begin");
     
     NSMutableString *sqlStr = [NSMutableString stringWithCapacity:1000*100];
     [sqlStr appendString:@"SELECT * FROM NutritionInfo"];
@@ -1445,7 +1445,7 @@
         nutrientInfo = dataAry[0];
     }
     
-    NSLog(@"getNutrientInfo ret:\n%@",nutrientInfo);
+    //NSLog(@"getNutrientInfo ret:\n%@",nutrientInfo);
     return nutrientInfo;
 }
 
@@ -1485,7 +1485,7 @@
             //do nothing, then get will obtain nil, though should not
         }
     }
-    NSLog(@"getRichNutritionFoodForNutrient ret:\n%@",foods);
+    //NSLog(@"getRichNutritionFoodForNutrient ret:\n%@",foods);
     return foods;
 }
 
@@ -1495,7 +1495,7 @@
  */
 -(NSArray *)getOrderedFoodIds:(NSArray *)idAry
 {
-    NSLog(@"getOrderedFoodIds begin");
+    //NSLog(@"getOrderedFoodIds begin");
     if (idAry==nil || idAry.count ==0)
         return nil;
     NSMutableArray *placeholderAry = [NSMutableArray arrayWithCapacity:idAry.count];
@@ -1514,7 +1514,7 @@
     [sqlStr appendString:@")\n"];
     [sqlStr appendString:@"  ORDER BY "];
     [sqlStr appendString:COLUMN_NAME_classify];
-    NSLog(@"getOrderedFoodIds sqlStr=%@",sqlStr);
+    //NSLog(@"getOrderedFoodIds sqlStr=%@",sqlStr);
     FMResultSet *rs = [dbfm executeQuery:sqlStr withArgumentsInArray:idAry];
     NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
     NSMutableArray *orderedIdAry = [NSMutableArray arrayWithCapacity:idAry.count];
@@ -1525,7 +1525,7 @@
             [orderedIdAry addObject:idData];
     }
     
-    NSLog(@"getOrderedFoodIds ret:\n%@",orderedIdAry);
+    //NSLog(@"getOrderedFoodIds ret:\n%@",orderedIdAry);
     return orderedIdAry;
 }
 
@@ -1769,7 +1769,7 @@
         [retDict setObject:rowFoodCollocation forKey:@"rowFoodCollocation"];
     if (foodAndAmountArray!=nil)
         [retDict setObject:foodAndAmountArray forKey:@"foodAndAmountArray"];
-    NSLog(@"getFoodCollocationData_withCollocationId %@ return:\n%@",nmCollocationId,retDict);
+    //NSLog(@"getFoodCollocationData_withCollocationId %@ return:\n%@",nmCollocationId,retDict);
     return retDict;
 }
 
@@ -1784,7 +1784,7 @@
 -(NSArray*)getDiseaseGroupInfo_byType:(NSString*)groupType
 {
     NSArray *dgDictAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseGroup andField:COLUMN_NAME_dsGroupType andValue:groupType andColumns:nil andOrderByPart:nil andNeedDistinct:false];
-    NSLog(@"getDiseaseGroup_byType ret:%@", [LZUtility getObjectDescription:dgDictAry andIndent:0] );
+    //NSLog(@"getDiseaseGroup_byType ret:%@", [LZUtility getObjectDescription:dgDictAry andIndent:0] );
 //    NSLog(@"getDiseaseGroup_byType ret:%@",[dgDictAry debugDescription]);// show chinese as unicode as '\U1234'
 //    NSLog(@"getDiseaseGroup_byType ret:%s",[[dgDictAry debugDescription] UTF8String]);// show chinese as unicode as '\U1234'
 //    NSLog(@"getDiseaseGroup_byType ret:%s",[[dgDictAry description] UTF8String]);// show chinese as unicode as '\U1234'
@@ -1812,7 +1812,7 @@
 //}
 -(NSArray*)getDiseaseIdsOfGroup:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType
 {
-    NSLog(@"getDiseaseIdsOfGroup enter, groupName=%@, department=%@, diseaseType=%@, timeType=%@",groupName,department,diseaseType,timeType);
+    //NSLog(@"getDiseaseIdsOfGroup enter, groupName=%@, department=%@, diseaseType=%@, timeType=%@",groupName,department,diseaseType,timeType);
     
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (groupName != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseGroup,groupName, nil]];
@@ -1823,7 +1823,7 @@
     NSArray *diseaseInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease, nil] andOrderByPart:nil andNeedDistinct:false];
     NSArray *diseaseIdAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_Disease andDictionaryArray:diseaseInfoAry];
     
-    NSLog(@"getDiseaseIdsOfGroup return=%@",[diseaseIdAry debugDescription]);//can show chinese, not unicode as '\U1234'
+    //NSLog(@"getDiseaseIdsOfGroup return=%@",[diseaseIdAry debugDescription]);//can show chinese, not unicode as '\U1234'
     
     return diseaseIdAry;
 }
@@ -1833,7 +1833,7 @@
  */
 -(NSArray*)getDiseaseInfosOfGroup:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType
 {
-    NSLog(@"getDiseaseInfosOfGroup enter, groupName=%@, department=%@, diseaseType=%@, timeType=%@",groupName,department,diseaseType,timeType);
+    //NSLog(@"getDiseaseInfosOfGroup enter, groupName=%@, department=%@, diseaseType=%@, timeType=%@",groupName,department,diseaseType,timeType);
     
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (groupName != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseGroup,groupName, nil]];
@@ -1843,7 +1843,7 @@
     
     NSArray *diseaseInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:nil andNeedDistinct:false];
 
-    NSLog(@"getDiseaseInfosOfGroup return=%@",[LZUtility getObjectDescription:diseaseInfoAry andIndent:0]);
+    //NSLog(@"getDiseaseInfosOfGroup return=%@",[LZUtility getObjectDescription:diseaseInfoAry andIndent:0]);
     return diseaseInfoAry;
 }
 
@@ -1885,7 +1885,7 @@
  */
 -(NSDictionary*)getDiseaseInfosOrganizedByColumn:(NSString*)organizedByColumn andFilters_Group:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType
 {
-    NSLog(@"getDiseaseInfosOrganizedByColumn enter, organizedByColumn=%@, groupName=%@, department=%@, diseaseType=%@, timeType=%@",organizedByColumn,groupName,department,diseaseType,timeType);
+    //NSLog(@"getDiseaseInfosOrganizedByColumn enter, organizedByColumn=%@, groupName=%@, department=%@, diseaseType=%@, timeType=%@",organizedByColumn,groupName,department,diseaseType,timeType);
     
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (groupName != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseGroup,groupName, nil]];
@@ -1894,7 +1894,7 @@
     if (timeType != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DiseaseTimeType,timeType, nil]];
     
     NSArray *departmentInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:organizedByColumn, nil] andOrderByPart:nil andNeedDistinct:true];
-    NSLog(@"getDiseaseInfosOrganizedByColumn departmentInfoAry=%@", [LZUtility getObjectDescription:departmentInfoAry andIndent:0] );
+    //NSLog(@"getDiseaseInfosOrganizedByColumn departmentInfoAry=%@", [LZUtility getObjectDescription:departmentInfoAry andIndent:0] );
     NSArray *departmentNames = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:organizedByColumn andDictionaryArray:departmentInfoAry];
     
     NSArray *diseaseRowAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseInGroup andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:nil andNeedDistinct:false];
@@ -1909,7 +1909,7 @@
                                     departmentNames,@"departmentNames",
                                     departmentDiseaseInfosDict,@"departmentDiseaseInfosDict",
                                     nil];
-    NSLog(@"getDiseaseInfosOrganizedByColumn ret:%@", [LZUtility getObjectDescription:retData andIndent:0] );
+    //NSLog(@"getDiseaseInfosOrganizedByColumn ret:%@", [LZUtility getObjectDescription:retData andIndent:0] );
     return retData;
 }
 
@@ -1939,7 +1939,7 @@
     if (diseaseIds != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_Disease,diseaseIds, nil]];
     
     NSArray *diseaseNutrientRows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_DiseaseNutrient andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_Disease,COLUMN_NAME_NutrientID,COLUMN_NAME_LackLevelMark, nil] andOrderByPart:nil andNeedDistinct:true];
-    NSLog(@"getDiseaseNutrientRows_ByDiseaseIds diseaseNutrientRows=%@", [LZUtility getObjectDescription:diseaseNutrientRows andIndent:0] );
+    //NSLog(@"getDiseaseNutrientRows_ByDiseaseIds diseaseNutrientRows=%@", [LZUtility getObjectDescription:diseaseNutrientRows andIndent:0] );
     
     NSMutableDictionary * diseaseNutrientInfosByDiseaseDict = [NSMutableDictionary dictionaryWithCapacity:diseaseIds.count];
     for(int i=0; i<diseaseNutrientRows.count; i++){
@@ -1947,7 +1947,7 @@
         NSString *diseaseId = diseaseNutrientRow[COLUMN_NAME_Disease];
         [LZUtility addUnitItemToArrayDictionary_withUnitItem:diseaseNutrientRow withArrayDictionary:diseaseNutrientInfosByDiseaseDict andKey:diseaseId];
     }
-    NSLog(@"in getDiseaseNutrientRows_ByDiseaseIds, diseaseNutrientInfosByDiseaseDict=%@",[LZUtility getObjectDescription:diseaseNutrientInfosByDiseaseDict andIndent:0]);
+    //NSLog(@"in getDiseaseNutrientRows_ByDiseaseIds, diseaseNutrientInfosByDiseaseDict=%@",[LZUtility getObjectDescription:diseaseNutrientInfosByDiseaseDict andIndent:0]);
     return diseaseNutrientInfosByDiseaseDict;
 }
 
@@ -1957,18 +1957,18 @@
  */
 -(NSArray*)getUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType
 {
-    NSLog(@"getUserCheckDiseaseRecord_withDay enter");
+    //NSLog(@"getUserCheckDiseaseRecord_withDay enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_Day,[NSNumber numberWithInt:day], nil]];
     if (TimeType > 0) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_TimeType,[NSNumber numberWithInt:TimeType], nil]];
     
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_UserCheckDiseaseRecord andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:nil andNeedDistinct:false];
-    NSLog(@"getUserCheckDiseaseRecord_withDay rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    //NSLog(@"getUserCheckDiseaseRecord_withDay rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
 }
 -(BOOL)saveUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType UpdateTime:(NSDate*)UpdateTime andDiseases:(NSArray*)Diseases andLackNutrientIDs:(NSArray*)LackNutrientIDs andHealthMark:(int)HealthMark
 {
-    NSLog(@"saveUserCheckDiseaseRecord_withDay enter");
+    //NSLog(@"saveUserCheckDiseaseRecord_withDay enter");
     NSArray *rows = [self getUserCheckDiseaseRecord_withDay:day andTimeType:TimeType];
     if (rows.count ==0){
         return [self insertUserCheckDiseaseRecord_withDay:day andTimeType:TimeType UpdateTime:UpdateTime andDiseases:Diseases andLackNutrientIDs:LackNutrientIDs andHealthMark:HealthMark];
@@ -1982,7 +1982,7 @@
  */
 -(BOOL)insertUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType UpdateTime:(NSDate*)UpdateTime andDiseases:(NSArray*)Diseases andLackNutrientIDs:(NSArray*)LackNutrientIDs andHealthMark:(int)HealthMark
 {
-    NSLog(@"insertUserCheckDiseaseRecord_withDay enter");
+    //NSLog(@"insertUserCheckDiseaseRecord_withDay enter");
 //    NSDateFormatter *dtFmt_yyyyMMdd_CurrentTimeZone = [[NSDateFormatter alloc]init];
 //    [dtFmt_yyyyMMdd_CurrentTimeZone setDateFormat:@"yyyyMMdd"];
 //    NSDateFormatter *dtFmt_HHmmss_CurrentTimeZone = [[NSDateFormatter alloc]init];
@@ -2008,7 +2008,7 @@
 }
 -(BOOL)updateUserCheckDiseaseRecord_withDay:(int)day andTimeType:(int)TimeType UpdateTime:(NSDate*)UpdateTime andDiseases:(NSArray*)Diseases andLackNutrientIDs:(NSArray*)LackNutrientIDs andHealthMark:(int)HealthMark
 {
-    NSLog(@"updateUserCheckDiseaseRecord_withDay enter");
+    //NSLog(@"updateUserCheckDiseaseRecord_withDay enter");
 
     NSTimeInterval dUpdateTime = [UpdateTime timeIntervalSince1970];
     long long llUpdateTime = (long long)round(dUpdateTime*1000);
@@ -2034,21 +2034,21 @@
 
 -(NSDictionary*)getTranslationItemsDictionaryByType:(NSString*)itemType
 {
-    NSLog(@"getTranslationItemsDictionaryByType enter, itemType=%@",itemType);
+    //NSLog(@"getTranslationItemsDictionaryByType enter, itemType=%@",itemType);
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (itemType != nil) [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_ItemType,itemType, nil]];
     
     NSArray *translationItemInfoAry = [self selectTableByEqualFilter_withTableName:TABLE_NAME_TranslationItem andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:nil andNeedDistinct:false];
     NSDictionary *translationItemInfo2LevelDict = [LZUtility dictionaryArrayTo2LevelDictionary_withKeyName:COLUMN_NAME_ItemID andDicArray:translationItemInfoAry];
     
-    NSLog(@"getTranslationItemsDictionaryByType return=%@",[LZUtility getObjectDescription:translationItemInfo2LevelDict andIndent:0]);
+    //NSLog(@"getTranslationItemsDictionaryByType return=%@",[LZUtility getObjectDescription:translationItemInfo2LevelDict andIndent:0]);
     return translationItemInfo2LevelDict;
 }
 
 
 -(NSArray*)getSymptomTypeRows_withForSex:(NSString*)forSex
 {
-    NSLog(@"getSymptomTypeRows_withForSex enter");
+    //NSLog(@"getSymptomTypeRows_withForSex enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (forSex==nil || [ForSex_both isEqualToString:forSex]){
 //        [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_ForSex,ForSex_both, nil]];
@@ -2058,13 +2058,13 @@
     }
     
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_SymptomType andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:COLUMN_NAME_DisplayOrder andNeedDistinct:false];
-    NSLog(@"getSymptomTypeRows_withForSex rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    //NSLog(@"getSymptomTypeRows_withForSex rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
 }
 
 -(NSArray*)getSymptomRows_BySymptomTypeIds:(NSArray*)symptomTypeIds
 {
-    NSLog(@"getSymptomRows_BySymptomTypeIds enter");
+    //NSLog(@"getSymptomRows_BySymptomTypeIds enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (symptomTypeIds.count > 0){
         [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SymptomTypeId,symptomTypeIds, nil]];
@@ -2073,25 +2073,25 @@
     }
     
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Symptom andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:COLUMN_NAME_DisplayOrder andNeedDistinct:false];
-    NSLog(@"getSymptomRows_BySymptomTypeIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    //NSLog(@"getSymptomRows_BySymptomTypeIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
 }
 
 -(NSMutableDictionary*)getSymptomRowsByTypeDict_BySymptomTypeIds:(NSArray*)symptomTypeIds
 {
-    NSLog(@"getSymptomRowsByTypeDict_BySymptomTypeIds enter");
+    //NSLog(@"getSymptomRowsByTypeDict_BySymptomTypeIds enter");
     NSArray *symptomRows = [self getSymptomRows_BySymptomTypeIds:symptomTypeIds];
     
     NSMutableDictionary * symptomsByTypeDict = [LZUtility groupbyDictionaryArrayToArrayDictionary:symptomRows andKeyName:COLUMN_NAME_SymptomTypeId];
     
-    NSLog(@"getSymptomRowsByTypeDict_BySymptomTypeIds ret=%@", [LZUtility getObjectDescription:symptomsByTypeDict andIndent:0] );
+    //NSLog(@"getSymptomRowsByTypeDict_BySymptomTypeIds ret=%@", [LZUtility getObjectDescription:symptomsByTypeDict andIndent:0] );
     return symptomsByTypeDict;
 }
 
 
 -(NSArray*)getSymptomRows_BySymptomIds:(NSArray*)symptomIds
 {
-    NSLog(@"getSymptomRows_BySymptomIds enter");
+    //NSLog(@"getSymptomRows_BySymptomIds enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (symptomIds.count > 0){
         [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SymptomId,symptomIds, nil]];
@@ -2100,7 +2100,7 @@
     }
     
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Symptom andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart:COLUMN_NAME_DisplayOrder andNeedDistinct:false];
-    NSLog(@"getSymptomRows_BySymptomIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    //NSLog(@"getSymptomRows_BySymptomIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
 }
 
@@ -2109,29 +2109,29 @@
  */
 -(NSArray*)getSymptomNutrientRows_BySymptomIds:(NSArray*)symptomIds
 {
-    NSLog(@"getSymptomNutrientRows_BySymptomIds enter");
+    //NSLog(@"getSymptomNutrientRows_BySymptomIds enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SymptomId,symptomIds, nil]];
     
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_SymptomNutrient andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_SymptomId,COLUMN_NAME_NutrientID, nil] andOrderByPart: @"SymptomTypeId,SymptomId" andNeedDistinct:false];
-    NSLog(@"getSymptomNutrientRows_BySymptomIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    //NSLog(@"getSymptomNutrientRows_BySymptomIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
 }
 -(NSArray*)getSymptomNutrientDistinctIds_BySymptomIds:(NSArray*)symptomIds
 {
-    NSLog(@"getSymptomNutrientDistinctIds_BySymptomIds enter");
+    //NSLog(@"getSymptomNutrientDistinctIds_BySymptomIds enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_SymptomId,symptomIds, nil]];
     
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_SymptomNutrient andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_NutrientID, nil] andOrderByPart: nil andNeedDistinct:true];
     NSArray *nutrientIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_NutrientID andDictionaryArray:rows];
-    NSLog(@"getSymptomNutrientDistinctIds_BySymptomIds nutrientIds=%@", [LZUtility getObjectDescription:nutrientIds andIndent:0] );
+    //NSLog(@"getSymptomNutrientDistinctIds_BySymptomIds nutrientIds=%@", [LZUtility getObjectDescription:nutrientIds andIndent:0] );
     return nutrientIds;
 }
 
 -(double)getSymptomHealthMarkSum_BySymptomIds:(NSArray*)symptomIds
 {
-    NSLog(@"getSymptomHealthMarkSum_BySymptomIds enter");
+    //NSLog(@"getSymptomHealthMarkSum_BySymptomIds enter");
     if (symptomIds.count == 0)
         return 0;
     
@@ -2154,26 +2154,26 @@
     NSNumber *nmHealthMark = row[COLUMN_NAME_HealthMark];
     double dHealthMark = [nmHealthMark doubleValue];
     
-    NSLog(@"getSymptomHealthMark_BySymptomIds ret=%f", dHealthMark);
+    //NSLog(@"getSymptomHealthMark_BySymptomIds ret=%f", dHealthMark);
     return dHealthMark;
 }
 
 
 -(NSArray*)getIllnessSuggestionDistinctIds_ByIllnessIds:(NSArray*)illnessIds
 {
-    NSLog(@"getIllnessSuggestionDistinctIds_ByIllnessIdIds enter");
+    //NSLog(@"getIllnessSuggestionDistinctIds_ByIllnessIdIds enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (illnessIds.count > 0)
         [fieldValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_IllnessId,illnessIds, nil]];
     
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_IllnessToSuggestion andFieldValuePairs:fieldValuePairs andSelectColumns:[NSArray arrayWithObjects:COLUMN_NAME_SuggestionId, nil] andOrderByPart: COLUMN_NAME_DisplayOrder andNeedDistinct:true];
     NSArray *suggestionIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_SuggestionId andDictionaryArray:rows];
-    NSLog(@"getIllnessSuggestionDistinctIds_ByIllnessIdIds suggestionIds=%@", [LZUtility getObjectDescription:suggestionIds andIndent:0] );
+    //NSLog(@"getIllnessSuggestionDistinctIds_ByIllnessIdIds suggestionIds=%@", [LZUtility getObjectDescription:suggestionIds andIndent:0] );
     return suggestionIds;
 }
 -(NSArray*)getIllnessSuggestions_BySuggestionIds:(NSArray*)suggestionIds
 {
-    NSLog(@"getIllnessSuggestions_BySuggestionIds enter");
+    //NSLog(@"getIllnessSuggestions_BySuggestionIds enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (suggestionIds != nil){
         if (suggestionIds.count > 0)
@@ -2182,55 +2182,55 @@
             return nil;
     }
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_IllnessSuggestion andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart: nil andNeedDistinct:false];
-    NSLog(@"getIllnessSuggestions_BySuggestionIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    //NSLog(@"getIllnessSuggestions_BySuggestionIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
 }
 
 -(NSArray*)getIllnessSuggestionsDistinct_ByIllnessIds:(NSArray*)illnessIds
 {
-    NSLog(@"getIllnessSuggestionsDistinct_ByIllnessIds enter");
+    //NSLog(@"getIllnessSuggestionsDistinct_ByIllnessIds enter");
     NSArray *suggestionIds = [self getIllnessSuggestionDistinctIds_ByIllnessIds:illnessIds];
     if (suggestionIds.count == 0)
         return nil;
     NSArray *rows = [self getIllnessSuggestions_BySuggestionIds:suggestionIds];
     
-    NSLog(@"getIllnessSuggestionsDistinct_ByIllnessIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    //NSLog(@"getIllnessSuggestionsDistinct_ByIllnessIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
 }
 
 -(NSArray*)getIllnessSuggestions_ByIllnessId:(NSString*)illnessId
 {
-    NSLog(@"getIllnessSuggestions_ByIllnessId enter");
+    //NSLog(@"getIllnessSuggestions_ByIllnessId enter");
     NSArray *suggestionIds = [self getIllnessSuggestionDistinctIds_ByIllnessIds:[NSArray arrayWithObjects:illnessId, nil]];
     if (suggestionIds.count == 0)
         return nil;
     NSArray *rows = [self getIllnessSuggestions_BySuggestionIds:suggestionIds];
     
-    NSLog(@"getIllnessSuggestions_ByIllnessId rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    //NSLog(@"getIllnessSuggestions_ByIllnessId rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
 }
 
 -(NSArray*)getIllnessIds
 {
-    NSLog(@"getIllnessIds enter");
+    //NSLog(@"getIllnessIds enter");
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Illness andFieldValuePairs:nil andSelectColumns:nil andOrderByPart: nil andNeedDistinct:false];
     NSArray *IllnessIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_IllnessId andDictionaryArray:rows];
-    NSLog(@"getIllnessIds IllnessIds=%@", [LZUtility getObjectDescription:IllnessIds andIndent:0] );
+    //NSLog(@"getIllnessIds IllnessIds=%@", [LZUtility getObjectDescription:IllnessIds andIndent:0] );
     return IllnessIds;
 }
 
 -(NSArray*)getAllIllness
 {
-    NSLog(@"getAllIllness enter");
+    //NSLog(@"getAllIllness enter");
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Illness andFieldValuePairs:nil andSelectColumns:nil andOrderByPart: COLUMN_NAME_DisplayOrder andNeedDistinct:false];
     
-    NSLog(@"getAllIllness ret=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    //NSLog(@"getAllIllness ret=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
 }
 
 -(NSArray*)getIllness_ByIllnessIds:(NSArray*)illnessIds
 {
-    NSLog(@"getIllness_ByIllnessIds enter");
+    //NSLog(@"getIllness_ByIllnessIds enter");
     NSMutableArray *fieldValuePairs = [NSMutableArray array];
     if (illnessIds != nil){
         if (illnessIds.count > 0)
@@ -2239,7 +2239,7 @@
             return nil;
     }
     NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_Illness andFieldValuePairs:fieldValuePairs andSelectColumns:nil andOrderByPart: nil andNeedDistinct:false];
-    NSLog(@"getIllness_ByIllnessIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    //NSLog(@"getIllness_ByIllnessIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
     return rows;
 }
 
@@ -2248,7 +2248,7 @@
  */
 -(BOOL)insertUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs
 {
-    NSLog(@"insertUserRecordSymptom_withDayLocal enter");
+    //NSLog(@"insertUserRecordSymptom_withDayLocal enter");
     
     long long llUpdateTimeUTC = [LZUtility getMillisecond:updateTimeUTC];
     
@@ -2257,7 +2257,7 @@
                            ];
     NSArray *paramAry = [NSArray arrayWithObjects:[NSNumber numberWithInt:dayLocal], [NSNumber numberWithLongLong:llUpdateTimeUTC], inputNameValuePairs, Note, calculateNameValuePairs, nil];
     BOOL dbopState = [dbfm executeUpdate:insertSql error:nil withArgumentsInArray:paramAry];
-    NSLog(@"insertUserRecordSymptom_withDayLocal ret:%d",dbopState);
+    //NSLog(@"insertUserRecordSymptom_withDayLocal ret:%d",dbopState);
     return dbopState;
 }
 -(BOOL)insertUserRecordSymptom_withRawData:(NSDictionary*)hmRawData
@@ -2287,7 +2287,7 @@
 }
 -(BOOL)updateUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs
 {
-    NSLog(@"updateUserRecordSymptom_withDayLocal enter");
+    //NSLog(@"updateUserRecordSymptom_withDayLocal enter");
     
     NSTimeInterval dUpdateTimeUTC = [updateTimeUTC timeIntervalSince1970];
     long long llUpdateTimeUTC = (long long)round(dUpdateTimeUTC*1000);
@@ -2297,7 +2297,7 @@
                            ];
     NSArray *paramAry = [NSArray arrayWithObjects:[NSNumber numberWithLongLong:llUpdateTimeUTC], inputNameValuePairs, Note, calculateNameValuePairs, [NSNumber numberWithInt:dayLocal], nil];
     BOOL dbopState = [dbfm executeUpdate:updateSql error:nil withArgumentsInArray:paramAry];
-    NSLog(@"updateUserRecordSymptom_withDayLocal ret:%d",dbopState);
+    //NSLog(@"updateUserRecordSymptom_withDayLocal ret:%d",dbopState);
     return dbopState;
 }
 
@@ -2324,12 +2324,12 @@
     NSData *jsonData_inputNameValuePairs = [CJSONSerializer1 serializeObject:inputNameValuePairsData error:&error];
     assert(error == NULL);
     NSString *jsonString_inputNameValuePairs = [[NSString alloc] initWithData:jsonData_inputNameValuePairs encoding:NSUTF8StringEncoding];
-    NSLog(@"insertUserRecordSymptom_withDayLocal , jsonString_inputNameValuePairs=%@",jsonString_inputNameValuePairs);
+    //NSLog(@"insertUserRecordSymptom_withDayLocal , jsonString_inputNameValuePairs=%@",jsonString_inputNameValuePairs);
     
     NSData *jsonData_calculateNameValuePairs = [CJSONSerializer1 serializeObject:calculateNameValuePairsData error:&error];
     assert(error == NULL);
     NSString *jsonString_calculateNameValuePairs = [[NSString alloc] initWithData:jsonData_calculateNameValuePairs encoding:NSUTF8StringEncoding];
-    NSLog(@"insertUserRecordSymptom_withDayLocal , jsonString_calculateNameValuePairs=%@",jsonString_calculateNameValuePairs);
+    //NSLog(@"insertUserRecordSymptom_withDayLocal , jsonString_calculateNameValuePairs=%@",jsonString_calculateNameValuePairs);
     
     bool opStatus = [self insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTimeUTC andInputNameValuePairs:jsonString_inputNameValuePairs andNote:Note andCalculateNameValuePairs:jsonString_calculateNameValuePairs];
 //    NSLog(@"insertUserRecordSymptom_withDayLocal ret:%d",opStatus);
@@ -2346,7 +2346,7 @@
     NSData *jsonData_calculateNameValuePairs = [[CJSONSerializer serializer] serializeObject:calculateNameValuePairsData error:&error];
     assert(error == NULL);
     NSString *jsonString_calculateNameValuePairs = [[NSString alloc] initWithData:jsonData_calculateNameValuePairs encoding:NSUTF8StringEncoding];
-    NSLog(@"updateUserRecordSymptom_withDayLocal , jsonString_inputNameValuePairs=%@\njsonString_calculateNameValuePairs=%@",jsonString_inputNameValuePairs,jsonString_calculateNameValuePairs);
+    //NSLog(@"updateUserRecordSymptom_withDayLocal , jsonString_inputNameValuePairs=%@\njsonString_calculateNameValuePairs=%@",jsonString_inputNameValuePairs,jsonString_calculateNameValuePairs);
     bool opStatus =  [self updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTimeUTC andInputNameValuePairs:jsonString_inputNameValuePairs andNote:Note andCalculateNameValuePairs:jsonString_calculateNameValuePairs];
     return opStatus;
 }
@@ -2354,7 +2354,7 @@
 -(BOOL)deleteUserRecordSymptomByByDayLocal:(int)dayLocal
 {
     bool opStatus =   [self deleteTableByEqualFilter_withTableName:TABLE_NAME_UserRecordSymptom andField:COLUMN_NAME_DayLocal andValue:[NSNumber numberWithInt:dayLocal]];
-    NSLog(@"deleteUserRecordSymptomByByDayLocal ret:%d",opStatus);
+    //NSLog(@"deleteUserRecordSymptomByByDayLocal ret:%d",opStatus);
     return opStatus;
 }
 
@@ -2370,7 +2370,7 @@
     if (rows.count > 0){
         rowDict = rows[0];
     }
-    NSLog(@"getUserRecordSymptomRawRowByDayLocal ret:%@",[LZUtility getObjectDescription:rowDict andIndent:0]);
+    //NSLog(@"getUserRecordSymptomRawRowByDayLocal ret:%@",[LZUtility getObjectDescription:rowDict andIndent:0]);
     return rowDict;
 }
 
@@ -2395,7 +2395,7 @@
         [FieldOpValuePairs addObject:[NSArray arrayWithObjects:COLUMN_NAME_DayLocal,@"<",[NSNumber numberWithInt:EndMonthLocal*100], nil]];
     }
     NSArray *rows = [self selectTable_byFieldOpValuePairs:FieldOpValuePairs andTableName:TABLE_NAME_UserRecordSymptom andSelectColumns:nil andOrderByPart:COLUMN_NAME_DayLocal andNeedDistinct:false];
-    NSLog(@"getUserRecordSymptomRawRowsByRange_withStartDayLocal ret:%@",[LZUtility getObjectDescription:rows andIndent:0]);
+    //NSLog(@"getUserRecordSymptomRawRowsByRange_withStartDayLocal ret:%@",[LZUtility getObjectDescription:rows andIndent:0]);
     return rows;
 }
 
@@ -2453,7 +2453,7 @@
         return nil;
     }
     NSDictionary *rowData = [self.class parseUserRecordSymptomRawRow:rowRaw];
-    NSLog(@"getUserRecordSymptomDataByDayLocal ret:%@",[LZUtility getObjectDescription:rowData andIndent:0]);
+    //NSLog(@"getUserRecordSymptomDataByDayLocal ret:%@",[LZUtility getObjectDescription:rowData andIndent:0]);
     return rowData;
 }
 
@@ -2469,7 +2469,7 @@
         NSDictionary *rowData = [self.class parseUserRecordSymptomRawRow:rowRaw];
         [rows addObject:rowData];
     }
-    NSLog(@"getUserRecordSymptomDataByRange_withStartDayLocal ret:%@",[LZUtility getObjectDescription:rows andIndent:0]);
+    //NSLog(@"getUserRecordSymptomDataByRange_withStartDayLocal ret:%@",[LZUtility getObjectDescription:rows andIndent:0]);
     return rows;
 }
 
@@ -2483,7 +2483,7 @@
 //    NSLog(@"getUserRecordSymptom_DistinctMonth dataAry=%@",dataAry);
 
     NSArray * monthAry = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:@"MonthLocal" andDictionaryArray:dataAry];
-    NSLog(@"getUserRecordSymptom_DistinctMonth ret:%@",monthAry);
+    //NSLog(@"getUserRecordSymptom_DistinctMonth ret:%@",monthAry);
     return monthAry;
 }
 

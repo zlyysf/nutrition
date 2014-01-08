@@ -127,7 +127,6 @@
         [sqlCreate appendString:s1];
     }
     [sqlCreate appendString:@")"];
-    NSLog(@"createTable_withTableName sqlCreate=%@",sqlCreate);
     [_db executeUpdate:sqlCreate];
 }
 
@@ -170,7 +169,7 @@
         [sqlCreate appendString:s1];
     }
     [sqlCreate appendString:@")"];
-    NSLog(@"createTable_withTableName sqlCreate=%@",sqlCreate);
+    //NSLog(@"createTable_withTableName sqlCreate=%@",sqlCreate);
     [_db executeUpdate:sqlCreate];
 }
 
@@ -203,7 +202,7 @@
     [sqlStr appendString:@") VALUES ("];
     [sqlStr appendString:valuePlaceholdersStr];
     [sqlStr appendString:@");"];
-    NSLog(@"generateInsertSqlForTable sqlStr=%@",sqlStr);
+    //NSLog(@"generateInsertSqlForTable sqlStr=%@",sqlStr);
     return sqlStr;
 }
 
@@ -247,7 +246,7 @@
         NSArray *row = rs.resultArray;
         [rowAry addObject:row];
     }
-    NSLog(@"queryDataAndMetaDataBySelectSql get columnNames=\n%@,\nrows=\n%@",columnNames,rowAry);
+    //NSLog(@"queryDataAndMetaDataBySelectSql get columnNames=\n%@,\nrows=\n%@",columnNames,rowAry);
     
     NSMutableDictionary *retData = [NSMutableDictionary dictionaryWithCapacity:3];
     if (rowAry.count > 0){
@@ -310,7 +309,7 @@
         [query appendFormat:@" ORDER BY %@",orderByPart];
     NSDictionary *dictQueryParam = [NSDictionary dictionaryWithObjectsAndKeys:fieldValue, @"fieldValue", nil];
 
-    NSLog(@"selectTableByEqualFilter_withTableName query=%@, dictQueryParam=%@",query,[LZUtility getObjectDescription:dictQueryParam andIndent:0]);
+    //NSLog(@"selectTableByEqualFilter_withTableName query=%@, dictQueryParam=%@",query,[LZUtility getObjectDescription:dictQueryParam andIndent:0]);
     FMResultSet *rs = [dbfm executeQuery:query withParameterDictionary:dictQueryParam];
     //    NSArray *ary = [[self class] FMResultSetToDictionaryArray:rs];
     NSArray *ary = [LZDataAccess FMResultSetToDictionaryArray:rs];
@@ -322,7 +321,7 @@
  */
 - (NSArray *)selectTableByEqualFilter_withTableName:(NSString *)tableName andFieldValuePairs:(NSArray *)fieldValuePairs andSelectColumns:(NSArray*)selectColumns andOrderByPart:(NSString*)orderByPart andNeedDistinct:(BOOL)needDistinct
 {
-    NSLog(@"selectTableByEqualFilter_withTableName enter");
+    //NSLog(@"selectTableByEqualFilter_withTableName enter");
     NSString *columnsPart = @"*";
     if (selectColumns.count>0){
         columnsPart = [selectColumns componentsJoinedByString:@","];
@@ -503,7 +502,6 @@
                              strCondition,@"strCondition",
                              sqlParams,@"sqlParams",
                              nil];
-//    NSLog(@"getUnitCondition_withColumn %@ %@ %@ %d ret:\n %@",columnName,operator,valObj,notFlag,retDict);
     return retDict;
 }
 /*
@@ -564,7 +562,6 @@
                              strCondition,@"strCondition",
                              sqlParams,@"sqlParams",
                              nil];
-//    NSLog(@"getUnitCondition_withColumn %@ %@ %@ %d ret:\n %@",columnName,operator,values,notFlag,retDict);
     return retDict;
 }
 
@@ -573,7 +570,6 @@
  */
 +(NSDictionary*)getMediumUnitCondition_withExpressionItems:(NSArray*)expressionItems andJoinBoolOp:(NSString*)joinBoolOp andOptions:(NSDictionary*)options
 {
-//    NSLog(@"getMediumUnitCondition_withExpressionItems enter, %@ . %@ . %@",expressionItems,joinBoolOp,options);
     NSNumber *nmVarBeParamWay = [options objectForKey:@"varBeParamWay"];
     BOOL varBeParamWay = FALSE;
     if (nmVarBeParamWay!=nil)
@@ -619,7 +615,6 @@
                              strCondition,@"strCondition",
                              sqlParams,@"sqlParams",
                              nil];
-//    NSLog(@"getMediumUnitCondition_withExpressionItems %@ %@ ret:\n %@",expressionItems,joinBoolOp,retDict);
     return retDict;
 }
 
@@ -657,7 +652,6 @@
                              strCondition,@"strCondition",
                              sqlParams,@"sqlParams",
                              nil];
-//    NSLog(@"getBigUnitCondition_withExpressionItems %@ %@ ret:\n %@",expressionItemsArray,joinBoolOp,retDict);
     return retDict;
 }
 
@@ -749,7 +743,7 @@
                              strConditions,@"strCondition",
                              sqlParams,@"sqlParams",
                              nil];
-    NSLog(@"getBigUnitCondition_withExpressionItems %@ ret:%@",filters,retDict);
+    //NSLog(@"getBigUnitCondition_withExpressionItems %@ ret:%@",filters,retDict);
     return retDict;
 }
 /*
@@ -781,7 +775,7 @@
     [strWholeQuery appendString:strCondition];
     if (afterWherePart.length>0) [strWholeQuery appendString:afterWherePart];
     
-    NSLog(@"getRowsByQuery:andFilters strWholeQuery=%@, \nParams=%@",strWholeQuery,sqlParams);
+    //NSLog(@"getRowsByQuery:andFilters strWholeQuery=%@, \nParams=%@",strWholeQuery,sqlParams);
     FMResultSet *rs = [dbfm executeQuery:strWholeQuery withArgumentsInArray:sqlParams];
     NSArray * dataAry = [self.class FMResultSetToDictionaryArray:rs];
     
