@@ -528,6 +528,12 @@ const float TickIntervalHeartbeat = 5.0;
                 maxValue = 23.5;
             }
             else {
+                if (minValue < 5.0) {
+                    minValue = 19.5;
+                }
+                if (maxValue > 80) {
+                    maxValue = 23.5;
+                }
                 float floorValue = floor(minValue);
                 if (minValue - floorValue >= TickIntervalBMI) {
                     floorValue += TickIntervalBMI;
@@ -551,6 +557,13 @@ const float TickIntervalHeartbeat = 5.0;
                 maxValue = 85.0;
             }
             else {
+                if (minValue < 20.0) {
+                    minValue = 45.0;
+                }
+                
+                if (maxValue > 400) {
+                    maxValue = 85.0;
+                }
                 float floorValue = floor(minValue);
                 float ceilValue = ceil(maxValue);
                 int quotient = (int)floorValue / 10;
@@ -579,7 +592,7 @@ const float TickIntervalHeartbeat = 5.0;
             }
             break;
         case ScatterTypeTemperature:
-            if (minValue > 34.0 || self.dataForPlot.count == 0) {
+            if (minValue < 30.0 || minValue > 34.0 || self.dataForPlot.count == 0) {
                 minValue = 34.0;
             }
             else {
@@ -593,6 +606,12 @@ const float TickIntervalHeartbeat = 5.0;
                 maxValue = 220.0;
             }
             else {
+                if (minBPValue < 30) {
+                    minBPValue = 60;
+                }
+                if (maxBPValue > 280) {
+                    maxBPValue = 220;
+                }
                 int quotient = minBPValue / 10;
                 int remainder = quotient % 2;
                 if (remainder == 0) {
@@ -626,6 +645,12 @@ const float TickIntervalHeartbeat = 5.0;
                 maxValue = 80.0;
             }
             else {
+                if (minValue < 10) {
+                    minValue = 40;
+                }
+                if (maxValue > 150) {
+                    maxValue = 80.0;
+                }
                 float floorValue = floor(minValue);
                 float ceilValue = ceil(maxValue);
                 int quotient = (int)floorValue / 10;
