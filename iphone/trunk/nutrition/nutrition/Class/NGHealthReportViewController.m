@@ -958,9 +958,13 @@
                 [illnessNameLabel setBackgroundColor:[UIColor whiteColor]];
                 [backView addSubview:illnessNameLabel];
                 
-                UIImageView *detailArrow = [[UIImageView alloc]initWithFrame:CGRectMake(265, startY+8, 20, 20)];
+                UIImageView *detailArrow = [[UIImageView alloc]initWithFrame:CGRectMake(265, 0, 20, 20)];
                 [detailArrow setImage:[UIImage imageNamed:@"item_detail_arrow.png"]];
                 [backView addSubview:detailArrow];
+                CGPoint potentialLabelCenter = illnessNameLabel.center;
+                CGPoint arrowCenter = CGPointMake(detailArrow.center.x, potentialLabelCenter.y);
+                detailArrow.center = arrowCenter;
+
                 
                 LZCustomDataButton *illnessButton = [[LZCustomDataButton alloc]initWithFrame:CGRectMake(0, startY, 300, 30)];
                 illnessButton.customData =[NSNumber numberWithInt:i];

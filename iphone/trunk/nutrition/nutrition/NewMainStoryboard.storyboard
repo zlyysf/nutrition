@@ -506,7 +506,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" title="健康报告" id="K6e-S7-716"/>
                     <connections>
                         <outlet property="listView" destination="gau-8z-zad" id="E1H-g4-EkR"/>
@@ -537,7 +536,7 @@
         <!--Record History View Controller-->
         <scene sceneID="JPX-8s-QED">
             <objects>
-                <viewController storyboardIdentifier="NGRecordHistoryViewController" automaticallyAdjustsScrollViewInsets="NO" id="rYM-Xc-5j6" customClass="NGRecordHistoryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NGRecordHistoryViewController" id="rYM-Xc-5j6" customClass="NGRecordHistoryViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="laA-Pf-MUS">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -650,7 +649,6 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="NXm-hD-YXl"/>
                     <connections>
                         <outlet property="contentScrollView" destination="KIr-Wa-68I" id="hyi-0D-4ts"/>
@@ -1153,7 +1151,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <extendedEdge key="edgesForExtendedLayout"/>
                     <navigationItem key="navigationItem" id="Gq6-nz-918"/>
                     <connections>
                         <outlet property="activityDescriptionLabel" destination="qTk-W6-T9F" id="h4u-uG-JXt"/>
