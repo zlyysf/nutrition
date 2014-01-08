@@ -265,13 +265,14 @@
     <color name="v3_heart">#ebe1aa</color>
     <color name="v3_chest_stomach">#c9de7e</color>
     <color name="v3_skin">#c8efac</color>
-    <color name="v3_hands_feet">#9cb9d0</color>
+    <color name="v3_hands_feet">#f4f197</color>
     <color name="v3_arms_legs">#9cb9d0</color>
     <color name="v3_body">#dfb6d9</color>
-    <color name="v3_yinshi">#e4efeb</color>
     <color name="v3_digestion">#c1c1ef</color>
+    <color name="v3_excretion">#cfecd9</color>
     <color name="v3_movement">#dfdfd5</color>
     <color name="v3_psychology">#e6d9d1</color>
+    <color name="v3_yinshi">#e4efeb</color>
     <color name="v3_male">#a7ccd8</color>
     <color name="v3_female">#efcad7</color>
     <color name="v3_numbers">#c6d4ef</color>
