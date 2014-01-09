@@ -112,6 +112,7 @@
 
 -(NSArray*)getSymptomNutrientRows_BySymptomIds:(NSArray*)symptomIds;
 -(NSArray*)getSymptomNutrientDistinctIds_BySymptomIds:(NSArray*)symptomIds;
+-(NSArray*)getSymptomNutrientIdsWithOrder_BySymptomIds:(NSArray*)symptomIds;
 
 -(double)getSymptomHealthMarkSum_BySymptomIds:(NSArray*)symptomIds;
 

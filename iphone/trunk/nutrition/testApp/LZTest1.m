@@ -2413,9 +2413,11 @@ BOOL needLimitNutrients = FALSE;
     
     NSArray *symptomIds = [NSArray arrayWithObjects:@"头晕", @"头发脱落", @"易疲劳", @"易流泪", nil];
     [da getSymptomNutrientDistinctIds_BySymptomIds:symptomIds];
+    [da getSymptomNutrientIdsWithOrder_BySymptomIds:symptomIds];
+    
     
     [da getSymptomHealthMarkSum_BySymptomIds:symptomIds];
-    
+
     [da getSymptomRows_BySymptomIds:symptomIds];
 }
 

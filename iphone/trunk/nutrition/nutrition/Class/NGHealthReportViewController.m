@@ -208,7 +208,7 @@
         self.recommendFoodDict = [[NSDictionary alloc]init];
         if (![userSelectedSymptom count]==0)
         {
-            lackNutritionArray =  [da getSymptomNutrientDistinctIds_BySymptomIds:userSelectedSymptom];//需保存数据
+            lackNutritionArray =  [da getSymptomNutrientIdsWithOrder_BySymptomIds:userSelectedSymptom];//需保存数据
             
             //根据缺少元素得到推荐的食物
             NSNumber *paramSex = [[NSUserDefaults standardUserDefaults]objectForKey:LZUserSexKey];

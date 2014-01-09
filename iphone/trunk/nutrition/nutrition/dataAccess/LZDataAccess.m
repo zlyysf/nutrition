@@ -2128,6 +2128,43 @@
     //NSLog(@"getSymptomNutrientDistinctIds_BySymptomIds nutrientIds=%@", [LZUtility getObjectDescription:nutrientIds andIndent:0] );
     return nutrientIds;
 }
+-(NSArray*)getSymptomNutrientIdsWithOrder_BySymptomIds:(NSArray*)symptomIds
+{
+//    NSLog(@"getSymptomNutrientIdsWithOrder_BySymptomIds enter, symptomIds=%@",[LZUtility getObjectDescription:symptomIds andIndent:0]);
+    if (symptomIds.count == 0)
+        return 0;
+    
+    NSMutableString *sqlStr = [NSMutableString stringWithFormat: @"SELECT NutrientID,count(NutrientID) as cnt FROM SymptomNutrient"];
+    NSString *AfterWherePart = @" GROUP BY NutrientID ORDER BY count(NutrientID) desc";
+    
+    NSMutableArray *exprIncludeANDdata = [NSMutableArray array];
+    
+    NSMutableArray *expr = [NSMutableArray arrayWithCapacity:3];
+    [expr addObject:COLUMN_NAME_SymptomId];
+    [expr addObject:@"IN"];
+    [expr addObject:symptomIds ];
+    [exprIncludeANDdata addObject:expr];
+    NSDictionary *filters = [NSDictionary dictionaryWithObjectsAndKeys:
+                             exprIncludeANDdata,@"includeAND",
+                             nil];
+    NSDictionary *localOptions = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithBool:true],@"varBeParamWay", nil];
+    NSArray * rows = [self getRowsByQuery:sqlStr andFilters:filters andWhereExistInQuery:false andAfterWherePart:AfterWherePart andOptions:localOptions];
+//    NSLog(@"getSymptomNutrientIdsWithOrder_BySymptomIds rows=%@", [LZUtility getObjectDescription:rows andIndent:0] );
+    NSArray *nutrientIds = [LZUtility getPropertyArrayFromDictionaryArray_withPropertyName:COLUMN_NAME_NutrientID andDictionaryArray:rows];
+//    NSArray *nutrientIdsByLimit ;
+//    if (nutrientIds.count <= Config_getLackNutrientLimit){
+//        nutrientIdsByLimit = nutrientIds;
+//    }else{
+//        NSRange range1;
+//        range1.location= 0;
+//        range1.length = Config_getLackNutrientLimit;
+//        nutrientIdsByLimit = [nutrientIds subarrayWithRange:range1];
+//    }
+//    NSLog(@"getSymptomNutrientIdsWithOrder_BySymptomIds nutrientIdsByLimit=%@", [LZUtility getObjectDescription:nutrientIdsByLimit andIndent:0] );
+//    return nutrientIdsByLimit;
+    NSLog(@"getSymptomNutrientIdsWithOrder_BySymptomIds nutrientIds=%@", [LZUtility getObjectDescription:nutrientIds andIndent:0] );
+    return nutrientIds;
+}
 
 -(double)getSymptomHealthMarkSum_BySymptomIds:(NSArray*)symptomIds
 {
