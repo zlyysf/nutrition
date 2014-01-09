@@ -2488,6 +2488,7 @@
             NSString *symptomTypeId = cell_Id.str;
             symptomTypeId = [symptomTypeId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             NSString *symptomTypeNameEn = cell_enName.str;
+            symptomTypeNameEn = [symptomTypeNameEn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
             [idToEnNameDict setObject:symptomTypeNameEn forKey:symptomTypeId];
             NSLog(@"in readSymptomTranslateData_SymptomTypeSheet, [id,enName]=%@,%@",symptomTypeId,symptomTypeNameEn);
@@ -2528,6 +2529,7 @@
             NSString *symptomId = cell_Id.str;
             symptomId = [symptomId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             NSString *symptomNameEn = cell_enName.str;
+            symptomNameEn = [symptomNameEn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
             [idToEnNameDict setObject:symptomNameEn forKey:symptomId];
             NSLog(@"in readSymptomTranslateData_SymptomSheet, [id,enName]=%@,%@",symptomId,symptomNameEn);
@@ -2608,6 +2610,7 @@
             illnessId = [illnessId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
 //            assert([allIllnessIdSet containsObject:illnessId]);//还不能做这个检查。因为SymptomSummary.xls中第一个sheet中的病的数据并不是全集。这里的病的数据有些是特有的，另一方面可以近似认为是全集。但是一部分源数据在SymptomSummary.xls中第一个sheet中，可能应该在读该sheet的时候做检查比较合适。
             NSString *nameEn = cell_enName.str;
+            nameEn = [nameEn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             NSString *urlCn = cell_urlCn.str;
             NSString *urlEn = cell_urlEn.str;
             if (urlCn == nil) urlCn = @"";
@@ -2707,6 +2710,7 @@
             NSString *suggestionId = cell_Id.str;
             suggestionId = [suggestionId stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             NSString *suggestionEn = cell_enName.str;
+            suggestionEn = [suggestionEn stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
             
             [idToEnDict setObject:suggestionEn forKey:suggestionId];
             NSLog(@"in readSymptomTranslateData_IllnessSuggestionSheet, [id,en]=%@,%@",suggestionId,suggestionEn);
