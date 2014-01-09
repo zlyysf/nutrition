@@ -307,7 +307,13 @@
         }
         else
         {
-            [CalculateNameValuePairsData setObject:self.attentionArray forKey:Key_distinctSuggestionIds];
+            NSMutableArray *suggestionIdArray = [[NSMutableArray alloc]init];
+            for (NSDictionary * aSuggestion in self.attentionArray)
+            {
+                NSString *suggestionId = [aSuggestion objectForKey:@"SuggestionId"];
+                [suggestionIdArray addObject:suggestionId];
+            }
+            [CalculateNameValuePairsData setObject:suggestionIdArray forKey:Key_distinctSuggestionIds];
         }
         
         

@@ -65,6 +65,15 @@
     //友盟统计SDK启
     [[UIApplication sharedApplication]cancelAllLocalNotifications];
     [LZDataAccess singleton];
+//    LZDataAccess *da = [LZDataAccess singleton];
+//    NSArray *suggestionArray = [da getIllnessSuggestionsDistinct_ByIllnessIds:nil];
+//    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]init];
+//    for (NSDictionary *aSuggestion in suggestionArray)
+//    {
+//        NSString *suggestionId = [aSuggestion objectForKey:@"SuggestionId"];
+//        [tempDict setObject:aSuggestion forKey:suggestionId];
+//    }
+//    self.suggestionDict = [NSDictionary dictionaryWithDictionary:tempDict];
     [LZUtility setReviewFlagForNewVersion];
     [MobClick startWithAppkey:UMSDKAPPKey];
     //[MobClick startWithAppkey:UMSDKAPPKey reportPolicy:REALTIME channelId:MobChannelIdAppStore];
