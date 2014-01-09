@@ -31,11 +31,12 @@
 @property (nonatomic,strong)NSDictionary *symptomRowsDict;
 @property (nonatomic,strong)NSArray *symptomTypeRows;
 @property (nonatomic,strong) UILabel *recordEmptyDisplayLabel;
+@property (nonatomic,strong)NSDictionary *monthDict;
 @end
 
 @implementation NGRecordHistoryViewController
 //@synthesize cycleView;
-@synthesize distinctMonthsArray,currentPage,historyDict,totalPage,table1DataSource,table2DataSource,table3DataSource,symptomRowsDict,symptomTypeRows,recordEmptyDisplayLabel;
+@synthesize distinctMonthsArray,currentPage,historyDict,totalPage,table1DataSource,table2DataSource,table3DataSource,symptomRowsDict,symptomTypeRows,recordEmptyDisplayLabel,monthDict;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -60,6 +61,7 @@
     self.listView3.tableFooterView = footerView;
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
+    monthDict = @{@"1":@"January", @"2":@"February",@"3":@"March",@"4":@"April",@"5":@"May",@"6":@"June",@"7":@"July",@"8":@"August",@"9":@"September",@"10":@"October",@"11":@"November",@"12":@"December"};
     [HUD show:YES];
     HUD.delegate = self;
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"left.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltoprevious)];
@@ -513,7 +515,12 @@
     [cell.backView addSubview:dateLabel];
     [dateLabel setFont:[UIFont systemFontOfSize:20]];
     [dateLabel setBackgroundColor:[UIColor clearColor]];
-    dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"lishi_c_riqi", @"历史页日期：%d月%d日"),month,day];
+    NSString *monthStr = [NSString stringWithFormat:@"%d",month];
+    if (!isChinese)
+    {
+        monthStr = monthDict[monthStr];
+    }
+    dateLabel.text = [NSString stringWithFormat:NSLocalizedString(@"lishi_c_riqi", @"历史页日期：%d月%d日"),monthStr,day];
     
     UILabel *weekLabel = [[UILabel alloc]initWithFrame:CGRectMake(210, 10, 80, 21)];
     weekLabel.text =[self week:week];

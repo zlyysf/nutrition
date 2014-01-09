@@ -128,14 +128,24 @@
     }
     else
     {
+        
         if (isChinese)
         {
-            self.weightTextField.text = [NSString stringWithFormat:@"%.1f",[currentWeight doubleValue]];
+            self.weightTextField.text = [NSString stringWithFormat:@"%@",[LZUtility getAccurateStringWithDecimal:[currentWeight doubleValue]]];
         }
         else
         {
-            self.weightTextField.text = [NSString stringWithFormat:@"%.1f",round([currentWeight doubleValue]*kKGConvertLBRatio)];
+            double covertedWeight =round([currentWeight doubleValue]*kKGConvertLBRatio);
+            self.weightTextField.text = [NSString stringWithFormat:@"%@",[LZUtility getAccurateStringWithDecimal:covertedWeight]];
         }
+        CGSize weightSize = [self.weightTextField.text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(200, 40)];
+        CGRect weightFrame = self.weightTextField.frame;
+        weightFrame.size.width = weightSize.width;
+        self.weightTextField.frame = weightFrame;
+        CGRect weightLabelFrame =  self.weightUnitLabel.frame;
+        weightLabelFrame.origin.x = weightFrame.origin.x + weightFrame.size.width+1;
+        self.weightUnitLabel.frame = weightLabelFrame;
+        
     }
     if (currentDate == nil)
     {
@@ -202,11 +212,21 @@
         double userWeight = [self.weightTextField.text doubleValue];
         if (isChinese)
         {
+            if (userWeight > 999)
+            {
+                [self alertWithTitle:NSLocalizedString(@"xinxi_m_wenxintishi",@"alert标题：温馨提示") msg:NSLocalizedString(@"xinxi_m_tizhongcuowu", @"体重错误信息：体重填写错误，请重新填写")];
+                return;
+            }
             [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithDouble:userWeight] forKey:LZUserWeightKey];
         }
         else
         {
             double convertedWeight = (double)(userWeight/kKGConvertLBRatio);
+            if (convertedWeight > 999)
+            {
+                [self alertWithTitle:NSLocalizedString(@"xinxi_m_wenxintishi",@"alert标题：温馨提示") msg:NSLocalizedString(@"xinxi_m_tizhongcuowu", @"体重错误信息：体重填写错误，请重新填写")];
+                return;
+            }
             [[NSUserDefaults standardUserDefaults]setObject:[NSNumber numberWithDouble:convertedWeight] forKey:LZUserWeightKey];
         }
     }
@@ -356,7 +376,7 @@
     {
         if (component == 0)
         {
-            return 250;
+            return 300;
         }
         return 1;
     }
@@ -364,7 +384,7 @@
     {
         if (component == 0)
         {
-            return 8;
+            return 9;
         }
         else
         {

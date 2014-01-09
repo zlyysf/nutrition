@@ -41,12 +41,7 @@
     self.contentScrollView.hidden = YES;
     self.contentWebView.hidden = YES;
     isFirstLoad = YES;
-    NSString *tips = [NSString stringWithFormat:NSLocalizedString(@"yingyangsu_c_header", @"页面表头：以下是富含%@的食物和每日推荐量"),self.title];
-    self.headerLabel.text = [NSString stringWithFormat:@"   %@",tips];
-    self.headerLabel.layer.borderColor = [UIColor lightGrayColor].CGColor;
-    self.headerLabel.layer.borderWidth = 0.5f;
-    [self.headerLabel setBackgroundColor:[UIColor colorWithRed:243/255.f green:220/255.f blue:183/255.f alpha:1.0f]];
-    switchViewControl = [[UISegmentedControl alloc]initWithFrame:CGRectMake(0, 0, 80, 30)];
+        switchViewControl = [[UISegmentedControl alloc]initWithFrame:CGRectMake(0, 0, 80, 30)];
     [switchViewControl setSegmentedControlStyle:UISegmentedControlStyleBar];
     [switchViewControl insertSegmentWithImage:[UIImage imageNamed:@"history.png"] atIndex:0 animated:NO];
     [switchViewControl insertSegmentWithImage:[UIImage imageNamed:@"fork.png"] atIndex:1 animated:NO];
@@ -126,6 +121,27 @@
         self.foodArray = [NSArray arrayWithArray:recommendFoodArray];
         
     dispatch_async(dispatch_get_main_queue(), ^{
+            NSString *text = [NSString stringWithFormat:NSLocalizedString(@"yingyangsu_c_header", @"页面表头：以下是富含%@的食物和每日推荐量"),self.title];
+            CGSize tipFrame = [text sizeWithFont:[UIFont systemFontOfSize:14] constrainedToSize:CGSizeMake(270, 555)];
+            float headerHeight = 0;
+            if (tipFrame.height <30)
+            {
+                headerHeight = 30;
+                self.headerLabel.frame = CGRectMake(15, 0, 270, 30);
+                [self.headerView setFrame:CGRectMake(0, 0, 300, 30)];
+            }
+            else
+            {
+                headerHeight = tipFrame.height+6;
+                self.headerLabel.frame = CGRectMake(15, 0, 270, headerHeight);
+                [self.headerView setFrame:CGRectMake(0, 0, 300, headerHeight)];
+            }
+            self.headerLabel.text = text;
+            self.headerLabel.numberOfLines = 0;
+            self.headerView.layer.borderColor = [UIColor lightGrayColor].CGColor;
+            self.headerView.layer.borderWidth = 0.5f;
+            [self.headerView setBackgroundColor:[UIColor colorWithRed:243/255.f green:220/255.f blue:183/255.f alpha:1.0f]];
+
             int totalFloor = [foodArray count]/3+ (([foodArray count]%3 == 0)?0:1);
             float backHeight = totalFloor*(15+120)+15+30;
             [self.contentScrollView setContentSize:CGSizeMake(320, backHeight+30)];
@@ -133,7 +149,7 @@
             [self.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [self.backView.layer setBorderWidth:0.5f];
             
-            float startY = 45;
+            float startY = headerHeight+15;
             int floor = 1;
             int perRowCount = 3;
             float startX;

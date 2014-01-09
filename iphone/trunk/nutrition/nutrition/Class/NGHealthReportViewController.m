@@ -521,7 +521,7 @@
         int foodCount =[recommendFood count];
         [foodScrollView setContentSize:CGSizeMake(foodCount*94+35, 120)];
         foodScrollView.showsHorizontalScrollIndicator = NO;
-        UILabel *nutritionNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 16, 120)];
+        UILabel *nutritionNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 15, 120)];
         nutritionNameLabel.numberOfLines = 0;
         [nutritionNameLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0f]];
         [nutritionNameLabel setText:convertedString];
