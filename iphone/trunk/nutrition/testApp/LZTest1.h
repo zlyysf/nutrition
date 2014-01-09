@@ -11,6 +11,6 @@
 @interface LZTest1 : NSObject
 
 +(void)testMain;
-
++(void)test_genData_UserRecordSymptom1;
 
 @end

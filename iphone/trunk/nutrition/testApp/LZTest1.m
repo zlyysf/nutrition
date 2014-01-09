@@ -2535,6 +2535,103 @@ BOOL needLimitNutrients = FALSE;
 
 }
 
++(void)test_genData_UserRecordSymptom1
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+
+    if (true){
+        int dayLocal = 20131104;
+        NSDate *updateTime = [NSDate date];
+        NSString *note = @"note1";
+        NSString *inputNameValuePairsStr=@"{\"BodyTemperature\":2.777777851363761,\"HeartRate\":65,\"SymptomsByType\":[[\"头面\",[\"头晕\",\"头痛\"]],[\"眼睛\",[\"视觉模糊\",\"暗光看不清\"]]],\"Symptoms\":[\"头晕\",\"头痛\",\"视觉模糊\",\"暗光看不清\"],\"weight\":81.64746439263358,\"BloodPressureLow\":90,\"BloodPressureHigh\":150}";
+        NSString *calculateNameValuePairsStr=@"{\"InferIllnessesAndSuggestions\":{\"体温过低\":[\"避免出汗很多的活动。\",\"冬天穿戴羊毛，丝绸，和聚丙烯材质的衣物。\",\"覆盖保护好头，脸，脖子，和手。\",\"脱掉潮湿衣服，尤其要保持手和脚干燥。\"],\"轻度高血压\":[\"控制和减少自己的压力。\",\"健康饮食。减少盐的摄入。\",\"穿戴羊毛，丝绸，和聚丙烯材质的衣物。\",\"覆盖保护好头，脸，脖子，和手。\",\"脱掉潮湿衣服，尤其要保持手和脚干燥。\"],\"轻度高血压\":[\"控制和减少自己的压力。\",\"健康饮食。减少盐的摄入。\",\"保持适中的体重。增加锻炼。\",\"在家要监督自己的血压。\",\"充足的睡眠。\",\"限制饮酒。不要吸烟。\",\"坚持练习放松和深呼吸的方法。\"]},\"LackNutrientsAndFoods\":{\"Riboflavin_(mg)\":{\"35070\":138.2978723404256,\"11268\":102.3622047244095,\"11260\":323.3830845771144,\"01140\":164.5569620253164,\"11667\":35.42234332425068},\"Iron_(mg)\":{\"11988\":136.0544217687075,\"15012\":67.34006734006734,\"16128\":82.21993833504625,\"12147\":144.6654611211573,\"20109\":199.501246882793},\"Vit_A_RAE\":{\"11253\":243.2432432432433,\"13325\":18.11594202898551,\"05027\":27.30582524271844,\"11297\":213.7767220902613,\"11251\":206.4220183486239}},\"BMI\":28.2517177829182,\"HealthMark\":97.5,\"IllnessIds\":[\"轻度高血压\",\"体温过低\"]}";
+        NSDictionary *row = [da getUserRecordSymptomDataByDayLocal:dayLocal];
+        if (row == nil){
+            [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }else{
+            [da updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }
+    }
+
+    if (true){
+        int dayLocal = 20131105;
+        NSDate *updateTime = [NSDate date];
+        NSString *note = @"note1";
+        NSString *inputNameValuePairsStr=@"{\"BodyTemperature\":38.5,\"HeartRate\":68,\"SymptomsByType\":[[\"眼睛\",[\"视觉模糊\",\"眼睛易疲劳\"]],[\"耳鼻\",[\"耳鸣\",\"听力减退\"]]],\"Symptoms\":[\"视觉模糊\",\"眼睛易疲劳\",\"耳鸣\",\"听力减退\"],\"weight\":76,\"BloodPressureLow\":100,\"BloodPressureHigh\":159}";
+        NSString *calculateNameValuePairsStr=@"{\"LackNutrientsAndFoods\":{\"Riboflavin_(mg)\":{\"17195\":58.03571428571428,\"10106\":76.60577489687684,\"15175\":315.5339805825243,\"01123\":284.4638949671773,\"11667\":35.42234332425068},\"Iron_(mg)\":{\"20581\":172.4137931034483,\"16108\":50.95541401273886,\"16128\":82.21993833504625,\"11231\":168.0672268907563,\"12120\":170.2127659574468},\"Vit_C_(mg)\":{\"09139\":39.42181340341656,\"11024\":107.1428571428571,\"11109\":245.9016393442623,\"11254\":204.5454545454545,\"11233\":75}},\"BMI\":26.29757785467128,\"HealthMark\":97.5,\"IllnessIds\":[\"轻度高血压\",\"中热\"]}";
+        NSDictionary *row = [da getUserRecordSymptomDataByDayLocal:dayLocal];
+        if (row == nil){
+            [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }else{
+            [da updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }
+    }
+
+    if (true){
+        int dayLocal = 20131107;
+        NSDate *updateTime = [NSDate date];
+        NSString *note = @"note1";
+        NSString *inputNameValuePairsStr=@"{\"BodyTemperature\":39,\"HeartRate\":96,\"SymptomsByType\":[[\"耳鼻\",[\"耳后出油\"]],[\"口腔\",[\"唇沟出油\",\"口唇干裂\",\"张口疼痛\"]]],\"Symptoms\":[\"耳后出油\",\"唇沟出油\",\"张口疼痛\",\"口唇干裂\"],\"weight\":77,\"BloodPressureLow\":85,\"BloodPressureHigh\":123}";
+        NSString *calculateNameValuePairsStr=@"{\"InferIllnessesAndSuggestions\":{\"高热\":[\"用凉水擦皮肤降温。冷水淋浴，或冷水泡澡。\",\"持续喝凉水，和凉的运动饮料。\",\"穿宽松衣物，脱掉不必要的衣服。\",\"在凉爽的地方休息。仰卧，保持腿的位置高于心脏。\"]},\"LackNutrientsAndFoods\":{\"Riboflavin_(mg)\":{\"17195\":58.03571428571428,\"11268\":102.3622047244095,\"01140\":164.5569620253164,\"13323\":45.77464788732395,\"35016\":351.3513513513514},\"Iron_(mg)\":{\"02014\":12.05545509342978,\"12151\":204.0816326530612,\"11240\":65.68144499178982,\"02009\":46.24277456647399,\"12131\":216.8021680216802},\"Vit_B6_(mg)\":{\"09040\":354.2234332425069,\"15036\":237.2262773722628,\"11413\":169.0507152145643,\"02020\":78.59733978234583,\"05332\":253.90625}},\"BMI\":26.64359861591696,\"HealthMark\":98,\"IllnessIds\":[\"高热\"]}";
+        NSDictionary *row = [da getUserRecordSymptomDataByDayLocal:dayLocal];
+        if (row == nil){
+            [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }else{
+            [da updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }
+    }
+
+    if (true){
+        int dayLocal = 20131111;
+        NSDate *updateTime = [NSDate date];
+        NSString *note = @"note1";
+        NSString *inputNameValuePairsStr=@"{\"BodyTemperature\":36,\"HeartRate\":88,\"SymptomsByType\":[[\"口腔\",[\"唇红肿\"]],[\"牙齿\",[\"牙齿松动\",\"牙齿脱落\"]]],\"Symptoms\":[\"唇红肿\",\"牙齿松动\",\"牙齿脱落\"],\"weight\":59,\"BloodPressureLow\":69,\"BloodPressureHigh\":158}";
+        NSString *calculateNameValuePairsStr=@"{\"InferIllnessesAndSuggestions\":{\"体温过低\":[\"避免出汗很多的活动。\",\"冬天穿戴羊毛，丝绸，和聚丙烯材质的衣物。\",\"覆盖保护好头，脸，脖子，和手。\",\"脱掉潮湿衣服，尤其要保持手和脚干燥。\"]},\"LackNutrientsAndFoods\":{\"Riboflavin_(mg)\":{\"35070\":138.2978723404256,\"17195\":58.03571428571428,\"01123\":284.4638949671773,\"11260\":323.3830845771144,\"15175\":315.5339805825243},\"Vit_C_(mg)\":{\"09139\":39.42181340341656,\"09181\":245.2316076294278,\"11951\":49.04632152588556,\"11503\":163.6363636363637,\"11254\":204.5454545454545}},\"BMI\":20.41522491349481,\"HealthMark\":97.5,\"IllnessIds\":[\"体温过低\"]}";
+        NSDictionary *row = [da getUserRecordSymptomDataByDayLocal:dayLocal];
+        if (row == nil){
+            [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }else{
+            [da updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }
+    }
+    
+    if (true){
+        int dayLocal = 20131001;
+        NSDate *updateTime = [NSDate date];
+        NSString *note = @"note1";
+        NSString *inputNameValuePairsStr=@"{\"BodyTemperature\":39,\"Symptoms\":[\"牙龈增生\",\"咽喉发痒\",\"咽喉灼热\",\"咽喉疼痛\",\"咽干\",\"声嘶\",\"讲话困难\",\"吞咽困难\",\"甲状腺肿大\",\"扁桃体肿大\"],\"SymptomsByType\":[[\"牙齿\",[\"牙龈增生\"]],[\"咽喉\",[\"咽喉发痒\",\"咽喉灼热\",\"咽喉疼痛\",\"咽干\",\"声嘶\",\"讲话困难\",\"吞咽困难\",\"甲状腺肿大\",\"扁桃体肿大\"]]]}";
+        NSString *calculateNameValuePairsStr=@"{\"InferIllnessesAndSuggestions\":{\"急性病毒性咽炎\":[\"面带口罩，避免吸入灰尘。\",\"饭前，便后，喷嚏或咳嗽后，注意洗手。\",\"擤鼻涕，咳嗽时，使用纸巾。\",\"不要与他人共用水杯和餐具。\",\"保持房间空气湿润。\",\"戒烟，避免二手烟。\",\"当空气污染严重时，尽量待在室内。\"],\"急性病毒性喉炎\":[\"饭前，便后，喷嚏或咳嗽后，注意洗手。\",\"避免与有上呼吸道疾病的人接触。\",\"限制酒精和咖啡。\",\"戒烟，避免二手烟。\",\"多喝流体，有助于痰液稀释。\",\"避免清咳嗓子。\"],\"高热\":[\"用凉水擦皮肤降温。冷水淋浴，或冷水泡澡。\",\"持续喝凉水，和凉的运动饮料。\",\"穿宽松衣物，脱掉不必要的衣服。\",\"在凉爽的地方休息。仰卧，保持腿的位置高于心脏。\"],\"急性扁桃体炎\":[\"饭前，便后，喷嚏或咳嗽后，注意洗手。\",\"不要与他人共用水杯和餐具。\",\"充足的睡眠，让嗓子休息。\",\"多喝水，保持嗓子湿凉爽的地方休息。仰卧，保持腿的位置高于心脏。\"],\"急性扁桃体炎\":[\"饭前，便后，喷嚏或咳嗽后，注意洗手。\",\"不要与他人共用水杯和餐具。\",\"充足的睡眠，让嗓子休息。\",\"多喝水，保持嗓子湿润，避免脱水。\",\"保持房间空气湿润。\"]},\"LackNutrientsAndFoods\":{\"Vit_A_RAE\":{\"11297\":213.7767220902613,\"10110\":13.84189480159951,\"11251\":206.4220183486239,\"11507\":126.9393511988716,\"17199\":12.17697199296442},\"Vit_C_(mg)\":{\"09190\":247.2527472527473,\"11270\":128.5714285714286,\"11156\":154.9053356282272,\"11503\":163.6363636363637,\"09148\":97.08737864077671},\"Vit_D_(µg)\":{\"15051\":205.4794520547945,\"15025\":64.37768240343348,\"15050\":164.8351648351648,\"15085\":136.3636363636363,\"11998\":133.9285714285714},\"Calcium_(mg)\":{\"42205\":145.1378809869376,\"16129\":268.8172043010753,\"01152\":699.3006993006993,\"16128\":274.7252747252747,\"16235\":813.0081300813009},\"Iron_(mg)\":{\"12023\":54.9828178694158,\"16014\":159.3625498007968,\"02014\":12.05545509342978,\"12151\":204.0816326530612,\"20109\":199.501246882793}},\"BMI\":20.41522491349481,\"HealthMark\":93.5,\"IllnessIds\":[\"高热\",\"急性病毒性咽炎\",\"急性病毒性喉炎\",\"急性扁桃体炎\"]}";
+        NSDictionary *row = [da getUserRecordSymptomDataByDayLocal:dayLocal];
+        if (row == nil){
+            [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }else{
+            [da updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }
+    }
+    
+    if (true){
+        int dayLocal = 20131028;
+        NSDate *updateTime = [NSDate date];
+        NSString *note = @"note1";
+        NSString *inputNameValuePairsStr=@"{\"HeartRate\":99,\"Symptoms\":[\"呼吸不畅\",\"气短\",\"咳嗽\",\"咳痰\",\"哮鸣音\",\"喘息\",\"痰中带血\"],\"SymptomsByType\":[[\"呼吸\",[\"呼吸不畅\",\"气短\",\"咳嗽\",\"咳痰\",\"痰中带血\",\"喘息\",\"哮鸣音\"]]]}";
+        NSString *calculateNameValuePairsStr=@"{\"InferIllnessesAndSuggestions\":{\"慢性支气管炎\":[\"饭前，便后，喷嚏或咳嗽后，注意洗手。\",\"保持房间温暖，湿度适中。\",\"充分休息。\",\"戒烟，避免二手烟。\"],\"支气管哮喘\":[\"制定和学会紧急自我处理方法。\",\"确定诱发因素和避免的方法。\",\"留意监督自己的呼吸。了解哮喘发生时的早期症状。\"]},\"LackNutrientsAndFoods\":{\"Vit_A_RAE\":{\"17199\":12.17697199296442,\"05143\":7.510013351134846,\"11124\":107.7844311377246,\"11507\":126.9393511988716,\"11233\":180},\"Iron_(mg)\":{\"12014\":90.70294784580499,\"12087\":119.7604790419162,\"16128\":82.21993833504625,\"15164\":202.5316455696202,\"15229\":73.80073800738008},\"Potassium_(mg)\":{\"16014\":316.9251517194875,\"16022\":357.1428571428572,\"16001\":374.8006379585327,\"16080\":377.207062600321,\"16032\":345.8425312729948}},\"BMI\":20.41522491349481,\"HealthMark\":95.5,\"IllnessIds\":[\"慢性支气管炎\",\"支气管哮喘\"]}";
+        NSDictionary *row = [da getUserRecordSymptomDataByDayLocal:dayLocal];
+        if (row == nil){
+            [da insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }else{
+            [da updateUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairs:inputNameValuePairsStr andNote:note andCalculateNameValuePairs:calculateNameValuePairsStr];
+        }
+    }
+
+
+
+    
+    
+    
+    
+    
+}
+
 +(void)test_getSingleNutrientRichFoodWithAmount_forNutrients
 {
     int sex = 0;//Male

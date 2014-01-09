@@ -16,6 +16,7 @@
 		0818CA0F18477AC6003DB33A /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F217AF8873000AEC06 /* CJSONSerializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0818CA1018477AC6003DB33A /* JSONRepresentation.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F317AF8873000AEC06 /* JSONRepresentation.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0818CA1118477B16003DB33A /* CDataScanner.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7DC17AF8873000AEC06 /* CDataScanner.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		081D3C1F187EB0D00030D743 /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
 		085C8D3F173366F2001A1ABB /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D35173366F2001A1ABB /* FMDatabase.m */; };
 		085C8D40173366F2001A1ABB /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D37173366F2001A1ABB /* FMDatabaseAdditions.m */; };
 		085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D39173366F2001A1ABB /* FMDatabasePool.m */; };
@@ -1528,6 +1529,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				081D3C1F187EB0D00030D743 /* LZTest1.m in Sources */,
 				5F3338B5172A407E0096E7AE /* main.m in Sources */,
 				5F729BC718432105004FC428 /* NGNutritionCell.m in Sources */,
 				5F3338B9172A407E0096E7AE /* LZAppDelegate.m in Sources */,

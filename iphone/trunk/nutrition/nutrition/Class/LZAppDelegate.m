@@ -14,6 +14,7 @@
 #import "LZReviewAppManager.h"
 #import "LZNutrientionManager.h"
 #import <Parse/Parse.h>
+#import "LZTest1.h"
 
 @implementation LZAppDelegate
 
@@ -134,6 +135,8 @@
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:true];
     
     [LZUtility syncRemoteDataToLocal_withJustCallback:nil];
+    
+//    [LZTest1 test_genData_UserRecordSymptom1];
     
     return YES;
 }

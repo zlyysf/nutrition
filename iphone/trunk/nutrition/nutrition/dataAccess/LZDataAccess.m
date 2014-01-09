@@ -2285,7 +2285,7 @@
  */
 -(BOOL)insertUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs
 {
-    //NSLog(@"insertUserRecordSymptom_withDayLocal enter");
+    NSLog(@"insertUserRecordSymptom_withDayLocal enter, inputNameValuePairs=%@\ncalculateNameValuePairs=%@",inputNameValuePairs,calculateNameValuePairs);
     
     long long llUpdateTimeUTC = [LZUtility getMillisecond:updateTimeUTC];
     
@@ -2324,7 +2324,8 @@
 }
 -(BOOL)updateUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs
 {
-    //NSLog(@"updateUserRecordSymptom_withDayLocal enter");
+    NSLog(@"updateUserRecordSymptom_withDayLocal enter, inputNameValuePairs=%@\ncalculateNameValuePairs=%@",inputNameValuePairs,calculateNameValuePairs);
+
     
     NSTimeInterval dUpdateTimeUTC = [updateTimeUTC timeIntervalSince1970];
     long long llUpdateTimeUTC = (long long)round(dUpdateTimeUTC*1000);
