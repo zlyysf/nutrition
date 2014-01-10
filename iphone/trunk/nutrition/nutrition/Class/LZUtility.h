@@ -47,7 +47,7 @@
 
 +(NSString*)getFullHtml_withPart:(NSString*)htmlPart;
 
-
++(NSArray*)getSubArray:(NSArray*)ary andFrom:(int)from andLength:(int)length;
 
 +(NSMutableArray*)arrayMinusSet_withArray:(NSMutableArray*)srcAry andMinusSet:(NSSet*)minusSet;
 +(NSMutableArray*)arrayMinusArray_withSrcArray:(NSMutableArray*)srcAry andMinusArray:(NSArray*)minusAry;

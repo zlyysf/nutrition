@@ -380,7 +380,22 @@
     return propAry;
 }
 
-
++(NSArray*)getSubArray:(NSArray*)ary andFrom:(int)from andLength:(int)length
+{
+    if (ary==nil || ary.count==0)
+        return nil;
+    assert(from>=0 && length>0);
+    if (from >= ary.count)
+        return nil;
+    int remainLen = ary.count - from;
+    int minLen = remainLen > length? length : remainLen;
+    NSMutableArray *subAry = [NSMutableArray arrayWithCapacity:minLen];
+    for(int i=0; i<minLen; i++){
+        id item = ary[from+i];
+        [subAry addObject:item];
+    }
+    return subAry;
+}
 
 /*
  从数组去掉集合里也存在的元素，直接在数组上修改，返回数组本身
