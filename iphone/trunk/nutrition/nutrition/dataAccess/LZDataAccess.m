@@ -2162,7 +2162,7 @@
 //    }
 //    NSLog(@"getSymptomNutrientIdsWithOrder_BySymptomIds nutrientIdsByLimit=%@", [LZUtility getObjectDescription:nutrientIdsByLimit andIndent:0] );
 //    return nutrientIdsByLimit;
-    NSLog(@"getSymptomNutrientIdsWithOrder_BySymptomIds nutrientIds=%@", [LZUtility getObjectDescription:nutrientIds andIndent:0] );
+//    NSLog(@"getSymptomNutrientIdsWithOrder_BySymptomIds nutrientIds=%@", [LZUtility getObjectDescription:nutrientIds andIndent:0] );
     return nutrientIds;
 }
 
@@ -2285,7 +2285,7 @@
  */
 -(BOOL)insertUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs
 {
-    NSLog(@"insertUserRecordSymptom_withDayLocal enter, inputNameValuePairs=%@\ncalculateNameValuePairs=%@",inputNameValuePairs,calculateNameValuePairs);
+//    NSLog(@"insertUserRecordSymptom_withDayLocal enter, inputNameValuePairs=%@\ncalculateNameValuePairs=%@",inputNameValuePairs,calculateNameValuePairs);
     
     long long llUpdateTimeUTC = [LZUtility getMillisecond:updateTimeUTC];
     
@@ -2324,7 +2324,7 @@
 }
 -(BOOL)updateUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs
 {
-    NSLog(@"updateUserRecordSymptom_withDayLocal enter, inputNameValuePairs=%@\ncalculateNameValuePairs=%@",inputNameValuePairs,calculateNameValuePairs);
+//    NSLog(@"updateUserRecordSymptom_withDayLocal enter, inputNameValuePairs=%@\ncalculateNameValuePairs=%@",inputNameValuePairs,calculateNameValuePairs);
 
     
     NSTimeInterval dUpdateTimeUTC = [updateTimeUTC timeIntervalSince1970];
