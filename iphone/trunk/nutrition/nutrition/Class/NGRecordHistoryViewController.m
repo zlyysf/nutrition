@@ -490,12 +490,25 @@
 //    if ([measureData objectForKey:Key_BloodPressureHigh]) {
 //        [InputNameValuePairsData setObject:[measureData objectForKey:Key_BloodPressureHigh] forKey:Key_BloodPressureHigh];
 //    }
-
     healthReportViewController.userInputValueDict = userInputValueDict;
     healthReportViewController.BMIValue = [bmiValue doubleValue];
     healthReportViewController.HealthValue = [healthValue doubleValue];
-    healthReportViewController.userSelectedSymptom = [InputNameValuePairsData objectForKey:Key_Symptoms];
-    healthReportViewController.symptomsByTypeArray = [InputNameValuePairsData objectForKey:Key_SymptomsByType];
+    if ([InputNameValuePairsData objectForKey:Key_Symptoms] == nil)
+    {
+        healthReportViewController.userSelectedSymptom = [NSArray array];
+    }
+    else
+    {
+        healthReportViewController.userSelectedSymptom = [InputNameValuePairsData objectForKey:Key_Symptoms];
+    }
+    if ([InputNameValuePairsData objectForKey:Key_SymptomsByType] == nil)
+    {
+        healthReportViewController.symptomsByTypeArray = [NSArray array];
+    }
+    else
+    {
+        healthReportViewController.symptomsByTypeArray = [InputNameValuePairsData objectForKey:Key_SymptomsByType];
+    }
     healthReportViewController.isOnlyDisplay = YES;
     [self.navigationController pushViewController:healthReportViewController animated:YES];
 
