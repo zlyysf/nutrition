@@ -1052,7 +1052,7 @@
                                                     <segment title="" width="44"/>
                                                     <segment title="" width="60"/>
                                                 </segments>
-                                                <color key="tintColor" red="0.02209565816" green="0.24290497450000001" blue="0.015916841760000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" red="0.2627450980392157" green="0.44313725490196076" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="activityChanged:" destination="D4K-QU-mXC" eventType="valueChanged" id="CAm-by-iNS"/>
                                                 </connections>
@@ -1072,7 +1072,7 @@
                                                     <segment title=""/>
                                                     <segment title=""/>
                                                 </segments>
-                                                <color key="tintColor" red="0.02209565816" green="0.24290497450000001" blue="0.015916841760000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" red="0.2627450980392157" green="0.44313725490196076" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="sexChanged:" destination="D4K-QU-mXC" eventType="valueChanged" id="V2x-dj-Wht"/>
                                                 </connections>
@@ -1215,7 +1215,7 @@
                                             <stepper opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" maximumValue="100" id="tev-CH-75q">
                                                 <rect key="frame" x="195" y="59" width="94" height="29"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <color key="tintColor" red="0.023529411760000001" green="0.24313725489999999" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" red="0.2627450980392157" green="0.44313725490196076" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="stepperChanged:" destination="rpA-q9-nst" eventType="valueChanged" id="uEA-M4-5wX"/>
                                                 </connections>
@@ -1227,7 +1227,7 @@
                                                     <segment title="G"/>
                                                     <segment title=""/>
                                                 </segments>
-                                                <color key="tintColor" red="0.023529411760000001" green="0.24313725489999999" blue="0.015686274510000001" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="tintColor" red="0.2627450980392157" green="0.44313725490196076" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                                 <connections>
                                                     <action selector="segmentChanged:" destination="rpA-q9-nst" eventType="valueChanged" id="u2M-d4-v1L"/>
                                                 </connections>

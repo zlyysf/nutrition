@@ -45,7 +45,7 @@
     [switchViewControl setSegmentedControlStyle:UISegmentedControlStyleBar];
     [switchViewControl insertSegmentWithImage:[UIImage imageNamed:@"history.png"] atIndex:0 animated:NO];
     [switchViewControl insertSegmentWithImage:[UIImage imageNamed:@"fork.png"] atIndex:1 animated:NO];
-    [switchViewControl setTintColor:[UIColor colorWithRed:6/255.f green:62/255.f blue:4/255.f alpha:1.0f]];
+    [switchViewControl setTintColor:[UIColor colorWithRed:67/255.f green:113/255.f blue:71/255.f alpha:1.0f]];
     [switchViewControl addTarget:self action:@selector(switchControlValueChange:) forControlEvents:UIControlEventValueChanged];
     [switchViewControl setSelectedSegmentIndex:1];
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithCustomView:switchViewControl];

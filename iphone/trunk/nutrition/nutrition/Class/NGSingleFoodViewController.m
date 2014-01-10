@@ -80,6 +80,7 @@
     
     
     NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodInfoDict objectForKey:COLUMN_NAME_SingleItemUnitName]];
+    singleUnitName = [singleUnitName capitalizedString];
     NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
     if ([weight intValue]>= [upper intValue])
     {

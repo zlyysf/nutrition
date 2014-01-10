@@ -61,7 +61,7 @@
     self.listView3.tableFooterView = footerView;
     HUD = [[MBProgressHUD alloc] initWithView:self.view];
     [self.view addSubview:HUD];
-    monthDict = @{@"1":@"January", @"2":@"February",@"3":@"March",@"4":@"April",@"5":@"May",@"6":@"June",@"7":@"July",@"8":@"August",@"9":@"September",@"10":@"October",@"11":@"November",@"12":@"December"};
+    monthDict = @{@"1":@"Jan", @"2":@"Feb",@"3":@"Mar",@"4":@"Apr",@"5":@"May",@"6":@"Jun",@"7":@"Jul",@"8":@"Aug",@"9":@"Sep",@"10":@"Oct",@"11":@"Nov",@"12":@"Dec"};
     [HUD show:YES];
     HUD.delegate = self;
     UIBarButtonItem *leftItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"left.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltoprevious)];
@@ -97,12 +97,12 @@
     {
         [self.listView1 setSectionIndexBackgroundColor:[UIColor clearColor]];
         [self.listView1 setSectionIndexColor:[UIColor colorWithRed:6/255.f green:62/255.f blue:4/255.f alpha:1.0f]];
-        [self.listView1 setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
+        [self.listView1 setSectionIndexTrackingBackgroundColor :[UIColor clearColor]];
         [self.listView2 setSectionIndexBackgroundColor:[UIColor clearColor]];
-        [self.listView2 setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
+        [self.listView2 setSectionIndexTrackingBackgroundColor :[UIColor clearColor]];
         [self.listView2 setSectionIndexColor:[UIColor colorWithRed:6/255.f green:62/255.f blue:4/255.f alpha:1.0f]];
         [self.listView3 setSectionIndexBackgroundColor:[UIColor clearColor]];
-        [self.listView3 setSectionIndexTrackingBackgroundColor :[UIColor whiteColor]];
+        [self.listView3 setSectionIndexTrackingBackgroundColor :[UIColor clearColor]];
         [self.listView3 setSectionIndexColor:[UIColor colorWithRed:6/255.f green:62/255.f blue:4/255.f alpha:1.0f]];
         //[self.listView setSectionIndexColor:[UIColor blackColor]];
     }
@@ -119,24 +119,34 @@
     NSArray *array = [da getUserRecordSymptom_DistinctMonth];
     distinctMonthsArray = [[NSArray alloc]initWithArray:array];
     [self.historyDict removeAllObjects];
-    if ([distinctMonthsArray count]<=1)
+    if ([distinctMonthsArray count] == 0)
     {
         totalPage = 1;
         currentPage = 0;
     }
     else
     {
-        NSNumber *first = [distinctMonthsArray objectAtIndex:0];
-        NSNumber *last = [distinctMonthsArray lastObject];
-        int firstYear =[first intValue]/100;
-        int lastYear = [last intValue]/100;
-        int firstMonth = [first intValue]%100;
-        int lastMonth = [last intValue]%100;
-        totalPage =(lastYear - firstYear)*12+lastMonth-firstMonth+1;
-        currentPage = totalPage-1;
-        CGFloat height = self.contentScrollView.frame.size.height;
-        [self.contentScrollView setContentSize:CGSizeMake(totalPage*320, height)];
+        totalPage = [distinctMonthsArray count];
+        currentPage =totalPage-1;
     }
+//    if ([distinctMonthsArray count]<=1)
+//    {
+//        totalPage = 1;
+//        currentPage = 0;
+//    }
+//    else
+//    {
+//        NSNumber *first = [distinctMonthsArray objectAtIndex:0];
+//        NSNumber *last = [distinctMonthsArray lastObject];
+//        int firstYear =[first intValue]/100;
+//        int lastYear = [last intValue]/100;
+//        int firstMonth = [first intValue]%100;
+//        int lastMonth = [last intValue]%100;
+//        totalPage =(lastYear - firstYear)*12+lastMonth-firstMonth+1;
+//        currentPage = totalPage-1;
+//        CGFloat height = self.contentScrollView.frame.size.height;
+//        [self.contentScrollView setContentSize:CGSizeMake(totalPage*320, height)];
+//    }
     [self displayContentForPage:currentPage];
     [HUD hide:YES];
 }
@@ -203,10 +213,11 @@
     }
     else
     {
-        NSNumber *startLocal =[distinctMonthsArray objectAtIndex:0];
-        int currentLocal = [LZUtility getMonthLocalForDistance:currentPage startLocal:[startLocal intValue]];
-        int preLoacal =[LZUtility getMonthLocalForDistance:currentPage-1 startLocal:[startLocal intValue]];
-        int nextLocal = [LZUtility getMonthLocalForDistance:currentPage+1 startLocal:[startLocal intValue]];
+        //NSNumber *startLocal =[distinctMonthsArray objectAtIndex:0];
+        int currentLocal = [self getValidLocalForPage:currentPage];
+        //[LZUtility getMonthLocalForDistance:currentPage startLocal:[startLocal intValue]];
+        int preLoacal =[self getValidLocalForPage:currentPage-1];
+        int nextLocal = [self getValidLocalForPage:currentPage+1];
         self.navigationItem.title = [NSString stringWithFormat:@"%d.%d",currentLocal/100,currentLocal%100];
         if (currentPage == 0)
         {
@@ -338,6 +349,10 @@
             [self.navigationItem.rightBarButtonItem setEnabled:YES];
         }
     }
+}
+-(int)getValidLocalForPage:(int)page
+{
+    
 }
 -(NSArray *)getDataSourceForMonthLocal:(int)monthLocal
 {
