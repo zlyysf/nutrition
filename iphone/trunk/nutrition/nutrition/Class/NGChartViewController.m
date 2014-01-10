@@ -290,7 +290,7 @@
 }
 -(int)getValidLocalForPage:(int)page
 {
-    if (page >=0)
+    if (page>= 0 && page <[distinctMonthsArray count])
     {
         NSNumber *local = [distinctMonthsArray objectAtIndex:page];
         return [local intValue];

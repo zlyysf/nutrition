@@ -354,7 +354,7 @@
 }
 -(int)getValidLocalForPage:(int)page
 {
-    if (page >=0)
+    if (page>= 0 && page <[distinctMonthsArray count])
     {
         NSNumber *local = [distinctMonthsArray objectAtIndex:page];
         return [local intValue];
@@ -530,11 +530,14 @@
     [cell.backView setClipsToBounds:YES];
     NSCalendar* calendar = [NSCalendar currentCalendar];
     NSDate *recordDate = [record objectForKey:@"UpdateTimeUTC"];
+    NSNumber *DayLocal = [record objectForKey:@"DayLocal"];
+    int monthLocal = [DayLocal intValue]%10000;
+    
     unsigned unitFlags = NSYearCalendarUnit |NSMonthCalendarUnit  | NSDayCalendarUnit |NSWeekdayCalendarUnit;
     NSDateComponents* component = [calendar components:unitFlags fromDate:recordDate];
     int week = [component weekday];
-    int month = [component month];
-    int day = [component day];
+    int month = monthLocal/100;
+    int day = monthLocal%100;
     //加标题栏 包括日期和星期
     UILabel *dateLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 7, 120, 24)];
     [cell.backView addSubview:dateLabel];
