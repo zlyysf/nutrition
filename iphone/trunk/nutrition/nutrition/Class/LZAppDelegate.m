@@ -58,10 +58,11 @@
     }
     else
     {
-        [[UINavigationBar appearance]setTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
+        [[UINavigationBar appearance]setTintColor:[UIColor colorWithRed:29/255.f green:120/255.f blue:41/255.f alpha:1.0f]];
         //[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]
         
-        [[UITabBar appearance]setSelectedImageTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
+        [[UITabBar appearance]setSelectedImageTintColor:[UIColor colorWithRed:29/255.f green:120/255.f blue:41/255.f alpha:1.0f]];
+        [[UITabBar appearance]setTintColor:[UIColor blackColor]];
     }
 //    ;
 //    [LZUtility initializePreferNutrient];
