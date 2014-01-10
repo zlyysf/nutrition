@@ -56,11 +56,13 @@
 //        [[UITabBar appearance]setTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
         [[UINavigationBar appearance]setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:25],UITextAttributeFont,[UIColor colorWithRed:6/255.f green:62/255.f blue:4/255.f alpha:1.0f],UITextAttributeTextColor, nil]];
     }
-//    else
-//    {
-//        [[UINavigationBar appearance]setTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
-//        [[UITabBar appearance]setSelectedImageTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
-//    }
+    else
+    {
+        [[UINavigationBar appearance]setTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
+        //[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]
+        
+        [[UITabBar appearance]setSelectedImageTintColor:[UIColor colorWithRed:0.f green:204/255.f blue:51/255.f alpha:1.0f]];
+    }
 //    ;
 //    [LZUtility initializePreferNutrient];
     //友盟统计SDK启

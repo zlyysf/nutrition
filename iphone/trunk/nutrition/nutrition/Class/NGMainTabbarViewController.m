@@ -66,7 +66,11 @@
     
     NSMutableArray *controllers = [NSMutableArray arrayWithObjects: nav,nav1,nav2,nav3,nav4,nil];
     self.viewControllers = controllers;
-    self.tabBar.translucent = NO;
+    if (IOS7_OR_LATER)
+    {
+        self.tabBar.translucent = NO;
+    }
+    
 	// Do any additional setup after loading the view.
 }
 -(void)viewDidAppear:(BOOL)animated

@@ -528,7 +528,28 @@
         int foodCount =[recommendFood count];
         [foodScrollView setContentSize:CGSizeMake(foodCount*94+35, 120)];
         foodScrollView.showsHorizontalScrollIndicator = NO;
-        UILabel *nutritionNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 0, 15, 120)];
+        float width = 18;
+        if(!isChinese)
+        {
+            if ([convertedString isEqualToString:@"Protein"] || [convertedString isEqualToString:@"Fiber"])
+            {
+                NSMutableArray *sepratedArray = [[NSMutableArray alloc]init];
+                for(int i =0;i< [convertedString length];i++)
+                {
+                    NSString *temp = [convertedString substringWithRange:NSMakeRange(i,1)];
+                    const char *u8Temp = [temp UTF8String];
+                    [sepratedArray addObject:[NSString stringWithUTF8String:u8Temp]];
+                }
+                convertedString = [sepratedArray componentsJoinedByString:@"\n"];
+                
+            }
+            else
+            {
+                CGSize textSize = [convertedString sizeWithFont:SmallLabelFont constrainedToSize:CGSizeMake(200, 100)];
+                width = (int)(textSize.width) +1;
+            }
+        }
+        UILabel *nutritionNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(8, 0, width, 120)];
         nutritionNameLabel.numberOfLines = 0;
         [nutritionNameLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0f]];
         [nutritionNameLabel setText:convertedString];
