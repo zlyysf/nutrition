@@ -94,24 +94,35 @@
     NSArray *array = [da getUserRecordSymptom_DistinctMonth];
     distinctMonthsArray = [[NSArray alloc]initWithArray:array];
     [self.historyDict removeAllObjects];
-    if ([distinctMonthsArray count]<=1)
+    if ([distinctMonthsArray count] == 0)
     {
         totalPage = 1;
         currentPage = 0;
     }
     else
     {
-        NSNumber *first = [distinctMonthsArray objectAtIndex:0];
-        NSNumber *last = [distinctMonthsArray lastObject];
-        int firstYear =[first intValue]/100;
-        int lastYear = [last intValue]/100;
-        int firstMonth = [first intValue]%100;
-        int lastMonth = [last intValue]%100;
-        totalPage =(lastYear - firstYear)*12+lastMonth-firstMonth+1;
-        currentPage = totalPage-1;
-        //CGFloat height = self.contentScrollView.frame.size.height;
-        [self.contentScrollView setContentSize:CGSizeMake(totalPage*320, contentRect.size.height)];
+        totalPage = [distinctMonthsArray count];
+        currentPage =totalPage-1;
     }
+    [self.contentScrollView setContentSize:CGSizeMake(totalPage*320, contentRect.size.height)];
+//    if ([distinctMonthsArray count]<=1)
+//    {
+//        totalPage = 1;
+//        currentPage = 0;
+//    }
+//    else
+//    {
+//        NSNumber *first = [distinctMonthsArray objectAtIndex:0];
+//        NSNumber *last = [distinctMonthsArray lastObject];
+//        int firstYear =[first intValue]/100;
+//        int lastYear = [last intValue]/100;
+//        int firstMonth = [first intValue]%100;
+//        int lastMonth = [last intValue]%100;
+//        totalPage =(lastYear - firstYear)*12+lastMonth-firstMonth+1;
+//        currentPage = totalPage-1;
+//        //CGFloat height = self.contentScrollView.frame.size.height;
+//        [self.contentScrollView setContentSize:CGSizeMake(totalPage*320, contentRect.size.height)];
+//    }
     [self displayContentForPage:currentPage];
 }
 -(void)displayContentForPage:(int)page
@@ -157,10 +168,10 @@
     }
     else
     {
-        NSNumber *startLocal =[distinctMonthsArray objectAtIndex:0];
-        int currentLocal = [LZUtility getMonthLocalForDistance:currentPage startLocal:[startLocal intValue]];
-        int preLoacal =[LZUtility getMonthLocalForDistance:currentPage-1 startLocal:[startLocal intValue]];
-        int nextLocal = [LZUtility getMonthLocalForDistance:currentPage+1 startLocal:[startLocal intValue]];
+        int currentLocal = [self getValidLocalForPage:currentPage];
+        //[LZUtility getMonthLocalForDistance:currentPage startLocal:[startLocal intValue]];
+        int preLoacal =[self getValidLocalForPage:currentPage-1];
+        int nextLocal = [self getValidLocalForPage:currentPage+1];
         self.navigationItem.title = [NSString stringWithFormat:@"%d.%d",currentLocal/100,currentLocal%100];
         if (currentPage == 0)
         {
@@ -276,6 +287,18 @@
         }
     }
     [HUD hide:YES];
+}
+-(int)getValidLocalForPage:(int)page
+{
+    if (page >=0)
+    {
+        NSNumber *local = [distinctMonthsArray objectAtIndex:page];
+        return [local intValue];
+    }
+    else
+    {
+        return 0;
+    }
 }
 
 - (NSArray *)plotDataSourceForTesting

@@ -129,6 +129,8 @@
         totalPage = [distinctMonthsArray count];
         currentPage =totalPage-1;
     }
+    CGFloat height = self.contentScrollView.frame.size.height;
+    [self.contentScrollView setContentSize:CGSizeMake(totalPage*320, height)];
 //    if ([distinctMonthsArray count]<=1)
 //    {
 //        totalPage = 1;
@@ -352,7 +354,15 @@
 }
 -(int)getValidLocalForPage:(int)page
 {
-    
+    if (page >=0)
+    {
+        NSNumber *local = [distinctMonthsArray objectAtIndex:page];
+        return [local intValue];
+    }
+    else
+    {
+        return 0;
+    }
 }
 -(NSArray *)getDataSourceForMonthLocal:(int)monthLocal
 {
