@@ -549,6 +549,10 @@
                 width = (int)(textSize.width) +1;
             }
         }
+        else
+        {
+            width = 15;
+        }
         UILabel *nutritionNameLabel = [[UILabel alloc]initWithFrame:CGRectMake(8, 0, width, 120)];
         nutritionNameLabel.numberOfLines = 0;
         [nutritionNameLabel setTextColor:[UIColor colorWithRed:102/255.f green:102/255.f blue:102/255.f alpha:1.0f]];
