@@ -2,14 +2,16 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingLeft="10dp"
     android:orientation="vertical" >
 
     <TextView
-        android:paddingTop="5dp"
-        android:textColor="#666666"
-        android:gravity="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="选择您今天的症状，然后点击查看养生报告。" />
+        android:gravity="left|center"
+        android:paddingLeft="10dp"
+        android:paddingTop="5dp"
+        android:text="选择您今天的症状，然后点击查看养生报告。"
+        android:textColor="@color/v3_label" />
 
 </LinearLayout>

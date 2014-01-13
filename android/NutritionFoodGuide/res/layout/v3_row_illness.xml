@@ -29,6 +29,7 @@
 	        android:gravity="left|center_vertical"
 	        android:text="AAA" 
 	        android:textSize="17sp"
+	        android:textColor="@color/v3_content"
 	        >
 	    </TextView>
 	

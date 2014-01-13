@@ -1,8 +1,11 @@
 package com.lingzhimobile.nutritionfoodguide.v3.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RadioButton;
@@ -24,6 +27,8 @@ public class V3ActivityHome extends V3BaseActivity {
     private static final String TAG_CYCLOPEDIA = "cyclopedia";
     private static final String TAG_SETTING = "setting";
     private static final String[] TAGS = new String[]{TAG_DIAGNOSE, TAG_HISTORY, TAG_CHART, TAG_CYCLOPEDIA, TAG_SETTING};
+    
+    int m_currentTabItemIndex = 0;
     
     RadioButton tabButtonDiagnose, tabButtonHistory, tabButtonChart,
             tabButtonCyclopedia, tabButtonSetting;
@@ -88,7 +93,8 @@ public class V3ActivityHome extends V3BaseActivity {
     }
 
     protected void setCurrentItem(int i) {
-        FragmentManager fragmentManager = this.getSupportFragmentManager();
+    	m_currentTabItemIndex  = i;
+    	FragmentManager fragmentManager = this.getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag(TAGS[i]);
         if (fragment == null) {
             switch(i){
@@ -112,4 +118,15 @@ public class V3ActivityHome extends V3BaseActivity {
         fragmentManager.beginTransaction().replace(R.id.contentFrameLayout, fragment, TAGS[i]).addToBackStack(null).commit();
     }
 
+    @Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+		FragmentManager fragmentManager = this.getSupportFragmentManager();
+		if (m_currentTabItemIndex == 0){
+			Fragment fragment = fragmentManager.findFragmentByTag(TAGS[m_currentTabItemIndex]);
+			((V3DiagnoseFragment)fragment).onActivityResult(requestCode, resultCode, data);
+		}
+		
+	}
 }

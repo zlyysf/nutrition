@@ -14,6 +14,8 @@ import android.graphics.drawable.StateListDrawable;
 import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
@@ -135,10 +137,67 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
         m_SymptomRowsByTypeDict = da.getSymptomRowsByTypeDict_BySymptomTypeIds(symptomTypeIds);
         
         m_symptomCheckedFlagsByTypeHm = new HashMap<String, SparseBooleanArray>();
-        for(int i=0; i<symptomTypeIds.size(); i++){
+        resetControlsInput();
+        m_btnSubmit.setEnabled(checkCanSubmit());
+	}
+	
+	void resetControlsInput(){
+		for(int i=0; i<symptomTypeIds.size(); i++){
         	String symptomTypeId = symptomTypeIds.get(i);
         	m_symptomCheckedFlagsByTypeHm.put(symptomTypeId, new SparseBooleanArray(m_SymptomRowsByTypeDict.get(symptomTypeId).size()));
         }
+		m_etBodyTemperature.setText(null);
+		m_etWeight.setText(null);
+		m_etHeartRate.setText(null);
+		m_etBloodPressureHigh.setText(null);
+		m_etBloodPressureLow.setText(null);
+		m_etNote.setText(null);
+	}
+	boolean checkCanSubmit(){
+		for(int i=0; i<symptomTypeIds.size(); i++){
+        	String symptomTypeId = symptomTypeIds.get(i);
+        	SparseBooleanArray boolAry = m_symptomCheckedFlagsByTypeHm.get(symptomTypeId);
+        	ArrayList<HashMap<String, Object>> SymptomRowsByType = m_SymptomRowsByTypeDict.get(symptomTypeId);
+        	if (boolAry!=null && SymptomRowsByType!=null){
+        		for(int j=0; j<SymptomRowsByType.size(); j++){
+        			if (boolAry.get(j)){
+        				return true;
+        			}
+        		}
+        	}
+        }
+		String sIn;
+		sIn = m_etBodyTemperature.getText().toString();
+		if (sIn.length() > 0){
+			return true;
+		}
+		
+		sIn = m_etWeight.getText().toString();
+		if (sIn.length() > 0){
+			return true;
+		}
+		
+		sIn = m_etHeartRate.getText().toString();
+		if (sIn.length() > 0){
+			return true;
+		}
+		
+		sIn = m_etBloodPressureHigh.getText().toString();
+		if (sIn.length() > 0){
+			return true;
+		}
+		
+		sIn = m_etBloodPressureLow.getText().toString();
+		if (sIn.length() > 0){
+			return true;
+		}
+		
+		sIn = m_etNote.getText().toString();
+		if (sIn.length() > 0){
+			return true;
+		}
+		
+		return false;
 	}
 
 	void setViewEventHandlers(){
@@ -150,6 +209,14 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
                 getActivity().startActivity(intent);
             }
         });
+		
+		TextWatcher_toEnableSubmitButton watcher = new TextWatcher_toEnableSubmitButton();
+		m_etBodyTemperature.addTextChangedListener(watcher);
+		m_etWeight.addTextChangedListener(watcher);
+		m_etHeartRate.addTextChangedListener(watcher);
+		m_etBloodPressureHigh.addTextChangedListener(watcher);
+		m_etBloodPressureLow.addTextChangedListener(watcher);
+		m_etNote.addTextChangedListener(watcher);
 
 		m_btnSubmit.setOnClickListener(new OnClickListener() {
             
@@ -253,8 +320,8 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 		switch (requestCode)
 		{
 			case IntentRequestCode_V3ActivityReport:
-				//TODO ................
-				Log.d(LogTag,"onActivityResult");
+				resetControlsInput();
+				m_ListAdapter_LevelTop.notifyDataSetChanged();
 				break;
 			default:
 				break;
@@ -264,6 +331,10 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 	public class SymptomAdapter extends BaseAdapter
 	{
 		public SymptomAdapter(){
+		}
+		
+		public void notifyDataSetChanged(){
+			super.notifyDataSetChanged();
 		}
 		
 		@Override
@@ -287,11 +358,12 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 		    TextView diagnoseTitle = (TextView) convertView.findViewById(R.id.diagnoseTitle);
 		    FlowLayout diagnoseFlow = (FlowLayout) convertView.findViewById(R.id.diagnoseFlow);
 		    diagnoseFlow.removeAllViews();
-		    String diagnoseTitleStr = getItem(position);
-		    diagnoseTitle.setText(diagnoseTitleStr);
+		    String symptomTypeId = getItem(position);
+		    diagnoseTitle.setText(symptomTypeId);
 		    diagnoseTitle.setBackgroundResource(checkboxColorCheckedResIds[position]);
 		    
-		    ArrayList<HashMap<String, Object>> SymptomRows = m_SymptomRowsByTypeDict.get(diagnoseTitleStr);
+		    ArrayList<HashMap<String, Object>> SymptomRows = m_SymptomRowsByTypeDict.get(symptomTypeId);
+		    SparseBooleanArray symptomCheckedFlags = m_symptomCheckedFlagsByTypeHm.get(symptomTypeId);
 		    for (int i=0; i<SymptomRows.size(); i++) {
 		    	HashMap<String, Object> symptomRow = SymptomRows.get(i);
 		        String symptomId = (String) symptomRow.get(Constants.COLUMN_NAME_SymptomId);
@@ -301,6 +373,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 		        changeCheckboxBackgroundWithSelector(getActivity(), ll, checkboxColorNormalResId, checkboxColorCheckedResIds[position%checkboxColorCheckedResIds.length]);
 		        cb.setText(symptomId);
 		        diagnoseFlow.addView(cellView);
+		        cb.setChecked(symptomCheckedFlags.get(i));
 		        
 		        OnCheckedChangeListener_Symptom OnCheckedChangeListener_Symptom1 = (OnCheckedChangeListener_Symptom)cb.getTag();
 		        if (OnCheckedChangeListener_Symptom1 == null){
@@ -310,7 +383,6 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 		        }else{
 		        	OnCheckedChangeListener_Symptom1.initInputData(position, i);
 		        }
-		        
 		    }
 		    
 			return convertView;
@@ -333,13 +405,28 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 				String symptomTypeId = (String)symptomTypeRow.get(Constants.COLUMN_NAME_SymptomTypeId);
 				SparseBooleanArray symptomCheckedFlags = m_symptomCheckedFlagsByTypeHm.get(symptomTypeId);
 				symptomCheckedFlags.put(m_symptomPos, isChecked);
+				
+				m_btnSubmit.setEnabled(checkCanSubmit());
 			}
 		}
 		
-		public void notifyDataSetChanged(){
-			super.notifyDataSetChanged();
-		}
+
 	}//class ExpandableListAdapter_DiagnoseResult
+	
+	class TextWatcher_toEnableSubmitButton implements TextWatcher{
+		@Override
+		public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+		}
+
+		@Override
+		public void onTextChanged(CharSequence s, int start, int before, int count) {
+		}
+
+		@Override
+		public void afterTextChanged(Editable s) {
+			m_btnSubmit.setEnabled(checkCanSubmit());
+		}
+	}
 	
 	
 	

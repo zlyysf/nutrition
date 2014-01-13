@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.R;
@@ -26,6 +27,8 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
     ArrayList<HashMap<String, Object>> historyMap;
 
     DataAccess da;
+    
+    Button m_btnPrev, m_btnNext;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -39,22 +42,59 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.v3_fragment_history, container, false);
+        initViewHandles(inflater, view);
+        initViewsContent();
+        setViewEventHandlers();
+        setViewsContent();
+        return view;
+    }
+    void initViewHandles(LayoutInflater inflater, View view){
         initHeaderLayout(view);
-        
-        Drawable prevDrawable = getResources().getDrawable(R.drawable.v3_prev_bg);
+        m_btnPrev = leftButton;
+        m_btnNext = rightButton;
+        monthViewPager = (ViewPager) view.findViewById(R.id.historyViewPager);
+    }
+    void initViewsContent(){
+    	Drawable prevDrawable = getResources().getDrawable(R.drawable.v3_prev_bg);
         prevDrawable.setBounds(0, 0, 27, 45);
-        leftButton.setCompoundDrawables(prevDrawable, null, null, null);
-
+        m_btnPrev.setCompoundDrawables(prevDrawable, null, null, null);
 
         Drawable nextDrawable = getResources().getDrawable(R.drawable.v3_next_bg);
         nextDrawable.setBounds(0, 0, 27, 45);
-        rightButton.setCompoundDrawables(null, null, nextDrawable, null);
-        leftButton.setText("");
-        rightButton.setText("");
-
-        monthViewPager = (ViewPager) view.findViewById(R.id.historyViewPager);
+        m_btnNext.setCompoundDrawables(null, null, nextDrawable, null);
+        m_btnPrev.setText("");
+        m_btnNext.setText("");
+        
         monthAdapter = new HistoryMonthAdapter(getChildFragmentManager(), monthList, this);
         monthViewPager.setAdapter(monthAdapter);
+    }
+    
+    void setViewEventHandlers(){
+        m_btnPrev.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentItemIndex = monthViewPager.getCurrentItem();
+                if (currentItemIndex > 0) {
+                    currentItemIndex --;
+                    monthViewPager.setCurrentItem(currentItemIndex, false);
+                    setTitleWithPager();
+                }
+                setNavButtonEnableState();
+            }
+        });
+
+        m_btnNext.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int currentItemIndex = monthViewPager.getCurrentItem();
+                if (currentItemIndex < monthAdapter.getCount()-1){
+                    currentItemIndex++;
+                    monthViewPager.setCurrentItem(currentItemIndex, false);
+                    setTitleWithPager();
+                }
+                setNavButtonEnableState();
+            }
+        });
         
         monthViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
@@ -68,10 +108,10 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
 			public void onPageScrollStateChanged(int state) {
 			}
 		});
-
-        m_currentTitle = monthAdapter.getPageTitle(0).toString();
-        title.setText(m_currentTitle);
-        return view;
+    }
+    void setViewsContent(){
+        monthViewPager.setCurrentItem(monthAdapter.getCount()-1, false);
+        setNavButtonEnableState();
     }
     
     void setTitleWithPager(){
@@ -90,36 +130,24 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
 
     @Override
     protected void setHeader() {
-        leftButton.setText("Previous");
-        rightButton.setText("Next");
-
-        leftButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                int currentItemIndex = monthViewPager.getCurrentItem();
-                if (currentItemIndex > 0) {
-                    currentItemIndex --;
-                    m_currentTitle = monthAdapter.getPageTitle(currentItemIndex).toString();
-                    title.setText(m_currentTitle);
-                    monthViewPager.setCurrentItem(currentItemIndex, false);
-                }
-            }
-        });
-
-        rightButton.setOnClickListener(new OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                int currentItemIndex = monthViewPager.getCurrentItem();
-                if (currentItemIndex < monthAdapter.getCount()-1){
-                    currentItemIndex++;
-                    m_currentTitle = monthAdapter.getPageTitle(currentItemIndex).toString();
-                    title.setText(m_currentTitle);
-                    monthViewPager.setCurrentItem(currentItemIndex, false);
-                }
-            }
-        });
-
+    }
+    
+    void setNavButtonEnableState(){
+    	if (monthList==null || monthList.size()<=1){
+    		m_btnPrev.setEnabled(false);
+    		m_btnNext.setEnabled(false);
+    	}else{
+    		int currentItemIndex = monthViewPager.getCurrentItem();
+        	if (currentItemIndex>0){
+        		m_btnPrev.setEnabled(true);
+        	} else {
+        		m_btnPrev.setEnabled(false);
+			}
+        	if (currentItemIndex==monthList.size()-1){
+        		m_btnNext.setEnabled(false);
+        	}else{
+        		m_btnNext.setEnabled(true);
+        	}
+    	}
     }
 }

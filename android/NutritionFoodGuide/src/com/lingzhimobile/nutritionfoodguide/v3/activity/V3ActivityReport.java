@@ -154,6 +154,12 @@ public class V3ActivityReport extends V3BaseActivity {
         m_IsShowingData = intent.getBooleanExtra(Constants.IntentParamKey_IsShowingData, false);
         m_nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(this);
         if (!m_IsShowingData){
+        	Date updateTime = new Date();
+        	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+    		m_dayLocal = Integer.parseInt(sdf.format(updateTime));
+        	HashMap<String, Object> row = da.getUserRecordSymptomDataByDayLocal(m_dayLocal);
+        	m_alreadyExistDataRow = (row!=null);
+        	
         	m_SymptomIdList = intent.getStringArrayListExtra(Constants.COLUMN_NAME_SymptomId);
             m_symptomIds = Tool.convertToStringArray(m_SymptomIdList);
             
@@ -251,6 +257,7 @@ public class V3ActivityReport extends V3BaseActivity {
             @Override
             public void onClick(View v) {
                 save();
+                m_btnSave.setEnabled(false);
             }
         });
     }
@@ -279,11 +286,11 @@ public class V3ActivityReport extends V3BaseActivity {
     }
     
     void calculate(){
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
     	Date updateTime = new Date();
-		int dayLocal = Integer.parseInt(sdf.format(updateTime));
-    	HashMap<String, Object> row = da.getUserRecordSymptomDataByDayLocal(dayLocal);
-    	m_alreadyExistDataRow = (row!=null);
+//    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+//		m_dayLocal = Integer.parseInt(sdf.format(updateTime));
+//    	HashMap<String, Object> row = da.getUserRecordSymptomDataByDayLocal(m_dayLocal);
+//    	m_alreadyExistDataRow = (row!=null);
     	
     	HashMap<String, Object> hmUserInfo = StoredConfigTool.getUserInfo(this);
     	m_DRIsDict = da.getStandardDRIs_withUserInfo(hmUserInfo, null);
@@ -322,6 +329,8 @@ public class V3ActivityReport extends V3BaseActivity {
     	
     	if (!m_alreadyExistDataRow){
     		save();
+    		m_btnSave.setEnabled(false);
+    		m_btnSave.setText(R.string.saved);
     	}
     }
     
@@ -432,12 +441,9 @@ public class V3ActivityReport extends V3BaseActivity {
     
     void save(){
     	Log.d(LogTag, "save enter");
-//    	Calendar calendarNow = Calendar.getInstance();
-//    	int year = calendarNow.get(Calendar.YEAR);    //获取年
-//    	int month = calendarNow.get(Calendar.MONTH) + 1; 
-    	SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-    	Date updateTime = new Date();
-		int dayLocal = Integer.parseInt(sdf.format(updateTime));
+
+		Date updateTime = new Date();
+		int dayLocal = m_dayLocal;
 		
 	    HashMap<String, Object> InputNameValuePairsData;
 	    HashMap<String, Object> CalculateNameValuePairsData;
