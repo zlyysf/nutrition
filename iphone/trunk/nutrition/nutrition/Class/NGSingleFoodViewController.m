@@ -11,6 +11,7 @@
 #import "LZConstants.h"
 #import "NGFoodNutritionCell.h"
 #import "LZNutrientionManager.h"
+#import "GADMasterViewController.h"
 @interface NGSingleFoodViewController ()
 {
     BOOL isChinese;
@@ -21,12 +22,14 @@
 @property (nonatomic,assign)int unitPerValue;
 @property (nonatomic,assign)int gMaxValue;
 @property (nonatomic,assign)int unitMaxValue;
+@property (nonatomic,strong)UIView *adView;
 
 
 @end
 
 @implementation NGSingleFoodViewController
 @synthesize foodInfoDict,nutrientSupplyArray,inOutParam,currentValue,unitPerValue,gMaxValue,unitMaxValue;
+@synthesize adView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -55,6 +58,8 @@
     [self.underHeaderLabel setBackgroundColor:[UIColor colorWithRed:236/255.f green:240/255.f blue:232/255.f alpha:1.0f]];
     [self.topHeaderLabel setText:[NSString stringWithFormat:@"  %@",NSLocalizedString(@"shiwu_c_xuanzezhonglian", @"选择重量项标题：选择重量")]];
     [self.underHeaderLabel setText:[NSString stringWithFormat:@"  %@",NSLocalizedString(@"shiwu_c_yingyanghanliang", @"洋洋含量项标题：营养含量")]];
+    self.adView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    [self.adView setBackgroundColor:[UIColor clearColor]];
     [self initialize];
 
     
@@ -131,6 +136,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    GADMasterViewController *gad = [GADMasterViewController singleton];
+    [gad resetAdView:self andListView:self.adView];
     if (isFirstLoad)
     {
         [self displayNutrientUI];
@@ -231,7 +238,12 @@
             if (isFirstLoad)
             {
                 float tableViewHeight = [self.nutrientSupplyArray count]*55;
-                [self.contentScrollView setContentSize:CGSizeMake(320, 184+tableViewHeight+20)];
+                CGFloat sizeHeight =184+tableViewHeight+20+50;
+                [self.contentScrollView setContentSize:CGSizeMake(320, sizeHeight)];
+                [self.contentScrollView addSubview:self.adView];
+                CGRect adFrame = self.adView.frame;
+                adFrame.origin.y = sizeHeight - 50;
+                self.adView.frame = adFrame;
                 [self.nutritionListView setFrame:CGRectMake(10, 184, 300, tableViewHeight)];
                 isFirstLoad = NO;
             }

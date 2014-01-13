@@ -19,6 +19,7 @@
 #import "LZUtility.h"
 #import "NGIllnessInfoViewController.h"
 #import "NGNutritionInfoViewController.h"
+#import "GADMasterViewController.h"
 #define DiseaseItemTopMargin 10
 #define DiseaseItemMargin 10
 #define DiseaseItemBottomMarigin 30
@@ -33,11 +34,13 @@
 @property (nonatomic,assign)float diseaseCellHeight;
 @property (nonatomic,assign)float nutritionCellHeight;
 @property (nonatomic,assign)float foodCellHeight;
+@property (nonatomic,strong)UIView *adView;
 @property (nonatomic,strong)UIImage *selectedImage;
 @end
 
 @implementation NGCyclopediaViewController
 @synthesize commonDiseaseArray,nutritionArray,foodArray,diseaseCellHeight,nutritionCellHeight,foodCellHeight,selectedImage;
+@synthesize adView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -85,7 +88,15 @@
     foodCellHeight = 20+30+ totalFloor*(80+FoodItemMargin)+FoodItemMargin;
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     selectedImage = [LZUtility createImageWithColor:ItemSelectedColor imageSize:CGSizeMake(300, 54)];
+    self.adView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    [self.adView setBackgroundColor:[UIColor clearColor]];
+    self.listView.tableFooterView = self.adView;
     
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    GADMasterViewController *gad = [GADMasterViewController singleton];
+    [gad resetAdView:self andListView:self.adView];
 }
 -(NSString *)getNutritionName:(NSString *)nutritionId
 {

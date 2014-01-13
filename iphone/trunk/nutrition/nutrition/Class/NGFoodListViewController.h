@@ -12,5 +12,6 @@
 @property (strong, nonatomic) IBOutlet UIScrollView *mainScrollView;
 @property (strong, nonatomic) IBOutlet UIView *backView;
 @property (strong, nonatomic)NSArray *foodArray;
+@property (strong, nonatomic) IBOutlet UIView *adView;
 
 @end

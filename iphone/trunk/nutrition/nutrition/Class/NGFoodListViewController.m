@@ -11,6 +11,7 @@
 #import "LZUtility.h"
 #import "LZFoodTypeButton.h"
 #import "NGSingleFoodViewController.h"
+#import "GADMasterViewController.h"
 #define FoodItemMargin 15
 @interface NGFoodListViewController ()
 {
@@ -18,7 +19,6 @@
     BOOL isFirstLoad;
     BOOL isChinese;
 }
-
 @end
 
 @implementation NGFoodListViewController
@@ -41,10 +41,12 @@
     backViewContentHeight = totalFloor*(80+FoodItemMargin)+FoodItemMargin;
     isFirstLoad = YES;
     isChinese = [LZUtility isCurrentLanguageChinese];
-	// Do any additional setup after loading the view.
+    // Do any additional setup after loading the view.
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    GADMasterViewController *gad = [GADMasterViewController singleton];
+    [gad resetAdView:self andListView:self.adView];
     [self.mainScrollView setContentSize:CGSizeMake(320, backViewContentHeight+30)];
     [self.backView setFrame:CGRectMake(10, 15, 300, backViewContentHeight)];
     [self.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];

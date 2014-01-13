@@ -13,4 +13,5 @@
 @property (strong, nonatomic) IBOutlet UITableView *listView2;
 @property (strong, nonatomic) IBOutlet UITableView *listView3;
 @property (strong, nonatomic) IBOutlet UIScrollView *contentScrollView;
+@property (strong, nonatomic) IBOutlet UIView *adView;
 @end

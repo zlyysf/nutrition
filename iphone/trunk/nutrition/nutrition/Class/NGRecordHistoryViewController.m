@@ -14,6 +14,7 @@
 #import "LZNutrientionManager.h"
 #import "NGHealthReportViewController.h"
 #import "MBProgressHUD.h"
+#import "GADMasterViewController.h"
 #define MAXNutritonDisplayCount 3
 @interface NGRecordHistoryViewController ()<MBProgressHUDDelegate>
 {
@@ -88,7 +89,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-
+    GADMasterViewController *gad = [GADMasterViewController singleton];
+    [gad resetAdView:self andListView:self.adView];
 }
 
 -(void)viewDidAppear:(BOOL)animated

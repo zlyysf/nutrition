@@ -21,6 +21,7 @@
 #import "NGRecommendFoodView.h"
 #import "LZRecommendFood.h"
 #import "MBProgressHUD.h"
+#import "GADMasterViewController.h"
 #define BorderColor [UIColor lightGrayColor].CGColor
 
 #define AttentionItemLabelWidth 240
@@ -89,6 +90,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    GADMasterViewController *gad = [GADMasterViewController singleton];
+    [gad resetAdView:self andListView:self.adView];
     if (isFirstLoad)
     {
         HUD.hidden = NO;

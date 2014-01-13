@@ -17,6 +17,7 @@
 #import "NGHealthReportViewController.h"
 #import "LZRecommendFood.h"
 #import "NGDiagnoseLabel.h"
+#import "GADMasterViewController.h"
 @interface NGDiagnoseViewController ()<LZKeyboardToolBarDelegate,UITextViewDelegate,UITextFieldDelegate>
 {
     BOOL isChinese;
@@ -29,10 +30,12 @@
 @property (assign,nonatomic)BOOL needClearState;
 @property (strong,nonatomic)NSMutableDictionary *symptomRowHeightDict;
 @property (nonatomic,strong) NSMutableDictionary *diagnoseViewDict;
+@property (nonatomic,strong)UIView *adView;
 @end
 
 @implementation NGDiagnoseViewController
 @synthesize symptomTypeIdArray,symptomRowsDict,symptomStateDict,currentTextField,userInputValueDict,userSelectedSymptom,needRefresh,symptomTypeRows,symptomRowHeightDict,needClearState,diagnoseViewDict;
+@synthesize adView;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -72,6 +75,9 @@
     needRefresh = NO;
     needClearState = NO;
     [self refresh];
+    self.adView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+    [self.adView setBackgroundColor:[UIColor clearColor]];
+    self.listView.tableFooterView = self.adView;
     
     	// Do any additional setup after loading the view.
 }
@@ -190,6 +196,8 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
+    GADMasterViewController *gad = [GADMasterViewController singleton];
+    [gad resetAdView:self andListView:self.adView];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     if (needRefresh)

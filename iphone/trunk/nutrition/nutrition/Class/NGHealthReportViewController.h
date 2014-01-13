@@ -18,4 +18,5 @@
 @property (assign,nonatomic)BOOL isOnlyDisplay;
 @property (assign, nonatomic)double BMIValue;
 @property (assign, nonatomic)double HealthValue;
+@property (strong, nonatomic) IBOutlet UIView *adView;
 @end
