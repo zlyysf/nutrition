@@ -15,9 +15,15 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.Display;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnTouchListener;
 import android.widget.*;
+import android.widget.LinearLayout.LayoutParams;
+
 
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
@@ -36,8 +42,10 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
     ArrayList<Integer> m_sectionlist_dayLocal;
     Integer[] m_sections_dayLocal;
     V3BaseHeadFragment m_fragment;
+//    ListView m_lv;
+//    LinearLayout m_llSideIndex;
 
-    public HistoryDayAdapter(Context context, ArrayList<HashMap<String, Object>> records, V3BaseHeadFragment fragment) {
+    public HistoryDayAdapter(Context context, ArrayList<HashMap<String, Object>> records, V3BaseHeadFragment fragment, ListView lv, LinearLayout llSideIndex) {
         mContext = context;
         mRecords = records;
         m_fragment = fragment;
@@ -54,6 +62,12 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
         	}
         }
         m_sections_dayLocal = m_sectionlist_dayLocal.toArray(new Integer[m_sectionlist_dayLocal.size()]);
+        
+//        m_lv = lv;
+//        m_llSideIndex = llSideIndex;
+        
+        setContentOfSideIndex(lv,llSideIndex);
+        
     }
 
     @Override
@@ -330,6 +344,41 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
 	@Override
 	public int getSectionForPosition(int position) {
 		return position;
+	}
+	
+	
+	public void setContentOfSideIndex(final ListView lv, LinearLayout llSideIndex) {
+		class OnClickListener_ListViewIndexItem implements View.OnClickListener{
+			@Override
+			public void onClick(View v) {
+				Integer secIdxObj = (Integer)v.getTag();
+				int itemPos = getPositionForSection(secIdxObj);
+				lv.setSelection(itemPos);
+			}
+		}
+		
+		llSideIndex.removeAllViews();
+		Object[] sections = getSections();
+		if (sections!=null){
+			OnClickListener_ListViewIndexItem OnClickListener_ListViewIndexItem1 = new OnClickListener_ListViewIndexItem();
+			for(int i=0; i<sections.length; i++){
+				Object section = sections[i];
+				TextView tv  = new TextView(mContext);
+				tv.setText(section.toString());
+				tv.setGravity(Gravity.CENTER_HORIZONTAL| Gravity.CENTER_VERTICAL);
+				
+				LayoutParams params = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1);
+				params.topMargin = 1;
+				params.bottomMargin = 1;
+				tv.setLayoutParams(params);
+				tv.setTag(Integer.valueOf(i));
+				tv.setOnClickListener(OnClickListener_ListViewIndexItem1);
+				llSideIndex.addView(tv);
+			}
+		}
+		
+		
+
 	}
 
 }

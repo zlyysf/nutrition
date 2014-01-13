@@ -1,6 +1,7 @@
 package com.lingzhimobile.nutritionfoodguide;
 /*
  * it is 3rd-party code from https://github.com/survivingwithandroid/Surviving-with-android/tree/master/ListView_SectionIndexer
+ * performance is bad here
  */
 import android.content.Context;
 import android.graphics.Canvas;
@@ -51,37 +52,40 @@ public class FastSearchListView_surviving extends ListView {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-
-		scaledWidth = indWidth * getSizeInPixel(ctx);
-		sx = this.getWidth() - this.getPaddingRight() - scaledWidth;
-
-		Paint p = new Paint();
-//		p.setColor(Color.WHITE);
-//		p.setAlpha(100);
-		p.setAlpha(0);
-
-		canvas.drawRect(sx, this.getPaddingTop(), sx + scaledWidth,
-				this.getHeight() - this.getPaddingBottom(), p);
 		
-		indexSize = (this.getHeight() - this.getPaddingTop() - getPaddingBottom())
-				/ sections.length;
-
-		Paint textPaint = new Paint();
-		textPaint.setColor(Color.DKGRAY);
-		textPaint.setTextSize(scaledWidth / 2);
-
-		for (int i = 0; i < sections.length; i++)
-			canvas.drawText(sections[i].toString(), sx + textPaint.getTextSize() / 2 
-					, (float)(getPaddingTop() + indexSize * (i + 0.5)), textPaint);
+		if (sections!=null && sections.length > 0){
+			scaledWidth = indWidth * getSizeInPixel(ctx);
+			sx = this.getWidth() - this.getPaddingRight() - scaledWidth;
+	
+			Paint p = new Paint();
+	//		p.setColor(Color.WHITE);
+	//		p.setAlpha(100);
+			p.setAlpha(0);
+	
+			canvas.drawRect(sx, this.getPaddingTop(), sx + scaledWidth,
+					this.getHeight() - this.getPaddingBottom(), p);
+			
+			indexSize = (this.getHeight() - this.getPaddingTop() - getPaddingBottom())
+					/ sections.length;
+	
+			Paint textPaint = new Paint();
+			textPaint.setColor(Color.DKGRAY);
+			textPaint.setTextSize(scaledWidth / 2);
+	
+			for (int i = 0; i < sections.length; i++)
+				canvas.drawText(sections[i].toString(), sx + textPaint.getTextSize() / 2 
+						, (float)(getPaddingTop() + indexSize * (i + 0.5)), textPaint);
+			
+			// We draw the letter in the middle
+			if (showLetter & section != null && !section.equals("")) {
+				
+				Paint textPaint2 = new Paint();			
+				textPaint2.setColor(Color.DKGRAY);
+				textPaint2.setTextSize(2 * indWidth);
+				
+				canvas.drawText(section.toString(), getWidth() / 2,  getHeight() / 2, textPaint2);
+			}
 		
-		// We draw the letter in the middle
-		if (showLetter & section != null && !section.equals("")) {
-			
-			Paint textPaint2 = new Paint();			
-			textPaint2.setColor(Color.DKGRAY);
-			textPaint2.setTextSize(2 * indWidth);
-			
-			canvas.drawText(section.toString(), getWidth() / 2,  getHeight() / 2, textPaint2);
 		}
 	}
 
