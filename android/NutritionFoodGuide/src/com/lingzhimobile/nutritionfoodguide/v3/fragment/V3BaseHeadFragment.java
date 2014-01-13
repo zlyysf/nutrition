@@ -13,6 +13,10 @@ public abstract class V3BaseHeadFragment extends Fragment {
 	
     public Button leftButton, rightButton;
     public TextView title;
+    
+    public String getCurrentTitle(){
+		return m_currentTitle;
+	}
 
     protected void initHeaderLayout(View view) {
         title = (TextView) view.findViewById(R.id.titleText);

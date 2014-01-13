@@ -28,7 +28,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.lingzhimobile.nutritionfoodguide.*;
+import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityFoodsByType.ListAdapterForFood;
 import com.lingzhimobile.nutritionfoodguide.v3.fragment.*;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3EncyclopediaFragment.OnClickListener_nutrient;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.SaveCallback;
@@ -36,6 +38,7 @@ import com.parse.SaveCallback;
 public class V3ActivityReport extends V3BaseActivity {
 	
 	static final String LogTag = "V3ActivityReport";
+	public static final int IntentResultCode = 1000;
 	
 	final static int c_nutrientFoodCountLimit = 5;
 
@@ -115,8 +118,9 @@ public class V3ActivityReport extends V3BaseActivity {
         m_btnSave = (Button) findViewById(R.id.rightButton);
         m_btnSave.setText(R.string.save);
         m_btnBack = (Button) findViewById(R.id.leftButton);
+        m_currentTitle = "养生报告";
         TextView tvTitle = (TextView)findViewById(R.id.titleText);
-        tvTitle.setText("养生报告");
+        tvTitle.setText(m_currentTitle);
         bmiTextView = (TextView) findViewById(R.id.bmiTextView);
         m_tvBmiTooLight =  (TextView) findViewById(R.id.tvBmiTooLight);
         m_tvBmiNormal =  (TextView) findViewById(R.id.tvBmiNormal);
@@ -236,6 +240,13 @@ public class V3ActivityReport extends V3BaseActivity {
     }
     
     void setViewEventHandlers(){
+    	m_btnBack.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setResult(IntentResultCode);
+                finish();
+            }
+        });
     	m_btnSave.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -250,7 +261,6 @@ public class V3ActivityReport extends V3BaseActivity {
     	}
     	show();
     }
-    
     
 
     
@@ -328,9 +338,10 @@ public class V3ActivityReport extends V3BaseActivity {
     	}else{
     		m_tvBmiFat.setBackgroundResource(R.drawable.v3_border_bmi_fat_bg);
     	}
-		  
+
 		healthTextView.setText(String.valueOf(m_HealthMark));
 		
+		V3EncyclopediaFragment.OnClickListener_nutrient OnClickListener_nutrient1 = new V3EncyclopediaFragment.OnClickListener_nutrient(this,m_currentTitle);
     	int lenOfNutrientIds = m_nutrientIds==null? 0 : m_nutrientIds.length;
     	for(int i = 0;i< m_tvNutrients.size();i++){
     		TextView tvNutrient = m_tvNutrients.get(i);
@@ -339,8 +350,10 @@ public class V3ActivityReport extends V3BaseActivity {
             	String nutrientId = m_nutrientIds[i];
             	HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
             	String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
-            	m_tvNutrients.get(i).setText(nutrientCaption);
-                Tool.changeBackground_NutritionButton(V3ActivityReport.this, tvNutrient, nutrientId, false);
+            	tvNutrient.setText(nutrientCaption);
+            	tvNutrient.setTag(nutrientId);
+            	tvNutrient.setOnClickListener(OnClickListener_nutrient1);
+                Tool.changeBackground_NutritionButton(V3ActivityReport.this, tvNutrient, nutrientId, true);
             } else {
             	tvNutrient.setVisibility(View.INVISIBLE);
             }
@@ -556,6 +569,27 @@ public class V3ActivityReport extends V3BaseActivity {
         }
 
     }
+    
+    static class OnClickListenerForFood extends OnClickListenerInListItem{
+		V3BaseActivity m_thisActivity;
+		HashMap<String, Object> m_foodData; 
+
+		public OnClickListenerForFood(V3BaseActivity thisActivity, HashMap<String, Object> foodData){
+			m_thisActivity = thisActivity;
+			m_foodData = foodData;
+		}
+
+		@Override
+		public void onClick(View v) {
+			String foodName = (String)m_foodData.get(Constants.COLUMN_NAME_CnCaption);
+			String foodId = (String)m_foodData.get(Constants.COLUMN_NAME_NDB_No);
+			Log.d(LogTag, "OnClickListenerForFood foodId="+foodId+", foodName="+foodName);
+			Intent intent1 = new Intent(m_thisActivity, ActivityFoodNutrition.class);
+			intent1.putExtra(Constants.IntentParamKey_BackButtonTitle, m_thisActivity.getCurrentTitle());
+			intent1.putExtra(Constants.COLUMN_NAME_NDB_No, foodId);
+			m_thisActivity.startActivity(intent1);
+		}
+	}//class OnClickListenerForInputFoodAmount
 
     class NutrientFoodAdapter extends BaseAdapter {
 
@@ -595,7 +629,9 @@ public class V3ActivityReport extends V3BaseActivity {
                     	HashMap<String, Object> food = nutrientFoods.get(i);
                     	String foodName = (String)food.get(Constants.COLUMN_NAME_CnCaption);
                     	Double foodAmount = (Double)food.get(Constants.Key_Amount);
+                    	
                     	View viewPager = getLayoutInflater().inflate(R.layout.v3_recomment_food_cell, null);
+                    	LinearLayout llFood = (LinearLayout)viewPager.findViewById(R.id.llFood);
                         TextView foodNameTextView = (TextView) viewPager.findViewById(R.id.foodNameTextView);
                         TextView foodCountTextView = (TextView) viewPager.findViewById(R.id.foodCountTextView);
                         ImageView ivFood = (ImageView) viewPager.findViewById(R.id.ivFood);
@@ -603,6 +639,7 @@ public class V3ActivityReport extends V3BaseActivity {
                         foodCountTextView.setText(foodAmount.intValue()+"g");
                         ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));
                         recommendViewPager.addView(viewPager);
+                        llFood.setOnClickListener(new OnClickListenerForFood(V3ActivityReport.this,food));
                     }
                 }
             }else{
@@ -616,6 +653,7 @@ public class V3ActivityReport extends V3BaseActivity {
                 		String foodName = (String)food.get(Constants.COLUMN_NAME_CnCaption);
                     	Double foodAmount = Double.parseDouble(""+ FoodAndAmountHm.get(foodId));
                     	View viewPager = getLayoutInflater().inflate(R.layout.v3_recomment_food_cell, null);
+                    	LinearLayout llFood = (LinearLayout)viewPager.findViewById(R.id.llFood);
                         TextView foodNameTextView = (TextView) viewPager.findViewById(R.id.foodNameTextView);
                         TextView foodCountTextView = (TextView) viewPager.findViewById(R.id.foodCountTextView);
                         ImageView ivFood = (ImageView) viewPager.findViewById(R.id.ivFood);
@@ -623,6 +661,7 @@ public class V3ActivityReport extends V3BaseActivity {
                         foodCountTextView.setText(foodAmount.intValue()+"g");
                         ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));
                         recommendViewPager.addView(viewPager);
+                        llFood.setOnClickListener(new OnClickListenerForFood(V3ActivityReport.this,food));
                 	}
                 }
             }
@@ -633,54 +672,7 @@ public class V3ActivityReport extends V3BaseActivity {
 
     }
 
-//    class DiseaseAttentionAdapter extends BaseAdapter {
-//
-//        @Override
-//        public int getCount() {
-//            return m_illnessIdList==null?0:m_illnessIdList.size();
-//        }
-//
-//        @Override
-//        public Object getItem(int arg0) {
-//            return m_illnessIdList.get(arg0);
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            return position;
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            if (convertView == null) {
-//                convertView = getLayoutInflater().inflate(R.layout.v3_disease_cell, null);
-//            }
-//            String illnessId = m_illnessIdList.get(position);
-//            HashMap<String, Object> illnessInfo = m_illnessInfoDict2Level.get(illnessId);
-//            ArrayList<HashMap<String, Object>> illnessSuggestions = m_suggestionsByIllnessHm.get(illnessId);
-//            String illnessName = (String)illnessInfo.get(Constants.COLUMN_NAME_IllnessNameCn);
-//            
-//            TextView diseaseTextView = (TextView) convertView.findViewById(R.id.diseaseTextView);
-//            diseaseTextView.setText(illnessName);
-//
-//            attentionLinearLayout = (LinearLayout) convertView.findViewById(R.id.attentionLinearLayout);
-//            attentionLinearLayout.removeAllViews();
-//
-//            if (illnessSuggestions!=null) {
-//            	for(int i=0; i<illnessSuggestions.size(); i++){
-//            		HashMap<String, Object> illnessSuggestion = illnessSuggestions.get(i);
-//            		String suggestionName = (String)illnessSuggestion.get(Constants.COLUMN_NAME_SuggestionCn);
-//            		View view = getLayoutInflater().inflate(R.layout.v3_attention_cell, null);
-//                    TextView attentionTextView = (TextView) view.findViewById(R.id.attentionTextView);
-//                    attentionTextView.setText(suggestionName);
-//                    attentionLinearLayout.addView(view);
-//            	}
-//            }
-//
-//            return convertView;
-//        }
-//
-//    }
+
     
     class IllnessAdapter extends BaseAdapter {
 
@@ -705,6 +697,7 @@ public class V3ActivityReport extends V3BaseActivity {
                 convertView = getLayoutInflater().inflate(R.layout.v3_row_illness, null);
             }
             TextView tvIllness = (TextView) convertView.findViewById(R.id.tvIllness);
+            LinearLayout llIllness = (LinearLayout)convertView.findViewById(R.id.llIllness);
             
             String illnessId = m_illnessIdList.get(position);
             HashMap<String, Object> illnessInfo = m_illnessInfoDict2Level.get(illnessId);
@@ -712,6 +705,9 @@ public class V3ActivityReport extends V3BaseActivity {
             String illnessName = (String)illnessInfo.get(Constants.COLUMN_NAME_IllnessNameCn);
             
             tvIllness.setText(illnessName);
+            
+            V3EncyclopediaFragment.OnClickListenerInListItem_illness OnClickListenerInListItem_illness1 = new V3EncyclopediaFragment.OnClickListenerInListItem_illness(V3ActivityReport.this,m_currentTitle,illnessId);
+            llIllness.setOnClickListener(OnClickListenerInListItem_illness1);
 
             return convertView;
         }

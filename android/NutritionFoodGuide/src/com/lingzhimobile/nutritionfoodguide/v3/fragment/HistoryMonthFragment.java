@@ -20,11 +20,14 @@ public class HistoryMonthFragment extends Fragment {
 	final static String Key_yearMonth = "yearMonth";
 
     int m_yearMonth;
+    V3BaseHeadFragment m_topfragment;
     ArrayList<HashMap<String, Object>> records;
     DataAccess da;
 
-    public static HistoryMonthFragment newInstance(int yearMonth) {
+    public static HistoryMonthFragment newInstance(int yearMonth, V3BaseHeadFragment topfragment) {
+    	
         HistoryMonthFragment fragment = new HistoryMonthFragment();
+        fragment.m_topfragment = topfragment;
         Bundle args = new Bundle();
         args.putInt(Key_yearMonth, yearMonth);
         fragment.setArguments(args);
@@ -44,7 +47,8 @@ public class HistoryMonthFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.v3_fragment_month, container, false);
         ListView recordListView = (ListView) view.findViewById(R.id.recordListView);
-        HistoryDayAdapter dayAdapter = new HistoryDayAdapter(getActivity(), records);
+        recordListView.setFastScrollEnabled(true);
+        HistoryDayAdapter dayAdapter = new HistoryDayAdapter(getActivity(), records, m_topfragment);
         recordListView.setAdapter(dayAdapter);
         return view;
     }

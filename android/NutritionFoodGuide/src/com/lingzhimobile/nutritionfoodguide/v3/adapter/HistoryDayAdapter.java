@@ -25,18 +25,35 @@ import com.lingzhimobile.nutritionfoodguide.GlobalVar;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.Tool;
 import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityReport;
+import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3BaseHeadFragment;
 
-public class HistoryDayAdapter extends BaseAdapter {
+public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
 	
 	static final String LogTag = "HistoryDayAdapter";
 
     Context mContext;
     ArrayList<HashMap<String, Object>> mRecords;
+    ArrayList<Integer> m_sectionlist_dayLocal;
+    Integer[] m_sections_dayLocal;
+    V3BaseHeadFragment m_fragment;
 
-    public HistoryDayAdapter(Context context,
-            ArrayList<HashMap<String, Object>> records) {
+    public HistoryDayAdapter(Context context, ArrayList<HashMap<String, Object>> records, V3BaseHeadFragment fragment) {
         mContext = context;
         mRecords = records;
+        m_fragment = fragment;
+        
+        m_sectionlist_dayLocal = new ArrayList<Integer>();
+        if (mRecords!=null){
+        	for(int i=0; i<mRecords.size(); i++){
+        		HashMap<String, Object> row = mRecords.get(i);
+        		Object dayLocalObj = row.get(Constants.COLUMN_NAME_DayLocal);
+        		Double dayLocalDouble = Double.parseDouble(dayLocalObj.toString());
+                int dayLocal = dayLocalDouble.intValue();
+                int dayInMonth = dayLocal%100;
+                m_sectionlist_dayLocal.add(Integer.valueOf(dayInMonth));
+        	}
+        }
+        m_sections_dayLocal = m_sectionlist_dayLocal.toArray(new Integer[m_sectionlist_dayLocal.size()]);
     }
 
     @Override
@@ -291,6 +308,7 @@ public class HistoryDayAdapter extends BaseAdapter {
 		@Override
 		public void onClick(View v) {
 			Intent intent1 = new Intent(mContext, V3ActivityReport.class);
+			intent1.putExtra(Constants.IntentParamKey_BackButtonTitle, m_fragment.getCurrentTitle());
 			intent1.putExtra(Constants.IntentParamKey_IsShowingData, true);
 			intent1.putExtra(Constants.COLUMN_NAME_DayLocal, m_dayLocal);
 			mContext.startActivity(intent1);
@@ -298,5 +316,20 @@ public class HistoryDayAdapter extends BaseAdapter {
 		}
     	
     }
+
+	@Override
+	public Object[] getSections() {
+		return m_sections_dayLocal;
+	}
+
+	@Override
+	public int getPositionForSection(int section) {
+		return section;
+	}
+
+	@Override
+	public int getSectionForPosition(int position) {
+		return position;
+	}
 
 }

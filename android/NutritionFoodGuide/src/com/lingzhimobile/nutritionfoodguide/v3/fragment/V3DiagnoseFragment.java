@@ -29,6 +29,10 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.lingzhimobile.nutritionfoodguide.ActivityAllFoodExpandList;
+import com.lingzhimobile.nutritionfoodguide.ActivityRichFood;
+import com.lingzhimobile.nutritionfoodguide.ActivitySearchFoodCustom;
+import com.lingzhimobile.nutritionfoodguide.ActivitySearchFoodWithClass;
 import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
@@ -39,6 +43,8 @@ import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityReport;
 
 public class V3DiagnoseFragment extends V3BaseHeadFragment {
 	static final String LogTag = V3DiagnoseFragment.class.getSimpleName();
+	
+	public static final int IntentRequestCode_V3ActivityReport = 100;
 	
     static final int[] checkboxColorCheckedResIds = { R.color.v3_head_face,
             R.color.v3_eyes, R.color.v3_ear_nose, R.color.v3_mouth_tongue,
@@ -229,7 +235,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
                 
                 intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 
-                getActivity().startActivity(intent);
+                getActivity().startActivityForResult(intent, IntentRequestCode_V3ActivityReport);
             }
         });
 	}
@@ -237,6 +243,22 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 	void setViewsContent(){
         m_ListAdapter_LevelTop = new SymptomAdapter();
         m_listView1.setAdapter(m_ListAdapter_LevelTop);
+	}
+	
+
+    @Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data)
+	{
+		super.onActivityResult(requestCode, resultCode, data);
+		switch (requestCode)
+		{
+			case IntentRequestCode_V3ActivityReport:
+				//TODO ................
+				Log.d(LogTag,"onActivityResult");
+				break;
+			default:
+				break;
+		}
 	}
 
 	public class SymptomAdapter extends BaseAdapter

@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import android.R.integer;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -74,7 +75,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     	return m_FoodClassToImageIdInfoDict;
     }
     
-    HashMap<String, Double> m_DRIsDict ;
+//    HashMap<String, Double> m_DRIsDict ;
     Activity m_activity;
 
 
@@ -162,10 +163,10 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     	m_currentTitle = getResources().getString(R.string.tabCaption_encyclopedia);
         m_tvTitle.setText(m_currentTitle);
         
-    	m_DRIsDict = NutritionTool.getDRIsDictOfCurrentUser(getActivity(), null);
+//    	m_DRIsDict = NutritionTool.getDRIsDictOfCurrentUser(getActivity(), null);
     }
     void setViewEventHandlers(){
-    	OnClickListener_nutrient OnClickListener_nutrient1 = new OnClickListener_nutrient();
+    	OnClickListener_nutrient OnClickListener_nutrient1 = new OnClickListener_nutrient(getActivity(),m_currentTitle);
     	ArrayList<TextView> tvNutrientAll = new ArrayList<TextView>();
     	tvNutrientAll.addAll(m_tvNutrientVitaminList);
     	tvNutrientAll.addAll(m_tvNutrientMineralList);
@@ -258,20 +259,29 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
         return encyclopediaFragment;
     }
     
-    class OnClickListener_nutrient implements View.OnClickListener{
+    public static class OnClickListener_nutrient implements View.OnClickListener{
+    	
+    	Context m_ctx;
+    	String m_currentTitle;
+    	public OnClickListener_nutrient(Context ctx, String currentTitle){
+    		m_ctx = ctx;
+    		m_currentTitle = currentTitle;
+    	}
 
 		@Override
 		public void onClick(View v) {
 			String nutrientId = (String)v.getTag();
 			if (nutrientId!=null){
-				HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(getActivity());
+				HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(m_ctx);
+				HashMap<String, Double> DRIsDict = NutritionTool.getDRIsDictOfCurrentUser(m_ctx, null);
+				
 				HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientId);
-				Intent intent = new Intent(getActivity(), V3ActivityFoodsByNutrient.class);
+				Intent intent = new Intent(m_ctx, V3ActivityFoodsByNutrient.class);
 				intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 //				intent.putExtra(Constants.IntentParamKey_InvokerType, Constants.InvokerType_FromNutrients);
 				intent.putExtra(Constants.COLUMN_NAME_NutrientID, nutrientId);
-				intent.putExtra(Constants.Key_Amount, m_DRIsDict.get(nutrientId).doubleValue());
-				startActivity(intent);
+				intent.putExtra(Constants.Key_Amount, DRIsDict.get(nutrientId).doubleValue());
+				m_ctx.startActivity(intent);
 			}	
 		}
     }
@@ -306,7 +316,7 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
             LinearLayout llIllness = (LinearLayout)convertView.findViewById(R.id.llIllness);
             OnClickListenerInListItem_illness OnClickListenerInListItem_illness1 = (OnClickListenerInListItem_illness)llIllness.getTag();
             if (OnClickListenerInListItem_illness1==null){
-            	OnClickListenerInListItem_illness1 = new OnClickListenerInListItem_illness();
+            	OnClickListenerInListItem_illness1 = new OnClickListenerInListItem_illness(getActivity(),m_currentTitle,(String)illnessRow.get(Constants.COLUMN_NAME_IllnessId));
             	OnClickListenerInListItem_illness1.initInputData(position);
             	llIllness.setOnClickListener(OnClickListenerInListItem_illness1);
             	llIllness.setTag(OnClickListenerInListItem_illness1);
@@ -325,15 +335,23 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 
     }
     
-    class OnClickListenerInListItem_illness extends OnClickListenerInListItem{
+    public static class OnClickListenerInListItem_illness extends OnClickListenerInListItem{
+    	Context m_ctx;
+    	String m_illnessId;
+    	String m_currentTitle;
+    	public OnClickListenerInListItem_illness(Context ctx, String currentTitle, String illnessId){
+    		m_ctx = ctx;
+    		m_illnessId = illnessId;
+    		m_currentTitle = currentTitle;
+    	}
+    	
+    	
     	@Override
 		public void onClick(View v) {
-    		HashMap<String, Object> illnessRow = m_illnessRowList.get(m_rowPos);
-    		String illnessId = (String)illnessRow.get(Constants.COLUMN_NAME_IllnessId);
-    		Intent intent = new Intent(m_activity, V3ActivityIllness.class);
+    		Intent intent = new Intent(m_ctx, V3ActivityIllness.class);
     		intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
-			intent.putExtra(Constants.COLUMN_NAME_IllnessId, illnessId);
-			startActivity(intent);
+			intent.putExtra(Constants.COLUMN_NAME_IllnessId, m_illnessId);
+			m_ctx.startActivity(intent);
 		}
     }
     

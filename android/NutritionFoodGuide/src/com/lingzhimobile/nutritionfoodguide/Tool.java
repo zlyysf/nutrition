@@ -35,6 +35,7 @@ import android.view.*;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 public class Tool {
 	static final String LogTag = "Tool";
@@ -1581,29 +1582,78 @@ public class Tool {
 	}
 	
 	public static void changeBackground_NutritionButton(Context curActv, View vwNutrition, String nutrientId, boolean needBgEffect){
+		//todo , search android color blend function or android color mix function
+		class OnTouchListenerForPressEffect implements View.OnTouchListener {
+			int m_overlapColor;
+			public OnTouchListenerForPressEffect(int overlapColor){
+				m_overlapColor = overlapColor;
+			}
+			
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+
+				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+					ColorFilter cf = new ColorFilter();
+		            v.getBackground().setColorFilter(m_overlapColor,PorterDuff.Mode.SRC_OVER);//can not DST_OVER 
+		            return false;
+		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+//		            v.getBackground().setColorFilter(Color.argb(0, 0, 0, 0),PorterDuff.Mode.SRC_OVER);
+		        	v.getBackground().clearColorFilter();
+		            return false;
+		        }
+		        return false;
+			}
+		}
+		
 		HashMap<String, Integer> nutrientColorMapping = NutritionTool.getNutrientColorMapping();
 		Integer nutrientColorResId = nutrientColorMapping.get(nutrientId);
 		final float[] roundedCorners = new float[] { 11, 11, 11, 11, 11, 11, 11, 11 };
 		RoundRectShape RoundRectShape1 = new RoundRectShape(roundedCorners, null,null);
+		
 		ShapeDrawable ShapeDrawable1 = new ShapeDrawable(RoundRectShape1);
 //		ShapeDrawable1.getPaint().setColor(Color.parseColor("#FF0000"));
 		ShapeDrawable1.getPaint().setColor(curActv.getResources().getColor(nutrientColorResId));
 		ShapeDrawable1.setPadding(16, 14, 16, 14);
 		
-		ShapeDrawable ShapeDrawable2 = new ShapeDrawable(RoundRectShape1);
-		ShapeDrawable2.getPaint().setColor(curActv.getResources().getColor(R.color.v3_addClickEffect));
-		ShapeDrawable2.setPadding(16, 14, 16, 14);
+		ShapeDrawable ShapeDrawable21 = new ShapeDrawable(RoundRectShape1);
+		ShapeDrawable21.getPaint().setColor(curActv.getResources().getColor(nutrientColorResId));
+		ShapeDrawable21.setPadding(16, 14, 16, 14);
 		
-		Drawable[] layers = new Drawable[2];
-		layers[0] = ShapeDrawable1;
-		layers[1] = ShapeDrawable2;
-		LayerDrawable layerDrawable1 = new LayerDrawable(layers);
+		int overlapColor = curActv.getResources().getColor(R.color.v3_addClickEffect);
+		ShapeDrawable ShapeDrawable22 = new ShapeDrawable(RoundRectShape1);
+		ShapeDrawable22.getPaint().setColor(overlapColor);
+		ShapeDrawable22.setPadding(16, 14, 16, 14);
+		
 
 		StateListDrawable states = new StateListDrawable();
-		if (needBgEffect){
-			states.addState(new int[] {android.R.attr.state_pressed}, layerDrawable1);
-		}
 		
+//		Drawable[] layers = new Drawable[2];
+//		layers[0] = ShapeDrawable21;
+//		layers[1] = ShapeDrawable22;
+//		LayerDrawable layerDrawable1 = new LayerDrawable(layers);
+//		//layerDrawable1.setLayerInset(0, 16, 14, 16, 14);
+//		//layerDrawable1.setLayerInset(1, 16, 14, 16, 14);
+//		if (needBgEffect){
+//			states.addState(new int[] {android.R.attr.state_pressed}, layerDrawable1);//这里需要颜色叠加.但是使用了padding就出问题了
+//		}
+
+		//all fail
+//		if (needBgEffect){
+////			ShapeDrawable21.setColorFilter(overlapColor, PorterDuff.Mode.SRC_OVER);//fail
+////			ShapeDrawable21.setColorFilter(overlapColor, PorterDuff.Mode.DST_OVER);//fail
+////			ShapeDrawable21.setColorFilter(overlapColor, PorterDuff.Mode.OVERLAY);//fail
+////			PorterDuffColorFilter overColorFilter = new PorterDuffColorFilter(overlapColor, PorterDuff.Mode.SRC_OVER);//fail
+////			PorterDuffColorFilter overColorFilter = new PorterDuffColorFilter(overlapColor, PorterDuff.Mode.DST_OVER);//fail
+////			ShapeDrawable21.getPaint().setColorFilter(overColorFilter);
+////			states.addState(new int[] {android.R.attr.state_pressed}, ShapeDrawable21);
+//		}
+		
+		//ok
+		if (needBgEffect){
+			vwNutrition.setOnTouchListener(new OnTouchListenerForPressEffect(overlapColor));
+		}else{
+			vwNutrition.setOnTouchListener(null);
+		}
 			
 		states.addState(new int[] { }, ShapeDrawable1);
 
@@ -1612,7 +1662,6 @@ public class Tool {
 		}else{
 			vwNutrition.setBackgroundDrawable(states);//deprecated in API level 16.
 		}
-//		
 		
 
 	}

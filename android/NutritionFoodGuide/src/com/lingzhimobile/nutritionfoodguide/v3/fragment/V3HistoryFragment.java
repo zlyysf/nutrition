@@ -53,7 +53,7 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
         rightButton.setText("");
 
         monthViewPager = (ViewPager) view.findViewById(R.id.historyViewPager);
-        monthAdapter = new HistoryMonthAdapter(getChildFragmentManager(), monthList);
+        monthAdapter = new HistoryMonthAdapter(getChildFragmentManager(), monthList, this);
         monthViewPager.setAdapter(monthAdapter);
         
         monthViewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -69,13 +69,15 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
 			}
 		});
 
-        title.setText(monthAdapter.getPageTitle(0));
+        m_currentTitle = monthAdapter.getPageTitle(0).toString();
+        title.setText(m_currentTitle);
         return view;
     }
     
     void setTitleWithPager(){
     	int currentItemIndex = monthViewPager.getCurrentItem();
-    	title.setText(monthAdapter.getPageTitle(currentItemIndex));
+    	m_currentTitle = monthAdapter.getPageTitle(currentItemIndex).toString();
+    	title.setText(m_currentTitle);
     }
 
     public static V3HistoryFragment newInstance(int tabId) {
@@ -98,7 +100,8 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
                 int currentItemIndex = monthViewPager.getCurrentItem();
                 if (currentItemIndex > 0) {
                     currentItemIndex --;
-                    title.setText(monthAdapter.getPageTitle(currentItemIndex));
+                    m_currentTitle = monthAdapter.getPageTitle(currentItemIndex).toString();
+                    title.setText(m_currentTitle);
                     monthViewPager.setCurrentItem(currentItemIndex, false);
                 }
             }
@@ -111,7 +114,8 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
                 int currentItemIndex = monthViewPager.getCurrentItem();
                 if (currentItemIndex < monthAdapter.getCount()-1){
                     currentItemIndex++;
-                    title.setText(monthAdapter.getPageTitle(currentItemIndex));
+                    m_currentTitle = monthAdapter.getPageTitle(currentItemIndex).toString();
+                    title.setText(m_currentTitle);
                     monthViewPager.setCurrentItem(currentItemIndex, false);
                 }
             }
