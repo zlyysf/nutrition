@@ -32,8 +32,13 @@ import android.provider.Settings.Secure;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.*;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.*;
+import android.widget.LinearLayout.*;
+import android.widget.ListAdapter;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -278,7 +283,11 @@ public class Tool {
 			String colName = colNames[i];
 			int colIdx = cs.getColumnIndex(colName);
 			String colValStr = cs.getString(colIdx);
-			if ( Cursor.FIELD_TYPE_STRING == cs.getType(colIdx) ){
+			boolean knownBeString = false;
+			if (Tool.getVersionOfAndroidSDK() >= 11){
+				knownBeString = (Cursor.FIELD_TYPE_STRING == cs.getType(colIdx));
+			}
+			if ( knownBeString ){
 				hmRow.put(colName, colValStr);
 			}else{
 				if (Constants.COLUMN_NAME_NDB_No.equalsIgnoreCase(colName) || Constants.COLUMN_NAME_FoodId.equalsIgnoreCase(colName)){
@@ -289,7 +298,11 @@ public class Tool {
 					Object colValObj = null;
 					try{
 						double d_colVal = Double.parseDouble(colValStr);
-						colValObj = Double.valueOf(d_colVal);
+						if (!Double.isNaN(d_colVal)){
+							colValObj = Double.valueOf(d_colVal);
+						}else{
+							colValObj = colValStr;
+						}
 					}catch (NumberFormatException e) {
 						colValObj = colValStr;
 					}
@@ -1664,6 +1677,77 @@ public class Tool {
 		}
 		
 
+	}
+	
+	
+	public static void setListViewExpandHeightByCalculateChildren(ListView lv){
+		int totalHeight = 0;    
+		ListAdapter adapter = lv.getAdapter();
+		int childCount = adapter.getCount();
+
+		for (int i = 0; i < childCount; i++) {
+	        View vwChild = adapter.getView(i, null, lv);
+	        vwChild.measure(0, 0); //计算子项View 的宽高    
+	        totalHeight += vwChild.getMeasuredHeight(); //统计所有子项的总高度    
+	    }    
+	    ViewGroup.LayoutParams params = lv.getLayoutParams();    
+	    params.height = totalHeight + lv.getDividerHeight() * (childCount - 1);    
+	    lv.setLayoutParams(params);
+	}
+	
+	public static void setGridViewFromTooHighToJustExpandHeight(GridView gv){
+		class OnGlobalLayoutListener_GV implements OnGlobalLayoutListener{
+			GridView m_gv;
+			public OnGlobalLayoutListener_GV(GridView gv){
+				m_gv = gv;
+			}
+
+			@Override
+			public void onGlobalLayout() {
+				m_gv.getViewTreeObserver().removeGlobalOnLayoutListener( this );
+//				m_gv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+                View lastChild = m_gv.getChildAt( m_gv.getChildCount() - 1 );
+                int height2 = lastChild.getBottom();
+//                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( LayoutParams.MATCH_PARENT, height2 );
+                ViewGroup.LayoutParams params = m_gv.getLayoutParams();
+                params.height = height2;
+                m_gv.setLayoutParams(params);
+			}
+			
+		}
+		gv.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener_GV(gv));
+	}
+	
+	//no use because childCount being 0
+	public static void setGridViewExpandHeightByCalculateChildren(GridView gv){
+//		int totalHeight = 0;
+//		int childCount = gv.getChildCount();
+//		int columnCount = 0;
+//		if (Tool.getVersionOfAndroidSDK() >= 11) columnCount = gv.getNumColumns();
+//		else ???
+//		int rowCount = childCount % columnCount == 0 ? childCount / columnCount : childCount / columnCount + 1;
+//		// gv.getHorizontalSpacing();
+//		// gv.getPaddingTop();
+//		// gv.getPaddingBottom();
+//		for(int i=0; i<rowCount; i++){
+//			int rowHeight = 0;
+//			for(int j=0; j<columnCount; j++){
+//				int idx = i*columnCount + j;
+//				if (idx <= childCount-1){
+//					View vwChild = gv.getChildAt(idx);
+//					vwChild.measure(0, 0);
+//					int cellHeight = vwChild.getMeasuredHeight();
+//					if (rowHeight < cellHeight){
+//						rowHeight = cellHeight;
+//					}
+//				}
+//			}
+//			totalHeight += rowHeight;
+//		}
+//		ViewGroup.LayoutParams params = gv.getLayoutParams();
+////		params.height = totalHeight + gv.getHorizontalSpacing()*(rowCount-1)+gv.getPaddingTop()+gv.getPaddingBottom();
+//		params.height = totalHeight +gv.getPaddingTop()+gv.getPaddingBottom();
+//		gv.setLayoutParams(params);
 	}
 }
 

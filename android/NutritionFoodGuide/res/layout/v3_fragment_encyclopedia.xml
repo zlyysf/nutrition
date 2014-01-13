@@ -285,10 +285,10 @@ it seems this way ok . but only worked once.
 			        </ImageView>
 			    </LinearLayout>
 
-                <com.lingzhimobile.nutritionfoodguide.GridViewExpandHeight
+                <GridView
                     android:id="@+id/gvFoodType"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="1000dp"
                     android:layout_margin="10dp"
                     android:layout_weight="1"
                     android:fadingEdge="none"
@@ -333,13 +333,14 @@ it seems this way ok . but only worked once.
 			        </ImageView>
 			    </LinearLayout>
 
-                <com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight
+                <ListView
                     android:id="@+id/lvIllness"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:divider="@null"
 
-                    android:listSelector="@android:color/transparent" >
+                    android:listSelector="@android:color/transparent" 
+                />
 
 <!-- http://gushedaoren.blog.163.com/blog/static/1736634052012117112723843/   ok
   
@@ -347,7 +348,7 @@ it seems this way ok . but only worked once.
   http://hi.baidu.com/kabike/item/29ec421e66ea714be75e0693  ok
   android:listSelector="@android:color/transparent" 
 -->
-                </com.lingzhimobile.nutritionfoodguide.ListViewExpandHeight>
+                
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

@@ -155,8 +155,8 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
         m_tvNutrientMacroList.add(tvNutrientMacro1);
         m_tvNutrientMacroList.add(tvNutrientMacro2);
 
-        m_gvFoodType = (GridViewExpandHeight) topView.findViewById(R.id.gvFoodType);
-        m_lvIllness = (ListViewExpandHeight) topView.findViewById(R.id.lvIllness);
+        m_gvFoodType = (GridView) topView.findViewById(R.id.gvFoodType);
+        m_lvIllness = (ListView) topView.findViewById(R.id.lvIllness);
 
 	}
     void initViewsContent(){
@@ -247,11 +247,14 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     	SimpleAdapter SimpleAdapter1 = new SimpleAdapter(getActivity(), meumList, R.layout.grid_cell_square_foodclass, 
 		          new String[]{Key_ItemImage,Key_ItemText}, new int[]{R.id.imageView1,R.id.textView1}); 
     	m_gvFoodType.setAdapter(SimpleAdapter1);
+    	Tool.setGridViewFromTooHighToJustExpandHeight(m_gvFoodType);
     	
     	m_illnessRowList = da.getAllIllness();
         
         IllnessAdapter IllnessAdapter1 = new IllnessAdapter();
         m_lvIllness.setAdapter(IllnessAdapter1);
+        
+        Tool.setListViewExpandHeightByCalculateChildren(m_lvIllness);
     }
 
     public static Fragment newInstance(int arg0) {
