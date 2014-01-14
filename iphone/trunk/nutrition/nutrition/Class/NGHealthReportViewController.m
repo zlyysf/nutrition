@@ -92,8 +92,16 @@
 {
     GADMasterViewController *gad = [GADMasterViewController singleton];
     [gad resetAdView:self andListView:self.adView];
+
     if (isFirstLoad)
     {
+        if (!KeyShouldShowAdView)
+        {
+            CGRect listRect = self.listView.frame;
+            listRect.size.height += 50;
+            self.listView.frame = listRect;
+            self.adView.hidden = YES;
+        }
         HUD.hidden = NO;
         [HUD show:YES];
         isFirstLoad = NO;

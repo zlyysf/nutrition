@@ -33,11 +33,12 @@
 @property (nonatomic,strong)NSArray *symptomTypeRows;
 @property (nonatomic,strong) UILabel *recordEmptyDisplayLabel;
 @property (nonatomic,strong)NSDictionary *monthDict;
+@property (nonatomic,assign)BOOL isFirstLoad;
 @end
 
 @implementation NGRecordHistoryViewController
 //@synthesize cycleView;
-@synthesize distinctMonthsArray,currentPage,historyDict,totalPage,table1DataSource,table2DataSource,table3DataSource,symptomRowsDict,symptomTypeRows,recordEmptyDisplayLabel,monthDict;
+@synthesize distinctMonthsArray,currentPage,historyDict,totalPage,table1DataSource,table2DataSource,table3DataSource,symptomRowsDict,symptomTypeRows,recordEmptyDisplayLabel,monthDict,isFirstLoad;
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -71,7 +72,7 @@
     UIBarButtonItem *rightItem = [[UIBarButtonItem alloc]initWithImage:[UIImage imageNamed:@"right.png"] style:UIBarButtonItemStyleBordered target:self action:@selector(scrolltonext)];
     [rightItem setEnabled:NO];
     self.navigationItem.rightBarButtonItem = rightItem;
-
+    isFirstLoad = YES;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(historyUpdated:) name: Notification_HistoryUpdatedKey object:nil];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
@@ -91,6 +92,19 @@
 {
     GADMasterViewController *gad = [GADMasterViewController singleton];
     [gad resetAdView:self andListView:self.adView];
+    if (isFirstLoad)
+    {
+        isFirstLoad = NO;
+        if (!KeyShouldShowAdView)
+        {
+            CGRect listRect = self.contentScrollView.frame;
+            listRect.size.height += 50;
+            self.contentScrollView.frame = listRect;
+            self.adView.hidden = YES;
+        }
+    }
+    
+
 }
 
 -(void)viewDidAppear:(BOOL)animated
