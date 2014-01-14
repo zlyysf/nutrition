@@ -11,7 +11,8 @@
 
 #define KeyIsEnvironmentDebug 0
 
-#define KeyShouldShowAdView 0
+#define KeyShouldShowAdView 1 //作用于部分广告条，以方便截图
+
 #define ParseApp_ApplicationID @"fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1" //zlyysf nutrition1 app
 #define ParseApp_ClientKey @"TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex" //zlyysf nutrition1 app
 
