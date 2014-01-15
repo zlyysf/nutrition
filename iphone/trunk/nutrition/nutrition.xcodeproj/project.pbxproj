@@ -1751,8 +1751,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dalei Li (43DU399UKG)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/nutrition/\\\"",
-					/Users/flyouting/zlyApple/work/nutrition/git1/iphone/trunk/nutrition/nutrition,
+					"\"$(SRCROOT)/nutrition/\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
@@ -1783,8 +1782,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lingzhi LLC (5F9UDRV872)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\\\"$(SRCROOT)/nutrition/\\\"",
-					/Users/flyouting/zlyApple/work/nutrition/git1/iphone/trunk/nutrition/nutrition,
+					"\"$(SRCROOT)/nutrition/\"",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
