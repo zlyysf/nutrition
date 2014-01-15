@@ -64,14 +64,14 @@
 		08859A0E18504CD90063553D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0D18504CD90063553D /* CFNetwork.framework */; };
 		08859A1018504CF80063553D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0F18504CF80063553D /* MobileCoreServices.framework */; };
 		08859A1218504D2C0063553D /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A1118504D2C0063553D /* libz.1.1.3.dylib */; };
-		08859A18185054030063553D /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A17185054030063553D /* Parse.framework */; };
-		08859A1B185058390063553D /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
 		088B768417C4B8F200206959 /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768317C4B8F200206959 /* LZDataAccessUtil.m */; };
 		088B768517C4BADD00206959 /* LZDataAccessUtil.h in Sources */ = {isa = PBXBuildFile; fileRef = 088B768217C4B8F200206959 /* LZDataAccessUtil.h */; };
 		088B768617C4BADD00206959 /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768317C4B8F200206959 /* LZDataAccessUtil.m */; };
+		08A1A2CA18863EBF00E95049 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A1A2C918863EBF00E95049 /* Parse.framework */; };
+		08A1A2CB18863ED600E95049 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A1A2C918863EBF00E95049 /* Parse.framework */; };
+		08A1A2CC188649C600E95049 /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
+		08A1A2CD188649C700E95049 /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
 		08ED42D317D4970A00917C78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
-		08FDAC93186030C10015E7EE /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A17185054030063553D /* Parse.framework */; };
-		08FDAC94186031170015E7EE /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
 		08FDAC95186031740015E7EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631DB17702CDF0068CBFE /* AudioToolbox.framework */; };
 		08FDAC961860317C0015E7EE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0D18504CD90063553D /* CFNetwork.framework */; };
 		08FDAC97186031900015E7EE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D81C17AF8921000AEC06 /* CoreLocation.framework */; };
@@ -250,10 +250,10 @@
 		08859A0D18504CD90063553D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		08859A0F18504CF80063553D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		08859A1118504D2C0063553D /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
-		08859A17185054030063553D /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = nutrition/Parse.framework; sourceTree = "<group>"; };
 		08859A1A185058390063553D /* FBMissingSymbols.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBMissingSymbols.m; path = nutrition/Class/FBMissingSymbols.m; sourceTree = "<group>"; };
 		088B768217C4B8F200206959 /* LZDataAccessUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZDataAccessUtil.h; sourceTree = "<group>"; };
 		088B768317C4B8F200206959 /* LZDataAccessUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZDataAccessUtil.m; sourceTree = "<group>"; };
+		08A1A2C918863EBF00E95049 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = nutrition/Parse.framework; sourceTree = "<group>"; };
 		5F03D33B174B923F008EFB60 /* LZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZProgressView.h; path = Class/LZProgressView.h; sourceTree = "<group>"; };
 		5F03D33C174B923F008EFB60 /* LZProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZProgressView.m; path = Class/LZProgressView.m; sourceTree = "<group>"; };
 		5F03D33D174B923F008EFB60 /* LZRecommendFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFoodCell.h; path = Class/LZRecommendFoodCell.h; sourceTree = "<group>"; };
@@ -616,10 +616,10 @@
 				085C8D5A17336A29001A1ABB /* CoreGraphics.framework in Frameworks */,
 				08FDAC961860317C0015E7EE /* CFNetwork.framework in Frameworks */,
 				08FDAC95186031740015E7EE /* AudioToolbox.framework in Frameworks */,
+				08A1A2CB18863ED600E95049 /* Parse.framework in Frameworks */,
 				085C8D7917336A3D001A1ABB /* libsqlite3.dylib in Frameworks */,
 				085C8D5817336A29001A1ABB /* UIKit.framework in Frameworks */,
 				085C8D5917336A29001A1ABB /* Foundation.framework in Frameworks */,
-				08FDAC93186030C10015E7EE /* Parse.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -627,7 +627,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08859A18185054030063553D /* Parse.framework in Frameworks */,
+				08A1A2CA18863EBF00E95049 /* Parse.framework in Frameworks */,
 				08859A1218504D2C0063553D /* libz.1.1.3.dylib in Frameworks */,
 				5F746C3A176B1E8600E68D0E /* SystemConfiguration.framework in Frameworks */,
 				FCEE441D1851FC24008329AF /* libCorePlot-CocoaTouch.a in Frameworks */,
@@ -804,7 +804,7 @@
 		5F3338A7172A407E0096E7AE /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				08859A17185054030063553D /* Parse.framework */,
+				08A1A2C918863EBF00E95049 /* Parse.framework */,
 				08859A1118504D2C0063553D /* libz.1.1.3.dylib */,
 				08859A0F18504CF80063553D /* MobileCoreServices.framework */,
 				08859A0D18504CD90063553D /* CFNetwork.framework */,
@@ -1487,7 +1487,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				08FDAC94186031170015E7EE /* FBMissingSymbols.m in Sources */,
 				0818C9C818472682003DB33A /* CDataScanner.m in Sources */,
 				0818CA1118477B16003DB33A /* CDataScanner.h in Sources */,
 				0818CA0A18477AC6003DB33A /* CJSONDeserializer.h in Sources */,
@@ -1496,6 +1495,7 @@
 				0818CA0D18477AC6003DB33A /* CJSONScanner.m in Sources */,
 				0818CA0E18477AC6003DB33A /* CJSONSerializer.h in Sources */,
 				0818CA0F18477AC6003DB33A /* CJSONSerializer.m in Sources */,
+				08A1A2CD188649C700E95049 /* FBMissingSymbols.m in Sources */,
 				0818CA1018477AC6003DB33A /* JSONRepresentation.h in Sources */,
 				08ED42D317D4970A00917C78 /* MBProgressHUD.m in Sources */,
 				088B768517C4BADD00206959 /* LZDataAccessUtil.h in Sources */,
@@ -1531,6 +1531,7 @@
 			files = (
 				081D3C1F187EB0D00030D743 /* LZTest1.m in Sources */,
 				5F3338B5172A407E0096E7AE /* main.m in Sources */,
+				08A1A2CC188649C600E95049 /* FBMissingSymbols.m in Sources */,
 				5F729BC718432105004FC428 /* NGNutritionCell.m in Sources */,
 				5F3338B9172A407E0096E7AE /* LZAppDelegate.m in Sources */,
 				5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */,
@@ -1546,7 +1547,6 @@
 				5F03D348174B9241008EFB60 /* LZProgressView.m in Sources */,
 				5FECAD9E18387F4E00D72A8C /* LZGlobalService.m in Sources */,
 				5FF08A941850526C00A954C8 /* NGIllnessInfoViewController.m in Sources */,
-				08859A1B185058390063553D /* FBMissingSymbols.m in Sources */,
 				FC1D1C27185EF0F500911A6C /* LZKeychainManager.m in Sources */,
 				5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */,
 				5FE436CE175F29D5003947ED /* LZKeyboardToolBar.m in Sources */,
@@ -1751,7 +1751,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Dalei Li (43DU399UKG)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/nutrition/\"",
+					"\\\"$(SRCROOT)/nutrition/\\\"",
+					/Users/flyouting/zlyApple/work/nutrition/git1/iphone/trunk/nutrition/nutrition,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
@@ -1782,7 +1783,8 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Lingzhi LLC (5F9UDRV872)";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
-					"\"$(SRCROOT)/nutrition/\"",
+					"\\\"$(SRCROOT)/nutrition/\\\"",
+					/Users/flyouting/zlyApple/work/nutrition/git1/iphone/trunk/nutrition/nutrition,
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
