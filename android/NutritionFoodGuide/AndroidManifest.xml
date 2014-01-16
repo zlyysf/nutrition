@@ -13,7 +13,6 @@
 	<uses-permission android:name="android.permission.READ_PHONE_STATE"></uses-permission>
     
     <uses-permission android:name="android.permission.GET_TASKS" />
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 	<uses-permission android:name="android.permission.VIBRATE" />
@@ -184,11 +183,13 @@
 		        <action android:name= "com.lingzhimobile.nutritionfoodguide.BroadcastReceiverAlert" />
 		    </intent-filter>
 		</receiver> 
+		<!--  
         <receiver android:name=".BroadcastReceiverBootComplete" >
 		    <intent-filter>
 		        <action android:name="android.intent.action.BOOT_COMPLETED" />
 		    </intent-filter>
 		</receiver>
+		-->
 		
         <service android:name="com.parse.PushService" />
 		<receiver android:name="com.parse.ParseBroadcastReceiver">
