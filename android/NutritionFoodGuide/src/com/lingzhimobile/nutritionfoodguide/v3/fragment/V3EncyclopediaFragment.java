@@ -12,13 +12,16 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SimpleCursorAdapter.ViewBinder;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.*;
 import android.widget.AdapterView.OnItemClickListener;
 
 import com.lingzhimobile.nutritionfoodguide.*;
 import com.lingzhimobile.nutritionfoodguide.v3.activity.*;
+import com.umeng.analytics.MobclickAgent;
 
 
 public class V3EncyclopediaFragment extends V3BaseHeadFragment {
@@ -80,8 +83,11 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 
 
 	TextView m_tvTitle;
+	ScrollViewDebug m_scrollView1;
     ArrayList<TextView> m_tvNutrientVitaminList, m_tvNutrientMineralList, m_tvNutrientMacroList;
     GridView m_gvFoodType;
+    
+    ViewTreeObserver.OnScrollChangedListener m_ViewTreeObserver_OnScrollChangedListener1;
     
     ArrayList<String> m_foodTypeIdList;
     HashMap<String, HashMap<String, Object>> m_foodTypeTranslation2LevelDict;
@@ -93,12 +99,32 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+    	Log.d(LogTag, "onCreate");
         super.onCreate(savedInstanceState);
         m_activity = this.getActivity();
     }
+    
+    public void onStart() {
+		Log.d(LogTag, "onStart");
+		super.onStop();
+	}
+    public void onStop() {
+		Log.d(LogTag, "onStop");
+		super.onStop();
+	}
+    public void onResume() {
+		Log.d(LogTag, "onResume");
+		super.onResume();
+	}
+	public void onPause() {
+		Log.d(LogTag, "onPause");
+		super.onPause();
+		m_scrollView1.mCanScroll = false;
+	}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    	Log.d(LogTag, "onCreateView");
         View view = inflater.inflate(R.layout.v3_fragment_encyclopedia, container, false);
         
         initViewHandles(view);
@@ -119,6 +145,8 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     	btn1 = (Button) topView.findViewById(R.id.rightButton);
     	btn1.setVisibility(View.GONE);
         
+    	m_scrollView1 = (ScrollViewDebug)topView.findViewById(R.id.scrollView1);
+    	
         TextView tvNutrientVitamin1 = (TextView)topView.findViewById(R.id.tvNutrientVitamin1);
         TextView tvNutrientVitamin2 = (TextView)topView.findViewById(R.id.tvNutrientVitamin2);
         TextView tvNutrientVitamin3 = (TextView)topView.findViewById(R.id.tvNutrientVitamin3);
@@ -190,6 +218,50 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 				startActivity(intent);
 			}//onItemClick
 		});//setOnItemClickListener
+    	
+//    	//no use
+//    	m_scrollView1.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+//			@Override
+//			public void onScrollChanged() {
+//				String msg = "top scrollView OnScrollChanged, x,y=["+m_scrollView1.getScrollX()+","+m_scrollView1.getScrollY()+"]";
+//				Log.d(LogTag, msg);
+//			}
+//		});
+    	m_scrollView1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				m_scrollView1.mCanScroll = true;
+			}
+		});
+    	
+    	m_ViewTreeObserver_OnScrollChangedListener1 = new ViewTreeObserver.OnScrollChangedListener() {
+			@Override
+			public void onScrollChanged() {
+				String msg = "top scrollView OnScrollChanged in OnTouchListener, x,y=["+m_scrollView1.getScrollX()+","+m_scrollView1.getScrollY()+"]";
+				Log.d(LogTag, msg);
+			}
+		};
+		//only by this way can get OnScrollChanged event. 
+		//http://stackoverflow.com/questions/4263053/android-scrollview-onscrollchanged
+//    	m_scrollView1.setOnTouchListener(new View.OnTouchListener() {
+//			@Override
+//			public boolean onTouch(View v, MotionEvent event) {
+//				m_scrollView1.getViewTreeObserver().addOnScrollChangedListener(m_ViewTreeObserver_OnScrollChangedListener1);
+//				return false;
+//			}
+//		});
+    	// but sometimes below not work, at least after added lifecycle log
+    	m_scrollView1.setOnTouchListener(new View.OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				ViewTreeObserver.OnScrollChangedListener ViewTreeObserver_OnScrollChangedListener1 = (ViewTreeObserver.OnScrollChangedListener)m_scrollView1.getTag();
+				if (ViewTreeObserver_OnScrollChangedListener1==null){
+					m_scrollView1.setTag(m_ViewTreeObserver_OnScrollChangedListener1);
+			    	m_scrollView1.getViewTreeObserver().addOnScrollChangedListener(m_ViewTreeObserver_OnScrollChangedListener1);
+				}
+				return false;
+			}
+		});
     }
     void setViewsContent(){
     	HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(getActivity());

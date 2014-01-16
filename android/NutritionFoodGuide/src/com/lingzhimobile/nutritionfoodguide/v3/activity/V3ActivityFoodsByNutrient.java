@@ -21,6 +21,7 @@ import android.view.*;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.view.View.OnTouchListener;
+import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.*;
@@ -37,10 +38,13 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 	
 	static final String LogTag = "V3ActivityFoodsByNutrient";
 	
+	
 	Button m_btnBack;
 	TextView m_tvTitle;
 	RadioGroup m_SegmentedRadioGroup1;
 	RadioButton m_rbDescription, m_rbFoods;
+	
+	ScrollViewDebug m_scrollView1;
 	
 	LinearLayout m_llFoods, m_llNutrientDescription;
 	
@@ -58,16 +62,19 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 	ArrayList<HashMap<String, Object>> m_foodsData;
 
 	public void onResume() {
+		Log.d(LogTag, "onResume");
 		super.onResume();
 		MobclickAgent.onResume(this);
 	}
 	public void onPause() {
+		Log.d(LogTag, "onPause");
 		super.onPause();
 		MobclickAgent.onPause(this);
 	}
 
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
+		Log.d(LogTag, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.v3_activity_foods_bynutrient);
         
@@ -79,17 +86,29 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 	
     @Override
     protected void onDestroy() {
+    	Log.d(LogTag, "onDestroy");
 		//fix a warning . com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityIllness has leaked IntentReceiver com.android.qualcomm.browsermanagement.BrowserManagement$1@41cd7790 that was originally registered here. Are you missing a call to unregisterReceiver()?
     	//android.app.IntentReceiverLeaked: Activity com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityIllness has leaked IntentReceiver com.android.qualcomm.browsermanagement.BrowserManagement$1@41cd7790 that was originally registered here. Are you missing a call to unregisterReceiver()?
     	//solved by http://angrycode.cn/archives/476
     	m_webView1.destroy();
 		super.onDestroy();
 	}
+    protected void onStart() {
+		Log.d(LogTag, "onStart");
+		super.onStop();
+	}
+    protected void onStop() {
+		Log.d(LogTag, "onStop");
+		super.onStop();
+	}
+
     
 	void initViewHandles(){
     	
     	m_tvTitle = (TextView) findViewById(R.id.titleText);
     	m_btnBack = (Button) findViewById(R.id.leftButton);
+    	
+    	m_scrollView1 = (ScrollViewDebug)findViewById(R.id.scrollView1);
 
     	m_SegmentedRadioGroup1 = (RadioGroup)findViewById(R.id.SegmentedRadioGroup1);
     	m_rbDescription = (RadioButton)findViewById(R.id.rbDescription);
@@ -137,9 +156,9 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
             @Override
             public void onClick(View v) {
                 finish();
+                Log.d(LogTag, "done finish");
             }
         });
-		
 
 		m_SegmentedRadioGroup1.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 			@Override
@@ -149,10 +168,25 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 				switchViews();
 			}
 		});
+		
+		m_scrollView1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				m_scrollView1.mCanScroll = true;
+			}
+		});
 	}
 	void setViewsContent(){
 		ListAdapterForFood_fromNutrient adapter = new ListAdapterForFood_fromNutrient(this,m_foodsData);
 		m_gridView1.setAdapter(adapter);
+		Tool.setGridViewFromTooHighToJustExpandHeight(m_gridView1);
+		
+		m_scrollView1.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+			@Override
+			public void onGlobalLayout() {
+//				m_scrollView1.scrollTo(0, 0);
+			}
+		});
 		
 		
 //		RichFoodAdapter adapter = new RichFoodAdapter();

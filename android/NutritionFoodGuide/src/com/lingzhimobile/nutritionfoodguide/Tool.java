@@ -1704,8 +1704,12 @@ public class Tool {
 
 			@Override
 			public void onGlobalLayout() {
-				m_gv.getViewTreeObserver().removeGlobalOnLayoutListener( this );
-//				m_gv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				if (Tool.getVersionOfAndroidSDK() >= 16){
+					m_gv.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+				}else{
+					m_gv.getViewTreeObserver().removeGlobalOnLayoutListener( this );
+				}
+				
                 View lastChild = m_gv.getChildAt( m_gv.getChildCount() - 1 );
                 int height2 = lastChild.getBottom();
 //                LinearLayout.LayoutParams params = new LinearLayout.LayoutParams( LayoutParams.MATCH_PARENT, height2 );
@@ -1713,10 +1717,11 @@ public class Tool {
                 params.height = height2;
                 m_gv.setLayoutParams(params);
 			}
-			
 		}
 		gv.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener_GV(gv));
 	}
+	
+	
 	
 	//no use because childCount being 0
 	public static void setGridViewExpandHeightByCalculateChildren(GridView gv){
