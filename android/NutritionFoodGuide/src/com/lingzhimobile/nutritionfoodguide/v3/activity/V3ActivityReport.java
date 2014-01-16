@@ -44,6 +44,7 @@ public class V3ActivityReport extends V3BaseActivity {
 
     // widgets
 	Button m_btnSave, m_btnBack;
+	ScrollViewDebug m_scrollView1;
 	ListView m_lvehIllness, m_lvehSuggestion;
 	
     ListView elementFoodListView;
@@ -121,6 +122,9 @@ public class V3ActivityReport extends V3BaseActivity {
         m_currentTitle = "养生报告";
         TextView tvTitle = (TextView)findViewById(R.id.titleText);
         tvTitle.setText(m_currentTitle);
+        
+        m_scrollView1 = (ScrollViewDebug)findViewById(R.id.scrollView1);
+        
         bmiTextView = (TextView) findViewById(R.id.bmiTextView);
         m_tvBmiTooLight =  (TextView) findViewById(R.id.tvBmiTooLight);
         m_tvBmiNormal =  (TextView) findViewById(R.id.tvBmiNormal);
@@ -260,6 +264,12 @@ public class V3ActivityReport extends V3BaseActivity {
                 m_btnSave.setEnabled(false);
             }
         });
+    	m_scrollView1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				m_scrollView1.mCanScroll = true;
+			}
+		});
     }
     
     void setViewsContent(){

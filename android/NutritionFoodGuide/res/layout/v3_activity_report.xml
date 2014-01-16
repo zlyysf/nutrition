@@ -10,7 +10,8 @@
         android:id="@+id/titleLayout"
         layout="@layout/v3_header_layout" />
 
-    <ScrollView
+    <com.lingzhimobile.nutritionfoodguide.ScrollViewDebug
+        android:id="@+id/scrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
@@ -341,6 +342,6 @@
             </LinearLayout>
             
         </LinearLayout>
-    </ScrollView>
+    </com.lingzhimobile.nutritionfoodguide.ScrollViewDebug>
 
 </LinearLayout>
