@@ -110,6 +110,7 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
 		});
     }
     void setViewsContent(){
+    	setTitleWithPager();
         monthViewPager.setCurrentItem(monthAdapter.getCount()-1, false);
         setNavButtonEnableState();
     }

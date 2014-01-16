@@ -32,6 +32,7 @@
         android:cacheColorHint="#00000000"
         android:divider="@null"
         android:scrollbars="none"
+        android:fadingEdge="none"
         >
     </ListView>
 

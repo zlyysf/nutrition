@@ -39,10 +39,9 @@ public class ActivityFoodNutrition extends V3BaseActivity {
 
 	TextView m_tvTitle;
 	Button m_btnBack;
+	ScrollViewDebug m_scrollView1;
 	TextView m_tvAmount;
 	ListView m_listView1;
-	ScrollView m_scrollView1;
-
 	
 	public void onResume() {
 		super.onResume();
@@ -73,7 +72,7 @@ public class ActivityFoodNutrition extends V3BaseActivity {
     	m_tvAmount = (TextView)findViewById(R.id.tvAmount);
 		m_listView1 = (ListView)findViewById(R.id.listView1);
 		
-		m_scrollView1 = (ScrollView)findViewById(R.id.scrollView1);
+		m_scrollView1 = (ScrollViewDebug)findViewById(R.id.scrollView1);
 	}
 	void initViewsContent(){
 		Intent paramIntent = getIntent();
@@ -90,6 +89,12 @@ public class ActivityFoodNutrition extends V3BaseActivity {
                 finish();
             }
         });
+		m_scrollView1.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				m_scrollView1.mCanScroll = true;
+			}
+		});
 	}
 	void setViewsContent(){
 		HashMap<String, HashMap<String, Object>> foodInfoDict2Level = GlobalVar.getAllFood2LevelDict(this);
