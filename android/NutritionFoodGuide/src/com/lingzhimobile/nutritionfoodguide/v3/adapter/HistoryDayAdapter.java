@@ -42,15 +42,24 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
     ArrayList<Integer> m_sectionlist_dayLocal;
     Integer[] m_sections_dayLocal;
     V3BaseHeadFragment m_fragment;
-//    ListView m_lv;
-//    LinearLayout m_llSideIndex;
+    ListView m_lv;
+    LinearLayout m_llSideIndex;
 
     public HistoryDayAdapter(Context context, ArrayList<HashMap<String, Object>> records, V3BaseHeadFragment fragment, ListView lv, LinearLayout llSideIndex) {
         mContext = context;
         mRecords = records;
         m_fragment = fragment;
         
-        m_sectionlist_dayLocal = new ArrayList<Integer>();
+        m_lv = lv;
+        m_llSideIndex = llSideIndex;
+        
+        getSectionsFromRecords();
+        setContentOfSideIndex(m_lv,m_llSideIndex);
+        
+    }
+    
+    void getSectionsFromRecords(){
+    	m_sectionlist_dayLocal = new ArrayList<Integer>();
         if (mRecords!=null){
         	for(int i=0; i<mRecords.size(); i++){
         		HashMap<String, Object> row = mRecords.get(i);
@@ -62,12 +71,26 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
         	}
         }
         m_sections_dayLocal = m_sectionlist_dayLocal.toArray(new Integer[m_sectionlist_dayLocal.size()]);
+    }
+    
+    public void updateData(Context context, ArrayList<HashMap<String, Object>> records, V3BaseHeadFragment fragment, ListView lv, LinearLayout llSideIndex){
+//    	mRecords = records;
+    	
+    	mContext = context;
+        mRecords = records;
+        m_fragment = fragment;
+        m_lv = lv;//seemed will be null in cache
+        m_llSideIndex = llSideIndex;
         
-//        m_lv = lv;
-//        m_llSideIndex = llSideIndex;
-        
-        setContentOfSideIndex(lv,llSideIndex);
-        
+    	getSectionsFromRecords();
+    	setContentOfSideIndex(m_lv,m_llSideIndex);
+    	lv.post(new Runnable() {
+			@Override
+			public void run() {
+				notifyDataSetChanged();
+			}
+		});
+//    	super.notifyDataSetChanged();
     }
 
     @Override
@@ -322,7 +345,8 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
 		@Override
 		public void onClick(View v) {
 			Intent intent1 = new Intent(mContext, V3ActivityReport.class);
-			intent1.putExtra(Constants.IntentParamKey_BackButtonTitle, m_fragment.getCurrentTitle());
+//			intent1.putExtra(Constants.IntentParamKey_BackButtonTitle, m_fragment.getCurrentTitle());
+			intent1.putExtra(Constants.IntentParamKey_BackButtonTitle, mContext.getResources().getString(R.string.tabCaption_history));
 			intent1.putExtra(Constants.IntentParamKey_IsShowingData, true);
 			intent1.putExtra(Constants.COLUMN_NAME_DayLocal, m_dayLocal);
 			mContext.startActivity(intent1);
@@ -346,21 +370,27 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
 		return position;
 	}
 	
-	
-	public void setContentOfSideIndex(final ListView lv, LinearLayout llSideIndex) {
-		class OnClickListener_ListViewIndexItem implements View.OnClickListener{
-			@Override
-			public void onClick(View v) {
-				Integer secIdxObj = (Integer)v.getTag();
-				int itemPos = getPositionForSection(secIdxObj);
-				lv.setSelection(itemPos);
-			}
+	static class OnClickListener_ListViewIndexItem implements View.OnClickListener{
+		HistoryDayAdapter m_adapter;
+		ListView m_lv;
+		public OnClickListener_ListViewIndexItem(HistoryDayAdapter adapter, ListView lv){
+			m_adapter = adapter;
+			m_lv = lv;
 		}
 		
+		@Override
+		public void onClick(View v) {
+			Integer secIdxObj = (Integer)v.getTag();
+			int itemPos = m_adapter.getPositionForSection(secIdxObj);
+			m_lv.setSelection(itemPos);
+		}
+	}
+	
+	public void setContentOfSideIndex(final ListView lv, LinearLayout llSideIndex) {
 		llSideIndex.removeAllViews();
 		Object[] sections = getSections();
 		if (sections!=null){
-			OnClickListener_ListViewIndexItem OnClickListener_ListViewIndexItem1 = new OnClickListener_ListViewIndexItem();
+			OnClickListener_ListViewIndexItem OnClickListener_ListViewIndexItem1 = new OnClickListener_ListViewIndexItem(HistoryDayAdapter.this, lv);
 			for(int i=0; i<sections.length; i++){
 				Object section = sections[i];
 				TextView tv  = new TextView(mContext);
@@ -376,9 +406,6 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
 				llSideIndex.addView(tv);
 			}
 		}
-		
-		
-
 	}
 
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.RadioButton;
 
+import com.lingzhimobile.nutritionfoodguide.DataAccess;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.ToolParse;
 import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3DiagnoseFragment;
@@ -44,7 +45,8 @@ public class V3ActivityHome extends V3BaseActivity {
         
         ParseAnalytics.trackAppOpened(getIntent());
         
-        ToolParse.syncRemoteDataToLocal(this, null);
+//        ToolParse.syncRemoteDataToLocal(this, null);
+        DataAccess.mLogEnabled = false;
 
         setContentView(R.layout.tab_activity);
 

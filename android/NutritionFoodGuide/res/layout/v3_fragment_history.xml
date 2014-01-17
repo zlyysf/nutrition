@@ -8,8 +8,25 @@
         android:id="@+id/titleLayout"
         layout="@layout/v3_header_layout" />
 
-    <android.support.v4.view.ViewPager        android:id="@+id/historyViewPager"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent" >
+        
+        <android.support.v4.view.ViewPager
+	        android:id="@+id/historyViewPager"
+	        android:layout_width="match_parent"
+	        android:layout_height="match_parent" />
+
+        <TextView
+            android:id="@+id/tvNoData"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/noHistoryRecord"
+            android:textSize="17sp" />
+        
+    </RelativeLayout>
+
+    
 
 </LinearLayout>

@@ -35,6 +35,8 @@ public class DataAccess {
 	}
 	
 	static final String LogTag = "DataAccess";
+	public static boolean mLogEnabled = true;
+	
 //	public static final int RawResIdForDB = R.raw.custom_db_dat;//zip
 //	public static final int RawResIdForNormalDB = R.raw.customdb_dat;//change ext name to avoid file 1M size limit
 	public static final int RawResIdForZipDB = R.raw.custom_db_dat_zip;//zip and change ext name to improve install-apk performance when debug
@@ -53,7 +55,7 @@ public class DataAccess {
 //			dir.mkdir();
 //		}
 //		
-//		Log.d("DataAccess", "getDBfileDirPath ret:"+dirPath);
+//		if(mLogEnabled) Log.d("DataAccess", "getDBfileDirPath ret:"+dirPath);
 //		return dirPath;
 //	}
 	public static String getDBfileDirPath(Context ctx){
@@ -65,22 +67,22 @@ public class DataAccess {
 			dir.mkdir();
 		}
 		
-		Log.d(LogTag, "getDBfileDirPath ret:"+dirPath);
+		if(mLogEnabled) Log.d(LogTag, "getDBfileDirPath ret:"+dirPath);
 		return dirPath;
 	}
 	
 	public static String getDBfilePath(Context ctx){
 		String filePath = getDBfileDirPath(ctx) + File.separator + DBfileName;
-		Log.d(LogTag, "getDBfilePath ret:"+filePath);
+		if(mLogEnabled) Log.d(LogTag, "getDBfilePath ret:"+filePath);
 		return filePath;
 	}
 	
 	private boolean prepareDB(Context ctx) {
-		Log.d(LogTag, "prepareDB enter");
+		if(mLogEnabled) Log.d(LogTag, "prepareDB enter");
 		String dbFilePath = getDBfilePath(ctx);
 		File dbFile = new File(dbFilePath);
 		if (!dbFile.exists()){
-			Log.d(LogTag, "prepareDB .if (!dbFile.exists()).");
+			if(mLogEnabled) Log.d(LogTag, "prepareDB .if (!dbFile.exists()).");
 			//Tool.unzipRawFileToSDCardFile(ctx, RawResIdForDB, dbFilePath);
 //			Tool.copyRawFileToSDCardFile(ctx, RawResIdForNormalDB, dbFilePath);//ok
 			Tool.unzipRawFileToSDCardFile(ctx, RawResIdForZipDB, dbFilePath);
@@ -88,15 +90,15 @@ public class DataAccess {
 		}else{
 			if (!StoredConfigTool.getDBalreadyUpdated(ctx)){
 				if (dbFile.delete()){
-					Log.d(LogTag, "prepareDB .else (!dbFile.exists()). if (!StoredConfigTool.getDBalreadyUpdated(ctx)). if (dbFile.delete()).");
+					if(mLogEnabled) Log.d(LogTag, "prepareDB .else (!dbFile.exists()). if (!StoredConfigTool.getDBalreadyUpdated(ctx)). if (dbFile.delete()).");
 					Tool.unzipRawFileToSDCardFile(ctx, RawResIdForZipDB, dbFilePath);
 					StoredConfigTool.setDBalreadyUpdated(ctx);
 				}else{
-					Log.d(LogTag, "prepareDB .else (!dbFile.exists()). else (!StoredConfigTool.getDBalreadyUpdated(ctx)). else (dbFile.delete())--something WRONG.");
+					if(mLogEnabled) Log.d(LogTag, "prepareDB .else (!dbFile.exists()). else (!StoredConfigTool.getDBalreadyUpdated(ctx)). else (dbFile.delete())--something WRONG.");
 				}
 				
 			}else{
-				Log.d(LogTag, "prepareDB .else (!dbFile.exists()). else (!StoredConfigTool.getDBalreadyUpdated(ctx)). do nothing.");
+				if(mLogEnabled) Log.d(LogTag, "prepareDB .else (!dbFile.exists()). else (!StoredConfigTool.getDBalreadyUpdated(ctx)). do nothing.");
 			}
 		}
 		return true;
@@ -158,7 +160,7 @@ public class DataAccess {
 	    if (needConsiderLoss){
 	    	hmDRI = letDRIConsiderLoss(hmDRI);
 	    }
-	    Log.d(LogTag, "getStandardDRIs_considerLoss ret:"+hmDRI.toString());
+	    if(mLogEnabled) Log.d(LogTag, "getStandardDRIs_considerLoss ret:"+hmDRI.toString());
 	    return hmDRI;
 	}
 	public HashMap<String, Double> getStandardDRIULs_considerLoss(int sex,int age,double weight,double height,int activityLevel, boolean needConsiderLoss)
@@ -176,7 +178,7 @@ public class DataAccess {
 	    if (needConsiderLoss){
 	    	hmDRI = letDRIULConsiderLoss(hmDRI);
 	    }
-	    Log.d(LogTag, "getStandardDRIULs_considerLoss ret:"+hmDRI.toString());
+	    if(mLogEnabled) Log.d(LogTag, "getStandardDRIULs_considerLoss ret:"+hmDRI.toString());
 	    return hmDRI;
 	}
 	
@@ -202,7 +204,7 @@ public class DataAccess {
 		HashMap<String, Double> row = rows.get(0);
 		row.remove("Start");
 		row.remove("End");
-		Log.d(LogTag, "getDRIbyGender ret:"+row.toString());
+		if(mLogEnabled) Log.d(LogTag, "getDRIbyGender ret:"+row.toString());
 		return row;
 	}
 	
@@ -227,13 +229,13 @@ public class DataAccess {
 		HashMap<String, Double> row = rows.get(0);
 		row.remove("Start");
 		row.remove("End");
-		Log.d(LogTag, "getDRIULbyGender ret:"+row.toString());
+		if(mLogEnabled) Log.d(LogTag, "getDRIULbyGender ret:"+row.toString());
 		return row;
 	}
 	
 	public HashMap<String, Double> getStandardDRIs_withUserInfo(HashMap<String, Object> userInfo,HashMap<String, Object> options){
 		//int sex,int age,double weight,double height,int activityLevel
-		Log.d(LogTag, "getStandardDRIs_withUserInfo enter, userInfo=:"+userInfo+"  options="+options);
+		if(mLogEnabled) Log.d(LogTag, "getStandardDRIs_withUserInfo enter, userInfo=:"+userInfo+"  options="+options);
 		assert(userInfo!=null);
 		Integer intObj_sex = (Integer)userInfo.get(Constants.ParamKey_sex);
 		Integer intObj_age = (Integer)userInfo.get(Constants.ParamKey_age);
@@ -261,7 +263,7 @@ public class DataAccess {
 	}
 	public HashMap<String, Double> getStandardDRIULs_withUserInfo(HashMap<String, Object> userInfo,HashMap<String, Object> options){
 		//int sex,int age,double weight,double height,int activityLevel
-		Log.d(LogTag, "getStandardDRIULs_withUserInfo enter, userInfo=:"+userInfo+"  options="+options);
+		if(mLogEnabled) Log.d(LogTag, "getStandardDRIULs_withUserInfo enter, userInfo=:"+userInfo+"  options="+options);
 		assert(userInfo!=null);
 		Integer intObj_sex = (Integer)userInfo.get(Constants.ParamKey_sex);
 		Integer intObj_age = (Integer)userInfo.get(Constants.ParamKey_age);
@@ -313,7 +315,7 @@ public class DataAccess {
 	        
 	        DRIdict2.put(key, Double.valueOf(driV2));
 	    }
-	    Log.d(LogTag, "letDRIConsiderLoss ret:"+DRIdict2.toString());
+	    if(mLogEnabled) Log.d(LogTag, "letDRIConsiderLoss ret:"+DRIdict2.toString());
 	    return DRIdict2;
 	}
 	HashMap<String, Double> letDRIULConsiderLoss(HashMap<String, Double> DRIdict)
@@ -342,7 +344,7 @@ public class DataAccess {
 	        
 	        DRIdict2.put(key, Double.valueOf(driV2));
 	    }
-	    Log.d(LogTag, "letDRIULConsiderLoss ret:"+DRIdict2.toString());
+	    if(mLogEnabled) Log.d(LogTag, "letDRIULConsiderLoss ret:"+DRIdict2.toString());
 	    return DRIdict2;
 	}
 	
@@ -384,11 +386,11 @@ public class DataAccess {
 	    	sbWholeQuery.append(afterWherePart);
 
 	    String[] sqlParamAry = Tool.convertToStringArray(sqlParams.toArray());
-	    Log.d(LogTag, "getRowsByQuery sbWholeQuery="+sbWholeQuery+",\nsqlParamAry="+sqlParamAry);
+	    if(mLogEnabled) Log.d(LogTag, "getRowsByQuery sbWholeQuery="+sbWholeQuery+",\nsqlParamAry="+sqlParamAry);
 	    Cursor cs = mDBcon.rawQuery(sbWholeQuery.toString(),sqlParamAry);
 	    ArrayList<HashMap<String, Object>> dataAry = Tool.getRowsWithTypeFromCursor(cs);
 	    cs.close();
-	    Log.d(LogTag, "getRowsByQuery ret:"+dataAry);
+	    if(mLogEnabled) Log.d(LogTag, "getRowsByQuery ret:"+dataAry);
 	    return dataAry;
 	}
 	
@@ -413,7 +415,7 @@ public class DataAccess {
 	 */
 	HashMap<String, Object> getConditionsPart_withFilters(HashMap<String, Object> filters ,HashMap<String, Object> options)
 	{
-		Log.d(LogTag, "getConditionsPart_withFilters enter, filters="+filters+", options="+options);
+		if(mLogEnabled) Log.d(LogTag, "getConditionsPart_withFilters enter, filters="+filters+", options="+options);
 		assert (filters != null);
 			
 	    Boolean obj_needWhereWord = (Boolean)filters.get("needWhereWord");
@@ -490,7 +492,7 @@ public class DataAccess {
 	    hmRet.put("strCondition", sbConditions.toString());
 	    hmRet.put("sqlParams", sqlParams);
 	    
-	    Log.d(LogTag, "getConditionsPart_withFilters ret:"+hmRet);
+	    if(mLogEnabled) Log.d(LogTag, "getConditionsPart_withFilters ret:"+hmRet);
 	    return hmRet;
 	}
 
@@ -500,7 +502,7 @@ public class DataAccess {
 	 */
 	HashMap<String, Object> getBigUnitCondition_withExpressionItems(ArrayList<ArrayList<Object>> expressionItemsArray,String joinBoolOp,HashMap<String, Object> options)
 	{
-		Log.d(LogTag, "getBigUnitCondition_withExpressionItems enter, expressionItemsArray="+expressionItemsArray+", joinBoolOp="+joinBoolOp);
+		if(mLogEnabled) Log.d(LogTag, "getBigUnitCondition_withExpressionItems enter, expressionItemsArray="+expressionItemsArray+", joinBoolOp="+joinBoolOp);
 //		boolean varBeParamWay = false;
 //		if (options!=null){
 //			Boolean obj_varBeParamWay = (Boolean)options.get("varBeParamWay");
@@ -533,7 +535,7 @@ public class DataAccess {
 	    hmRet.put("strCondition", sbCondition.toString());
 	    hmRet.put("sqlParams", sqlParams);
 	    
-	    Log.d(LogTag, "getBigUnitCondition_withExpressionItems ret:"+hmRet);
+	    if(mLogEnabled) Log.d(LogTag, "getBigUnitCondition_withExpressionItems ret:"+hmRet);
 	    return hmRet;
 	}
 	
@@ -543,7 +545,7 @@ public class DataAccess {
 	@SuppressWarnings("unchecked")
 	HashMap<String, Object> getMediumUnitCondition_withExpressionItems(ArrayList<Object> expressionItems,String joinBoolOp ,HashMap<String, Object> options)
 	{
-		Log.d(LogTag, "getMediumUnitCondition_withExpressionItems enter, expressionItems="+expressionItems+", joinBoolOp="+joinBoolOp);
+		if(mLogEnabled) Log.d(LogTag, "getMediumUnitCondition_withExpressionItems enter, expressionItems="+expressionItems+", joinBoolOp="+joinBoolOp);
 		
 //		boolean varBeParamWay = false;
 //		if (options!=null){
@@ -605,7 +607,7 @@ public class DataAccess {
 	    hmRet.put("strCondition", sbCondition.toString());
 	    hmRet.put("sqlParams", sqlParams);
 	    
-	    Log.d(LogTag, "getMediumUnitCondition_withExpressionItems ret:"+hmRet);
+	    if(mLogEnabled) Log.d(LogTag, "getMediumUnitCondition_withExpressionItems ret:"+hmRet);
 	    return hmRet;
 	}
 
@@ -615,7 +617,7 @@ public class DataAccess {
 	 */
 	HashMap<String, Object> getUnitCondition_withColumn(String columnName,String operator,Object valObj , boolean notFlag ,HashMap<String, Object> options)
 	{
-		Log.d(LogTag, "getUnitCondition_withColumn enter, columnName="+columnName+", operator="+operator+", valObj="+valObj+", notFlag="+notFlag);
+		if(mLogEnabled) Log.d(LogTag, "getUnitCondition_withColumn enter, columnName="+columnName+", operator="+operator+", valObj="+valObj+", notFlag="+notFlag);
 		
 		boolean varBeParamWay = false;
 		if (options!=null){
@@ -657,7 +659,7 @@ public class DataAccess {
 	    hmRet.put("strCondition", sbCondition.toString());
 	    hmRet.put("sqlParams", sqlParams);
 	    
-	    Log.d(LogTag, "getUnitCondition_withColumn ret:"+hmRet);
+	    if(mLogEnabled) Log.d(LogTag, "getUnitCondition_withColumn ret:"+hmRet);
 	    return hmRet;
 	}
 	/*
@@ -666,7 +668,7 @@ public class DataAccess {
 	 */
 	HashMap<String, Object> getUnitCondition_withColumn(String columnName,String operator ,ArrayList<Object> values ,boolean notFlag ,HashMap<String, Object> options)
 	{
-		Log.d(LogTag, "getUnitCondition_withColumn enter, columnName="+columnName+", operator="+operator+", values="+values+", notFlag="+notFlag);
+		if(mLogEnabled) Log.d(LogTag, "getUnitCondition_withColumn enter, columnName="+columnName+", operator="+operator+", values="+values+", notFlag="+notFlag);
 		
 		boolean varBeParamWay = false;
 		if (options!=null){
@@ -714,7 +716,7 @@ public class DataAccess {
 	    hmRet.put("strCondition", sbCondition.toString());
 	    hmRet.put("sqlParams", sqlParams);
 	    
-	    Log.d(LogTag, "getUnitCondition_withColumn ret:"+hmRet);
+	    if(mLogEnabled) Log.d(LogTag, "getUnitCondition_withColumn ret:"+hmRet);
 	    return hmRet;
 	    
 	}
@@ -733,7 +735,7 @@ public class DataAccess {
 			ArrayList<Object> columnValue_sPairs_equal, ArrayList<Object> columnValue_sPairs_like, 
 			String[] selectColumns, String orderByPart, boolean needDistinct)
 	{
-		Log.d(LogTag, "selectTableByEqualFilter_withTableName enter");
+		if(mLogEnabled) Log.d(LogTag, "selectTableByEqualFilter_withTableName enter");
 		
 		String columnsPart = "*";
 	    if (selectColumns!=null && selectColumns.length>0){
@@ -834,7 +836,7 @@ public class DataAccess {
 	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
 	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
 	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, afterWherePart, localOptions);
-	    Log.d(LogTag, "selectTableByEqualFilter_withTableName return");
+	    if(mLogEnabled) Log.d(LogTag, "selectTableByEqualFilter_withTableName return");
 	    return dataAry;
 	}
 	
@@ -845,7 +847,7 @@ public class DataAccess {
 	public ArrayList<HashMap<String, Object>> selectTable_byFieldOpValuePairs(ArrayList<Object> fieldOpValuePairs, String tableName,
 			String[] selectColumns, String orderByPart, boolean needDistinct)
 	{
-		Log.d(LogTag, "selectTable_byFieldOpValuePairs enter");
+		if(mLogEnabled) Log.d(LogTag, "selectTable_byFieldOpValuePairs enter");
 		
 		String columnsPart = "*";
 	    if (selectColumns!=null && selectColumns.length>0){
@@ -910,7 +912,7 @@ public class DataAccess {
 	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
 	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
 	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, afterWherePart, localOptions);
-	    Log.d(LogTag, "selectTable_byFieldOpValuePairs return");
+	    if(mLogEnabled) Log.d(LogTag, "selectTable_byFieldOpValuePairs return");
 	    return dataAry;
 	}
 
@@ -931,7 +933,7 @@ public class DataAccess {
 	}
 	public ArrayList<HashMap<String, Object>> getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient(String nutrientAsColumnName,String[] givenFoodIds,boolean ifNeedCustomDefinedFoods)
 	{
-	    Log.d(LogTag, "getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient enter");
+	    if(mLogEnabled) Log.d(LogTag, "getFoodsOfRichNutritionAndIntersectGivenSet_withNutrient enter");
 	    if (givenFoodIds==null || givenFoodIds.length == 0)
 	        return null;
 	    return getRichNutritionFood(nutrientAsColumnName,null,null,givenFoodIds,null,0,ifNeedCustomDefinedFoods);
@@ -968,12 +970,12 @@ public class DataAccess {
 	            //do nothing, then get will obtain null, though should not
 	        }
 	    }
-//	    Log.d(LogTag, "getRichNutritionFood2_withAmount_ForNutrient return="+Tool.getIndentFormatStringOfObject(foods,0));
+//	    if(mLogEnabled) Log.d(LogTag, "getRichNutritionFood2_withAmount_ForNutrient return="+Tool.getIndentFormatStringOfObject(foods,0));
 	    return foods;
 	}
 	public ArrayList<HashMap<String, Object>> getRichNutritionFood2(String nutrientAsColumnName)
 	{
-		Log.d(LogTag, "getRichNutritionFood2 enter, nutrientAsColumnName="+nutrientAsColumnName);
+		if(mLogEnabled) Log.d(LogTag, "getRichNutritionFood2 enter, nutrientAsColumnName="+nutrientAsColumnName);
 		StringBuffer sbSql = new StringBuffer(1000);
 		//看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
 		sbSql.append("SELECT F.*,CnCaption,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight");
@@ -1017,7 +1019,7 @@ public class DataAccess {
 	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
 	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
 	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, sb_afterWherePart.toString(), localOptions);
-	    Log.d(LogTag, "getRichNutritionFood return");
+	    if(mLogEnabled) Log.d(LogTag, "getRichNutritionFood return");
 	    return dataAry;
 	}
 	
@@ -1036,7 +1038,7 @@ public class DataAccess {
 	public ArrayList<HashMap<String, Object>> getRichNutritionFood(String nutrientAsColumnName, String includeFoodClass, String excludeFoodClass,
 			String[] includeFoodIds, String[] excludeFoodIds, int topN, boolean ifNeedCustomDefinedFoods)
 	{
-		Log.d(LogTag, "getRichNutritionFood enter, nutrientAsColumnName="+nutrientAsColumnName+", includeFoodClass="+includeFoodClass+", excludeFoodClass="+excludeFoodClass
+		if(mLogEnabled) Log.d(LogTag, "getRichNutritionFood enter, nutrientAsColumnName="+nutrientAsColumnName+", includeFoodClass="+includeFoodClass+", excludeFoodClass="+excludeFoodClass
 				+", includeFoodIds="+includeFoodIds+", excludeFoodIds="+excludeFoodIds);
 		StringBuffer sbSql = new StringBuffer(1000);
 		//看来如果sql语句中用了view，会有FL.[Lower_Limit(g)]等某些列整个成为列名,而且就算是[Lower_Limit(g)]，也还会保留[].而如果没有用到view，则Lower_Limit(g)是列名
@@ -1133,7 +1135,7 @@ public class DataAccess {
 	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
 	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
 	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, sb_afterWherePart.toString(), localOptions);
-	    Log.d(LogTag, "getRichNutritionFood return");
+	    if(mLogEnabled) Log.d(LogTag, "getRichNutritionFood return");
 	    return dataAry;
 	}
 	
@@ -1226,7 +1228,7 @@ public class DataAccess {
 	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, null, localOptions);
 	    ArrayList<Object> foodIdLst = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_NDB_No,dataAry);
 	    ArrayList<String> foodIdStrLst = Tool.convertToStringArrayList(foodIdLst);
-	    Log.d(LogTag, "getFoodIdsByFilters_withIncludeFoodClass ret:"+foodIdStrLst);
+	    if(mLogEnabled) Log.d(LogTag, "getFoodIdsByFilters_withIncludeFoodClass ret:"+foodIdStrLst);
 	    
 	    return foodIdStrLst;
 	}
@@ -1346,7 +1348,7 @@ public class DataAccess {
 //	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, null, localOptions);
 //	    ArrayList<Object> propLst = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName("CnType", dataAry);
 //	    ArrayList<String> strPropLst = Tool.convertToStringArrayList(propLst);
-//	    Log.d(LogTag, "getFoodCnTypesByFilters_withIncludeFoodClass return");
+//	    if(mLogEnabled) Log.d(LogTag, "getFoodCnTypesByFilters_withIncludeFoodClass return");
 //	    return strPropLst;
 //	}
 	public ArrayList<String> getFoodCnTypes()
@@ -1358,18 +1360,18 @@ public class DataAccess {
 	    ArrayList<String> cnTypes = Tool.getDataFromCursor(cs, 0);
 	    cs.close();
 	    
-	    Log.d(LogTag, "getFoodCnTypes ret:"+cnTypes);
+	    if(mLogEnabled) Log.d(LogTag, "getFoodCnTypes ret:"+cnTypes);
 	    return cnTypes;
 //	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), null, false, null, null);
 //	    ArrayList<Object> propLst = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName("CnType", dataAry);
 //	    ArrayList<String> strPropLst = Tool.convertToStringArrayList(propLst);
-//	    Log.d(LogTag, "getFoodCnTypesByFilters_withIncludeFoodClass return");
+//	    if(mLogEnabled) Log.d(LogTag, "getFoodCnTypesByFilters_withIncludeFoodClass return");
 //	    return strPropLst;
 	}
 	
 	public ArrayList<HashMap<String, Object>> getFoodAttributesByIds(String[] idAry)
 	{
-		Log.d(LogTag, "getFoodAttributesByIds begin");
+		if(mLogEnabled) Log.d(LogTag, "getFoodAttributesByIds begin");
 	    if (idAry==null || idAry.length ==0)
 	        return null;
 
@@ -1378,7 +1380,7 @@ public class DataAccess {
 	
 	public ArrayList<HashMap<String, Object>> getAllFood()
 	{
-		Log.d(LogTag, "getAllFood begin");
+		if(mLogEnabled) Log.d(LogTag, "getAllFood begin");
 	    return getFoodsByFilters_withIncludeFoodClass(null,null,null,null,null);
 	}
 
@@ -1400,7 +1402,7 @@ public class DataAccess {
 	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
 	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
 	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, null, localOptions);
-	    Log.d(LogTag, "getFoodsByFilters_withIncludeFoodClass return");
+	    if(mLogEnabled) Log.d(LogTag, "getFoodsByFilters_withIncludeFoodClass return");
 	    return dataAry;
 	}
 
@@ -1433,7 +1435,7 @@ public class DataAccess {
 	public ArrayList<HashMap<String, Object>> getFoodsByColumnValuePairFilter(String[][] columnValuePairs_equal,ArrayList<ArrayList<Object>> columnValuesPairs_equal, 
 			String[][] columnValuePairs_like,ArrayList<ArrayList<Object>> columnValuesPairs_like)
 	{
-		Log.d(LogTag, "getFoodsByColumnValuePairFilter enter");
+		if(mLogEnabled) Log.d(LogTag, "getFoodsByColumnValuePairFilter enter");
 		StringBuffer sbSql = new StringBuffer(1000*1);
 		sbSql.append("SELECT F.*,CnCaption,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit, FC.PicPath, SingleItemUnitName,SingleItemUnitWeight \n");
 		sbSql.append("  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No \n");
@@ -1531,7 +1533,7 @@ public class DataAccess {
 	    HashMap<String, Object> localOptions = new HashMap<String, Object>();
 	    localOptions.put("varBeParamWay", Boolean.valueOf(false));
 	    ArrayList<HashMap<String, Object>> dataAry = getRowsByQuery(sbSql.toString(), filters, false, null, localOptions);
-	    Log.d(LogTag, "getFoodsByColumnValuePairFilter return");
+	    if(mLogEnabled) Log.d(LogTag, "getFoodsByColumnValuePairFilter return");
 	    return dataAry;
 	}
 	
@@ -1540,7 +1542,7 @@ public class DataAccess {
 	 */
 	public ArrayList<String> getOrderedFoodIds(String[] idAry)
 	{
-		Log.d(LogTag, "getOrderedFoodIds begin");
+		if(mLogEnabled) Log.d(LogTag, "getOrderedFoodIds begin");
 		if (idAry==null || idAry.length ==0)
 	        return null;
 		String placeholdersStr = generatePlaceholderPartForIn(idAry.length);
@@ -1549,7 +1551,7 @@ public class DataAccess {
 		sbSql.append("  WHERE NDB_No in (" + placeholdersStr + ")\n");
 		sbSql.append("  ORDER BY "+Constants.COLUMN_NAME_classify);
 
-		Log.d(LogTag, "getOrderedFoodIds sbSql="+sbSql);
+		if(mLogEnabled) Log.d(LogTag, "getOrderedFoodIds sbSql="+sbSql);
 	    
 		Cursor cs = mDBcon.rawQuery(sbSql.toString(),idAry);
 //	    ArrayList<HashMap<String, Object>> dataAry = Tool.getRowsWithTypeFromCursor(cs);
@@ -1561,7 +1563,7 @@ public class DataAccess {
 	    ArrayList<String> orderedIdAl = Tool.getDataFromCursor(cs, 0);
 	    cs.close();
 	    
-	    Log.d(LogTag, "getOrderedFoodIds ret:"+orderedIdAl);
+	    if(mLogEnabled) Log.d(LogTag, "getOrderedFoodIds ret:"+orderedIdAl);
 	    return orderedIdAl;
 	}
 	public <T> ArrayList<String> getOrderedFoodIds(HashMap<String, T> hmIdAsKey){
@@ -1583,7 +1585,7 @@ public class DataAccess {
 	 */
 	public HashMap<String, HashMap<String, Object>> getNutrientInfoAs2LevelDictionary_withNutrientIds(String[] nutrientIds)
 	{
-		Log.d(LogTag, "getNutrientInfoAs2LevelDictionary_withNutrientIds enter, nutrientIds="+nutrientIds);
+		if(mLogEnabled) Log.d(LogTag, "getNutrientInfoAs2LevelDictionary_withNutrientIds enter, nutrientIds="+nutrientIds);
 		StringBuffer sbQuery = new StringBuffer();
 		sbQuery.append("SELECT * FROM NutritionInfo");
 		if (nutrientIds != null && nutrientIds.length > 0){
@@ -1595,10 +1597,10 @@ public class DataAccess {
 		Cursor cs = mDBcon.rawQuery(sbQuery.toString(),nutrientIds);
 		ArrayList<HashMap<String, Object>> dataAry =  Tool.getRowsWithTypeFromCursor(cs);
 		cs.close();
-		Log.d(LogTag, "in getNutrientInfoAs2LevelDictionary_withNutrientIds,dataAry="+dataAry);
+		if(mLogEnabled) Log.d(LogTag, "in getNutrientInfoAs2LevelDictionary_withNutrientIds,dataAry="+dataAry);
 		
 		HashMap<String, HashMap<String, Object>> dic2Level = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_NutrientID,dataAry);
-		Log.d(LogTag, "getNutrientInfoAs2LevelDictionary_withNutrientIds ret:"+dic2Level.toString());
+		if(mLogEnabled) Log.d(LogTag, "getNutrientInfoAs2LevelDictionary_withNutrientIds ret:"+dic2Level.toString());
 	    return dic2Level;
 	}	
 	
@@ -1675,7 +1677,7 @@ public class DataAccess {
 		Cursor cs = mDBcon.query(Constants.TABLE_NAME_FoodCollocation, null, null, null, null, null, null);
 		ArrayList<HashMap<String, Object>> rows = Tool.getRowsWithTypeFromCursor(cs);
 		cs.close();
-		Log.d(LogTag, Tool.getIndentFormatStringOfObject(rows, 0));
+		if(mLogEnabled) Log.d(LogTag, Tool.getIndentFormatStringOfObject(rows, 0));
 	    return rows;
 	}
 
@@ -1778,7 +1780,7 @@ public class DataAccess {
 	    if (foodAndAmountArray!=null)
 	    	retDict.put("foodAndAmountArray", foodAndAmountArray);
 
-	    Log.d(LogTag, "getFoodCollocationData_withCollocationId "+nmCollocationId+" ret:"+Tool.getIndentFormatStringOfObject(retDict, 0));
+	    if(mLogEnabled) Log.d(LogTag, "getFoodCollocationData_withCollocationId "+nmCollocationId+" ret:"+Tool.getIndentFormatStringOfObject(retDict, 0));
 	    return retDict;
 	}
 
@@ -1842,7 +1844,7 @@ public class DataAccess {
 	
 	ArrayList<String> getDiseaseIdsOfGroup(String groupName, String department, String diseaseType, String timeType)
 	{
-	    Log.d(LogTag, "getDiseaseIdsOfGroup enter, groupName="+groupName+", department="+department+", diseaseType="+diseaseType+", timeType="+timeType );
+	    if(mLogEnabled) Log.d(LogTag, "getDiseaseIdsOfGroup enter, groupName="+groupName+", department="+department+", diseaseType="+diseaseType+", timeType="+timeType );
 	    ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 	    if (groupName != null){
 	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseGroup,groupName};
@@ -1868,13 +1870,13 @@ public class DataAccess {
 	    ArrayList<Object> diseaseIdObjAry = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(destColumn, diseaseInfoAry);
 	    ArrayList<String> diseaseIdAry = Tool.convertToStringArrayList(diseaseIdObjAry);
 
-	    Log.d(LogTag, "getDiseaseIdsOfGroup return="+diseaseIdAry);
+	    if(mLogEnabled) Log.d(LogTag, "getDiseaseIdsOfGroup return="+diseaseIdAry);
 	    return diseaseIdAry;
 	}
 	
 	ArrayList<HashMap<String, Object>> getDiseaseInfosOfGroup(String groupName, String department, String diseaseType, String timeType)
 	{
-		Log.d(LogTag, "getDiseaseInfosOfGroup enter, groupName="+groupName+", department="+department+", diseaseType="+diseaseType+", timeType="+timeType );
+		if(mLogEnabled) Log.d(LogTag, "getDiseaseInfosOfGroup enter, groupName="+groupName+", department="+department+", diseaseType="+diseaseType+", timeType="+timeType );
 		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 	    if (groupName != null){
 	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseGroup,groupName};
@@ -1895,13 +1897,13 @@ public class DataAccess {
 	    
 	    ArrayList<HashMap<String, Object>> diseaseInfoAry = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_DiseaseInGroup, 
 	    		columnValuePairs_equal, null, null, null, false);
-	    Log.d(LogTag, "getDiseaseInfosOfGroup return="+Tool.getIndentFormatStringOfObject(diseaseInfoAry, 0));
+	    if(mLogEnabled) Log.d(LogTag, "getDiseaseInfosOfGroup return="+Tool.getIndentFormatStringOfObject(diseaseInfoAry, 0));
 	    return diseaseInfoAry;
 	}
 	
 	HashMap<String, ArrayList<HashMap<String, Object>>> getDiseaseNutrientRows_ByDiseaseIds(ArrayList<String> diseaseIds, String groupName)
 	{
-		Log.d(LogTag, "getDiseaseNutrientRows_ByDiseaseIds enter, groupName="+groupName+", diseaseIds="+diseaseIds );
+		if(mLogEnabled) Log.d(LogTag, "getDiseaseNutrientRows_ByDiseaseIds enter, groupName="+groupName+", diseaseIds="+diseaseIds );
 		ArrayList<Object> columnValue_sPairs_equal = new ArrayList<Object>();
 	    if (groupName != null){
 	    	Object[] columnValuePair = {Constants.COLUMN_NAME_DiseaseGroup,groupName};
@@ -1915,7 +1917,7 @@ public class DataAccess {
 	    String[] selectColumns = {Constants.COLUMN_NAME_Disease,Constants.COLUMN_NAME_NutrientID,Constants.COLUMN_NAME_LackLevelMark};
 	    ArrayList<HashMap<String, Object>> diseaseNutrientRows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_DiseaseNutrient, 
 	    		columnValue_sPairs_equal, null, selectColumns, null, true);
-	    Log.d(LogTag, "getDiseaseNutrientRows_ByDiseaseIds , diseaseNutrientRows="+Tool.getIndentFormatStringOfObject(diseaseNutrientRows, 0) );
+	    if(mLogEnabled) Log.d(LogTag, "getDiseaseNutrientRows_ByDiseaseIds , diseaseNutrientRows="+Tool.getIndentFormatStringOfObject(diseaseNutrientRows, 0) );
 	    
 	    HashMap<String, ArrayList<HashMap<String, Object>>> diseaseNutrientInfosByDiseaseDict = new HashMap<String, ArrayList<HashMap<String, Object>>>();
 	    if (diseaseNutrientRows!=null){
@@ -1925,7 +1927,7 @@ public class DataAccess {
 	    		Tool.addItemToListHash(diseaseNutrientRow, diseaseId, diseaseNutrientInfosByDiseaseDict);
 		    }
 	    }
-	    Log.d(LogTag, "getDiseaseNutrientRows_ByDiseaseIds ret="+Tool.getIndentFormatStringOfObject(diseaseNutrientInfosByDiseaseDict, 0));
+	    if(mLogEnabled) Log.d(LogTag, "getDiseaseNutrientRows_ByDiseaseIds ret="+Tool.getIndentFormatStringOfObject(diseaseNutrientInfosByDiseaseDict, 0));
 	    return diseaseNutrientInfosByDiseaseDict;
 	}
 	
@@ -2028,7 +2030,7 @@ public class DataAccess {
 //	}
 	public HashMap<String, HashMap<String, Object>> getTranslationItemsDictionaryByType(String itemType)
 	{
-		Log.d(LogTag, "getTranslationItemsDictionaryByType enter, itemType="+itemType);
+		if(mLogEnabled) Log.d(LogTag, "getTranslationItemsDictionaryByType enter, itemType="+itemType);
 		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 		if (itemType != null){
 	    	Object[] columnValuePair = {Constants.COLUMN_NAME_ItemType,new Object[]{itemType}};
@@ -2039,14 +2041,14 @@ public class DataAccess {
 	    		columnValuePairs_equal, null, null, null, false);
 		HashMap<String, HashMap<String, Object>> translationItemInfo2LevelDict = Tool.dictionaryArrayTo2LevelDictionary_withKeyName(Constants.COLUMN_NAME_ItemID,translationItemInfoAry);
 		String logMsg = "getTranslationItemsDictionaryByType ret="+Tool.getIndentFormatStringOfObject(translationItemInfo2LevelDict,0);
-		Log.d(LogTag, logMsg);
+		if(mLogEnabled) Log.d(LogTag, logMsg);
 	    return translationItemInfo2LevelDict;
 	    
 	}
 
 	public ArrayList<HashMap<String, Object>> getSymptomTypeRows_withForSex(String forSex)
 	{
-	    Log.d(LogTag, "getSymptomTypeRows_withForSex enter, forSex="+forSex);
+	    if(mLogEnabled) Log.d(LogTag, "getSymptomTypeRows_withForSex enter, forSex="+forSex);
 	    ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 	    if (forSex == null || Constants.ForSex_both.equalsIgnoreCase(forSex)){
 //	    	Object[] columnValuePair = {Constants.COLUMN_NAME_ForSex,Constants.ForSex_both};
@@ -2059,13 +2061,13 @@ public class DataAccess {
 
 	    ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_SymptomType, 
 	    		columnValuePairs_equal, null, null, Constants.COLUMN_NAME_DisplayOrder, false);
-	    Log.d(LogTag, "getSymptomTypeRows_withForSex return="+Tool.getIndentFormatStringOfObject(rows,0));
+	    if(mLogEnabled) Log.d(LogTag, "getSymptomTypeRows_withForSex return="+Tool.getIndentFormatStringOfObject(rows,0));
 	    return rows;
 	}
 	
 	public ArrayList<HashMap<String, Object>> getSymptomRows_BySymptomTypeIds(ArrayList<String> symptomTypeIds)
 	{
-		Log.d(LogTag, "getSymptomRows_BySymptomTypeIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getSymptomRows_BySymptomTypeIds enter");
 		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 		if (symptomTypeIds != null){
 			if (symptomTypeIds.size() == 0){
@@ -2078,7 +2080,7 @@ public class DataAccess {
 		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Symptom, 
 	    		columnValuePairs_equal, null, null, Constants.COLUMN_NAME_DisplayOrder, false);
 		String logMsg = "getSymptomRows_BySymptomTypeIds row count="+rows.size()+",\nrows="+Tool.getIndentFormatStringOfObject(rows,0);
-		Log.d(LogTag, logMsg);
+		if(mLogEnabled) Log.d(LogTag, logMsg);
 		Tool_microlog4android.logDebug(logMsg);
 	    return rows;
 	    
@@ -2086,7 +2088,7 @@ public class DataAccess {
 	
 	public ArrayList<HashMap<String, Object>> getSymptomRows_BySymptomIds(ArrayList<String> symptomIds)
 	{
-		Log.d(LogTag, "getSymptomRows_BySymptomIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getSymptomRows_BySymptomIds enter");
 		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 		if (symptomIds != null){
 			if (symptomIds.size() == 0){
@@ -2099,7 +2101,7 @@ public class DataAccess {
 		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Symptom, 
 	    		columnValuePairs_equal, null, null, Constants.COLUMN_NAME_DisplayOrder, false);
 		String logMsg = "getSymptomRows_BySymptomIds rows="+Tool.getIndentFormatStringOfObject(rows,0);
-		Log.d(LogTag, logMsg);
+		if(mLogEnabled) Log.d(LogTag, logMsg);
 		Tool_microlog4android.logDebug(logMsg);
 	    return rows;
 	    
@@ -2108,18 +2110,18 @@ public class DataAccess {
 	
 	public HashMap<String,ArrayList<HashMap<String, Object>>> getSymptomRowsByTypeDict_BySymptomTypeIds(ArrayList<String> symptomTypeIds)
 	{
-		Log.d(LogTag, "getSymptomRowsByTypeDict_BySymptomTypeIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getSymptomRowsByTypeDict_BySymptomTypeIds enter");
 		ArrayList<HashMap<String, Object>> symptomRows = getSymptomRows_BySymptomTypeIds(symptomTypeIds);
 		HashMap<String, ArrayList<HashMap<String, Object>>> symptomsByTypeDict = Tool.groupBy(Constants.COLUMN_NAME_SymptomTypeId, symptomRows);
 		String logMsg = "getSymptomRowsByTypeDict_BySymptomTypeIds return=" + Tool.getIndentFormatStringOfObject(symptomsByTypeDict, 0);
-		Log.d(LogTag, logMsg);
+		if(mLogEnabled) Log.d(LogTag, logMsg);
 		Tool_microlog4android.logDebug(logMsg);
 	    return symptomsByTypeDict;
 	}
 
 	public ArrayList<HashMap<String, Object>> getSymptomNutrientRows_BySymptomIds(ArrayList<String> symptomIds)
 	{
-		Log.d(LogTag, "getSymptomNutrientRows_BySymptomIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getSymptomNutrientRows_BySymptomIds enter");
 		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 		if (symptomIds != null){
 			if (symptomIds.size() == 0){
@@ -2133,7 +2135,7 @@ public class DataAccess {
 		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_SymptomNutrient, 
 	    		columnValuePairs_equal, null, selectColumns, "SymptomTypeId,SymptomId", false);
 		String logMsg = "getSymptomNutrientRows_BySymptomIds row count="+rows.size()+",\nrows="+Tool.getIndentFormatStringOfObject(rows,0);
-		Log.d(LogTag, logMsg);
+		if(mLogEnabled) Log.d(LogTag, logMsg);
 		Tool_microlog4android.logDebug(logMsg);
 	    return rows;
 	    
@@ -2141,7 +2143,7 @@ public class DataAccess {
 	
 	public ArrayList<String> getSymptomNutrientDistinctIds_BySymptomIds(ArrayList<String> symptomIds)
 	{
-		Log.d(LogTag, "getSymptomNutrientDistinctIds_BySymptomIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getSymptomNutrientDistinctIds_BySymptomIds enter");
 		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 		if (symptomIds != null){
 			if (symptomIds.size() == 0){
@@ -2158,14 +2160,14 @@ public class DataAccess {
 		ArrayList<String> nutrientIds = Tool.convertToStringArrayList(nutrientIdObjs);
 		
 		String logMsg = "getSymptomNutrientDistinctIds_BySymptomIds nutrientIds="+Tool.getIndentFormatStringOfObject(nutrientIds,0);
-		Log.d(LogTag, logMsg);
+		if(mLogEnabled) Log.d(LogTag, logMsg);
 		
 	    return nutrientIds;
 	}
 	
 	public ArrayList<String> getSymptomNutrientIdsWithDisplaySort_BySymptomIds(ArrayList<String> symptomIds)
 	{
-		Log.d(LogTag, "getSymptomNutrientIdsWithDisplaySort_BySymptomIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getSymptomNutrientIdsWithDisplaySort_BySymptomIds enter");
 		if (symptomIds==null || symptomIds.size()==0)
 			return null;
 		
@@ -2184,13 +2186,13 @@ public class DataAccess {
 	    ArrayList<Object> nutrientIdsAsOBj = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_NutrientID, rows);
 	    ArrayList<String> nutrientIds = Tool.convertToStringArrayList(nutrientIdsAsOBj);
 	    
-	    Log.d(LogTag, "getSymptomNutrientIdsWithDisplaySort_BySymptomIds ret:"+Tool.getIndentFormatStringOfObject(nutrientIds,0) );
+	    if(mLogEnabled) Log.d(LogTag, "getSymptomNutrientIdsWithDisplaySort_BySymptomIds ret:"+Tool.getIndentFormatStringOfObject(nutrientIds,0) );
 	    return nutrientIds;
 	}
 	
 	public double getSymptomHealthMarkSum_BySymptomIds(String[] symptomIds)
 	{
-		Log.d(LogTag, "getSymptomHealthMark_BySymptomIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getSymptomHealthMark_BySymptomIds enter");
 	    if (symptomIds==null || symptomIds.length==0)
 	        return 0;
 	    
@@ -2216,13 +2218,13 @@ public class DataAccess {
 	    Double nmHealthMark = (Double)row.get(Constants.COLUMN_NAME_HealthMark);
 	    double dHealthMark = nmHealthMark.doubleValue();
 	    
-	    Log.d(LogTag, "getSymptomHealthMark_BySymptomIds ret="+ dHealthMark);
+	    if(mLogEnabled) Log.d(LogTag, "getSymptomHealthMark_BySymptomIds ret="+ dHealthMark);
 	    return dHealthMark;
 	}
 	
 	public ArrayList<String> getIllnessSuggestionDistinctIds_ByIllnessIds(ArrayList<String> illnessIds)
 	{
-		Log.d(LogTag, "getIllnessSuggestionDistinctIds_ByIllnessIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getIllnessSuggestionDistinctIds_ByIllnessIds enter");
 		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 		if (illnessIds != null){
 			if (illnessIds.size() == 0){
@@ -2239,14 +2241,14 @@ public class DataAccess {
 		ArrayList<String> suggestionIds = Tool.convertToStringArrayList(suggestionIdObjs);
 		
 		String logMsg = "getIllnessSuggestionDistinctIds_ByIllnessIds suggestionIds="+Tool.getIndentFormatStringOfObject(suggestionIds,0);
-		Log.d(LogTag, logMsg);
+		if(mLogEnabled) Log.d(LogTag, logMsg);
 		
 	    return suggestionIds;
 	}
 	
 	public ArrayList<HashMap<String, Object>> getIllnessSuggestions_BySuggestionIds(ArrayList<String> suggestionIds)
 	{
-		Log.d(LogTag, "getIllnessSuggestions_BySuggestionIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getIllnessSuggestions_BySuggestionIds enter");
 		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 		if (suggestionIds != null){
 			if (suggestionIds.size() == 0){
@@ -2259,7 +2261,7 @@ public class DataAccess {
 		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_IllnessSuggestion, 
 	    		columnValuePairs_equal, null, null, null, false);
 		String logMsg = "getIllnessSuggestions_BySuggestionIds row count="+rows.size()+",\nrows="+Tool.getIndentFormatStringOfObject(rows,0);
-		Log.d(LogTag, logMsg);
+		if(mLogEnabled) Log.d(LogTag, logMsg);
 		Tool_microlog4android.logDebug(logMsg);
 	    return rows;
 	    
@@ -2267,18 +2269,18 @@ public class DataAccess {
 	
 	public ArrayList<HashMap<String, Object>> getIllnessSuggestionsDistinct_ByIllnessIds(ArrayList<String> illnessIds)
 	{
-		Log.d(LogTag, "getIllnessSuggestionsDistinct_ByIllnessIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getIllnessSuggestionsDistinct_ByIllnessIds enter");
 		ArrayList<String> suggestionIds = getIllnessSuggestionDistinctIds_ByIllnessIds(illnessIds);
 	    if (suggestionIds == null || suggestionIds.size() == 0)
 	        return null;
 	    ArrayList<HashMap<String, Object>> rows = getIllnessSuggestions_BySuggestionIds(suggestionIds);
-	    Log.d(LogTag, "getIllnessSuggestionsDistinct_ByIllnessIds rows="+Tool.getIndentFormatStringOfObject(rows,0) );
+	    if(mLogEnabled) Log.d(LogTag, "getIllnessSuggestionsDistinct_ByIllnessIds rows="+Tool.getIndentFormatStringOfObject(rows,0) );
 	    return rows;
 	}
 	
 	public ArrayList<HashMap<String, Object>> getIllnessSuggestions_ByIllnessId(String illnessId)
 	{
-		Log.d(LogTag, "getIllnessSuggestions_ByIllnessId enter");
+		if(mLogEnabled) Log.d(LogTag, "getIllnessSuggestions_ByIllnessId enter");
 		ArrayList<String> illnessIds = new ArrayList<String>();
 		illnessIds.add(illnessId);
 		
@@ -2287,21 +2289,21 @@ public class DataAccess {
 			return null;
 
 		ArrayList<HashMap<String, Object>> rows = getIllnessSuggestions_BySuggestionIds(suggestionIds);
-		Log.d(LogTag, "getIllnessSuggestions_ByIllnessId rows="+Tool.getIndentFormatStringOfObject(rows,0) );
+		if(mLogEnabled) Log.d(LogTag, "getIllnessSuggestions_ByIllnessId rows="+Tool.getIndentFormatStringOfObject(rows,0) );
 	    return rows;
 	}
 
 	public ArrayList<HashMap<String, Object>> getAllIllness()
 	{
-		Log.d(LogTag, "getAllIllness enter");
+		if(mLogEnabled) Log.d(LogTag, "getAllIllness enter");
 		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Illness,null,null,null,Constants.COLUMN_NAME_DisplayOrder,false);
-		Log.d(LogTag, "getAllIllness ret="+Tool.getIndentFormatStringOfObject(rows,0) );
+		if(mLogEnabled) Log.d(LogTag, "getAllIllness ret="+Tool.getIndentFormatStringOfObject(rows,0) );
 	    return rows;
 	}
 	
 	public ArrayList<HashMap<String, Object>> getIllness_ByIllnessIds(ArrayList<String> illnessIds)
 	{
-		Log.d(LogTag, "getIllness_ByIllnessIds enter");
+		if(mLogEnabled) Log.d(LogTag, "getIllness_ByIllnessIds enter");
 		ArrayList<Object> columnValuePairs_equal = new ArrayList<Object>();
 		if (illnessIds != null){
 			if (illnessIds.size() == 0){
@@ -2314,7 +2316,7 @@ public class DataAccess {
 		ArrayList<HashMap<String, Object>> rows = selectTableByEqualFilter_withTableName(Constants.TABLE_NAME_Illness, 
 	    		columnValuePairs_equal, null, null, null, false);
 		String logMsg = "getIllness_ByIllnessIds row count="+rows.size()+",\nrows="+Tool.getIndentFormatStringOfObject(rows,0);
-		Log.d(LogTag, logMsg);
+		if(mLogEnabled) Log.d(LogTag, logMsg);
 //		Tool_microlog4android.logDebug(logMsg);
 	    return rows;
 	}
@@ -2325,7 +2327,7 @@ public class DataAccess {
 	 */
 	public void insertUserRecordSymptom_withDayLocal(int dayLocal,Date updateTimeUTC,String inputNameValuePairs,String Note,String calculateNameValuePairs)
 	{
-		Log.d(LogTag, "insertUserRecordSymptom_withDayLocal enter");
+		if(mLogEnabled) Log.d(LogTag, "insertUserRecordSymptom_withDayLocal enter");
 		long lUpdateTimeUTC = updateTimeUTC.getTime();
 		String insertSql = "INSERT INTO UserRecordSymptom (DayLocal, UpdateTimeUTC, inputNameValuePairs, Note, calculateNameValuePairs) VALUES (?,?,?,?,?);";
 		Object[] bindArgs = new Object[]{Integer.valueOf(dayLocal),lUpdateTimeUTC,inputNameValuePairs,Note,calculateNameValuePairs};
@@ -2333,7 +2335,7 @@ public class DataAccess {
 	}
 	public void insertUserRecordSymptom_withRawData(HashMap<String, Object> hmRawData)
 	{
-		Log.d(LogTag, "insertUserRecordSymptom_withRawData enter");
+		if(mLogEnabled) Log.d(LogTag, "insertUserRecordSymptom_withRawData enter");
 		if (hmRawData == null)
 			return;
 		String key;
@@ -2357,7 +2359,7 @@ public class DataAccess {
 	}
 	public void updateUserRecordSymptom_withDayLocal(int dayLocal,Date updateTimeUTC,String inputNameValuePairs,String Note,String calculateNameValuePairs)
 	{
-		Log.d(LogTag, "updateUserRecordSymptom_withDayLocal enter");
+		if(mLogEnabled) Log.d(LogTag, "updateUserRecordSymptom_withDayLocal enter");
 		long lUpdateTimeUTC = updateTimeUTC.getTime();
 		String updateSql = "UPDATE UserRecordSymptom SET UpdateTimeUTC=?, inputNameValuePairs=?, Note=?, calculateNameValuePairs=? WHERE DayLocal=? ;";
 		Object[] bindArgs = new Object[]{lUpdateTimeUTC, inputNameValuePairs, Note, calculateNameValuePairs, Integer.valueOf(dayLocal)};
@@ -2387,8 +2389,8 @@ public class DataAccess {
 		JSONObject jsonObj_calculateNameValuePairsData = Tool.HashMapToJsonObject(calculateNameValuePairsData);
 		String jsonString_calculateNameValuePairs = jsonObj_calculateNameValuePairsData.toString();
 		
-		Log.d(LogTag, "insertUserRecordSymptom_withDayLocal , jsonString_inputNameValuePairs="+jsonString_inputNameValuePairs);
-		Log.d(LogTag, "insertUserRecordSymptom_withDayLocal , jsonString_calculateNameValuePairs="+jsonString_calculateNameValuePairs);
+		if(mLogEnabled) Log.d(LogTag, "insertUserRecordSymptom_withDayLocal , jsonString_inputNameValuePairs="+jsonString_inputNameValuePairs);
+		if(mLogEnabled) Log.d(LogTag, "insertUserRecordSymptom_withDayLocal , jsonString_calculateNameValuePairs="+jsonString_calculateNameValuePairs);
 	    
 		insertUserRecordSymptom_withDayLocal(dayLocal, updateTimeUTC, jsonString_inputNameValuePairs, Note, jsonString_calculateNameValuePairs);
 	}
@@ -2426,7 +2428,7 @@ public class DataAccess {
     	if (rows!=null && rows.size()>0){
     		rowDict = rows.get(0);
     	}
-    	Log.d(LogTag, "getUserRecordSymptomRawRowByDayLocal ret="+Tool.getIndentFormatStringOfObject(rowDict,0) );
+    	if(mLogEnabled) Log.d(LogTag, "getUserRecordSymptomRawRowByDayLocal ret="+Tool.getIndentFormatStringOfObject(rowDict,0) );
 	    return rowDict;
 	}
 
@@ -2457,7 +2459,7 @@ public class DataAccess {
 	    	FieldOpValuePairs.add(FieldOpValuePair);
 	    }
 	    ArrayList<HashMap<String, Object>> rows = selectTable_byFieldOpValuePairs(FieldOpValuePairs,Constants.TABLE_NAME_UserRecordSymptom,null,Constants.COLUMN_NAME_DayLocal,false);
-	    Log.d(LogTag, "getUserRecordSymptomRawRowsByRange_withStartDayLocal ret="+Tool.getIndentFormatStringOfObject(rows,0) );
+	    if(mLogEnabled) Log.d(LogTag, "getUserRecordSymptomRawRowsByRange_withStartDayLocal ret="+Tool.getIndentFormatStringOfObject(rows,0) );
 	    return rows;
 	}
 
@@ -2523,7 +2525,7 @@ public class DataAccess {
 	{
 		HashMap<String, Object> rowRaw = getUserRecordSymptomRawRowByDayLocal(dayLocal);
 		HashMap<String, Object> rowData = parseUserRecordSymptomRawRow(rowRaw);
-		Log.d(LogTag, "getUserRecordSymptomDataByDayLocal ret:"+Tool.getIndentFormatStringOfObject(rowData,0) );
+		if(mLogEnabled) Log.d(LogTag, "getUserRecordSymptomDataByDayLocal ret:"+Tool.getIndentFormatStringOfObject(rowData,0) );
 	    return rowData;
 	}
 	
@@ -2540,7 +2542,7 @@ public class DataAccess {
 	    	HashMap<String, Object> rowData = parseUserRecordSymptomRawRow(rowRaw);
 	        rows.add(rowData);
 	    }
-	    Log.d(LogTag, "getUserRecordSymptomDataByRange_withStartDayLocal ret:"+Tool.getIndentFormatStringOfObject(rows,0) );
+	    if(mLogEnabled) Log.d(LogTag, "getUserRecordSymptomDataByRange_withStartDayLocal ret:"+Tool.getIndentFormatStringOfObject(rows,0) );
 	    return rows;
 	}
 	
@@ -2559,7 +2561,7 @@ public class DataAccess {
 	    ArrayList<Object> monthDblAry = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName("MonthLocal", rows);
 	    ArrayList<Integer> monthIntAry = Tool.convertFromArrayList(monthDblAry);
 	    
-	    Log.d(LogTag, "getUserRecordSymptom_DistinctMonth ret:"+Tool.getIndentFormatStringOfObject(monthIntAry,0) );
+	    if(mLogEnabled) Log.d(LogTag, "getUserRecordSymptom_DistinctMonth ret:"+Tool.getIndentFormatStringOfObject(monthIntAry,0) );
 	    return monthIntAry;
 	}
 
