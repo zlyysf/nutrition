@@ -75,22 +75,26 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
     
     public void updateData(Context context, ArrayList<HashMap<String, Object>> records, V3BaseHeadFragment fragment, ListView lv, LinearLayout llSideIndex){
 //    	mRecords = records;
+    	Log.d(LogTag, "updateData records="+records+", lv="+lv+", llSideIndex="+llSideIndex);
     	
     	mContext = context;
-        mRecords = records;
+    	if (mRecords==null){
+    		mRecords = records;
+    	}else{
+    		mRecords.clear();//still not ok for below problem
+    		mRecords.addAll(records);
+    	}
         m_fragment = fragment;
         m_lv = lv;//seemed will be null in cache
         m_llSideIndex = llSideIndex;
         
     	getSectionsFromRecords();
     	setContentOfSideIndex(m_lv,m_llSideIndex);
-    	lv.post(new Runnable() {
-			@Override
-			public void run() {
-				notifyDataSetChanged();
-			}
-		});
-//    	super.notifyDataSetChanged();
+
+    	super.notifyDataSetChanged();
+//    	//http://stackoverflow.com/questions/17258268/custom-baseadapter-in-listview-can-not-notifydatasetchanged
+//    	lv.requestFocusFromTouch();//不加这句，历史页面上被重用的那个页上的listview是白板，但llSideIndex有内容，还是不行，切一下tab再翻页，其他地方还有这问题
+//    	lv.invalidate();
     }
 
     @Override

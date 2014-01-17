@@ -12,6 +12,7 @@ import com.lingzhimobile.nutritionfoodguide.ActivityFoodCombination;
 import com.lingzhimobile.nutritionfoodguide.ActivityTestCases;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
+import com.lingzhimobile.nutritionfoodguide.GlobalVar;
 import com.lingzhimobile.nutritionfoodguide.RecommendFood;
 import com.lingzhimobile.nutritionfoodguide.StoredConfigTool;
 import com.lingzhimobile.nutritionfoodguide.Tool;
@@ -336,6 +337,8 @@ public class TestCaseDA {
 	}
 	public static void test_genData_UserRecordSymptom1(Context ctx)
 	{
+		GlobalVar.UserDiagnoseRecordHaveUpdated_forHistory = true;
+		
 		DataAccess da = DataAccess.getSingleton(ctx);
 		
 		if (true){

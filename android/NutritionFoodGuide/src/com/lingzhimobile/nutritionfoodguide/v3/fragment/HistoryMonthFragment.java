@@ -60,7 +60,7 @@ public class HistoryMonthFragment extends Fragment {
         m_recordListView = (ListView) m_fragmentView.findViewById(R.id.recordListView);
         m_llSideIndex = (LinearLayout)m_fragmentView.findViewById(R.id.llSideIndex);
         
-        refreshViews(m_yearMonth);
+        refreshViews();
         
         return m_fragmentView;
     }
@@ -81,25 +81,48 @@ public class HistoryMonthFragment extends Fragment {
 		super.onResume();
 	}
     
-    public void refreshViews(int yearMonth){
+    public void needRefreshViews(int yearMonth){
+    	m_yearMonth = yearMonth;
+    	getActivity().runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				refreshViews();
+			}
+		});
+    }
+    
+    private void refreshViews(){
     	View vw = getView();
     	Log.d(LogTag, "refreshViews m_fragmentView="+m_fragmentView+" , getView="+vw);//看来两个东西不是同一个 refreshViews m_fragmentView=android.widget.LinearLayout@419a7d40 , getView=null
 
-    	m_yearMonth = yearMonth;
-    	if (m_fragmentView != null){
+    	View vwForF = m_fragmentView;
+    	if (vwForF == null){
+    		vwForF = vw;
+    	}
+
+    	if (vwForF != null){
         	DataAccess da = DataAccess.getSingleton(getActivity());
 //            m_yearMonth = getArguments().getInt(Key_yearMonth);
             records = da.getUserRecordSymptomDataByRange_withStartDayLocal(0,0, m_yearMonth, m_yearMonth + 1);
             
-        	m_recordListView = (ListView) m_fragmentView.findViewById(R.id.recordListView);
-            m_llSideIndex = (LinearLayout)m_fragmentView.findViewById(R.id.llSideIndex);
+        	m_recordListView = (ListView) vwForF.findViewById(R.id.recordListView);
+            m_llSideIndex = (LinearLayout)vwForF.findViewById(R.id.llSideIndex);
             if (m_dayAdapter == null){
-            	m_dayAdapter = new HistoryDayAdapter(getActivity(), records, m_topfragment, m_recordListView, m_llSideIndex);
-            	m_recordListView.setAdapter(m_dayAdapter);
-            	m_dayAdapter.notifyDataSetChanged();
+            	m_dayAdapter = (HistoryDayAdapter)m_recordListView.getAdapter();
+            	if (m_dayAdapter == null){
+            		m_dayAdapter = new HistoryDayAdapter(getActivity(), records, m_topfragment, m_recordListView, m_llSideIndex);
+                	m_recordListView.setAdapter(m_dayAdapter);
+                	m_dayAdapter.notifyDataSetChanged();
+            	}else{
+            		Log.d(LogTag, "in refreshViews, m_recordListView.getAdapter!=null");
+            		m_dayAdapter.updateData(getActivity(), records, m_topfragment, m_recordListView, m_llSideIndex);
+            	}
             }else{
+            	Log.d(LogTag, "in refreshViews, m_dayAdapter!=null");
             	m_dayAdapter.updateData(getActivity(), records, m_topfragment, m_recordListView, m_llSideIndex);
             }
+    	}else{
+    		Log.d(LogTag, "in refreshViews, vwForF==null, do nothing");
     	}
     }
     

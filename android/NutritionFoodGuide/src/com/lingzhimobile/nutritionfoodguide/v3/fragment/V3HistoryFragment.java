@@ -18,12 +18,15 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.lingzhimobile.nutritionfoodguide.DataAccess;
+import com.lingzhimobile.nutritionfoodguide.GlobalVar;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.test.TestCaseDA;
 import com.lingzhimobile.nutritionfoodguide.v3.adapter.HistoryMonthAdapter;
 
 public class V3HistoryFragment extends V3BaseHeadFragment {
 	static final String LogTag = V3HistoryFragment.class.getSimpleName();
+	
+	public boolean mNeedClearAllSubFragment = false;
 
 	Button m_btnPrev, m_btnNext;
 	TextView m_tvNoData;
@@ -89,6 +92,10 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
     public void onResume() {
 		Log.d(LogTag, "onResume");
 		super.onResume();
+		if (mNeedClearAllSubFragment){
+			mNeedClearAllSubFragment = false;
+			clearAllSubFragment();
+		}
 	}
 	public void onPause() {
 		Log.d(LogTag, "onPause");
@@ -208,18 +215,28 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
         	historyViewPager.setVisibility(View.VISIBLE);
         	monthAdapter = new HistoryMonthAdapter(getChildFragmentManager(), m_monthList, this);
             historyViewPager.setAdapter(monthAdapter);
-            
-            historyViewPager.destroyDrawingCache();
-            
-            
-            monthAdapter.notifyDataSetChanged();
-            
+
+            if (GlobalVar.UserDiagnoseRecordHaveUpdated_forHistory){
+            	GlobalVar.UserDiagnoseRecordHaveUpdated_forHistory = false;
+            	clearAllSubFragment();
+            }
         }
         
         if (m_monthList!=null && m_monthList.size()>0){
         	int lastItemPos = monthAdapter.getCount()-1;
         	moveToThePage(lastItemPos);
         	setTitleWithPager(lastItemPos);
+    	}
+    }
+    public void needClearAllSubFragment(){
+    	mNeedClearAllSubFragment = true;
+    }
+    
+    private void clearAllSubFragment(){
+    	Log.d(LogTag, "clearAllSubFragment monthAdapter is null ?"+(monthAdapter==null));
+    	if (monthAdapter!=null){
+    		monthAdapter.destroyAllItem();
+            monthAdapter.notifyDataSetChanged();
     	}
     }
 

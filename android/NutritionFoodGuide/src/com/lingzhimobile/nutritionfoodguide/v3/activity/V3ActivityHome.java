@@ -116,6 +116,25 @@ public class V3ActivityHome extends V3BaseActivity {
                 fragment = V3SettingFragment.newInstance(1);
                 break;
             }
+        }else{
+        	switch(i){
+            case 0:
+                
+                break;
+            case 1:
+            	V3HistoryFragment fragmentHis = (V3HistoryFragment)fragment;
+            	fragmentHis.needClearAllSubFragment();
+                break;
+            case 2:
+                
+                break;
+            case 3:
+                
+                break;
+            case 4:
+                
+                break;
+            }
         }
         fragmentManager.beginTransaction().replace(R.id.contentFrameLayout, fragment, TAGS[i]).addToBackStack(null).commit();
     }

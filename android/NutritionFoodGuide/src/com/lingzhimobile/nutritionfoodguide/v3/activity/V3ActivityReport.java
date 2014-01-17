@@ -451,6 +451,8 @@ public class V3ActivityReport extends V3BaseActivity {
     
     void save(){
     	Log.d(LogTag, "save enter");
+    	
+    	GlobalVar.UserDiagnoseRecordHaveUpdated_forHistory = true;
 
 		Date updateTime = new Date();
 		int dayLocal = m_dayLocal;

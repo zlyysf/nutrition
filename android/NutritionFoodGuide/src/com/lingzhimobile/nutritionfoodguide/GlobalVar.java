@@ -11,6 +11,8 @@ import android.util.Log;
 
 
 public class GlobalVar {
+	
+	public static boolean UserDiagnoseRecordHaveUpdated_forHistory = false;
 
 	public static ArrayList<String> DiseaseGroups = null;
 	public static ArrayList<ArrayList<String>> DiseasesOfGroup_Collection = null;
