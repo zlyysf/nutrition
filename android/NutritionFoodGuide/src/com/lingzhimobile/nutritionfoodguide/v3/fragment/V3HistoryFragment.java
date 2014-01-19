@@ -26,7 +26,7 @@ import com.lingzhimobile.nutritionfoodguide.v3.adapter.HistoryMonthAdapter;
 public class V3HistoryFragment extends V3BaseHeadFragment {
 	static final String LogTag = V3HistoryFragment.class.getSimpleName();
 	
-	public boolean mNeedClearAllSubFragment = false;
+	public boolean mNeedClearAllSubFragment = false;  // 这个标志用于tab切换时用，切换到历史页时，由于一些莫名的bug需要先彻底清除缓存页面
 
 	Button m_btnPrev, m_btnNext;
 	TextView m_tvNoData;
@@ -93,7 +93,7 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
 		Log.d(LogTag, "onResume");
 		super.onResume();
 		if (mNeedClearAllSubFragment){
-			mNeedClearAllSubFragment = false;
+			
 			clearAllSubFragment();
 		}
 	}
@@ -223,9 +223,16 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
         }
         
         if (m_monthList!=null && m_monthList.size()>0){
-        	int lastItemPos = monthAdapter.getCount()-1;
-        	moveToThePage(lastItemPos);
-        	setTitleWithPager(lastItemPos);
+        	if (mNeedClearAllSubFragment){
+        		int curItemPos = historyViewPager.getCurrentItem();
+        		moveToThePage(curItemPos);
+            	setTitleWithPager(curItemPos);
+        	}else{
+        		int lastItemPos = monthAdapter.getCount()-1;
+            	moveToThePage(lastItemPos);
+            	setTitleWithPager(lastItemPos);
+        	}
+        	
     	}
     }
     public void needClearAllSubFragment(){
@@ -234,6 +241,7 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
     
     private void clearAllSubFragment(){
     	Log.d(LogTag, "clearAllSubFragment monthAdapter is null ?"+(monthAdapter==null));
+    	mNeedClearAllSubFragment = false;
     	if (monthAdapter!=null){
     		monthAdapter.destroyAllItem();
             monthAdapter.notifyDataSetChanged();

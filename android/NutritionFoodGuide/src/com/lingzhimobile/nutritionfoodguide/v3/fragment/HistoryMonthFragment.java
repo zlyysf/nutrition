@@ -68,6 +68,7 @@ public class HistoryMonthFragment extends Fragment {
 	public void onViewStateRestored (Bundle savedInstanceState){
 		//super.restoreViewState(null) should be called before.在这里会导致 OnPageChangeListener.onPageSelected 被调用
 		Log.d(LogTag, "onViewStateRestored enter");
+		//android.support.v4.app.SuperNotCalledException: Fragment HistoryMonthFragment did not call through to super.onViewStateRestored
 		super.onViewStateRestored(savedInstanceState);
 		Log.d(LogTag, "onViewStateRestored exit");
 		
