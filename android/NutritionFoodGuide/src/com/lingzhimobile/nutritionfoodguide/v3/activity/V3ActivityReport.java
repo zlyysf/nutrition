@@ -358,7 +358,7 @@ public class V3ActivityReport extends V3BaseActivity {
     		m_tvBmiFat.setBackgroundResource(R.drawable.v3_border_bmi_fat_bg);
     	}
 
-		healthTextView.setText(String.valueOf(m_HealthMark));
+		healthTextView.setText(Tool.formatFloatOrInt(m_HealthMark, 1));
 		
 		V3EncyclopediaFragment.OnClickListener_nutrient OnClickListener_nutrient1 = new V3EncyclopediaFragment.OnClickListener_nutrient(this,m_currentTitle);
     	int lenOfNutrientIds = m_nutrientIds==null? 0 : m_nutrientIds.length;
@@ -369,7 +369,8 @@ public class V3ActivityReport extends V3BaseActivity {
             	String nutrientId = m_nutrientIds[i];
             	HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
             	String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
-            	tvNutrient.setText(nutrientCaption);
+            	String[] cnenParts = Tool.splitNutrientTitleToCnEn(nutrientCaption);
+            	tvNutrient.setText(cnenParts[cnenParts.length-1]);
             	tvNutrient.setTag(nutrientId);
             	tvNutrient.setOnClickListener(OnClickListener_nutrient1);
                 Tool.changeBackground_NutritionButton(V3ActivityReport.this, tvNutrient, nutrientId, true);
@@ -635,8 +636,10 @@ public class V3ActivityReport extends V3BaseActivity {
             HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
             String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
             
+            String[] cnenParts = Tool.splitNutrientTitleToCnEn(nutrientCaption);
+            
             TextViewSimpleVertical tvvNutrient = (TextViewSimpleVertical) convertView.findViewById(R.id.tvvNutrient);
-            tvvNutrient.setTextVertical(nutrientCaption);
+            tvvNutrient.setTextVertical(cnenParts[cnenParts.length-1]);
 
             LinearLayout recommendViewPager = (LinearLayout) convertView.findViewById(R.id.recommendViewPager);
             recommendViewPager.removeAllViews();
@@ -653,6 +656,7 @@ public class V3ActivityReport extends V3BaseActivity {
                         TextView foodNameTextView = (TextView) viewPager.findViewById(R.id.foodNameTextView);
                         TextView foodCountTextView = (TextView) viewPager.findViewById(R.id.foodCountTextView);
                         ImageView ivFood = (ImageView) viewPager.findViewById(R.id.ivFood);
+
                         foodNameTextView.setText(foodName);
                         foodCountTextView.setText(foodAmount.intValue()+"g");
                         ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));
@@ -675,6 +679,7 @@ public class V3ActivityReport extends V3BaseActivity {
                         TextView foodNameTextView = (TextView) viewPager.findViewById(R.id.foodNameTextView);
                         TextView foodCountTextView = (TextView) viewPager.findViewById(R.id.foodCountTextView);
                         ImageView ivFood = (ImageView) viewPager.findViewById(R.id.ivFood);
+                        
                         foodNameTextView.setText(foodName);
                         foodCountTextView.setText(foodAmount.intValue()+"g");
                         ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));

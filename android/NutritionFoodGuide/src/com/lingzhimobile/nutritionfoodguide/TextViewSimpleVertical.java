@@ -57,7 +57,8 @@ public class TextViewSimpleVertical extends TextView{
     		StringBuffer sb2 = new StringBuffer(s1.length()*2);
     		for (int i = 0; i < s1.length(); i++) {
 				sb2.append(s1.charAt(i));
-				sb2.append("\n");
+				if (i<s1.length()-1)
+					sb2.append("\n");
 			}
     		return sb2.toString();
     	}

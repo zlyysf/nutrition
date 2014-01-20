@@ -114,15 +114,15 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
         historyViewPager = (ViewPager) view.findViewById(R.id.historyViewPager);
     }
     void initViewsContent(){
-    	Drawable prevDrawable = getResources().getDrawable(R.drawable.v3_prev_bg);
-        prevDrawable.setBounds(0, 0, 27, 45);
-        m_btnPrev.setCompoundDrawables(prevDrawable, null, null, null);
-
-        Drawable nextDrawable = getResources().getDrawable(R.drawable.v3_next_bg);
-        nextDrawable.setBounds(0, 0, 27, 45);
-        m_btnNext.setCompoundDrawables(null, null, nextDrawable, null);
-        m_btnPrev.setText("");
-        m_btnNext.setText("");
+//    	Drawable prevDrawable = getResources().getDrawable(R.drawable.v3_prev_bg);
+//        prevDrawable.setBounds(0, 0, 27, 45);
+//        m_btnPrev.setCompoundDrawables(prevDrawable, null, null, null);
+//
+//        Drawable nextDrawable = getResources().getDrawable(R.drawable.v3_next_bg);
+//        nextDrawable.setBounds(0, 0, 27, 45);
+//        m_btnNext.setCompoundDrawables(null, null, nextDrawable, null);
+//        m_btnPrev.setText("");
+//        m_btnNext.setText("");
         
         title.setText(R.string.tabCaption_history);
         

@@ -1754,6 +1754,17 @@ public class Tool {
 //		params.height = totalHeight +gv.getPaddingTop()+gv.getPaddingBottom();
 //		gv.setLayoutParams(params);
 	}
+	
+	public static String formatFloatOrInt(double val, int decimalDigitLen){
+		int ival = (int)val;
+		if (val == ival){
+			return ""+ival;
+		}else{
+			String formatPattern = "%."+decimalDigitLen+"f";
+			String s = String.format(formatPattern, val);
+			return s;
+		}
+	}
 }
 
 

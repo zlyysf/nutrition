@@ -6,7 +6,7 @@
 
     <include
         android:id="@+id/titleLayout"
-        layout="@layout/v3_header_layout" />
+        layout="@layout/v3_header_layout_history" />
 
     <RelativeLayout
         android:layout_width="match_parent"

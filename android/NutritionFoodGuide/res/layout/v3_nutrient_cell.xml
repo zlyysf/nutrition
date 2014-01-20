@@ -15,33 +15,42 @@
         android:layout_marginBottom="10dp"
         android:orientation="horizontal" >
 
-        <com.lingzhimobile.nutritionfoodguide.TextViewSimpleVertical
-            xmlns:n2="http://schemas.android.com/apk/res/com.lingzhimobile.nutritionfoodguide"
-            android:id="@+id/tvvNutrient"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="left|center_vertical"
-            android:layout_marginTop="10dp"
-            android:layout_weight="0"
-            android:gravity="left|center_vertical"
-            android:textColor="@color/v3_label"
-            android:textSize="14sp"
-            n2:textVertical="Protein" />
-
         <HorizontalScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:fadingEdge="none"
             android:scrollbars="none" >
-
+            
             <LinearLayout
-                android:id="@+id/recommendViewPager"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" 
                 android:orientation="horizontal" 
                 >
+                
+                <com.lingzhimobile.nutritionfoodguide.TextViewSimpleVertical
+		            xmlns:n2="http://schemas.android.com/apk/res/com.lingzhimobile.nutritionfoodguide"
+		            android:id="@+id/tvvNutrient"
+		            android:layout_width="wrap_content"
+		            android:layout_height="wrap_content"
+		            android:layout_gravity="left|center_vertical"
+	
+		            android:layout_weight="0"
+		            android:gravity="left|center_vertical"
+		            android:textColor="@color/v3_label"
+		            android:textSize="14sp"
+		            n2:textVertical="Protein" />
+	
+	            <LinearLayout
+	                android:id="@+id/recommendViewPager"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" 
+	                android:orientation="horizontal" 
+	                >
+	            </LinearLayout>
             </LinearLayout>
+            
+            
         </HorizontalScrollView>
     </LinearLayout>
 
