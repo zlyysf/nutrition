@@ -61,6 +61,7 @@
                 android:textSize="10sp"
                 android:textStyle="bold" />
 
+            <!--  
             <RadioButton
                 android:id="@+id/rbChart"
                 android:layout_width="match_parent"
@@ -75,6 +76,7 @@
                 android:textColor="@color/radio_astab_changecolor"
                 android:textSize="10sp"
                 android:textStyle="bold" />
+            -->
 
             <RadioButton
                 android:id="@+id/rbCyclopedia"
