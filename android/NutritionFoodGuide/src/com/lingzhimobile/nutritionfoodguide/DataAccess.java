@@ -188,6 +188,8 @@ public class DataAccess {
 		if (Constants.Gender_female.equalsIgnoreCase(gender)){
 			tableName = Constants.TABLE_NAME_DRIFemale;
 		}
+		if (age < 1)
+			age = 1;
 		StringBuffer sbQuery = new StringBuffer();
 		sbQuery.append("SELECT * FROM ");
 		sbQuery.append(tableName);

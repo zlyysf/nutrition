@@ -81,7 +81,8 @@ public class StoredConfigTool {
 		double height = sharedPref.getFloat(Constants.ParamKey_height, Default_height);
 		int activityLevel = sharedPref.getInt(Constants.ParamKey_activityLevel, Default_activityLevel);
 		
-		long msInYear_ = 365*24*60*60*1000;
+		long one = 1;
+		long msInYear_ = one * 365*24*60*60*1000;
 		
 		Date dtNow = new Date();
 		if (l_birthday == 0)
