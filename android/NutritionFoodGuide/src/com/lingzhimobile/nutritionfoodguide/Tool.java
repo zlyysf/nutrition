@@ -1765,6 +1765,11 @@ public class Tool {
 			return s;
 		}
 	}
+	
+	public static void printStackTrace(String logTag){
+		Throwable throwable1 = new Throwable("just show stack");
+		Log.d(logTag, Log.getStackTraceString(throwable1));
+	}
 }
 
 

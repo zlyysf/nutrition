@@ -34,7 +34,7 @@
         android:textSize="25sp"
         android:text="Title" />
 
-    <Button
+    <com.lingzhimobile.nutritionfoodguide.ButtonCanSaveViewState
         android:id="@+id/rightButton"
         android:paddingTop="5dp"
         android:paddingBottom="5dp"
