@@ -1,5 +1,6 @@
 package com.lingzhimobile.nutritionfoodguide;
 
+
 import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseInstallation;
@@ -12,10 +13,14 @@ import android.app.Application;
 import android.util.Log;
 
 public class Application1 extends Application {
+	
+	static final String LogTag = Application1.class.getSimpleName();
 
 	@Override
 	public void onCreate() {
 		super.onCreate();
+		
+		Log.d(LogTag, "onCreate enter");
 		
 		Parse.setLogLevel(Parse.LOG_LEVEL_VERBOSE);
 
@@ -23,23 +28,18 @@ public class Application1 extends Application {
 		Parse.initialize(this, Constants.ParseApp_ApplicationID, Constants.ParseApp_ClientKey);
 
 		//for push
-
 		PushService.setDefaultPushCallback(this, ActivityHome.class);
 		ParseInstallation.getCurrentInstallation().saveInBackground();
 
 //		ParseUser.enableAutomaticUser();//会导致每次通过ide运行app都会创建一个新的Anonymous user
 		
 		ParseACL defaultACL = new ParseACL();
-	    
 		// If you would like all objects to be private by default, remove this line.
 		defaultACL.setPublicReadAccess(true);
 		defaultACL.setPublicWriteAccess(true);
-		
 		ParseACL.setDefaultACL(defaultACL, true);
 		
-		
-		
-		
+		Log.d(LogTag, "onCreate exit");
 		
 	}
 

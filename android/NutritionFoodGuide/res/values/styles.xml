@@ -192,7 +192,7 @@
     <style name="v3_user_profile_label" parent="@style/v3_label">
         <item name="android:layout_weight">0</item>
         <item name="android:minWidth">60dp</item>
-        <item name="android:minHeight">60dp</item>
+        <item name="android:minHeight">70dp</item>
     </style>
     <style name="v3_user_profile_text">
         <item name="android:layout_width">60dp</item>

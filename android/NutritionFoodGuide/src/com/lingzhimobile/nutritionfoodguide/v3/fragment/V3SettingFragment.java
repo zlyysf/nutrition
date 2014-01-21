@@ -3,11 +3,16 @@ package com.lingzhimobile.nutritionfoodguide.v3.fragment;
 import java.util.*;
 
 
+import android.R.bool;
 import android.app.*;
 import android.content.Context;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -19,6 +24,7 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import com.lingzhimobile.nutritionfoodguide.Constants;
 import com.lingzhimobile.nutritionfoodguide.R;
 import com.lingzhimobile.nutritionfoodguide.StoredConfigTool;
+import com.lingzhimobile.nutritionfoodguide.Tool;
 import com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityHome;
 
 public class V3SettingFragment extends V3BaseHeadFragment {
@@ -42,10 +48,34 @@ public class V3SettingFragment extends V3BaseHeadFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.v3_fragment_setting, container,
-                false);
-        initHeaderLayout(view);
+        View view = inflater.inflate(R.layout.v3_fragment_setting, container, false);
         
+        initViewHandles(inflater, view);
+        initViewsContent();
+        setViewEventHandlers();
+        setViewsContent();
+        
+        return view;
+    }
+
+    public static Fragment newInstance(int arg0) {
+        Fragment settingFragment = new V3SettingFragment();
+        return settingFragment;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
+    protected void setHeader() {
+
+    }
+    
+    void initViewHandles(LayoutInflater inflater, View view){
+    	initHeaderLayout(view);
+
         m_tvTitle = (TextView) view.findViewById(R.id.titleText);
         m_tvTitle.setText(R.string.tabCaption_info);
     	m_btnSave = (Button) view.findViewById(R.id.rightButton);
@@ -66,59 +96,18 @@ public class V3SettingFragment extends V3BaseHeadFragment {
         intensity4RadioButton = (RadioButton) view.findViewById(R.id.intensity4RadioButton);
         
         m_tvActivityLevelDescription = (TextView) view.findViewById(R.id.tvActivityLevelDescription);
-        
-        birthdayTextView.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				DatePickerDialog_OnDateSetListener DatePickerDialog_OnDateSetListener1 = new DatePickerDialog_OnDateSetListener(birthdayTextView);
-				Calendar cal = Calendar.getInstance();
-				cal.setTime(m_birthday);
-				DatePickerDialog DatePickerDialog1 = new DatePickerDialog(getActivity(),DatePickerDialog_OnDateSetListener1,
-						cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH));
-				DatePickerDialog1.show();
-			}
-		});
-        
-        intensityRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			
-			@Override
-			public void onCheckedChanged(RadioGroup group, int checkedId) {
-				if (checkedId==R.id.intensity1RadioButton){
-					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription0);
-				}else if (checkedId==R.id.intensity2RadioButton){
-					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription1);
-				}else if (checkedId==R.id.intensity3RadioButton){
-					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription2);
-				}else if (checkedId==R.id.intensity4RadioButton){
-					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription3);
-				}
-					
-				
-			}
-		});
-        
-        
-        return view;
-    }
 
-    public static Fragment newInstance(int arg0) {
-        Fragment settingFragment = new V3SettingFragment();
-        return settingFragment;
     }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        HashMap<String, Object> userInfo = StoredConfigTool.getUserInfo(getActivity());
+    void initViewsContent(){
+    	HashMap<String, Object> userInfo = StoredConfigTool.getUserInfo(getActivity());
         m_birthday = (Date)userInfo.get(Constants.ParamKey_birthday);
         String strDt = formatDate(getActivity(), m_birthday);
         birthdayTextView.setText(strDt);
 
-        heightTextView.setText(userInfo.get(Constants.ParamKey_height)
-                .toString());
-        weightTextView.setText(userInfo.get(Constants.ParamKey_weight)
-                .toString());
+        Double dbl_height = (Double)userInfo.get(Constants.ParamKey_height);
+        Double dbl_weight = (Double)userInfo.get(Constants.ParamKey_weight);
+        heightTextView.setText(Tool.formatFloatOrInt(dbl_height, 1));
+        weightTextView.setText(Tool.formatFloatOrInt(dbl_weight, 1));
         genderRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_sex));
         intensityRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_activityLevel));
         
@@ -138,12 +127,10 @@ public class V3SettingFragment extends V3BaseHeadFragment {
 		}else {
 			intensity4RadioButton.setChecked(true);
 		}
-
     }
-
-    @Override
-    protected void setHeader() {
-        rightButton.setOnClickListener(new OnClickListener() {
+    
+    void setViewEventHandlers(){
+    	m_btnSave.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -174,9 +161,76 @@ public class V3SettingFragment extends V3BaseHeadFragment {
                 }
                 userInfo.put(Constants.ParamKey_activityLevel, activityLevel);
                 StoredConfigTool.saveUserInfo(getActivity(), userInfo);
+                
+                setSaveButtonEnabled(false);
             }
         });
+        
+
+        birthdayTextView.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				DatePickerDialog_OnDateSetListener DatePickerDialog_OnDateSetListener1 = new DatePickerDialog_OnDateSetListener(birthdayTextView);
+				Calendar cal = Calendar.getInstance();
+				cal.setTime(m_birthday);
+				DatePickerDialog DatePickerDialog1 = new DatePickerDialog(getActivity(),DatePickerDialog_OnDateSetListener1,
+						cal.get(Calendar.YEAR),cal.get(Calendar.MONTH),cal.get(Calendar.DAY_OF_MONTH));
+				DatePickerDialog1.show();
+			}
+		});
+        
+        intensityRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {
+				if (checkedId==R.id.intensity1RadioButton){
+					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription0);
+				}else if (checkedId==R.id.intensity2RadioButton){
+					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription1);
+				}else if (checkedId==R.id.intensity3RadioButton){
+					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription2);
+				}else if (checkedId==R.id.intensity4RadioButton){
+					m_tvActivityLevelDescription.setText(R.string.ActivityLevelDescription3);
+				}
+					
+				setSaveButtonEnabled(true);
+			}
+		});
+        
+        genderRadioGroup.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(RadioGroup group, int checkedId) {	
+				setSaveButtonEnabled(true);
+			}
+		});
+        
+        TextWatcher TextWatcher1 = new TextWatcher() {
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+				setSaveButtonEnabled(true);
+			}
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+			}
+			@Override
+			public void afterTextChanged(Editable s) {
+			}
+		};
+        heightTextView.addTextChangedListener(TextWatcher1);
+        weightTextView.addTextChangedListener(TextWatcher1);
     }
+    void setViewsContent(){
+    	setSaveButtonEnabled(false);
+    }
+    
+    void setSaveButtonEnabled(boolean enableFlag){
+    	boolean isEnabled = m_btnSave.isEnabled();
+    	if (isEnabled != enableFlag){
+    		m_btnSave.setEnabled(enableFlag);
+    	}
+    }
+    
     
     static String formatDate(Context ctx, Date dt){
     	java.text.DateFormat jdtFormat = android.text.format.DateFormat.getDateFormat(ctx);
@@ -201,6 +255,8 @@ public class V3SettingFragment extends V3BaseHeadFragment {
 			GregorianCalendar gCal = new GregorianCalendar(year, monthOfYear, dayOfMonth);
 			m_birthday = gCal.getTime();
 			setDateTextForTextControl(getActivity(),m_tvDate,m_birthday);
+			
+			setSaveButtonEnabled(true);
 		}
 	};//class TimePickerDialog_OnTimeSetListener
 

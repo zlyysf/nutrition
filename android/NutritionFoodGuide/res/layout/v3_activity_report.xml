@@ -210,6 +210,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llLackNutrients"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -255,6 +256,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/llRecommendFood"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -293,6 +295,7 @@
             -->
             
             <LinearLayout
+                android:id="@+id/llPossibleIllness"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
@@ -319,6 +322,7 @@
             </LinearLayout>
             
             <LinearLayout
+                android:id="@+id/llSuggestion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"

@@ -174,7 +174,8 @@ public class ActivityFoodNutrition extends V3BaseActivity {
 			String enUnit = (String)nutrientData.get(Constants.Key_Unit);
 			
 			TextView tvNutrient = (TextView)convertView.findViewById(R.id.tvNutrient);
-			tvNutrient.setText(nutrientCaption);
+			String[] cnenParts = Tool.splitNutrientTitleToCnEn(nutrientCaption);
+			tvNutrient.setText(cnenParts[cnenParts.length-1]);
 //			LinearLayout llNutrient = (LinearLayout)convertView.findViewById(R.id.llNutrient);
 			
 //			LinearLayout llProgress = (LinearLayout)convertView.findViewById(R.id.llProgress);

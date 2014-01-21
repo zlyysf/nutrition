@@ -660,6 +660,10 @@ public class ActivityDiagnoseResult extends ActivityBase {
 	}//class ExpandableListAdapter_DiagnoseResult
 	
 	public static void changeProgressbarColors(Activity curActv, ProgressBar progBar, int progVal, int colorResIdFor1stProg){
+		changeProgressbarColors(curActv,progBar,progVal,colorResIdFor1stProg, R.drawable.progressbar_colors_solid_layers);
+	}
+	
+	public static void changeProgressbarColors(Activity curActv, ProgressBar progBar, int progVal, int colorResIdFor1stProg, int colorResIdForBg){
 		final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
 		ShapeDrawable ShapeDrawable1 = new ShapeDrawable(new RoundRectShape(roundedCorners, null,null));
 //		ShapeDrawable1.getPaint().setColor(Color.parseColor("#FF0000"));
@@ -669,9 +673,9 @@ public class ActivityDiagnoseResult extends ActivityBase {
 //		progBar.setBackground(getResources().getDrawable( R.drawable.pink));//no round corner
 //		progBar.setBackground(getResources().getDrawable( android.R.drawable.progress_horizontal));//have round corner, should be because progress_horizontal have round corner
 		if (Tool.getVersionOfAndroidSDK() >= 16){//运行时获取Android API版本来判断
-			progBar.setBackground(curActv.getResources().getDrawable( R.drawable.progressbar_colors_solid_layers));//android 2.3 not have this method
+			progBar.setBackground(curActv.getResources().getDrawable( colorResIdForBg));//android 2.3 not have this method
 		}else{
-			progBar.setBackgroundDrawable(curActv.getResources().getDrawable( R.drawable.progressbar_colors_solid_layers));//deprecated in API level 16.
+			progBar.setBackgroundDrawable(curActv.getResources().getDrawable( colorResIdForBg));//deprecated in API level 16.
 		}
 //		
 		

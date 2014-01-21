@@ -35,7 +35,7 @@ import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3BaseHeadFragment;
 
 public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
 	
-	static final String LogTag = "HistoryDayAdapter";
+	static final String LogTag = HistoryDayAdapter.class.getSimpleName();
 
     Context mContext;
     ArrayList<HashMap<String, Object>> mRecords;
@@ -124,6 +124,10 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
         HashMap<String, Object> dataRow = getItem(position);
 
         LinearLayout llItemByDay = (LinearLayout)convertView.findViewById(R.id.llItemByDay);
+        
+        LinearLayout llSymptom = (LinearLayout)convertView.findViewById(R.id.llSymptom);
+        LinearLayout llNote = (LinearLayout)convertView.findViewById(R.id.llNote);
+        
         TextView dayTextView = (TextView) convertView.findViewById(R.id.dayTextView);
         TextView weekdayTextView = (TextView) convertView.findViewById(R.id.weekdayTextView);
 //        TextView bmiTextView = (TextView) convertView.findViewById(R.id.bmiTextView);
@@ -136,6 +140,8 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
         TextView noteTextView = (TextView) convertView.findViewById(R.id.noteTextView);
         
 //        TextView tvSuggestions = (TextView) convertView.findViewById(R.id.tvSuggestions);
+        
+        TextView tvHealthMark = (TextView)convertView.findViewById(R.id.tvHealthMark);
         
         TextView nutrient1TextView = (TextView) convertView.findViewById(R.id.nutrient1TextView);
         TextView nutrient2TextView = (TextView) convertView.findViewById(R.id.nutrient2TextView);
@@ -174,7 +180,13 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
         weekdayTextView.setText(weekdayStr);
         
         note = (String) dataRow.get(Constants.COLUMN_NAME_Note);
-        noteTextView.setText(note);
+        if (note==null || note.length()==0){
+        	llNote.setVisibility(View.GONE);
+        }else{
+        	llNote.setVisibility(View.VISIBLE);
+        	noteTextView.setText(note);
+        }
+        
         
         HashMap<String, Object> inputNameValuePairs = (HashMap<String, Object>) dataRow.get(Constants.COLUMN_NAME_inputNameValuePairs);
         HashMap<String, Object> calculateNameValuePairs = (HashMap<String, Object>) dataRow.get(Constants.COLUMN_NAME_calculateNameValuePairs);
@@ -229,6 +241,15 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
 //        	heartRateTextView.setText("");
 //        }
         
+        Object HealthMarkObj = calculateNameValuePairs.get(Constants.Key_HealthMark);
+        if (HealthMarkObj != null){
+        	double HealthMark = Double.parseDouble(HealthMarkObj.toString());
+        	tvHealthMark.setText(Tool.formatFloatOrInt(HealthMark, 1));
+        	tvHealthMark.setVisibility(View.VISIBLE);
+        }else{
+        	tvHealthMark.setVisibility(View.INVISIBLE);
+        }
+        
         HashMap<String, HashMap<String, Object>> allIllnessInfoDict2Level = GlobalVar.getAllIllness2LevelDict(mContext);
         HashMap<String, HashMap<String, Object>> symptomTypeInfoDict2Level = GlobalVar.getAllSymptomType2LevelDict(mContext);
         HashMap<String, HashMap<String, Object>> allSymptomInfoDict2Level = GlobalVar.getAllSymptom2LevelDict(mContext);
@@ -273,8 +294,12 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
     		ArrayList<HashMap<String, Object>> symptomInfos = Tool.getdictionaryArrayFrom2LevelDictionary(allSymptomIdList, allSymptomInfoDict2Level);
     		ArrayList<Object> symptomStrs = Tool.getPropertyArrayListFromDictionaryArray_withPropertyName(Constants.COLUMN_NAME_SymptomNameCn, symptomInfos);
     		symptomsStr = StringUtils.join(symptomStrs,"，");
+    		tvSymptoms.setText(symptomsStr);
+    		llSymptom.setVisibility(View.VISIBLE);
+        }else{
+        	llSymptom.setVisibility(View.GONE);
         }
-        tvSymptoms.setText(symptomsStr);
+        
         
         
         ArrayList<Object> symptomsByType3DList = (ArrayList<Object>)inputNameValuePairs.get(Constants.Key_SymptomsByType);
@@ -328,7 +353,8 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
             	String nutrientId = nutrientIdList.get(i);
             	HashMap<String, Object> nutrientInfo = nutrientInfoDict2Level.get(nutrientId);
             	String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
-                nutrientTextViews[i].setText(nutrientCaption);
+            	String[] cnenParts = Tool.splitNutrientTitleToCnEn(nutrientCaption);
+                nutrientTextViews[i].setText(cnenParts[cnenParts.length-1]);
                 Tool.changeBackground_NutritionButton(mContext, nutrientTextViews[i], nutrientId, false);
             } else {
                 nutrientTextViews[i].setVisibility(View.INVISIBLE);

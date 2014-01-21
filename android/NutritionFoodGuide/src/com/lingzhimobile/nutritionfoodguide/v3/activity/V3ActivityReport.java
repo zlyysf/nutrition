@@ -45,6 +45,7 @@ public class V3ActivityReport extends V3BaseActivity {
     // widgets
 	Button m_btnSave, m_btnBack;
 	ScrollViewDebug m_scrollView1;
+	LinearLayout m_llLackNutrients, m_llRecommendFood, m_llPossibleIllness, m_llSuggestion;
 	ListView m_lvehIllness, m_lvehSuggestion;
 	
     ListView elementFoodListView;
@@ -125,6 +126,11 @@ public class V3ActivityReport extends V3BaseActivity {
         
         m_scrollView1 = (ScrollViewDebug)findViewById(R.id.scrollView1);
         
+        m_llLackNutrients = (LinearLayout)findViewById(R.id.llLackNutrients);
+        m_llRecommendFood = (LinearLayout)findViewById(R.id.llRecommendFood);
+        m_llPossibleIllness = (LinearLayout)findViewById(R.id.llPossibleIllness);
+        m_llSuggestion = (LinearLayout)findViewById(R.id.llSuggestion);
+
         bmiTextView = (TextView) findViewById(R.id.bmiTextView);
         m_tvBmiTooLight =  (TextView) findViewById(R.id.tvBmiTooLight);
         m_tvBmiNormal =  (TextView) findViewById(R.id.tvBmiNormal);
@@ -362,22 +368,33 @@ public class V3ActivityReport extends V3BaseActivity {
 		
 		V3EncyclopediaFragment.OnClickListener_nutrient OnClickListener_nutrient1 = new V3EncyclopediaFragment.OnClickListener_nutrient(this,m_currentTitle);
     	int lenOfNutrientIds = m_nutrientIds==null? 0 : m_nutrientIds.length;
-    	for(int i = 0;i< m_tvNutrients.size();i++){
-    		TextView tvNutrient = m_tvNutrients.get(i);
-            if ( i < lenOfNutrientIds){
-            	tvNutrient.setVisibility(View.VISIBLE);
-            	String nutrientId = m_nutrientIds[i];
-            	HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
-            	String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
-            	String[] cnenParts = Tool.splitNutrientTitleToCnEn(nutrientCaption);
-            	tvNutrient.setText(cnenParts[cnenParts.length-1]);
-            	tvNutrient.setTag(nutrientId);
-            	tvNutrient.setOnClickListener(OnClickListener_nutrient1);
-                Tool.changeBackground_NutritionButton(V3ActivityReport.this, tvNutrient, nutrientId, true);
-            } else {
-            	tvNutrient.setVisibility(View.INVISIBLE);
-            }
-        }
+    	if (lenOfNutrientIds == 0){
+    		m_llLackNutrients.setVisibility(View.GONE);
+    		m_llRecommendFood.setVisibility(View.GONE);
+    	}else{
+    		m_llLackNutrients.setVisibility(View.VISIBLE);
+    		m_llRecommendFood.setVisibility(View.VISIBLE);
+    		
+	    	for(int i = 0;i< m_tvNutrients.size();i++){
+	    		TextView tvNutrient = m_tvNutrients.get(i);
+	            if ( i < lenOfNutrientIds){
+	            	tvNutrient.setVisibility(View.VISIBLE);
+	            	String nutrientId = m_nutrientIds[i];
+	            	HashMap<String, Object> nutrientInfo = m_nutrientInfoDict2Level.get(nutrientId);
+	            	String nutrientCaption = (String)nutrientInfo.get(Constants.COLUMN_NAME_IconTitleCn);
+	            	String[] cnenParts = Tool.splitNutrientTitleToCnEn(nutrientCaption);
+	            	tvNutrient.setText(cnenParts[cnenParts.length-1]);
+	            	tvNutrient.setTag(nutrientId);
+	            	tvNutrient.setOnClickListener(OnClickListener_nutrient1);
+	                Tool.changeBackground_NutritionButton(V3ActivityReport.this, tvNutrient, nutrientId, true);
+	            } else {
+	            	tvNutrient.setVisibility(View.INVISIBLE);
+	            }
+	        }
+	    	
+	    	nutrientFoodAdapter = new NutrientFoodAdapter();
+			elementFoodListView.setAdapter(nutrientFoodAdapter);
+    	}
     	
     	if (m_illnessIdList != null && m_illnessIdList.size()>0 ){
     		ArrayList<HashMap<String, Object>> illnessRows = da.getIllness_ByIllnessIds(m_illnessIdList);
@@ -396,16 +413,24 @@ public class V3ActivityReport extends V3BaseActivity {
     		
     	}
 		
-		nutrientFoodAdapter = new NutrientFoodAdapter();
-		elementFoodListView.setAdapter(nutrientFoodAdapter);
-		
 //		diseaseAttentionAdapter = new DiseaseAttentionAdapter();
 //		diseaseAttentionListView.setAdapter(diseaseAttentionAdapter);
-		
-		IllnessAdapter IllnessAdapter1 = new IllnessAdapter();
-		m_lvehIllness.setAdapter(IllnessAdapter1);
-		SuggestionAdapter SuggestionAdapter1 = new SuggestionAdapter();
-		m_lvehSuggestion.setAdapter(SuggestionAdapter1);
+    	if (m_illnessIdList == null || m_illnessIdList.size()==0 ){
+    		m_llPossibleIllness.setVisibility(View.GONE);
+    	}else{
+    		m_llPossibleIllness.setVisibility(View.VISIBLE);
+    		IllnessAdapter IllnessAdapter1 = new IllnessAdapter();
+    		m_lvehIllness.setAdapter(IllnessAdapter1);
+    	}
+    	
+    	if (m_suggestionDistinctIdList == null || m_suggestionDistinctIdList.size()==0){
+    		m_llSuggestion.setVisibility(View.GONE);
+    	}else{
+    		m_llSuggestion.setVisibility(View.VISIBLE);
+    		SuggestionAdapter SuggestionAdapter1 = new SuggestionAdapter();
+    		m_lvehSuggestion.setAdapter(SuggestionAdapter1);
+    	}
+    	
     }
     
     HashMap<String, HashMap<String, Double>> getData_FoodAndAmountByNutrient_fromFoodsByNutrient(){

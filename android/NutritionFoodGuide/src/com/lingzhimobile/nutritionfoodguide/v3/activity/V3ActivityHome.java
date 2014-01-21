@@ -21,6 +21,8 @@ import com.lingzhimobile.nutritionfoodguide.v3.fragment.V3TabContentFragment;
 import com.parse.ParseAnalytics;
 
 public class V3ActivityHome extends V3BaseActivity {
+	
+	static final String LogTag = V3ActivityHome.class.getSimpleName();
 
     private static final String TAG_DIAGNOSE = "diagnose";
     private static final String TAG_HISTORY = "history";
@@ -42,10 +44,11 @@ public class V3ActivityHome extends V3BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(LogTag, "onCreate enter");
         
         ParseAnalytics.trackAppOpened(getIntent());
         
-//        ToolParse.syncRemoteDataToLocal(this, null);
+        ToolParse.syncRemoteDataToLocal(this, null);
         DataAccess.mLogEnabled = false;
 
         setContentView(R.layout.tab_activity);

@@ -50,7 +50,8 @@ public class HistoryMonthAdapter extends FragmentStatePagerAdapterCustom//Fragme
     		int yearMonth = mMonthList.get(position);
         	int year = yearMonth / 100;
         	int month = yearMonth % 100;
-        	String title = year + " 年 " + month + " 月";
+//        	String title = year + " 年 " + month + " 月";
+        	String title = year + "." + month;
             return title;
     	}else{
     		return "";

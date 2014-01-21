@@ -18,12 +18,11 @@
             android:layout_width="40dp"
             android:layout_height="fill_parent"
             android:layout_weight="1"
-            
             />
 
         <TextView
             android:id="@+id/tvNutrient"
-            android:layout_width="80dp"
+            android:layout_width="50dp"
             android:layout_height="fill_parent"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10dp"
@@ -45,7 +44,6 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:orientation="vertical" 
-        android:background="@drawable/rowpart_clickable_bg"
         >
 
         <TextView

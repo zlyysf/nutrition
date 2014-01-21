@@ -3,6 +3,7 @@
     android:id="@+id/titleLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="44dp"
     android:orientation="horizontal"
     android:background="@color/v3_header_bg" >
 
