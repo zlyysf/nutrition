@@ -19,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 
@@ -34,6 +35,7 @@ public class V3SettingFragment extends V3BaseHeadFragment {
 
     Date m_birthday;
     
+    LinearLayout m_llToClearFocus;
     TextView birthdayTextView;//in fact EditText
     TextView m_tvActivityLevelDescription;
     EditText heightTextView, weightTextView;
@@ -137,6 +139,8 @@ public class V3SettingFragment extends V3BaseHeadFragment {
     	Button leftButton = (Button) view.findViewById(R.id.leftButton);
     	leftButton.setVisibility(View.GONE);
     	
+    	m_llToClearFocus = (LinearLayout)view.findViewById(R.id.llToClearFocus);
+    	
         birthdayTextView = (TextView) view.findViewById(R.id.birthdayTextView);
         heightTextView = (EditText) view.findViewById(R.id.heightTextView);
         weightTextView = (EditText) view.findViewById(R.id.weightTextView);
@@ -192,6 +196,20 @@ public class V3SettingFragment extends V3BaseHeadFragment {
                 
                 m_anyDataHasChanged = false;
                 setSaveButtonEnabled(m_anyDataHasChanged);
+                    
+                //http://stackoverflow.com/questions/6117967/how-to-remove-focus-without-setting-focus-to-another-control/6118033#6118033
+//                m_llToClearFocus.requestFocus();
+                
+                Activity actv = getActivity();
+                View curFocusedView = actv.getWindow().getCurrentFocus();
+                if (curFocusedView!=null){
+                	InputMethodManager imm = (InputMethodManager)actv.getSystemService(Context.INPUT_METHOD_SERVICE);
+                	imm.hideSoftInputFromWindow(curFocusedView.getWindowToken(), 0);
+                	curFocusedView.clearFocus();
+                }
+                m_llToClearFocus.requestFocus();
+                
+                
             }
         });
         

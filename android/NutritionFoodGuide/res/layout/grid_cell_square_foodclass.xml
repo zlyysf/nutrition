@@ -31,6 +31,12 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
+        
+        <ImageView
+            android:id="@+id/imageViewBgEffect"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:src="@drawable/v3_bg_food_addclickeffect" />
 
     </RelativeLayout>
 </com.lingzhimobile.nutritionfoodguide.LayoutSquare>

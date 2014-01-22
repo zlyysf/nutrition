@@ -677,16 +677,20 @@ public class V3ActivityReport extends V3BaseActivity {
                     	Double foodAmount = (Double)food.get(Constants.Key_Amount);
                     	
                     	View viewPager = getLayoutInflater().inflate(R.layout.v3_recomment_food_cell, null);
-                    	LinearLayout llFood = (LinearLayout)viewPager.findViewById(R.id.llFood);
+//                    	LinearLayout llFood = (LinearLayout)viewPager.findViewById(R.id.llFood);
                         TextView foodNameTextView = (TextView) viewPager.findViewById(R.id.foodNameTextView);
                         TextView foodCountTextView = (TextView) viewPager.findViewById(R.id.foodCountTextView);
                         ImageView ivFood = (ImageView) viewPager.findViewById(R.id.ivFood);
+                        ImageView imageViewBgEffect = (ImageView)viewPager.findViewById(R.id.imageViewBgEffect);
 
                         foodNameTextView.setText(foodName);
                         foodCountTextView.setText(foodAmount.intValue()+"g");
                         ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));
                         recommendViewPager.addView(viewPager);
-                        llFood.setOnClickListener(new OnClickListenerForFood(V3ActivityReport.this,food));
+//                        llFood.setOnClickListener(new OnClickListenerForFood(V3ActivityReport.this,food));
+                        imageViewBgEffect.setOnClickListener(new OnClickListenerForFood(V3ActivityReport.this,food));
+                        
+                        
                     }
                 }
             }else{
@@ -700,16 +704,18 @@ public class V3ActivityReport extends V3BaseActivity {
                 		String foodName = (String)food.get(Constants.COLUMN_NAME_CnCaption);
                     	Double foodAmount = Double.parseDouble(""+ FoodAndAmountHm.get(foodId));
                     	View viewPager = getLayoutInflater().inflate(R.layout.v3_recomment_food_cell, null);
-                    	LinearLayout llFood = (LinearLayout)viewPager.findViewById(R.id.llFood);
+//                    	LinearLayout llFood = (LinearLayout)viewPager.findViewById(R.id.llFood);
                         TextView foodNameTextView = (TextView) viewPager.findViewById(R.id.foodNameTextView);
                         TextView foodCountTextView = (TextView) viewPager.findViewById(R.id.foodCountTextView);
                         ImageView ivFood = (ImageView) viewPager.findViewById(R.id.ivFood);
+                        ImageView imageViewBgEffect = (ImageView)viewPager.findViewById(R.id.imageViewBgEffect);
                         
                         foodNameTextView.setText(foodName);
                         foodCountTextView.setText(foodAmount.intValue()+"g");
                         ivFood.setImageDrawable(Tool.getDrawableForFoodPic(getAssets(), (String)food.get(Constants.COLUMN_NAME_PicPath)));
                         recommendViewPager.addView(viewPager);
-                        llFood.setOnClickListener(new OnClickListenerForFood(V3ActivityReport.this,food));
+//                        llFood.setOnClickListener(new OnClickListenerForFood(V3ActivityReport.this,food));
+                        imageViewBgEffect.setOnClickListener(new OnClickListenerForFood(V3ActivityReport.this,food));
                 	}
                 }
             }

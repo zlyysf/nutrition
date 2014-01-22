@@ -90,7 +90,7 @@
     </style>
     
     <style name="v3_nutrient_label" >
-        <item name="android:minWidth">30dp</item>
+        <item name="android:minWidth">40dp</item>
         <item name="android:layout_weight">0</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
@@ -102,17 +102,20 @@
         <item name="android:textColor">@color/v3_content</item>
     </style>
     
-    <style name="v3_label" >
-        <item name="android:minWidth">40dp</item>
+    <style name="v3_label_base" >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">center_vertical|left</item>
         <item name="android:gravity">center_vertical|left</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/v3_label</item>
+    </style>
+    
+    <style name="v3_label"  parent="@style/v3_label_base">
+        <item name="android:minWidth">40dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_marginLeft">10dp</item>
         <item name="android:layout_marginRight">10dp</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/v3_label</item>
     </style>
     
     <style name="v3_encyclopedia_level2label" >

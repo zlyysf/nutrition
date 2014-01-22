@@ -10,6 +10,10 @@ import java.util.Map.Entry;
 import android.R.integer;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.drawable.ClipDrawable;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -193,7 +197,6 @@ public class ActivityFoodNutrition extends V3BaseActivity {
 				colorResId = colorResIdObj;
 			}
 			ActivityDiagnoseResult.changeProgressbarColors(ActivityFoodNutrition.this,pbSupplyPercent,supplyPercent, colorResId);
-
 			return convertView;
 		}
 

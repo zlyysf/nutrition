@@ -1604,12 +1604,24 @@ public class Tool {
 			
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
+				int eventAction = event.getAction();
+//				float eX = event.getX();
+//				float eY = event.getY();
+////				float vX = v.getX();
+////				float vY = v.getY();
+//				int vLeft = v.getLeft();
+//				int vRight = v.getRight();
+//				int vTop = v.getTop();
+//				int vBottom = v.getBottom();
+////				Log.d(LogTag, "eX,eY="+eX+","+eY+". vX,vY="+vX+","+vY+". vLTRB="+vLeft+","+vTop+","+vRight+","+vBottom);
+//				Log.d(LogTag, "eX,eY="+eX+","+eY+". vLTRB="+vLeft+","+vTop+","+vRight+","+vBottom);
 
-				if (event.getAction() == MotionEvent.ACTION_DOWN) {
+				//目前有个bug是按住按钮然后移动到外面，按钮颜色变了不能恢复 TODO
+				if (eventAction == MotionEvent.ACTION_DOWN) {
 					ColorFilter cf = new ColorFilter();
 		            v.getBackground().setColorFilter(m_overlapColor,PorterDuff.Mode.SRC_OVER);//can not DST_OVER 
 		            return false;
-		        } else if (event.getAction() == MotionEvent.ACTION_UP) {
+		        } else if (eventAction == MotionEvent.ACTION_UP || eventAction == MotionEvent.ACTION_OUTSIDE) {
 //		            v.getBackground().setColorFilter(Color.argb(0, 0, 0, 0),PorterDuff.Mode.SRC_OVER);
 		        	v.getBackground().clearColorFilter();
 		            return false;

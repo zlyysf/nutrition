@@ -6,41 +6,54 @@
     android:paddingRight="5dp"
     android:orientation="vertical" >
     
-    <LinearLayout 
-        android:id="@+id/llFood"
-	    android:layout_width="wrap_content"
-	    android:layout_height="wrap_content"
-	    android:padding="1px"
-	    android:background="@drawable/bg_border_user_profile"
-	    android:orientation="vertical" >
 
+    <FrameLayout
+        android:id="@+id/flFood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+            
+	    <LinearLayout 
+	        android:id="@+id/llFood"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:padding="1px"
+		    android:background="@drawable/bg_border_user_profile"
+		    android:orientation="vertical" >
+		    
+		    <ImageView
+		        android:id="@+id/ivFood"
+		        android:layout_width="80dp"
+		        android:layout_height="80dp"
+		        android:gravity="center"
+		        android:scaleType="fitXY"
+		        android:src="@drawable/place_holder" />
+		
+		    <TextView
+		        android:id="@+id/foodNameTextView"
+		        android:layout_width="match_parent"
+		        android:layout_height="20dp"
+		        android:gravity="center"
+		        android:textColor="@color/white"
+		        android:background="@color/v3_foodtext_black_bg"
+		        android:textSize="14sp"
+		        android:text="鸡蛋"
+		         />
+		    <TextView
+		        android:id="@+id/foodCountTextView"
+		        android:layout_width="match_parent"
+		        android:layout_height="20dp"
+		        android:gravity="center"
+		        android:textColor="@color/white"
+		        android:background="@color/v3_foodtext_black_bg"
+		        android:textSize="14sp"
+		        android:text="2个" />
+	    </LinearLayout>
+	    
 	    <ImageView
-	        android:id="@+id/ivFood"
-	        android:layout_width="80dp"
-	        android:layout_height="80dp"
-	        android:gravity="center"
-	        android:scaleType="fitXY"
-	        android:src="@drawable/place_holder" />
-	
-	    <TextView
-	        android:id="@+id/foodNameTextView"
-	        android:layout_width="match_parent"
-	        android:layout_height="20dp"
-	        android:gravity="center"
-	        android:textColor="@color/white"
-	        android:background="@color/v3_foodtext_black_bg"
-	        android:textSize="14sp"
-	        android:text="鸡蛋"
-	         />
-	    <TextView
-	        android:id="@+id/foodCountTextView"
-	        android:layout_width="match_parent"
-	        android:layout_height="20dp"
-	        android:gravity="center"
-	        android:textColor="@color/white"
-	        android:background="@color/v3_foodtext_black_bg"
-	        android:textSize="14sp"
-	        android:text="2个" />
-    
-    </LinearLayout>
+	            android:id="@+id/imageViewBgEffect"
+	            android:layout_width="80dp"
+		        android:layout_height="120dp"
+	            android:src="@drawable/v3_bg_food_addclickeffect" />
+        
+	</FrameLayout>
 </LinearLayout>
