@@ -44,7 +44,7 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 	RadioGroup m_SegmentedRadioGroup1;
 	RadioButton m_rbDescription, m_rbFoods;
 	
-	ScrollViewDebug m_scrollView1;
+//	ScrollViewDebug m_scrollView1;
 	
 	LinearLayout m_llFoods, m_llNutrientDescription;
 	
@@ -108,17 +108,17 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
     	m_tvTitle = (TextView) findViewById(R.id.titleText);
     	m_btnBack = (Button) findViewById(R.id.leftButton);
     	
-    	m_scrollView1 = (ScrollViewDebug)findViewById(R.id.scrollView1);
-
     	m_SegmentedRadioGroup1 = (RadioGroup)findViewById(R.id.SegmentedRadioGroup1);
     	m_rbDescription = (RadioButton)findViewById(R.id.rbDescription);
     	m_rbFoods = (RadioButton)findViewById(R.id.rbFoods);
-
-        m_llFoods = (LinearLayout)findViewById(R.id.llFoods);
+    	
+    	m_llFoods = (LinearLayout)findViewById(R.id.llFoods);
         m_llNutrientDescription = (LinearLayout)findViewById(R.id.llNutrientDescription);
-        
-        m_tvNutrientFoods = (TextView)findViewById(R.id.tvNutrientFoods);
+    	
+//    	m_scrollView1 = (ScrollViewDebug)findViewById(R.id.scrollView1);
+    	m_tvNutrientFoods = (TextView)findViewById(R.id.tvNutrientFoods);
         m_gridView1 = (GridView)findViewById(R.id.gridView1);
+
         
         m_webView1 = (WebView)findViewById(R.id.webView1);
         
@@ -169,24 +169,24 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 			}
 		});
 		
-		m_scrollView1.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				m_scrollView1.mCanScroll = true;
-			}
-		});
+//		m_scrollView1.setOnClickListener(new View.OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				m_scrollView1.mCanScroll = true;
+//			}
+//		});
 	}
 	void setViewsContent(){
 		ListAdapterForFood_fromNutrient adapter = new ListAdapterForFood_fromNutrient(this,m_foodsData);
 		m_gridView1.setAdapter(adapter);
 		Tool.setGridViewFromTooHighToJustExpandHeight(m_gridView1);
 		
-		m_scrollView1.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
-			@Override
-			public void onGlobalLayout() {
-//				m_scrollView1.scrollTo(0, 0);
-			}
-		});
+//		m_scrollView1.getViewTreeObserver().addOnGlobalLayoutListener(new OnGlobalLayoutListener() {
+//			@Override
+//			public void onGlobalLayout() {
+////				m_scrollView1.scrollTo(0, 0);
+//			}
+//		});
 		
 		
 //		RichFoodAdapter adapter = new RichFoodAdapter();
@@ -222,6 +222,7 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 		
 		@Override
 		public View getView(int position, View convertView, ViewGroup parent) {
+			Log.d(LogTag, "getView pos="+position+", convertView="+convertView);
 			if (convertView == null){
 				convertView = m_thisActivity.getLayoutInflater().inflate(R.layout.v3_grid_cell_square_food_amount, null);
 			}

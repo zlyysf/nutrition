@@ -11,6 +11,8 @@ import android.widget.*;
 public class ScrollViewDebug extends ScrollView{
 	static final String LogTag = "ScrollViewDebug";
 	
+	public static boolean mLogEnabled = false;
+	
 	public boolean mCanScroll = false; // 为了预防activity开始显示或重新显示时，scrollview自动滚动一段距离的bug
 	
 	public ScrollViewDebug(Context context) {
@@ -45,20 +47,22 @@ public class ScrollViewDebug extends ScrollView{
 	}
 	
 	public void scrollTo (int x, int y){
-		Log.d(LogTag, "scrollTo "+x+","+y+" mCanScroll="+mCanScroll);
+		if(mLogEnabled) Log.d(LogTag, "scrollTo "+x+","+y+" mCanScroll="+mCanScroll);
 		if (mCanScroll){
 			super.scrollTo(x, y);
 		}else{
 			//keep old pos
+//			Tool.printStackTrace(LogTag);
 		}
 	}
 	
 	public void scrollBy(int x, int y){
-		Log.d(LogTag, "scrollBy "+x+","+y+" mCanScroll="+mCanScroll);
+		if(mLogEnabled) Log.d(LogTag, "scrollBy "+x+","+y+" mCanScroll="+mCanScroll);
 		if (mCanScroll){
 			super.scrollBy(x, y);
 		}else{
 			//keep old pos
+//			Tool.printStackTrace(LogTag);
 		}
 	}
 	
@@ -71,7 +75,7 @@ public class ScrollViewDebug extends ScrollView{
 	}
 	
 	protected void onScrollChanged(int l, int t, int oldl, int oldt) {
-		Log.d(LogTag, "onScrollChanged "+l+","+t+" <- "+oldl+","+oldt);
+		if(mLogEnabled) Log.d(LogTag, "onScrollChanged "+l+","+t+" <- "+oldl+","+oldt);
 		super.onScrollChanged(l, t, oldl, oldt);
 	}
 	
