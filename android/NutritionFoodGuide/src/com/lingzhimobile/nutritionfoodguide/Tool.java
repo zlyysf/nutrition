@@ -670,7 +670,21 @@ public class Tool {
 		}
 	}
 
-	
+	public static <T> ArrayList<T> getSubList(ArrayList<T> lst, int from, int len){
+		if (lst==null || lst.size()==0)
+			return lst;
+		if (from >= lst.size())
+			return null;
+		int remainLen = lst.size() - from;
+	    int minLen = remainLen > len? len : remainLen;
+	    ArrayList<T> subLst = new ArrayList<T>(minLen);
+	    
+	    for(int i=0; i<minLen; i++){
+	        T item = lst.get(from+i);
+	        subLst.add(item);
+	    }
+	    return subLst;
+	}
 	
 	
 	/*
@@ -1781,6 +1795,8 @@ public class Tool {
 	public static void printStackTrace(String logTag){
 		Throwable throwable1 = new Throwable("just show stack");
 		Log.d(logTag, Log.getStackTraceString(throwable1));
+		
+//		android.os.Debug.dumpHprofData(fileName)
 	}
 }
 

@@ -24,6 +24,8 @@ public class Constants {
 	public static final int Config_foodNormalValue = 250; // unit g
 	public static final double Config_nearZero = 0.0000001;
 	public static final int Config_defaultFoodIncreaseUnit = 1;
+	
+	public static final int Config_getLackNutrientLimit = 3;
 
 	public static final boolean Config_ifNeedCustomDefinedFoods =true;
 

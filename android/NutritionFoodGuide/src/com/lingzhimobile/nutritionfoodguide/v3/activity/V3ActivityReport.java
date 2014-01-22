@@ -327,6 +327,7 @@ public class V3ActivityReport extends V3BaseActivity {
     	
     	if (m_SymptomIdList!=null && m_SymptomIdList.size()>0){
     		m_nutrientIdList = da.getSymptomNutrientIdsWithDisplaySort_BySymptomIds(m_SymptomIdList);
+    		m_nutrientIdList = Tool.getSubList(m_nutrientIdList, 0, Constants.Config_getLackNutrientLimit);
         	m_nutrientIds = Tool.convertToStringArray(m_nutrientIdList);
     	}
     	
