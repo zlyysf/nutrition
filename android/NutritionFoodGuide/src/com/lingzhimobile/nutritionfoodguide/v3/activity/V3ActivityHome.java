@@ -2,8 +2,7 @@ package com.lingzhimobile.nutritionfoodguide.v3.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.*;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.View;
@@ -103,6 +102,7 @@ public class V3ActivityHome extends V3BaseActivity {
     }
 
     protected void setCurrentItem(int i) {
+//    	int prevTabItemIndex = m_currentTabItemIndex;
     	m_currentTabItemIndex  = i;
     	FragmentManager fragmentManager = this.getSupportFragmentManager();
         Fragment fragment = fragmentManager.findFragmentByTag(TAGS[i]);
@@ -140,11 +140,33 @@ public class V3ActivityHome extends V3BaseActivity {
                 
                 break;
             case Position_Tab_Setting:
-                
+            	fragment = V3SettingFragment.newInstance(1);
                 break;
             }
         }
-        fragmentManager.beginTransaction().replace(R.id.contentFrameLayout, fragment, TAGS[i]).addToBackStack(null).commit();
+        //看来没法从fragmentManager中删掉某个fragment
+//        Fragment toRemoveFragment = null;
+//        if (prevTabItemIndex == Position_Tab_Setting){
+//        	toRemoveFragment = fragmentManager.findFragmentByTag(TAGS[prevTabItemIndex]);
+//        }
+        
+        FragmentTransaction fragTran = fragmentManager.beginTransaction();
+//        if (toRemoveFragment != null){
+//        	fragTran.remove(toRemoveFragment);
+//        	Log.d(LogTag, "fragTran.remove prevTabItemIndex="+prevTabItemIndex);
+//        }
+        fragTran.replace(R.id.contentFrameLayout, fragment, TAGS[i]);
+//        if (prevTabItemIndex != Position_Tab_Setting){
+//        	fragTran.addToBackStack(null);
+//        }
+        fragTran.addToBackStack(null);
+        fragTran.commit();
+        
+//        if (prevTabItemIndex == Position_Tab_Setting){
+//        	Fragment toRemoveFragment2 = fragmentManager.findFragmentByTag(TAGS[prevTabItemIndex]);
+//        	Log.d(LogTag, "toRemoveFragment2="+toRemoveFragment2);//not null, seemed that FragmentTransaction.remove not remove from fragmentManager
+//        }
+        
     }
 
     @Override
