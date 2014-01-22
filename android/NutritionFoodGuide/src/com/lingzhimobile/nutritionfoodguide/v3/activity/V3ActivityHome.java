@@ -127,7 +127,7 @@ public class V3ActivityHome extends V3BaseActivity {
         }else{
         	switch(i){
             case Position_Tab_Diagnose:
-                
+//            	fragment = V3DiagnoseFragment.newInstance(0);
                 break;
             case Position_Tab_History:
             	V3HistoryFragment fragmentHis = (V3HistoryFragment)fragment;

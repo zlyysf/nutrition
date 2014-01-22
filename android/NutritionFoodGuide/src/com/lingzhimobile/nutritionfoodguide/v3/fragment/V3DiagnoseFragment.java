@@ -7,6 +7,7 @@ import org.apmem.tools.layouts.FlowLayout;
 import org.json.JSONArray;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.RectF;
 import android.graphics.drawable.ShapeDrawable;
@@ -22,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -57,7 +59,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
             R.color.v3_psychology, R.color.v3_male, R.color.v3_female };
 	static final int checkboxColorNormalResId = R.color.white;
 	
-	TextView m_tvTitle;
+	TextView m_tvTitle, m_tvNotice;
 	Button m_btnSubmit;
 	EditText m_etNote, m_etBodyTemperature, m_etWeight, m_etHeartRate, m_etBloodPressureHigh, m_etBloodPressureLow;
 	ListView m_listView1;
@@ -92,8 +94,8 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
     }
 
 	@Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		Log.d(LogTag, "onCreateView");
 	    View view = inflater.inflate(R.layout.v3_fragment_diagnose, container, false);
 	    initHeaderLayout(view);
         initViewHandles(inflater, view);
@@ -102,6 +104,30 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
         setViewsContent();
         return view;
     }
+	
+	@Override
+    public void onActivityCreated (Bundle savedInstanceState){
+		Log.d(LogTag, "onActivityCreated enter");
+		super.onActivityCreated(savedInstanceState);
+		Log.d(LogTag, "onActivityCreated exit");
+	}
+    
+	
+	public void onViewStateRestored (Bundle savedInstanceState){
+		Log.d(LogTag, "onViewStateRestored enter");
+		super.onViewStateRestored(savedInstanceState);
+		Log.d(LogTag, "onViewStateRestored exit ");
+	}
+    public void onStart() {
+		Log.d(LogTag, "onStart begin");
+		super.onStart();
+		Log.d(LogTag, "onStart exit");
+	}
+    public void onResume() {
+    	Log.d(LogTag, "onResume begin");
+		super.onResume();
+		Log.d(LogTag, "onResume exit");
+	}
 
     void initViewHandles(LayoutInflater inflater, View view){
     	m_tvTitle = (TextView) view.findViewById(R.id.titleText);
@@ -113,6 +139,8 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
         m_listView1 = (ListView)view.findViewById(R.id.listView1);
         View headerView = inflater.inflate(R.layout.v3_symptom_header, null, false);
         View footerView = inflater.inflate(R.layout.v3_symptom_footer, null, false);
+        m_tvNotice = (TextView)headerView.findViewById(R.id.tvNotice);
+        
         m_etNote = (EditText)footerView.findViewById(R.id.etNote);
         m_etBodyTemperature = (EditText)footerView.findViewById(R.id.etBodyTemperature);
         m_etWeight = (EditText)footerView.findViewById(R.id.etWeight);
@@ -152,6 +180,22 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 		m_etBloodPressureHigh.setText(null);
 		m_etBloodPressureLow.setText(null);
 		m_etNote.setText(null);
+		
+		Activity actv = getActivity();
+        View curFocusedView = actv.getWindow().getCurrentFocus();
+        if (curFocusedView!=null){
+        	InputMethodManager imm = (InputMethodManager)actv.getSystemService(Context.INPUT_METHOD_SERVICE);
+        	imm.hideSoftInputFromWindow(curFocusedView.getWindowToken(), 0);
+        	curFocusedView.clearFocus();
+        }
+//		m_tvNotice.requestFocus();
+//		m_listView1.scrollTo(0, 0);//why no use?
+//		m_listView1.post(new Runnable() {//why no use?
+//			@Override
+//			public void run() {
+//				m_listView1.scrollTo(0, 0);
+//			}
+//		});
 	}
 	boolean checkCanSubmit(){
 		for(int i=0; i<symptomTypeIds.size(); i++){
@@ -316,6 +360,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
     @Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data)
 	{
+    	Log.d(LogTag, "onActivityResult begin");
 		super.onActivityResult(requestCode, resultCode, data);
 		switch (requestCode)
 		{
@@ -326,6 +371,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
 			default:
 				break;
 		}
+		Log.d(LogTag, "onActivityResult end");
 	}
 
 	public class SymptomAdapter extends BaseAdapter
