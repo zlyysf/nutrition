@@ -29,6 +29,7 @@ public class V3ActivityIllness extends V3BaseActivity {
 	
 	static final String LogTag = "V3ActivityIllness";
 	
+	LinearLayout m_llTop;
 	TextView m_tvTitle;
 	Button m_btnBack;
 	WebView m_webView1;
@@ -52,11 +53,21 @@ public class V3ActivityIllness extends V3BaseActivity {
 		//fix a warning . com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityIllness has leaked IntentReceiver com.android.qualcomm.browsermanagement.BrowserManagement$1@41cd7790 that was originally registered here. Are you missing a call to unregisterReceiver()?
     	//android.app.IntentReceiverLeaked: Activity com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityIllness has leaked IntentReceiver com.android.qualcomm.browsermanagement.BrowserManagement$1@41cd7790 that was originally registered here. Are you missing a call to unregisterReceiver()?
     	//solved by http://angrycode.cn/archives/476
-    	m_webView1.destroy();
+//    	m_webView1.destroy();//Error: WebView.destroy() called while still attached!
 		super.onDestroy();
+		//http://blog.csdn.net/geekpark/article/details/14524673
+    	if (m_webView1 != null){
+    		if (m_llTop != null){
+    			m_llTop.removeView(m_webView1);
+    		}
+    		m_webView1.removeAllViews();
+    		m_webView1.destroy();
+    	}
 	}
     
     void initViewHandles(){
+    	m_llTop = (LinearLayout) findViewById(R.id.llTop);
+    	
     	Button rightButton = (Button) findViewById(R.id.rightButton);
     	rightButton.setVisibility(View.GONE);
     	m_btnBack = (Button) findViewById(R.id.leftButton);

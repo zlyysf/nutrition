@@ -90,8 +90,17 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 		//fix a warning . com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityIllness has leaked IntentReceiver com.android.qualcomm.browsermanagement.BrowserManagement$1@41cd7790 that was originally registered here. Are you missing a call to unregisterReceiver()?
     	//android.app.IntentReceiverLeaked: Activity com.lingzhimobile.nutritionfoodguide.v3.activity.V3ActivityIllness has leaked IntentReceiver com.android.qualcomm.browsermanagement.BrowserManagement$1@41cd7790 that was originally registered here. Are you missing a call to unregisterReceiver()?
     	//solved by http://angrycode.cn/archives/476
-    	m_webView1.destroy();
-		super.onDestroy();
+//    	m_webView1.destroy();//Error: WebView.destroy() called while still attached!
+    	super.onDestroy();
+    	//http://blog.csdn.net/geekpark/article/details/14524673
+    	if (m_webView1 != null){
+    		if (m_llNutrientDescription != null){
+    			m_llNutrientDescription.removeView(m_webView1);
+    		}
+    		m_webView1.removeAllViews();
+    		m_webView1.destroy();
+    	}
+		
 	}
     protected void onStart() {
 		Log.d(LogTag, "onStart");
