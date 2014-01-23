@@ -248,14 +248,19 @@ public class V3ActivityFoodsByNutrient extends V3BaseActivity {
 			tvAmount.setText(amountStr);
 			
 			ImageView imageView1 = (ImageView)vwItem.findViewById(R.id.imageView1);
+			ImageView imageViewBgEffect = (ImageView)vwItem.findViewById(R.id.imageViewBgEffect);
+			
 			imageView1.setImageDrawable(Tool.getDrawableForFoodPic(m_thisActivity.getAssets(), (String)foodInfo.get(Constants.COLUMN_NAME_PicPath)));
 			
-			OnClickListenerForInputFoodAmount myOnClickListenerForInputAmount = (OnClickListenerForInputFoodAmount)imageView1.getTag();
+//			OnClickListenerForInputFoodAmount myOnClickListenerForInputAmount = (OnClickListenerForInputFoodAmount)imageView1.getTag();
+			OnClickListenerForInputFoodAmount myOnClickListenerForInputAmount = (OnClickListenerForInputFoodAmount)imageViewBgEffect.getTag();
 			if (myOnClickListenerForInputAmount == null){
 				myOnClickListenerForInputAmount = new OnClickListenerForInputFoodAmount(m_thisActivity,this);
 				myOnClickListenerForInputAmount.initInputData(position);
-				imageView1.setOnClickListener(myOnClickListenerForInputAmount);
-				imageView1.setTag(myOnClickListenerForInputAmount);
+//				imageView1.setOnClickListener(myOnClickListenerForInputAmount);
+//				imageView1.setTag(myOnClickListenerForInputAmount);
+				imageViewBgEffect.setOnClickListener(myOnClickListenerForInputAmount);
+				imageViewBgEffect.setTag(myOnClickListenerForInputAmount);
 			}else{
 				myOnClickListenerForInputAmount.initInputData(position);
 			}

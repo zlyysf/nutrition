@@ -169,10 +169,11 @@ public class V3SettingFragment extends V3BaseHeadFragment {
                 HashMap<String, Object> userInfo = new HashMap<String, Object>();
 //                userInfo.put(Constants.ParamKey_age,Integer.parseInt(birthdayTextView.getText().toString()));
                 userInfo.put(Constants.ParamKey_birthday, m_birthday);
-                userInfo.put(Constants.ParamKey_height,
-                        Double.parseDouble(heightTextView.getText().toString()));
-                userInfo.put(Constants.ParamKey_weight,
-                        Double.parseDouble(weightTextView.getText().toString()));
+                String heightStr = heightTextView.getText().toString();
+                String weightStr = weightTextView.getText().toString();
+                Log.d(LogTag, "heightStr="+heightStr+", weightStr="+weightStr);
+                userInfo.put(Constants.ParamKey_height, Double.parseDouble(heightStr));
+                userInfo.put(Constants.ParamKey_weight, Double.parseDouble(weightStr));
                 
                 int sex = Constants.Value_sex_male;
             	if (femaleRadioButton.isChecked()){
@@ -298,8 +299,9 @@ public class V3SettingFragment extends V3BaseHeadFragment {
 
         Double dbl_height = (Double)userInfo.get(Constants.ParamKey_height);
         Double dbl_weight = (Double)userInfo.get(Constants.ParamKey_weight);
-//        heightTextView.setText(Tool.formatFloatOrInt(dbl_height, 1));
-//        weightTextView.setText(Tool.formatFloatOrInt(dbl_weight, 1));
+//        Log.d(LogTag, "in setViewsContent, dbl_height="+dbl_height+", dbl_weight="+dbl_weight);
+        heightTextView.setText(Tool.formatFloatOrInt(dbl_height, 1));
+        weightTextView.setText(Tool.formatFloatOrInt(dbl_weight, 1));
         genderRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_sex));
         intensityRadioGroup.check((Integer) userInfo.get(Constants.ParamKey_activityLevel));
         

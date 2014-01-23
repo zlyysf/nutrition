@@ -12,8 +12,11 @@ import com.parse.ParseObject;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 public class StoredConfigTool {
+	
+	static final String LogTag = StoredConfigTool.class.getSimpleName();
 	
 	private static final String SharedPreferenceName = "userprof";
 	
@@ -112,6 +115,8 @@ public class StoredConfigTool {
 		Double dblObj_weight = (Double)userInfo.get(Constants.ParamKey_weight);
 		Double dblObj_height = (Double)userInfo.get(Constants.ParamKey_height);
 		Integer intObj_activityLevel = (Integer)userInfo.get(Constants.ParamKey_activityLevel);
+//		Log.d(LogTag,"in saveUserInfo_withPartItems, dblObj_weight="+dblObj_weight+", dblObj_height="+dblObj_height);
+		
 		
 		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = sharedPref.edit();
