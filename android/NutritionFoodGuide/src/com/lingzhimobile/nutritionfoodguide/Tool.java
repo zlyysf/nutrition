@@ -25,6 +25,7 @@ import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.database.*;
 import android.graphics.*;
+import android.graphics.Paint.Style;
 import android.graphics.drawable.*;
 import android.graphics.drawable.shapes.*;
 import android.os.DropBoxManager.Entry;
@@ -1608,7 +1609,7 @@ public class Tool {
 		//另外需要在各个activity中设置 onKeyDown 处理back键
 	}
 	
-	public static void changeBackground_NutritionButton(Context curActv, View vwNutrition, String nutrientId, boolean needBgEffect){
+	public static void changeBackground_NutritionButton0(Context curActv, View vwNutrition, String nutrientId, boolean needBgEffect){
 		//todo , search android color blend function or android color mix function
 		class OnTouchListenerForPressEffect implements View.OnTouchListener {
 			int m_overlapColor;
@@ -1701,10 +1702,80 @@ public class Tool {
 		}else{
 			vwNutrition.setBackgroundDrawable(states);//deprecated in API level 16.
 		}
+	}
+	
+	//与changeBackground_NutritionButton0相比，改掉了手指点在按钮上，此时按钮变色，再移动到按钮外面，变色不消失的问题。但是做了取舍，当按钮文本增长时，与按钮的边界会减小，即padding没有了.
+	public static void changeBackground_NutritionButton(Context curActv, View vwNutrition, String nutrientId, boolean needBgEffect){
+		
+		HashMap<String, Integer> nutrientColorMapping = NutritionTool.getNutrientColorMapping();
+		Integer nutrientColorResId = nutrientColorMapping.get(nutrientId);
+		final float[] roundedCorners = new float[] { 11, 11, 11, 11, 11, 11, 11, 11 };
+		RoundRectShape RoundRectShape1 = new RoundRectShape(roundedCorners, null,null);
+		
+		//这里边框是可以加，但是细细看来不够美观
+//		ShapeDrawable ShapeDrawableBorder = new ShapeDrawable(RoundRectShape1);
+//		Paint paintOfShapeDrawableBorder = ShapeDrawableBorder.getPaint();
+//		paintOfShapeDrawableBorder.setColor(curActv.getResources().getColor(R.color.silver));
+//		paintOfShapeDrawableBorder.setStyle(Style.STROKE);
+//		paintOfShapeDrawableBorder.setStrokeWidth(1);
+////		ShapeDrawableBorder.setPadding(16, 14, 16, 14);
+		
+		ShapeDrawable ShapeDrawable1 = new ShapeDrawable(RoundRectShape1);
+//		ShapeDrawable1.getPaint().setColor(Color.parseColor("#FF0000"));
+		ShapeDrawable1.getPaint().setColor(curActv.getResources().getColor(nutrientColorResId));
+//		ShapeDrawable1.setPadding(16, 14, 16, 14);//对于padding的问题，暂且使用设置width和height的方式来绕开，其实也没有完全解决
+		
+		ShapeDrawable ShapeDrawable21 = new ShapeDrawable(RoundRectShape1);
+		ShapeDrawable21.getPaint().setColor(curActv.getResources().getColor(nutrientColorResId));
+//		ShapeDrawable21.setPadding(16, 14, 16, 14);
+		
+		int overlapColor = curActv.getResources().getColor(R.color.v3_addClickEffect);
+		ShapeDrawable ShapeDrawable22 = new ShapeDrawable(RoundRectShape1);
+		ShapeDrawable22.getPaint().setColor(overlapColor);
+//		ShapeDrawable22.setPadding(16, 14, 16, 14);
+		
+		StateListDrawable states = new StateListDrawable();
+		
+//		Drawable[] layersNormal = new Drawable[2];
+//		layersNormal[1] = ShapeDrawableBorder;
+//		layersNormal[0] = ShapeDrawable1;
+		Drawable[] layersNormal = new Drawable[1];
+		layersNormal[0] = ShapeDrawable1;
+		LayerDrawable layerDrawableNormal = new LayerDrawable(layersNormal);
+		
+//		Drawable[] layersPressEffect = new Drawable[3];
+//		layersPressEffect[2] = ShapeDrawableBorder;
+//		layersPressEffect[0] = ShapeDrawable21;
+//		layersPressEffect[1] = ShapeDrawable22;
+		Drawable[] layersPressEffect = new Drawable[2];
+		layersPressEffect[0] = ShapeDrawable21;
+		layersPressEffect[1] = ShapeDrawable22;
+		LayerDrawable layerDrawablePressEffect = new LayerDrawable(layersPressEffect);
+		if (needBgEffect){
+			states.addState(new int[] {android.R.attr.state_pressed}, layerDrawablePressEffect);//这里需要颜色叠加.但是使用了padding就出问题了
+		}
+
+		//all fail
+//		if (needBgEffect){
+////			ShapeDrawable21.setColorFilter(overlapColor, PorterDuff.Mode.SRC_OVER);//fail
+////			ShapeDrawable21.setColorFilter(overlapColor, PorterDuff.Mode.DST_OVER);//fail
+////			ShapeDrawable21.setColorFilter(overlapColor, PorterDuff.Mode.OVERLAY);//fail
+////			PorterDuffColorFilter overColorFilter = new PorterDuffColorFilter(overlapColor, PorterDuff.Mode.SRC_OVER);//fail
+////			PorterDuffColorFilter overColorFilter = new PorterDuffColorFilter(overlapColor, PorterDuff.Mode.DST_OVER);//fail
+////			ShapeDrawable21.getPaint().setColorFilter(overColorFilter);
+////			states.addState(new int[] {android.R.attr.state_pressed}, ShapeDrawable21);
+//		}
+			
+		states.addState(new int[] { }, layerDrawableNormal);
+
+		if (Tool.getVersionOfAndroidSDK() >= 16){//运行时获取Android API版本来判断
+			vwNutrition.setBackground(states);//android 2.3 not have this method
+		}else{
+			vwNutrition.setBackgroundDrawable(states);//deprecated in API level 16.
+		}
 		
 
 	}
-	
 	
 	public static void setListViewExpandHeightByCalculateChildren(ListView lv){
 		int totalHeight = 0;    

@@ -90,15 +90,20 @@
         <item name="android:minHeight">30dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_margin">5dp</item>
-
+        <!-- no use when using code set background
+        <item name="android:padding">7dp</item>
+        -->
         <item name="android:textColor">@color/v3_content</item>
     </style>
     
     <style name="v3_nutrient_label" parent="@style/v3_text_center_common">
-        <item name="android:minWidth">40dp</item>
+        <item name="android:minWidth">50dp</item>
+        <item name="android:minHeight">30dp</item>
         <item name="android:layout_weight">0</item>
         <item name="android:layout_margin">5dp</item>
-
+        <!-- no use when using code set background
+        <item name="android:padding">7dp</item>
+        -->
         <item name="android:textColor">@color/v3_content</item>
     </style>
     
