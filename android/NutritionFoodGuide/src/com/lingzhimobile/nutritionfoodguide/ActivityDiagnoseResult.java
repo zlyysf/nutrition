@@ -29,6 +29,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.DataSetObserver;
 import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.Paint.Style;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.ClipDrawable;
 import android.graphics.drawable.ColorDrawable;
@@ -36,6 +38,7 @@ import android.graphics.drawable.Drawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.LayerDrawable;
 import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RectShape;
 import android.graphics.drawable.shapes.RoundRectShape;
 
 import android.os.Build.VERSION;
@@ -663,7 +666,7 @@ public class ActivityDiagnoseResult extends ActivityBase {
 		changeProgressbarColors(curActv,progBar,progVal,colorResIdFor1stProg, R.drawable.progressbar_colors_solid_layers);
 	}
 	
-	public static void changeProgressbarColors(Activity curActv, ProgressBar progBar, int progVal, int colorResIdFor1stProg, int colorResIdForBg){
+	public static void changeProgressbarColors0(Activity curActv, ProgressBar progBar, int progVal, int colorResIdFor1stProg, int colorResIdForBg){
 		final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
 		ShapeDrawable ShapeDrawable1 = new ShapeDrawable(new RoundRectShape(roundedCorners, null,null));
 //		ShapeDrawable1.getPaint().setColor(Color.parseColor("#FF0000"));
@@ -694,6 +697,54 @@ public class ActivityDiagnoseResult extends ActivityBase {
 //	    progressLayerDrawable.setId(1, android.R.id.secondaryProgress);
 //	    progressLayerDrawable.setId(2, android.R.id.progress);
 //	    progBar.setProgressDrawable(progressLayerDrawable);
+		
+		progBar.setProgress(0);//根据网上说法，在动态改变progressbar的颜色的时候，其本身有点小bug，这里是滚动页面后进度条的前景色就没了。需要改变progress值使其刷新
+		progBar.setProgress(progVal);
+	}
+	
+	public static void changeProgressbarColors(Activity curActv, ProgressBar progBar, int progVal, int colorResIdFor1stProg, int colorResIdForBg){
+//		final float[] roundedCorners = new float[] { 5, 5, 5, 5, 5, 5, 5, 5 };
+//		ShapeDrawable ShapeDrawable1 = new ShapeDrawable(new RoundRectShape(roundedCorners, null,null));
+//		ShapeDrawable1.getPaint().setColor(curActv.getResources().getColor(colorResIdFor1stProg));
+//		ClipDrawable ClipDrawable1 = new ClipDrawable(ShapeDrawable1, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+//		progBar.setProgressDrawable(ClipDrawable1);  
+////		progBar.setBackground(getResources().getDrawable( R.drawable.pink));//no round corner
+////		progBar.setBackground(getResources().getDrawable( android.R.drawable.progress_horizontal));//have round corner, should be because progress_horizontal have round corner
+//		if (Tool.getVersionOfAndroidSDK() >= 16){//运行时获取Android API版本来判断
+//			progBar.setBackground(curActv.getResources().getDrawable( colorResIdForBg));//android 2.3 not have this method
+//		}else{
+//			progBar.setBackgroundDrawable(curActv.getResources().getDrawable( colorResIdForBg));//deprecated in API level 16.
+//		}
+		
+		//http://stackoverflow.com/questions/2020882/how-to-change-progress-bars-progress-color-in-android
+		RectShape RectShape1 = new RectShape();
+		ShapeDrawable ShapeDrawableBorder = new ShapeDrawable(RectShape1);
+		Paint paintOfShapeDrawableBorder = ShapeDrawableBorder.getPaint();
+		paintOfShapeDrawableBorder.setColor(curActv.getResources().getColor(R.color.black));//(R.color.silver));
+		paintOfShapeDrawableBorder.setStyle(Style.STROKE);
+		paintOfShapeDrawableBorder.setStrokeWidth(1);
+		
+		ShapeDrawable ShapeDrawableProgress = new ShapeDrawable(RectShape1);
+		ShapeDrawableProgress.getPaint().setColor(curActv.getResources().getColor(colorResIdFor1stProg));
+		Drawable[] layersProgress = new Drawable[2];
+		layersProgress[1] = ShapeDrawableBorder;
+		layersProgress[0] = ShapeDrawableProgress;
+		LayerDrawable layerDrawableProgress = new LayerDrawable(layersProgress);
+		ClipDrawable ClipDrawableProgress = new ClipDrawable(layerDrawableProgress, Gravity.LEFT, ClipDrawable.HORIZONTAL);
+		
+		ShapeDrawable ShapeDrawableBackground = new ShapeDrawable(RectShape1);
+		ShapeDrawableBackground.getPaint().setColor(curActv.getResources().getColor(R.color.white));//gray
+		Drawable[] layersBackground = new Drawable[2];
+		layersBackground[1] = ShapeDrawableBorder;
+		layersBackground[0] = ShapeDrawableBackground;
+		LayerDrawable layerDrawableBackground = new LayerDrawable(layersBackground);
+		
+		Drawable[] wholeDrawables = {layerDrawableBackground, ClipDrawableProgress, ClipDrawableProgress};
+		LayerDrawable wholeLayerDrawable = new LayerDrawable(wholeDrawables);
+		wholeLayerDrawable.setId(0, android.R.id.background);
+	    wholeLayerDrawable.setId(1, android.R.id.secondaryProgress);
+	    wholeLayerDrawable.setId(2, android.R.id.progress);
+	    progBar.setProgressDrawable(wholeLayerDrawable);
 		
 		progBar.setProgress(0);//根据网上说法，在动态改变progressbar的颜色的时候，其本身有点小bug，这里是滚动页面后进度条的前景色就没了。需要改变progress值使其刷新
 		progBar.setProgress(progVal);
