@@ -52,7 +52,7 @@ public class V3ActivityHome extends V3BaseActivity {
         
         ParseAnalytics.trackAppOpened(getIntent());
         
-        ToolParse.syncRemoteDataToLocal(this, null);
+        
         DataAccess.mLogEnabled = false;
 
         setContentView(R.layout.tab_activity);

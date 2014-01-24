@@ -182,6 +182,24 @@ public class StoredConfigTool {
 		editor.commit();
 	}
 	
+	private static final String Key_alreadyBeOpenedAtCurrentInstall = "alreadyBeOpenedAtCurrentInstall";
+	
+	public static boolean isFirstBeOpenedAtCurrentInstall(Context ctx)
+	{
+		SharedPreferences sharedPref = ctx.getSharedPreferences(SharedPreferenceName,Activity.MODE_PRIVATE);
+		boolean alreadyBeOpened = sharedPref.getBoolean(Key_alreadyBeOpenedAtCurrentInstall, false);
+		boolean firstBeOpened = !alreadyBeOpened;
+		
+		if (!alreadyBeOpened){
+			SharedPreferences.Editor editor = sharedPref.edit();
+			editor.putBoolean(Key_alreadyBeOpenedAtCurrentInstall, true);
+			editor.commit();
+		}
+		
+		return firstBeOpened;
+	}
+
+	
 
 	
 	
