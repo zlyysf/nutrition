@@ -6,14 +6,14 @@ import android.net.Uri;
 public class Constants {
 	
 	//debug
-	public static final String ParseApp_ApplicationID = "fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1";//zlyysf nutrition1 app
-	public static final String ParseApp_ClientKey = "TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex";//zlyysf nutrition1 app
+//	public static final String ParseApp_ApplicationID = "fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1";//zlyysf nutrition1 app
+//	public static final String ParseApp_ClientKey = "TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex";//zlyysf nutrition1 app
 	
 	//product
-//	public static final String ParseApp_ApplicationID = "KOObufGbStKu8OP2QrcGEU0dkwMpvlD0rJ09PD6R";//lingzhi RemedyPills app
-//	public static final String ParseApp_ClientKey = "MkXIifLvrpe5mONp4IhPs0ijcpg15ZCJdSJpFIT8";//lingzhi RemedyPills app
+	public static final String ParseApp_ApplicationID = "KOObufGbStKu8OP2QrcGEU0dkwMpvlD0rJ09PD6R";//lingzhi RemedyPills app
+	public static final String ParseApp_ClientKey = "MkXIifLvrpe5mONp4IhPs0ijcpg15ZCJdSJpFIT8";//lingzhi RemedyPills app
 	
-	public static final boolean KeyIsEnvironmentDebug = true;
+	public static final boolean KeyIsEnvironmentDebug = false;
 	
 	public static final String DBupdateTime = "201311211600";
 	
