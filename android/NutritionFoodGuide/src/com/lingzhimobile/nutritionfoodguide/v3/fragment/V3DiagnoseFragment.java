@@ -310,7 +310,7 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
                 	
                 	if (Weight>0){
                 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
-                		userInfo.put(Constants.Key_Weight, Double.valueOf(Weight));
+                		userInfo.put(Constants.ParamKey_weight, Double.valueOf(Weight));
                 		StoredConfigTool.saveUserInfo_withPartItems(getActivity(), userInfo);
                 	}
                 }
