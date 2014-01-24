@@ -207,6 +207,9 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     	m_gvFoodType.setOnItemClickListener(new OnItemClickListener(){
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (GlobalVar.isClickedTooFast()){
+					return;
+				}
 				String foodTypeId = m_foodTypeIdList.get(position);
 //				Log.d(LogTag, "onItemClick "+foodCnType);
 				
@@ -345,6 +348,10 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
 
 		@Override
 		public void onClick(View v) {
+			if (GlobalVar.isClickedTooFast()){
+				return;
+			}
+			
 			String nutrientId = (String)v.getTag();
 			if (nutrientId!=null){
 				HashMap<String, HashMap<String, Object>> nutrientInfoDict2Level = GlobalVar.getAllNutrient2LevelDict(m_ctx);
@@ -423,6 +430,10 @@ public class V3EncyclopediaFragment extends V3BaseHeadFragment {
     	
     	@Override
 		public void onClick(View v) {
+    		if (GlobalVar.isClickedTooFast()){
+				return;
+			}
+    		
     		Intent intent = new Intent(m_ctx, V3ActivityIllness.class);
     		intent.putExtra(Constants.IntentParamKey_BackButtonTitle, m_currentTitle);
 			intent.putExtra(Constants.COLUMN_NAME_IllnessId, m_illnessId);

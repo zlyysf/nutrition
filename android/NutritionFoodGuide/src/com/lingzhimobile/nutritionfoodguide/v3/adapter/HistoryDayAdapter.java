@@ -374,6 +374,10 @@ public class HistoryDayAdapter extends BaseAdapter implements SectionIndexer {
 
 		@Override
 		public void onClick(View v) {
+			if (GlobalVar.isClickedTooFast()){
+				return;
+			}
+			
 			Intent intent1 = new Intent(mContext, V3ActivityReport.class);
 //			intent1.putExtra(Constants.IntentParamKey_BackButtonTitle, m_fragment.getCurrentTitle());
 			intent1.putExtra(Constants.IntentParamKey_BackButtonTitle, mContext.getResources().getString(R.string.tabCaption_history));

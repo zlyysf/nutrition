@@ -24,6 +24,16 @@ public class GlobalVar {
 	static HashMap<String, HashMap<String, Object>> m_foodInfoDict2Level = null;
 	static HashMap<String, HashMap<String, Object>> m_suggestionInfoDict2Level = null;
 	
+	private static long m_lastClickTime = 0;
+    public static boolean isClickedTooFast() {
+        long timeNow = System.currentTimeMillis();
+        long timeDelta = timeNow - m_lastClickTime;
+        if ( timeDelta < 800) {   
+            return true;   
+        }   
+        m_lastClickTime = timeNow;   
+        return false;   
+    }
 	
 	public static void InitDiseaseAndGroupData(Context ctx) 
 			throws IOException

@@ -626,6 +626,9 @@ public class V3ActivityReport extends V3BaseActivity {
 
 		@Override
 		public void onClick(View v) {
+			if (GlobalVar.isClickedTooFast()){
+				return;
+			}
 			String foodName = (String)m_foodData.get(Constants.COLUMN_NAME_CnCaption);
 			String foodId = (String)m_foodData.get(Constants.COLUMN_NAME_NDB_No);
 			Log.d(LogTag, "OnClickListenerForFood foodId="+foodId+", foodName="+foodName);

@@ -166,6 +166,10 @@ public class V3ActivityFoodsByType extends V3BaseActivity {
 
 		@Override
 		public void onClick(View v) {
+			if (GlobalVar.isClickedTooFast()){
+				return;
+			}
+			
 			HashMap<String, Object> foodData = (HashMap<String, Object>)m_listAdapter.getItem(m_rowPos);
 			String foodName = (String)foodData.get(Constants.COLUMN_NAME_CnCaption);
 			String foodId = (String)foodData.get(Constants.COLUMN_NAME_NDB_No);
