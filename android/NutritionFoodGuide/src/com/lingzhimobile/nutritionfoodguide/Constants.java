@@ -5,17 +5,16 @@ import android.net.Uri;
 
 public class Constants {
 	
+	//debug
 	public static final String ParseApp_ApplicationID = "fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1";//zlyysf nutrition1 app
 	public static final String ParseApp_ClientKey = "TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex";//zlyysf nutrition1 app
 	
-	public static final String ParseObject_UserRecord = "UserRecord";
-	public static final String ParseObjectKey_objectId = "objectId";
-	public static final String ParseObjectKey_UserRecord_deviceId = "deviceId";
-	public static final String ParseObjectKey_UserRecord_attachFile = "attachFile";
-	public static final String ParseObject_UserRecordSymptom = "UserRecordSymptom";
-	
+	//product
+//	public static final String ParseApp_ApplicationID = "KOObufGbStKu8OP2QrcGEU0dkwMpvlD0rJ09PD6R";//lingzhi RemedyPills app
+//	public static final String ParseApp_ClientKey = "MkXIifLvrpe5mONp4IhPs0ijcpg15ZCJdSJpFIT8";//lingzhi RemedyPills app
 	
 	public static final boolean KeyIsEnvironmentDebug = true;
+	
 	public static final String DBupdateTime = "201311211600";
 	
 	public static final boolean Config_needConsiderNutrientLoss = false;
@@ -39,6 +38,12 @@ public class Constants {
 	public static final boolean Config_alreadyChoosedFoodHavePriority =true; //主要用于减少食物种类
 	public static final boolean Config_needPriorityFoodToSpecialNutrient = false; //有了 alreadyChoosedFoodHavePriority 为true，感觉needPriorityFoodToSpecialNutrient的特色没必要了
 	
+	
+	public static final String ParseObject_UserRecord = "UserRecord";
+	public static final String ParseObjectKey_objectId = "objectId";
+	public static final String ParseObjectKey_UserRecord_deviceId = "deviceId";
+	public static final String ParseObjectKey_UserRecord_attachFile = "attachFile";
+	public static final String ParseObject_UserRecordSymptom = "UserRecordSymptom";
 	
 	public static final String FoodClassify_gulei ="gulei";
 	public static final String FoodClassify_gandoulei ="gandoulei";

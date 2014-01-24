@@ -132,7 +132,9 @@ public class V3DiagnoseFragment extends V3BaseHeadFragment {
     void initViewHandles(LayoutInflater inflater, View view){
     	m_tvTitle = (TextView) view.findViewById(R.id.titleText);
         leftButton = (Button) view.findViewById(R.id.leftButton);
-//        leftButton.setVisibility(View.INVISIBLE);
+        if (!Constants.KeyIsEnvironmentDebug){
+        	leftButton.setVisibility(View.INVISIBLE);
+        }
         rightButton = (Button) view.findViewById(R.id.rightButton);
         rightButton.setText("查看");
         m_btnSubmit = rightButton;
