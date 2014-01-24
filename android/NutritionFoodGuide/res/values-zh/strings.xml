@@ -23,6 +23,7 @@
     <string name="prevStep">上一步</string>
     <string name="save">保存</string>
     <string name="finish">完成</string>
+    <string name="saved">已保存</string>
     
     <string name="create">新建</string>
     
@@ -35,6 +36,12 @@
     <string name="title_searchfood">食物</string>
     <string name="title_userinfo">个人</string>
     <string name="title_setting">设置</string>
+    
+    <string name="tabCaption_health_maintenance">养生</string>
+    <string name="tabCaption_history">历史</string>
+    <string name="tabCaption_graph">曲线</string>
+    <string name="tabCaption_encyclopedia">百科</string>
+    <string name="tabCaption_info">信息</string>
     
     <string name="title_addfood_tolist_ornew">添加食物</string>
     <string name="title_food_combination">营养搭配</string>
@@ -57,7 +64,8 @@
     <string name="youNeededNutrients">您需要补充的营养元素</string>
     <string name="weCanRecommend1InSum">我们可以继续为您推荐富含以上营养元素的食物</string>
     
-    <string name="chooseRichFood">下列是富含%s的食物，克数代表一天的推荐量。</string>
+    <string name="chooseRichFood">以下是富含%s的食物和每日推荐量</string>
+    <string name="v3_chooseRichFood">以下是富含%s的食物和每日推荐量</string>
     <string name="chooseNutrientsExplain">哪些营养素是您重点关注且是不能缺少的，请选择：</string>
     
     <string name="noFoodCombinationListForNow">暂无膳食清单</string>
@@ -70,6 +78,9 @@
     
     <string name="calculating">计算中...</string>
     <string name="alreadyChooseEnoughFoodAndNeedToDelete">已有的这组食物搭配已经能够满足您所关注的营养需要，如需另行推荐，您可以删掉一些食物再使用推荐功能。</string>
+    
+    <string name="noHistoryRecord">无历史记录!</string>
+    
     
     
     <string name="basicInfo">基本信息</string>
@@ -109,5 +120,10 @@
     <string name="feedbackEmailTitle">用户意见反馈</string>
     <string name="feedbackEmailChooseSender">选择邮件发送程序：</string>
 
+    <string name="ActivityLevelDescription0">每日仅做一些轻度运动，如散步，购物，做家务等。</string>
+    <string name="ActivityLevelDescription1">每日做大概30分钟中等运动，如快速步行，平地骑车，跳交谊舞等。</string>
+    <string name="ActivityLevelDescription2">每日做大概60分钟中等运动；或30分钟的强度运动，如中速跑步，爬山，打羽毛球等。</string>
+    <string name="ActivityLevelDescription3">每日做大概45~60分钟的剧烈运动，如快跑，游泳，打篮球等。</string>
+    
 
 </resources>

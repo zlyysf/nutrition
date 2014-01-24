@@ -18,3 +18,8 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-keep class com.parse.** { *; }
+-keep class com.facebook.** { *; }
+-dontwarn com.parse.**
+-dontwarn com.facebook.**
