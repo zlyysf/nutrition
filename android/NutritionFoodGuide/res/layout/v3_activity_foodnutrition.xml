@@ -39,7 +39,7 @@
 
 	                <TextView
 	                    style="@style/v3_encyclopedia_headerlabel"
-	                    android:text="选择重量" />
+	                    android:text="重量" />
                 </LinearLayout>
 
 
