@@ -192,6 +192,7 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
 			public void onPageSelected(int position) {
 				Log.d(LogTag, "onPageSelected position="+position);
 				setTitleWithPager(position);
+				setNavButtonEnableState();
 			}
 			@Override
 			public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -254,7 +255,7 @@ public class V3HistoryFragment extends V3BaseHeadFragment {
 	    	historyViewPager.setCurrentItem(pageIdx, false);//seemed will cause OnPageChangeListener.onPageSelected
 	//        setTitleWithPager(pageIdx);
     	}
-        setNavButtonEnableState();
+//        setNavButtonEnableState();
     }
     void setTitleWithPager(int pageIdx){
     	Log.d(LogTag, "setTitleWithPager pageIdx="+pageIdx);
