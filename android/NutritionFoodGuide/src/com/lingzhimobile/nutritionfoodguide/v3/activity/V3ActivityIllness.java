@@ -35,6 +35,7 @@ public class V3ActivityIllness extends V3BaseActivity {
 	WebView m_webView1;
 	
 	String m_IllnessId;
+	String m_prevActvTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,42 @@ public class V3ActivityIllness extends V3BaseActivity {
         initViewsContent();
         setViewEventHandlers();
         setViewsContent();
+    }
+    
+    public void onStart() {
+		Log.d(LogTag, "onStart");
+		super.onStart();
+	}
+    public void onResume() {
+		Log.d(LogTag, "onResume");
+		super.onResume();		
+	}
+    
+    @Override
+    public void onWindowFocusChanged (boolean hasFocus){
+        super.onWindowFocusChanged(hasFocus);
+        if(hasFocus){
+        	//to prevent m_prevActvTitle and m_btnBack overlap
+        	String title1 = m_prevActvTitle;
+//			Log.d(LogTag, "m_btnBack.getRight()="+m_btnBack.getRight()+", m_tvTitle.getLeft()="+m_tvTitle.getLeft()+", title1="+title1);
+//			while (m_btnBack.getRight() > m_tvTitle.getLeft()){
+//	        	if (title1.length()>=2)
+//	        		title1 = title1.substring(0, title1.length()/2);
+//	        	else title1 = "";
+//	        	m_btnBack.setText(title1);//看来设置完这个并不立即导致尺寸改变
+//	        	Log.d(LogTag, "m_btnBack.getRight()="+m_btnBack.getRight()+", m_tvTitle.getLeft()="+m_tvTitle.getLeft()+", title1="+title1);
+//	        }
+			if (m_btnBack.getRight() > m_tvTitle.getLeft()){
+				int delta = m_btnBack.getRight() - m_tvTitle.getLeft();
+				float titleWidth = m_btnBack.getPaint().measureText(title1);
+				if ((titleWidth/2)>=delta){
+					title1 = title1.substring(0, title1.length()/2);
+				}else{
+					title1 = "";
+				}
+				m_btnBack.setText(title1);
+			}
+        }
     }
     
     @Override
@@ -79,10 +116,8 @@ public class V3ActivityIllness extends V3BaseActivity {
     void initViewsContent(){
     	Intent paramIntent = getIntent();
         m_IllnessId = paramIntent.getStringExtra(Constants.COLUMN_NAME_IllnessId);
+        m_prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
         
-        String prevActvTitle = paramIntent.getStringExtra(Constants.IntentParamKey_BackButtonTitle);
-        if (prevActvTitle!=null)
-        	m_btnBack.setText(prevActvTitle);
     }
     
     void setViewEventHandlers(){
@@ -103,6 +138,12 @@ public class V3ActivityIllness extends V3BaseActivity {
     	
     	m_currentTitle = illnessCaption;
         m_tvTitle.setText(m_currentTitle);
+        
+        if (m_prevActvTitle!=null)
+        	m_btnBack.setText(m_prevActvTitle);
+        
+        
+        
     	
     	String url = (String)illnessInfo.get(Constants.COLUMN_NAME_UrlCn);
     	m_webView1.loadUrl(url);
