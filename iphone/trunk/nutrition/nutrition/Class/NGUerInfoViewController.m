@@ -10,6 +10,7 @@
 #import "LZKeyboardToolBar.h"
 #import "LZConstants.h"
 #import "LZUtility.h"
+#import "LZReviewAppManager.h"
 #import <math.h>
 
 @interface NGUerInfoViewController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate,LZKeyboardToolBarDelegate>
@@ -44,6 +45,9 @@
     self.sexLabel.text = NSLocalizedString(@"xinxi_c_xingbie", @"性别项标题：性别");
     self.weightLabel.text = NSLocalizedString(@"xinxi_c_tizhong", @"体重项标题：体重");
     self.activityLabel.text = NSLocalizedString(@"xinxi_c_huodongqiangdu", @"活动强度项标题：活动强度");
+    
+    [self.reviewAppButton setTitle:NSLocalizedString(@"settings_pingfenbutton",@"给我们评分") forState:UIControlStateNormal];
+
     self.title = NSLocalizedString(@"xinxi_c_title", @"页面标题：信息");
     self.birthdayPicker = [[UIDatePicker alloc]init];
     self.birthdayPicker.datePickerMode = UIDatePickerModeDate;
@@ -72,7 +76,7 @@
     {
         [self.navigationItem.rightBarButtonItem setEnabled:NO];
     }
-    [self.listView setContentSize:CGSizeMake(320, 455)];
+    [self.listView setContentSize:CGSizeMake(320, 535)];
     //[self displayUserInfo];
     
 	// Do any additional setup after loading the view.
@@ -578,4 +582,22 @@
     }
 }
 
+- (IBAction)btnReviewClicked:(id)sender {
+    [[LZReviewAppManager SharedInstance]reviewOurAppDirectly];
+}
 @end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

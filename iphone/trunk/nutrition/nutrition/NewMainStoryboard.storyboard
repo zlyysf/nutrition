@@ -999,7 +999,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="CHS-a2-Sok">
-                                        <rect key="frame" x="10" y="15" width="300" height="425"/>
+                                        <rect key="frame" x="10" y="15" width="300" height="510"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i38-iv-cX9">
@@ -1051,6 +1051,11 @@
                                             </imageView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray_horizon_line.png" id="Uj0-Wr-7UQ">
                                                 <rect key="frame" x="0.0" y="300" width="300" height="1"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                            </imageView>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="gray_horizon_line.png" id="c6q-Br-SPy">
+                                                <rect key="frame" x="0.0" y="430" width="300" height="1"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </imageView>
@@ -1168,6 +1173,17 @@
                                                     <action selector="birthdayButtonClicked:" destination="D4K-QU-mXC" eventType="touchUpInside" id="JVn-Og-IB0"/>
                                                 </connections>
                                             </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8IS-Ft-vvZ">
+                                                <rect key="frame" x="60" y="450" width="180" height="40"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <state key="normal" title="Review Our App">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="btnReviewClicked:" destination="D4K-QU-mXC" eventType="touchUpInside" id="stR-Yz-cjN"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
@@ -1188,6 +1204,7 @@
                         <outlet property="heightLabel" destination="zpn-WA-KXy" id="gqP-O1-T5j"/>
                         <outlet property="heightTextField" destination="rPn-k9-5Oa" id="Dfe-32-PYR"/>
                         <outlet property="listView" destination="bVg-Rm-vnt" id="EQ6-er-rMn"/>
+                        <outlet property="reviewAppButton" destination="8IS-Ft-vvZ" id="hzh-D3-fbf"/>
                         <outlet property="sexLabel" destination="Vo4-s6-mMs" id="J2Y-eh-kAG"/>
                         <outlet property="sexSegmentControll" destination="SQA-EU-ahn" id="JvJ-eL-F0V"/>
                         <outlet property="weightLabel" destination="Oj5-R4-dbZ" id="p1x-lY-lFr"/>

@@ -18,6 +18,7 @@
 #import "LZRecommendFood.h"
 #import "NGDiagnoseLabel.h"
 #import "GADMasterViewController.h"
+#import "LZReviewAppManager.h"
 @interface NGDiagnoseViewController ()<LZKeyboardToolBarDelegate,UITextViewDelegate,UITextFieldDelegate>
 {
     BOOL isChinese;
@@ -209,6 +210,7 @@
         [self clearState];
     }
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
+    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {

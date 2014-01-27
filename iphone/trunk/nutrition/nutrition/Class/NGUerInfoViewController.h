@@ -25,6 +25,14 @@
 @property (strong,nonatomic) UIPickerView *heightPicker;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *sexSegmentControll;
 @property (strong, nonatomic) IBOutlet UISegmentedControl *activitySegmentControll;
+
+
+- (IBAction)btnReviewClicked:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *reviewAppButton;
+
+
+
+
 @property (assign,nonatomic)BOOL isPresented;
 - (IBAction)activityChanged:(id)sender;
 

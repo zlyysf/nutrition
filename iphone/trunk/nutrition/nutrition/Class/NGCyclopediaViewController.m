@@ -20,6 +20,8 @@
 #import "NGIllnessInfoViewController.h"
 #import "NGNutritionInfoViewController.h"
 #import "GADMasterViewController.h"
+#import "LZReviewAppManager.h"
+
 #define DiseaseItemTopMargin 10
 #define DiseaseItemMargin 10
 #define DiseaseItemBottomMarigin 30
@@ -97,6 +99,7 @@
 {
     GADMasterViewController *gad = [GADMasterViewController singleton];
     [gad resetAdView:self andListView:self.adView];
+    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
 }
 -(NSString *)getNutritionName:(NSString *)nutritionId
 {
