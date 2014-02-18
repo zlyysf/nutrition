@@ -887,19 +887,19 @@
 			isa = PBXGroup;
 			children = (
 				0818CA1218477B50003DB33A /* CDataScanner.m */,
-				5FECAD9F183885CA00D72A8C /* Nutrition2.0 */,
+				0882403D173A7E7400E71E6E /* readme.txt */,
 				0869449E18AC72090085B76A /* CtrlLib */,
 				085C8D4917336707001A1ABB /* Util */,
 				085C8D4517336701001A1ABB /* dataAccess */,
 				085C8D33173366F2001A1ABB /* fmdbLib */,
 				FCEE43D01851FC23008329AF /* CorePlotLib */,
+				5FECAD9F183885CA00D72A8C /* Nutrition2.0 */,
 				5F3338AE172A407E0096E7AE /* Nutrition */,
 				5F90D7D017AF8873000AEC06 /* BaiduSDK */,
 				5FF631C917702C690068CBFE /* AdMob */,
 				5F746BFE1769A81500E68D0E /* YouMengSDK */,
 				5FF847381758540200DEA6DE /* MBProgressHUD */,
 				0882419D175621BC00E71E6E /* ResExternal */,
-				0882403D173A7E7400E71E6E /* readme.txt */,
 				085C8D5B17336A29001A1ABB /* testApp */,
 				5F3338D4172A5BD60096E7AE /* Resource */,
 				5F3338AF172A407E0096E7AE /* Supporting Files */,
@@ -1966,7 +1966,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
 				INFOPLIST_FILE = "nutrition/nutrition-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/nutrition/CorePlotLib\"",
@@ -1997,7 +1997,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
 				INFOPLIST_FILE = "nutrition/nutrition-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/nutrition/CorePlotLib\"",

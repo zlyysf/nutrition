@@ -1654,14 +1654,45 @@
 
 
 
++(double)getSystemVersionValue
+{
+    return [[[UIDevice currentDevice] systemVersion] floatValue];
+}
+
++(BOOL)is_IOS7_OR_LATER
+{
+    return ([self getSystemVersionValue] >= 7.0 );
+}
 
 
 
 
+// http://blog.csdn.net/smallsky_keke/article/details/11366839
++ (UIDeviceResolution) currentResolution {
+    if(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone){
+        if ([[UIScreen mainScreen] respondsToSelector: @selector(scale)]) {
+            CGSize result = [[UIScreen mainScreen] bounds].size;
+            result = CGSizeMake(result.width * [UIScreen mainScreen].scale, result.height * [UIScreen mainScreen].scale);
+            if (result.height <= 480.0f)
+                return UIDevice_iPhoneStandardRes;
+            return (result.height > 960 ? UIDevice_iPhoneTallerHiRes : UIDevice_iPhoneHiRes);
+        } else
+            return UIDevice_iPhoneStandardRes;
+    } else
+        return (([[UIScreen mainScreen] respondsToSelector: @selector(scale)]) ? UIDevice_iPadHiRes : UIDevice_iPadStandardRes);
+}
 
++ (BOOL)isRunningOnScreen4inch
+{
+    return ([self currentResolution] == UIDevice_iPhoneTallerHiRes) ;
+}
 
-
-
+//+ (BOOL)isRunningOniPhone5{
+//    return ([self currentResolution] == UIDevice_iPhoneTallerHiRes) ;
+//}
+//+ (BOOL)isRunningOniPhone{
+//    return (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone);
+//}
 
 
 
@@ -1683,6 +1714,25 @@
 
     NSString *localName = [nutrientDict objectForKey:localPropKey];
     return localName;
+}
+
++(NSString*)getLocalNutrientShortName:(NSDictionary*)nutrientDict
+{
+    bool isChinese = [LZUtility isCurrentLanguageChinese];
+    NSString *localPropKey;
+    if (isChinese)
+    {
+        localPropKey = COLUMN_NAME_IconTitleCn;
+    }
+    else
+    {
+        localPropKey = COLUMN_NAME_IconTitleEn;
+    }
+    
+    NSString *localName = [nutrientDict objectForKey:localPropKey];
+    NSString *localNameShort = [LZUtility getNutritionNameInfo:localName isChinese:isChinese];
+    
+    return localNameShort;
 }
 
 +(NSString*)getLocalFoodName:(NSDictionary*)foodAttrDict

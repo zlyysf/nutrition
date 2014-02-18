@@ -151,7 +151,9 @@
             [markLabel setText:markStr];
             [markLabel setTextColor:[UIColor blackColor]];
             [markLabel setFont:labelFont];
+            markLabel.backgroundColor = [UIColor clearColor];
             [markUnitView addSubview:markLabel];
+            
         }else if (i%5==0){
             markXianHeight = markUnitMidHeight;
         }

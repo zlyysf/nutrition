@@ -92,11 +92,7 @@
     
     [LZGlobalService SetSubViewExternNone:self];
     
-    if ([dietId intValue]>0){
-        self.title = NSLocalizedString(@"listmake_viewtitle1",@"推荐的食物");
-    }else{
-        self.title = NSLocalizedString(@"listmake_viewtitle2",@"营养搭配");
-    }
+    self.title = NSLocalizedString(@"listmake_viewtitle2",@"营养搭配");
     
     
     HUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
@@ -887,13 +883,11 @@
         
         NSDictionary * AllNutrient2LevelDict = [[LZGlobal SharedInstance] getAllNutrient2LevelDict];
         NSDictionary *nutrientDict = [AllNutrient2LevelDict objectForKey:nutrientId];
-        NSString *nutritionName = [LZUtility getLocalNutrientName:nutrientDict];
-        
-        NSString *convertedString = [LZUtility getNutritionNameInfo:nutritionName isChinese:isChinese];
-        
+        NSString *nutritionNameShort = [LZUtility getLocalNutrientShortName:nutrientDict];
+
         cell.nutrientId = nutrientId;
         
-        [cell.nutritionNameLabel setText:convertedString];
+        [cell.nutritionNameLabel setText:nutritionNameShort];
         
         NSNumber *percent = [nutrientSupplyInfo objectForKey:@"nutrientSupplyRate"];
         
@@ -1167,31 +1161,39 @@
 
 #pragma mark- Recommend Function
 - (IBAction)recommendAction:(id)sender {
-    //弹出选择元素框
-    float duration = 0.5;
-    CGSize screenSize = [[UIScreen mainScreen]bounds].size;
-    NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
-    NSString *title = NSLocalizedString(@"listmake_filterview_title",@"哪些营养素是您重点关注且是不能缺少的，请选择：");
-    LZRecommendFilterView *viewtoAnimate = [[LZRecommendFilterView alloc]initWithFrame:CGRectMake(0, 20, screenSize.width, screenSize.height-20) backColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5] filterInfo:preferNutrient tipsStr:title delegate:self];
+//    //弹出选择元素框
+//    float duration = 0.5;
+//    CGSize screenSize = [[UIScreen mainScreen]bounds].size;
+//    NSArray *preferNutrient = [[NSUserDefaults standardUserDefaults]objectForKey:KeyUserRecommendPreferNutrientArray];
+//    NSString *title = NSLocalizedString(@"listmake_filterview_title",@"哪些营养素是您重点关注且是不能缺少的，请选择：");
+//    LZRecommendFilterView *viewtoAnimate = [[LZRecommendFilterView alloc]initWithFrame:CGRectMake(0, 20, screenSize.width, screenSize.height-20) backColor:[UIColor colorWithRed:0.f green:0.f blue:0.f alpha:0.5] filterInfo:preferNutrient tipsStr:title delegate:self];
+//    
+//    //LZAppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
+//    //[appDelegate.window addSubview:viewtoAnimate];
+//    [self.navigationController.view addSubview:viewtoAnimate];
+//    CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
+//    scale.duration = duration;
+//    scale.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.5f],
+//                    [NSNumber numberWithFloat:1.05f],
+//                    [NSNumber numberWithFloat:0.95f],
+//                    [NSNumber numberWithFloat:1.f],
+//                    nil];
+//    CAAnimationGroup *group = [CAAnimationGroup animation];
+//    group.animations = [NSArray arrayWithArray:[NSArray arrayWithObjects:scale, nil]];
+//    group.delegate = nil;
+//    group.duration = duration;
+//    group.removedOnCompletion = YES;
+//    
+//    group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
+//    [viewtoAnimate.backView.layer addAnimation:group forKey:@"kFTAnimationPopIn"];
     
-    //LZAppDelegate *appDelegate = [[UIApplication sharedApplication]delegate];
-    //[appDelegate.window addSubview:viewtoAnimate];
-    [self.navigationController.view addSubview:viewtoAnimate];
-    CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
-    scale.duration = duration;
-    scale.values = [NSArray arrayWithObjects:[NSNumber numberWithFloat:.5f],
-                    [NSNumber numberWithFloat:1.05f],
-                    [NSNumber numberWithFloat:0.95f],
-                    [NSNumber numberWithFloat:1.f],
-                    nil];
-    CAAnimationGroup *group = [CAAnimationGroup animation];
-    group.animations = [NSArray arrayWithArray:[NSArray arrayWithObjects:scale, nil]];
-    group.delegate = nil;
-    group.duration = duration;
-    group.removedOnCompletion = YES;
+    HUD.hidden = NO;
+    [HUD show:YES];
+    //self.listView.hidden = YES;
     
-    group.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    [viewtoAnimate.backView.layer addAnimation:group forKey:@"kFTAnimationPopIn"];
+    HUD.labelText = NSLocalizedString(@"listmake_HUDLabel_content",@"智能推荐中...");
+    
+    [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.01f];
     
 }
 - (void)recommendOnePlan
@@ -1267,7 +1269,7 @@
     
 }
 
-#pragma mark- LZRecommendFilterView Deleagte
+#pragma mark- LZRecommendFilterViewDelegate
 - (void)filterViewCanceled:(LZRecommendFilterView *)filterView
 {
     [filterView.layer removeAllAnimations];

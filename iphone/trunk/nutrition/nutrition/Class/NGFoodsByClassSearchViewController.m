@@ -8,6 +8,7 @@
 
 #import "NGFoodsByClassSearchViewController.h"
 
+#import "LZGlobalService.h"
 #import "LZDataAccess.h"
 #import "LZFoodTypeButton.h"
 #import "NGFoodsByClassViewController.h"
@@ -39,6 +40,10 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+//    [LZGlobalService SetSubViewExternNone:self];//no use here about search bar when clicked
+
+    
     isfirstLoad = YES;
     if (ViewControllerUseBackImage) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
@@ -114,6 +119,26 @@
 {
     [MobClick endLogPageView:UmengPathShiWuChaXun];
 }
+
+//searchbar的位置对了，但其下面的位置不对
+//- (void) viewDidLayoutSubviews
+//{
+//    if(floor(NSFoundationVersionNumber) > NSFoundationVersionNumber_iOS_6_1)
+//    {
+//        CGRect viewBounds = self.view.bounds;
+//        CGFloat topBarOffset = self.topLayoutGuide.length;
+//        viewBounds.origin.y = topBarOffset * -1;
+//        self.view.bounds = viewBounds;
+//        
+//        self.edgesForExtendedLayout = UIRectEdgeNone;
+//    }
+//}
+
+
+
+
+
+
 -(void)setButtons
 {
     float startY = 10;
@@ -249,65 +274,81 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    //    [self.searchResultVC setActive:NO];
-    //    [self.searchResultVC.searchBar resignFirstResponder];
-    //    [tableView deselectRowAtIndexPath:indexPath animated:NO];
-    //    NSDictionary *foodAtr = [self.searchResultArray objectAtIndex:indexPath.row];
-    //
-    //
-    //    //NSString *resultName = [resultDict objectForKey:@"Name"];
-    //
-    //    //int index = [self.allFoodNamesArray indexOfObject:resultName];
-    //    //NSDictionary *foodAtr = [self.allFood  objectAtIndex:index];
-    //    NSString *foodQueryKey;
-    //    if (isChinese)
-    //    {
-    //        foodQueryKey = @"CnCaption";
-    //    }
-    //    else
-    //    {
-    //        foodQueryKey = @"FoodNameEn";
-    //    }
-    //
-    //    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
-    //    NSNumber *weight = [NSNumber numberWithInt:100];
-    //    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
-    //    NGFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"NGFoodDetailController"];
-    //    //            NSString *sectionTitle = [NSString stringWithFormat:@"%dg%@",[weight intValue],foodName];
-    //    NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName]];
-    //    NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
-    //    //    if ([weight intValue]>= [upper intValue])
-    //    //    {
-    //    //        upper = weight;
-    //    //    }
-    //    foodDetailController.gUnitMaxValue = upper;
-    //
-    //    if ([singleUnitName length]==0)
-    //    {
-    //        foodDetailController.isUnitDisplayAvailable = NO;
-    //    }
-    //    else
-    //    {
-    //        foodDetailController.isUnitDisplayAvailable = YES;
-    //        foodDetailController.unitName = singleUnitName;
-    //        NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
-    //        foodDetailController.isDefaultUnitDisplay = NO;
-    //        int maxCount = (int)(ceilf(([upper floatValue]*2)/[singleUnitWeight floatValue]));
-    //        foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
-    //    }
-    //    foodDetailController.isPushToDietPicker = isFromOut;
-    //    foodDetailController.currentSelectValue = weight;
-    //    foodDetailController.defaulSelectValue = weight;
-    //    foodDetailController.foodAttr = foodAtr;
-    //    foodDetailController.foodName = foodName;
-    //    if(!isFromOut)
-    //    {
-    //       foodDetailController.delegate = self;
-    //    }
-    //    foodDetailController.isCalForAll = NO;
-    //    foodDetailController.GUnitStartIndex = 100;
-    //    JWNavigationViewController *nav = [[JWNavigationViewController alloc]initWithRootViewController:foodDetailController];
-    //    [self presentModalViewController:nav animated:YES];
+    [self.searchResultVC setActive:NO];
+    [self.searchResultVC.searchBar resignFirstResponder];
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    NSDictionary *foodAttr = [self.searchResultArray objectAtIndex:indexPath.row];
+    
+    NSString *foodId = foodAttr[COLUMN_NAME_NDB_No];
+    NSNumber *foodAmount = [NSNumber numberWithInt:100];
+
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
+    NGFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"NGFoodDetailController"];
+    foodDetailController.FoodId = foodId;
+    foodDetailController.FoodAttr = foodAttr;
+    foodDetailController.FoodAmount = foodAmount;
+    //    foodDetailController.delegate = self;
+    foodDetailController.editDelegate = editDelegate;
+    foodDetailController.BackToViewControllerWhenFinish = (UIViewController*)editDelegate;
+    foodDetailController.staticFoodAmountDict = [editDelegate getFoodAmountDict];
+    foodDetailController.isCalForAll = true;
+    //    foodDetailController.editDelegate = editDelegate;
+    [self.navigationController pushViewController:foodDetailController animated:YES];
+//
+//
+//    //NSString *resultName = [resultDict objectForKey:@"Name"];
+//
+//    //int index = [self.allFoodNamesArray indexOfObject:resultName];
+//    //NSDictionary *foodAtr = [self.allFood  objectAtIndex:index];
+//    NSString *foodQueryKey;
+//    if (isChinese)
+//    {
+//        foodQueryKey = @"CnCaption";
+//    }
+//    else
+//    {
+//        foodQueryKey = @"FoodNameEn";
+//    }
+//
+//    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
+//    NSNumber *weight = [NSNumber numberWithInt:100];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
+//    NGFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"NGFoodDetailController"];
+//    //            NSString *sectionTitle = [NSString stringWithFormat:@"%dg%@",[weight intValue],foodName];
+//    NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName]];
+//    NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
+//    //    if ([weight intValue]>= [upper intValue])
+//    //    {
+//    //        upper = weight;
+//    //    }
+//    foodDetailController.gUnitMaxValue = upper;
+//
+//    if ([singleUnitName length]==0)
+//    {
+//        foodDetailController.isUnitDisplayAvailable = NO;
+//    }
+//    else
+//    {
+//        foodDetailController.isUnitDisplayAvailable = YES;
+//        foodDetailController.unitName = singleUnitName;
+//        NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+//        foodDetailController.isDefaultUnitDisplay = NO;
+//        int maxCount = (int)(ceilf(([upper floatValue]*2)/[singleUnitWeight floatValue]));
+//        foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
+//    }
+//    foodDetailController.isPushToDietPicker = isFromOut;
+//    foodDetailController.currentSelectValue = weight;
+//    foodDetailController.defaulSelectValue = weight;
+//    foodDetailController.foodAttr = foodAtr;
+//    foodDetailController.foodName = foodName;
+//    if(!isFromOut)
+//    {
+//       foodDetailController.delegate = self;
+//    }
+//    foodDetailController.isCalForAll = NO;
+//    foodDetailController.GUnitStartIndex = 100;
+//    JWNavigationViewController *nav = [[JWNavigationViewController alloc]initWithRootViewController:foodDetailController];
+//    [self presentModalViewController:nav animated:YES];
 }
 #pragma mark -
 #pragma mark UISearchDisplayController Delegate Methods
@@ -355,25 +396,45 @@
 
 - (void)searchDisplayControllerDidEndSearch:(UISearchDisplayController *)controller
 {
-    
     [self.searchResultVC.searchBar resignFirstResponder];
 }
 
 
-#pragma mark- LZFoodDetailViewControllerDelegate
--(void)didChangeFoodId:(NSString *)foodId toAmount:(NSNumber*)changedValue
-{
-    [LZUtility addFood:foodId withFoodAmount:changedValue];
-    for (UIViewController *vc in self.navigationController.viewControllers)
-    {
-        if ([vc isMemberOfClass:[LZDietListMakeViewController class]])
-        {
-            [self.navigationController popToViewController:vc animated:NO];
-            break;
-        }
+// http://stackoverflow.com/questions/18925900/ios-7-uisearchdisplaycontroller-search-bar-overlaps-status-bar-while-searching
+//这解决了点击search bar时， search bar 与 status bar 重叠的问题
+-(void)searchDisplayControllerWillBeginSearch:(UISearchDisplayController *)controller {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        CGRect statusBarFrame =  [[UIApplication sharedApplication] statusBarFrame];
+        CGRect frame = controller.searchBar.frame;
+        frame.origin.y += statusBarFrame.size.height;
+        controller.searchBar.frame = frame;
     }
-    
 }
+-(void)searchDisplayControllerWillEndSearch:(UISearchDisplayController *)controller {
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0) {
+        CGRect statusBarFrame =  [[UIApplication sharedApplication] statusBarFrame];
+        CGRect frame = controller.searchBar.frame;
+        frame.origin.y -= statusBarFrame.size.height;
+        controller.searchBar.frame = frame;
+    }
+}
+
+
+
+//#pragma mark- LZFoodDetailViewControllerDelegate
+//-(void)didChangeFoodId:(NSString *)foodId toAmount:(NSNumber*)changedValue
+//{
+//    [LZUtility addFood:foodId withFoodAmount:changedValue];
+//    for (UIViewController *vc in self.navigationController.viewControllers)
+//    {
+//        if ([vc isMemberOfClass:[LZDietListMakeViewController class]])
+//        {
+//            [self.navigationController popToViewController:vc animated:NO];
+//            break;
+//        }
+//    }
+//    
+//}
 
 - (void)viewDidUnload {
     [self setSearchResultVC:nil];

@@ -84,7 +84,7 @@
     }else{
         NSString *rightTitle;
         if (isForEdit) {
-            rightTitle = NSLocalizedString(@"baocunbutton", @"保存");
+            rightTitle = NSLocalizedString(@"quedingbutton", @"确定");
         }else{
             rightTitle = NSLocalizedString(@"tianjiabutton", @"添加");
         }
@@ -353,13 +353,11 @@
     
     NSDictionary * AllNutrient2LevelDict = [[LZGlobal SharedInstance] getAllNutrient2LevelDict];
     NSDictionary *nutrientDict = [AllNutrient2LevelDict objectForKey:nutrientId];
-    NSString *nutritionName = [LZUtility getLocalNutrientName:nutrientDict];
-    
-    NSString *convertedString = [LZUtility getNutritionNameInfo:nutritionName isChinese:isChinese];
+    NSString *nutritionNameShort = [LZUtility getLocalNutrientShortName:nutrientDict];
     
     cell.nutrientId = nutrientId;
     
-    [cell.nutritionNameLabel setText:convertedString];
+    [cell.nutritionNameLabel setText:nutritionNameShort];
 
     NSNumber *percent = [nutrientSupplyInfo objectForKey:@"1foodSupply1NutrientRate"];
     NSNumber *food1Supply1NutrientAmount = [nutrientSupplyInfo objectForKey:@"food1Supply1NutrientAmount"];

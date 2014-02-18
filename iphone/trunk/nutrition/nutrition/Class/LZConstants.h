@@ -167,6 +167,8 @@
 
 #define COLUMN_NAME_NutrientCnCaption @"NutrientCnCaption"
 #define COLUMN_NAME_NutrientEnCaption @"NutrientEnCaption"
+#define COLUMN_NAME_IconTitleCn @"IconTitleCn"
+#define COLUMN_NAME_IconTitleEn @"IconTitleEn"
 #define COLUMN_NAME_NutrientEnUnit @"NutrientEnUnit"
 #define COLUMN_NAME_LossRate @"LossRate"
 #define COLUMN_NAME_NutrientDescription @"NutrientDescription"
