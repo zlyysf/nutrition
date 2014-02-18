@@ -228,6 +228,8 @@
     [LZUtility initializePreferNutrient];
 //    foodListViewController.listType = dietListTypeNew;
     [self.navigationController pushViewController:foodListViewController animated:YES];
+    
+    [MobClick event:UmengEvent_V2YingYangDaPei];
 }
 - (void)settingsAction
 {
@@ -412,6 +414,8 @@
     foodListViewController.title = dietTitle;
     foodListViewController.dietId = dietId;
     [self.navigationController pushViewController:foodListViewController animated:YES];
+    
+    [MobClick event:UmengEvent_V2YingYangDaPei];
 }
 
 - (void)viewDidUnload {

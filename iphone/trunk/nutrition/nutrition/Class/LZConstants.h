@@ -414,6 +414,17 @@
 #define UmengEventHuanYiZu @"ChangeFood"
 #define UmengEventZhenDuan @"HealthCheck"
 
+#define UmengEvent_V2Diagnose @"V2Diagnose"
+#define UmengEvent_V2FoodsByNutrient @"V2FoodsByNutrient"
+#define UmengEvent_V2FoodsByClass @"V2FoodsByClass"
+#define UmengEvent_V2Disease @"V2Disease"
+#define UmengEvent_V2YingYangDaPei @"V2YingYangDaPei"
+#define UmengEvent_V2YingYangDaPeiSave @"V2YingYangDaPeiSave"
+#define UmengEvent_V2Recommend @"V2Recommend"
+#define UmengEvent_V2AddByNutrientButton @"V2AddByNutrientButton"
+#define UmengEvent_V2AddByClassSearchButton @"V2AddByClassSearchButton"
+#define UmengEvent_V2AddBySearch @"V2AddBySearch"
+
 
 #define SeperatorForNames @",,"
 

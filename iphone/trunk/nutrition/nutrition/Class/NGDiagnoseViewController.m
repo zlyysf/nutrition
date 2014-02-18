@@ -19,6 +19,8 @@
 #import "NGDiagnoseLabel.h"
 #import "GADMasterViewController.h"
 #import "LZReviewAppManager.h"
+#import "MobClick.h"
+
 @interface NGDiagnoseViewController ()<LZKeyboardToolBarDelegate,UITextViewDelegate,UITextFieldDelegate>
 {
     BOOL isChinese;
@@ -190,6 +192,8 @@
     healthReportViewController.isOnlyDisplay = NO;
     needClearState = YES;
     [self.navigationController pushViewController:healthReportViewController animated:YES];
+    
+    [MobClick event:UmengEvent_V2Diagnose];
 }
 -(void)userInfoChanged:(NSNotification *)notification
 {

@@ -201,6 +201,7 @@
     }
     else
     {
+        [MobClick event:UmengEvent_V2YingYangDaPeiSave];
         if (dietId == nil || [dietId intValue]<=0)
         {
             //新建一个表单，用insert
@@ -1193,6 +1194,7 @@
     
     HUD.labelText = NSLocalizedString(@"listmake_HUDLabel_content",@"智能推荐中...");
     
+    [MobClick event:UmengEvent_V2Recommend];
     [self performSelector:@selector(recommendOnePlan) withObject:nil afterDelay:0.01f];
     
 }
@@ -1301,7 +1303,7 @@
 }
 - (void)filterViewSubmitted:(LZRecommendFilterView *)filterView
 {
-    [MobClick event:UmengEventTuiJian];
+//    [MobClick event:UmengEventTuiJian];
     [filterView.layer removeAllAnimations];
     float duration = 0.3;
     CAKeyframeAnimation *scale = [CAKeyframeAnimation animationWithKeyPath:@"transform.scale"];
@@ -1358,6 +1360,8 @@
     foodSearchViewController.isFromOut = NO;
     foodSearchViewController.editDelegate = self;
     [self.navigationController pushViewController:foodSearchViewController animated:YES];
+    
+    [MobClick event:UmengEvent_V2AddByClassSearchButton];
 }
 
 - (IBAction)addFoodAction:(id)sender {
@@ -1394,6 +1398,8 @@
     addByNutrientController.NutrientAmount = [NSNumber numberWithDouble:dNutrientLackVal];
     addByNutrientController.editDelegate = self;
     [self.navigationController pushViewController:addByNutrientController animated:YES];
+    
+    [MobClick event:UmengEvent_V2AddByNutrientButton];
 }
 - (IBAction)addFoodByNutrient:(UIButton *)sender {
     int tag = sender.tag;

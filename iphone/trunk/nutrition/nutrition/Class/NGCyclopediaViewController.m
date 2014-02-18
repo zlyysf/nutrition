@@ -22,6 +22,8 @@
 #import "GADMasterViewController.h"
 #import "LZReviewAppManager.h"
 
+#import "MobClick.h"
+
 #define DiseaseItemTopMargin 10
 #define DiseaseItemMargin 10
 #define DiseaseItemBottomMarigin 30
@@ -425,6 +427,8 @@
 //    richNutrientController.nutrientTitle = nutritionName;
 //    richNutrientController.nutritionDescription = description;
     [self.navigationController pushViewController:nutritionInfoViewController animated:YES];
+    
+    [MobClick event:UmengEvent_V2FoodsByNutrient];
 }
 -(void)illnessButtonClicked:(LZCustomDataButton *)sender
 {
@@ -449,6 +453,8 @@
     illnessInfoViewController.illnessURL = illnessUrl;
     illnessInfoViewController.title = illnessName;
     [self.navigationController pushViewController:illnessInfoViewController animated:YES];
+    
+    [MobClick event:UmengEvent_V2Disease];
 }
 -(void)typeButtonTapped:(LZFoodTypeButton *)sender
 {
@@ -475,6 +481,8 @@
     //dailyIntakeViewController.foodIntakeDictionary = self.foodIntakeDictionary;
     foodListViewController.title = typeName;
     [self.navigationController pushViewController:foodListViewController animated:YES];
+    
+    [MobClick event:UmengEvent_V2FoodsByClass];
 }
 
 #pragma mark- UITableViewDelegate

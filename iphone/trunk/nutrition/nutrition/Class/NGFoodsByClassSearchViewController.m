@@ -294,6 +294,8 @@
     foodDetailController.isCalForAll = true;
     //    foodDetailController.editDelegate = editDelegate;
     [self.navigationController pushViewController:foodDetailController animated:YES];
+    
+    [MobClick event:UmengEvent_V2AddBySearch];
 //
 //
 //    //NSString *resultName = [resultDict objectForKey:@"Name"];
