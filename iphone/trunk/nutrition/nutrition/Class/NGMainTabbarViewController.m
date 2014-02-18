@@ -14,6 +14,8 @@
 #import "NGCyclopediaViewController.h"
 #import "NGUerInfoViewController.h"
 
+#import "NGFoodCombinationListViewController.h"
+
 @interface NGMainTabbarViewController ()
 
 @end
@@ -33,6 +35,10 @@
 {
     [super viewDidLoad];
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+    UIStoryboard *storyboardModFCL = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
+    
+    
+    
     NGDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGDiagnoseViewController"];
     UINavigationController *nav = [[ UINavigationController alloc] initWithRootViewController:diagnoseViewController];
     nav.navigationBar.translucent = NO;
@@ -63,8 +69,14 @@
     UITabBarItem *infoItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"xinxi_c_title", @"页面标题：信息") image:[UIImage imageNamed:@"info-50.png"] tag:4];
     nav4.tabBarItem = infoItem;
     
+    NGFoodCombinationListViewController *controllFcl = [storyboardModFCL instantiateViewControllerWithIdentifier:@"NGFoodCombinationListViewController"];
+    UINavigationController *nav5 = [[ UINavigationController alloc] initWithRootViewController:controllFcl];
+    nav5.navigationBar.translucent = NO;
+    UITabBarItem *fclItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"qingdan_c_title", @"页面标题：清单") image:[UIImage imageNamed:@"info-50.png"] tag:5];
+    nav5.tabBarItem = fclItem;
     
-    NSMutableArray *controllers = [NSMutableArray arrayWithObjects: nav,nav1,nav2,nav3,nav4,nil];
+    
+    NSMutableArray *controllers = [NSMutableArray arrayWithObjects: nav,nav1,nav2,nav3,nav4,nav5,nil];
     self.viewControllers = controllers;
     if (IOS7_OR_LATER)
     {

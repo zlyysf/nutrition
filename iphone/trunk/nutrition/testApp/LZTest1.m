@@ -11,6 +11,7 @@
 #import "LZRecommendFood.h"
 #import "LZUtility.h"
 #import "LZConstants.h"
+#import "LZUtilityParse.h"
 
 @implementation LZTest1
 
@@ -32,12 +33,13 @@
 //    [self.class test_getFoodCollocationData];
 //    [self.class test_updateFoodCollocationData_withCollocationId];
 //    [self.class test_deleteFoodCollocationData_withCollocationId];
+    [self.class test_aboutFoodCollocationParam];
 //    [self.class test_DiseaseNutrient1];
 //    [self.class test_DiseaseNutrient2];
 //    [self.class test_saveUserCheckDiseaseRecord_withDay];
 //    [self.class test_TranslationItem1];
 //    [self.class test_getFoodsByShowingPart];
-    [self.class test_getSymptom1];
+//    [self.class test_getSymptom1];
 //    [self.class test_inferIllnesses_withSymptoms1];
 //    [self.class test_getIllnessSuggestionsDistinct1];
 //    [self.class test_dalUserRecordSymptom1];
@@ -2173,9 +2175,9 @@ BOOL needLimitNutrients = FALSE;
     NSMutableArray * foodAndAmountArray = [NSMutableArray array];
     [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10010", [NSNumber numberWithDouble:123],nil]];
     [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10011", [NSNumber numberWithDouble:234],nil]];    
-    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
+    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andCreateTime:0 andCollocationId:nil andFoodAmount2LevelArray:foodAndAmountArray andFoodCollocationParamNameValueDict:nil];
     assert(nmCollocationId!=nil);
-    [da getFoodCollocationData_withCollocationId:nmCollocationId];
+    [da getFoodCollocationRawData_withCollocationId:nmCollocationId];
     
 }
 
@@ -2187,14 +2189,14 @@ BOOL needLimitNutrients = FALSE;
     NSMutableArray * foodAndAmountArray = [NSMutableArray array];
     [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"01010", [NSNumber numberWithDouble:111],nil]];
     [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10011", [NSNumber numberWithDouble:112],nil]];
-    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
+    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andCreateTime:0 andCollocationId:nil andFoodAmount2LevelArray:foodAndAmountArray andFoodCollocationParamNameValueDict:nil];
     assert(nmCollocationId!=nil);
     
     NSString *collocationName2 = @"collocationName2";
     NSMutableArray * foodAndAmountArray2 = [NSMutableArray array];
     [foodAndAmountArray2 addObject:[NSArray arrayWithObjects:@"02010", [NSNumber numberWithDouble:211],nil]];
     [foodAndAmountArray2 addObject:[NSArray arrayWithObjects:@"20011", [NSNumber numberWithDouble:212],nil]];
-    NSNumber *nmCollocationId2 = [da insertFoodCollocationData_withCollocationName:collocationName2 andFoodAmount2LevelArray:foodAndAmountArray2];
+    NSNumber *nmCollocationId2 = [da insertFoodCollocationData_withCollocationName:collocationName2 andCreateTime:0 andCollocationId:nil andFoodAmount2LevelArray:foodAndAmountArray2 andFoodCollocationParamNameValueDict:nil];
     assert(nmCollocationId2!=nil);
    
     NSArray * fdClctAry = [da getAllFoodCollocation];
@@ -2202,7 +2204,7 @@ BOOL needLimitNutrients = FALSE;
     for(int i=0; i<fdClctAry.count; i++){
         NSDictionary *fdClctDict = fdClctAry[i];
         NSNumber *nmCollocationId = [fdClctDict objectForKey:COLUMN_NAME_CollocationId];
-        NSDictionary * fdClctData = [da getFoodCollocationData_withCollocationId:nmCollocationId];
+        NSDictionary * fdClctData = [da getFoodCollocationRawData_withCollocationId:nmCollocationId];
         NSArray *foodAndAmountArray = [fdClctData objectForKey:@"foodAndAmountArray"];
         for(int j=0; j<foodAndAmountArray.count; j++){
             NSDictionary *foodAndAmount = foodAndAmountArray[j];
@@ -2222,7 +2224,7 @@ BOOL needLimitNutrients = FALSE;
     NSMutableArray * foodAndAmountArray = [NSMutableArray array];
     [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10010", [NSNumber numberWithDouble:111],nil]];
     [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10011", [NSNumber numberWithDouble:112],nil]];
-    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
+    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andCreateTime:0 andCollocationId:nil andFoodAmount2LevelArray:foodAndAmountArray andFoodCollocationParamNameValueDict:nil];
     assert(nmCollocationId!=nil);
     
     NSString *collocationName2 = @"collocationName2";
@@ -2231,7 +2233,7 @@ BOOL needLimitNutrients = FALSE;
     [foodAndAmountArray2 addObject:[NSArray arrayWithObjects:@"20011", [NSNumber numberWithDouble:212],nil]];
     [da updateFoodCollocationData_withCollocationId:nmCollocationId andNewCollocationName:collocationName2 andFoodAmount2LevelArray:foodAndAmountArray2];
     
-    [da getFoodCollocationData_withCollocationId:nmCollocationId];
+    [da getFoodCollocationRawData_withCollocationId:nmCollocationId];
     
 }
 
@@ -2242,12 +2244,59 @@ BOOL needLimitNutrients = FALSE;
     NSMutableArray * foodAndAmountArray = [NSMutableArray array];
     [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10010", [NSNumber numberWithDouble:111],nil]];
     [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10011", [NSNumber numberWithDouble:112],nil]];
-    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
+    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andCreateTime:0 andCollocationId:nil andFoodAmount2LevelArray:foodAndAmountArray andFoodCollocationParamNameValueDict:nil];
     assert(nmCollocationId!=nil);
     
     [da deleteFoodCollocationData_withCollocationId:nmCollocationId];
     
-    [da getFoodCollocationData_withCollocationId:nmCollocationId];
+    [da getFoodCollocationRawData_withCollocationId:nmCollocationId];
+    
+}
+
++(void)test_aboutFoodCollocationParam
+{
+    LZDataAccess *da = [LZDataAccess singleton];
+    
+    //clear
+    NSArray * fdClctAry = [da getAllFoodCollocation];
+    for(int i=0; i<fdClctAry.count; i++){
+        NSDictionary *fdClctDict = fdClctAry[i];
+        NSNumber *nmCollocationId = [fdClctDict objectForKey:COLUMN_NAME_CollocationId];
+        [da deleteFoodCollocationData_withCollocationId:nmCollocationId];
+    }
+
+    
+    
+    NSString *collocationName = @"collocationName";
+    NSMutableArray * foodAndAmountArray = [NSMutableArray array];
+    [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"01010", [NSNumber numberWithDouble:111],nil]];
+    [foodAndAmountArray addObject:[NSArray arrayWithObjects:@"10011", [NSNumber numberWithDouble:112],nil]];
+    NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andCreateTime:0 andCollocationId:nil andFoodAmount2LevelArray:foodAndAmountArray andFoodCollocationParamNameValueDict:nil];
+    assert(nmCollocationId!=nil);
+    
+    
+    NSString *paramName1 = KEY_NAME_ParseObjectId;
+    NSString *paramValue1 = @"aaa111";
+    [da insertFoodCollocationParam_withId:nmCollocationId andParamName:paramName1 andParamValue:paramValue1];
+    
+    NSDictionary *dict1 = [da getFoodCollocationParamsById:nmCollocationId];
+    NSLog(@"getFoodCollocationParamsById 1 ret:%@",dict1);
+    
+    NSDictionary* FoodCollocationData1 = [da getFoodCollocationData_withCollocationId:nmCollocationId];
+    NSLog(@"getFoodCollocationRawData_withCollocationId  ret:%@",FoodCollocationData1);
+
+    
+    paramValue1 = @"aaa222";
+    [da updateFoodCollocationParam_withId:nmCollocationId andParamName:paramName1 andParamValue:paramValue1];
+    
+    dict1 = [da getFoodCollocationParamsById:nmCollocationId];
+    NSLog(@"getFoodCollocationParamsById 2 ret:%@",dict1);
+    
+    [da deleteFoodCollocationParamById:nmCollocationId];
+    
+    dict1 = [da getFoodCollocationParamsById:nmCollocationId];
+    NSLog(@"getFoodCollocationParamsById 3 ret:%@",dict1);
+    
     
 }
 
@@ -2669,7 +2718,7 @@ BOOL needLimitNutrients = FALSE;
 }
 +(void)test_syncRemoteDataInParse_2
 {
-    [LZUtility syncRemoteDataToLocal_withJustCallback:^(BOOL succeeded) {
+    [LZUtilityParse syncRemoteDataToLocal_withJustCallback:^(BOOL succeeded) {
         LZDataAccess *da = [LZDataAccess singleton];
         [da getUserRecordSymptomRawRowsByRange_withStartDayLocal:0 andEndDayLocal:0 andStartMonthLocal:0 andEndMonthLocal:0];
         
@@ -2699,13 +2748,13 @@ BOOL needLimitNutrients = FALSE;
         [InferIllnessesAndSuggestions setObject:[NSArray arrayWithObjects:@"建议b1",@"建议b2", nil] forKey:@"疾病a2"];
         [CalculateNameValuePairsData setObject:InferIllnessesAndSuggestions forKey:Key_InferIllnessesAndSuggestions];
         
-        PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+        PFObject *parseObjUserRecord = [LZUtilityParse getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
                                                  
         [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             NSMutableString *msg = [NSMutableString string];
             if (succeeded){
                 [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
-                [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
+                [LZUtilityParse saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
             }else{
                 [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
             }
@@ -2739,23 +2788,23 @@ BOOL needLimitNutrients = FALSE;
         [InferIllnessesAndSuggestions setObject:[NSArray arrayWithObjects:@"建议d1",@"建议d2", nil] forKey:@"疾病d2"];
         [CalculateNameValuePairsData setObject:InferIllnessesAndSuggestions forKey:Key_InferIllnessesAndSuggestions];
         
-        PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+        PFObject *parseObjUserRecord = [LZUtilityParse getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
         
         [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
             NSMutableString *msg = [NSMutableString string];
             if (succeeded){
                 [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
-                [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
+                [LZUtilityParse saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
             }else{
                 [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
             }
             NSLog(@"saveParseRowObj2 %@",msg);
             
-            [LZUtility syncRemoteDataToLocal_withJustCallback:^(BOOL succeeded) {
+            [LZUtilityParse syncRemoteDataToLocal_withJustCallback:^(BOOL succeeded) {
                 LZDataAccess *da = [LZDataAccess singleton];
                 [da getUserRecordSymptomRawRowsByRange_withStartDayLocal:0 andEndDayLocal:0 andStartMonthLocal:0 andEndMonthLocal:0];
                 
-                [LZUtility syncRemoteDataToLocal_withJustCallback:^(BOOL succeeded) {
+                [LZUtilityParse syncRemoteDataToLocal_withJustCallback:^(BOOL succeeded) {
                     [da getUserRecordSymptomRawRowsByRange_withStartDayLocal:0 andEndDayLocal:0 andStartMonthLocal:0 andEndMonthLocal:0];
                     
                 }];//syncRemoteDataToLocal_withJustCallback

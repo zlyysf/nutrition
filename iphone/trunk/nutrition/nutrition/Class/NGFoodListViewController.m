@@ -12,6 +12,9 @@
 #import "LZFoodTypeButton.h"
 #import "NGSingleFoodViewController.h"
 #import "GADMasterViewController.h"
+#import "NGFoodDetailController.h"
+
+
 #define FoodItemMargin 15
 @interface NGFoodListViewController ()
 {
@@ -108,23 +111,36 @@
 -(void)foodButtonTapped:(LZFoodTypeButton*)foodButton
 {
     int tag = foodButton.tag -100;
-    NSDictionary *foodAtr = [self.foodArray  objectAtIndex:tag];
-    NSString *foodQueryKey;
-    if (isChinese)
-    {
-        foodQueryKey = @"CnCaption";
-    }
-    else
-    {
-        foodQueryKey = @"FoodNameEn";
-    }
-    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
-    NGSingleFoodViewController *singleFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGSingleFoodViewController"];
-    singleFoodViewController.title = foodName;
-    singleFoodViewController.foodInfoDict = foodAtr;
-    [self.navigationController pushViewController:singleFoodViewController animated:YES];
-    //NSLog(@"%@",foodAtr);
+    NSDictionary *foodAttr = [self.foodArray objectAtIndex:tag];
+    NSString *foodId = foodAttr[COLUMN_NAME_NDB_No];
+    
+//    NSString *foodQueryKey;
+//    if (isChinese)
+//    {
+//        foodQueryKey = @"CnCaption";
+//    }
+//    else
+//    {
+//        foodQueryKey = @"FoodNameEn";
+//    }
+//    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+//    NGSingleFoodViewController *singleFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGSingleFoodViewController"];
+//    singleFoodViewController.title = foodName;
+//    singleFoodViewController.foodInfoDict = foodAtr;
+//    [self.navigationController pushViewController:singleFoodViewController animated:YES];
+    
+    NSNumber *foodAmount = [NSNumber numberWithInt:100];
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
+    NGFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"NGFoodDetailController"];
+    foodDetailController.FoodId = foodId;
+    foodDetailController.FoodAttr = foodAttr;
+    foodDetailController.FoodAmount = foodAmount;
+    foodDetailController.notNeedSave = true;
+    [self.navigationController pushViewController:foodDetailController animated:YES];
+    
+    
 }
 - (void)didReceiveMemoryWarning
 {

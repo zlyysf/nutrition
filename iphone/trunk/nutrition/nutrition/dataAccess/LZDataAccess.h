@@ -16,6 +16,7 @@
 
 @interface LZDataAccess : NSObject{
     FMDatabase *dbfm;
+    BOOL EnableDebug;
 }
 +(LZDataAccess *)singleton;
 
@@ -81,13 +82,24 @@
 -(NSArray *) getRichNutritionFood2_withAmount_ForNutrient:(NSString *)nutrientName andNutrientAmount:(NSNumber*)nutrientAmount;
 
 
+-(NSDictionary*)getFoodCollocationById:(NSNumber*)nmCollocationId;
+
 -(BOOL)updateFoodCollocationName:(NSString*)collationName byId:(NSNumber*)nmCollocationId;
 -(NSArray*)getAllFoodCollocation;
--(NSArray*)getCollocationFoodData_withCollocationId:(NSNumber*)nmCollocationId;
+-(NSArray*)getCollocationFoodAmountRows_withCollocationId:(NSNumber*)nmCollocationId;
+-(NSArray*)getCollocationFoodAmount2LevelArray_withCollocationId:(NSNumber*)nmCollocationId;
+-(NSDictionary*)getFoodCollocationRawData_withCollocationId:(NSNumber*)nmCollocationId;
 -(NSDictionary*)getFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId;
--(NSNumber *)insertFoodCollocationData_withCollocationName:(NSString*)collationName andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray;
+//-(NSNumber *)insertFoodCollocationData_withCollocationName:(NSString*)collationName andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray;
+-(NSNumber *)insertFoodCollocationData_withCollocationName:(NSString*)collationName andCreateTime:(long long)llCreateTime andCollocationId:(NSNumber*)nmCollocationId andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray andFoodCollocationParamNameValueDict:(NSDictionary*)foodCollocationParamNameValueDict;
+
 -(BOOL)updateFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId andNewCollocationName:(NSString*)collocationName andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray;
 -(BOOL)deleteFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId;
+
+-(BOOL)insertFoodCollocationParam_withId:(NSNumber*)nmCollocationId andParamName:(NSString*)paramName andParamValue:(NSString*)paramValue;
+-(BOOL)updateFoodCollocationParam_withId:(NSNumber*)nmCollocationId andParamName:(NSString*)paramName andParamValue:(NSString*)paramValue;
+-(BOOL)deleteFoodCollocationParamById:(NSNumber*)nmCollocationId;
+-(NSDictionary*)getFoodCollocationParamsById:(NSNumber*)nmCollocationId;
 
 -(NSArray*)getDiseaseGroupInfo_byType:(NSString*)groupType;
 //-(NSArray*)getDiseaseNamesOfGroup:(NSString*)groupName andDepartment:(NSString*)department andDiseaseType:(NSString*)diseaseType andTimeType:(NSString*)timeType;

@@ -19,5 +19,9 @@
     BOOL needDisplay;
 }
 @property (nonatomic,strong)UILabel *contentLabel;
+
+//传rect是个坏方式
 - (void)drawProgressForRect:(CGRect)rect backgroundColor:(UIColor*)backColor fillColor:(UIColor*)fillColor progress:(float)progress withBackRadius:(float)backRadius fillRadius:(float)fillRadius;
+
+- (void)drawProgress_with_backgroundColor:(UIColor*)backColor fillColor:(UIColor*)fillColor progress:(float)progress withBackRadius:(float)backRadius fillRadius:(float)fillRadius;
 @end

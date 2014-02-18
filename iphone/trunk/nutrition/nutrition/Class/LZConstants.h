@@ -9,15 +9,15 @@
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
 
-#define KeyIsEnvironmentDebug 0
+#define KeyIsEnvironmentDebug 1
 
 #define KeyShouldShowAdView 1 //作用于部分广告条，以方便截图
 
-//#define ParseApp_ApplicationID @"fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1" //zlyysf nutrition1 app
-//#define ParseApp_ClientKey @"TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex" //zlyysf nutrition1 app
+#define ParseApp_ApplicationID @"fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1" //zlyysf nutrition1 app
+#define ParseApp_ClientKey @"TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex" //zlyysf nutrition1 app
 
-#define ParseApp_ApplicationID @"KOObufGbStKu8OP2QrcGEU0dkwMpvlD0rJ09PD6R" //lingzhi RemedyPills app
-#define ParseApp_ClientKey @"MkXIifLvrpe5mONp4IhPs0ijcpg15ZCJdSJpFIT8" //lingzhi RemedyPills app
+//#define ParseApp_ApplicationID @"KOObufGbStKu8OP2QrcGEU0dkwMpvlD0rJ09PD6R" //lingzhi RemedyPills app
+//#define ParseApp_ClientKey @"MkXIifLvrpe5mONp4IhPs0ijcpg15ZCJdSJpFIT8" //lingzhi RemedyPills app
 
 #define ParseObject_UserRecord @"UserRecord"
 #define ParseObjectKey_objectId @"objectId"
@@ -25,6 +25,11 @@
 #define ParseObjectKey_UserRecord_attachFile @"attachFile"
 #define ParseObject_UserRecordSymptom @"UserRecordSymptom"
 #define ParseObjectKey_UserRecordSymptom_deviceId @"deviceId"
+#define ParseObject_FoodCollocation @"FoodCollocation"
+#define ParseObjectKey_FoodCollocation_deviceId @"deviceId"
+#define ParseObjectKey_FoodCollocation_rowFoodCollocation @"rowFoodCollocation"
+#define ParseObjectKey_FoodCollocation_foodAndAmount2LevelArray @"foodAndAmount2LevelArray"
+#define ParseObjectKey_FoodCollocation_nameValueDict @"nameValueDict"
 
 #define KeyDebugSettingsDict @"KeyDebugSettingsDict"
 #define AppVersionCheckName @"NutritionFoodGuide"
@@ -161,6 +166,7 @@
 #define COLUMN_NAME_NutrientID @"NutrientID"
 
 #define COLUMN_NAME_NutrientCnCaption @"NutrientCnCaption"
+#define COLUMN_NAME_NutrientEnCaption @"NutrientEnCaption"
 #define COLUMN_NAME_NutrientEnUnit @"NutrientEnUnit"
 #define COLUMN_NAME_LossRate @"LossRate"
 #define COLUMN_NAME_NutrientDescription @"NutrientDescription"
@@ -172,8 +178,14 @@
 #define TABLE_NAME_CollocationFood @"CollocationFood"
 #define TABLE_NAME_FoodCollocationParam @"FoodCollocationParam"
 #define COLUMN_NAME_CollocationId @"CollocationId"
+#define COLUMN_NAME_CollocationName @"CollocationName"
+#define COLUMN_NAME_CollocationCreateTime @"CollocationCreateTime"
 #define COLUMN_NAME_FoodId @"FoodId"
 #define COLUMN_NAME_FoodAmount @"FoodAmount"
+#define KEY_NAME_ParseObjectId @"ParseObjectId"
+#define COLUMN_NAME_ParamName @"ParamName"
+#define COLUMN_NAME_ParamValue @"ParamValue"
+
 
 #define TABLE_NAME_CustomRichFood @"CustomRichFood"
 #define TABLE_NAME_CustomRichFood2 @"CustomRichFood2"

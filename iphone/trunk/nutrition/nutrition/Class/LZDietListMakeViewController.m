@@ -21,13 +21,14 @@
 #import <QuartzCore/QuartzCore.h>
 #import "MBProgressHUD.h"
 #import "LZReviewAppManager.h"
-#import <ShareSDK/ShareSDK.h>
-#import "WXApi.h"
+//#import <ShareSDK/ShareSDK.h>
+//#import "WXApi.h"
 #import "LZShareViewController.h"
 #import "LZRecommendFilterView.h"
 #import "LZAppDelegate.h"
 #import "LZFoodSearchViewController.h"
 #import "LZNutrientionManager.h"
+#import "LZUtilityParse.h"
 #define KChangeFoodAmountAlertTag 101
 #define KSaveDietTitleAlertTag 102
 #define KInstallWechatAlertTag 103
@@ -189,9 +190,8 @@
             }
             if([da updateFoodCollocationData_withCollocationId:dietId andNewCollocationName:nil andFoodAmount2LevelArray:foodAndAmountArray])
             {
-                NSDictionary *emptyIntake = [[NSDictionary alloc]init];
-                [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
-                [[NSUserDefaults standardUserDefaults]synchronize];
+                [LZUtilityParse saveParseObject_FoodCollocationData_withCollocationId:dietId];
+                
                 [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
             }
             else
@@ -1191,20 +1191,8 @@
         [takenFoodAmountDict setObject:weight forKey:foodId];
     }
     
-
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    
-    NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
-    NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
-    NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
-    NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
-    NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
-    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                              userSex,ParamKey_sex, userAge,ParamKey_age,
-                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
-                              userActivityLevel,ParamKey_activityLevel, nil];
-
+    NSDictionary *userInfo = [LZUtility getUserInfo];
 
     BOOL needConsiderNutrientLoss = FALSE;
 //    BOOL needLimitNutrients = FALSE;//not passed from here because here have priority
@@ -1231,7 +1219,6 @@
     if (KeyIsEnvironmentDebug){
         NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
         if (flagsDict.count > 0){
-//            options = [NSMutableDictionary dictionaryWithDictionary:flagsDict];
             [options setValuesForKeysWithDictionary:flagsDict];
             assert([options objectForKey:LZSettingKey_randSeed]!=nil);
         }
@@ -1476,51 +1463,51 @@
     //[shareSheet showInView:self.view];
     [shareSheet showInView:[UIApplication sharedApplication].keyWindow];
 }
--(NSString *)getShareContentsForShareType:(ShareType)type
-{
-    if(type == ShareTypeSinaWeibo)
-    {
-//        if ([takenFoodIdsArray count]!= 0)
-//        {
-//            NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为我精心推荐:";
-//            for (NSString *foodId in takenFoodIdsArray)
-//            {
-//                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
-//                NSString *name = [aFood objectForKey:@"Name"];
-//                NSNumber *weight = [aFood objectForKey:@"Amount"];
-//                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
-//            }
+//-(NSString *)getShareContentsForShareType:(ShareType)type
+//{
+//    if(type == ShareTypeSinaWeibo)
+//    {
+////        if ([takenFoodIdsArray count]!= 0)
+////        {
+////            NSString *contents = @"@买菜助手(http://t.cn/zHuwJxz )为我精心推荐:";
+////            for (NSString *foodId in takenFoodIdsArray)
+////            {
+////                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+////                NSString *name = [aFood objectForKey:@"Name"];
+////                NSNumber *weight = [aFood objectForKey:@"Amount"];
+////                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
+////            }
+////            return contents;
+////        }
+////        else
+////        {
+//        NSString *contents = [NSString stringWithFormat:NSLocalizedString(@"listmake_weiboshare_content",@"我用@营养膳食指南%@挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!"),@"(http://t.cn/zH1gxw5 )"];
 //            return contents;
-//        }
-//        else
-//        {
-        NSString *contents = [NSString stringWithFormat:NSLocalizedString(@"listmake_weiboshare_content",@"我用@营养膳食指南%@挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!"),@"(http://t.cn/zH1gxw5 )"];
-            return contents;
-//        }
-    }
-    else //微信好友 或者微信朋友圈
-    {
-//        if ([takenFoodIdsArray count]!= 0)
-//        {
-//            NSString *contents = @"买菜助手(http://t.cn/zHuwJxz )为我推荐了:";
-//            for (NSString *foodId in takenFoodIdsArray)
-//            {
-//                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
-//                NSString *name = [aFood objectForKey:@"Name"];
-//                NSNumber *weight = [aFood objectForKey:@"Amount"];
-//                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
-//            }
-//            contents = [contents stringByAppendingString:@"\n你也来试试吧!"];//:@"\n%@ %dg",name,[weight intValue]];
+////        }
+//    }
+//    else //微信好友 或者微信朋友圈
+//    {
+////        if ([takenFoodIdsArray count]!= 0)
+////        {
+////            NSString *contents = @"买菜助手(http://t.cn/zHuwJxz )为我推荐了:";
+////            for (NSString *foodId in takenFoodIdsArray)
+////            {
+////                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+////                NSString *name = [aFood objectForKey:@"Name"];
+////                NSNumber *weight = [aFood objectForKey:@"Amount"];
+////                contents = [contents stringByAppendingFormat:@"\n%@ %dg",name,[weight intValue]];
+////            }
+////            contents = [contents stringByAppendingString:@"\n你也来试试吧!"];//:@"\n%@ %dg",name,[weight intValue]];
+////            return contents;
+////        }
+////        else
+////        {
+//        NSString *contents = [NSString stringWithFormat:NSLocalizedString(@"listmake_wechatshare_content",@"我用 营养膳食指南%@ 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!"),@"(http://t.cn/zH1gxw5 )"];
 //            return contents;
-//        }
-//        else
-//        {
-        NSString *contents = [NSString stringWithFormat:NSLocalizedString(@"listmake_wechatshare_content",@"我用 营养膳食指南%@ 挑选出了一组含全面丰富营养的食物搭配, 羡慕吧? 快来试试吧!"),@"(http://t.cn/zH1gxw5 )"];
-            return contents;
-//        }
-        
-    }
-}
+////        }
+//        
+//    }
+//}
 -(NSData *)getShareData
 {
     if (isCapturing)
@@ -1575,123 +1562,123 @@
     }
 
 }
-- (void)shareRecommendContentForType:(ShareType)type
-{
-    if(type == ShareTypeWeixiSession || type == ShareTypeWeixiTimeline)
-    {
-//        if ([WXApi isWXAppInstalled])
+//- (void)shareRecommendContentForType:(ShareType)type
+//{
+//    if(type == ShareTypeWeixiSession || type == ShareTypeWeixiTimeline)
+//    {
+////        if ([WXApi isWXAppInstalled])
+////        {
+//            NSData *shareData = [self getShareData];
+//            //isWXAppInstalled
+//            //getWXAppInstallUrl
+//            if(shareData)
+//            {
+//                NSString *contents = [self getShareContentsForShareType:type];
+//                UIImage *shareImage = [UIImage imageWithData:shareData];
+//                id<ISSContent> content = [ShareSDK content:contents
+//                                            defaultContent:@"default"
+//                                                     image:[ShareSDK jpegImageWithImage:shareImage quality:0.1]
+//                                                     title:@"title"
+//                                                       url:nil
+//                                               description:@"description"
+//                                                 mediaType:SSPublishContentMediaTypeImage];
+//                shareImage = nil;
+//                [content addWeixinSessionUnitWithType:INHERIT_VALUE
+//                                              content:contents
+//                                                title:@"title"
+//                                                  url:INHERIT_VALUE
+//                                                image:INHERIT_VALUE
+//                                         musicFileUrl:nil
+//                                              extInfo:nil
+//                                             fileData:nil
+//                                         emoticonData:nil];
+//
+//                id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+//                                                                     allowCallback:YES
+//                                                                     authViewStyle:SSAuthViewStyleFullScreenPopup
+//                                                                      viewDelegate:nil
+//                                                           authManagerViewDelegate:nil];
+//                [ShareSDK shareContent:content
+//                                  type:type
+//                           authOptions:authOptions
+//                         statusBarTips:YES
+//                                result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
+//                                    if (state == SSPublishContentStateSuccess)
+//                                    {
+////                                        NSLog(@"success");
+//                                    }
+//                                    else if (state == SSPublishContentStateFail)
+//                                    {
+//                                        if ([error errorCode] == -22003)
+//                                        {
+//                                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"listmake_alert6_title",@"分享失败")
+//                                                                                                message:[error errorDescription]
+//                                                                                               delegate:nil
+//                                                                                      cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了")
+//                                                                                      otherButtonTitles:nil];
+//                                            [alertView show];
+//                                            
+//                                        }
+//                                    }
+//                                }];
+//                }
+//
+////        }
+////        else
+////        {
+////            [self popWeiChatInstallAlert];
+////        }
+//    }
+//    else if (type == ShareTypeSinaWeibo)
+//    {
+//       // UIImageJPEGRepresentation
+//        NSData *shareData = [self getShareData];
+//        if(shareData)
 //        {
-            NSData *shareData = [self getShareData];
-            //isWXAppInstalled
-            //getWXAppInstallUrl
-            if(shareData)
-            {
-                NSString *contents = [self getShareContentsForShareType:type];
-                UIImage *shareImage = [UIImage imageWithData:shareData];
-                id<ISSContent> content = [ShareSDK content:contents
-                                            defaultContent:@"default"
-                                                     image:[ShareSDK jpegImageWithImage:shareImage quality:0.1]
-                                                     title:@"title"
-                                                       url:nil
-                                               description:@"description"
-                                                 mediaType:SSPublishContentMediaTypeImage];
-                shareImage = nil;
-                [content addWeixinSessionUnitWithType:INHERIT_VALUE
-                                              content:contents
-                                                title:@"title"
-                                                  url:INHERIT_VALUE
-                                                image:INHERIT_VALUE
-                                         musicFileUrl:nil
-                                              extInfo:nil
-                                             fileData:nil
-                                         emoticonData:nil];
-
-                id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
-                                                                     allowCallback:YES
-                                                                     authViewStyle:SSAuthViewStyleFullScreenPopup
-                                                                      viewDelegate:nil
-                                                           authManagerViewDelegate:nil];
-                [ShareSDK shareContent:content
-                                  type:type
-                           authOptions:authOptions
-                         statusBarTips:YES
-                                result:^(ShareType type, SSPublishContentState state, id<ISSStatusInfo> statusInfo, id<ICMErrorInfo> error, BOOL end) {
-                                    if (state == SSPublishContentStateSuccess)
-                                    {
-//                                        NSLog(@"success");
-                                    }
-                                    else if (state == SSPublishContentStateFail)
-                                    {
-                                        if ([error errorCode] == -22003)
-                                        {
-                                            UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"listmake_alert6_title",@"分享失败")
-                                                                                                message:[error errorDescription]
-                                                                                               delegate:nil
-                                                                                      cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了")
-                                                                                      otherButtonTitles:nil];
-                                            [alertView show];
-                                            
-                                        }
-                                    }
-                                }];
-                }
-
+//            if ([ShareSDK hasAuthorizedWithType:type])
+//            {
+//                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//                
+//                LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
+//                UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:shareViewController];
+//                NSString *contents = [self getShareContentsForShareType:type ];
+//                shareViewController.preInsertText = contents;
+//                shareViewController.shareImageData = shareData;
+//                [self presentModalViewController:nav animated:YES];
+//            }
+//            else
+//            {
+//                id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
+//                                                                     allowCallback:YES
+//                                                                     authViewStyle:SSAuthViewStyleFullScreenPopup
+//                                                                      viewDelegate:nil
+//                                                           authManagerViewDelegate:nil];
+////                [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
+////                                                //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"营养膳食指南"],
+////                                                SHARE_TYPE_NUMBER(type),
+////                                                //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
+////                                                //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
+////                                                nil]];
+//                [ShareSDK authWithType:type options:authOptions result:^(SSAuthState state, id<ICMErrorInfo> error) {
+//                    if (state == SSAuthStateSuccess)
+//                    {
+//                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//                        LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
+//                        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:shareViewController];
+//                        NSString * contents = [self getShareContentsForShareType:type];
+//                        shareViewController.preInsertText = contents;
+//                        shareViewController.shareImageData = shareData;
+//                        [self presentModalViewController:nav animated:YES];
+//                    }
+//                    //NSLog(@"ssauthState %d",state);
+//                }];
+//                
+//            }
 //        }
-//        else
-//        {
-//            [self popWeiChatInstallAlert];
-//        }
-    }
-    else if (type == ShareTypeSinaWeibo)
-    {
-       // UIImageJPEGRepresentation
-        NSData *shareData = [self getShareData];
-        if(shareData)
-        {
-            if ([ShareSDK hasAuthorizedWithType:type])
-            {
-                UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                
-                LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-                UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:shareViewController];
-                NSString *contents = [self getShareContentsForShareType:type ];
-                shareViewController.preInsertText = contents;
-                shareViewController.shareImageData = shareData;
-                [self presentModalViewController:nav animated:YES];
-            }
-            else
-            {
-                id<ISSAuthOptions> authOptions = [ShareSDK authOptionsWithAutoAuth:YES
-                                                                     allowCallback:YES
-                                                                     authViewStyle:SSAuthViewStyleFullScreenPopup
-                                                                      viewDelegate:nil
-                                                           authManagerViewDelegate:nil];
-//                [authOptions setFollowAccounts:[NSDictionary dictionaryWithObjectsAndKeys:
-//                                                //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"营养膳食指南"],
-//                                                SHARE_TYPE_NUMBER(type),
-//                                                //[ShareSDK userFieldWithType:SSUserFieldTypeName valeu:@"ShareSDK"],
-//                                                //SHARE_TYPE_NUMBER(ShareTypeTencentWeibo),
-//                                                nil]];
-                [ShareSDK authWithType:type options:authOptions result:^(SSAuthState state, id<ICMErrorInfo> error) {
-                    if (state == SSAuthStateSuccess)
-                    {
-                        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-                        LZShareViewController *shareViewController = [storyboard instantiateViewControllerWithIdentifier:@"LZShareViewController"];
-                        UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:shareViewController];
-                        NSString * contents = [self getShareContentsForShareType:type];
-                        shareViewController.preInsertText = contents;
-                        shareViewController.shareImageData = shareData;
-                        [self presentModalViewController:nav animated:YES];
-                    }
-                    //NSLog(@"ssauthState %d",state);
-                }];
-                
-            }
-        }
-        
-    }
-    
-}
+//        
+//    }
+//    
+//}
 //- (void)popWeiChatInstallAlert
 //{
 //    UIAlertView *insallWeichatAlert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"还没有安装微信，立即下载?" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"确定", nil];
@@ -1700,7 +1687,100 @@
 //}
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-//    if (alertView.tag == KChangeFoodAmountAlertTag)
+////    if (alertView.tag == KChangeFoodAmountAlertTag)
+////    {
+////        if (buttonIndex == alertView.cancelButtonIndex)
+////        {
+////            return;
+////        }
+////        else
+////        {
+////            if (self.currentEditFoodId == nil)
+////            {
+////                return;
+////            }
+////            UITextField *textFiled = [alertView textFieldAtIndex:0];
+////            int changed = [textFiled.text intValue];
+////            NSDictionary* takenDict =  [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
+////            if ([takenDict objectForKey:currentEditFoodId])
+////            {
+////                NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:takenDict];
+////                
+////                if (changed <=0)
+////                {
+////                    [tempDict removeObjectForKey:self.currentEditFoodId];
+////                }
+////                else
+////                {
+////                    [tempDict setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
+////                }
+////                self.currentEditFoodId = nil;
+////                [[NSUserDefaults standardUserDefaults]setObject:tempDict forKey:LZUserDailyIntakeKey];
+////                [[NSUserDefaults standardUserDefaults]synchronize];
+////                
+////            }
+////            else if ([self.recommendFoodDictForDisplay objectForKey:currentEditFoodId])
+////            {
+////                if (changed <=0)
+////                {
+////                    [self.recommendFoodDictForDisplay removeObjectForKey:self.currentEditFoodId];
+////                }
+////                else
+////                {
+////                    [self.recommendFoodDictForDisplay setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
+////                }
+////                self.currentEditFoodId = nil;
+////
+////            }
+////            [self refreshFoodNureitentProcessForAll:YES];
+////
+////        }
+////    }
+//    if(alertView.tag == KSaveDietTitleAlertTag)
+//    {
+//        if (buttonIndex == alertView.cancelButtonIndex)
+//        {
+////            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
+////            [[NSUserDefaults standardUserDefaults]synchronize];
+////            [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
+//        }
+//        else
+//        {
+//            
+//            UITextField *textFiled = [alertView textFieldAtIndex:0];
+//
+//            NSString *collocationName = textFiled.text;
+//            NSString *trimedName = [collocationName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+//            if ([trimedName length] == 0)
+//            {
+//                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") message:NSLocalizedString(@"listmake_alert7_message",@"您输入的名称不规范，请重新输入") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了" )otherButtonTitles: nil];
+//                [invalidNameAlert show];
+//                return;
+//            }
+//            LZDataAccess *da = [LZDataAccess singleton];
+//            NSMutableArray * foodAndAmountArray = [NSMutableArray array];
+//            for (NSString *foodId in self.takenFoodIdsArray)
+//            {
+//                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
+//                NSNumber *weight = [aFood objectForKey:@"Amount"];
+//                [foodAndAmountArray addObject:[NSArray arrayWithObjects:foodId, weight,nil]];
+//            }
+//            NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
+//            if(nmCollocationId)
+//            {
+//                NSDictionary *emptyIntake = [[NSDictionary alloc]init];
+//                [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
+//                [[NSUserDefaults standardUserDefaults]synchronize];
+//                [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
+//            }
+//            else
+//            {
+//                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert8_title",@"保存失败") message:NSLocalizedString(@"alertmessage_tryagain",@"出现了错误，请重试") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
+//                [saveFailedAlert show];
+//            }
+//        }
+//    }
+//    else if(alertView.tag == KInstallWechatAlertTag)
 //    {
 //        if (buttonIndex == alertView.cancelButtonIndex)
 //        {
@@ -1708,123 +1788,30 @@
 //        }
 //        else
 //        {
-//            if (self.currentEditFoodId == nil)
-//            {
-//                return;
-//            }
-//            UITextField *textFiled = [alertView textFieldAtIndex:0];
-//            int changed = [textFiled.text intValue];
-//            NSDictionary* takenDict =  [[NSUserDefaults standardUserDefaults]objectForKey:LZUserDailyIntakeKey];
-//            if ([takenDict objectForKey:currentEditFoodId])
-//            {
-//                NSMutableDictionary *tempDict = [NSMutableDictionary dictionaryWithDictionary:takenDict];
-//                
-//                if (changed <=0)
-//                {
-//                    [tempDict removeObjectForKey:self.currentEditFoodId];
-//                }
-//                else
-//                {
-//                    [tempDict setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
-//                }
-//                self.currentEditFoodId = nil;
-//                [[NSUserDefaults standardUserDefaults]setObject:tempDict forKey:LZUserDailyIntakeKey];
-//                [[NSUserDefaults standardUserDefaults]synchronize];
-//                
-//            }
-//            else if ([self.recommendFoodDictForDisplay objectForKey:currentEditFoodId])
-//            {
-//                if (changed <=0)
-//                {
-//                    [self.recommendFoodDictForDisplay removeObjectForKey:self.currentEditFoodId];
-//                }
-//                else
-//                {
-//                    [self.recommendFoodDictForDisplay setObject:[NSNumber numberWithInt:changed] forKey:self.currentEditFoodId];
-//                }
-//                self.currentEditFoodId = nil;
-//
-//            }
-//            [self refreshFoodNureitentProcessForAll:YES];
-//
+//            NSString *weichatURL =[WXApi getWXAppInstallUrl];
+//            NSURL *ourAppUrl = [ [ NSURL alloc ] initWithString: weichatURL ];
+//            [[UIApplication sharedApplication] openURL:ourAppUrl];
 //        }
 //    }
-    if(alertView.tag == KSaveDietTitleAlertTag)
-    {
-        if (buttonIndex == alertView.cancelButtonIndex)
-        {
-//            [[NSUserDefaults standardUserDefaults] removeObjectForKey:LZUserDailyIntakeKey];
-//            [[NSUserDefaults standardUserDefaults]synchronize];
-//            [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
-        }
-        else
-        {
-            
-            UITextField *textFiled = [alertView textFieldAtIndex:0];
-
-            NSString *collocationName = textFiled.text;
-            NSString *trimedName = [collocationName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
-            if ([trimedName length] == 0)
-            {
-                UIAlertView *invalidNameAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") message:NSLocalizedString(@"listmake_alert7_message",@"您输入的名称不规范，请重新输入") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了" )otherButtonTitles: nil];
-                [invalidNameAlert show];
-                return;
-            }
-            LZDataAccess *da = [LZDataAccess singleton];
-            NSMutableArray * foodAndAmountArray = [NSMutableArray array];
-            for (NSString *foodId in self.takenFoodIdsArray)
-            {
-                NSDictionary *aFood = [takenFoodDict objectForKey:foodId];
-                NSNumber *weight = [aFood objectForKey:@"Amount"];
-                [foodAndAmountArray addObject:[NSArray arrayWithObjects:foodId, weight,nil]];
-            }
-            NSNumber *nmCollocationId = [da insertFoodCollocationData_withCollocationName:collocationName andFoodAmount2LevelArray:foodAndAmountArray];
-            if(nmCollocationId)
-            {
-                NSDictionary *emptyIntake = [[NSDictionary alloc]init];
-                [[NSUserDefaults standardUserDefaults] setObject:emptyIntake forKey:LZUserDailyIntakeKey];
-                [[NSUserDefaults standardUserDefaults]synchronize];
-                [self.navigationController  popViewControllerAnimated:!backWithNoAnimation];
-            }
-            else
-            {
-                UIAlertView *saveFailedAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"listmake_alert8_title",@"保存失败") message:NSLocalizedString(@"alertmessage_tryagain",@"出现了错误，请重试") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
-                [saveFailedAlert show];
-            }
-        }
-    }
-    else if(alertView.tag == KInstallWechatAlertTag)
-    {
-        if (buttonIndex == alertView.cancelButtonIndex)
-        {
-            return;
-        }
-        else
-        {
-            NSString *weichatURL =[WXApi getWXAppInstallUrl];
-            NSURL *ourAppUrl = [ [ NSURL alloc ] initWithString: weichatURL ];
-            [[UIApplication sharedApplication] openURL:ourAppUrl];
-        }
-    }
 }
 - (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-     if(buttonIndex == actionSheet.cancelButtonIndex)
-    {
-        return;
-    }
-    else if (buttonIndex == 0)//weibo
-    {
-        [self shareRecommendContentForType:ShareTypeSinaWeibo];
-    }
-    else if (buttonIndex == 1)//微信好友
-    {
-        [self shareRecommendContentForType:ShareTypeWeixiSession];
-    }
-    else//朋友圈
-    {
-        [self shareRecommendContentForType:ShareTypeWeixiTimeline];
-    }
+//     if(buttonIndex == actionSheet.cancelButtonIndex)
+//    {
+//        return;
+//    }
+//    else if (buttonIndex == 0)//weibo
+//    {
+//        [self shareRecommendContentForType:ShareTypeSinaWeibo];
+//    }
+//    else if (buttonIndex == 1)//微信好友
+//    {
+//        [self shareRecommendContentForType:ShareTypeWeixiSession];
+//    }
+//    else//朋友圈
+//    {
+//        [self shareRecommendContentForType:ShareTypeWeixiTimeline];
+//    }
     
 }
 #pragma mark MBProgressHUDDelegate methods

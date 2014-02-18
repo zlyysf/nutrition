@@ -60,7 +60,7 @@
         self.navigationItem.leftBarButtonItem = backItem;
     }
 
-    self.title = NSLocalizedString(@"dietlist_viewtitle",@"清单");
+    self.title = NSLocalizedString(@"dietlist_viewtitle",@"膳食清单");
     self.dietArray = [[NSMutableArray alloc]init];
     currentEditDietId = nil;
     self.emptyTopLabel.text = NSLocalizedString(@"dietlist_topemptylabel_content",@"暂无膳食清单");
@@ -295,7 +295,7 @@
     LZDataAccess *da = [LZDataAccess singleton];
     NSDictionary *aDiet = [self.dietArray objectAtIndex:indexPath.row];
     NSNumber *dietId = [aDiet objectForKey:@"CollocationId"];
-    NSArray *array = [da getCollocationFoodData_withCollocationId:dietId];
+    NSArray *array = [da getCollocationFoodAmountRows_withCollocationId:dietId];
 //    NSLog(@"%@",array);
     NSMutableDictionary *dietContentDict = [[NSMutableDictionary alloc]init];
     for (NSDictionary *aFood in array)

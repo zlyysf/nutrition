@@ -32,7 +32,7 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:cDbFile];
 //    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
-    //NSLog(@"dbFilePath=%@",filePath);
+    NSLog(@"dbFilePath=%@",filePath);
     return filePath;
 }
 
@@ -1533,27 +1533,41 @@
 
 
 /*
+ 看来sqlite对于自增长字段支持足够灵活，只要不重就可以插入，插入null则表示自增
  单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
  return auto increment id value
  */
--(NSNumber*)insertFoodCollocation_withName:(NSString*)collationName
+-(NSNumber*)insertFoodCollocation_withName:(NSString*)collationName andCreateTime:(long long)llCreateTime andCollocationId:(NSNumber*)nmCollocationId
 {
-    NSDate *dtNow = [NSDate date];
-    long long llms = [LZUtility getMillisecond:dtNow];
+    long long llms = llCreateTime;
+    if (llms == 0){
+        NSDate *dtNow = [NSDate date];
+        llms = [LZUtility getMillisecond:dtNow];
+    }
     
     NSString *insertSql = [NSString stringWithFormat:
-                          @"  INSERT INTO FoodCollocation (CollocationName, CollocationCreateTime) VALUES (?,?);"
+                          @"  INSERT INTO FoodCollocation (CollocationId, CollocationName, CollocationCreateTime) VALUES (?,?,?);"
                           ];
-    NSArray *paramAry = [NSArray arrayWithObjects:collationName, [NSNumber numberWithLongLong:llms],nil];
+    NSArray *paramAry;
+    if (nmCollocationId == nil){
+        paramAry = [NSArray arrayWithObjects:[NSNull null], collationName, [NSNumber numberWithLongLong:llms],nil];
+    }else{
+        paramAry = [NSArray arrayWithObjects:nmCollocationId, collationName, [NSNumber numberWithLongLong:llms],nil];
+    }
+    
     BOOL dbopState = [dbfm executeUpdate:insertSql error:nil withArgumentsInArray:paramAry];
     NSNumber *nmAutoIncrColumnValue = nil;
     if (dbopState){
-        NSString *sql = @"select last_insert_rowid();";
-        FMResultSet *rs = [dbfm executeQuery:sql];
-        if ([rs next]) {
-            NSArray *resultArray = rs.resultArray;
-            assert(resultArray.count>0);
-            nmAutoIncrColumnValue = resultArray[0];
+        if (nmCollocationId != nil){
+            nmAutoIncrColumnValue = nmCollocationId;
+        }else{
+            NSString *sql = @"select last_insert_rowid();";
+            FMResultSet *rs = [dbfm executeQuery:sql];
+            if ([rs next]) {
+                NSArray *resultArray = rs.resultArray;
+                assert(resultArray.count>0);
+                nmAutoIncrColumnValue = resultArray[0];
+            }
         }
     }
     return nmAutoIncrColumnValue;
@@ -1606,10 +1620,26 @@
 }
 
 
--(NSArray*)getCollocationFoodData_withCollocationId:(NSNumber*)nmCollocationId
+-(NSArray*)getCollocationFoodAmountRows_withCollocationId:(NSNumber*)nmCollocationId
 {
     return [self selectTableByEqualFilter_withTableName:TABLE_NAME_CollocationFood andField:COLUMN_NAME_CollocationId andValue:nmCollocationId
                                              andColumns:[NSArray arrayWithObjects:COLUMN_NAME_FoodId,COLUMN_NAME_FoodAmount, nil] andOrderByPart:nil andNeedDistinct:false];
+}
+-(NSArray*)getCollocationFoodAmount2LevelArray_withCollocationId:(NSNumber*)nmCollocationId
+{
+    NSArray * rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_CollocationFood
+                            andField:COLUMN_NAME_CollocationId andValue:nmCollocationId
+                            andColumns:[NSArray arrayWithObjects:COLUMN_NAME_FoodId,COLUMN_NAME_FoodAmount, nil]
+                            andOrderByPart:nil andNeedDistinct:false];
+    NSMutableArray *foodAmount2LevelArray = [NSMutableArray array];
+    for(int i=0; i<rows.count; i++){
+        NSDictionary *row = rows[i];
+        NSMutableArray *foodAmountAsAry = [NSMutableArray arrayWithCapacity:2];
+        [foodAmountAsAry addObject:row[COLUMN_NAME_FoodId]];
+        [foodAmountAsAry addObject:row[COLUMN_NAME_FoodAmount]];
+        [foodAmount2LevelArray addObject:foodAmountAsAry];
+    }
+    return foodAmount2LevelArray;
 }
 /*
  单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
@@ -1661,7 +1691,7 @@
 }
 
 
--(NSNumber *)insertFoodCollocationData_withCollocationName:(NSString*)collationName andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray andNeedTransaction:(BOOL)needTransaction andOuterTransactionExist:(BOOL)outerTransactionExist
+-(NSNumber *)insertFoodCollocationData_withCollocationName:(NSString*)collationName andCreateTime:(long long)llCreateTime andCollocationId:(NSNumber*)nmCollocationId1 andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray andFoodCollocationParamNameValueDict:(NSDictionary*)foodCollocationParamNameValueDict andNeedTransaction:(BOOL)needTransaction andOuterTransactionExist:(BOOL)outerTransactionExist
 {
     BOOL nowTransactionExist = outerTransactionExist;
     if (needTransaction){
@@ -1671,8 +1701,7 @@
         }
     }
     
-    
-    NSNumber *nmCollocationId = [self insertFoodCollocation_withName:collationName];
+    NSNumber *nmCollocationId = [self insertFoodCollocation_withName:collationName andCreateTime:llCreateTime andCollocationId:nmCollocationId1];
     if (nmCollocationId==nil){
         if (needTransaction)
             [dbfm rollback];
@@ -1685,6 +1714,15 @@
         return nil;
     }
     
+    if (foodCollocationParamNameValueDict!=nil){
+        BOOL dbopState =[self insertFoodCollocationParams_withId:nmCollocationId andFoodCollocationParamNameValueDict:foodCollocationParamNameValueDict andNeedTransaction:needTransaction andOuterTransactionExist:nowTransactionExist];
+        if (!dbopState){
+            if (needTransaction)
+                //[dbfm rollback];//should not rollback here because inner codes has rollbacked.
+                return nil;
+        }
+    }
+    
     if (needTransaction){
         if (!outerTransactionExist){
             [dbfm commit];//transaction is created here, so need commit here
@@ -1694,10 +1732,10 @@
     }
     return nmCollocationId;
 }
--(NSNumber *)insertFoodCollocationData_withCollocationName:(NSString*)collationName andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray
+-(NSNumber *)insertFoodCollocationData_withCollocationName:(NSString*)collationName andCreateTime:(long long)llCreateTime andCollocationId:(NSNumber*)nmCollocationId andFoodAmount2LevelArray:(NSArray*)foodAmount2LevelArray andFoodCollocationParamNameValueDict:(NSDictionary*)foodCollocationParamNameValueDict
 {
     assert(collationName.length > 0);
-    return [self insertFoodCollocationData_withCollocationName:collationName andFoodAmount2LevelArray:foodAmount2LevelArray andNeedTransaction:true andOuterTransactionExist:false];
+    return [self insertFoodCollocationData_withCollocationName:collationName andCreateTime:llCreateTime andCollocationId:nmCollocationId andFoodAmount2LevelArray:foodAmount2LevelArray andFoodCollocationParamNameValueDict:(NSDictionary*)foodCollocationParamNameValueDict andNeedTransaction:true andOuterTransactionExist:false];
 }
 
 
@@ -1760,25 +1798,124 @@
     return [self updateFoodCollocationData_withCollocationId:nmCollocationId andNewCollocationName:collocationName andFoodAmount2LevelArray:foodAmount2LevelArray andNeedTransaction:true andOuterTransactionExist:false];
 }
 
--(NSDictionary*)getFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId
+
+-(BOOL)insertFoodCollocationParams_withId:(NSNumber*)nmCollocationId andFoodCollocationParamNameValueDict:(NSDictionary*)foodCollocationParamNameValueDict andNeedTransaction:(BOOL)needTransaction andOuterTransactionExist:(BOOL)outerTransactionExist
+{
+    if (needTransaction && !outerTransactionExist){
+        [dbfm beginTransaction];//here created transaction
+    }
+    
+    if (foodCollocationParamNameValueDict!=nil){
+        NSArray *paramNames = foodCollocationParamNameValueDict.allKeys;
+        for(int i=0; i<paramNames.count; i++){
+            NSString *paramName = paramNames[i];
+            NSString *paramValue = foodCollocationParamNameValueDict[paramName];
+            BOOL dbopState = [self insertFoodCollocationParam_withId:nmCollocationId andParamName:paramName andParamValue:paramValue];
+            if (!dbopState){
+                if (needTransaction){
+                    [dbfm rollback];
+                }
+                return false;
+            }
+        }
+    }
+    
+    if (needTransaction){
+        if (!outerTransactionExist){
+            [dbfm commit];//transaction is created here, so need commit here
+        }else{
+            //let outer codes commit
+        }
+    }
+    return true;
+}
+
+-(BOOL)insertFoodCollocationParam_withId:(NSNumber*)nmCollocationId andParamName:(NSString*)paramName andParamValue:(NSString*)paramValue
+{
+    NSString *insertSql = [NSString stringWithFormat:
+                           @"  INSERT INTO FoodCollocationParam (CollocationId, ParamName, ParamValue) VALUES (?,?,?);"
+                           ];
+    NSArray *paramAry = [NSArray arrayWithObjects:nmCollocationId, paramName, paramValue, nil];
+    BOOL dbopState = [dbfm executeUpdate:insertSql error:nil withArgumentsInArray:paramAry];
+    return dbopState;
+}
+
+/*
+ 单条语句暂且不管transaction的问题，假定不抛exception，在返回false值后让外层判断来rollback
+ */
+-(BOOL)updateFoodCollocationParam_withId:(NSNumber*)nmCollocationId andParamName:(NSString*)paramName andParamValue:(NSString*)paramValue
+{
+    NSString *updSql = [NSString stringWithFormat:
+                        @" UPDATE FoodCollocationParam SET ParamValue=? WHERE CollocationId=? and ParamName=?;"
+                        ];
+    NSArray *paramAry = [NSArray arrayWithObjects:paramValue, nmCollocationId, paramName, nil];
+    BOOL dbopState = [dbfm executeUpdate:updSql error:nil withArgumentsInArray:paramAry];
+    return dbopState;
+}
+
+-(BOOL)deleteFoodCollocationParamById:(NSNumber*)nmCollocationId
+{
+    return [self deleteTableByEqualFilter_withTableName:TABLE_NAME_FoodCollocationParam andField:COLUMN_NAME_CollocationId andValue:nmCollocationId];
+}
+/*
+ 把 name-value pair array 转成了一个 dictionary
+ */
+-(NSDictionary*)getFoodCollocationParamsById:(NSNumber*)nmCollocationId
+{
+    NSArray *rows = [self selectTableByEqualFilter_withTableName:TABLE_NAME_FoodCollocationParam andField:COLUMN_NAME_CollocationId andValue:nmCollocationId];
+    
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    for(int i=0; i<rows.count; i++){
+        NSDictionary *row = rows[i];
+        [dict setObject:row[COLUMN_NAME_ParamValue] forKey:row[COLUMN_NAME_ParamName]];
+    }
+    return dict;
+}
+
+
+
+-(NSDictionary*)getFoodCollocationRawData_withCollocationId:(NSNumber*)nmCollocationId
 {
     NSDictionary * rowFoodCollocation = [self getFoodCollocationById:nmCollocationId];
-    NSArray *foodAndAmountArray = [self getCollocationFoodData_withCollocationId:nmCollocationId];
+    NSArray *foodAndAmountArray = [self getCollocationFoodAmountRows_withCollocationId:nmCollocationId];
+    NSDictionary * nameValueDict = [self getFoodCollocationParamsById:nmCollocationId];
     NSMutableDictionary *retDict = [NSMutableDictionary dictionary];
     if (rowFoodCollocation!=nil)
         [retDict setObject:rowFoodCollocation forKey:@"rowFoodCollocation"];
     if (foodAndAmountArray!=nil)
         [retDict setObject:foodAndAmountArray forKey:@"foodAndAmountArray"];
+    if (nameValueDict!=nil)
+        [retDict setObject:nameValueDict forKey:@"nameValueDict"];
+    //NSLog(@"getFoodCollocationRawData_withCollocationId %@ return:\n%@",nmCollocationId,retDict);
+    return retDict;
+}
+
+-(NSDictionary*)getFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId
+{
+    NSDictionary * rowFoodCollocation = [self getFoodCollocationById:nmCollocationId];
+    NSArray *foodAndAmount2LevelArray = [self getCollocationFoodAmount2LevelArray_withCollocationId:nmCollocationId];
+    NSDictionary * nameValueDict = [self getFoodCollocationParamsById:nmCollocationId];
+    NSMutableDictionary *retDict = [NSMutableDictionary dictionary];
+    if (rowFoodCollocation!=nil)
+        [retDict setObject:rowFoodCollocation forKey:@"rowFoodCollocation"];
+    if (foodAndAmount2LevelArray!=nil)
+        [retDict setObject:foodAndAmount2LevelArray forKey:@"foodAndAmount2LevelArray"];
+    if (nameValueDict!=nil)
+        [retDict setObject:nameValueDict forKey:@"nameValueDict"];
     //NSLog(@"getFoodCollocationData_withCollocationId %@ return:\n%@",nmCollocationId,retDict);
     return retDict;
 }
+
+
 
 -(BOOL)deleteFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId
 {
     BOOL dbopState1 = [self deleteFoodCollocationById:nmCollocationId];
     BOOL dbopState2 = [self deleteCollocationFoodData_withCollocationId:nmCollocationId];
-    return dbopState1 && dbopState2;
+    BOOL dbopState3 = [self deleteFoodCollocationParamById:nmCollocationId];
+    return dbopState1 && dbopState2 && dbopState3;
 }
+
 
 
 -(NSArray*)getDiseaseGroupInfo_byType:(NSString*)groupType

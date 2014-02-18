@@ -13,7 +13,7 @@
 #import "MobClick.h"
 #import "LZRecommendFood.h"
 #import "LZFoodDetailController.h"
-#import "JWNavigationViewController.h"
+//#import "JWNavigationViewController.h"
 #import "LZDietListMakeViewController.h"
 @interface LZDailyIntakeViewController ()<LZFoodDetailViewControllerDelegate>
 {
@@ -393,9 +393,11 @@
     foodDetailController.delegate = self;
     foodDetailController.isCalForAll = NO;
     foodDetailController.GUnitStartIndex = 100;
-    //UINavigationController *initialController = (UINavigationController*)[UIApplication
-    //sharedApplication].keyWindow.rootViewController;
-    JWNavigationViewController *nav = [[JWNavigationViewController alloc]initWithRootViewController:foodDetailController];
+//    //UINavigationController *initialController = (UINavigationController*)[UIApplication
+//    //sharedApplication].keyWindow.rootViewController;
+//    JWNavigationViewController *nav = [[JWNavigationViewController alloc]initWithRootViewController:foodDetailController];
+//    [self presentModalViewController:nav animated:YES];
+    UINavigationController *nav = [[UINavigationController alloc]  initWithRootViewController:foodDetailController];
     [self presentModalViewController:nav animated:YES];
 
     

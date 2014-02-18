@@ -17,6 +17,11 @@
 		0818CA1018477AC6003DB33A /* JSONRepresentation.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F317AF8873000AEC06 /* JSONRepresentation.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0818CA1118477B16003DB33A /* CDataScanner.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7DC17AF8873000AEC06 /* CDataScanner.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		081D3C1F187EB0D00030D743 /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
+		084CFC9718ADBC570003BC93 /* nutrient_button_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9518ADBC570003BC93 /* nutrient_button_off@2x.png */; };
+		084CFC9818ADBC570003BC93 /* nutrient_button_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9618ADBC570003BC93 /* nutrient_button_on@2x.png */; };
+		084CFC9A18ADBCC30003BC93 /* button_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9918ADBCC30003BC93 /* button_back@2x.png */; };
+		084CFC9C18ADC70A0003BC93 /* recommend_sign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9B18ADC70A0003BC93 /* recommend_sign@2x.png */; };
+		084CFC9E18ADEFDF0003BC93 /* section_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9D18ADEFDF0003BC93 /* section_bar@2x.png */; };
 		085C8D3F173366F2001A1ABB /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D35173366F2001A1ABB /* FMDatabase.m */; };
 		085C8D40173366F2001A1ABB /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D37173366F2001A1ABB /* FMDatabaseAdditions.m */; };
 		085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D39173366F2001A1ABB /* FMDatabasePool.m */; };
@@ -57,6 +62,8 @@
 		085C8D8917336BA5001A1ABB /* LZUtility.h in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B6172BC61D00E90387 /* LZUtility.h */; };
 		085C8D8A17336BA5001A1ABB /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
 		085C8D8B17336BE1001A1ABB /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D4D17336744001A1ABB /* CustomDB.dat */; };
+		086944A118AC72540085B76A /* LZSliderByScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 086944A018AC72540085B76A /* LZSliderByScrollView.m */; };
+		086944A518AC75EE0085B76A /* valuepicker_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 086944A418AC75EE0085B76A /* valuepicker_bg@2x.png */; };
 		0882403E173A7E7400E71E6E /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882403D173A7E7400E71E6E /* readme.txt */; };
 		088241441744DE8000E71E6E /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
 		0882419F175621DE00E71E6E /* foodDealed in Resources */ = {isa = PBXBuildFile; fileRef = 0882419E175621DE00E71E6E /* foodDealed */; };
@@ -67,11 +74,54 @@
 		088B768417C4B8F200206959 /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768317C4B8F200206959 /* LZDataAccessUtil.m */; };
 		088B768517C4BADD00206959 /* LZDataAccessUtil.h in Sources */ = {isa = PBXBuildFile; fileRef = 088B768217C4B8F200206959 /* LZDataAccessUtil.h */; };
 		088B768617C4BADD00206959 /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768317C4B8F200206959 /* LZDataAccessUtil.m */; };
+		088FDE2618A4890900D9D687 /* addfood_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE2218A4890900D9D687 /* addfood_icon@2x.png */; };
+		088FDE2718A4890900D9D687 /* diet_topbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE2318A4890900D9D687 /* diet_topbar_bg@2x.png */; };
+		088FDE2818A4890900D9D687 /* recommend_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE2418A4890900D9D687 /* recommend_icon@2x.png */; };
+		088FDE2918A4890900D9D687 /* share_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE2518A4890900D9D687 /* share_icon@2x.png */; };
+		088FDE2A18A48A1B00D9D687 /* LZDietListMakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */; };
+		088FDE2B18A48B3400D9D687 /* LZRecommendFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */; };
+		088FDE2C18A48BE300D9D687 /* LZRecommendFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D33E174B923F008EFB60 /* LZRecommendFoodCell.m */; };
+		088FDE2D18A48BE600D9D687 /* LZCheckNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D340174B9240008EFB60 /* LZCheckNutritionCell.m */; };
+		088FDE2E18A48BE800D9D687 /* LZNutritionSupplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D344174B9241008EFB60 /* LZNutritionSupplyCell.m */; };
+		088FDE2F18A48BEB00D9D687 /* LZStandardContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D346174B9241008EFB60 /* LZStandardContentCell.m */; };
+		088FDE3018A48BEE00D9D687 /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
+		088FDE3118A48BF000D9D687 /* LZFoodNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */; };
+		088FDE3218A48BF300D9D687 /* LZNutrientFoodAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743F175CACAB006E46CA /* LZNutrientFoodAddCell.m */; };
+		088FDE3318A48BF600D9D687 /* LZDietCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E5AA817967A95007CA18A /* LZDietCell.m */; };
+		088FDE3418A48BF900D9D687 /* LZDietPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F86C85A17CC51A0001DDC34 /* LZDietPickerCell.m */; };
+		088FDE3518A48BFC00D9D687 /* LZDiseaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4FD72217D4B75900DBA25A /* LZDiseaseCell.m */; };
+		088FDE3618A48C0100D9D687 /* LZHeavlyLackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F537F2417F2BFBE00BDD014 /* LZHeavlyLackCell.m */; };
+		088FDE3718A48C5000D9D687 /* LZAddByNutrientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743C175CAB63006E46CA /* LZAddByNutrientController.m */; };
+		088FDE3818A48C7700D9D687 /* LZFoodDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D342174B9240008EFB60 /* LZFoodDetailController.m */; };
+		088FDE3B18A4A14700D9D687 /* NGFoodCombinationEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE3A18A4A14700D9D687 /* NGFoodCombinationEditViewController.m */; };
+		088FDE3C18A4AA6C00D9D687 /* LZFoodSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */; };
+		088FDE3F18A4B58B00D9D687 /* NGFoodsByNutrientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE3E18A4B58B00D9D687 /* NGFoodsByNutrientViewController.m */; };
+		088FDE4118A4B84E00D9D687 /* add_by_nutrient_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE4018A4B84E00D9D687 /* add_by_nutrient_button@2x.png */; };
+		088FDE4418A4C32000D9D687 /* LZGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE4318A4C32000D9D687 /* LZGlobal.m */; };
+		088FDE4718A62C5200D9D687 /* NGDietCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE4618A62C5200D9D687 /* NGDietCell.m */; };
+		088FDE4918A62DBA00D9D687 /* change_name_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE4818A62DBA00D9D687 /* change_name_button@2x.png */; };
+		088FDE4C18A6373200D9D687 /* big_arrow_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE4A18A6373200D9D687 /* big_arrow_clicked@2x.png */; };
+		088FDE4D18A6373200D9D687 /* big_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE4B18A6373200D9D687 /* big_arrow@2x.png */; };
+		088FDE5018A63ED900D9D687 /* NGFoodsByClassSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE4F18A63ED900D9D687 /* NGFoodsByClassSearchViewController.m */; };
+		088FDE5118A6429200D9D687 /* LZDailyIntakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */; };
+		088FDE5318A6473500D9D687 /* valuepicker_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE5218A6473500D9D687 /* valuepicker_cover@2x.png */; };
+		088FDE5418A6476C00D9D687 /* LZSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68D17CF11930043D760 /* LZSearchBar.m */; };
+		088FDE5518A6476F00D9D687 /* LZValueSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F50961A1754777300461964 /* LZValueSelectorView.m */; };
+		088FDE5818A86D0D00D9D687 /* NGFoodDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE5718A86D0D00D9D687 /* NGFoodDetailController.m */; };
+		088FDE5B18A8707400D9D687 /* NGNutritionSupplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE5A18A8707400D9D687 /* NGNutritionSupplyCell.m */; };
+		088FDFAB18A8C44100D9D687 /* NGFoodsByClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDFAA18A8C44100D9D687 /* NGFoodsByClassViewController.m */; };
+		088FDFAE18A8C62800D9D687 /* NGFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDFAD18A8C62800D9D687 /* NGFoodCell.m */; };
+		089693601897A369005E03FB /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0896935E1897A369005E03FB /* MainStoryboard.storyboard */; };
+		089693631897A91C005E03FB /* FoodCombinationList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 089693621897A91C005E03FB /* FoodCombinationList.storyboard */; };
+		089693661897AE31005E03FB /* NGFoodCombinationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 089693651897AE31005E03FB /* NGFoodCombinationListViewController.m */; };
+		089693691897B373005E03FB /* NGFoodCombinationItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 089693681897B373005E03FB /* NGFoodCombinationItemCell.m */; };
 		08A1A2CA18863EBF00E95049 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A1A2C918863EBF00E95049 /* Parse.framework */; };
 		08A1A2CB18863ED600E95049 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A1A2C918863EBF00E95049 /* Parse.framework */; };
 		08A1A2CC188649C600E95049 /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
 		08A1A2CD188649C700E95049 /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
 		08ED42D317D4970A00917C78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
+		08FA708D18B1E02D002DF80E /* LZUtilityParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA708C18B1E02D002DF80E /* LZUtilityParse.m */; };
+		08FA708E18B1E155002DF80E /* LZUtilityParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA708C18B1E02D002DF80E /* LZUtilityParse.m */; };
 		08FDAC95186031740015E7EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631DB17702CDF0068CBFE /* AudioToolbox.framework */; };
 		08FDAC961860317C0015E7EE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0D18504CD90063553D /* CFNetwork.framework */; };
 		08FDAC97186031900015E7EE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D81C17AF8921000AEC06 /* CoreLocation.framework */; };
@@ -213,6 +263,11 @@
 
 /* Begin PBXFileReference section */
 		0818CA1218477B50003DB33A /* CDataScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CDataScanner.m; path = nutrition/BaiduSDK/TouchJSON/CDataScanner.m; sourceTree = "<group>"; };
+		084CFC9518ADBC570003BC93 /* nutrient_button_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_off@2x.png"; path = "nutrition/Resource/nutrient_button_off@2x.png"; sourceTree = "<group>"; };
+		084CFC9618ADBC570003BC93 /* nutrient_button_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_on@2x.png"; path = "nutrition/Resource/nutrient_button_on@2x.png"; sourceTree = "<group>"; };
+		084CFC9918ADBCC30003BC93 /* button_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_back@2x.png"; path = "nutrition/Resource/button_back@2x.png"; sourceTree = "<group>"; };
+		084CFC9B18ADC70A0003BC93 /* recommend_sign@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "recommend_sign@2x.png"; path = "nutrition/Resource/recommend_sign@2x.png"; sourceTree = "<group>"; };
+		084CFC9D18ADEFDF0003BC93 /* section_bar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "section_bar@2x.png"; path = "nutrition/Resource/section_bar@2x.png"; sourceTree = "<group>"; };
 		085C8D34173366F2001A1ABB /* FMDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabase.h; sourceTree = "<group>"; };
 		085C8D35173366F2001A1ABB /* FMDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FMDatabase.m; sourceTree = "<group>"; };
 		085C8D36173366F2001A1ABB /* FMDatabaseAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FMDatabaseAdditions.h; sourceTree = "<group>"; };
@@ -243,6 +298,9 @@
 		085C8D6E17336A29001A1ABB /* LZViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LZViewController.m; sourceTree = "<group>"; };
 		085C8D7117336A29001A1ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LZViewController_iPhone.xib; sourceTree = "<group>"; };
 		085C8D7417336A29001A1ABB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/LZViewController_iPad.xib; sourceTree = "<group>"; };
+		0869449F18AC72540085B76A /* LZSliderByScrollView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZSliderByScrollView.h; path = nutrition/Class/LZSliderByScrollView.h; sourceTree = "<group>"; };
+		086944A018AC72540085B76A /* LZSliderByScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZSliderByScrollView.m; path = nutrition/Class/LZSliderByScrollView.m; sourceTree = "<group>"; };
+		086944A418AC75EE0085B76A /* valuepicker_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "valuepicker_bg@2x.png"; path = "nutrition/Resource/valuepicker_bg@2x.png"; sourceTree = "<group>"; };
 		0882403D173A7E7400E71E6E /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = readme.txt; sourceTree = "<group>"; };
 		088241421744DE8000E71E6E /* LZTest1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZTest1.h; sourceTree = "<group>"; };
 		088241431744DE8000E71E6E /* LZTest1.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZTest1.m; sourceTree = "<group>"; };
@@ -253,7 +311,42 @@
 		08859A1A185058390063553D /* FBMissingSymbols.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = FBMissingSymbols.m; path = nutrition/Class/FBMissingSymbols.m; sourceTree = "<group>"; };
 		088B768217C4B8F200206959 /* LZDataAccessUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZDataAccessUtil.h; sourceTree = "<group>"; };
 		088B768317C4B8F200206959 /* LZDataAccessUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LZDataAccessUtil.m; sourceTree = "<group>"; };
+		088FDE2218A4890900D9D687 /* addfood_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "addfood_icon@2x.png"; path = "nutrition/Resource/addfood_icon@2x.png"; sourceTree = "<group>"; };
+		088FDE2318A4890900D9D687 /* diet_topbar_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "diet_topbar_bg@2x.png"; path = "nutrition/Resource/diet_topbar_bg@2x.png"; sourceTree = "<group>"; };
+		088FDE2418A4890900D9D687 /* recommend_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "recommend_icon@2x.png"; path = "nutrition/Resource/recommend_icon@2x.png"; sourceTree = "<group>"; };
+		088FDE2518A4890900D9D687 /* share_icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "share_icon@2x.png"; path = "nutrition/Resource/share_icon@2x.png"; sourceTree = "<group>"; };
+		088FDE3918A4A14700D9D687 /* NGFoodCombinationEditViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodCombinationEditViewController.h; path = nutrition/Class/NGFoodCombinationEditViewController.h; sourceTree = "<group>"; };
+		088FDE3A18A4A14700D9D687 /* NGFoodCombinationEditViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodCombinationEditViewController.m; path = nutrition/Class/NGFoodCombinationEditViewController.m; sourceTree = "<group>"; };
+		088FDE3D18A4B58B00D9D687 /* NGFoodsByNutrientViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodsByNutrientViewController.h; path = nutrition/Class/NGFoodsByNutrientViewController.h; sourceTree = "<group>"; };
+		088FDE3E18A4B58B00D9D687 /* NGFoodsByNutrientViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodsByNutrientViewController.m; path = nutrition/Class/NGFoodsByNutrientViewController.m; sourceTree = "<group>"; };
+		088FDE4018A4B84E00D9D687 /* add_by_nutrient_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "add_by_nutrient_button@2x.png"; path = "nutrition/Resource/add_by_nutrient_button@2x.png"; sourceTree = "<group>"; };
+		088FDE4218A4C32000D9D687 /* LZGlobal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZGlobal.h; path = nutrition/Class/LZGlobal.h; sourceTree = "<group>"; };
+		088FDE4318A4C32000D9D687 /* LZGlobal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZGlobal.m; path = nutrition/Class/LZGlobal.m; sourceTree = "<group>"; };
+		088FDE4518A62C5200D9D687 /* NGDietCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGDietCell.h; path = nutrition/Class/NGDietCell.h; sourceTree = "<group>"; };
+		088FDE4618A62C5200D9D687 /* NGDietCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGDietCell.m; path = nutrition/Class/NGDietCell.m; sourceTree = "<group>"; };
+		088FDE4818A62DBA00D9D687 /* change_name_button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "change_name_button@2x.png"; path = "nutrition/Resource/change_name_button@2x.png"; sourceTree = "<group>"; };
+		088FDE4A18A6373200D9D687 /* big_arrow_clicked@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "big_arrow_clicked@2x.png"; path = "nutrition/Resource/big_arrow_clicked@2x.png"; sourceTree = "<group>"; };
+		088FDE4B18A6373200D9D687 /* big_arrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "big_arrow@2x.png"; path = "nutrition/Resource/big_arrow@2x.png"; sourceTree = "<group>"; };
+		088FDE4E18A63ED900D9D687 /* NGFoodsByClassSearchViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodsByClassSearchViewController.h; path = nutrition/Class/NGFoodsByClassSearchViewController.h; sourceTree = "<group>"; };
+		088FDE4F18A63ED900D9D687 /* NGFoodsByClassSearchViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodsByClassSearchViewController.m; path = nutrition/Class/NGFoodsByClassSearchViewController.m; sourceTree = "<group>"; };
+		088FDE5218A6473500D9D687 /* valuepicker_cover@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "valuepicker_cover@2x.png"; path = "nutrition/Resource/valuepicker_cover@2x.png"; sourceTree = "<group>"; };
+		088FDE5618A86D0D00D9D687 /* NGFoodDetailController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodDetailController.h; path = nutrition/Class/NGFoodDetailController.h; sourceTree = "<group>"; };
+		088FDE5718A86D0D00D9D687 /* NGFoodDetailController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodDetailController.m; path = nutrition/Class/NGFoodDetailController.m; sourceTree = "<group>"; };
+		088FDE5918A8707400D9D687 /* NGNutritionSupplyCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGNutritionSupplyCell.h; path = nutrition/Class/NGNutritionSupplyCell.h; sourceTree = "<group>"; };
+		088FDE5A18A8707400D9D687 /* NGNutritionSupplyCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGNutritionSupplyCell.m; path = nutrition/Class/NGNutritionSupplyCell.m; sourceTree = "<group>"; };
+		088FDFA918A8C44100D9D687 /* NGFoodsByClassViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodsByClassViewController.h; path = nutrition/Class/NGFoodsByClassViewController.h; sourceTree = "<group>"; };
+		088FDFAA18A8C44100D9D687 /* NGFoodsByClassViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodsByClassViewController.m; path = nutrition/Class/NGFoodsByClassViewController.m; sourceTree = "<group>"; };
+		088FDFAC18A8C62800D9D687 /* NGFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodCell.h; path = nutrition/Class/NGFoodCell.h; sourceTree = "<group>"; };
+		088FDFAD18A8C62800D9D687 /* NGFoodCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodCell.m; path = nutrition/Class/NGFoodCell.m; sourceTree = "<group>"; };
+		0896935F1897A369005E03FB /* en */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = en; path = en.lproj/MainStoryboard.storyboard; sourceTree = "<group>"; };
+		089693621897A91C005E03FB /* FoodCombinationList.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = FoodCombinationList.storyboard; path = nutrition/FoodCombinationList.storyboard; sourceTree = "<group>"; };
+		089693641897AE31005E03FB /* NGFoodCombinationListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodCombinationListViewController.h; path = nutrition/Class/NGFoodCombinationListViewController.h; sourceTree = "<group>"; };
+		089693651897AE31005E03FB /* NGFoodCombinationListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodCombinationListViewController.m; path = nutrition/Class/NGFoodCombinationListViewController.m; sourceTree = "<group>"; };
+		089693671897B373005E03FB /* NGFoodCombinationItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodCombinationItemCell.h; path = nutrition/Class/NGFoodCombinationItemCell.h; sourceTree = "<group>"; };
+		089693681897B373005E03FB /* NGFoodCombinationItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodCombinationItemCell.m; path = nutrition/Class/NGFoodCombinationItemCell.m; sourceTree = "<group>"; };
 		08A1A2C918863EBF00E95049 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = nutrition/Parse.framework; sourceTree = "<group>"; };
+		08FA708B18B1E02D002DF80E /* LZUtilityParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtilityParse.h; path = nutrition/Class/LZUtilityParse.h; sourceTree = "<group>"; };
+		08FA708C18B1E02D002DF80E /* LZUtilityParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtilityParse.m; path = nutrition/Class/LZUtilityParse.m; sourceTree = "<group>"; };
 		5F03D33B174B923F008EFB60 /* LZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZProgressView.h; path = Class/LZProgressView.h; sourceTree = "<group>"; };
 		5F03D33C174B923F008EFB60 /* LZProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZProgressView.m; path = Class/LZProgressView.m; sourceTree = "<group>"; };
 		5F03D33D174B923F008EFB60 /* LZRecommendFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFoodCell.h; path = Class/LZRecommendFoodCell.h; sourceTree = "<group>"; };
@@ -696,6 +789,8 @@
 				5FB8C0B9172BCA9F00E90387 /* LZConstants.h */,
 				5FB8C0B6172BC61D00E90387 /* LZUtility.h */,
 				5FB8C0B7172BC61D00E90387 /* LZUtility.m */,
+				08FA708B18B1E02D002DF80E /* LZUtilityParse.h */,
+				08FA708C18B1E02D002DF80E /* LZUtilityParse.m */,
 				085C8D4A17336720001A1ABB /* LZRecommendFood.h */,
 				085C8D4B17336720001A1ABB /* LZRecommendFood.m */,
 				5F746C061769EB9A00E68D0E /* LZReviewAppManager.h */,
@@ -705,6 +800,8 @@
 				08859A1A185058390063553D /* FBMissingSymbols.m */,
 				FC1D1C25185EF0F500911A6C /* LZKeychainManager.h */,
 				FC1D1C26185EF0F500911A6C /* LZKeychainManager.m */,
+				088FDE4218A4C32000D9D687 /* LZGlobal.h */,
+				088FDE4318A4C32000D9D687 /* LZGlobal.m */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -739,12 +836,30 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0869449E18AC72090085B76A /* CtrlLib */ = {
+			isa = PBXGroup;
+			children = (
+				0869449F18AC72540085B76A /* LZSliderByScrollView.h */,
+				086944A018AC72540085B76A /* LZSliderByScrollView.m */,
+			);
+			name = CtrlLib;
+			sourceTree = "<group>";
+		};
 		0882419D175621BC00E71E6E /* ResExternal */ = {
 			isa = PBXGroup;
 			children = (
 				0882419E175621DE00E71E6E /* foodDealed */,
 			);
 			name = ResExternal;
+			sourceTree = "<group>";
+		};
+		089693611897A89E005E03FB /* UIDesign */ = {
+			isa = PBXGroup;
+			children = (
+				5FECAD8F1838701100D72A8C /* NewMainStoryboard.storyboard */,
+				089693621897A91C005E03FB /* FoodCombinationList.storyboard */,
+			);
+			name = UIDesign;
 			sourceTree = "<group>";
 		};
 		5F22A6C917CF580D0043D760 /* foodTypeButtonIcons */ = {
@@ -773,6 +888,7 @@
 			children = (
 				0818CA1218477B50003DB33A /* CDataScanner.m */,
 				5FECAD9F183885CA00D72A8C /* Nutrition2.0 */,
+				0869449E18AC72090085B76A /* CtrlLib */,
 				085C8D4917336707001A1ABB /* Util */,
 				085C8D4517336701001A1ABB /* dataAccess */,
 				085C8D33173366F2001A1ABB /* fmdbLib */,
@@ -834,6 +950,7 @@
 		5F3338AE172A407E0096E7AE /* Nutrition */ = {
 			isa = PBXGroup;
 			children = (
+				0896935E1897A369005E03FB /* MainStoryboard.storyboard */,
 				5FCC5BE817AA302500796B24 /* TestControllers */,
 				5F8DEE9617951DC200C6E9F5 /* Controllers */,
 				5F8DEE9717951E2B00C6E9F5 /* Cells */,
@@ -862,6 +979,21 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				084CFC9D18ADEFDF0003BC93 /* section_bar@2x.png */,
+				084CFC9B18ADC70A0003BC93 /* recommend_sign@2x.png */,
+				084CFC9918ADBCC30003BC93 /* button_back@2x.png */,
+				084CFC9518ADBC570003BC93 /* nutrient_button_off@2x.png */,
+				084CFC9618ADBC570003BC93 /* nutrient_button_on@2x.png */,
+				086944A418AC75EE0085B76A /* valuepicker_bg@2x.png */,
+				088FDE5218A6473500D9D687 /* valuepicker_cover@2x.png */,
+				088FDE4A18A6373200D9D687 /* big_arrow_clicked@2x.png */,
+				088FDE4B18A6373200D9D687 /* big_arrow@2x.png */,
+				088FDE4818A62DBA00D9D687 /* change_name_button@2x.png */,
+				088FDE4018A4B84E00D9D687 /* add_by_nutrient_button@2x.png */,
+				088FDE2218A4890900D9D687 /* addfood_icon@2x.png */,
+				088FDE2318A4890900D9D687 /* diet_topbar_bg@2x.png */,
+				088FDE2418A4890900D9D687 /* recommend_icon@2x.png */,
+				088FDE2518A4890900D9D687 /* share_icon@2x.png */,
 				5F2B2C5E1859AAF4004243F9 /* left@2x.png */,
 				5F2B2C5F1859AAF4004243F9 /* right@2x.png */,
 				5F206DE31855AE1200E8D094 /* gray_vertical_line@2x.png */,
@@ -906,6 +1038,8 @@
 		5F7F71F11840C8EF00724397 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				088FDE5618A86D0D00D9D687 /* NGFoodDetailController.h */,
+				088FDE5718A86D0D00D9D687 /* NGFoodDetailController.m */,
 				FCEE441E1851FC98008329AF /* LZScatterViewController.h */,
 				FCEE441F1851FC98008329AF /* LZScatterViewController.m */,
 				5FECADA01838912900D72A8C /* NGDiagnoseViewController.h */,
@@ -930,6 +1064,16 @@
 				5F206DE61855E63000E8D094 /* NGSingleFoodViewController.m */,
 				5F2938B118583EF400FAE2E2 /* NGChartViewController.h */,
 				5F2938B218583EF400FAE2E2 /* NGChartViewController.m */,
+				089693641897AE31005E03FB /* NGFoodCombinationListViewController.h */,
+				089693651897AE31005E03FB /* NGFoodCombinationListViewController.m */,
+				088FDE3918A4A14700D9D687 /* NGFoodCombinationEditViewController.h */,
+				088FDE3A18A4A14700D9D687 /* NGFoodCombinationEditViewController.m */,
+				088FDE3D18A4B58B00D9D687 /* NGFoodsByNutrientViewController.h */,
+				088FDE3E18A4B58B00D9D687 /* NGFoodsByNutrientViewController.m */,
+				088FDE4E18A63ED900D9D687 /* NGFoodsByClassSearchViewController.h */,
+				088FDE4F18A63ED900D9D687 /* NGFoodsByClassSearchViewController.m */,
+				088FDFA918A8C44100D9D687 /* NGFoodsByClassViewController.h */,
+				088FDFAA18A8C44100D9D687 /* NGFoodsByClassViewController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -937,6 +1081,12 @@
 		5F7F71F21840C90100724397 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				088FDFAC18A8C62800D9D687 /* NGFoodCell.h */,
+				088FDFAD18A8C62800D9D687 /* NGFoodCell.m */,
+				088FDE5918A8707400D9D687 /* NGNutritionSupplyCell.h */,
+				088FDE5A18A8707400D9D687 /* NGNutritionSupplyCell.m */,
+				088FDE4518A62C5200D9D687 /* NGDietCell.h */,
+				088FDE4618A62C5200D9D687 /* NGDietCell.m */,
 				5FF593D3183DBB970011CEA3 /* NGDiagnoseCell.h */,
 				5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */,
 				5FDB8638184071F40015FADD /* NGNoteCell.h */,
@@ -957,6 +1107,8 @@
 				5FEA3889184DA79300EC1C96 /* NGReportHealthScoreCell.m */,
 				5F2938AE1856E69B00FAE2E2 /* NGFoodNutritionCell.h */,
 				5F2938AF1856E69B00FAE2E2 /* NGFoodNutritionCell.m */,
+				089693671897B373005E03FB /* NGFoodCombinationItemCell.h */,
+				089693681897B373005E03FB /* NGFoodCombinationItemCell.m */,
 			);
 			name = Cells;
 			sourceTree = "<group>";
@@ -1198,11 +1350,11 @@
 		5FECAD9F183885CA00D72A8C /* Nutrition2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				089693611897A89E005E03FB /* UIDesign */,
 				5FECAD9C18387F4E00D72A8C /* LZGlobalService.h */,
 				5FECAD9D18387F4E00D72A8C /* LZGlobalService.m */,
 				5F3338B7172A407E0096E7AE /* LZAppDelegate.h */,
 				5F3338B8172A407E0096E7AE /* LZAppDelegate.m */,
-				5FECAD8F1838701100D72A8C /* NewMainStoryboard.storyboard */,
 				5F7F71F31840C91300724397 /* Views */,
 				5F7F71F21840C90100724397 /* Cells */,
 				5F7F71F11840C8EF00724397 /* Controllers */,
@@ -1425,8 +1577,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				084CFC9C18ADC70A0003BC93 /* recommend_sign@2x.png in Resources */,
 				5F3338B3172A407E0096E7AE /* InfoPlist.strings in Resources */,
 				5FECAD9A1838777F00D72A8C /* physics-50@2x.png in Resources */,
+				089693631897A91C005E03FB /* FoodCombinationList.storyboard in Resources */,
+				088FDE2818A4890900D9D687 /* recommend_icon@2x.png in Resources */,
 				085C8D4E17336744001A1ABB /* CustomDB.dat in Resources */,
 				0882403E173A7E7400E71E6E /* readme.txt in Resources */,
 				5FF9D9F61876901F00F6A525 /* Default@2x.png in Resources */,
@@ -1434,12 +1589,14 @@
 				0882419F175621DE00E71E6E /* foodDealed in Resources */,
 				5FF8473D1758546900DEA6DE /* README.mdown in Resources */,
 				5FF9D9F51876901F00F6A525 /* Default.png in Resources */,
+				084CFC9E18ADEFDF0003BC93 /* section_bar@2x.png in Resources */,
 				5FF593DF183E01B60011CEA3 /* 心跳@2x.png in Resources */,
 				5FE436D3175F3EF5003947ED /* Icon-Small.png in Resources */,
 				5FE436D4175F3EF5003947ED /* Icon-Small@2x.png in Resources */,
 				5FE436D5175F3EF5003947ED /* Icon.png in Resources */,
 				5FE436D6175F3EF5003947ED /* Icon@2x.png in Resources */,
 				5FF631D617702C690068CBFE /* README.txt in Resources */,
+				088FDE5318A6473500D9D687 /* valuepicker_cover@2x.png in Resources */,
 				5FF08A9E1850A5AD00A954C8 /* history@2x.png in Resources */,
 				5F206DE41855AE1200E8D094 /* gray_vertical_line@2x.png in Resources */,
 				5FF08A9D1850A5AD00A954C8 /* fork@2x.png in Resources */,
@@ -1448,15 +1605,20 @@
 				5FECAD901838701100D72A8C /* NewMainStoryboard.storyboard in Resources */,
 				5FF593E0183E01B60011CEA3 /* 血压@2x.png in Resources */,
 				5FF593DE183E01B60011CEA3 /* 体重@2x.png in Resources */,
+				089693601897A369005E03FB /* MainStoryboard.storyboard in Resources */,
 				5F943EFA17D721F400AFBF47 /* 主食@2x.png in Resources */,
+				088FDE4C18A6373200D9D687 /* big_arrow_clicked@2x.png in Resources */,
 				5F7F71F71840D82400724397 /* item_detail_arrow@2x.png in Resources */,
 				5FF9D9F41876901F00F6A525 /* Default-568h@2x.png in Resources */,
 				5F943EFB17D721F400AFBF47 /* 五谷@2x.png in Resources */,
+				088FDE4D18A6373200D9D687 /* big_arrow@2x.png in Resources */,
 				5F943EFC17D721F400AFBF47 /* 奶制品@2x.png in Resources */,
 				5F943EFD17D721F400AFBF47 /* 干果@2x.png in Resources */,
+				088FDE2718A4890900D9D687 /* diet_topbar_bg@2x.png in Resources */,
 				5F943EFE17D721F400AFBF47 /* 水产@2x.png in Resources */,
 				5F943EFF17D721F400AFBF47 /* 水果@2x.png in Resources */,
 				5FECAD991838777F00D72A8C /* month_view-50@2x.png in Resources */,
+				084CFC9A18ADBCC30003BC93 /* button_back@2x.png in Resources */,
 				5F943F0017D721F400AFBF47 /* 肉类@2x.png in Resources */,
 				5F943F0117D721F400AFBF47 /* 菌藻类@2x.png in Resources */,
 				5F943F0217D721F400AFBF47 /* 蔬菜@2x.png in Resources */,
@@ -1464,11 +1626,17 @@
 				5F22E3D918435CD1001CCC89 /* info-50@2x.png in Resources */,
 				5F943F0417D721F400AFBF47 /* 调味品@2x.png in Resources */,
 				5F943F0517D721F400AFBF47 /* 豆制品@2x.png in Resources */,
+				088FDE4918A62DBA00D9D687 /* change_name_button@2x.png in Resources */,
 				5F943F0617D721F400AFBF47 /* 零食@2x.png in Resources */,
+				084CFC9718ADBC570003BC93 /* nutrient_button_off@2x.png in Resources */,
 				5F943F0717D721F400AFBF47 /* 饮料@2x.png in Resources */,
 				5FECAD971838777F00D72A8C /* clinic-50@2x.png in Resources */,
+				088FDE2618A4890900D9D687 /* addfood_icon@2x.png in Resources */,
 				5F8F9FAF17E6B00300F6B295 /* Icon-72.png in Resources */,
 				5F8F9FB017E6B00300F6B295 /* Icon-72@2x.png in Resources */,
+				084CFC9818ADBC570003BC93 /* nutrient_button_on@2x.png in Resources */,
+				086944A518AC75EE0085B76A /* valuepicker_bg@2x.png in Resources */,
+				088FDE2918A4890900D9D687 /* share_icon@2x.png in Resources */,
 				5FECAD981838777F00D72A8C /* line_chart-50@2x.png in Resources */,
 				5F2B2C601859AAF4004243F9 /* left@2x.png in Resources */,
 				5FF593DD183E01B60011CEA3 /* 体温计@2x.png in Resources */,
@@ -1477,6 +1645,7 @@
 				5FDB08B418162C89004896FD /* Icon120x120.png in Resources */,
 				5FDB08B518162C89004896FD /* Icon152x152.png in Resources */,
 				5F7F71F91840D9F100724397 /* gray_horizon_line@2x.png in Resources */,
+				088FDE4118A4B84E00D9D687 /* add_by_nutrient_button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1519,6 +1688,7 @@
 				085C8D8817336B82001A1ABB /* CustomDB.dat in Sources */,
 				085C8D6217336A29001A1ABB /* main.m in Sources */,
 				085C8D6617336A29001A1ABB /* LZAppDelegate.m in Sources */,
+				08FA708E18B1E155002DF80E /* LZUtilityParse.m in Sources */,
 				085C8D6F17336A29001A1ABB /* LZViewController.m in Sources */,
 				08FDAC9D186031E20015E7EE /* LZKeychainManager.m in Sources */,
 				088241441744DE8000E71E6E /* LZTest1.m in Sources */,
@@ -1530,15 +1700,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				081D3C1F187EB0D00030D743 /* LZTest1.m in Sources */,
+				088FDE5418A6476C00D9D687 /* LZSearchBar.m in Sources */,
+				088FDE3518A48BFC00D9D687 /* LZDiseaseCell.m in Sources */,
+				088FDE2B18A48B3400D9D687 /* LZRecommendFilterView.m in Sources */,
+				088FDE3118A48BF000D9D687 /* LZFoodNutritionCell.m in Sources */,
+				08FA708D18B1E02D002DF80E /* LZUtilityParse.m in Sources */,
 				5F3338B5172A407E0096E7AE /* main.m in Sources */,
 				08A1A2CC188649C600E95049 /* FBMissingSymbols.m in Sources */,
+				088FDE2D18A48BE600D9D687 /* LZCheckNutritionCell.m in Sources */,
 				5F729BC718432105004FC428 /* NGNutritionCell.m in Sources */,
+				088FDE3818A48C7700D9D687 /* LZFoodDetailController.m in Sources */,
 				5F3338B9172A407E0096E7AE /* LZAppDelegate.m in Sources */,
 				5FB8C0B8172BC61D00E90387 /* LZUtility.m in Sources */,
 				085C8D3F173366F2001A1ABB /* FMDatabase.m in Sources */,
 				085C8D40173366F2001A1ABB /* FMDatabaseAdditions.m in Sources */,
 				5F206DE71855E63000E8D094 /* NGSingleFoodViewController.m in Sources */,
 				5FBD42E7184C6D8200759A3C /* NGMainTabbarViewController.m in Sources */,
+				088FDE2A18A48A1B00D9D687 /* LZDietListMakeViewController.m in Sources */,
 				085C8D41173366F2001A1ABB /* FMDatabasePool.m in Sources */,
 				085C8D42173366F2001A1ABB /* FMDatabaseQueue.m in Sources */,
 				085C8D44173366F2001A1ABB /* FMResultSet.m in Sources */,
@@ -1546,56 +1724,80 @@
 				085C8D4C17336720001A1ABB /* LZRecommendFood.m in Sources */,
 				5F03D348174B9241008EFB60 /* LZProgressView.m in Sources */,
 				5FECAD9E18387F4E00D72A8C /* LZGlobalService.m in Sources */,
+				088FDE2F18A48BEB00D9D687 /* LZStandardContentCell.m in Sources */,
 				5FF08A941850526C00A954C8 /* NGIllnessInfoViewController.m in Sources */,
 				FC1D1C27185EF0F500911A6C /* LZKeychainManager.m in Sources */,
 				5FF8473C1758546900DEA6DE /* MBProgressHUD.m in Sources */,
 				5FE436CE175F29D5003947ED /* LZKeyboardToolBar.m in Sources */,
+				086944A118AC72540085B76A /* LZSliderByScrollView.m in Sources */,
 				5FF9D9F01874389500F6A525 /* NGDiagnoseLabel.m in Sources */,
 				5F746C081769EB9A00E68D0E /* LZReviewAppManager.m in Sources */,
+				088FDE3B18A4A14700D9D687 /* NGFoodCombinationEditViewController.m in Sources */,
 				5F7F71FC1840EAC000724397 /* NGRecommendFoodView.m in Sources */,
 				5FF631DF17702D630068CBFE /* GADMasterViewController.m in Sources */,
 				5FF593D5183DBB970011CEA3 /* NGDiagnoseCell.m in Sources */,
 				5FF6320417718E100068CBFE /* LZNutrientionManager.m in Sources */,
 				5FF08A9718506A9800A954C8 /* NGFoodListViewController.m in Sources */,
 				5FCC5BEB17AA30A600796B24 /* LZDebugSettingsViewController.m in Sources */,
+				088FDE5B18A8707400D9D687 /* NGNutritionSupplyCell.m in Sources */,
 				5F90D80317AF8873000AEC06 /* mongoose.c in Sources */,
 				5FEE43E8185EF9A3006081EA /* LZEmptyClassCell.m in Sources */,
+				088FDE3618A48C0100D9D687 /* LZHeavlyLackCell.m in Sources */,
 				5F90D80417AF8873000AEC06 /* OpenUDID.m in Sources */,
 				5F90D80517AF8873000AEC06 /* CDataScanner.m in Sources */,
 				5F729BCA1843211C004FC428 /* NGFoodsCell.m in Sources */,
 				5FDB863D1840722B0015FADD /* NGMeasurementCell.m in Sources */,
+				088FDE3F18A4B58B00D9D687 /* NGFoodsByNutrientViewController.m in Sources */,
 				5F90D80617AF8873000AEC06 /* CFilteringJSONSerializer.m in Sources */,
+				089693691897B373005E03FB /* NGFoodCombinationItemCell.m in Sources */,
 				5F90D80717AF8873000AEC06 /* CJSONDeserializer_BlocksExtensions.m in Sources */,
 				5FF08A9A18506AB200A954C8 /* NGNutritionInfoViewController.m in Sources */,
 				5F90D80817AF8873000AEC06 /* CJSONSerialization.m in Sources */,
+				088FDE2E18A48BE800D9D687 /* LZNutritionSupplyCell.m in Sources */,
+				088FDE3718A48C5000D9D687 /* LZAddByNutrientController.m in Sources */,
 				5F90D80917AF8873000AEC06 /* CJSONSerializedData.m in Sources */,
 				5F90D80A17AF8873000AEC06 /* CDataScanner_Extensions.m in Sources */,
+				088FDE3318A48BF600D9D687 /* LZDietCell.m in Sources */,
 				5F90D80B17AF8873000AEC06 /* NSDictionary_JSONExtensions.m in Sources */,
 				5F90D80C17AF8873000AEC06 /* CJSONDeserializer.m in Sources */,
 				5F90D80D17AF8873000AEC06 /* CJSONScanner.m in Sources */,
 				5FEE43E9185EF9C0006081EA /* LZNutritionInfoView.m in Sources */,
+				088FDE2C18A48BE300D9D687 /* LZRecommendFoodCell.m in Sources */,
+				088FDFAE18A8C62800D9D687 /* NGFoodCell.m in Sources */,
+				088FDE4418A4C32000D9D687 /* LZGlobal.m in Sources */,
 				5F90D80E17AF8873000AEC06 /* CJSONSerializer.m in Sources */,
+				088FDE3418A48BF900D9D687 /* LZDietPickerCell.m in Sources */,
 				5F90D80F17AF8873000AEC06 /* ioapi.c in Sources */,
 				5F90D81017AF8873000AEC06 /* mztools.c in Sources */,
+				088FDE5518A6476F00D9D687 /* LZValueSelectorView.m in Sources */,
 				5F90D81117AF8873000AEC06 /* unzip.c in Sources */,
 				5F729BC4184320ED004FC428 /* NGCommonDiseaseCell.m in Sources */,
+				088FDE3018A48BEE00D9D687 /* LZFoodCell.m in Sources */,
 				5FECADA51838B19D00D72A8C /* NGRecordHistoryViewController.m in Sources */,
 				5F90D81217AF8873000AEC06 /* zip.c in Sources */,
 				5F90D81317AF8873000AEC06 /* ZipArchive.mm in Sources */,
 				FCEE44201851FC98008329AF /* LZScatterViewController.m in Sources */,
 				5FDB86431840A2F90015FADD /* NGHealthReportViewController.m in Sources */,
+				088FDE3218A48BF300D9D687 /* LZNutrientFoodAddCell.m in Sources */,
 				5F22E3DC18435DB7001CCC89 /* NGUerInfoViewController.m in Sources */,
 				5FDB863A184071F40015FADD /* NGNoteCell.m in Sources */,
 				088B768417C4B8F200206959 /* LZDataAccessUtil.m in Sources */,
+				088FDE5818A86D0D00D9D687 /* NGFoodDetailController.m in Sources */,
 				5FEA388A184DA79300EC1C96 /* NGReportHealthScoreCell.m in Sources */,
+				088FDE3C18A4AA6C00D9D687 /* LZFoodSearchViewController.m in Sources */,
+				088FDE5018A63ED900D9D687 /* NGFoodsByClassSearchViewController.m in Sources */,
+				088FDE5118A6429200D9D687 /* LZDailyIntakeViewController.m in Sources */,
 				5F22A6C817CF4C6E0043D760 /* LZFoodTypeButton.m in Sources */,
 				5F2938B318583EF400FAE2E2 /* NGChartViewController.m in Sources */,
 				5F729BC11842FFE8004FC428 /* NGCyclopediaViewController.m in Sources */,
 				5FEA3887184DA53300EC1C96 /* NGReportBMICell.m in Sources */,
+				088FDFAB18A8C44100D9D687 /* NGFoodsByClassViewController.m in Sources */,
 				5F2938B01856E69B00FAE2E2 /* NGFoodNutritionCell.m in Sources */,
 				5FECADA21838912900D72A8C /* NGDiagnoseViewController.m in Sources */,
+				088FDE4718A62C5200D9D687 /* NGDietCell.m in Sources */,
 				5F0A4155180E685F007B8715 /* LZCustomDataButton.m in Sources */,
 				5FDB864018409D0B0015FADD /* NGRecordCell.m in Sources */,
+				089693661897AE31005E03FB /* NGFoodCombinationListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1624,6 +1826,14 @@
 				085C8D7417336A29001A1ABB /* en */,
 			);
 			name = LZViewController_iPad.xib;
+			sourceTree = "<group>";
+		};
+		0896935E1897A369005E03FB /* MainStoryboard.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0896935F1897A369005E03FB /* en */,
+			);
+			name = MainStoryboard.storyboard;
 			sourceTree = "<group>";
 		};
 		5F3338B1172A407E0096E7AE /* InfoPlist.strings */ = {
@@ -1756,7 +1966,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
 				INFOPLIST_FILE = "nutrition/nutrition-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/nutrition/CorePlotLib\"",
@@ -1787,7 +1997,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
 				INFOPLIST_FILE = "nutrition/nutrition-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/nutrition/CorePlotLib\"",

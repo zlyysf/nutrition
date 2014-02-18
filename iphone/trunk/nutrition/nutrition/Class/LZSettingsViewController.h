@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "BaiduMobAdWall.h"
-@interface LZSettingsViewController : UIViewController<UITextFieldDelegate,BaiduMobAdWallDelegate>
+//#import "BaiduMobAdWall.h"
+//@interface LZSettingsViewController : UIViewController<UITextFieldDelegate,BaiduMobAdWallDelegate>
+@interface LZSettingsViewController : UIViewController<UITextFieldDelegate>
 @property (strong, nonatomic) IBOutlet UIView *line2View;
 //@property (strong, nonatomic) IBOutlet UIView *line3View;
 //@property (strong, nonatomic) IBOutlet UIView *line4View;
@@ -33,5 +34,5 @@
 @property (strong, nonatomic) IBOutlet UIButton *reviewAppButton;
 @property (strong, nonatomic) IBOutlet UIButton *recommendAppButton;
 @property (strong, nonatomic) IBOutlet UIButton *feedBackButton;
-@property (nonatomic, strong) BaiduMobAdWall *baiduAdWall;
+//@property (nonatomic, strong) BaiduMobAdWall *baiduAdWall;
 @end

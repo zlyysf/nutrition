@@ -10,6 +10,7 @@
 #import "LZConstants.h"
 #import "MobClick.h"
 #import "LZUtility.h"
+#import "LZUtilityParse.h"
 #import "LZDataAccess.h"
 #import "LZReviewAppManager.h"
 #import "LZNutrientionManager.h"
@@ -137,7 +138,7 @@
     [defaultACL setPublicWriteAccess:true];
     [PFACL setDefaultACL:defaultACL withAccessForCurrentUser:true];
     
-    [LZUtility syncRemoteDataToLocal_withJustCallback:nil];
+    [LZUtilityParse syncRemoteDataToLocal_withJustCallback:nil];
     
 //    [LZTest1 test_genData_UserRecordSymptom1];
     

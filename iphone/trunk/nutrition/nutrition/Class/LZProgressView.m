@@ -63,7 +63,7 @@
     [self drawRectangle:fillRect withRadius:drawingFillRadius];
 
 }
-- (void)drawProgressForRect:(CGRect)rect backgroundColor:(UIColor*)backColor fillColor:(UIColor*)fillColor progress:(float)progress withBackRadius:(float)backRadius fillRadius:(float)fillRadius;
+- (void)drawProgressForRect:(CGRect)rect backgroundColor:(UIColor*)backColor fillColor:(UIColor*)fillColor progress:(float)progress withBackRadius:(float)backRadius fillRadius:(float)fillRadius
 {
     needDisplay = YES;
     drawingRect = rect;
@@ -74,8 +74,15 @@
     drawingFillRadius = fillRadius;
     [self setNeedsDisplay];
     //[self setNeedsLayout];
-    
 }
+
+- (void)drawProgress_with_backgroundColor:(UIColor*)backColor fillColor:(UIColor*)fillColor progress:(float)progress withBackRadius:(float)backRadius fillRadius:(float)fillRadius
+{
+    CGRect rect_badWay = CGRectMake(0,0, self.frame.size.width,self.frame.size.height);
+    [self drawProgressForRect:rect_badWay backgroundColor:backColor fillColor:fillColor progress:progress withBackRadius:backRadius fillRadius:fillRadius];
+}
+
+
 //- (void)layoutSubviews
 //{
 //    

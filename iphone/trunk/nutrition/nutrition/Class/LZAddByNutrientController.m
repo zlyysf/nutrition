@@ -15,7 +15,7 @@
 #import "MBProgressHUD.h"
 #import "LZFoodDetailController.h"
 #import "LZNutrientFoodAddCell.h"
-#import "JWNavigationViewController.h"
+//#import "JWNavigationViewController.h"
 @interface LZAddByNutrientController ()<MBProgressHUDDelegate,LZFoodDetailViewControllerDelegate>
 {
     MBProgressHUD *HUD;
@@ -348,89 +348,89 @@
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self.listView deselectRowAtIndexPath:indexPath animated:YES];
-    //self.pushToNextView = YES;
-    NSDictionary *foodAtr = [self.foodArray objectAtIndex:indexPath.row];
-    //NSString *NDB_No = [foodAtr objectForKey:@"NDB_No"];
-    NSString *foodQueryKey;
-    if (isChinese)
-    {
-        foodQueryKey = @"CnCaption";
-    }
-    else
-    {
-        foodQueryKey = @"FoodNameEn";
-    }
-    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
-    NSNumber *weight ;//= [self.tempIntakeDict objectForKey:NDB_No];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
-    LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
-    
-    NSDictionary *aFood = [self.foodArray objectAtIndex:indexPath.row];
-    NSNumber *foodAmount = [aFood objectForKey:Key_FoodAmount];
-    int amount =(int)(ceilf([foodAmount floatValue]));
-    //int weightAmount = (int)(ceilf([weight floatValue]));
-   // if (weightAmount <=0 )
-    //{
-    if (amount>0)
-    {
-        weight = [NSNumber numberWithInt:amount];
-    }
-    else
-    {
-        weight = [NSNumber numberWithInt:0];
-    }
-    //}
-
-    
-    NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName]];
-    NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
-    if ([weight intValue]>= [upper intValue])
-    {
-        upper = weight;
-    }
-    foodDetailController.gUnitMaxValue = upper;
-    
-    if ([singleUnitName length]==0)
-    {
-        foodDetailController.isUnitDisplayAvailable = NO;
-    }
-    else
-    {
-        foodDetailController.isUnitDisplayAvailable = YES;
-        foodDetailController.unitName = singleUnitName;
-        NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
-//        if ([LZUtility isUseUnitDisplay:weight unitWeight:singleUnitWeight])
-//        {
-//            foodDetailController.isDefaultUnitDisplay = YES;
-//        }
-//        else
-//        {
-//            foodDetailController.isDefaultUnitDisplay = NO;
-//        }
-        
-        foodDetailController.isDefaultUnitDisplay = NO;
-        int maxCount = (int)(ceilf(([upper floatValue]*2)/[singleUnitWeight floatValue]));
-//        if (maxCount <20)
-//        {
-//            foodDetailController.unitMaxValue = [NSNumber numberWithInt:20];
-//        }
-//        else
-//        {
-//            foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
-//        }
-        foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
-    }
-   
-    foodDetailController.currentSelectValue = weight;
-    foodDetailController.defaulSelectValue = weight;
-    foodDetailController.foodAttr = foodAtr;
-    foodDetailController.foodName = foodName;
-    foodDetailController.delegate = self;
-    foodDetailController.isCalForAll = NO;
-    foodDetailController.GUnitStartIndex = 0;
-    JWNavigationViewController *nav = [[JWNavigationViewController alloc]initWithRootViewController:foodDetailController];
-    [self presentModalViewController:nav animated:YES];
+//    [self.listView deselectRowAtIndexPath:indexPath animated:YES];
+//    //self.pushToNextView = YES;
+//    NSDictionary *foodAtr = [self.foodArray objectAtIndex:indexPath.row];
+//    //NSString *NDB_No = [foodAtr objectForKey:@"NDB_No"];
+//    NSString *foodQueryKey;
+//    if (isChinese)
+//    {
+//        foodQueryKey = @"CnCaption";
+//    }
+//    else
+//    {
+//        foodQueryKey = @"FoodNameEn";
+//    }
+//    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
+//    NSNumber *weight ;//= [self.tempIntakeDict objectForKey:NDB_No];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard" bundle:nil];
+//    LZFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"LZFoodDetailController"];
+//    
+//    NSDictionary *aFood = [self.foodArray objectAtIndex:indexPath.row];
+//    NSNumber *foodAmount = [aFood objectForKey:Key_FoodAmount];
+//    int amount =(int)(ceilf([foodAmount floatValue]));
+//    //int weightAmount = (int)(ceilf([weight floatValue]));
+//   // if (weightAmount <=0 )
+//    //{
+//    if (amount>0)
+//    {
+//        weight = [NSNumber numberWithInt:amount];
+//    }
+//    else
+//    {
+//        weight = [NSNumber numberWithInt:0];
+//    }
+//    //}
+//
+//    
+//    NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName]];
+//    NSNumber *upper = [NSNumber numberWithInt:1000];// [foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
+//    if ([weight intValue]>= [upper intValue])
+//    {
+//        upper = weight;
+//    }
+//    foodDetailController.gUnitMaxValue = upper;
+//    
+//    if ([singleUnitName length]==0)
+//    {
+//        foodDetailController.isUnitDisplayAvailable = NO;
+//    }
+//    else
+//    {
+//        foodDetailController.isUnitDisplayAvailable = YES;
+//        foodDetailController.unitName = singleUnitName;
+//        NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
+////        if ([LZUtility isUseUnitDisplay:weight unitWeight:singleUnitWeight])
+////        {
+////            foodDetailController.isDefaultUnitDisplay = YES;
+////        }
+////        else
+////        {
+////            foodDetailController.isDefaultUnitDisplay = NO;
+////        }
+//        
+//        foodDetailController.isDefaultUnitDisplay = NO;
+//        int maxCount = (int)(ceilf(([upper floatValue]*2)/[singleUnitWeight floatValue]));
+////        if (maxCount <20)
+////        {
+////            foodDetailController.unitMaxValue = [NSNumber numberWithInt:20];
+////        }
+////        else
+////        {
+////            foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
+////        }
+//        foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
+//    }
+//   
+//    foodDetailController.currentSelectValue = weight;
+//    foodDetailController.defaulSelectValue = weight;
+//    foodDetailController.foodAttr = foodAtr;
+//    foodDetailController.foodName = foodName;
+//    foodDetailController.delegate = self;
+//    foodDetailController.isCalForAll = NO;
+//    foodDetailController.GUnitStartIndex = 0;
+//    JWNavigationViewController *nav = [[JWNavigationViewController alloc]initWithRootViewController:foodDetailController];
+//    [self presentModalViewController:nav animated:YES];
     
     
 }

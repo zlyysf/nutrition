@@ -156,7 +156,7 @@
         [self.currentTextView resignFirstResponder];
     }
     if (![self checkSubmitItemEnableState])
-    {
+    { 
         return;
     }
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];

@@ -31,6 +31,7 @@ CollocationId, FoodId, FoodAmount
 
 FoodCollocationParam 食物搭配相关参数，主要是用户信息，但是可能目前仅作记录。使用时仍用当前的。
 CollocationId, ParamName, ParamValue
+    ParamName can be ParseObjectId
 
 DROP TABLE IF EXISTS FoodCollocation;
 DROP TABLE IF EXISTS CollocationFood;
@@ -38,7 +39,7 @@ DROP TABLE IF EXISTS FoodCollocationParam;
 CREATE TABLE FoodCollocation(CollocationId INTEGER PRIMARY KEY AUTOINCREMENT, CollocationName TEXT, CollocationCreateTime INTEGER);
 CREATE TABLE CollocationFood(CollocationId INTEGER, FoodId TEXT, FoodAmount REAL);
 CREATE TABLE FoodCollocationParam(CollocationId INTEGER, ParamName TEXT, ParamValue TEXT);
-
+    ParamName can be ParseObjectId
 
 
 

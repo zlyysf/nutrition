@@ -12,10 +12,12 @@
 #import "LZCustomDataButton.h"
 #import "LZDataAccess.h"
 #import "LZUtility.h"
+#import "LZUtilityParse.h"
 #import "LZNutrientionManager.h"
 #import "NGIllnessInfoViewController.h"
 #import "NGNutritionInfoViewController.h"
 #import "NGSingleFoodViewController.h"
+#import "NGFoodDetailController.h"
 #import "LZConstants.h"
 #import "LZEmptyClassCell.h"
 #import "NGRecommendFoodView.h"
@@ -344,12 +346,12 @@
                 [[NSNotificationCenter defaultCenter]postNotificationName:Notification_HistoryUpdatedKey object:nil];
                 
                 //to sync to remote parse service
-                PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+                PFObject *parseObjUserRecord = [LZUtilityParse getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:today andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
                 [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                     NSMutableString *msg = [NSMutableString string];
                     if (succeeded){
                         [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
-                        [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
+                        [LZUtilityParse saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
                     }else{
                         [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
                     }
@@ -656,12 +658,12 @@
             [self.navigationItem.rightBarButtonItem setEnabled:NO];
             
             //to sync to remote parse service
-            PFObject *parseObjUserRecord = [LZUtility getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
+            PFObject *parseObjUserRecord = [LZUtilityParse getToSaveParseObject_UserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:updateTime andInputNameValuePairsData:InputNameValuePairsData andNote:note andCalculateNameValuePairsData:CalculateNameValuePairsData];
             [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
                 NSMutableString *msg = [NSMutableString string];
                 if (succeeded){
                     [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
-                    [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
+                    [LZUtilityParse saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObjUserRecord.objectId andDayLocal:dayLocal];
                 }else{
                     [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
                 }
@@ -1122,22 +1124,36 @@
     NSIndexPath *foodIndex = (NSIndexPath *)sender.customData;
     NSString *nutritionId = [self.lackNutritionArray objectAtIndex:foodIndex.section];
     NSArray *recommendFood = [self.recommendFoodDict objectForKey:nutritionId];
-    NSDictionary *foodAtr = [recommendFood objectAtIndex:foodIndex.row];
-    NSString *foodQueryKey;
-    if (isChinese)
-    {
-        foodQueryKey = @"CnCaption";
-    }
-    else
-    {
-        foodQueryKey = @"FoodNameEn";
-    }
-    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
-    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
-    NGSingleFoodViewController *singleFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGSingleFoodViewController"];
-    singleFoodViewController.title = foodName;
-    singleFoodViewController.foodInfoDict = foodAtr;
-    [self.navigationController pushViewController:singleFoodViewController animated:YES];
+    NSDictionary *foodAttr = [recommendFood objectAtIndex:foodIndex.row];
+    NSString *foodId = foodAttr[COLUMN_NAME_NDB_No];
+    NSNumber *foodAmount = foodAttr[COLUMN_NAME_FoodAmount];
+    NSLog(@"in foodClicked, foodAttr=%@",foodAttr);
+    
+    
+//    NSString *foodQueryKey;
+//    if (isChinese)
+//    {
+//        foodQueryKey = @"CnCaption";
+//    }
+//    else
+//    {
+//        foodQueryKey = @"FoodNameEn";
+//    }
+//    NSString *foodName = [foodAtr objectForKey:foodQueryKey];
+//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+//    NGSingleFoodViewController *singleFoodViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGSingleFoodViewController"];
+//    singleFoodViewController.title = foodName;
+//    singleFoodViewController.foodInfoDict = foodAtr;
+//    [self.navigationController pushViewController:singleFoodViewController animated:YES];
+    
+    
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
+    NGFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"NGFoodDetailController"];
+    foodDetailController.FoodId = foodId;
+    foodDetailController.FoodAttr = foodAttr;
+    foodDetailController.FoodAmount = foodAmount;
+    foodDetailController.notNeedSave = true;
+    [self.navigationController pushViewController:foodDetailController animated:YES];
 }
 #pragma mark MBProgressHUDDelegate methods
 

@@ -113,7 +113,15 @@ CREATE TABLE UserRecordSymptom(DayLocal INTEGER, UpdateTimeUTC INTEGER, inputNam
     name1=value1;;;name2=value2;;;arrayName1=[item1,,,item2];;;name3=value3;;;nameValuePairArrayName1={n1=v1,,,n2=v2}
 
 
+FoodCollocation 食物搭配历史表
+CollocationId, CollocationName, CollocationCreateTime
 
+CollocationFood 食物搭配详情，一个搭配包含多个食物
+CollocationId, FoodId, FoodAmount
+
+FoodCollocationParam 食物搭配相关参数，主要是用户信息，但是可能目前仅作记录。使用时仍用当前的。
+CollocationId, ParamName, ParamValue
+    ParamName can be ParseObjectId
 
 
 

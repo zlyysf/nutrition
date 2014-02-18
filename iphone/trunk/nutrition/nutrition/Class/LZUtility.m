@@ -611,6 +611,25 @@
     return (userSex && userAge && userHeight && userWeight && userActivityLevel && birthday);
 }
 
++(NSDictionary*)getUserInfo
+{
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSNumber *userSex = [userDefaults objectForKey:LZUserSexKey];
+    NSNumber *userAge = [userDefaults objectForKey:LZUserAgeKey];
+    NSNumber *userHeight = [userDefaults objectForKey:LZUserHeightKey];
+    NSNumber *userWeight = [userDefaults objectForKey:LZUserWeightKey];
+    NSNumber *userActivityLevel = [userDefaults objectForKey:LZUserActivityLevelKey];
+    if (!(userSex && userAge && userHeight && userWeight && userActivityLevel))
+    {
+        return nil;
+    }
+    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                              userSex,ParamKey_sex, userAge,ParamKey_age,
+                              userWeight,ParamKey_weight, userHeight,ParamKey_height,
+                              userActivityLevel,ParamKey_activityLevel, nil];
+    return userInfo;
+}
+
 + (NSDictionary *)getActivityLevelInfo
 {
     NSArray *levelArray = [[NSArray alloc]initWithObjects:NSLocalizedString(@"xinxi_c_qing",@"活动强度：轻"),NSLocalizedString(@"xinxi_c_zhongdeng", @"活动强度：中等"),NSLocalizedString(@"xinxi_c_qiang",@"活动强度：强"),NSLocalizedString(@"xinxi_c_henqiang",@"活动强度：很强"), nil];
@@ -1633,275 +1652,55 @@
     return  deviceId;
 }
 
-+(PFObject*) newParseObjectByCurrentDeviceForUserRecord_withFileContent:(NSString*) fileContent
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
++(NSString*)getLocalNutrientName:(NSDictionary*)nutrientDict
 {
-    NSString *uniqueDeviceId = [self uniqueDeviceId];
-
-    NSData * fileData = [fileContent dataUsingEncoding:NSUTF8StringEncoding];
-    PFFile *pFile = [PFFile fileWithName:@"UserRecord.txt" data:fileData];
-    
-	// Stitch together a postObject and send this async to Parse
-	PFObject *newPFObj = [PFObject objectWithClassName:ParseObject_UserRecord];
-	[newPFObj setObject:uniqueDeviceId forKey:ParseObjectKey_UserRecord_deviceId];
-    [newPFObj setObject:pFile forKey:ParseObjectKey_UserRecord_attachFile];
-    
-    return newPFObj;
-}
-
-+(void) updateParseObject_UserRecord_WithParseObject:(PFObject*) parseObjUserRecord andFileContent:(NSString*) fileContent
-{
-    NSData * fileData = [fileContent dataUsingEncoding:NSUTF8StringEncoding];
-    PFFile *pFile = [PFFile fileWithName:@"UserRecord.txt" data:fileData];
-    [parseObjUserRecord setObject:pFile forKey:ParseObjectKey_UserRecord_attachFile];
-}
-
-
-+(PFQuery*) getParseQueryByCurrentDeviceForUserRecord
-{
-    NSString *uniqueDeviceId = [self uniqueDeviceId];
-    PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_UserRecord];
-    [pQuery whereKey:ParseObjectKey_UserRecord_deviceId equalTo:uniqueDeviceId];
-    return pQuery;
-}
-
-+(void)Test_saveParseObj
-{
-    NSString *s1 = @"333中共中央关于全面深化改革若干重大问题的决定》明确考试招生制度改革的顶层设计，是我国教育考试招生制度系统性综合性最强的一次改革，将显著扭转应试教育倾向，为亿万学生提供多样化的学习选择和成长途径，构建衔接沟通各级各类教育、认可多种学习成果的人才成长“立交桥”。";
-    PFObject* parseObjUserRecord = [self newParseObjectByCurrentDeviceForUserRecord_withFileContent:s1];
-    [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        NSMutableString *msg = [NSMutableString string];
-        if (succeeded){
-            [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
-        }else{
-            [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
-        }
-	}];
-}
-
-PFObject *g_parseObjUserRecord=nil;
-+(void)Test_getParseObj
-{
-    PFQuery *pQuery = [self getParseQueryByCurrentDeviceForUserRecord];
-    
-    [pQuery findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        NSMutableString *msg = [NSMutableString string];
-        if (!error) {
-            [msg appendFormat:@"PFQuery.findObjectsInBackgroundWithBlock OK, objects cnt=%d",objects.count];
-            if (objects.count > 0){
-                PFObject *parseObjUserRecord = objects[0];
-                g_parseObjUserRecord = parseObjUserRecord;
-                [msg appendFormat:@" item0.objectId=%@",parseObjUserRecord.objectId];
-                PFFile *pFile = [parseObjUserRecord objectForKey:ParseObjectKey_UserRecord_attachFile];
-                if (pFile != nil){
-                    [msg appendFormat:@" and have file"];
-                    
-                    [pFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
-                        NSMutableString *msg = [NSMutableString string];
-                        if (error){
-                            [msg appendFormat:@"PFFile.getDataInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
-                        }else{
-                            NSString* strData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-                            [msg appendFormat:@"PFFile.getDataInBackgroundWithBlock OK. data=%@",strData];
-                        }
-                    }];
-                }else{
-                    [msg appendFormat:@" but file is null"];
-                }
-            }
-        }else{
-            [msg appendFormat:@"pQuery findObjectsInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
-        }
-    }];
-}
-
-+(void)Test_updateParseObj
-{
-    PFObject *parseObjUserRecord = g_parseObjUserRecord;
-    if (parseObjUserRecord==nil){
-        return;
+    bool isChinese = [LZUtility isCurrentLanguageChinese];
+    NSString *localPropKey;
+    if (isChinese)
+    {
+        localPropKey = COLUMN_NAME_NutrientCnCaption;
     }
-    NSString *s1 = @"333汇集国内外重大时事、热点聚焦、包括国内、国际、军事、财经各类重大突发新闻，超大资讯量二十四小时滚动更新（150-180条/月），让您第一时间得到最新消息。";
-    [self updateParseObject_UserRecord_WithParseObject:parseObjUserRecord andFileContent:s1];
-    
-    [parseObjUserRecord saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-        NSMutableString *msg = [NSMutableString string];
-        if (succeeded){
-            [msg appendFormat:@"PFObject.saveInBackgroundWithBlock OK"];
-        }else{
-            [msg appendFormat:@"PFObject.saveInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
-        }
-	}];
-}
-
-+(void) saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId: (NSString*) parseObjId andDayLocal:(int) dayLocal
-{
-    [[NSUserDefaults standardUserDefaults]setObject:parseObjId forKey:ParseObjectKey_objectId];
-    [[NSUserDefaults standardUserDefaults]setInteger:dayLocal forKey:COLUMN_NAME_DayLocal];
-    [[NSUserDefaults standardUserDefaults]synchronize];
-}
-
-+(PFObject*) getToSaveParseObject_UserRecordSymptom_withDayLocal:(int) dayLocal andUpdateTimeUTC:(NSDate*) updateTimeUTC andInputNameValuePairsData:(NSDictionary*) inputNameValuePairsData andNote:(NSString*) Note andCalculateNameValuePairsData:(NSDictionary*) calculateNameValuePairsData
-{
-    NSString* stored_parseObjId = [[NSUserDefaults standardUserDefaults] stringForKey:ParseObjectKey_objectId];
-    NSInteger stored_dayLocal = [[NSUserDefaults standardUserDefaults] integerForKey:COLUMN_NAME_DayLocal];
-    
-    
-    NSString* parseObjIdValid = nil;
-    if (stored_parseObjId != nil && stored_parseObjId.length>0 && stored_dayLocal>0){
-        if (stored_dayLocal == dayLocal){
-            parseObjIdValid = stored_parseObjId;//stored value is valid
-        }else{
-            //				StoredConfigTool.saveParseObjectInfo_CurrentUserRecordSymptom(ctx,null);//stored value is old , clear
-        }
-    }
-    
-    PFObject* parseObj = nil;
-    if (parseObjIdValid==nil)
-        parseObj = [PFObject objectWithClassName:ParseObject_UserRecordSymptom];
     else
-        parseObj = [PFObject objectWithoutDataWithClassName:ParseObject_UserRecordSymptom objectId:parseObjIdValid];
-    
-    NSString *uniqueDeviceId = [self uniqueDeviceId];
-    [parseObj setObject:uniqueDeviceId forKey:ParseObjectKey_UserRecord_deviceId];
-    
-    [parseObj setObject:[NSNumber numberWithInt:dayLocal] forKey:COLUMN_NAME_DayLocal];
-    
-    long long llUpdateTimeUTC = [self getMillisecond:updateTimeUTC];
-    [parseObj setObject:[NSNumber numberWithLongLong:llUpdateTimeUTC] forKey:COLUMN_NAME_UpdateTimeUTC];
-    
-    CJSONSerializer * CJSONSerializer1 = [CJSONSerializer serializer];
-    NSError *error = NULL;
-    if (inputNameValuePairsData!=nil){
-        NSData *jsonData_inputNameValuePairs = [CJSONSerializer1 serializeObject:inputNameValuePairsData error:&error];
-        assert(error == NULL);
-        NSString *jsonString_inputNameValuePairs = [[NSString alloc] initWithData:jsonData_inputNameValuePairs encoding:NSUTF8StringEncoding];
-        [parseObj setObject:jsonString_inputNameValuePairs forKey:COLUMN_NAME_inputNameValuePairs];
+    {
+        localPropKey = COLUMN_NAME_NutrientEnCaption;
     }
-    
-    if(Note != nil){
-        [parseObj setObject:Note forKey:COLUMN_NAME_Note];
-    }
-    
-    if (calculateNameValuePairsData!=nil){
-        NSData *jsonData_calculateNameValuePairs = [CJSONSerializer1 serializeObject:calculateNameValuePairsData error:&error];
-        assert(error == NULL);
-        NSString *jsonString_calculateNameValuePairs = [[NSString alloc] initWithData:jsonData_calculateNameValuePairs encoding:NSUTF8StringEncoding];
-        [parseObj setObject:jsonString_calculateNameValuePairs forKey:COLUMN_NAME_calculateNameValuePairs];
-    }
-    
-    return parseObj;
+
+    NSString *localName = [nutrientDict objectForKey:localPropKey];
+    return localName;
 }
 
-
-+(PFQuery*) getParseQueryByCurrentDeviceForUserRecordSymptom_withDayLocal:(int)dayLocal
++(NSString*)getLocalFoodName:(NSDictionary*)foodAttrDict
 {
-    NSString *uniqueDeviceId = [self uniqueDeviceId];
-    PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_UserRecordSymptom];
-    [pQuery whereKey:ParseObjectKey_UserRecordSymptom_deviceId equalTo:uniqueDeviceId];
-    [pQuery whereKey:COLUMN_NAME_DayLocal equalTo:[NSNumber numberWithInt:dayLocal ]];
-    return pQuery;
-}
-
-+(PFQuery*) getParseQueryByCurrentDeviceForUserRecordSymptom
-{
-    NSString *uniqueDeviceId = [self uniqueDeviceId];
-    PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_UserRecordSymptom];
-    [pQuery whereKey:ParseObjectKey_UserRecordSymptom_deviceId equalTo:uniqueDeviceId];
-    [pQuery addAscendingOrder:COLUMN_NAME_DayLocal];
-    return pQuery;
-}
-
-
-+(NSMutableDictionary*) parseParseObjectToHashMapRawRow_UserRecordSymptom:(PFObject*) parseObj
-{
-    if (parseObj == nil)
-        return nil;
-    NSMutableDictionary* dataDict = [NSMutableDictionary dictionary];
-    
-    NSString *key;
-    id val;
-    key = COLUMN_NAME_DayLocal;
-    NSNumber *nmDayLocal = [parseObj objectForKey:key];
-    [dataDict setObject:nmDayLocal forKey:key];
-    
-    key = COLUMN_NAME_UpdateTimeUTC;
-    NSNumber *nmUpdateTimeUTC = [parseObj objectForKey:key];
-    NSDate *UpdateTimeUTC = [LZUtility getDateFromMillisecond:[nmUpdateTimeUTC longLongValue]];
-    [dataDict setObject:UpdateTimeUTC forKey:key];
-
-    
-    key = COLUMN_NAME_Note;
-    val = [parseObj objectForKey:key];
-    if (val != nil){
-        [dataDict setObject:val forKey:key];
+    bool isChinese = [LZUtility isCurrentLanguageChinese];
+    NSString *localPropKey;
+    if (isChinese)
+    {
+        localPropKey = COLUMN_NAME_CnCaption;
+    }
+    else
+    {
+        localPropKey = COLUMN_NAME_FoodNameEn;
     }
     
-    key = COLUMN_NAME_inputNameValuePairs;
-    val = [parseObj objectForKey:key];
-    if (val != nil){
-        [dataDict setObject:val forKey:key];
-    }
-
-    key = COLUMN_NAME_calculateNameValuePairs;
-    val = [parseObj objectForKey:key];
-    if (val != nil){
-        [dataDict setObject:val forKey:key];
-    }
-    
-    return dataDict;
+    NSString *localName = [foodAttrDict objectForKey:localPropKey];
+    return localName;
 }
-
-
-
-+(void) syncRemoteDataToLocal_withJustCallback:(JustCallbackBlock) justCallback
-{
-    BOOL alreadyLoadFromRemote = [[NSUserDefaults standardUserDefaults]boolForKey:LZSettingKey_alreadyLoadFromRemote];
-    if (alreadyLoadFromRemote){
-        if (justCallback!=nil){
-            justCallback(true);
-        }
-        return;
-    }
-
-    PFQuery *queryRemote = [self getParseQueryByCurrentDeviceForUserRecordSymptom];
-    [queryRemote findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
-        NSMutableString *msg = [NSMutableString string];
-        bool succeeded = (error==nil);
-        if (!succeeded){
-            [msg appendFormat:@" query.findObjectsInBackgroundWithBlock ERR:%@,\n err.userInfo:%@",error,[error userInfo]];
-        }else{
-            if (objects.count==0){
-                [msg appendFormat:@" No data in remote."];
-            }else{
-                [msg appendFormat:@" Have %d rows in remote.",objects.count];
-
-                LZDataAccess *da = [LZDataAccess singleton];
-                for(int i=0; i<objects.count; i++){
-                    PFObject* parseObj = objects[i];
-                    NSMutableDictionary *hmRawRow = [self parseParseObjectToHashMapRawRow_UserRecordSymptom:parseObj];
-                    [da insertUserRecordSymptom_withRawData:hmRawRow];
-                    
-                    if (i==objects.count-1){
-                        NSNumber *nmDayLocal = [hmRawRow objectForKey:COLUMN_NAME_DayLocal];
-                        [LZUtility saveParseObjectInfo_CurrentUserRecordSymptom_withParseObjectId:parseObj.objectId andDayLocal:[nmDayLocal intValue]];
-                    }
-                }//for
-            }
-            [[NSUserDefaults standardUserDefaults]setBool:YES forKey:LZSettingKey_alreadyLoadFromRemote];
-            [[NSUserDefaults standardUserDefaults]synchronize];
-        }
-        
-        if (justCallback!=nil){
-            justCallback(succeeded);
-        }
-    }];
-}
-
-
-
-
-
-
 
 
 
