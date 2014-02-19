@@ -30,6 +30,9 @@
 - (IBAction)btnReviewClicked:(id)sender;
 @property (weak, nonatomic) IBOutlet UIButton *reviewAppButton;
 
+@property (weak, nonatomic) IBOutlet UIButton *feedbackButton;
+- (IBAction)btnFeedbackClicked:(id)sender;
+
 
 
 

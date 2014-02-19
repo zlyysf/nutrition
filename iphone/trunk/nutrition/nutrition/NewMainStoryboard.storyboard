@@ -999,7 +999,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" id="CHS-a2-Sok">
-                                        <rect key="frame" x="10" y="15" width="300" height="510"/>
+                                        <rect key="frame" x="10" y="15" width="300" height="520"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <label clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="i38-iv-cX9">
@@ -1174,14 +1174,25 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="8IS-Ft-vvZ">
-                                                <rect key="frame" x="60" y="450" width="180" height="40"/>
+                                                <rect key="frame" x="60" y="440" width="180" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                                 <state key="normal" title="Review Our App">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="btnReviewClicked:" destination="D4K-QU-mXC" eventType="touchUpInside" id="stR-Yz-cjN"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="eBM-Zx-aP5">
+                                                <rect key="frame" x="60" y="473" width="180" height="34"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                                <state key="normal" title="Give Feedback">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="btnFeedbackClicked:" destination="D4K-QU-mXC" eventType="touchUpInside" id="Ly2-Cp-Kby"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -1201,6 +1212,7 @@
                         <outlet property="backView" destination="CHS-a2-Sok" id="pQz-co-iJT"/>
                         <outlet property="birthdayLabel" destination="i38-iv-cX9" id="gxp-Sz-Hew"/>
                         <outlet property="birthdayTextField" destination="9Ra-uU-vKg" id="2CO-oQ-czk"/>
+                        <outlet property="feedbackButton" destination="eBM-Zx-aP5" id="oNG-vU-kT3"/>
                         <outlet property="heightLabel" destination="zpn-WA-KXy" id="gqP-O1-T5j"/>
                         <outlet property="heightTextField" destination="rPn-k9-5Oa" id="Dfe-32-PYR"/>
                         <outlet property="listView" destination="bVg-Rm-vnt" id="EQ6-er-rMn"/>

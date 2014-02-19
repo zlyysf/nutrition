@@ -12,8 +12,9 @@
 #import "LZUtility.h"
 #import "LZReviewAppManager.h"
 #import <math.h>
+#import <MessageUI/MessageUI.h>
 
-@interface NGUerInfoViewController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate,LZKeyboardToolBarDelegate>
+@interface NGUerInfoViewController ()<UITextFieldDelegate,UIPickerViewDataSource,UIPickerViewDelegate,LZKeyboardToolBarDelegate, MFMailComposeViewControllerDelegate>
 {
     BOOL isChinese;
 }
@@ -47,6 +48,16 @@
     self.activityLabel.text = NSLocalizedString(@"xinxi_c_huodongqiangdu", @"活动强度项标题：活动强度");
     
     [self.reviewAppButton setTitle:NSLocalizedString(@"settings_pingfenbutton",@"给我们评分") forState:UIControlStateNormal];
+    [self.feedbackButton setTitle:NSLocalizedString(@"settings_fankuibutton",@"意见反馈") forState:UIControlStateNormal];
+    
+    NSString * Key_IsAlreadyReviewdeOurApp = [LZUtility getPersistKey_ByEachVersion_IsAlreadyReviewdeOurApp];
+    BOOL alreadyReviewed = [[NSUserDefaults standardUserDefaults]boolForKey:Key_IsAlreadyReviewdeOurApp];
+    if (!alreadyReviewed){
+        self.feedbackButton.hidden = true;
+    }else{
+        self.feedbackButton.hidden = false;
+    }
+    
 
     self.title = NSLocalizedString(@"xinxi_c_title", @"页面标题：信息");
     self.birthdayPicker = [[UIDatePicker alloc]init];
@@ -584,7 +595,81 @@
 
 - (IBAction)btnReviewClicked:(id)sender {
     [[LZReviewAppManager SharedInstance]reviewOurAppDirectly];
+    self.feedbackButton.hidden = false;
 }
+- (IBAction)btnFeedbackClicked:(id)sender {
+    [self performSelector:@selector(feedbackAction) withObject:nil afterDelay:0.f];
+}
+
+- (void)feedbackAction
+{
+    Class mailClass = (NSClassFromString(@"MFMailComposeViewController"));
+    
+    if (mailClass != nil)
+    {
+        if ([mailClass canSendMail])
+        {
+            [self displayComposerSheet];
+        }
+        else{
+            [self alertWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"温馨提示") msg:NSLocalizedString(@"settings_alert1_message",@"你还没有邮件账户，请到系统设置里面创建一个")];
+        }
+    }
+    
+}
+
+-(void)displayComposerSheet
+{
+    MFMailComposeViewController *mailPicker = [[MFMailComposeViewController alloc] init];
+    
+    mailPicker.mailComposeDelegate = self;
+    
+    //设置主题
+    [mailPicker setSubject: NSLocalizedString(@"settings_email_title",@"用户意见反馈")];
+    
+    //添加发送者
+    NSArray *toRecipients = [NSArray arrayWithObjects: @"support@lingzhimobile.com",nil];
+    
+    [mailPicker setToRecipients: toRecipients];
+    
+    [mailPicker setMessageBody:@"" isHTML:NO];
+    
+    [self presentViewController:mailPicker animated:YES completion:nil];
+}
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError *)error
+{
+    NSString *msg;
+    
+    switch (result)
+    {
+        case MFMailComposeResultCancelled:
+            break;
+        case MFMailComposeResultSaved:
+            msg = NSLocalizedString(@"settings_sendemail_result0",@"邮件保存成功");
+            [self alertWithTitle:nil msg:msg];
+            break;
+        case MFMailComposeResultSent:
+            msg = NSLocalizedString(@"settings_sendemail_result1",@"邮件发送成功");
+            [self alertWithTitle:nil msg:msg];
+            break;
+        case MFMailComposeResultFailed:
+            msg = NSLocalizedString(@"settings_sendemail_result2",@"邮件发送失败");
+            [self alertWithTitle:nil msg:msg];
+            break;
+        default:
+            break;
+    }
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+
+
+
+
+
 @end
 
 

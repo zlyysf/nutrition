@@ -8,6 +8,9 @@
 
 #import "LZReviewAppManager.h"
 #import "LZConstants.h"
+#import "LZUtility.h"
+
+
 @implementation LZReviewAppManager
 +(LZReviewAppManager*)SharedInstance
 {
@@ -21,7 +24,8 @@
 -(void)popReviewOurAppAlertAccordingRules
 {
     //制定一些规则，根据某些标志位来判断是否弹出评分提示
-    BOOL alreadyReviewed = [[NSUserDefaults standardUserDefaults]boolForKey:KeyIsAlreadyReviewdeOurApp];
+    NSString * Key_IsAlreadyReviewdeOurApp = [LZUtility getPersistKey_ByEachVersion_IsAlreadyReviewdeOurApp];
+    BOOL alreadyReviewed = [[NSUserDefaults standardUserDefaults]boolForKey:Key_IsAlreadyReviewdeOurApp];
     if (alreadyReviewed)
     {
         return;
@@ -51,7 +55,9 @@
 
 -(void)reviewOurAppDirectly
 {
-    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:KeyIsAlreadyReviewdeOurApp];
+    NSString * Key_IsAlreadyReviewdeOurApp = [LZUtility getPersistKey_ByEachVersion_IsAlreadyReviewdeOurApp];
+    
+    [[NSUserDefaults standardUserDefaults]setBool:YES forKey:Key_IsAlreadyReviewdeOurApp];
     [[NSUserDefaults standardUserDefaults]synchronize];
 //    NSString *str = @"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa";
 //    str = [NSString stringWithFormat:@"%@/wa/viewContentsUserReviews?", str];
