@@ -13,11 +13,11 @@
 
 #define KeyShouldShowAdView 1 //作用于部分广告条，以方便截图
 
-#define ParseApp_ApplicationID @"fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1" //zlyysf nutrition1 app
-#define ParseApp_ClientKey @"TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex" //zlyysf nutrition1 app
+#define ParseApp_ApplicationID_dev @"fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1" //zlyysf nutrition1 app
+#define ParseApp_ClientKey_dev @"TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex" //zlyysf nutrition1 app
 
-//#define ParseApp_ApplicationID @"KOObufGbStKu8OP2QrcGEU0dkwMpvlD0rJ09PD6R" //lingzhi RemedyPills app
-//#define ParseApp_ClientKey @"MkXIifLvrpe5mONp4IhPs0ijcpg15ZCJdSJpFIT8" //lingzhi RemedyPills app
+#define ParseApp_ApplicationID_prod @"KOObufGbStKu8OP2QrcGEU0dkwMpvlD0rJ09PD6R" //lingzhi RemedyPills app
+#define ParseApp_ClientKey_prod @"MkXIifLvrpe5mONp4IhPs0ijcpg15ZCJdSJpFIT8" //lingzhi RemedyPills app
 
 #define ParseObject_UserRecord @"UserRecord"
 #define ParseObjectKey_objectId @"objectId"

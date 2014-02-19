@@ -115,7 +115,12 @@
 //        }
 //    }
     
-    [Parse setApplicationId:ParseApp_ApplicationID clientKey:ParseApp_ClientKey];
+    if (KeyIsEnvironmentDebug){
+        [Parse setApplicationId:ParseApp_ApplicationID_dev clientKey:ParseApp_ClientKey_dev];
+    }else{
+        [Parse setApplicationId:ParseApp_ApplicationID_prod clientKey:ParseApp_ClientKey_prod];
+    }
+    
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     [application registerForRemoteNotificationTypes:UIRemoteNotificationTypeBadge| UIRemoteNotificationTypeAlert| UIRemoteNotificationTypeSound];
     

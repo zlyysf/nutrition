@@ -37,46 +37,50 @@
     UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
     UIStoryboard *storyboardModFCL = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
     
-    
-    
+    NSMutableArray *controllers = [NSMutableArray array];
+    UINavigationController *nav;
     NGDiagnoseViewController *diagnoseViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGDiagnoseViewController"];
-    UINavigationController *nav = [[ UINavigationController alloc] initWithRootViewController:diagnoseViewController];
+    nav = [[ UINavigationController alloc] initWithRootViewController:diagnoseViewController];
     nav.navigationBar.translucent = NO;
     UITabBarItem *diagnoseItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"jiankangjilu_c_title", @"页面标题：养生") image:[UIImage imageNamed:@"clinic-50.png"] tag:0];
     nav.tabBarItem = diagnoseItem;
+    [controllers addObject:nav];
     
     NGRecordHistoryViewController *recordHistoryViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGRecordHistoryViewController"];
-    UINavigationController *nav1 = [[ UINavigationController alloc] initWithRootViewController:recordHistoryViewController];
-    nav1.navigationBar.translucent = NO;
+    nav = [[ UINavigationController alloc] initWithRootViewController:recordHistoryViewController];
+    nav.navigationBar.translucent = NO;
     UITabBarItem *recordItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"lishi_c_title", @"页面标题：历史") image:[UIImage imageNamed:@"month_view-50.png"] tag:1];
-    nav1.tabBarItem = recordItem;
+    nav.tabBarItem = recordItem;
+    [controllers addObject:nav];
     
     NGChartViewController *chartViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGChartViewController"];
-    UINavigationController *nav2 = [[ UINavigationController alloc] initWithRootViewController:chartViewController];
-    nav2.navigationBar.translucent = NO;
+    nav = [[ UINavigationController alloc] initWithRootViewController:chartViewController];
+    nav.navigationBar.translucent = NO;
     UITabBarItem *chartItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"tubiao_c_title", @"页面标题：曲线") image:[UIImage imageNamed:@"line_chart-50.png"] tag:2];
-    nav2.tabBarItem = chartItem;
-    
-    NGCyclopediaViewController *cyclopediaViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGCyclopediaViewController"];
-    UINavigationController *nav3 = [[ UINavigationController alloc] initWithRootViewController:cyclopediaViewController];
-    nav3.navigationBar.translucent = NO;
-    UITabBarItem *recentItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"baike_c_title", @"页面标题：百科") image:[UIImage imageNamed:@"physics-50.png"] tag:3];
-    nav3.tabBarItem = recentItem;
-    
-    NGUerInfoViewController *uerInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGUerInfoViewController"];
-    UINavigationController *nav4 = [[ UINavigationController alloc] initWithRootViewController:uerInfoViewController];
-    nav4.navigationBar.translucent = NO;
-    UITabBarItem *infoItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"xinxi_c_title", @"页面标题：信息") image:[UIImage imageNamed:@"info-50.png"] tag:4];
-    nav4.tabBarItem = infoItem;
+    nav.tabBarItem = chartItem;
+    [controllers addObject:nav];
     
     NGFoodCombinationListViewController *controllFcl = [storyboardModFCL instantiateViewControllerWithIdentifier:@"NGFoodCombinationListViewController"];
-    UINavigationController *nav5 = [[ UINavigationController alloc] initWithRootViewController:controllFcl];
-    nav5.navigationBar.translucent = NO;
-    UITabBarItem *fclItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"qingdan_c_title", @"页面标题：清单") image:[UIImage imageNamed:@"info-50.png"] tag:5];
-    nav5.tabBarItem = fclItem;
+    nav = [[ UINavigationController alloc] initWithRootViewController:controllFcl];
+    nav.navigationBar.translucent = NO;
+    UITabBarItem *fclItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"qingdan_c_title", @"页面标题：清单") image:[UIImage imageNamed:@"diet_list-50.png"] tag:3];
+    nav.tabBarItem = fclItem;
+    [controllers addObject:nav];
     
+    NGCyclopediaViewController *cyclopediaViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGCyclopediaViewController"];
+    nav = [[ UINavigationController alloc] initWithRootViewController:cyclopediaViewController];
+    nav.navigationBar.translucent = NO;
+    UITabBarItem *recentItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"baike_c_title", @"页面标题：百科") image:[UIImage imageNamed:@"physics-50.png"] tag:4];
+    nav.tabBarItem = recentItem;
+    [controllers addObject:nav];
     
-    NSMutableArray *controllers = [NSMutableArray arrayWithObjects: nav,nav1,nav2,nav3,nav4,nav5,nil];
+    NGUerInfoViewController *uerInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGUerInfoViewController"];
+    nav = [[ UINavigationController alloc] initWithRootViewController:uerInfoViewController];
+    nav.navigationBar.translucent = NO;
+    UITabBarItem *infoItem = [[UITabBarItem alloc]initWithTitle:NSLocalizedString(@"xinxi_c_title", @"页面标题：信息") image:[UIImage imageNamed:@"info-50.png"] tag:5];
+    nav.tabBarItem = infoItem;
+    [controllers addObject:nav];
+    
     self.viewControllers = controllers;
     if (IOS7_OR_LATER)
     {

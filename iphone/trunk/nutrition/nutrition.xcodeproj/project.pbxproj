@@ -122,6 +122,7 @@
 		08ED42D317D4970A00917C78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
 		08FA708D18B1E02D002DF80E /* LZUtilityParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA708C18B1E02D002DF80E /* LZUtilityParse.m */; };
 		08FA708E18B1E155002DF80E /* LZUtilityParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA708C18B1E02D002DF80E /* LZUtilityParse.m */; };
+		08FA709418B4505D002DF80E /* diet_list-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08FA709318B4505D002DF80E /* diet_list-50@2x.png */; };
 		08FDAC95186031740015E7EE /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631DB17702CDF0068CBFE /* AudioToolbox.framework */; };
 		08FDAC961860317C0015E7EE /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0D18504CD90063553D /* CFNetwork.framework */; };
 		08FDAC97186031900015E7EE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D81C17AF8921000AEC06 /* CoreLocation.framework */; };
@@ -347,6 +348,7 @@
 		08A1A2C918863EBF00E95049 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = nutrition/Parse.framework; sourceTree = "<group>"; };
 		08FA708B18B1E02D002DF80E /* LZUtilityParse.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZUtilityParse.h; path = nutrition/Class/LZUtilityParse.h; sourceTree = "<group>"; };
 		08FA708C18B1E02D002DF80E /* LZUtilityParse.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZUtilityParse.m; path = nutrition/Class/LZUtilityParse.m; sourceTree = "<group>"; };
+		08FA709318B4505D002DF80E /* diet_list-50@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "diet_list-50@2x.png"; path = "nutrition/Resource/diet_list-50@2x.png"; sourceTree = "<group>"; };
 		5F03D33B174B923F008EFB60 /* LZProgressView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZProgressView.h; path = Class/LZProgressView.h; sourceTree = "<group>"; };
 		5F03D33C174B923F008EFB60 /* LZProgressView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZProgressView.m; path = Class/LZProgressView.m; sourceTree = "<group>"; };
 		5F03D33D174B923F008EFB60 /* LZRecommendFoodCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZRecommendFoodCell.h; path = Class/LZRecommendFoodCell.h; sourceTree = "<group>"; };
@@ -979,6 +981,7 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				08FA709318B4505D002DF80E /* diet_list-50@2x.png */,
 				084CFC9D18ADEFDF0003BC93 /* section_bar@2x.png */,
 				084CFC9B18ADC70A0003BC93 /* recommend_sign@2x.png */,
 				084CFC9918ADBCC30003BC93 /* button_back@2x.png */,
@@ -1634,6 +1637,7 @@
 				088FDE2618A4890900D9D687 /* addfood_icon@2x.png in Resources */,
 				5F8F9FAF17E6B00300F6B295 /* Icon-72.png in Resources */,
 				5F8F9FB017E6B00300F6B295 /* Icon-72@2x.png in Resources */,
+				08FA709418B4505D002DF80E /* diet_list-50@2x.png in Resources */,
 				084CFC9818ADBC570003BC93 /* nutrient_button_on@2x.png in Resources */,
 				086944A518AC75EE0085B76A /* valuepicker_bg@2x.png in Resources */,
 				088FDE2918A4890900D9D687 /* share_icon@2x.png in Resources */,
