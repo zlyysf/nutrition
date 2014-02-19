@@ -32,7 +32,7 @@
     NSString *documentsDirectory = [paths objectAtIndex:0];
     NSString *filePath = [documentsDirectory stringByAppendingPathComponent:cDbFile];
 //    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
-    NSLog(@"dbFilePath=%@",filePath);
+//    NSLog(@"dbFilePath=%@",filePath);
     return filePath;
 }
 
@@ -44,6 +44,7 @@
 
 
 
+
 - (id)initDB{
     self = [super init];
     if (self) {
@@ -52,10 +53,7 @@
         NSString *srcResourceDbFilePath = [self.class srcResourceDbFilePath];
         NSFileManager * defFileManager = [NSFileManager defaultManager];
         
-        NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
-        //NSString *appName = [infoDictionary objectForKey:@"CFBundleDisplayName"];
-        NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
-        NSString *flagKey = [NSString stringWithFormat:@"%@%@-DB",AppVersionCheckName,appVersion];
+        NSString *flagKey = [LZUtility getPersistKey_ByEachVersion_DBFileUpdatedFlag];
 
         BOOL fileExists,isDir;
         fileExists = [defFileManager fileExistsAtPath:dbFilePath isDirectory:&isDir];

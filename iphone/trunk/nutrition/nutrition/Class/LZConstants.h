@@ -118,7 +118,7 @@
 #define LZSettingKey_randSeed @"randSeed"
 #define LZSettingKey_randSeedOut @"randSeedOut"
 
-#define LZSettingKey_alreadyLoadFromRemote @"alreadyLoadFromRemote"
+//#define LZSettingKey_alreadyLoadFromRemote @"alreadyLoadFromRemote"
 
 #define ParamKey_sex @"sex"
 #define ParamKey_age @"age"

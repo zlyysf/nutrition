@@ -141,6 +141,10 @@ enum {
 +(int)getMonthLocalForDistance:(int)distance startLocal:(int)startLocal;
 
 
++(NSString*)getPersistKey_ByEachVersion_DBFileUpdatedFlag;
++(NSString*)getPersistKey_ByEachVersion_alreadyLoadFromRemoteDataInParse;
+
+
 +(NSString *)uniqueDeviceId;
 
 +(double)getSystemVersionValue;

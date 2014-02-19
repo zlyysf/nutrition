@@ -402,7 +402,10 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(void) syncRemoteDataToLocal_withJustCallback:(JustCallbackBlock) justCallback
 {
-    BOOL alreadyLoadFromRemote = [[NSUserDefaults standardUserDefaults]boolForKey:LZSettingKey_alreadyLoadFromRemote];
+    LZDataAccess *da = [LZDataAccess singleton];//注意这条语句必须在最前。由于db那边的更新是每次升级都会删掉以前的数据库。导致这里也得每次升级时再同步一下。而且这依赖于db。
+    
+    NSString *flagKey = [LZUtility getPersistKey_ByEachVersion_alreadyLoadFromRemoteDataInParse];
+    BOOL alreadyLoadFromRemote = [[NSUserDefaults standardUserDefaults]boolForKey:flagKey];
     if (alreadyLoadFromRemote){
         if (justCallback!=nil){
             justCallback(true);
@@ -422,7 +425,7 @@ PFObject *g_parseObjUserRecord=nil;
             }else{
                 [msg appendFormat:@" Have %d rows in remote.",objects.count];
                 
-                LZDataAccess *da = [LZDataAccess singleton];
+                
                 for(int i=0; i<objects.count; i++){
                     PFObject* parseObj = objects[i];
                     
@@ -438,7 +441,7 @@ PFObject *g_parseObjUserRecord=nil;
                     }
                 }//for
             }
-//            [[NSUserDefaults standardUserDefaults]setBool:YES forKey:LZSettingKey_alreadyLoadFromRemote];
+//            [[NSUserDefaults standardUserDefaults]setBool:YES forKey:flagKey];
 //            [[NSUserDefaults standardUserDefaults]synchronize];
         }
         NSLog(@"in syncRemoteDataToLocal_withJustCallback msg1=%@",msg);
@@ -474,7 +477,7 @@ PFObject *g_parseObjUserRecord=nil;
                         }
                     }//for
                 }
-                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:LZSettingKey_alreadyLoadFromRemote];
+                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:flagKey];
                 [[NSUserDefaults standardUserDefaults]synchronize];
             }
             NSLog(@"in syncRemoteDataToLocal_withJustCallback msg2=%@",msg);

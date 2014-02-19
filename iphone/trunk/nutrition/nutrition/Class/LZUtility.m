@@ -1628,6 +1628,28 @@
     return [new year]*100+[new month];
 }
 
+
+
+
++(NSString*)getPersistKey_ByEachVersion_DBFileUpdatedFlag
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *flagKey = [NSString stringWithFormat:@"%@%@-DB",AppVersionCheckName,appVersion];
+    return flagKey;
+}
+
++(NSString*)getPersistKey_ByEachVersion_alreadyLoadFromRemoteDataInParse
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *key = [NSString stringWithFormat:@"%@%@",@"alreadyLoadFromRemoteDataInParse",appVersion];
+    return key;
+}
+
+
+
+
 #define KEYCHAIN_DEVICE_ID @"Keychain_Device_Id"
 
 // http://stackoverflow.com/questions/6993325/uidevice-uniqueidentifier-deprecated-what-to-do-now
