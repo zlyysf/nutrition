@@ -83,6 +83,7 @@ enum {
 
 + (UIColor*)getSymptomTypeColorForId:(NSString *)typeId;
 + (BOOL)isUserProfileComplete;
++(void)storeUserInfoWithDefault;
 +(NSDictionary*)getUserInfo;
 
 + (NSDictionary *)getActivityLevelInfo;

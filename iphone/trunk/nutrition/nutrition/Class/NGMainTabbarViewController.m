@@ -93,13 +93,15 @@
 {
     if (![LZUtility isUserProfileComplete])
     {
-        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
-        NGUerInfoViewController *uerInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGUerInfoViewController"];
-        uerInfoViewController.isPresented = YES;
-        //addByNutrientController.foodArray = recommendFoodArray;
-        //addByNutrientController.nutrientTitle = nutrientName;
-        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:uerInfoViewController];
-        [self presentModalViewController:navController animated:YES];
+        [LZUtility storeUserInfoWithDefault];
+        assert([LZUtility isUserProfileComplete]);
+//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
+//        NGUerInfoViewController *uerInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGUerInfoViewController"];
+//        uerInfoViewController.isPresented = YES;
+//        //addByNutrientController.foodArray = recommendFoodArray;
+//        //addByNutrientController.nutrientTitle = nutrientName;
+//        UINavigationController *navController = [[UINavigationController alloc]initWithRootViewController:uerInfoViewController];
+//        [self presentModalViewController:navController animated:YES];
     }
 
 }

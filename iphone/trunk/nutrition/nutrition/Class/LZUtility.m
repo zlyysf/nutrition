@@ -611,6 +611,30 @@
     return (userSex && userAge && userHeight && userWeight && userActivityLevel && birthday);
 }
 
++(void)storeUserInfoWithDefault
+{
+    int sex = 0;//Male
+//    int age = 25;
+    NSDate *now = [NSDate date];
+    NSDate *year25 = [NSDate dateWithTimeIntervalSince1970: ([now timeIntervalSince1970] - 3600*24*365*25)];
+    double weight=72;//kg
+    double height = 180;//cm
+    int activityLevel = 0;//0--3
+    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    [userDefaults setObject:[NSNumber numberWithInt:sex] forKey:LZUserSexKey];
+    [userDefaults setObject:year25 forKey:LZUserBirthKey];
+    int age = [self calculateAgeAccordingToTheBirthdate:year25];
+    NSLog(@"storeUserInfoWithDefault age=%d",age);
+    [userDefaults setObject:[NSNumber numberWithInt:age] forKey:LZUserAgeKey];
+    
+    [userDefaults setObject:[NSNumber numberWithDouble:height] forKey:LZUserHeightKey];
+    [userDefaults setObject:[NSNumber numberWithDouble:weight] forKey:LZUserWeightKey];
+    
+    [userDefaults setObject:[NSNumber numberWithInt:activityLevel] forKey:LZUserActivityLevelKey];
+    
+    [userDefaults synchronize];
+}
+
 +(NSDictionary*)getUserInfo
 {
     NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
