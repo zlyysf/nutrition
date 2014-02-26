@@ -34,7 +34,7 @@
     {
         int times = [[NSUserDefaults standardUserDefaults]integerForKey:KeyReviewAlertControllCount];
         times +=1;
-        if (times >= 10)
+        if (times >= 20)
         {
             [[NSUserDefaults standardUserDefaults]setInteger:0 forKey:KeyReviewAlertControllCount];
             [[NSUserDefaults standardUserDefaults]synchronize];
