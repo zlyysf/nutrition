@@ -68,8 +68,12 @@
 //    ;
 //    [LZUtility initializePreferNutrient];
     //友盟统计SDK启
+    
+    
     [[UIApplication sharedApplication]cancelAllLocalNotifications];
-    [LZDataAccess singleton];
+    
+    [LZDataAccess singleton];//必要时生成新版数据库，目前是在每次更新安装时
+    
 //    LZDataAccess *da = [LZDataAccess singleton];
 //    NSArray *suggestionArray = [da getIllnessSuggestionsDistinct_ByIllnessIds:nil];
 //    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]init];
@@ -274,10 +278,26 @@
     
     UILocalNotification *local = [[UILocalNotification alloc]init];
     [local setAlertAction:NSLocalizedString(@"localnotify_3dayreminder_action",@"打开")];
-    [local setAlertBody:NSLocalizedString(@"localnotify_3dayreminder_content",@"营养膳食指南竭诚帮您选出含有全面丰富营养的食物搭配，敬请使用!")];
+    [local setAlertBody:NSLocalizedString(@"localnotify_3dayreminder_content",@"养生胶囊助您消除亚健康，敬请使用!")];
     [local setApplicationIconBadgeNumber:1];
-    NSDate *currentDate = [NSDate date];
-    [local setFireDate:[currentDate dateByAddingTimeInterval:LocalNotifyTimeInterval]];
+
+    NSDate *dtNow = [NSDate date];
+//    NSDate *fireDate = [dtNow dateByAddingTimeInterval:LocalNotifyTimeInterval];
+    NSCalendar *curCalendar = [NSCalendar currentCalendar];
+    NSDateComponents *dtComponentsNow = [curCalendar components:(NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit|NSHourCalendarUnit|NSMinuteCalendarUnit|NSSecondCalendarUnit) fromDate:dtNow];
+    NSDateComponents *dtComponentsLater = [[NSDateComponents alloc] init];
+    [dtComponentsLater setYear:dtComponentsNow.year];
+    [dtComponentsLater setMonth:dtComponentsNow.month];
+    [dtComponentsLater setDay:dtComponentsNow.day+AfterDaysNeedAlertToUseApp];
+    [dtComponentsLater setHour:16];
+    [dtComponentsLater setMinute:30];
+    [dtComponentsLater setSecond:0];
+//    [dtComponentsLater setHour:dtComponentsNow.hour];
+//    [dtComponentsLater setMinute:dtComponentsNow.minute];
+//    [dtComponentsLater setSecond:dtComponentsNow.second+10];
+    NSDate *fireDate = [curCalendar dateFromComponents:dtComponentsLater];
+    
+    [local setFireDate:fireDate];
     [local setTimeZone:[NSTimeZone defaultTimeZone]];
     [local setSoundName:UILocalNotificationDefaultSoundName];
     NSDictionary *infoDict = [NSDictionary dictionaryWithObject:KeyNotifyTimeTypeReminder forKey:@"notifyType"];
@@ -294,6 +314,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
+//    NSLog(@"applicationDidBecomeActive");
     [[UIApplication sharedApplication]setApplicationIconBadgeNumber:0];
 //    NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
 //    NSArray *oldScheduledNotify = [[UIApplication sharedApplication]scheduledLocalNotifications];
@@ -312,6 +333,7 @@
 }
 - (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
 {
+//    NSLog(@"application didReceiveLocalNotification");
 //    if ([application respondsToSelector:@selector(applicationState)] && application.applicationState != UIApplicationStateActive)
 //    {
 //        [self handleLocalNotify:notification];

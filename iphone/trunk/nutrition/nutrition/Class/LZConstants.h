@@ -365,7 +365,8 @@
 
 #define UMSDKAPPKey @"51b96cc356240b6ee80a05dc"
 #define ShareSDKAPPKey @"4d8c71c46cb"
-#define LocalNotifyTimeInterval (72*60*60) // 72 hours
+#define LocalNotifyTimeInterval (60*60*24*3) // 3 day
+#define AfterDaysNeedAlertToUseApp 3
 
 #define MobChannelIdTongbu @"TongbuTui"
 #define MobChannelId91Store @"91Store"

@@ -220,7 +220,7 @@
     }else{
         NSTimeInterval nowTimeInterval = [now timeIntervalSince1970];
         NSTimeInterval prevTimeInterval = [prevScrollTime timeIntervalSince1970];
-        NSLog(@"scrollViewDidScroll x=%f nowTimeInterval=%f",scrollView.contentOffset.x,nowTimeInterval);
+//        NSLog(@"scrollViewDidScroll x=%f nowTimeInterval=%f",scrollView.contentOffset.x,nowTimeInterval);
         if (needReduceScrollingEvent){
             if (nowTimeInterval - prevTimeInterval >= AtLeastTimeSpanBySecondWhenReduceScrollEvent){
                 prevScrollTime = now;
