@@ -1678,6 +1678,13 @@
     NSString *key = [NSString stringWithFormat:@"%@%@",KeyIsAlreadyReviewdeOurApp,appVersion];
     return key;
 }
++(NSString*)getPersistKey_ByEachVersion_IsAlreadyEmailFeedbackOurApp
+{
+    NSDictionary *infoDictionary = [[NSBundle mainBundle] infoDictionary];
+    NSString *appVersion = [infoDictionary objectForKey:@"CFBundleShortVersionString"];
+    NSString *key = [NSString stringWithFormat:@"%@%@",KeyIsAlreadyEmailFeedbackOurApp,appVersion];
+    return key;
+}
 
 
 

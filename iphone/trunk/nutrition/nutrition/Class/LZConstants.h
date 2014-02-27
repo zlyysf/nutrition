@@ -373,6 +373,7 @@
 #define MobChannelId25pp @"25pp"
 
 #define KeyIsAlreadyReviewdeOurApp @"KeyIsAlreadyReviewdeOurApp" // YES means already reviewed
+#define KeyIsAlreadyEmailFeedbackOurApp @"KeyIsAlreadyEmailFeedbackOurApp"
 #define KeyReviewAlertControllCount @"KeyReviewAlertControllCount" // >=10 popAlert
 #define KeyHealthCheckReminderState @"KeyHealthCheckReminderState"
 

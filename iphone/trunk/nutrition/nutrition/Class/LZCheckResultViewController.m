@@ -835,7 +835,7 @@
     self.listView.hidden = NO;
     [self refreshFoodNureitentProcessForAll:NO];
 //    [self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
-    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
+    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules_withViewController];
     
 }
 -(void)refreshFoodNureitentProcessForAll:(BOOL)needRefreshAll

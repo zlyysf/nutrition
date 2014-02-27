@@ -214,7 +214,7 @@
         [self clearState];
     }
         //[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(textFieldValueChanged:) name:UITextFieldTextDidChangeNotification object:nil];
-    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
+    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules_withViewController:self];
 }
 -(void)viewWillDisappear:(BOOL)animated
 {

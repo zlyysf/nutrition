@@ -7,9 +7,22 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <MessageUI/MessageUI.h>
 
-@interface LZReviewAppManager : NSObject<UIAlertViewDelegate>
+@interface MFMailComposeViewControllerDelegator : NSObject{
+    UIViewController* m_viewControllerForMail;
+}
+-(void)popEmailFeedbackDialog_withViewController:(UIViewController*)viewController;
+
+
+@end
+
+
+
+@interface LZReviewAppManager : NSObject<UIAlertViewDelegate>{
+    MFMailComposeViewControllerDelegator *m_MFMailComposeViewControllerDelegator;
+}
 +(LZReviewAppManager*)SharedInstance;
--(void)popReviewOurAppAlertAccordingRules;
+-(void)popReviewOurAppAlertAccordingRules_withViewController:(UIViewController*)viewController;
 -(void)reviewOurAppDirectly;
 @end

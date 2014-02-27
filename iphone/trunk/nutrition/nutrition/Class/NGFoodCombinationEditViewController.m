@@ -268,6 +268,8 @@
         [self refreshFoodNureitentProcessForAll:YES];
         needRefresh = NO;
     }
+    
+    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules_withViewController:self];
 }
 - (void)viewDidAppear:(BOOL)animated
 {
@@ -1267,7 +1269,7 @@
     self.listView.hidden = NO;
     [self refreshFoodNureitentProcessForAll:YES];
     [self.listView setContentOffset:CGPointMake(0, 0) animated:NO];
-    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
+    
     
 }
 

@@ -145,6 +145,7 @@ enum {
 +(NSString*)getPersistKey_ByEachVersion_DBFileUpdatedFlag;
 +(NSString*)getPersistKey_ByEachVersion_alreadyLoadFromRemoteDataInParse;
 +(NSString*)getPersistKey_ByEachVersion_IsAlreadyReviewdeOurApp;
++(NSString*)getPersistKey_ByEachVersion_IsAlreadyEmailFeedbackOurApp;
 
 
 +(NSString *)uniqueDeviceId;

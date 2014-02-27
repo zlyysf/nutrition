@@ -101,7 +101,7 @@
 {
     GADMasterViewController *gad = [GADMasterViewController singleton];
     [gad resetAdView:self andListView:self.adView];
-    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules];
+//    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules_withViewController:self];
 }
 -(NSString *)getNutritionName:(NSString *)nutritionId
 {
