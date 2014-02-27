@@ -94,7 +94,7 @@
     if (![LZUtility isUserProfileComplete])
     {
         [LZUtility storeUserInfoWithDefault];
-        assert([LZUtility isUserProfileComplete]);
+
 //        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"NewMainStoryboard" bundle:nil];
 //        NGUerInfoViewController *uerInfoViewController = [storyboard instantiateViewControllerWithIdentifier:@"NGUerInfoViewController"];
 //        uerInfoViewController.isPresented = YES;

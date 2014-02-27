@@ -33,6 +33,11 @@
     {
         [self cleanDebugSettings];
     }
+    
+    if (![LZUtility isUserProfileComplete])
+    {
+        [LZUtility storeUserInfoWithDefault];
+    }
 //    NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
 //    UIImage * navImage = [UIImage imageWithContentsOfFile:path];
 //    UIImage *gradientImage44 = [navImage
