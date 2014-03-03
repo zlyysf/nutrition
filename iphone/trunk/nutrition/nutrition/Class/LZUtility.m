@@ -518,49 +518,44 @@
 
 +(UIColor*)getNutrientColorForNutrientId:(NSString *)nutrientId
 {
-    /*@"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
-     @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-     @"Vit_B12_(µg)",@"Panto_Acid_mg)",
-     @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
-     @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
-     @"Protein_(g)",@"Lipid_Tot_(g)",
-     @"Fiber_TD_(g)",@"Choline_Tot_ (mg)",*/
-    NSDictionary * colorDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                [UIColor colorWithRed:56/255.f green:255/255.f blue:53/255.f alpha:0.4f],@"Vit_A_RAE",
-                                [UIColor colorWithRed:230/255.f green:255/255.f blue:5/255.f alpha:0.4f],@"Vit_C_(mg)",
-                                [UIColor colorWithRed:0/255.f green:255/255.f blue:255/255.f alpha:0.4f],@"Vit_D_(µg)",
-                                [UIColor colorWithRed:255/255.f green:127/255.f blue:0/255.f alpha:0.4f],@"Vit_E_(mg)",
-                                [UIColor colorWithRed:56/255.f green:240/255.f blue:242/255.f alpha:1.0f],@"Vit_K_(µg)",
-                                [UIColor colorWithRed:227/255.f green:28/255.f blue:121/255.f alpha:1.0f],@"Thiamin_(mg)",
-                                [UIColor colorWithRed:204/255.f green:255/255.f blue:102/255.f alpha:0.4f],@"Riboflavin_(mg)",
-                                [UIColor colorWithRed:236/255.f green:170/255.f blue:0/255.f alpha:1.0f],@"Niacin_(mg)",
-                                [UIColor colorWithRed:94/255.f green:24/255.f blue:255/255.f alpha:0.4f],@"Vit_B6_(mg)",
-                                [UIColor colorWithRed:212/255.f green:164/255.f blue:255/255.f alpha:0.4f],@"Folate_Tot_(µg)",
-                                [UIColor colorWithRed:244/255.f green:156/255.f blue:167/255.f alpha:1.0f],@"Vit_B12_(µg)",
-                                [UIColor colorWithRed:185/255.f green:52/255.f blue:12/255.f alpha:1.0f],@"Panto_Acid_mg)",
-                                [UIColor colorWithRed:182/255.f green:16/255.f blue:214/255.f alpha:0.4f],@"Calcium_(mg)",
-                                [UIColor colorWithRed:200/255.f green:56/255.f blue:242/255.f alpha:1.0f],@"Copper_(mg)",
-                                [UIColor colorWithRed:255/255.f green:0/255.f blue:0/255.f alpha:0.4f],@"Iron_(mg)",
-                                [UIColor colorWithRed:0/255.f green:128/255.f blue:255/255.f alpha:0.4f],@"Magnesium_(mg)",
-                                [UIColor colorWithRed:107/255.f green:22/255.f blue:132/255.f alpha:1.0f],@"Manganese_(mg)",
-                                [UIColor colorWithRed:142/255.f green:72/255.f blue:32/255.f alpha:1.0f],@"Phosphorus_(mg)",
-                                [UIColor colorWithRed:136/255.f green:136/255.f blue:136/255.f alpha:1.0f],@"Selenium_(µg)",
-                                [UIColor colorWithRed:126/255.f green:101/255.f blue:255/255.f alpha:0.4f],@"Zinc_(mg)",
-                                [UIColor colorWithRed:194/255.f green:244/255.f blue:183/255.f alpha:0.4f],@"Potassium_(mg)",
-                                [UIColor colorWithRed:255/255.f green:29/255.f blue:138/255.f alpha:0.4f],@"Protein_(g)",
-                                [UIColor colorWithRed:255/255.f green:179/255.f blue:171/255.f alpha:1.0f],@"Lipid_Tot_(g)",
-                                [UIColor colorWithRed:72/255.f green:251/255.f blue:160/255.f alpha:0.4f],@"Fiber_TD_(g)",
-                                [UIColor colorWithRed:130/255.f green:56/255.f blue:242/255.f alpha:1.0f],@"Choline_Tot_ (mg)",
-                                nil];
-    UIColor *nutrientColor = [colorDict objectForKey:nutrientId];
-    if (nutrientColor == nil)
-    {
-        return [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:1];
-    }
-    else
-    {
-        return nutrientColor;
-    }
+    return [UIColor colorWithRed:56/255.f green:255/255.f blue:53/255.f alpha:0.4f];
+    
+//    NSDictionary * colorDict = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                [UIColor colorWithRed:56/255.f green:255/255.f blue:53/255.f alpha:0.4f],@"Vit_A_RAE",
+//                                [UIColor colorWithRed:230/255.f green:255/255.f blue:5/255.f alpha:0.4f],@"Vit_C_(mg)",
+//                                [UIColor colorWithRed:0/255.f green:255/255.f blue:255/255.f alpha:0.4f],@"Vit_D_(µg)",
+//                                [UIColor colorWithRed:255/255.f green:127/255.f blue:0/255.f alpha:0.4f],@"Vit_E_(mg)",
+//                                [UIColor colorWithRed:56/255.f green:240/255.f blue:242/255.f alpha:1.0f],@"Vit_K_(µg)",
+//                                [UIColor colorWithRed:227/255.f green:28/255.f blue:121/255.f alpha:1.0f],@"Thiamin_(mg)",
+//                                [UIColor colorWithRed:204/255.f green:255/255.f blue:102/255.f alpha:0.4f],@"Riboflavin_(mg)",
+//                                [UIColor colorWithRed:236/255.f green:170/255.f blue:0/255.f alpha:1.0f],@"Niacin_(mg)",
+//                                [UIColor colorWithRed:94/255.f green:24/255.f blue:255/255.f alpha:0.4f],@"Vit_B6_(mg)",
+//                                [UIColor colorWithRed:212/255.f green:164/255.f blue:255/255.f alpha:0.4f],@"Folate_Tot_(µg)",
+//                                [UIColor colorWithRed:244/255.f green:156/255.f blue:167/255.f alpha:1.0f],@"Vit_B12_(µg)",
+//                                [UIColor colorWithRed:185/255.f green:52/255.f blue:12/255.f alpha:1.0f],@"Panto_Acid_mg)",
+//                                [UIColor colorWithRed:182/255.f green:16/255.f blue:214/255.f alpha:0.4f],@"Calcium_(mg)",
+//                                [UIColor colorWithRed:200/255.f green:56/255.f blue:242/255.f alpha:1.0f],@"Copper_(mg)",
+//                                [UIColor colorWithRed:255/255.f green:0/255.f blue:0/255.f alpha:0.4f],@"Iron_(mg)",
+//                                [UIColor colorWithRed:0/255.f green:128/255.f blue:255/255.f alpha:0.4f],@"Magnesium_(mg)",
+//                                [UIColor colorWithRed:107/255.f green:22/255.f blue:132/255.f alpha:1.0f],@"Manganese_(mg)",
+//                                [UIColor colorWithRed:142/255.f green:72/255.f blue:32/255.f alpha:1.0f],@"Phosphorus_(mg)",
+//                                [UIColor colorWithRed:136/255.f green:136/255.f blue:136/255.f alpha:1.0f],@"Selenium_(µg)",
+//                                [UIColor colorWithRed:126/255.f green:101/255.f blue:255/255.f alpha:0.4f],@"Zinc_(mg)",
+//                                [UIColor colorWithRed:194/255.f green:244/255.f blue:183/255.f alpha:0.4f],@"Potassium_(mg)",
+//                                [UIColor colorWithRed:255/255.f green:29/255.f blue:138/255.f alpha:0.4f],@"Protein_(g)",
+//                                [UIColor colorWithRed:255/255.f green:179/255.f blue:171/255.f alpha:1.0f],@"Lipid_Tot_(g)",
+//                                [UIColor colorWithRed:72/255.f green:251/255.f blue:160/255.f alpha:0.4f],@"Fiber_TD_(g)",
+//                                [UIColor colorWithRed:130/255.f green:56/255.f blue:242/255.f alpha:1.0f],@"Choline_Tot_ (mg)",
+//                                nil];
+//    UIColor *nutrientColor = [colorDict objectForKey:nutrientId];
+//    if (nutrientColor == nil)
+//    {
+//        return [UIColor colorWithRed:0.f green:0.f blue:0.f alpha:1];
+//    }
+//    else
+//    {
+//        return nutrientColor;
+//    }
 }
 + (UIColor*)getSymptomTypeColorForId:(NSString *)typeId
 {

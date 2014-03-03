@@ -6,10 +6,12 @@
 //  Copyright (c) 2013 lingzhi mobile. All rights reserved.
 //
 
+#import "LZChargeConfig.h"
+
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
 
-#define KeyIsEnvironmentDebug 0
+#define KeyIsEnvironmentDebug 1
 
 #define KeyShouldShowAdView 1 //作用于部分广告条，以方便截图
 
@@ -39,7 +41,7 @@
 #define Config_foodNormalValue 250 // unit g
 #define Config_nearZero 0.0000001
 #define Config_defaultFoodIncreaseUnit 1
-
+#define Config_needLimitNutrients TRUE
 #define Config_getLackNutrientLimit 3 
 
 #define ViewControllerUseBackImage 0
@@ -49,7 +51,7 @@
 #define Config_ifNeedCustomDefinedFoods TRUE
 #define Config_randomSelectFood TRUE
 #define Config_needUseFoodLimitTableWhenCal TRUE
-#define Config_needLimitNutrients TRUE
+
 #define Config_needUseLessAsPossibleFood FALSE
 #define Config_upperLimitTypeForSupplyAsPossible @"normal_value" //COLUMN_NAME_normal_value //  @"Upper_Limit(g)" // COLUMN_NAME_Upper_Limit
 //#define Config_needUseLowLimitAsUnit TRUE
@@ -84,6 +86,9 @@
 #define NutrientId_Lipid @"Lipid_Tot_(g)"
 #define NutrientId_Protein @"Protein_(g)"
 #define NutrientId_Folate @"Folate_Tot_(µg)"
+
+#define NutrientId_Cholesterol @"Cholestrl_(mg)"
+#define NutrientId_Water @"Water_(g)"
 
 #define kFatFactor 1/9 //means 1g fat contains 9Kcal energy
 #define kCarbFactor 1/4 //means 1g carbohydrt contains 4Kcal energy

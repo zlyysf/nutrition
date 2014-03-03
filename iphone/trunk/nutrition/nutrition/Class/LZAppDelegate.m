@@ -25,14 +25,12 @@
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
     [LZUtility initializeCheckReminder];
     //custom navigationbar and barbuttonitem
-    if(KeyIsEnvironmentDebug)
-    {
-        [self initialDebugSettings];//add some debug settings key in user default
-    }
-    else
-    {
-        [self cleanDebugSettings];
-    }
+    
+//    if(KeyIsEnvironmentDebug){
+//        [self initialDebugSettings];//add some debug settings key in user default
+//    }else{
+//        [self cleanDebugSettings];
+//    }
     
     if (![LZUtility isUserProfileComplete])
     {

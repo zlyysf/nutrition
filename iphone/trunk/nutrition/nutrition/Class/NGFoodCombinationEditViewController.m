@@ -893,8 +893,10 @@
         [cell.nutritionNameLabel setText:nutritionNameShort];
         
         NSNumber *percent = [nutrientSupplyInfo objectForKey:@"nutrientSupplyRate"];
-        
         float progress = [percent floatValue]>1.f ? 1.f :[percent floatValue];
+        NSNumber *nm_nutrientSupply = m_nutrientSupplyDict[nutrientId];
+        NSNumber *nutrientDRI = [m_DRIsDict objectForKey:nutrientId];
+        NSString *unit = [nutrientDict objectForKey:COLUMN_NAME_NutrientEnUnit];
         
         UIColor *fillColor = [LZUtility getNutrientColorForNutrientId:nutrientId];
         
@@ -902,7 +904,12 @@
         [cell.nutritionProgressView.layer setBorderWidth:0.5f];
         [cell.nutritionProgressView drawProgress_with_backgroundColor:[UIColor whiteColor] fillColor:fillColor progress:progress withBackRadius:0.f fillRadius:0.f];
         
-        cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%%",(int)(floorf([percent floatValue] *100))];
+//        cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%%",(int)(floorf([percent floatValue] *100))];
+        if ([nutrientId isEqualToString:NutrientId_Cholesterol]){
+            cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@" (%.2f/%.2f%@)",[nm_nutrientSupply floatValue],[nutrientDRI floatValue ],unit];
+        }else{
+            cell.nutrientSupplyLabel.text = [NSString stringWithFormat:@"%d%% (%.2f/%.2f%@)",(int)([percent floatValue] *100),[nm_nutrientSupply floatValue],[nutrientDRI floatValue ],unit];
+        }
         
         return cell;
     }
@@ -977,7 +984,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     //TODO CHECK THE FEATURE
-//    [self.listView deselectRowAtIndexPath:indexPath animated:YES];
+    [self.listView deselectRowAtIndexPath:indexPath animated:YES];
     if(indexPath.section == 0)
     {
         if(m_allFoodIdsArray ==nil || [m_allFoodIdsArray count]==0)
@@ -1011,109 +1018,12 @@
 //            foodDetailController.editDelegate = self;
             [self.navigationController pushViewController:foodDetailController animated:YES];
             
-            
-//            NSDictionary *aFood = [m_foodAmountInfoDict objectForKey:foodId];//[m_takenFoodIdsArray objectAtIndex:indexPath.row];
-//            NSString *ndb_No = [aFood objectForKey:@"NDB_No"];
-//            NSDictionary * foodAtr = [m_allRelatedFoodAttrDict objectForKey:ndb_No];
-//            //NSArray *nutrientSupplyArr = [[m_takenFoodNutrientInfoAryDictDict objectForKey:Key_foodSupplyNutrientInfoAryDict]objectForKey:ndb_No];
-//            //NSArray *nutrientStandardArr = [[m_takenFoodNutrientInfoAryDictDict objectForKey:Key_foodStandardNutrientInfoAryDict]objectForKey:ndb_No];
-//            NSString *foodNameKey;
-//            if (isChinese)
-//            {
-//                foodNameKey = @"CnCaption";
-//            }
-//            else
-//            {
-//                foodNameKey = @"FoodNameEn";
-//            }
-//            NSString *foodName = [foodAtr objectForKey:foodNameKey];
-//            NSNumber *weight = [aFood objectForKey:@"Amount"];
-//            UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
-//            NGFoodDetailController * foodDetailController = [storyboard instantiateViewControllerWithIdentifier:@"NGFoodDetailController"];
-//            
-//            NSString *singleUnitName = [LZUtility getSingleItemUnitName:[foodAtr objectForKey:COLUMN_NAME_SingleItemUnitName]];
-//            NSNumber *upper = [NSNumber numberWithInt:1000];//[foodAtr objectForKey:COLUMN_NAME_Upper_Limit];
-//            if ([weight intValue]>= [upper intValue])
-//            {
-//                upper = weight;
-//            }
-//            foodDetailController.gUnitMaxValue = upper;
-//            
-//            if ([singleUnitName length]==0)
-//            {
-//                foodDetailController.isUnitDisplayAvailable = NO;
-//            }
-//            else
-//            {
-//                foodDetailController.isUnitDisplayAvailable = YES;
-//                foodDetailController.unitName = singleUnitName;
-//                NSNumber *singleUnitWeight = [foodAtr objectForKey:COLUMN_NAME_SingleItemUnitWeight];
-//                //                if ([LZUtility isUseUnitDisplay:weight unitWeight:singleUnitWeight])
-//                //                {
-//                //                    foodDetailController.isDefaultUnitDisplay = YES;
-//                //                }
-//                //                else
-//                //                {
-//                //                    foodDetailController.isDefaultUnitDisplay = NO;
-//                //                }
-//                foodDetailController.isDefaultUnitDisplay = NO;
-//                int maxCount = (int)(ceilf(([upper floatValue]*2)/[singleUnitWeight floatValue]));
-//                //                if (maxCount <20)
-//                //                {
-//                //                    foodDetailController.unitMaxValue = [NSNumber numberWithInt:20];
-//                //                }
-//                //                else
-//                //                {
-//                foodDetailController.unitMaxValue = [NSNumber numberWithInt:maxCount];
-//                //}
-//            }
-//            NSMutableDictionary *takenFoodAmountDict = [[NSMutableDictionary alloc]init];
-//            for (NSString *foodId in m_takenFoodIdsArray)
-//            {
-//                NSDictionary *aaFood = [m_foodAmountInfoDict objectForKey:foodId];
-//                NSNumber *aWeight = [aaFood objectForKey:@"Amount"];
-//                [takenFoodAmountDict setObject:aWeight forKey:foodId];
-//            }
-//            [takenFoodAmountDict removeObjectForKey:ndb_No];
-//            foodDetailController.currentSelectValue = weight;
-//            foodDetailController.defaulSelectValue = weight;
-//            foodDetailController.foodAttr = foodAtr;
-//            foodDetailController.foodName = foodName;
-//            foodDetailController.delegate = self;
-//            foodDetailController.isForEdit = YES;
-//            foodDetailController.isCalForAll = YES;
-//            foodDetailController.staticFoodAmountDict = takenFoodAmountDict;
-//            foodDetailController.GUnitStartIndex = 100;
-//            //UINavigationController *initialController = (UINavigationController*)[UIApplication
-//            //sharedApplication].keyWindow.rootViewController;
-//            UINavigationController *nav = [[UINavigationController alloc]initWithRootViewController:foodDetailController];
-//            [self presentModalViewController:nav animated:YES];
         }
     }
     else
     {
-        [self addFoodForTag:indexPath.row];
+        [self addFoodForNutrientGroup:indexPath.row];
         
-//        NSMutableDictionary *takenFoodAmountDict = [[NSMutableDictionary alloc]init];
-//        for (NSString *foodId in m_takenFoodIdsArray)
-//        {
-//            NSDictionary *aFood = [m_foodAmountInfoDict objectForKey:foodId];
-//            NSNumber *weight = [aFood objectForKey:@"Amount"];
-//            [takenFoodAmountDict setObject:weight forKey:foodId];
-//        }
-//        [m_recommendFoodAmountDict_ForDisplay removeAllObjects];
-//        [[NSUserDefaults standardUserDefaults] setObject:takenFoodAmountDict forKey:LZUserDailyIntakeKey];
-//        [[NSUserDefaults standardUserDefaults]synchronize];
-//        needRefresh = YES;
-//        
-//        NSDictionary *nutrient = [m_nutrientSupplyRateInfoArray objectAtIndex:indexPath.row];
-//        NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
-//        UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
-//        NGFoodsByNutrientViewController *addByNutrientController = [storyboard instantiateViewControllerWithIdentifier:@"NGFoodsByNutrientViewController"];
-//        
-//        addByNutrientController.NutrientId = nutrientId;
-//        addByNutrientController.editDelegate = self;
-//        [self.navigationController pushViewController:addByNutrientController animated:YES];
     }
 }
 //- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -1236,14 +1146,14 @@
                                     [NSNumber numberWithBool:needPriorityFoodToSpecialNutrient],LZSettingKey_needPriorityFoodToSpecialNutrient,
                                     [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                                     nil];
-    if (KeyIsEnvironmentDebug){
-        NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
-        if (flagsDict.count > 0){
-            //            options = [NSMutableDictionary dictionaryWithDictionary:flagsDict];
-            [options setValuesForKeysWithDictionary:flagsDict];
-            assert([options objectForKey:LZSettingKey_randSeed]!=nil);
-        }
-    }
+//    if (KeyIsEnvironmentDebug){
+//        NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
+//        if (flagsDict.count > 0){
+//            //            options = [NSMutableDictionary dictionaryWithDictionary:flagsDict];
+//            [options setValuesForKeysWithDictionary:flagsDict];
+//            assert([options objectForKey:LZSettingKey_randSeed]!=nil);
+//        }
+//    }
     
     NSArray *preferNutrient = [userDefaults objectForKey:KeyUserRecommendPreferNutrientArray];
     NSArray *paramArray = [LZUtility convertPreferNutrientArrayToParamArray:preferNutrient];
@@ -1379,14 +1289,26 @@
     //[initialController pushViewController:dailyIntakeController animated:YES];
     
 }
-- (void)addFoodForTag:(int)tag
+- (void)addFoodForNutrientGroup:(int)indexInGroup
 {
 //    [self mergeRecommendFoodsToTakenFoods];
     
     needRefresh = YES;
     
-    NSDictionary *nutrient = [m_nutrientSupplyRateInfoArray objectAtIndex:tag];
+    NSDictionary *nutrient = [m_nutrientSupplyRateInfoArray objectAtIndex:indexInGroup];
     NSString *nutrientId = [nutrient objectForKey:@"NutrientID"];
+    if ([nutrientId isEqualToString:NutrientId_Water] || [nutrientId isEqualToString:NutrientId_Cholesterol]) {
+        UIAlertView *infoAlert ;
+        if ([nutrientId isEqualToString:NutrientId_Water]){
+            infoAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"提示") message:NSLocalizedString(@"alertmessage_bestfoodbewater",@"最好的食物是水") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
+        }else{
+            infoAlert = [[UIAlertView alloc]initWithTitle:NSLocalizedString(@"alerttitle_wenxintishi",@"提示") message:NSLocalizedString(@"alertmessage_take_as_small",@"摄入得越少越好") delegate:nil cancelButtonTitle:NSLocalizedString(@"zhidaolebutton",@"知道了") otherButtonTitles:nil];
+        }
+        
+        [infoAlert show];
+        
+        return;
+    }
     
     NSNumber *nmNutrientDRI = m_DRIsDict[nutrientId];
     NSNumber *nmNutrientSuppliedAmount = m_nutrientSupplyDict[nutrientId];
@@ -1405,7 +1327,7 @@
 }
 - (IBAction)addFoodByNutrient:(UIButton *)sender {
     int tag = sender.tag;
-    [self performSelector:@selector(addFoodForTag:) withObject:[NSNumber numberWithInt:tag] afterDelay:0.f];
+    [self performSelector:@selector(addFoodForNutrientGroup:) withObject:[NSNumber numberWithInt:tag] afterDelay:0.f];
     
     
 }

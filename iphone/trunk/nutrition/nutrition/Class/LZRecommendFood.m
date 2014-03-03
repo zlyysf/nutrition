@@ -15,7 +15,7 @@
 
 +(NSArray*)getOnlyToShowNutrients
 {
-    NSArray *ary = [NSArray arrayWithObjects: @"Energ_Kcal", nil];
+    NSArray *ary = [NSArray arrayWithObjects: @"Energ_Kcal", @"Water_(g)", @"Cholestrl_(mg)",  nil];//
     return ary;
 }
 
@@ -25,6 +25,9 @@
 +(NSArray*)getCustomNutrients:(NSDictionary*)options
 {
     BOOL needLimitNutrients = Config_needLimitNutrients;
+    if (needFee)
+        needLimitNutrients = false;
+    
     if (options.count > 0){//options param has priority
         NSNumber *nmFlag_needLimitNutrients = [options objectForKey:LZSettingKey_needLimitNutrients];
         if (nmFlag_needLimitNutrients != nil){
@@ -36,12 +39,12 @@
     if (!KeyIsEnvironmentDebug){
         //just use config value
     }else{
-        NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
-        if (flagsDict.count > 0){
-            NSNumber *nmFlag_needLimitNutrients = [flagsDict objectForKey:LZSettingKey_needLimitNutrients];
-            if (nmFlag_needLimitNutrients != nil)
-                needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
-        }
+//        NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey: KeyDebugSettingsDict];
+//        if (flagsDict.count > 0){
+//            NSNumber *nmFlag_needLimitNutrients = [flagsDict objectForKey:LZSettingKey_needLimitNutrients];
+//            if (nmFlag_needLimitNutrients != nil)
+//                needLimitNutrients = [nmFlag_needLimitNutrients boolValue];
+//        }
     }
     return [self.class getCustomNutrients_withFlag_needLimitNutrients:needLimitNutrients];
 }
@@ -56,25 +59,19 @@
                                     @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",
                                     @"Riboflavin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",@"Vit_B12_(µg)",
                                     @"Calcium_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Zinc_(mg)",@"Potassium_(mg)",
-                                    @"Fiber_TD_(g)",@"Protein_(g)", //@"Energ_Kcal",
+                                    @"Fiber_TD_(g)",@"Protein_(g)",
                                     nil];
     }else{
-//        limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
-//                                    @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
-//                                    @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-//                                    @"Vit_B12_(µg)",@"Panto_Acid_mg)",
-//                                    @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
-//                                    @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
-//                                    @"Protein_(g)",@"Lipid_Tot_(g)",
-//                                    @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
         limitedNutrientsCanBeCal = [NSArray arrayWithObjects:
                                     @"Vit_A_RAE",@"Vit_C_(mg)",@"Vit_D_(µg)",@"Vit_E_(mg)",@"Vit_K_(µg)",
-                                    @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)",@"Vit_B6_(mg)",@"Folate_Tot_(µg)",
-                                    @"Vit_B12_(µg)",@"Panto_Acid_mg)",
+                                    @"Thiamin_(mg)",@"Riboflavin_(mg)",@"Niacin_(mg)", @"Panto_Acid_mg)", @"Vit_B6_(mg)",@"Folate_Tot_(µg)",
+                                    @"Vit_B12_(µg)",
+                                    @"Choline_Tot_ (mg)",
                                     @"Calcium_(mg)",@"Copper_(mg)",@"Iron_(mg)",@"Magnesium_(mg)",@"Manganese_(mg)",
-                                    @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",
-                                    @"Protein_(g)",
-                                    @"Fiber_TD_(g)",@"Choline_Tot_ (mg)", nil];
+                                    @"Phosphorus_(mg)",@"Selenium_(µg)",@"Zinc_(mg)",@"Potassium_(mg)",@"Sodium_(mg)",
+                                    @"Protein_(g)",@"Lipid_Tot_(g)",
+                                    @"Fiber_TD_(g)", nil];
+
     }
     return limitedNutrientsCanBeCal;
 }
@@ -108,6 +105,7 @@
          @"Water_(g)",@"Fiber_TD_(g)",@"Choline_Tot_ (mg)",@"Cholestrl_(mg)", nil];
     return nutrientNames;
 }
+
 
 
 -(NSMutableDictionary *) recommendFoodForEnoughNuitritionWithPreIntake:(NSDictionary*)takenFoodAmountDict andUserInfo:(NSDictionary*)userInfo andOptions:(NSDictionary*)options
@@ -3085,7 +3083,13 @@
         NSString *nutrientId = allShowNutrients[i];
         NSNumber *nm_DRI1unit = DRIsDict[nutrientId];
         NSNumber *nm_Supply = nutrientSupplyDict[nutrientId];
-        double supplyRate = [nm_Supply doubleValue]/([nm_DRI1unit doubleValue]);
+        double supplyRate;
+        if ([nm_DRI1unit doubleValue]>0){
+            supplyRate = [nm_Supply doubleValue]/([nm_DRI1unit doubleValue]);
+        }else{
+            supplyRate = 1;
+        }
+        
         NSDictionary *nutrientInfoDict = nutrientInfoDict2Level[nutrientId];
         NSString *nutrientCnCaption = nutrientInfoDict[COLUMN_NAME_NutrientCnCaption];
         NSDictionary *nutrientSupplyRateInfo= [NSDictionary dictionaryWithObjectsAndKeys:

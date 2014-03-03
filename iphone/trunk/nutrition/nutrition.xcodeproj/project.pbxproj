@@ -264,6 +264,7 @@
 
 /* Begin PBXFileReference section */
 		0818CA1218477B50003DB33A /* CDataScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CDataScanner.m; path = nutrition/BaiduSDK/TouchJSON/CDataScanner.m; sourceTree = "<group>"; };
+		0838298318C436ED00D3FE80 /* LZChargeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZChargeConfig.h; path = nutrition/Class/LZChargeConfig.h; sourceTree = "<group>"; };
 		084CFC9518ADBC570003BC93 /* nutrient_button_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_off@2x.png"; path = "nutrition/Resource/nutrient_button_off@2x.png"; sourceTree = "<group>"; };
 		084CFC9618ADBC570003BC93 /* nutrient_button_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_on@2x.png"; path = "nutrition/Resource/nutrient_button_on@2x.png"; sourceTree = "<group>"; };
 		084CFC9918ADBCC30003BC93 /* button_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_back@2x.png"; path = "nutrition/Resource/button_back@2x.png"; sourceTree = "<group>"; };
@@ -788,6 +789,7 @@
 		085C8D4917336707001A1ABB /* Util */ = {
 			isa = PBXGroup;
 			children = (
+				0838298318C436ED00D3FE80 /* LZChargeConfig.h */,
 				5FB8C0B9172BCA9F00E90387 /* LZConstants.h */,
 				5FB8C0B6172BC61D00E90387 /* LZUtility.h */,
 				5FB8C0B7172BC61D00E90387 /* LZUtility.m */,

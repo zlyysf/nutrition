@@ -1216,13 +1216,13 @@
                     [NSNumber numberWithBool:needPriorityFoodToSpecialNutrient],LZSettingKey_needPriorityFoodToSpecialNutrient,
                     [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                                     nil];
-    if (KeyIsEnvironmentDebug){
-        NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
-        if (flagsDict.count > 0){
-            [options setValuesForKeysWithDictionary:flagsDict];
-            assert([options objectForKey:LZSettingKey_randSeed]!=nil);
-        }
-    }
+//    if (KeyIsEnvironmentDebug){
+//        NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
+//        if (flagsDict.count > 0){
+//            [options setValuesForKeysWithDictionary:flagsDict];
+//            assert([options objectForKey:LZSettingKey_randSeed]!=nil);
+//        }
+//    }
     
     NSArray *preferNutrient = [userDefaults objectForKey:KeyUserRecommendPreferNutrientArray];
     NSArray *paramArray = [LZUtility convertPreferNutrientArrayToParamArray:preferNutrient];

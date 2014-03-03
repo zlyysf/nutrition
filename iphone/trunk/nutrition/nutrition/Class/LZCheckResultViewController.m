@@ -814,15 +814,15 @@
                                     [NSNumber numberWithBool:needPriorityFoodToSpecialNutrient],LZSettingKey_needPriorityFoodToSpecialNutrient,
                                     [NSNumber numberWithInt:randSeed],LZSettingKey_randSeed,
                                     nil];
-    if (KeyIsEnvironmentDebug){
-            NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
-            if (flagsDict.count > 0){
-                    //            options = [NSMutableDictionary dictionaryWithDictionary:flagsDict];
-                    [options setValuesForKeysWithDictionary:flagsDict];
-                    assert([options objectForKey:LZSettingKey_randSeed]!=nil);
-                }
-        }
-        
+//    if (KeyIsEnvironmentDebug){
+//            NSDictionary *flagsDict = [[NSUserDefaults standardUserDefaults]objectForKey:KeyDebugSettingsDict];
+//            if (flagsDict.count > 0){
+//                    //            options = [NSMutableDictionary dictionaryWithDictionary:flagsDict];
+//                    [options setValuesForKeysWithDictionary:flagsDict];
+//                    assert([options objectForKey:LZSettingKey_randSeed]!=nil);
+//                }
+//        }
+    
     NSArray *paramArray = [LZUtility convertPreferNutrientArrayToParamArray:newPreferArray];
     NSMutableDictionary *params = [NSMutableDictionary dictionaryWithObjectsAndKeys:paramArray,Key_givenNutrients,nil];
     
