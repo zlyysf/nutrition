@@ -63,7 +63,7 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-//    [LZGlobalService SetSubViewExternNone:self];
+    [LZGlobalService SetSubViewExternNone:self];//从膳食清单的任何页面进到这个页面不需要这条语句，但是在百科上的任何页面进到这个页面就需要
     
 //    if (ViewControllerUseBackImage) {
 //        NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
@@ -92,9 +92,12 @@
         self.navigationItem.rightBarButtonItem = saveItem;
     }
 
-    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
-                            CGSizeFromGADAdSize(kGADAdSizeBanner).width, CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
-    self.listView.tableFooterView = footerView;
+    if (!needFee){
+        UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+                                                                     CGSizeFromGADAdSize(kGADAdSizeBanner).width, CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+        self.listView.tableFooterView = footerView;
+    }
+    
 
 //    isFirstLoad = YES;
     self.listView.hidden = YES;
@@ -165,9 +168,13 @@
     }
 
     [MobClick beginLogPageView:UmengPathShiWuXiangQing];
-    GADMasterViewController *shared = [GADMasterViewController singleton];
-    UIView *footerView = self.listView.tableFooterView;
-    [shared resetAdView:self andListView:footerView];
+    
+    if (!needFee){
+        GADMasterViewController *shared = [GADMasterViewController singleton];
+        UIView *footerView = self.listView.tableFooterView;
+        [shared resetAdView:self andListView:footerView];
+    }
+    
 //    [self setButtonState];
 
 }

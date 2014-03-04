@@ -171,11 +171,13 @@
         }
     }
     
-    UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
-                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).width,
-                                                                 CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
-    self.listView.tableFooterView = footerView;
-
+    if (!needFee){
+        UIView *footerView = [[UIView alloc]initWithFrame:CGRectMake(0,0,
+                                                                     CGSizeFromGADAdSize(kGADAdSizeBanner).width,
+                                                                     CGSizeFromGADAdSize(kGADAdSizeBanner).height)];
+        self.listView.tableFooterView = footerView;
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(settingsChanged:) name:Notification_SettingsChangedKey object:nil];
     [self.addFoodButton.titleLabel setFont:[UIFont boldSystemFontOfSize:15]];
     
@@ -259,10 +261,15 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     //[[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(nutrientShowNotification:) name:Notification_ShowNutrientInfoKey object:nil];
     [MobClick beginLogPageView:UmengPathYingYangDaPei];
-    self.listView.tableFooterView.hidden = NO;
-    GADMasterViewController *shared = [GADMasterViewController singleton];
-    UIView *footerView = self.listView.tableFooterView;
-    [shared resetAdView:self andListView:footerView];
+    
+    
+    if (!needFee){
+        self.listView.tableFooterView.hidden = NO;
+        GADMasterViewController *shared = [GADMasterViewController singleton];
+        UIView *footerView = self.listView.tableFooterView;
+        [shared resetAdView:self andListView:footerView];
+    }
+    
     if(needRefresh)
     {
         [self refreshFoodNureitentProcessForAll:YES];

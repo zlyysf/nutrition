@@ -57,15 +57,21 @@
     [self.view addSubview:HUD];
     HUD.hidden = YES;
     HUD.delegate = self;
-    self.adView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
-    [self.adView setBackgroundColor:[UIColor clearColor]];
-
+    
+    if (!needFee){
+        self.adView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
+        [self.adView setBackgroundColor:[UIColor clearColor]];
+    }
+    
 	// Do any additional setup after loading the view.
 }
 - (void)viewWillAppear:(BOOL)animated
 {
-    GADMasterViewController *gad = [GADMasterViewController singleton];
-    [gad resetAdView:self andListView:self.adView];
+    if (!needFee){
+        GADMasterViewController *gad = [GADMasterViewController singleton];
+        [gad resetAdView:self andListView:self.adView];
+    }
+    
     if (isFirstLoad) {
         HUD.hidden = NO;
         [HUD show:YES];
@@ -150,11 +156,19 @@
 
             int totalFloor = [foodArray count]/3+ (([foodArray count]%3 == 0)?0:1);
             float backHeight = totalFloor*(15+120)+15+30;
-            [self.contentScrollView setContentSize:CGSizeMake(320, backHeight+30+50)];
-            [self.contentScrollView addSubview:self.adView];
-            CGRect adFrame =self.adView.frame;
-            adFrame.origin.y =backHeight+30;
-            self.adView.frame = adFrame;
+            float backHeight2 = backHeight+30;
+            if (!needFee){
+                backHeight2 += 50;
+            }
+            [self.contentScrollView setContentSize:CGSizeMake(320, backHeight2)];
+        
+            if (!needFee){
+                [self.contentScrollView addSubview:self.adView];
+                CGRect adFrame =self.adView.frame;
+                adFrame.origin.y =backHeight+30;
+                self.adView.frame = adFrame;
+            }
+        
             [self.backView setFrame:CGRectMake(10, 15, 300, backHeight)];
             [self.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];
             [self.backView.layer setBorderWidth:0.5f];

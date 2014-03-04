@@ -46,6 +46,17 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (needFee){
+        [self.admobView removeFromSuperview];
+        
+        CGRect tvFrame = self.listView.frame;
+//        NSLog(@"self.listView.frame be %f,%f, %f,%f",tvFrame.origin.x,tvFrame.origin.y,tvFrame.size.width,tvFrame.size.height);
+        tvFrame.size.height = tvFrame.size.height+50;
+        self.listView.frame = tvFrame;
+    }
+
+    
     if (ViewControllerUseBackImage) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
         UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
@@ -60,6 +71,7 @@
     else{
         isChinese = NO;
     }
+    
     
     //    UIImage *buttonImage = [UIImage imageNamed:@"nav_back_button.png"];
     //
@@ -144,9 +156,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     [MobClick beginLogPageView:UmengPathShiWuZhongLeiErJi];
-    GADMasterViewController *shared = [GADMasterViewController singleton];
-    [shared resetAdView:self andListView:self.admobView];
     
+    if (!needFee){
+        GADMasterViewController *shared = [GADMasterViewController singleton];
+        [shared resetAdView:self andListView:self.admobView];
+    }
 }
 -(void)viewWillDisappear:(BOOL)animated
 {

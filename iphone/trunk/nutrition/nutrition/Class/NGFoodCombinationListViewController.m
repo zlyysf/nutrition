@@ -130,6 +130,14 @@
 	// Do any additional setup after loading the view.
     [LZGlobalService SetSubViewExternNone:self];
     
+    if (needFee){
+        [self.mobView removeFromSuperview];
+        CGRect tvFrame = self.listView.frame;
+//        NSLog(@"self.listView.frame be %f,%f, %f,%f",tvFrame.origin.x,tvFrame.origin.y,tvFrame.size.width,tvFrame.size.height);
+        tvFrame.size.height = tvFrame.size.height+50;
+        self.listView.frame = tvFrame;
+    }
+    
     if (ViewControllerUseBackImage) {
         NSString *path = [[NSBundle mainBundle] pathForResource:@"background@2x" ofType:@"png"];
         UIImage * backGroundImage = [UIImage imageWithContentsOfFile:path];
@@ -167,8 +175,14 @@
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:UmengPathShanShiQingDan];
-    GADMasterViewController *shared = [GADMasterViewController singleton];
-    [shared resetAdView:self andListView:self.mobView];
+    
+    if (!needFee){
+        GADMasterViewController *shared = [GADMasterViewController singleton];
+        [shared resetAdView:self andListView:self.mobView];
+    }else{
+        
+    }
+    
     [self displayLocalDietList];
 }
 - (void)viewDidAppear:(BOOL)animated

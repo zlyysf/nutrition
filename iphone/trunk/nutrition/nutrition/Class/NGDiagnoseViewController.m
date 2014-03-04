@@ -80,7 +80,7 @@
     [self refresh];
     self.adView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
     [self.adView setBackgroundColor:[UIColor clearColor]];
-    self.listView.tableFooterView = self.adView;
+    
     
     	// Do any additional setup after loading the view.
 }
@@ -201,8 +201,12 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    GADMasterViewController *gad = [GADMasterViewController singleton];
-    [gad resetAdView:self andListView:self.adView];
+    if (!needFee){
+        self.listView.tableFooterView = self.adView;
+        GADMasterViewController *gad = [GADMasterViewController singleton];
+        [gad resetAdView:self andListView:self.adView];
+    }
+    
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
     if (needRefresh)

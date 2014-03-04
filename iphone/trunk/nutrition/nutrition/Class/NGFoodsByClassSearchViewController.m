@@ -98,17 +98,25 @@
     //        }
     //    }
     int totalFloor = [foodTypeArray count]/3+ (([foodTypeArray count]%3 == 0)?0:1);
-    float scrollHeight = totalFloor *94 + 20+ (totalFloor-1)*8+50;
-    self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, scrollHeight-50, 320, 50)];
-    [self.listView addSubview:self.admobView];
+//    float scrollHeight = totalFloor *94 + 20+ (totalFloor-1)*8+50;
+    float scrollHeight = totalFloor *94 + 20+ (totalFloor-1)*8;
+    if (!needFee){
+        scrollHeight += 50;
+        self.admobView = [[UIView alloc]initWithFrame:CGRectMake(0, scrollHeight-50, 320, 50)];
+        [self.listView addSubview:self.admobView];
+    }
+    
     [self.listView setContentSize:CGSizeMake(320, scrollHeight)];
     [self.searchResultVC.searchBar setPlaceholder:NSLocalizedString(@"foodsearch_searchbar_placeholder",@"快速查找食物")];
 }
 -(void)viewWillAppear:(BOOL)animated
 {
     [MobClick beginLogPageView:UmengPathShiWuChaXun];
-    GADMasterViewController *shared = [GADMasterViewController singleton];
-    [shared resetAdView:self andListView:self.admobView];
+    if (!needFee){
+        GADMasterViewController *shared = [GADMasterViewController singleton];
+        [shared resetAdView:self andListView:self.admobView];
+    }
+    
     if (isfirstLoad)
     {
         isfirstLoad = NO;

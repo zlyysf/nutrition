@@ -72,6 +72,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (needFee){
+        [self.adView removeFromSuperview];
+        
+        CGRect tvFrame = self.listView.frame;
+        //        NSLog(@"self.listView.frame be %f,%f, %f,%f",tvFrame.origin.x,tvFrame.origin.y,tvFrame.size.width,tvFrame.size.height);
+        tvFrame.size.height = tvFrame.size.height+50;
+        self.listView.frame = tvFrame;
+    }
+    
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     isFirstLoad = YES;
     isRecommendViewDone = NO;
@@ -92,18 +102,20 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    GADMasterViewController *gad = [GADMasterViewController singleton];
-    [gad resetAdView:self andListView:self.adView];
-
+    if (!needFee){
+        GADMasterViewController *gad = [GADMasterViewController singleton];
+        [gad resetAdView:self andListView:self.adView];
+    }
+    
     if (isFirstLoad)
     {
-        if (!KeyShouldShowAdView)
-        {
-            CGRect listRect = self.listView.frame;
-            listRect.size.height += 50;
-            self.listView.frame = listRect;
-            self.adView.hidden = YES;
-        }
+//        if (!KeyShouldShowAdView)
+//        {
+//            CGRect listRect = self.listView.frame;
+//            listRect.size.height += 50;
+//            self.listView.frame = listRect;
+//            self.adView.hidden = YES;
+//        }
         HUD.hidden = NO;
         [HUD show:YES];
         isFirstLoad = NO;

@@ -38,6 +38,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    if (needFee){
+        [self.adView removeFromSuperview];
+        CGRect tvFrame = self.mainScrollView.frame;
+        //        NSLog(@"self.listView.frame be %f,%f, %f,%f",tvFrame.origin.x,tvFrame.origin.y,tvFrame.size.width,tvFrame.size.height);
+        tvFrame.size.height = tvFrame.size.height+50;
+        self.mainScrollView.frame = tvFrame;
+    }
+    
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     int foodCount = [foodArray count];
     int totalFloor = foodCount/3+ ((foodCount%3 == 0)?0:1);
@@ -48,8 +57,13 @@
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    GADMasterViewController *gad = [GADMasterViewController singleton];
-    [gad resetAdView:self andListView:self.adView];
+    if (!needFee){
+        GADMasterViewController *gad = [GADMasterViewController singleton];
+        [gad resetAdView:self andListView:self.adView];
+    }else{
+        
+    }
+    
     [self.mainScrollView setContentSize:CGSizeMake(320, backViewContentHeight+30)];
     [self.backView setFrame:CGRectMake(10, 15, 300, backViewContentHeight)];
     [self.backView.layer setBorderColor:[UIColor lightGrayColor].CGColor];

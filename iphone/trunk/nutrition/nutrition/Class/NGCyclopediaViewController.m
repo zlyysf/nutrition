@@ -92,15 +92,20 @@
     foodCellHeight = 20+30+ totalFloor*(80+FoodItemMargin)+FoodItemMargin;
     [self.view setBackgroundColor:[UIColor colorWithRed:230/255.f green:230/255.f blue:230/255.f alpha:1.0f]];
     selectedImage = [LZUtility createImageWithColor:ItemSelectedColor imageSize:CGSizeMake(300, 54)];
+    
     self.adView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, 320, 50)];
     [self.adView setBackgroundColor:[UIColor clearColor]];
-    self.listView.tableFooterView = self.adView;
+    
     
 }
 -(void)viewWillAppear:(BOOL)animated
 {
-    GADMasterViewController *gad = [GADMasterViewController singleton];
-    [gad resetAdView:self andListView:self.adView];
+    if (!needFee){//no ad in charged version
+        self.listView.tableFooterView = self.adView;
+        GADMasterViewController *gad = [GADMasterViewController singleton];
+        [gad resetAdView:self andListView:self.adView];
+    }
+    
 //    [[LZReviewAppManager SharedInstance]popReviewOurAppAlertAccordingRules_withViewController:self];
 }
 -(NSString *)getNutritionName:(NSString *)nutritionId

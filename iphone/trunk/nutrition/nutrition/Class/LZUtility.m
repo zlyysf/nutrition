@@ -484,6 +484,17 @@
     return ret;
 }
 
++(BOOL)isItemInArray:(NSArray*)ary andItem:(id)item
+{
+    if (item == nil)
+        return true;
+    if (ary.count == 0)
+        return false;
+    NSSet *set1 = [NSSet setWithArray:ary];
+    bool ret = [set1 containsObject:item];
+    return ret;
+}
+
 
 +(NSMutableDictionary*)dictionaryArrayTo2LevelDictionary_withKeyName:(NSString*)keyName andDicArray:(NSArray*)dicArray
 {
