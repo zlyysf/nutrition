@@ -831,7 +831,11 @@
     [sqlStr appendFormat:@"\n D.[%@] AS RichLevel ",nutrientAsColumnName];
     [sqlStr appendString:@"\n  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
     if (ifNeedCustomDefinedFoods){
-        [sqlStr appendFormat:@"\n    JOIN CustomRichFood CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='%@' \n",nutrientAsColumnName];
+        if( [LZUtility isItemInArray:[NSArray arrayWithObjects:@"Vit_K_(µg)",@"Thiamin_(mg)",@"Niacin_(mg)",@"Panto_Acid_mg)",@"Choline_Tot_ (mg)",@"Copper_(mg)",@"Manganese_(mg)",@"Phosphorus_(mg)",@"Selenium_(µg)",@"Sodium_(mg)",@"Lipid_Tot_(g)",@"Water_(g)", @"Cholestrl_(mg)", nil] andItem:nutrientAsColumnName ]){
+            //do nothing because no data
+        }else{
+            [sqlStr appendFormat:@"\n    JOIN CustomRichFood CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='%@' \n",nutrientAsColumnName];
+        }
     }
     NSString *upperLimitColumn = COLUMN_NAME_normal_value;
     if ([COLUMN_NAME_Upper_Limit isEqualToString:upperLimitType]){
@@ -881,6 +885,11 @@
     [sqlStr appendString:@"SELECT F.*,CnCaption,FoodNameEn,CnType,classify ,FC.[Lower_Limit(g)],FC.[Upper_Limit(g)],FC.normal_value,FC.first_recommend,FC.increment_unit,FC.PicPath, SingleItemUnitName,SingleItemUnitWeight "];
     [sqlStr appendString:@"\n  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No "];
 //    [sqlStr appendString:@"\n    JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
+//    if( [LZUtility isItemInArray:[NSArray arrayWithObjects:@"Vit_K_(µg)",@"Thiamin_(mg)",@"Niacin_(mg)",@"Choline_Tot_ (mg)",@"Copper_(mg)",@"Manganese_(mg)",@"Phosphorus_(mg)",@"Selenium_(µg)",@"Sodium_(mg)",@"Lipid_Tot_(g)",@"Water_(g)", @"Cholestrl_(mg)", nil] andItem:nutrientAsColumnName ]){
+//        //do nothing because no data
+//    }else{
+//        [sqlStr appendFormat:@"\n    JOIN CustomRichFood2 CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='%@' \n",nutrientAsColumnName];
+//    }
     [sqlStr appendFormat:@"\n    JOIN CustomRichFood2 CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='%@' \n",nutrientAsColumnName];
     
     
@@ -946,7 +955,11 @@
 //    [sqlStr appendString:@"\n  FROM FoodNutritionCustom F JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
     [sqlStr appendString:@"\n  FROM FoodNutrition F join FoodCustom FC on F.NDB_No=FC.NDB_No JOIN Food_Supply_DRI_Amount D on F.NDB_No=D.NDB_No "];
     if (ifNeedCustomDefinedFoods){
-        [sqlStr appendFormat:@"\n    JOIN CustomRichFood CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='%@' \n",nutrientAsColumnName];
+        if( [LZUtility isItemInArray:[NSArray arrayWithObjects:@"Vit_K_(µg)",@"Thiamin_(mg)",@"Niacin_(mg)",@"Panto_Acid_mg)",@"Choline_Tot_ (mg)",@"Copper_(mg)",@"Manganese_(mg)",@"Phosphorus_(mg)",@"Selenium_(µg)",@"Sodium_(mg)",@"Lipid_Tot_(g)",@"Water_(g)", @"Cholestrl_(mg)", nil] andItem:nutrientAsColumnName ]){
+            //do nothing because no data
+        }else{
+            [sqlStr appendFormat:@"\n    JOIN CustomRichFood CRF ON FC.NDB_No=CRF.NDB_No AND CRF.NutrientId='%@' \n",nutrientAsColumnName];
+        }
     }
     
     NSMutableArray *exprIncludeORdata = [NSMutableArray array];
