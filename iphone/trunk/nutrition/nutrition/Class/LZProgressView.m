@@ -52,7 +52,7 @@
     CGColorRelease (myColor);
     CGColorSpaceRelease (myColorSpace);
     CGContextRestoreGState(myContext);
-    if (drawingProgress <0.01f)
+    if (drawingProgress <0.01f || isnan(drawingProgress))
     {
         return;
     }
