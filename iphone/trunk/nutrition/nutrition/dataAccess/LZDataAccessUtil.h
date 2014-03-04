@@ -14,6 +14,8 @@
 +(NSArray *)FMResultSetToDictionaryArray:(FMResultSet *)rs;
 +(NSDictionary *)FMResultSetToDictionaryRowsAndCols:(FMResultSet *)rs;
 
+-(NSArray*)getAllColumnsOfTable:(NSString *)tableName;
+
 +(NSDictionary *)findRowByKey:(NSArray *)rows andKeyName:(NSString *)keyname andKeyValue:(NSString *)keyvalue;
 -(NSString *)replaceForSqlText:(NSString *)origin;
 
@@ -24,8 +26,10 @@
 -(void)createTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames withPrimaryKey:(NSString*)primaryKey andIfNeedDropTable:(BOOL)needDrop;
 -(void)createTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames withRows2D:(NSArray*)rows2D withPrimaryKey:(NSString*)primaryKey andIfNeedDropTable:(BOOL)needDrop;
 -(NSString *)generateInsertSqlForTable:(NSString*)tableName andColumnNames:(NSArray*)columnNames;
+-(NSString*)generateInsertSqlForTable:(NSString *)tableName;
 -(void)insertToTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames andRows2D:(NSArray*)rows2D andIfNeedClearTable:(BOOL)needClear;
 
+-(void)importDataFromOneDBToOther_withDestTableNames:(NSArray *)tableNames andSrcDataAccess:(LZDataAccess*)srcDa andIfNeedClearTable:(BOOL)needClear;
 
 -(NSDictionary*)queryDataAndMetaDataBySelectSql:(NSString*)sqlSelect;
 

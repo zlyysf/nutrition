@@ -23,6 +23,7 @@
 //+ (NSString *)dbFilePath;
 
 //- (id)initDBConnection;
+-(id)initWithDBfilePath:(NSString*)dbFilePath;
 - (id)init_withDBcon:(FMDatabase *)innerDBCon;
 -(void)openDB_withFilePath: (NSString *)dbFilePath;
 -(void)closeDB;

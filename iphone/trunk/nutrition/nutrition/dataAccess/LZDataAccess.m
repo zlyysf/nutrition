@@ -36,6 +36,16 @@
     return filePath;
 }
 
++ (NSString *)dbFileTmpPath {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *tmpFileName = [NSString stringWithFormat:@"%@tmp",cDbFile];
+    NSString *filePath = [documentsDirectory stringByAppendingPathComponent:tmpFileName];
+    //    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
+    //    NSLog(@"dbFileTmpPath=%@",filePath);
+    return filePath;
+}
+
 + (NSString *)srcResourceDbFilePath {
     NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:cDbFile];
     //NSLog(@"dbFilePath=%@",filePath);
@@ -43,13 +53,23 @@
 }
 
 
-
+//just simply open db file
+-(id)initWithDBfilePath:(NSString*)dbFilePath
+{
+    self = [super init];
+    if (self){
+        [self openDB_withFilePath:dbFilePath];
+    }
+    return self;
+}
 
 - (id)initDB{
     self = [super init];
     if (self) {
 
         NSString *dbFilePath = [self.class dbFilePath];
+        NSString *dbFileTmpPath = [self.class dbFileTmpPath];
+
         NSString *srcResourceDbFilePath = [self.class srcResourceDbFilePath];
         NSFileManager * defFileManager = [NSFileManager defaultManager];
         
@@ -76,19 +96,43 @@
             //NSLog(@"initDB, flag %@=%d",flagKey,fileExists);
             if (!flagExists) {
                 NSError *err = nil;
-                [defFileManager removeItemAtPath:dbFilePath error:&err];
+                
+                //for some Fault Tolerance
+                if ([defFileManager fileExistsAtPath:dbFileTmpPath isDirectory:&isDir]){
+                    [defFileManager removeItemAtPath:dbFileTmpPath error:&err];
+                    if (err != nil){
+                        NSLog(@"initDB, fail to pre remove dbFileTmpPath, %@",err);
+                        return nil;
+                    }
+                }
+
+                [defFileManager moveItemAtPath:dbFilePath toPath:dbFileTmpPath error:&err];
                 if (err != nil){
-                    //NSLog(@"initDB, fail to remove dbFilePath, %@",err);
+                    NSLog(@"initDB , fail to move dbFilePath to dbFileTmpPath, %@",err);
                     return nil;
                 }
+                
                 [defFileManager copyItemAtPath:srcResourceDbFilePath toPath:dbFilePath error:&err];
                 if (err != nil){
-                    //NSLog(@"initDB , fail to copy srcResourceDbFilePath to dbFilePath, %@",err);
+                    NSLog(@"initDB , fail to copy srcResourceDbFilePath to dbFilePath, %@",err);
                     return nil;
                 }
+                [self openDB_withFilePath:dbFilePath];
+                
+                LZDataAccess *srcDa = [[LZDataAccess alloc]initWithDBfilePath:dbFileTmpPath];
+                NSArray *tableNames = [NSArray arrayWithObjects:TABLE_NAME_UserRecordSymptom, TABLE_NAME_FoodCollocation, TABLE_NAME_CollocationFood, TABLE_NAME_FoodCollocationParam, nil];
+                [self importDataFromOneDBToOther_withDestTableNames:tableNames andSrcDataAccess:srcDa andIfNeedClearTable:false];
+                
+                [defFileManager removeItemAtPath:dbFileTmpPath error:&err];
+                if (err != nil){
+                    NSLog(@"initDB, fail to remove dbFileTmpPath at last, %@",err);
+                    return nil;
+                }
+
+                
                 [[NSUserDefaults standardUserDefaults]setBool:YES forKey:flagKey];
                 [[NSUserDefaults standardUserDefaults]synchronize];
-                [self openDB_withFilePath:dbFilePath];
+                
             }else{
                 [self openDB_withFilePath:dbFilePath];
             }

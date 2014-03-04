@@ -21,8 +21,6 @@
     return ary;
 }
 
-
-
 +(NSDictionary *)FMResultSetToDictionaryRowsAndCols:(FMResultSet *)rs
 {
     NSArray *columnNames = nil;
@@ -38,6 +36,18 @@
     return retDict;
 }
 
+-(NSArray*)getAllColumnsOfTable:(NSString *)tableName
+{
+    FMDatabase *_db = dbfm;
+    NSString *query = [NSString stringWithFormat: @"SELECT * FROM %@ LIMIT 1",tableName];
+    FMResultSet *rs = [_db executeQuery:query];
+    
+    NSArray *columnNames = nil;
+    if ([rs next]) {
+        columnNames = rs.columnNameArray;
+    }
+    return columnNames;
+}
 
 
 +(NSDictionary *)findRowByKey:(NSArray *)rows andKeyName:(NSString *)keyname andKeyValue:(NSString *)keyvalue
@@ -206,6 +216,17 @@
     return sqlStr;
 }
 
+-(NSString*)generateInsertSqlForTable:(NSString *)tableName
+{
+    NSArray *columnNames = [self getAllColumnsOfTable:tableName];
+    if (columnNames==nil || columnNames.count==0){
+        return nil;
+    }
+    NSString *sql = [self generateInsertSqlForTable:tableName andColumnNames:columnNames];
+    return sql;
+}
+
+
 -(void)insertToTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames andRows2D:(NSArray*)rows2D andIfNeedClearTable:(BOOL)needClear
 {
     FMDatabase *_db = dbfm;
@@ -225,9 +246,51 @@
     }
 }
 
+-(void)insertToTable_withTableName:(NSString*)tableName withColumnNames:(NSArray*)columnNames andDictRows:(NSArray*)dictRows andIfNeedClearTable:(BOOL)needClear
+{
+    if (dictRows==nil || dictRows.count==0){
+        return;
+    }
+    NSMutableArray *rows2D = [NSMutableArray arrayWithCapacity:dictRows.count];
+    for(int i=0; i<dictRows.count; i++){
+        NSDictionary *rowDict = dictRows[i];
+        NSMutableArray *row1D = [NSMutableArray arrayWithCapacity:columnNames.count];
+        for(int j=0; j<columnNames.count; j++){
+            NSString *columnName = columnNames[j];
+            id val = rowDict[columnName];
+            if (val == nil)
+                [row1D addObject:[NSNull null]];
+            else
+                [row1D addObject:val];
+        }//for j
+        [rows2D addObject:row1D];
+    }//for i
+    [self insertToTable_withTableName:tableName withColumnNames:columnNames andRows2D:rows2D andIfNeedClearTable:needClear];
+}
 
+-(void)importDataFromOneDBToOther_withDestTableName:(NSString *)tableName andTableData:(NSDictionary*)rowsAndCols andIfNeedClearTable:(BOOL)needClear
+{
+    if (rowsAndCols == nil)
+        return;
+    NSArray *cols = rowsAndCols[@"cols"];
+    NSArray *rows = rowsAndCols[@"rows"];
+    if (rows == nil || rows.count==0)
+        return;
+    [self insertToTable_withTableName:tableName withColumnNames:cols andDictRows:rows andIfNeedClearTable:needClear];
+}
 
-
+-(void)importDataFromOneDBToOther_withDestTableName:(NSString *)tableName andSrcDataAccess:(LZDataAccess*)srcDa andIfNeedClearTable:(BOOL)needClear
+{
+    NSDictionary *srcData = [srcDa getAllDataOfTable:tableName];
+    [self importDataFromOneDBToOther_withDestTableName:tableName andTableData:srcData andIfNeedClearTable:needClear];
+}
+-(void)importDataFromOneDBToOther_withDestTableNames:(NSArray *)tableNames andSrcDataAccess:(LZDataAccess*)srcDa andIfNeedClearTable:(BOOL)needClear
+{
+    for (int i=0; i<tableNames.count; i++) {
+        NSString *tableName = tableNames[i];
+        [self importDataFromOneDBToOther_withDestTableName:tableName andSrcDataAccess:srcDa andIfNeedClearTable:needClear];
+    }
+}
 
 
 
