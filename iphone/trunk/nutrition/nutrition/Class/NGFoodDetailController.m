@@ -15,7 +15,7 @@
 //#import "LZDietPickerViewController.h"
 #import "LZNutrientionManager.h"
 #import "LZGlobal.h"
-
+#import "LZGlobalService.h"
 
 
 #define LongLineHeight 20.f

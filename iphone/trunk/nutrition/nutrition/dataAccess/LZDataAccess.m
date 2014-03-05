@@ -2512,7 +2512,7 @@
     key = COLUMN_NAME_calculateNameValuePairs;
     NSString *jsonStr_calculateNameValuePairs = [hmRawData objectForKey:key];
     
-    [self insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:UpdateTimeUTC andInputNameValuePairs:jsonStr_inputNameValuePairs andNote:note andCalculateNameValuePairs:jsonStr_calculateNameValuePairs];
+    return [self insertUserRecordSymptom_withDayLocal:dayLocal andUpdateTimeUTC:UpdateTimeUTC andInputNameValuePairs:jsonStr_inputNameValuePairs andNote:note andCalculateNameValuePairs:jsonStr_calculateNameValuePairs];
 }
 -(BOOL)updateUserRecordSymptom_withDayLocal:(int)dayLocal andUpdateTimeUTC:(NSDate*)updateTimeUTC andInputNameValuePairs:(NSString*)inputNameValuePairs andNote:(NSString*)Note andCalculateNameValuePairs:(NSString*)calculateNameValuePairs
 {

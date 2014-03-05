@@ -14,8 +14,9 @@
 #import "LZDataAccess.h"
 #import "LZReviewAppManager.h"
 #import "LZNutrientionManager.h"
+#import "LZGlobalService.h"
 #import <Parse/Parse.h>
-#import "LZTest1.h"
+//#import "LZTest1.h"
 
 @implementation LZAppDelegate
 

@@ -13,7 +13,7 @@
 #import "NGChartViewController.h"
 #import "NGCyclopediaViewController.h"
 #import "NGUerInfoViewController.h"
-
+#import "LZGlobalService.h"
 #import "NGFoodCombinationListViewController.h"
 
 @interface NGMainTabbarViewController ()

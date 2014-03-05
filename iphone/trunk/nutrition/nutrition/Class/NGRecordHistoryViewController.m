@@ -15,6 +15,8 @@
 #import "NGHealthReportViewController.h"
 #import "MBProgressHUD.h"
 #import "GADMasterViewController.h"
+#import "LZGlobalService.h"
+
 #define MAXNutritonDisplayCount 3
 @interface NGRecordHistoryViewController ()<MBProgressHUDDelegate>
 {

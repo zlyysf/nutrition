@@ -26,6 +26,9 @@
 
 #import "LZDataAccess.h"
 #import "LZCustomDataButton.h"
+#import "LZGlobalService.h"
+
+
 #define KChangeDietAlertTag 99
 @interface NGFoodCombinationListViewController ()<UIAlertViewDelegate>
 
