@@ -6,7 +6,15 @@
 //  Copyright (c) 2013 lingzhi mobile. All rights reserved.
 //
 
-#import "LZChargeConfig.h"
+
+
+
+#ifdef CHARGE
+#import "LZConfigPro.h"
+#else
+#import "LZConfigLite.h"
+#endif
+
 
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
@@ -15,11 +23,7 @@
 
 //#define KeyShouldShowAdView 1 //作用于部分广告条，以方便截图
 
-#define ParseApp_ApplicationID_dev @"fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1" //zlyysf nutrition1 app
-#define ParseApp_ClientKey_dev @"TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex" //zlyysf nutrition1 app
 
-#define ParseApp_ApplicationID_prod @"KOObufGbStKu8OP2QrcGEU0dkwMpvlD0rJ09PD6R" //lingzhi RemedyPills app
-#define ParseApp_ClientKey_prod @"MkXIifLvrpe5mONp4IhPs0ijcpg15ZCJdSJpFIT8" //lingzhi RemedyPills app
 
 #define ParseObject_UserRecord @"UserRecord"
 #define ParseObjectKey_objectId @"objectId"
@@ -368,8 +372,7 @@
 #define Notification_TakenFoodDeletedKey @"KeyTakenFoodDeletedNotification"
 #define Notification_HistoryUpdatedKey @"KeyHistoryUpdatedNotification"
 
-#define UMSDKAPPKey @"51b96cc356240b6ee80a05dc"
-#define ShareSDKAPPKey @"4d8c71c46cb"
+
 #define LocalNotifyTimeInterval (60*60*24*3) // 3 day
 #define AfterDaysNeedAlertToUseApp 3
 
@@ -386,20 +389,12 @@
 #define KeyCheckReminderXiaWu @"KeyCheckReminderXiaWu"
 #define KeyCheckReminderShuiQian @"KeyCheckReminderShuiQian"
 
-#define MY_BANNER_UNIT_ID @"a151bfe57a8e242"//admob key
 
-//share config info
-#define SinaWeiboAppKey @"2194086998"
-#define SinaWeiboAppSecret @"626218cc582db24b710fcb5510801393"
-//#define SinaWeiboAppKey @"3626415671"
-//#define SinaWeiboAppSecret @"9d17e75a675323f5b719cb058c5b9d0d"
 
-#define WeChatAppId @"wxe7284abf139401f5"
+
 #define kKGConvertLBRatio 2.2046
 
-//百度广告APP SID 和计费名
-#define BaiduAdsAppSID @"f06ac562"
-#define BaiduAdsAppSpec @"f06ac562"
+
 #define UmengPathZhuYeMian @"主页面"
 #define UmengPathShanShiQingDan @"膳食清单页面"
 #define UmengPathYingYangDaPei @"营养搭配页面"

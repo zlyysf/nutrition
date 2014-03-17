@@ -460,8 +460,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		08055E1E18D6DBDD001C02C0 /* LZConfigLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConfigLite.h; path = nutrition/NutritionLite/LZConfigLite.h; sourceTree = "<group>"; };
+		08055E1F18D6DBF7001C02C0 /* LZConfigPro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConfigPro.h; path = nutrition/NutritionPro/LZConfigPro.h; sourceTree = "<group>"; };
 		0818CA1218477B50003DB33A /* CDataScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CDataScanner.m; path = nutrition/BaiduSDK/TouchJSON/CDataScanner.m; sourceTree = "<group>"; };
-		0838298318C436ED00D3FE80 /* LZChargeConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZChargeConfig.h; path = nutrition/Class/LZChargeConfig.h; sourceTree = "<group>"; };
 		084CFC9518ADBC570003BC93 /* nutrient_button_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_off@2x.png"; path = "nutrition/Resource/nutrient_button_off@2x.png"; sourceTree = "<group>"; };
 		084CFC9618ADBC570003BC93 /* nutrient_button_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_on@2x.png"; path = "nutrition/Resource/nutrient_button_on@2x.png"; sourceTree = "<group>"; };
 		084CFC9918ADBCC30003BC93 /* button_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_back@2x.png"; path = "nutrition/Resource/button_back@2x.png"; sourceTree = "<group>"; };
@@ -1033,7 +1034,6 @@
 		085C8D4917336707001A1ABB /* Util */ = {
 			isa = PBXGroup;
 			children = (
-				0838298318C436ED00D3FE80 /* LZChargeConfig.h */,
 				5FB8C0B9172BCA9F00E90387 /* LZConstants.h */,
 				5FB8C0B6172BC61D00E90387 /* LZUtility.h */,
 				5FB8C0B7172BC61D00E90387 /* LZUtility.m */,
@@ -1104,6 +1104,7 @@
 		088C090A18C74FA1005B58BC /* NutritionPro */ = {
 			isa = PBXGroup;
 			children = (
+				08055E1F18D6DBF7001C02C0 /* LZConfigPro.h */,
 				088C091018C75415005B58BC /* nutritionpro-Info.plist */,
 				088C090D18C74FF4005B58BC /* InfoPlist.strings */,
 			);
@@ -1113,6 +1114,7 @@
 		088C090F18C751F2005B58BC /* NutritionLite */ = {
 			isa = PBXGroup;
 			children = (
+				08055E1E18D6DBDD001C02C0 /* LZConfigLite.h */,
 				088C093E18C756E3005B58BC /* InfoPlist.strings */,
 				088C093818C75602005B58BC /* nutrition-Info.plist */,
 			);
@@ -2413,6 +2415,16 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"CHARGE=1",
+				);
+				HEADER_SEARCH_PATHS = (
+					nutrition/nutrition/NutritionPro,
+					"$(inherited)",
+					/App2/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					nutrition/nutrition/NutritionLite,
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/nutrition/NutritionPro/nutritionpro-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -2446,6 +2458,13 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "CHARGE=1";
+				HEADER_SEARCH_PATHS = (
+					nutrition/nutrition/NutritionPro,
+					"$(inherited)",
+					/App2/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					nutrition/nutrition/NutritionLite,
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/nutrition/NutritionPro/nutritionpro-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -2539,6 +2558,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					nutrition/nutrition/NutritionLite,
+					"$(inherited)",
+					/App2/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					nutrition/nutrition/NutritionPro,
+				);
 				INFOPLIST_FILE = "nutrition/NutritionLite/nutrition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
@@ -2572,6 +2597,12 @@
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
+				HEADER_SEARCH_PATHS = (
+					nutrition/nutrition/NutritionLite,
+					"$(inherited)",
+					/App2/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					nutrition/nutrition/NutritionPro,
+				);
 				INFOPLIST_FILE = "nutrition/NutritionLite/nutrition-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
