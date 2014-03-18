@@ -31,7 +31,7 @@
 -(void) drawWithShadows :(CGContextRef) myContext
 {
 //    CGSize          myShadowOffset = CGSizeMake (0,  0.5);
-    float           myColorValues[] = {140/255.f, 137/255.f, 137/255.f, 0.75};
+    const CGFloat           myColorValues[] = {140/255.f, 137/255.f, 137/255.f, 0.75};
     CGColorRef      myColor;
     CGColorSpaceRef myColorSpace;
     CGContextSaveGState(myContext);
