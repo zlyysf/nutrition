@@ -19,6 +19,7 @@
 
 +(PFObject*) newParseObjectByCurrentDeviceForUserRecord_withFileContent:(NSString*) fileContent
 {
+    NSLog(@"newParseObjectByCurrentDeviceForUserRecord_withFileContent enter");
     NSString *uniqueDeviceId = [LZUtility uniqueDeviceId];
     
     NSData * fileData = [fileContent dataUsingEncoding:NSUTF8StringEncoding];
@@ -34,6 +35,7 @@
 
 +(void) updateParseObject_UserRecord_WithParseObject:(PFObject*) parseObjUserRecord andFileContent:(NSString*) fileContent
 {
+    NSLog(@"updateParseObject_UserRecord_WithParseObject enter");
     NSData * fileData = [fileContent dataUsingEncoding:NSUTF8StringEncoding];
     PFFile *pFile = [PFFile fileWithName:@"UserRecord.txt" data:fileData];
     [parseObjUserRecord setObject:pFile forKey:ParseObjectKey_UserRecord_attachFile];
@@ -42,6 +44,7 @@
 
 +(PFQuery*) getParseQueryByCurrentDeviceForUserRecord
 {
+    NSLog(@"getParseQueryByCurrentDeviceForUserRecord enter");
     NSString *uniqueDeviceId = [LZUtility uniqueDeviceId];
     NSLog(@"uniqueDeviceId=%@",uniqueDeviceId);
     PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_UserRecord];
@@ -127,9 +130,9 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(PFObject*) getToSaveParseObject_UserRecordSymptom_withDayLocal:(int) dayLocal andUpdateTimeUTC:(NSDate*) updateTimeUTC andInputNameValuePairsData:(NSDictionary*) inputNameValuePairsData andNote:(NSString*) Note andCalculateNameValuePairsData:(NSDictionary*) calculateNameValuePairsData
 {
+    NSLog(@"getToSaveParseObject_UserRecordSymptom_withDayLocal enter");
     NSString* stored_parseObjId = [[NSUserDefaults standardUserDefaults] stringForKey:ParseObjectKey_objectId];
     NSInteger stored_dayLocal = [[NSUserDefaults standardUserDefaults] integerForKey:COLUMN_NAME_DayLocal];
-    
     
     NSString* parseObjIdValid = nil;
     if (stored_parseObjId != nil && stored_parseObjId.length>0 && stored_dayLocal>0){
@@ -180,6 +183,7 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(PFQuery*) getParseQueryByCurrentDeviceForUserRecordSymptom_withDayLocal:(int)dayLocal
 {
+    NSLog(@"getParseQueryByCurrentDeviceForUserRecordSymptom_withDayLocal enter");
     NSString *uniqueDeviceId = [LZUtility uniqueDeviceId];
     PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_UserRecordSymptom];
     [pQuery whereKey:ParseObjectKey_UserRecordSymptom_deviceId equalTo:uniqueDeviceId];
@@ -189,6 +193,7 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(PFQuery*) getParseQueryByCurrentDeviceForUserRecordSymptom
 {
+    NSLog(@"getParseQueryByCurrentDeviceForUserRecordSymptom enter");
     NSString *uniqueDeviceId = [LZUtility uniqueDeviceId];
     NSLog(@"uniqueDeviceId=%@",uniqueDeviceId);
     PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_UserRecordSymptom];
@@ -200,6 +205,7 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(NSMutableDictionary*) parseParseObjectToHashMapRawRow_UserRecordSymptom:(PFObject*) parseObj
 {
+    NSLog(@"parseParseObjectToHashMapRawRow_UserRecordSymptom enter");
     if (parseObj == nil)
         return nil;
     NSMutableDictionary* dataDict = [NSMutableDictionary dictionary];
@@ -240,6 +246,7 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(void) deleteParseObject_FoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId
 {
+    NSLog(@"deleteParseObject_FoodCollocationData_withCollocationId enter");
     LZDataAccess *da = [LZDataAccess singleton];
     
     NSDictionary* foodCollocationData = [da getFoodCollocationData_withCollocationId:nmCollocationId];
@@ -267,6 +274,7 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(void) saveParseObject_FoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId
 {
+    NSLog(@"saveParseObject_FoodCollocationData_withCollocationId enter");
     LZDataAccess *da = [LZDataAccess singleton];
     
     NSDictionary* foodCollocationData = [da getFoodCollocationData_withCollocationId:nmCollocationId];
@@ -331,6 +339,7 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(NSMutableDictionary*) parseParseObjectForDA_FoodCollocationData:(PFObject*) parseObj
 {
+    NSLog(@"parseParseObjectForDA_FoodCollocationData enter");
     if (parseObj == nil)
         return nil;
     NSMutableDictionary* dataDict = [NSMutableDictionary dictionary];
@@ -381,6 +390,7 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(PFQuery*) getParseQueryByCurrentDeviceForFoodCollocationData_withCollocationId:(NSNumber*)nmCollocationId
 {
+    NSLog(@"getParseQueryByCurrentDeviceForFoodCollocationData_withCollocationId enter");
     NSString *uniqueDeviceId = [LZUtility uniqueDeviceId];
     PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_FoodCollocation];
     [pQuery whereKey:ParseObjectKey_FoodCollocation_deviceId equalTo:uniqueDeviceId];
@@ -390,6 +400,7 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(PFQuery*) getParseQueryByCurrentDeviceForFoodCollocationData
 {
+    NSLog(@"getParseQueryByCurrentDeviceForFoodCollocationData enter");
     NSString *uniqueDeviceId = [LZUtility uniqueDeviceId];
     NSLog(@"uniqueDeviceId=%@",uniqueDeviceId);
     PFQuery *pQuery = [PFQuery queryWithClassName:ParseObject_FoodCollocation];
@@ -402,6 +413,7 @@ PFObject *g_parseObjUserRecord=nil;
 
 +(void) syncRemoteDataToLocal_withJustCallback:(JustCallbackBlock) justCallback
 {
+    NSLog(@"syncRemoteDataToLocal_withJustCallback enter");
     LZDataAccess *da = [LZDataAccess singleton];//注意这条语句必须在最前。由于db那边的更新是每次升级都会删掉以前的数据库。导致这里也得每次升级时再同步一下。而且这依赖于db。
     
     NSString *flagKey = [LZUtility getPersistKey_ByEachVersion_alreadyLoadFromRemoteDataInParse];
@@ -410,11 +422,14 @@ PFObject *g_parseObjUserRecord=nil;
         if (justCallback!=nil){
             justCallback(true);
         }
+        NSLog(@"syncRemoteDataToLocal_withJustCallback exit1");
         return;
     }
     
     PFQuery *queryRemote_UserRecordSymptom = [self getParseQueryByCurrentDeviceForUserRecordSymptom];
+    NSLog(@"syncRemoteDataToLocal_withJustCallback findObjectsInBackgroundWithBlock begin");
     [queryRemote_UserRecordSymptom findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        NSLog(@"syncRemoteDataToLocal_withJustCallback findObjectsInBackgroundWithBlock return");
         NSMutableString *msg = [NSMutableString string];
         bool succeeded = (error==nil);
         if (!succeeded){
