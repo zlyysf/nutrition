@@ -260,15 +260,6 @@
 		088C08B518C743CD005B58BC /* add_by_nutrient_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE4018A4B84E00D9D687 /* add_by_nutrient_button@2x.png */; };
 		088C090B18C74FF4005B58BC /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 088C090D18C74FF4005B58BC /* InfoPlist.strings */; };
 		088C091118C75415005B58BC /* nutritionpro-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 088C091018C75415005B58BC /* nutritionpro-Info.plist */; };
-		088C091C18C754E9005B58BC /* iconLite29.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091318C754E9005B58BC /* iconLite29.png */; };
-		088C091D18C754E9005B58BC /* iconLite57.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091418C754E9005B58BC /* iconLite57.png */; };
-		088C091E18C754E9005B58BC /* iconLite58.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091518C754E9005B58BC /* iconLite58.png */; };
-		088C091F18C754E9005B58BC /* iconLite72.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091618C754E9005B58BC /* iconLite72.png */; };
-		088C092018C754E9005B58BC /* iconLite76.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091718C754E9005B58BC /* iconLite76.png */; };
-		088C092118C754E9005B58BC /* iconLite114.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091818C754E9005B58BC /* iconLite114.png */; };
-		088C092218C754E9005B58BC /* iconLite120.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091918C754E9005B58BC /* iconLite120.png */; };
-		088C092318C754E9005B58BC /* iconLite144.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091A18C754E9005B58BC /* iconLite144.png */; };
-		088C092418C754E9005B58BC /* iconLite152.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091B18C754E9005B58BC /* iconLite152.png */; };
 		088C092F18C7554A005B58BC /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C092618C7554A005B58BC /* icon-72.png */; };
 		088C093018C7554A005B58BC /* icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C092718C7554A005B58BC /* icon-72@2x.png */; };
 		088C093118C7554A005B58BC /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C092818C7554A005B58BC /* Icon-Small.png */; };
@@ -327,6 +318,15 @@
 		08A1A2CB18863ED600E95049 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A1A2C918863EBF00E95049 /* Parse.framework */; };
 		08A1A2CC188649C600E95049 /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
 		08A1A2CD188649C700E95049 /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
+		08C886CB18D7F3B800ADA3EE /* iconLite29.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091318C754E9005B58BC /* iconLite29.png */; };
+		08C886CC18D7F3BB00ADA3EE /* iconLite57.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091418C754E9005B58BC /* iconLite57.png */; };
+		08C886CD18D7F3C000ADA3EE /* iconLite58.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091518C754E9005B58BC /* iconLite58.png */; };
+		08C886CE18D7F3C300ADA3EE /* iconLite72.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091618C754E9005B58BC /* iconLite72.png */; };
+		08C886CF18D7F3C600ADA3EE /* iconLite76.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091718C754E9005B58BC /* iconLite76.png */; };
+		08C886D018D7F3CA00ADA3EE /* iconLite114.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091818C754E9005B58BC /* iconLite114.png */; };
+		08C886D118D7F3CD00ADA3EE /* iconLite120.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091918C754E9005B58BC /* iconLite120.png */; };
+		08C886D218D7F3D000ADA3EE /* iconLite144.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091A18C754E9005B58BC /* iconLite144.png */; };
+		08C886D318D7F3D400ADA3EE /* iconLite152.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091B18C754E9005B58BC /* iconLite152.png */; };
 		08ED42D317D4970A00917C78 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
 		08FA708D18B1E02D002DF80E /* LZUtilityParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA708C18B1E02D002DF80E /* LZUtilityParse.m */; };
 		08FA708E18B1E155002DF80E /* LZUtilityParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA708C18B1E02D002DF80E /* LZUtilityParse.m */; };
@@ -1902,8 +1902,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				088C093018C7554A005B58BC /* icon-72@2x.png in Resources */,
-				088C092218C754E9005B58BC /* iconLite120.png in Resources */,
-				088C092418C754E9005B58BC /* iconLite152.png in Resources */,
 				088C087018C743CD005B58BC /* recommend_sign@2x.png in Resources */,
 				088C087218C743CD005B58BC /* physics-50@2x.png in Resources */,
 				088C087318C743CD005B58BC /* FoodCombinationList.storyboard in Resources */,
@@ -1914,10 +1912,8 @@
 				088C087718C743CD005B58BC /* Default@2x.png in Resources */,
 				088C087818C743CD005B58BC /* right@2x.png in Resources */,
 				088C087918C743CD005B58BC /* foodDealed in Resources */,
-				088C091E18C754E9005B58BC /* iconLite58.png in Resources */,
 				088C087A18C743CD005B58BC /* README.mdown in Resources */,
 				088C087B18C743CD005B58BC /* Default.png in Resources */,
-				088C091C18C754E9005B58BC /* iconLite29.png in Resources */,
 				088C093418C7554A005B58BC /* Icon@2x.png in Resources */,
 				088C087C18C743CD005B58BC /* section_bar@2x.png in Resources */,
 				088C087D18C743CD005B58BC /* 心跳@2x.png in Resources */,
@@ -1935,7 +1931,6 @@
 				088C092F18C7554A005B58BC /* icon-72.png in Resources */,
 				088C094F18C7582F005B58BC /* MainStoryboard.storyboard in Resources */,
 				088C088E18C743CD005B58BC /* big_arrow_clicked@2x.png in Resources */,
-				088C091F18C754E9005B58BC /* iconLite72.png in Resources */,
 				088C088F18C743CD005B58BC /* item_detail_arrow@2x.png in Resources */,
 				088C089018C743CD005B58BC /* Default-568h@2x.png in Resources */,
 				088C089118C743CD005B58BC /* 五谷@2x.png in Resources */,
@@ -1949,12 +1944,9 @@
 				088C089818C743CD005B58BC /* month_view-50@2x.png in Resources */,
 				088C089918C743CD005B58BC /* button_back@2x.png in Resources */,
 				088C089A18C743CD005B58BC /* 肉类@2x.png in Resources */,
-				088C092018C754E9005B58BC /* iconLite76.png in Resources */,
-				088C092118C754E9005B58BC /* iconLite114.png in Resources */,
 				088C089B18C743CD005B58BC /* 菌藻类@2x.png in Resources */,
 				088C093318C7554A005B58BC /* Icon.png in Resources */,
 				088C093218C7554A005B58BC /* Icon-Small@2x.png in Resources */,
-				088C091D18C754E9005B58BC /* iconLite57.png in Resources */,
 				088C089C18C743CD005B58BC /* 蔬菜@2x.png in Resources */,
 				088C089D18C743CD005B58BC /* 蛋类@2x.png in Resources */,
 				088C089E18C743CD005B58BC /* info-50@2x.png in Resources */,
@@ -1980,7 +1972,6 @@
 				088C08AE18C743CD005B58BC /* left@2x.png in Resources */,
 				088C08AF18C743CD005B58BC /* 体温计@2x.png in Resources */,
 				088C08B418C743CD005B58BC /* gray_horizon_line@2x.png in Resources */,
-				088C092318C754E9005B58BC /* iconLite144.png in Resources */,
 				088C08B518C743CD005B58BC /* add_by_nutrient_button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2009,11 +2000,14 @@
 				5FF08A9D1850A5AD00A954C8 /* fork@2x.png in Resources */,
 				5F7E5AAB17969463007CA18A /* diet_empty_icon@2x.png in Resources */,
 				5F90D80117AF8873000AEC06 /* baidumobadsdk.bundle in Resources */,
+				08C886D118D7F3CD00ADA3EE /* iconLite120.png in Resources */,
 				5FECAD901838701100D72A8C /* NewMainStoryboard.storyboard in Resources */,
 				088C094618C75714005B58BC /* InfoPlist.strings in Resources */,
 				5FF593E0183E01B60011CEA3 /* 血压@2x.png in Resources */,
 				5FF593DE183E01B60011CEA3 /* 体重@2x.png in Resources */,
 				5F943EFA17D721F400AFBF47 /* 主食@2x.png in Resources */,
+				08C886D218D7F3D000ADA3EE /* iconLite144.png in Resources */,
+				08C886D318D7F3D400ADA3EE /* iconLite152.png in Resources */,
 				088FDE4C18A6373200D9D687 /* big_arrow_clicked@2x.png in Resources */,
 				5F7F71F71840D82400724397 /* item_detail_arrow@2x.png in Resources */,
 				5FF9D9F41876901F00F6A525 /* Default-568h@2x.png in Resources */,
@@ -2021,7 +2015,9 @@
 				088FDE4D18A6373200D9D687 /* big_arrow@2x.png in Resources */,
 				5F943EFC17D721F400AFBF47 /* 奶制品@2x.png in Resources */,
 				5F943EFD17D721F400AFBF47 /* 干果@2x.png in Resources */,
+				08C886CF18D7F3C600ADA3EE /* iconLite76.png in Resources */,
 				088FDE2718A4890900D9D687 /* diet_topbar_bg@2x.png in Resources */,
+				08C886CE18D7F3C300ADA3EE /* iconLite72.png in Resources */,
 				5F943EFE17D721F400AFBF47 /* 水产@2x.png in Resources */,
 				5F943EFF17D721F400AFBF47 /* 水果@2x.png in Resources */,
 				5FECAD991838777F00D72A8C /* month_view-50@2x.png in Resources */,
@@ -2032,18 +2028,22 @@
 				5F943F0317D721F400AFBF47 /* 蛋类@2x.png in Resources */,
 				5F22E3D918435CD1001CCC89 /* info-50@2x.png in Resources */,
 				5F943F0417D721F400AFBF47 /* 调味品@2x.png in Resources */,
+				08C886CB18D7F3B800ADA3EE /* iconLite29.png in Resources */,
 				5F943F0517D721F400AFBF47 /* 豆制品@2x.png in Resources */,
 				088FDE4918A62DBA00D9D687 /* change_name_button@2x.png in Resources */,
 				5F943F0617D721F400AFBF47 /* 零食@2x.png in Resources */,
 				088C094D18C757FB005B58BC /* Localizable.strings in Resources */,
+				08C886CC18D7F3BB00ADA3EE /* iconLite57.png in Resources */,
 				084CFC9718ADBC570003BC93 /* nutrient_button_off@2x.png in Resources */,
 				5F943F0717D721F400AFBF47 /* 饮料@2x.png in Resources */,
 				5FECAD971838777F00D72A8C /* clinic-50@2x.png in Resources */,
 				088FDE2618A4890900D9D687 /* addfood_icon@2x.png in Resources */,
 				08FA709418B4505D002DF80E /* diet_list-50@2x.png in Resources */,
 				084CFC9818ADBC570003BC93 /* nutrient_button_on@2x.png in Resources */,
+				08C886D018D7F3CA00ADA3EE /* iconLite114.png in Resources */,
 				086944A518AC75EE0085B76A /* valuepicker_bg@2x.png in Resources */,
 				088FDE2918A4890900D9D687 /* share_icon@2x.png in Resources */,
+				08C886CD18D7F3C000ADA3EE /* iconLite58.png in Resources */,
 				5FECAD981838777F00D72A8C /* line_chart-50@2x.png in Resources */,
 				5F2B2C601859AAF4004243F9 /* left@2x.png in Resources */,
 				5FF593DD183E01B60011CEA3 /* 体温计@2x.png in Resources */,
