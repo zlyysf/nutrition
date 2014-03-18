@@ -19,7 +19,7 @@
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
 
-#define KeyIsEnvironmentDebug 1
+#define KeyIsEnvironmentDebug 0
 
 //#define KeyShouldShowAdView 1 //作用于部分广告条，以方便截图
 
