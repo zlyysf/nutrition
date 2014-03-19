@@ -11,6 +11,8 @@
 
 #define needFee 1 // 是否收费
 
+#define AppleIDofApp @"834768588"
+
 #define ParseApp_ApplicationID_dev @"X6IfgbIUaEbMpZUUc5r40nnREUr8uIcfcrMAHtJY" //lingzhi19b , remedyPills Pro dev
 #define ParseApp_ClientKey_dev @"R9hP9LzdVauEFDcmVgMOAqiy7DTyBp3WKvvstU5x" //
 

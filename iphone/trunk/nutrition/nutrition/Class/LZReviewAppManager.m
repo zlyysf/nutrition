@@ -161,13 +161,14 @@
 //    str = [NSString stringWithFormat:@"%@/wa/viewContentsUserReviews?", str];
 //    str = [NSString stringWithFormat:@"%@type=Purple+Software&id=", str];
 //    // Here is the app id from itunesconnect
-//    str = [NSString stringWithFormat:@"%@658111966", str];
+//    str = [NSString stringWithFormat:@"%@%@", str,AppleIDofApp];
     
-    NSString *idApp = @"658111966";
+    NSString *idApp = AppleIDofApp;
     NSString *str = [NSString stringWithFormat:@"itms-apps://itunes.apple.com/app/id%@?at=10l6dK", idApp];
     
     [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
-    //NSURL *ourAppUrl = [ [ NSURL alloc ] initWithString: @"https://itunes.apple.com/app/id658111966" ];
+//    NSString *sUrl = [NSString stringWithFormat:@"https://itunes.apple.com/app/id%@", AppleIDofApp];
+    //NSURL *ourAppUrl = [ [ NSURL alloc ] initWithString: sUrl ];
     //[[UIApplication sharedApplication] openURL:ourAppUrl];
 }
 - (void)alertView:(UIAlertView *)alertView willDismissWithButtonIndex:(NSInteger)buttonIndex

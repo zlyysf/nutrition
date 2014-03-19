@@ -11,6 +11,8 @@
 
 #define needFee 0 // 是否收费
 
+#define AppleIDofApp @"658111966"
+
 #define ParseApp_ApplicationID_dev @"fztdtApy436OtueDufo0hWx6IQIVn08CqepzgxB1" //zlyysf nutrition1 app
 #define ParseApp_ClientKey_dev @"TwMxnh4aTLN3U4jmJBUGlQ45QnNRgehAvHj98Qex" //zlyysf nutrition1 app
 
