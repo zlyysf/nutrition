@@ -161,6 +161,11 @@ enum {
 +(NSString*)getLocalNutrientShortName:(NSDictionary*)nutrientDict;
 +(NSString*)getLocalFoodName:(NSDictionary*)foodAttrDict;
 
++ (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL;
+
+
+
+
 @end
 
 

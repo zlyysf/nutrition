@@ -85,6 +85,7 @@
                 //NSLog(@"initDB, fail to copy srcResourceDbFilePath to dbFilePath, %@",err);
                 return nil;
             }
+            [LZUtility addSkipBackupAttributeToItemAtURL:[NSURL fileURLWithPath:dbFilePath isDirectory:false]];
             [[NSUserDefaults standardUserDefaults]setBool:YES forKey:flagKey];
             [[NSUserDefaults standardUserDefaults]synchronize];
             [self openDB_withFilePath:dbFilePath];
@@ -117,6 +118,7 @@
                     NSLog(@"initDB , fail to copy srcResourceDbFilePath to dbFilePath, %@",err);
                     return nil;
                 }
+                [LZUtility addSkipBackupAttributeToItemAtURL:[NSURL fileURLWithPath:dbFilePath isDirectory:false]];
                 [self openDB_withFilePath:dbFilePath];
                 
                 LZDataAccess *srcDa = [[LZDataAccess alloc]initWithDBfilePath:dbFileTmpPath];

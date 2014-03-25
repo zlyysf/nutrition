@@ -2405,6 +2405,10 @@
 		088C08B718C743CD005B58BC /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7,
+					armv7s,
+				);
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -2426,7 +2430,7 @@
 					nutrition/nutrition/NutritionLite,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/nutrition/NutritionPro/nutritionpro-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/nutrition/CorePlotLib\"",
@@ -2447,6 +2451,10 @@
 		088C08B818C743CD005B58BC /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ARCHS = (
+					armv7,
+					armv7s,
+				);
 				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
@@ -2466,7 +2474,7 @@
 					nutrition/nutrition/NutritionLite,
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/nutrition/NutritionPro/nutritionpro-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/nutrition/CorePlotLib\"",
