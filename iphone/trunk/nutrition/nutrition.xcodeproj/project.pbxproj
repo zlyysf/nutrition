@@ -17,6 +17,7 @@
 		0818CA1018477AC6003DB33A /* JSONRepresentation.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F317AF8873000AEC06 /* JSONRepresentation.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		0818CA1118477B16003DB33A /* CDataScanner.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7DC17AF8873000AEC06 /* CDataScanner.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		081D3C1F187EB0D00030D743 /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
+		08240BD81941718400F3C6A1 /* LZNutrientQueryMainNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08240BD71941718400F3C6A1 /* LZNutrientQueryMainNavController.m */; };
 		084CFC9718ADBC570003BC93 /* nutrient_button_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9518ADBC570003BC93 /* nutrient_button_off@2x.png */; };
 		084CFC9818ADBC570003BC93 /* nutrient_button_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9618ADBC570003BC93 /* nutrient_button_on@2x.png */; };
 		084CFC9A18ADBCC30003BC93 /* button_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9918ADBCC30003BC93 /* button_back@2x.png */; };
@@ -318,6 +319,205 @@
 		08C886D118D7F3CD00ADA3EE /* iconLite120.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091918C754E9005B58BC /* iconLite120.png */; };
 		08C886D218D7F3D000ADA3EE /* iconLite144.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091A18C754E9005B58BC /* iconLite144.png */; };
 		08C886D318D7F3D400ADA3EE /* iconLite152.png in Resources */ = {isa = PBXBuildFile; fileRef = 088C091B18C754E9005B58BC /* iconLite152.png */; };
+		08CC551819419D66000D75FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CC551719419D66000D75FE /* main.m */; };
+		08CC551B19419DD4000D75FE /* LZNutrientQueryAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CC551A19419DD4000D75FE /* LZNutrientQueryAppDelegate.m */; };
+		08E9352718EA63F00088369B /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
+		08E9352818EA63F00088369B /* LZSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68D17CF11930043D760 /* LZSearchBar.m */; };
+		08E9352918EA63F00088369B /* LZDiseaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F4FD72217D4B75900DBA25A /* LZDiseaseCell.m */; };
+		08E9352A18EA63F00088369B /* LZRecommendFilterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F8DEE9417951DB000C6E9F5 /* LZRecommendFilterView.m */; };
+		08E9352B18EA63F00088369B /* LZFoodNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F627439175C93F2006E46CA /* LZFoodNutritionCell.m */; };
+		08E9352C18EA63F00088369B /* LZUtilityParse.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FA708C18B1E02D002DF80E /* LZUtilityParse.m */; };
+		08E9352E18EA63F00088369B /* FBMissingSymbols.m in Sources */ = {isa = PBXBuildFile; fileRef = 08859A1A185058390063553D /* FBMissingSymbols.m */; };
+		08E9352F18EA63F00088369B /* LZCheckNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D340174B9240008EFB60 /* LZCheckNutritionCell.m */; };
+		08E9353018EA63F00088369B /* NGNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F729BC618432105004FC428 /* NGNutritionCell.m */; };
+		08E9353118EA63F00088369B /* LZFoodDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D342174B9240008EFB60 /* LZFoodDetailController.m */; };
+		08E9353218EA63F00088369B /* LZAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338B8172A407E0096E7AE /* LZAppDelegate.m */; };
+		08E9353318EA63F00088369B /* LZUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FB8C0B7172BC61D00E90387 /* LZUtility.m */; };
+		08E9353418EA63F00088369B /* FMDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D35173366F2001A1ABB /* FMDatabase.m */; };
+		08E9353518EA63F00088369B /* FMDatabaseAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D37173366F2001A1ABB /* FMDatabaseAdditions.m */; };
+		08E9353618EA63F00088369B /* NGSingleFoodViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F206DE61855E63000E8D094 /* NGSingleFoodViewController.m */; };
+		08E9353718EA63F00088369B /* NGMainTabbarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBD42E6184C6D8200759A3C /* NGMainTabbarViewController.m */; };
+		08E9353818EA63F00088369B /* LZDietListMakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F94A86417531CC100664B57 /* LZDietListMakeViewController.m */; };
+		08E9353918EA63F00088369B /* FMDatabasePool.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D39173366F2001A1ABB /* FMDatabasePool.m */; };
+		08E9353A18EA63F00088369B /* FMDatabaseQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3B173366F2001A1ABB /* FMDatabaseQueue.m */; };
+		08E9353B18EA63F00088369B /* FMResultSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D3E173366F2001A1ABB /* FMResultSet.m */; };
+		08E9353C18EA63F00088369B /* LZDataAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4717336701001A1ABB /* LZDataAccess.m */; };
+		08E9353D18EA63F00088369B /* LZRecommendFood.m in Sources */ = {isa = PBXBuildFile; fileRef = 085C8D4B17336720001A1ABB /* LZRecommendFood.m */; };
+		08E9353E18EA63F00088369B /* LZProgressView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D33C174B923F008EFB60 /* LZProgressView.m */; };
+		08E9353F18EA63F00088369B /* LZGlobalService.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECAD9D18387F4E00D72A8C /* LZGlobalService.m */; };
+		08E9354018EA63F00088369B /* LZStandardContentCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D346174B9241008EFB60 /* LZStandardContentCell.m */; };
+		08E9354118EA63F00088369B /* NGIllnessInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF08A931850526C00A954C8 /* NGIllnessInfoViewController.m */; };
+		08E9354218EA63F00088369B /* LZKeychainManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FC1D1C26185EF0F500911A6C /* LZKeychainManager.m */; };
+		08E9354318EA63F00088369B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF8473A1758546900DEA6DE /* MBProgressHUD.m */; };
+		08E9354418EA63F00088369B /* LZKeyboardToolBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE436CD175F29D5003947ED /* LZKeyboardToolBar.m */; };
+		08E9354518EA63F00088369B /* LZSliderByScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = 086944A018AC72540085B76A /* LZSliderByScrollView.m */; };
+		08E9354618EA63F00088369B /* NGDiagnoseLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF9D9EF1874389500F6A525 /* NGDiagnoseLabel.m */; };
+		08E9354718EA63F00088369B /* LZReviewAppManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F746C071769EB9A00E68D0E /* LZReviewAppManager.m */; };
+		08E9354818EA63F00088369B /* NGFoodCombinationEditViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE3A18A4A14700D9D687 /* NGFoodCombinationEditViewController.m */; };
+		08E9354918EA63F00088369B /* NGRecommendFoodView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7F71FB1840EAC000724397 /* NGRecommendFoodView.m */; };
+		08E9354A18EA63F00088369B /* GADMasterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF631DE17702D630068CBFE /* GADMasterViewController.m */; };
+		08E9354B18EA63F00088369B /* NGDiagnoseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF593D4183DBB970011CEA3 /* NGDiagnoseCell.m */; };
+		08E9354C18EA63F00088369B /* LZNutrientionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF6320117718E0F0068CBFE /* LZNutrientionManager.m */; };
+		08E9354D18EA63F00088369B /* NGFoodListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF08A9618506A9800A954C8 /* NGFoodListViewController.m */; };
+		08E9354E18EA63F00088369B /* LZDebugSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCC5BEA17AA30A600796B24 /* LZDebugSettingsViewController.m */; };
+		08E9354F18EA63F00088369B /* NGNutritionSupplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE5A18A8707400D9D687 /* NGNutritionSupplyCell.m */; };
+		08E9355018EA63F00088369B /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7D617AF8873000AEC06 /* mongoose.c */; };
+		08E9355118EA63F00088369B /* LZEmptyClassCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FD76DEB17D5B83600746418 /* LZEmptyClassCell.m */; };
+		08E9355218EA63F00088369B /* LZHeavlyLackCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F537F2417F2BFBE00BDD014 /* LZHeavlyLackCell.m */; };
+		08E9355318EA63F00088369B /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7DA17AF8873000AEC06 /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9355418EA63F00088369B /* CDataScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7DD17AF8873000AEC06 /* CDataScanner.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9355518EA63F00088369B /* NGFoodsCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F729BC91843211C004FC428 /* NGFoodsCell.m */; };
+		08E9355618EA63F00088369B /* NGMeasurementCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB863C1840722B0015FADD /* NGMeasurementCell.m */; };
+		08E9355718EA63F00088369B /* NGFoodsByNutrientViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE3E18A4B58B00D9D687 /* NGFoodsByNutrientViewController.m */; };
+		08E9355818EA63F00088369B /* CFilteringJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7E017AF8873000AEC06 /* CFilteringJSONSerializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9355918EA63F00088369B /* NGFoodCombinationItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 089693681897B373005E03FB /* NGFoodCombinationItemCell.m */; };
+		08E9355A18EA63F00088369B /* CJSONDeserializer_BlocksExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7E217AF8873000AEC06 /* CJSONDeserializer_BlocksExtensions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9355B18EA63F00088369B /* NGNutritionInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF08A9918506AB200A954C8 /* NGNutritionInfoViewController.m */; };
+		08E9355C18EA63F00088369B /* CJSONSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7E417AF8873000AEC06 /* CJSONSerialization.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9355D18EA63F00088369B /* LZNutritionSupplyCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D344174B9241008EFB60 /* LZNutritionSupplyCell.m */; };
+		08E9355E18EA63F00088369B /* LZAddByNutrientController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743C175CAB63006E46CA /* LZAddByNutrientController.m */; };
+		08E9355F18EA63F00088369B /* CJSONSerializedData.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7E617AF8873000AEC06 /* CJSONSerializedData.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9356018EA63F00088369B /* CDataScanner_Extensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7E917AF8873000AEC06 /* CDataScanner_Extensions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9356118EA63F00088369B /* LZDietCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F7E5AA817967A95007CA18A /* LZDietCell.m */; };
+		08E9356218EA63F00088369B /* NSDictionary_JSONExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7EB17AF8873000AEC06 /* NSDictionary_JSONExtensions.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9356318EA63F00088369B /* CJSONDeserializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7EE17AF8873000AEC06 /* CJSONDeserializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9356418EA63F00088369B /* CJSONScanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F017AF8873000AEC06 /* CJSONScanner.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9356518EA63F00088369B /* LZNutritionInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF6320317718E100068CBFE /* LZNutritionInfoView.m */; };
+		08E9356618EA63F00088369B /* LZRecommendFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F03D33E174B923F008EFB60 /* LZRecommendFoodCell.m */; };
+		08E9356718EA63F00088369B /* NGFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDFAD18A8C62800D9D687 /* NGFoodCell.m */; };
+		08E9356818EA63F00088369B /* LZGlobal.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE4318A4C32000D9D687 /* LZGlobal.m */; };
+		08E9356918EA63F00088369B /* CJSONSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F217AF8873000AEC06 /* CJSONSerializer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9356A18EA63F00088369B /* LZDietPickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F86C85A17CC51A0001DDC34 /* LZDietPickerCell.m */; };
+		08E9356B18EA63F00088369B /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F717AF8873000AEC06 /* ioapi.c */; };
+		08E9356C18EA63F00088369B /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7F917AF8873000AEC06 /* mztools.c */; };
+		08E9356D18EA63F00088369B /* LZValueSelectorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F50961A1754777300461964 /* LZValueSelectorView.m */; };
+		08E9356E18EA63F00088369B /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7FB17AF8873000AEC06 /* unzip.c */; };
+		08E9356F18EA63F00088369B /* NGCommonDiseaseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F729BC3184320ED004FC428 /* NGCommonDiseaseCell.m */; };
+		08E9357018EA63F00088369B /* LZFoodCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F9995F5172BDBE400A36B4F /* LZFoodCell.m */; };
+		08E9357118EA63F00088369B /* NGRecordHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA41838B19D00D72A8C /* NGRecordHistoryViewController.m */; };
+		08E9357218EA63F00088369B /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7FD17AF8873000AEC06 /* zip.c */; };
+		08E9357318EA63F00088369B /* ZipArchive.mm in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D80017AF8873000AEC06 /* ZipArchive.mm */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		08E9357418EA63F00088369B /* LZScatterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FCEE441F1851FC98008329AF /* LZScatterViewController.m */; };
+		08E9357518EA63F00088369B /* NGHealthReportViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB86421840A2F90015FADD /* NGHealthReportViewController.m */; };
+		08E9357618EA63F00088369B /* LZNutrientFoodAddCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F62743F175CACAB006E46CA /* LZNutrientFoodAddCell.m */; };
+		08E9357718EA63F00088369B /* NGUerInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22E3DB18435DB7001CCC89 /* NGUerInfoViewController.m */; };
+		08E9357818EA63F00088369B /* NGNoteCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB8639184071F40015FADD /* NGNoteCell.m */; };
+		08E9357918EA63F00088369B /* LZDataAccessUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 088B768317C4B8F200206959 /* LZDataAccessUtil.m */; };
+		08E9357A18EA63F00088369B /* NGFoodDetailController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE5718A86D0D00D9D687 /* NGFoodDetailController.m */; };
+		08E9357B18EA63F00088369B /* NGReportHealthScoreCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA3889184DA79300EC1C96 /* NGReportHealthScoreCell.m */; };
+		08E9357C18EA63F00088369B /* LZFoodSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A68A17CEFC400043D760 /* LZFoodSearchViewController.m */; };
+		08E9357D18EA63F00088369B /* NGFoodsByClassSearchViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE4F18A63ED900D9D687 /* NGFoodsByClassSearchViewController.m */; };
+		08E9357E18EA63F00088369B /* LZDailyIntakeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3338CF172A59E20096E7AE /* LZDailyIntakeViewController.m */; };
+		08E9357F18EA63F00088369B /* LZFoodTypeButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F22A6C717CF4C6D0043D760 /* LZFoodTypeButton.m */; };
+		08E9358018EA63F00088369B /* NGChartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2938B218583EF400FAE2E2 /* NGChartViewController.m */; };
+		08E9358118EA63F00088369B /* NGCyclopediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F729BC01842FFE8004FC428 /* NGCyclopediaViewController.m */; };
+		08E9358218EA63F00088369B /* NGReportBMICell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEA3886184DA53300EC1C96 /* NGReportBMICell.m */; };
+		08E9358318EA63F00088369B /* NGFoodsByClassViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDFAA18A8C44100D9D687 /* NGFoodsByClassViewController.m */; };
+		08E9358418EA63F00088369B /* NGFoodNutritionCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2938AF1856E69B00FAE2E2 /* NGFoodNutritionCell.m */; };
+		08E9358518EA63F00088369B /* NGDiagnoseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FECADA11838912900D72A8C /* NGDiagnoseViewController.m */; };
+		08E9358618EA63F00088369B /* NGDietCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 088FDE4618A62C5200D9D687 /* NGDietCell.m */; };
+		08E9358718EA63F00088369B /* LZCustomDataButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0A4154180E685F007B8715 /* LZCustomDataButton.m */; };
+		08E9358818EA63F00088369B /* NGRecordCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDB863F18409D0B0015FADD /* NGRecordCell.m */; };
+		08E9358918EA63F00088369B /* NGFoodCombinationListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 089693651897AE31005E03FB /* NGFoodCombinationListViewController.m */; };
+		08E9358B18EA63F00088369B /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08A1A2C918863EBF00E95049 /* Parse.framework */; };
+		08E9358C18EA63F00088369B /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A1118504D2C0063553D /* libz.1.1.3.dylib */; };
+		08E9358D18EA63F00088369B /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C39176B1E8600E68D0E /* SystemConfiguration.framework */; };
+		08E9358E18EA63F00088369B /* libCorePlot-CocoaTouch.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FCEE441C1851FC24008329AF /* libCorePlot-CocoaTouch.a */; };
+		08E9358F18EA63F00088369B /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D717702CD00068CBFE /* StoreKit.framework */; };
+		08E9359018EA63F00088369B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D82517AF8E69000AEC06 /* Security.framework */; };
+		08E9359118EA63F00088369B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C3B176B1E9000E68D0E /* QuartzCore.framework */; };
+		08E9359218EA63F00088369B /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0F18504CF80063553D /* MobileCoreServices.framework */; };
+		08E9359318EA63F00088369B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D81C17AF8921000AEC06 /* CoreLocation.framework */; };
+		08E9359418EA63F00088369B /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AC172A407E0096E7AE /* CoreGraphics.framework */; };
+		08E9359518EA63F00088369B /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08859A0D18504CD90063553D /* CFNetwork.framework */; };
+		08E9359618EA63F00088369B /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631DB17702CDF0068CBFE /* AudioToolbox.framework */; };
+		08E9359718EA63F00088369B /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D81A17AF8916000AEC06 /* MediaPlayer.framework */; };
+		08E9359818EA63F00088369B /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D81817AF88F0000AEC06 /* AVFoundation.framework */; };
+		08E9359918EA63F00088369B /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D81617AF88E0000AEC06 /* CoreMotion.framework */; };
+		08E9359A18EA63F00088369B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D81417AF88C1000AEC06 /* CoreTelephony.framework */; };
+		08E9359B18EA63F00088369B /* AdSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D917702CD70068CBFE /* AdSupport.framework */; };
+		08E9359C18EA63F00088369B /* libz.1.2.5.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C3F176B1EA900E68D0E /* libz.1.2.5.dylib */; };
+		08E9359D18EA63F00088369B /* libicucore.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C3D176B1E9F00E68D0E /* libicucore.dylib */; };
+		08E9359E18EA63F00088369B /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746C021769A9BD00E68D0E /* libz.dylib */; };
+		08E9359F18EA63F00088369B /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 085C8D4F173367AC001A1ABB /* libsqlite3.dylib */; };
+		08E935A018EA63F00088369B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338A8172A407E0096E7AE /* UIKit.framework */; };
+		08E935A118EA63F00088369B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AA172A407E0096E7AE /* Foundation.framework */; };
+		08E935A218EA63F00088369B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9C128C17321935000E08E5 /* MessageUI.framework */; };
+		08E935A318EA63F00088369B /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746BFF1769A83E00E68D0E /* libMobClickLibrary.a */; };
+		08E935A418EA63F00088369B /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */; };
+		08E935A518EA63F00088369B /* libBaiduMobAdSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D7D417AF8873000AEC06 /* libBaiduMobAdSdk.a */; };
+		08E935A718EA63F00088369B /* recommend_sign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9B18ADC70A0003BC93 /* recommend_sign@2x.png */; };
+		08E935A818EA63F00088369B /* physics-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD951838777F00D72A8C /* physics-50@2x.png */; };
+		08E935A918EA63F00088369B /* FoodCombinationList.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 089693621897A91C005E03FB /* FoodCombinationList.storyboard */; };
+		08E935AA18EA63F00088369B /* recommend_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE2418A4890900D9D687 /* recommend_icon@2x.png */; };
+		08E935AB18EA63F00088369B /* CustomDB.dat in Resources */ = {isa = PBXBuildFile; fileRef = 085C8D4D17336744001A1ABB /* CustomDB.dat */; };
+		08E935AC18EA63F00088369B /* readme.txt in Resources */ = {isa = PBXBuildFile; fileRef = 0882403D173A7E7400E71E6E /* readme.txt */; };
+		08E935AD18EA63F00088369B /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF9D9F31876901F00F6A525 /* Default@2x.png */; };
+		08E935AE18EA63F00088369B /* right@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B2C5F1859AAF4004243F9 /* right@2x.png */; };
+		08E935AF18EA63F00088369B /* foodDealed in Resources */ = {isa = PBXBuildFile; fileRef = 0882419E175621DE00E71E6E /* foodDealed */; };
+		08E935B018EA63F00088369B /* README.mdown in Resources */ = {isa = PBXBuildFile; fileRef = 5FF8473B1758546900DEA6DE /* README.mdown */; };
+		08E935B118EA63F00088369B /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF9D9F21876901F00F6A525 /* Default.png */; };
+		08E935B218EA63F00088369B /* section_bar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9D18ADEFDF0003BC93 /* section_bar@2x.png */; };
+		08E935B318EA63F00088369B /* 心跳@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593DB183E01B60011CEA3 /* 心跳@2x.png */; };
+		08E935B418EA63F00088369B /* README.txt in Resources */ = {isa = PBXBuildFile; fileRef = 5FF631D417702C690068CBFE /* README.txt */; };
+		08E935B518EA63F00088369B /* valuepicker_cover@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE5218A6473500D9D687 /* valuepicker_cover@2x.png */; };
+		08E935B618EA63F00088369B /* history@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF08A9C1850A5AD00A954C8 /* history@2x.png */; };
+		08E935B718EA63F00088369B /* gray_vertical_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F206DE31855AE1200E8D094 /* gray_vertical_line@2x.png */; };
+		08E935B818EA63F00088369B /* fork@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF08A9B1850A5AD00A954C8 /* fork@2x.png */; };
+		08E935B918EA63F00088369B /* diet_empty_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7E5AAA17969463007CA18A /* diet_empty_icon@2x.png */; };
+		08E935BA18EA63F00088369B /* baidumobadsdk.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 5F90D7D217AF8873000AEC06 /* baidumobadsdk.bundle */; };
+		08E935BC18EA63F00088369B /* NewMainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD8F1838701100D72A8C /* NewMainStoryboard.storyboard */; };
+		08E935BD18EA63F00088369B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 088C093E18C756E3005B58BC /* InfoPlist.strings */; };
+		08E935BE18EA63F00088369B /* 血压@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593DC183E01B60011CEA3 /* 血压@2x.png */; };
+		08E935BF18EA63F00088369B /* 体重@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593DA183E01B60011CEA3 /* 体重@2x.png */; };
+		08E935C018EA63F00088369B /* 主食@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EEC17D721F400AFBF47 /* 主食@2x.png */; };
+		08E935C318EA63F00088369B /* big_arrow_clicked@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE4A18A6373200D9D687 /* big_arrow_clicked@2x.png */; };
+		08E935C418EA63F00088369B /* item_detail_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7F71F61840D82400724397 /* item_detail_arrow@2x.png */; };
+		08E935C518EA63F00088369B /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF9D9F11876901F00F6A525 /* Default-568h@2x.png */; };
+		08E935C618EA63F00088369B /* 五谷@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EED17D721F400AFBF47 /* 五谷@2x.png */; };
+		08E935C718EA63F00088369B /* big_arrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE4B18A6373200D9D687 /* big_arrow@2x.png */; };
+		08E935C818EA63F00088369B /* 奶制品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EEE17D721F400AFBF47 /* 奶制品@2x.png */; };
+		08E935C918EA63F00088369B /* 干果@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EEF17D721F400AFBF47 /* 干果@2x.png */; };
+		08E935CB18EA63F00088369B /* diet_topbar_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE2318A4890900D9D687 /* diet_topbar_bg@2x.png */; };
+		08E935CD18EA63F00088369B /* 水产@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF017D721F400AFBF47 /* 水产@2x.png */; };
+		08E935CE18EA63F00088369B /* 水果@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF117D721F400AFBF47 /* 水果@2x.png */; };
+		08E935CF18EA63F00088369B /* month_view-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD941838777F00D72A8C /* month_view-50@2x.png */; };
+		08E935D018EA63F00088369B /* button_back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9918ADBCC30003BC93 /* button_back@2x.png */; };
+		08E935D118EA63F00088369B /* 肉类@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF217D721F400AFBF47 /* 肉类@2x.png */; };
+		08E935D218EA63F00088369B /* 菌藻类@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF317D721F400AFBF47 /* 菌藻类@2x.png */; };
+		08E935D318EA63F00088369B /* 蔬菜@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF417D721F400AFBF47 /* 蔬菜@2x.png */; };
+		08E935D418EA63F00088369B /* 蛋类@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF517D721F400AFBF47 /* 蛋类@2x.png */; };
+		08E935D518EA63F00088369B /* info-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F22E3D818435CD1001CCC89 /* info-50@2x.png */; };
+		08E935D618EA63F00088369B /* 调味品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF617D721F400AFBF47 /* 调味品@2x.png */; };
+		08E935D818EA63F00088369B /* 豆制品@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF717D721F400AFBF47 /* 豆制品@2x.png */; };
+		08E935D918EA63F00088369B /* change_name_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE4818A62DBA00D9D687 /* change_name_button@2x.png */; };
+		08E935DA18EA63F00088369B /* 零食@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF817D721F400AFBF47 /* 零食@2x.png */; };
+		08E935DB18EA63F00088369B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 088C094918C757DD005B58BC /* Localizable.strings */; };
+		08E935DD18EA63F00088369B /* nutrient_button_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9518ADBC570003BC93 /* nutrient_button_off@2x.png */; };
+		08E935DE18EA63F00088369B /* 饮料@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F943EF917D721F400AFBF47 /* 饮料@2x.png */; };
+		08E935DF18EA63F00088369B /* clinic-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD921838777F00D72A8C /* clinic-50@2x.png */; };
+		08E935E018EA63F00088369B /* addfood_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE2218A4890900D9D687 /* addfood_icon@2x.png */; };
+		08E935E118EA63F00088369B /* diet_list-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08FA709318B4505D002DF80E /* diet_list-50@2x.png */; };
+		08E935E218EA63F00088369B /* nutrient_button_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9618ADBC570003BC93 /* nutrient_button_on@2x.png */; };
+		08E935E418EA63F00088369B /* valuepicker_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 086944A418AC75EE0085B76A /* valuepicker_bg@2x.png */; };
+		08E935E518EA63F00088369B /* share_icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE2518A4890900D9D687 /* share_icon@2x.png */; };
+		08E935E718EA63F00088369B /* line_chart-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD931838777F00D72A8C /* line_chart-50@2x.png */; };
+		08E935E818EA63F00088369B /* left@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F2B2C5E1859AAF4004243F9 /* left@2x.png */; };
+		08E935E918EA63F00088369B /* 体温计@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FF593D9183E01B60011CEA3 /* 体温计@2x.png */; };
+		08E935EA18EA63F00088369B /* gray_horizon_line@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5F7F71F81840D9F100724397 /* gray_horizon_line@2x.png */; };
+		08E935EB18EA63F00088369B /* add_by_nutrient_button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 088FDE4018A4B84E00D9D687 /* add_by_nutrient_button@2x.png */; };
+		08E935F418EA67340088369B /* nutritionQueryLite-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 08E935F218EA67290088369B /* nutritionQueryLite-Info.plist */; };
+		08E9360018EA6E3D0088369B /* iconQueryLite29.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E935F718EA6E3D0088369B /* iconQueryLite29.png */; };
+		08E9360118EA6E3D0088369B /* iconQueryLite57.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E935F818EA6E3D0088369B /* iconQueryLite57.png */; };
+		08E9360218EA6E3D0088369B /* iconQueryLite58.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E935F918EA6E3D0088369B /* iconQueryLite58.png */; };
+		08E9360318EA6E3D0088369B /* iconQueryLite72.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E935FA18EA6E3D0088369B /* iconQueryLite72.png */; };
+		08E9360418EA6E3D0088369B /* iconQueryLite76.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E935FB18EA6E3D0088369B /* iconQueryLite76.png */; };
+		08E9360518EA6E3D0088369B /* iconQueryLite114.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E935FC18EA6E3D0088369B /* iconQueryLite114.png */; };
+		08E9360618EA6E3D0088369B /* iconQueryLite120.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E935FD18EA6E3D0088369B /* iconQueryLite120.png */; };
+		08E9360718EA6E3D0088369B /* iconQueryLite144.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E935FE18EA6E3D0088369B /* iconQueryLite144.png */; };
+		08E9360818EA6E3D0088369B /* iconQueryLite152.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E935FF18EA6E3D0088369B /* iconQueryLite152.png */; };
+		08E9362618EA6FB70088369B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 08E9362818EA6FB70088369B /* InfoPlist.strings */; };
+		08E9362D18EA75C20088369B /* NutrientQueryMain.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 08E9362C18EA75C20088369B /* NutrientQueryMain.storyboard */; };
 		08E94BC218D843A9004F253E /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E94BB018D841D8004F253E /* Icon-72.png */; };
 		08E94BC318D843AD004F253E /* Icon-72@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E94BB118D841D8004F253E /* Icon-72@2x.png */; };
 		08E94BC418D843B1004F253E /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 08E94BB218D841D8004F253E /* Icon-Small.png */; };
@@ -463,6 +663,8 @@
 		08055E1E18D6DBDD001C02C0 /* LZConfigLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConfigLite.h; path = nutrition/NutritionLite/LZConfigLite.h; sourceTree = "<group>"; };
 		08055E1F18D6DBF7001C02C0 /* LZConfigPro.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZConfigPro.h; path = nutrition/NutritionPro/LZConfigPro.h; sourceTree = "<group>"; };
 		0818CA1218477B50003DB33A /* CDataScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CDataScanner.m; path = nutrition/BaiduSDK/TouchJSON/CDataScanner.m; sourceTree = "<group>"; };
+		08240BD61941718400F3C6A1 /* LZNutrientQueryMainNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZNutrientQueryMainNavController.h; path = code/LZNutrientQueryMainNavController.h; sourceTree = "<group>"; };
+		08240BD71941718400F3C6A1 /* LZNutrientQueryMainNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZNutrientQueryMainNavController.m; path = code/LZNutrientQueryMainNavController.m; sourceTree = "<group>"; };
 		084CFC9518ADBC570003BC93 /* nutrient_button_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_off@2x.png"; path = "nutrition/Resource/nutrient_button_off@2x.png"; sourceTree = "<group>"; };
 		084CFC9618ADBC570003BC93 /* nutrient_button_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_on@2x.png"; path = "nutrition/Resource/nutrient_button_on@2x.png"; sourceTree = "<group>"; };
 		084CFC9918ADBCC30003BC93 /* button_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_back@2x.png"; path = "nutrition/Resource/button_back@2x.png"; sourceTree = "<group>"; };
@@ -563,6 +765,33 @@
 		089693671897B373005E03FB /* NGFoodCombinationItemCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = NGFoodCombinationItemCell.h; path = nutrition/Class/NGFoodCombinationItemCell.h; sourceTree = "<group>"; };
 		089693681897B373005E03FB /* NGFoodCombinationItemCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = NGFoodCombinationItemCell.m; path = nutrition/Class/NGFoodCombinationItemCell.m; sourceTree = "<group>"; };
 		08A1A2C918863EBF00E95049 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Parse.framework; path = nutrition/Parse.framework; sourceTree = "<group>"; };
+		08CC551719419D66000D75FE /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		08CC551919419DD4000D75FE /* LZNutrientQueryAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZNutrientQueryAppDelegate.h; path = code/LZNutrientQueryAppDelegate.h; sourceTree = "<group>"; };
+		08CC551A19419DD4000D75FE /* LZNutrientQueryAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZNutrientQueryAppDelegate.m; path = code/LZNutrientQueryAppDelegate.m; sourceTree = "<group>"; };
+		08E935EF18EA63F00088369B /* nutrition copy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "nutrition copy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		08E935F218EA67290088369B /* nutritionQueryLite-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "nutritionQueryLite-Info.plist"; sourceTree = "<group>"; };
+		08E935F718EA6E3D0088369B /* iconQueryLite29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryLite29.png; path = nutrition/NutrientQueryLite/icons/iconQueryLite29.png; sourceTree = "<group>"; };
+		08E935F818EA6E3D0088369B /* iconQueryLite57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryLite57.png; path = nutrition/NutrientQueryLite/icons/iconQueryLite57.png; sourceTree = "<group>"; };
+		08E935F918EA6E3D0088369B /* iconQueryLite58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryLite58.png; path = nutrition/NutrientQueryLite/icons/iconQueryLite58.png; sourceTree = "<group>"; };
+		08E935FA18EA6E3D0088369B /* iconQueryLite72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryLite72.png; path = nutrition/NutrientQueryLite/icons/iconQueryLite72.png; sourceTree = "<group>"; };
+		08E935FB18EA6E3D0088369B /* iconQueryLite76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryLite76.png; path = nutrition/NutrientQueryLite/icons/iconQueryLite76.png; sourceTree = "<group>"; };
+		08E935FC18EA6E3D0088369B /* iconQueryLite114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryLite114.png; path = nutrition/NutrientQueryLite/icons/iconQueryLite114.png; sourceTree = "<group>"; };
+		08E935FD18EA6E3D0088369B /* iconQueryLite120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryLite120.png; path = nutrition/NutrientQueryLite/icons/iconQueryLite120.png; sourceTree = "<group>"; };
+		08E935FE18EA6E3D0088369B /* iconQueryLite144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryLite144.png; path = nutrition/NutrientQueryLite/icons/iconQueryLite144.png; sourceTree = "<group>"; };
+		08E935FF18EA6E3D0088369B /* iconQueryLite152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryLite152.png; path = nutrition/NutrientQueryLite/icons/iconQueryLite152.png; sourceTree = "<group>"; };
+		08E9360918EA6E4E0088369B /* iconQueryPro29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryPro29.png; path = nutrition/NutrientQueryPro/icons/iconQueryPro29.png; sourceTree = "<group>"; };
+		08E9360A18EA6E4E0088369B /* iconQueryPro57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryPro57.png; path = nutrition/NutrientQueryPro/icons/iconQueryPro57.png; sourceTree = "<group>"; };
+		08E9360B18EA6E4E0088369B /* iconQueryPro58.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryPro58.png; path = nutrition/NutrientQueryPro/icons/iconQueryPro58.png; sourceTree = "<group>"; };
+		08E9360C18EA6E4E0088369B /* iconQueryPro72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryPro72.png; path = nutrition/NutrientQueryPro/icons/iconQueryPro72.png; sourceTree = "<group>"; };
+		08E9360D18EA6E4E0088369B /* iconQueryPro76.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryPro76.png; path = nutrition/NutrientQueryPro/icons/iconQueryPro76.png; sourceTree = "<group>"; };
+		08E9360E18EA6E4E0088369B /* iconQueryPro114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryPro114.png; path = nutrition/NutrientQueryPro/icons/iconQueryPro114.png; sourceTree = "<group>"; };
+		08E9360F18EA6E4E0088369B /* iconQueryPro120.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryPro120.png; path = nutrition/NutrientQueryPro/icons/iconQueryPro120.png; sourceTree = "<group>"; };
+		08E9361018EA6E4E0088369B /* iconQueryPro144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryPro144.png; path = nutrition/NutrientQueryPro/icons/iconQueryPro144.png; sourceTree = "<group>"; };
+		08E9361118EA6E4E0088369B /* iconQueryPro152.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = iconQueryPro152.png; path = nutrition/NutrientQueryPro/icons/iconQueryPro152.png; sourceTree = "<group>"; };
+		08E9362718EA6FB70088369B /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
+		08E9362918EA6FC40088369B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		08E9362A18EA72910088369B /* LZQueryConfigLite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LZQueryConfigLite.h; sourceTree = "<group>"; };
+		08E9362C18EA75C20088369B /* NutrientQueryMain.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = NutrientQueryMain.storyboard; sourceTree = "<group>"; };
 		08E94BB018D841D8004F253E /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72.png"; path = "nutrition/NutritionPro/icons/Icon-72.png"; sourceTree = "<group>"; };
 		08E94BB118D841D8004F253E /* Icon-72@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-72@2x.png"; path = "nutrition/NutritionPro/icons/Icon-72@2x.png"; sourceTree = "<group>"; };
 		08E94BB218D841D8004F253E /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Icon-Small.png"; path = "nutrition/NutritionPro/icons/Icon-Small.png"; sourceTree = "<group>"; };
@@ -964,6 +1193,40 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		08E9358A18EA63F00088369B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08E9358B18EA63F00088369B /* Parse.framework in Frameworks */,
+				08E9358C18EA63F00088369B /* libz.1.1.3.dylib in Frameworks */,
+				08E9358D18EA63F00088369B /* SystemConfiguration.framework in Frameworks */,
+				08E9358E18EA63F00088369B /* libCorePlot-CocoaTouch.a in Frameworks */,
+				08E9358F18EA63F00088369B /* StoreKit.framework in Frameworks */,
+				08E9359018EA63F00088369B /* Security.framework in Frameworks */,
+				08E9359118EA63F00088369B /* QuartzCore.framework in Frameworks */,
+				08E9359218EA63F00088369B /* MobileCoreServices.framework in Frameworks */,
+				08E9359318EA63F00088369B /* CoreLocation.framework in Frameworks */,
+				08E9359418EA63F00088369B /* CoreGraphics.framework in Frameworks */,
+				08E9359518EA63F00088369B /* CFNetwork.framework in Frameworks */,
+				08E9359618EA63F00088369B /* AudioToolbox.framework in Frameworks */,
+				08E9359718EA63F00088369B /* MediaPlayer.framework in Frameworks */,
+				08E9359818EA63F00088369B /* AVFoundation.framework in Frameworks */,
+				08E9359918EA63F00088369B /* CoreMotion.framework in Frameworks */,
+				08E9359A18EA63F00088369B /* CoreTelephony.framework in Frameworks */,
+				08E9359B18EA63F00088369B /* AdSupport.framework in Frameworks */,
+				08E9359C18EA63F00088369B /* libz.1.2.5.dylib in Frameworks */,
+				08E9359D18EA63F00088369B /* libicucore.dylib in Frameworks */,
+				08E9359E18EA63F00088369B /* libz.dylib in Frameworks */,
+				08E9359F18EA63F00088369B /* libsqlite3.dylib in Frameworks */,
+				08E935A018EA63F00088369B /* UIKit.framework in Frameworks */,
+				08E935A118EA63F00088369B /* Foundation.framework in Frameworks */,
+				08E935A218EA63F00088369B /* MessageUI.framework in Frameworks */,
+				08E935A318EA63F00088369B /* libMobClickLibrary.a in Frameworks */,
+				08E935A418EA63F00088369B /* libGoogleAdMobAds.a in Frameworks */,
+				08E935A518EA63F00088369B /* libBaiduMobAdSdk.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5F3338A2172A407E0096E7AE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -1001,6 +1264,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		08240BD419416C9800F3C6A1 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				08240BD61941718400F3C6A1 /* LZNutrientQueryMainNavController.h */,
+				08240BD71941718400F3C6A1 /* LZNutrientQueryMainNavController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		085C8D33173366F2001A1ABB /* fmdbLib */ = {
 			isa = PBXGroup;
 			children = (
@@ -1170,6 +1442,70 @@
 			name = UIDesign;
 			sourceTree = "<group>";
 		};
+		08CC551619419D26000D75FE /* codeSome */ = {
+			isa = PBXGroup;
+			children = (
+				08CC551719419D66000D75FE /* main.m */,
+				08CC551919419DD4000D75FE /* LZNutrientQueryAppDelegate.h */,
+				08CC551A19419DD4000D75FE /* LZNutrientQueryAppDelegate.m */,
+			);
+			name = codeSome;
+			sourceTree = "<group>";
+		};
+		08E935F118EA66400088369B /* NutrientQueryLite */ = {
+			isa = PBXGroup;
+			children = (
+				08CC551619419D26000D75FE /* codeSome */,
+				08240BD419416C9800F3C6A1 /* Controllers */,
+				08E9362B18EA75810088369B /* UIDesign */,
+				08E9362A18EA72910088369B /* LZQueryConfigLite.h */,
+				08E935F218EA67290088369B /* nutritionQueryLite-Info.plist */,
+				08E9362818EA6FB70088369B /* InfoPlist.strings */,
+			);
+			name = NutrientQueryLite;
+			path = nutrition/NutrientQueryLite;
+			sourceTree = "<group>";
+		};
+		08E935F518EA6DF90088369B /* iconsQueryLite */ = {
+			isa = PBXGroup;
+			children = (
+				08E935F718EA6E3D0088369B /* iconQueryLite29.png */,
+				08E935F818EA6E3D0088369B /* iconQueryLite57.png */,
+				08E935F918EA6E3D0088369B /* iconQueryLite58.png */,
+				08E935FA18EA6E3D0088369B /* iconQueryLite72.png */,
+				08E935FB18EA6E3D0088369B /* iconQueryLite76.png */,
+				08E935FC18EA6E3D0088369B /* iconQueryLite114.png */,
+				08E935FD18EA6E3D0088369B /* iconQueryLite120.png */,
+				08E935FE18EA6E3D0088369B /* iconQueryLite144.png */,
+				08E935FF18EA6E3D0088369B /* iconQueryLite152.png */,
+			);
+			name = iconsQueryLite;
+			sourceTree = "<group>";
+		};
+		08E935F618EA6E140088369B /* iconsQueryPro */ = {
+			isa = PBXGroup;
+			children = (
+				08E9360918EA6E4E0088369B /* iconQueryPro29.png */,
+				08E9360A18EA6E4E0088369B /* iconQueryPro57.png */,
+				08E9360B18EA6E4E0088369B /* iconQueryPro58.png */,
+				08E9360C18EA6E4E0088369B /* iconQueryPro72.png */,
+				08E9360D18EA6E4E0088369B /* iconQueryPro76.png */,
+				08E9360E18EA6E4E0088369B /* iconQueryPro114.png */,
+				08E9360F18EA6E4E0088369B /* iconQueryPro120.png */,
+				08E9361018EA6E4E0088369B /* iconQueryPro144.png */,
+				08E9361118EA6E4E0088369B /* iconQueryPro152.png */,
+			);
+			name = iconsQueryPro;
+			sourceTree = "<group>";
+		};
+		08E9362B18EA75810088369B /* UIDesign */ = {
+			isa = PBXGroup;
+			children = (
+				08E9362C18EA75C20088369B /* NutrientQueryMain.storyboard */,
+			);
+			path = UIDesign;
+			sourceTree = "<group>";
+		};
 		5F22A6C917CF580D0043D760 /* foodTypeButtonIcons */ = {
 			isa = PBXGroup;
 			children = (
@@ -1194,6 +1530,7 @@
 		5F33389C172A407E0096E7AE = {
 			isa = PBXGroup;
 			children = (
+				08E935F118EA66400088369B /* NutrientQueryLite */,
 				088C094818C757A1005B58BC /* Localize */,
 				088C090F18C751F2005B58BC /* NutritionLite */,
 				088C090A18C74FA1005B58BC /* NutritionPro */,
@@ -1225,6 +1562,7 @@
 				5F3338A5172A407E0096E7AE /* 养生胶囊Lite.app */,
 				085C8D5717336A29001A1ABB /* testApp.app */,
 				088C08B918C743CD005B58BC /* 养生胶囊Pro.app */,
+				08E935EF18EA63F00088369B /* nutrition copy.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1288,6 +1626,8 @@
 		5F3338D4172A5BD60096E7AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				08E935F618EA6E140088369B /* iconsQueryPro */,
+				08E935F518EA6DF90088369B /* iconsQueryLite */,
 				088C092518C75509005B58BC /* iconsPro */,
 				088C091218C754D7005B58BC /* iconsLite */,
 				08FA709318B4505D002DF80E /* diet_list-50@2x.png */,
@@ -1822,6 +2162,23 @@
 			productReference = 088C08B918C743CD005B58BC /* 养生胶囊Pro.app */;
 			productType = "com.apple.product-type.application";
 		};
+		08E9352518EA63F00088369B /* nutrientquerylite */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 08E935EC18EA63F00088369B /* Build configuration list for PBXNativeTarget "nutrientquerylite" */;
+			buildPhases = (
+				08E9352618EA63F00088369B /* Sources */,
+				08E9358A18EA63F00088369B /* Frameworks */,
+				08E935A618EA63F00088369B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = nutrientquerylite;
+			productName = nutrition;
+			productReference = 08E935EF18EA63F00088369B /* nutrition copy.app */;
+			productType = "com.apple.product-type.application";
+		};
 		5F3338A4172A407E0096E7AE /* nutrition */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 5F3338C8172A407F0096E7AE /* Build configuration list for PBXNativeTarget "nutrition" */;
@@ -1878,6 +2235,7 @@
 				5F3338A4172A407E0096E7AE /* nutrition */,
 				085C8D5617336A29001A1ABB /* testApp */,
 				088C07EE18C743CD005B58BC /* nutritionpro */,
+				08E9352518EA63F00088369B /* nutrientquerylite */,
 			);
 		};
 /* End PBXProject section */
@@ -1973,6 +2331,85 @@
 				088C08AF18C743CD005B58BC /* 体温计@2x.png in Resources */,
 				088C08B418C743CD005B58BC /* gray_horizon_line@2x.png in Resources */,
 				088C08B518C743CD005B58BC /* add_by_nutrient_button@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		08E935A618EA63F00088369B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08E9360218EA6E3D0088369B /* iconQueryLite58.png in Resources */,
+				08E935A718EA63F00088369B /* recommend_sign@2x.png in Resources */,
+				08E935A818EA63F00088369B /* physics-50@2x.png in Resources */,
+				08E935A918EA63F00088369B /* FoodCombinationList.storyboard in Resources */,
+				08E935AA18EA63F00088369B /* recommend_icon@2x.png in Resources */,
+				08E935F418EA67340088369B /* nutritionQueryLite-Info.plist in Resources */,
+				08E935AB18EA63F00088369B /* CustomDB.dat in Resources */,
+				08E935AC18EA63F00088369B /* readme.txt in Resources */,
+				08E935AD18EA63F00088369B /* Default@2x.png in Resources */,
+				08E935AE18EA63F00088369B /* right@2x.png in Resources */,
+				08E935AF18EA63F00088369B /* foodDealed in Resources */,
+				08E935B018EA63F00088369B /* README.mdown in Resources */,
+				08E935B118EA63F00088369B /* Default.png in Resources */,
+				08E935B218EA63F00088369B /* section_bar@2x.png in Resources */,
+				08E935B318EA63F00088369B /* 心跳@2x.png in Resources */,
+				08E935B418EA63F00088369B /* README.txt in Resources */,
+				08E935B518EA63F00088369B /* valuepicker_cover@2x.png in Resources */,
+				08E935B618EA63F00088369B /* history@2x.png in Resources */,
+				08E935B718EA63F00088369B /* gray_vertical_line@2x.png in Resources */,
+				08E9360718EA6E3D0088369B /* iconQueryLite144.png in Resources */,
+				08E9360018EA6E3D0088369B /* iconQueryLite29.png in Resources */,
+				08E935B818EA63F00088369B /* fork@2x.png in Resources */,
+				08E935B918EA63F00088369B /* diet_empty_icon@2x.png in Resources */,
+				08E9360118EA6E3D0088369B /* iconQueryLite57.png in Resources */,
+				08E935BA18EA63F00088369B /* baidumobadsdk.bundle in Resources */,
+				08E935BC18EA63F00088369B /* NewMainStoryboard.storyboard in Resources */,
+				08E935BD18EA63F00088369B /* InfoPlist.strings in Resources */,
+				08E935BE18EA63F00088369B /* 血压@2x.png in Resources */,
+				08E935BF18EA63F00088369B /* 体重@2x.png in Resources */,
+				08E935C018EA63F00088369B /* 主食@2x.png in Resources */,
+				08E935C318EA63F00088369B /* big_arrow_clicked@2x.png in Resources */,
+				08E9360418EA6E3D0088369B /* iconQueryLite76.png in Resources */,
+				08E935C418EA63F00088369B /* item_detail_arrow@2x.png in Resources */,
+				08E935C518EA63F00088369B /* Default-568h@2x.png in Resources */,
+				08E935C618EA63F00088369B /* 五谷@2x.png in Resources */,
+				08E935C718EA63F00088369B /* big_arrow@2x.png in Resources */,
+				08E9360818EA6E3D0088369B /* iconQueryLite152.png in Resources */,
+				08E935C818EA63F00088369B /* 奶制品@2x.png in Resources */,
+				08E935C918EA63F00088369B /* 干果@2x.png in Resources */,
+				08E9362D18EA75C20088369B /* NutrientQueryMain.storyboard in Resources */,
+				08E935CB18EA63F00088369B /* diet_topbar_bg@2x.png in Resources */,
+				08E935CD18EA63F00088369B /* 水产@2x.png in Resources */,
+				08E935CE18EA63F00088369B /* 水果@2x.png in Resources */,
+				08E935CF18EA63F00088369B /* month_view-50@2x.png in Resources */,
+				08E935D018EA63F00088369B /* button_back@2x.png in Resources */,
+				08E935D118EA63F00088369B /* 肉类@2x.png in Resources */,
+				08E935D218EA63F00088369B /* 菌藻类@2x.png in Resources */,
+				08E935D318EA63F00088369B /* 蔬菜@2x.png in Resources */,
+				08E935D418EA63F00088369B /* 蛋类@2x.png in Resources */,
+				08E935D518EA63F00088369B /* info-50@2x.png in Resources */,
+				08E935D618EA63F00088369B /* 调味品@2x.png in Resources */,
+				08E9362618EA6FB70088369B /* InfoPlist.strings in Resources */,
+				08E935D818EA63F00088369B /* 豆制品@2x.png in Resources */,
+				08E935D918EA63F00088369B /* change_name_button@2x.png in Resources */,
+				08E935DA18EA63F00088369B /* 零食@2x.png in Resources */,
+				08E935DB18EA63F00088369B /* Localizable.strings in Resources */,
+				08E935DD18EA63F00088369B /* nutrient_button_off@2x.png in Resources */,
+				08E935DE18EA63F00088369B /* 饮料@2x.png in Resources */,
+				08E935DF18EA63F00088369B /* clinic-50@2x.png in Resources */,
+				08E935E018EA63F00088369B /* addfood_icon@2x.png in Resources */,
+				08E935E118EA63F00088369B /* diet_list-50@2x.png in Resources */,
+				08E935E218EA63F00088369B /* nutrient_button_on@2x.png in Resources */,
+				08E935E418EA63F00088369B /* valuepicker_bg@2x.png in Resources */,
+				08E9360518EA6E3D0088369B /* iconQueryLite114.png in Resources */,
+				08E935E518EA63F00088369B /* share_icon@2x.png in Resources */,
+				08E935E718EA63F00088369B /* line_chart-50@2x.png in Resources */,
+				08E935E818EA63F00088369B /* left@2x.png in Resources */,
+				08E9360618EA6E3D0088369B /* iconQueryLite120.png in Resources */,
+				08E935E918EA63F00088369B /* 体温计@2x.png in Resources */,
+				08E935EA18EA63F00088369B /* gray_horizon_line@2x.png in Resources */,
+				08E9360318EA6E3D0088369B /* iconQueryLite72.png in Resources */,
+				08E935EB18EA63F00088369B /* add_by_nutrient_button@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2204,6 +2641,114 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		08E9352618EA63F00088369B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				08E9352718EA63F00088369B /* LZTest1.m in Sources */,
+				08E9352818EA63F00088369B /* LZSearchBar.m in Sources */,
+				08E9352918EA63F00088369B /* LZDiseaseCell.m in Sources */,
+				08E9352A18EA63F00088369B /* LZRecommendFilterView.m in Sources */,
+				08E9352B18EA63F00088369B /* LZFoodNutritionCell.m in Sources */,
+				08E9352C18EA63F00088369B /* LZUtilityParse.m in Sources */,
+				08E9352E18EA63F00088369B /* FBMissingSymbols.m in Sources */,
+				08E9352F18EA63F00088369B /* LZCheckNutritionCell.m in Sources */,
+				08E9353018EA63F00088369B /* NGNutritionCell.m in Sources */,
+				08E9353118EA63F00088369B /* LZFoodDetailController.m in Sources */,
+				08E9353218EA63F00088369B /* LZAppDelegate.m in Sources */,
+				08E9353318EA63F00088369B /* LZUtility.m in Sources */,
+				08E9353418EA63F00088369B /* FMDatabase.m in Sources */,
+				08E9353518EA63F00088369B /* FMDatabaseAdditions.m in Sources */,
+				08E9353618EA63F00088369B /* NGSingleFoodViewController.m in Sources */,
+				08E9353718EA63F00088369B /* NGMainTabbarViewController.m in Sources */,
+				08E9353818EA63F00088369B /* LZDietListMakeViewController.m in Sources */,
+				08E9353918EA63F00088369B /* FMDatabasePool.m in Sources */,
+				08E9353A18EA63F00088369B /* FMDatabaseQueue.m in Sources */,
+				08E9353B18EA63F00088369B /* FMResultSet.m in Sources */,
+				08E9353C18EA63F00088369B /* LZDataAccess.m in Sources */,
+				08E9353D18EA63F00088369B /* LZRecommendFood.m in Sources */,
+				08E9353E18EA63F00088369B /* LZProgressView.m in Sources */,
+				08E9353F18EA63F00088369B /* LZGlobalService.m in Sources */,
+				08E9354018EA63F00088369B /* LZStandardContentCell.m in Sources */,
+				08E9354118EA63F00088369B /* NGIllnessInfoViewController.m in Sources */,
+				08E9354218EA63F00088369B /* LZKeychainManager.m in Sources */,
+				08E9354318EA63F00088369B /* MBProgressHUD.m in Sources */,
+				08E9354418EA63F00088369B /* LZKeyboardToolBar.m in Sources */,
+				08E9354518EA63F00088369B /* LZSliderByScrollView.m in Sources */,
+				08E9354618EA63F00088369B /* NGDiagnoseLabel.m in Sources */,
+				08E9354718EA63F00088369B /* LZReviewAppManager.m in Sources */,
+				08E9354818EA63F00088369B /* NGFoodCombinationEditViewController.m in Sources */,
+				08E9354918EA63F00088369B /* NGRecommendFoodView.m in Sources */,
+				08E9354A18EA63F00088369B /* GADMasterViewController.m in Sources */,
+				08E9354B18EA63F00088369B /* NGDiagnoseCell.m in Sources */,
+				08E9354C18EA63F00088369B /* LZNutrientionManager.m in Sources */,
+				08E9354D18EA63F00088369B /* NGFoodListViewController.m in Sources */,
+				08E9354E18EA63F00088369B /* LZDebugSettingsViewController.m in Sources */,
+				08E9354F18EA63F00088369B /* NGNutritionSupplyCell.m in Sources */,
+				08E9355018EA63F00088369B /* mongoose.c in Sources */,
+				08E9355118EA63F00088369B /* LZEmptyClassCell.m in Sources */,
+				08E9355218EA63F00088369B /* LZHeavlyLackCell.m in Sources */,
+				08E9355318EA63F00088369B /* OpenUDID.m in Sources */,
+				08E9355418EA63F00088369B /* CDataScanner.m in Sources */,
+				08E9355518EA63F00088369B /* NGFoodsCell.m in Sources */,
+				08E9355618EA63F00088369B /* NGMeasurementCell.m in Sources */,
+				08CC551B19419DD4000D75FE /* LZNutrientQueryAppDelegate.m in Sources */,
+				08E9355718EA63F00088369B /* NGFoodsByNutrientViewController.m in Sources */,
+				08E9355818EA63F00088369B /* CFilteringJSONSerializer.m in Sources */,
+				08E9355918EA63F00088369B /* NGFoodCombinationItemCell.m in Sources */,
+				08E9355A18EA63F00088369B /* CJSONDeserializer_BlocksExtensions.m in Sources */,
+				08E9355B18EA63F00088369B /* NGNutritionInfoViewController.m in Sources */,
+				08E9355C18EA63F00088369B /* CJSONSerialization.m in Sources */,
+				08CC551819419D66000D75FE /* main.m in Sources */,
+				08E9355D18EA63F00088369B /* LZNutritionSupplyCell.m in Sources */,
+				08E9355E18EA63F00088369B /* LZAddByNutrientController.m in Sources */,
+				08E9355F18EA63F00088369B /* CJSONSerializedData.m in Sources */,
+				08E9356018EA63F00088369B /* CDataScanner_Extensions.m in Sources */,
+				08E9356118EA63F00088369B /* LZDietCell.m in Sources */,
+				08E9356218EA63F00088369B /* NSDictionary_JSONExtensions.m in Sources */,
+				08E9356318EA63F00088369B /* CJSONDeserializer.m in Sources */,
+				08E9356418EA63F00088369B /* CJSONScanner.m in Sources */,
+				08E9356518EA63F00088369B /* LZNutritionInfoView.m in Sources */,
+				08E9356618EA63F00088369B /* LZRecommendFoodCell.m in Sources */,
+				08240BD81941718400F3C6A1 /* LZNutrientQueryMainNavController.m in Sources */,
+				08E9356718EA63F00088369B /* NGFoodCell.m in Sources */,
+				08E9356818EA63F00088369B /* LZGlobal.m in Sources */,
+				08E9356918EA63F00088369B /* CJSONSerializer.m in Sources */,
+				08E9356A18EA63F00088369B /* LZDietPickerCell.m in Sources */,
+				08E9356B18EA63F00088369B /* ioapi.c in Sources */,
+				08E9356C18EA63F00088369B /* mztools.c in Sources */,
+				08E9356D18EA63F00088369B /* LZValueSelectorView.m in Sources */,
+				08E9356E18EA63F00088369B /* unzip.c in Sources */,
+				08E9356F18EA63F00088369B /* NGCommonDiseaseCell.m in Sources */,
+				08E9357018EA63F00088369B /* LZFoodCell.m in Sources */,
+				08E9357118EA63F00088369B /* NGRecordHistoryViewController.m in Sources */,
+				08E9357218EA63F00088369B /* zip.c in Sources */,
+				08E9357318EA63F00088369B /* ZipArchive.mm in Sources */,
+				08E9357418EA63F00088369B /* LZScatterViewController.m in Sources */,
+				08E9357518EA63F00088369B /* NGHealthReportViewController.m in Sources */,
+				08E9357618EA63F00088369B /* LZNutrientFoodAddCell.m in Sources */,
+				08E9357718EA63F00088369B /* NGUerInfoViewController.m in Sources */,
+				08E9357818EA63F00088369B /* NGNoteCell.m in Sources */,
+				08E9357918EA63F00088369B /* LZDataAccessUtil.m in Sources */,
+				08E9357A18EA63F00088369B /* NGFoodDetailController.m in Sources */,
+				08E9357B18EA63F00088369B /* NGReportHealthScoreCell.m in Sources */,
+				08E9357C18EA63F00088369B /* LZFoodSearchViewController.m in Sources */,
+				08E9357D18EA63F00088369B /* NGFoodsByClassSearchViewController.m in Sources */,
+				08E9357E18EA63F00088369B /* LZDailyIntakeViewController.m in Sources */,
+				08E9357F18EA63F00088369B /* LZFoodTypeButton.m in Sources */,
+				08E9358018EA63F00088369B /* NGChartViewController.m in Sources */,
+				08E9358118EA63F00088369B /* NGCyclopediaViewController.m in Sources */,
+				08E9358218EA63F00088369B /* NGReportBMICell.m in Sources */,
+				08E9358318EA63F00088369B /* NGFoodsByClassViewController.m in Sources */,
+				08E9358418EA63F00088369B /* NGFoodNutritionCell.m in Sources */,
+				08E9358518EA63F00088369B /* NGDiagnoseViewController.m in Sources */,
+				08E9358618EA63F00088369B /* NGDietCell.m in Sources */,
+				08E9358718EA63F00088369B /* LZCustomDataButton.m in Sources */,
+				08E9358818EA63F00088369B /* NGRecordCell.m in Sources */,
+				08E9358918EA63F00088369B /* NGFoodCombinationListViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		5F3338A1172A407E0096E7AE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2365,6 +2910,15 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
+		08E9362818EA6FB70088369B /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				08E9362718EA6FB70088369B /* zh-Hans */,
+				08E9362918EA6FC40088369B /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -2486,6 +3040,88 @@
 				PRODUCT_NAME = "养生胶囊Pro";
 				PROVISIONING_PROFILE = "";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "EF920ACD-DC3F-451E-9D02-31EA9E25CDBF";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		08E935ED18EA63F00088369B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/nutrition/\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"NUTRIENTQUERY=1",
+					"$(inherited)",
+				);
+				HEADER_SEARCH_PATHS = (
+					nutrition/nutrition/NutritionLite,
+					"$(inherited)",
+					/App2/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					nutrition/nutrition/NutritionPro,
+				);
+				INFOPLIST_FILE = "nutrition/NutrientQueryLite/nutritionQueryLite-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/nutrition/CorePlotLib\"",
+					"\"$(SRCROOT)/nutrition/Parse.framework\"",
+					"\"$(SRCROOT)/nutrition/YouMengSDK\"",
+					"\"$(SRCROOT)/nutrition/AdMob\"",
+					"\"$(SRCROOT)/nutrition/BaiduSDK\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "nutrition copy";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		08E935EE18EA63F00088369B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_NS_ASSERTIONS = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/nutrition/\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "nutrition/nutrition-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = "NUTRIENTQUERY=1";
+				HEADER_SEARCH_PATHS = (
+					nutrition/nutrition/NutritionLite,
+					"$(inherited)",
+					/App2/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include,
+					nutrition/nutrition/NutritionPro,
+				);
+				INFOPLIST_FILE = "nutrition/NutrientQueryLite/nutritionQueryLite-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/nutrition/CorePlotLib\"",
+					"\"$(SRCROOT)/nutrition/AdMob\"",
+					"\"$(SRCROOT)/nutrition/YouMengSDK\"",
+					"\"$(SRCROOT)/nutrition/BaiduSDK\"",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "nutrition copy";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "65553ACA-AF74-431E-9CEE-929D2C85CE06";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2646,6 +3282,15 @@
 			buildConfigurations = (
 				088C08B718C743CD005B58BC /* Debug */,
 				088C08B818C743CD005B58BC /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		08E935EC18EA63F00088369B /* Build configuration list for PBXNativeTarget "nutrientquerylite" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				08E935ED18EA63F00088369B /* Debug */,
+				08E935EE18EA63F00088369B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

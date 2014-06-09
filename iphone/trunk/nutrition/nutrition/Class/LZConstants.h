@@ -10,9 +10,18 @@
 
 
 #ifdef CHARGE
-#import "LZConfigPro.h"
+    #ifdef NUTRIENTQUERY
+        #import "LZQueryConfigPro.h"
+    #else
+        #import "LZConfigPro.h"
+    #endif
+
 #else
-#import "LZConfigLite.h"
+    #ifdef NUTRIENTQUERY
+        #import "LZQueryConfigLite.h"
+    #else
+        #import "LZConfigLite.h"
+    #endif
 #endif
 
 
