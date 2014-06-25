@@ -1730,6 +1730,10 @@
     return ([self getSystemVersionValue] >= 7.0 );
 }
 
++(BOOL)is_BEFORE_IOS7
+{
+    return ([self getSystemVersionValue] < 7.0 );
+}
 
 
 
@@ -1835,7 +1839,16 @@
 }
 
 
-
++(void)checkMacroAffectedParams
+{
+    if ([AppleIDofApp isEqualToString:AppleIDofApp_NutrientQueryLite]){
+        NSLog(@"NutrientQueryLite");
+    }else if ([AppleIDofApp isEqualToString:AppleIDofApp_NutritionLite]){
+        NSLog(@"NutritionLite");
+    }else if ([AppleIDofApp isEqualToString:AppleIDofApp_NutritionPro]){
+        NSLog(@"NutritionPro");
+    }
+}
 
 
 

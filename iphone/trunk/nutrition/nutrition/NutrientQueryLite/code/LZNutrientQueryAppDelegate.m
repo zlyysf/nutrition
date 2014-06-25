@@ -31,36 +31,17 @@
 {
     // Override point for customization after application launch.
     [[UIApplication sharedApplication]setStatusBarHidden:NO];
-    [LZUtility initializeCheckReminder];
-    //custom navigationbar and barbuttonitem
     
-    //    if(KeyIsEnvironmentDebug){
-    //        [self initialDebugSettings];//add some debug settings key in user default
-    //    }else{
-    //        [self cleanDebugSettings];
-    //    }
+    [LZUtility checkMacroAffectedParams];
+    
+    
+
     
     if (![LZUtility isUserProfileComplete])
     {
         [LZUtility storeUserInfoWithDefault];
     }
-    //    NSString *path = [[NSBundle mainBundle] pathForResource:@"nav_bar@2x" ofType:@"png"];
-    //    UIImage * navImage = [UIImage imageWithContentsOfFile:path];
-    //    UIImage *gradientImage44 = [navImage
-    //                                resizableImageWithCapInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-    //    [[UINavigationBar appearance]setBackgroundImage:gradientImage44 forBarMetrics:UIBarMetricsDefault];
-    //    [[UISearchBar appearance]setImage:[UIImage imageNamed:@"search_glass.png"] forSearchBarIcon:UISearchBarIconSearch state:UIControlStateNormal];
-    //    [[UISearchBar appearance]setPositionAdjustment:UIOffsetMake(0, 1) forSearchBarIcon:UISearchBarIconSearch];
-    //    UIImage *button30 = [[UIImage imageNamed:@"button_back"] resizableImageWithCapInsets:UIEdgeInsetsMake(0, 5, 0, 5)];
-    //    [[UIBarButtonItem appearance] setBackgroundImage:button30 forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    //    UIImage *buttonBack30 = [[UIImage imageNamed:@"nav_back_button"]
-    //                             resizableImageWithCapInsets:UIEdgeInsetsMake(0, 13, 0, 5)];
-    //
-    //    [[UIBarButtonItem appearance] setBackButtonBackgroundImage:buttonBack30
-    //                                                      forState:UIControlStateNormal barMetrics:UIBarMetricsDefault];
-    //[[UINavigationBar appearance]setBarTintColor:[UIColor whiteColor]];
-    //    [[UITabBar appearance]setBackgroundImage:[UIImage imageNamed:@"tabbar_back.png"]];
-    //    [[UITabBar appearance] setSelectedImageTintColor:[UIColor greenColor]];
+
     if (IOS7_OR_LATER)
     {
         [[UINavigationBar appearance]setTintColor:[UIColor colorWithRed:67/255.f green:113/255.f blue:71/255.f alpha:1.0f]];
@@ -76,6 +57,10 @@
         [[UITabBar appearance]setSelectedImageTintColor:[UIColor colorWithRed:29/255.f green:120/255.f blue:41/255.f alpha:1.0f]];
         [[UITabBar appearance]setTintColor:[UIColor blackColor]];
     }
+    if (![LZUtility isCurrentLanguageChinese]){
+        [[UINavigationBar appearance]setTitleTextAttributes:[NSDictionary dictionaryWithObjectsAndKeys:[UIFont boldSystemFontOfSize:18],UITextAttributeFont, nil]];
+    }
+    
     //    ;
     //    [LZUtility initializePreferNutrient];
     //友盟统计SDK启
@@ -85,16 +70,7 @@
     
     [LZDataAccess singleton];//必要时生成新版数据库，目前是在每次更新安装时
     
-    //    LZDataAccess *da = [LZDataAccess singleton];
-    //    NSArray *suggestionArray = [da getIllnessSuggestionsDistinct_ByIllnessIds:nil];
-    //    NSMutableDictionary *tempDict = [[NSMutableDictionary alloc]init];
-    //    for (NSDictionary *aSuggestion in suggestionArray)
-    //    {
-    //        NSString *suggestionId = [aSuggestion objectForKey:@"SuggestionId"];
-    //        [tempDict setObject:aSuggestion forKey:suggestionId];
-    //    }
-    //    self.suggestionDict = [NSDictionary dictionaryWithDictionary:tempDict];
-    [LZUtility setReviewFlagForNewVersion];
+       [LZUtility setReviewFlagForNewVersion];
     [MobClick startWithAppkey:UMSDKAPPKey];
     //[MobClick startWithAppkey:UMSDKAPPKey reportPolicy:REALTIME channelId:MobChannelIdAppStore];
     //检查更新
@@ -107,28 +83,6 @@
     //    [ShareSDK connectWeChatWithAppId:WeChatAppId wechatCls:[WXApi class]];
     [LZNutrientionManager SharedInstance];
     
-    //    NSNumber *checkReminderState = [[NSUserDefaults standardUserDefaults]objectForKey:KeyHealthCheckReminderState];
-    //    if (checkReminderState == nil)
-    //    {
-    //        NSNumber *stateOn = [NSNumber numberWithBool:YES];
-    //        [[NSUserDefaults standardUserDefaults]setObject:stateOn forKey:KeyHealthCheckReminderState];
-    //        [[NSUserDefaults standardUserDefaults]synchronize];
-    //    }
-    //    [[UISwitch appearance] setOnTintColor:[UIColor colorWithRed:58/255.f green:170/255.f blue:44/255.f alpha:1.f]];
-    //    UILocalNotification *localNotify = [launchOptions objectForKey: UIApplicationLaunchOptionsLocalNotificationKey];
-    //    if (localNotify != nil)
-    //    {
-    //        if ([LZUtility isUserProfileComplete])
-    //        {
-    //            NSSet *keySet = [NSSet setWithObjects:KeyCheckReminderXiaWu,KeyCheckReminderShangWu,KeyCheckReminderShuiQian, nil];
-    //            NSDictionary *info = [localNotify userInfo];
-    //            if(info != nil && [keySet containsObject:[info objectForKey:@"notifyType"]])
-    //            {
-    //                [[NSUserDefaults standardUserDefaults]setBool:YES forKey:KeyAppLauchedForHealthCheck];
-    //                [[NSUserDefaults standardUserDefaults]synchronize];
-    //            }
-    //        }
-    //    }
     
     if (KeyIsEnvironmentDebug){
         [Parse setApplicationId:ParseApp_ApplicationID_dev clientKey:ParseApp_ClientKey_dev];
@@ -164,19 +118,19 @@
     
     
     
-    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+//    self.window = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
+//    
+////    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
+//    UIStoryboard *storyboardModFCL = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
+//    
+//    NGFoodCombinationListViewController *controllFcl = [storyboardModFCL instantiateViewControllerWithIdentifier:@"NGFoodCombinationListViewController"];
+//    
+//    UINavigationController *NavigationController = [[UINavigationController alloc]initWithRootViewController:controllFcl];
+//    
+//    self.window.rootViewController = NavigationController;
+//    [self.window makeKeyAndVisible];
     
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
-    UIStoryboard *storyboardModFCL = [UIStoryboard storyboardWithName:@"FoodCombinationList" bundle:nil];
-    
-    NGFoodCombinationListViewController *controllFcl = [storyboardModFCL instantiateViewControllerWithIdentifier:@"NGFoodCombinationListViewController"];
-    
-    UINavigationController *NavigationController = [[UINavigationController alloc]initWithRootViewController:controllFcl];
-    
-    self.window.rootViewController = NavigationController;
-    [self.window makeKeyAndVisible];
-    
-    return YES;
+
     
     
     
@@ -189,6 +143,11 @@
     PFInstallation *currentInstallation = [PFInstallation currentInstallation];
     [currentInstallation setDeviceTokenFromData:deviceToken];
     [currentInstallation saveInBackground];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"application_didFailToRegisterForRemoteNotificationsWithError:%@",error);
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {

@@ -163,7 +163,7 @@ enum {
 
 + (BOOL)addSkipBackupAttributeToItemAtURL:(NSURL *)URL;
 
-
++(void)checkMacroAffectedParams;
 
 
 @end

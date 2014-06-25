@@ -33,7 +33,9 @@
 #define MY_BANNER_UNIT_ID @"a15391765f581f4"//admob Publisher ID
 
 //百度广告APP SID 和计费名
-#define BaiduAdsAppSID @"dae595e0" //NutritionQuery_ios_百度官方版  // TODO , complete some steps
-#define BaiduAdsAppSpec @"dae595e0"
+//#define BaiduAdsAppSID @"dae595e0" //NutritionQuery_ios_百度官方版  // TODO , complete some steps
+//#define BaiduAdsAppSpec @"dae595e0"
+#define BaiduAdsAppSID @"f06ac562"
+#define BaiduAdsAppSpec @"f06ac562"
 
 #endif

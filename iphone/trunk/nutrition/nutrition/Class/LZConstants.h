@@ -28,9 +28,13 @@
 #ifndef nutrition_LZConstants_h
 #define nutrition_LZConstants_h
 
-#define KeyIsEnvironmentDebug 0
+#define KeyIsEnvironmentDebug 1
 
 //#define KeyShouldShowAdView 1 //作用于部分广告条，以方便截图
+
+#define AppleIDofApp_NutrientQueryLite @"886576583" 
+#define AppleIDofApp_NutritionLite @"658111966"
+#define AppleIDofApp_NutritionPro @"834768588"
 
 
 
