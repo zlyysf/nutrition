@@ -18,6 +18,10 @@
 		0818CA1118477B16003DB33A /* CDataScanner.h in Sources */ = {isa = PBXBuildFile; fileRef = 5F90D7DC17AF8873000AEC06 /* CDataScanner.h */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		081D3C1F187EB0D00030D743 /* LZTest1.m in Sources */ = {isa = PBXBuildFile; fileRef = 088241431744DE8000E71E6E /* LZTest1.m */; };
 		08240BD81941718400F3C6A1 /* LZNutrientQueryMainNavController.m in Sources */ = {isa = PBXBuildFile; fileRef = 08240BD71941718400F3C6A1 /* LZNutrientQueryMainNavController.m */; };
+		08428814195A93E900B10648 /* libBaiduMobAdSdk64bit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08428813195A93E900B10648 /* libBaiduMobAdSdk64bit.a */; };
+		08428816195A942400B10648 /* libBaiduMobAdSdk64bit.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08428813195A93E900B10648 /* libBaiduMobAdSdk64bit.a */; };
+		08428817195A9CBA00B10648 /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */; };
+		08428818195A9D2900B10648 /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746BFF1769A83E00E68D0E /* libMobClickLibrary.a */; };
 		08432C9A1945CCD500926F3A /* LZMainMenuItemCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 08CC55221945BC11000D75FE /* LZMainMenuItemCell.m */; };
 		084CFC9718ADBC570003BC93 /* nutrient_button_off@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9518ADBC570003BC93 /* nutrient_button_off@2x.png */; };
 		084CFC9818ADBC570003BC93 /* nutrient_button_on@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9618ADBC570003BC93 /* nutrient_button_on@2x.png */; };
@@ -451,8 +455,6 @@
 		08E935A018EA63F00088369B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338A8172A407E0096E7AE /* UIKit.framework */; };
 		08E935A118EA63F00088369B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F3338AA172A407E0096E7AE /* Foundation.framework */; };
 		08E935A218EA63F00088369B /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F9C128C17321935000E08E5 /* MessageUI.framework */; };
-		08E935A318EA63F00088369B /* libMobClickLibrary.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F746BFF1769A83E00E68D0E /* libMobClickLibrary.a */; };
-		08E935A418EA63F00088369B /* libGoogleAdMobAds.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF631D317702C690068CBFE /* libGoogleAdMobAds.a */; };
 		08E935A518EA63F00088369B /* libBaiduMobAdSdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F90D7D417AF8873000AEC06 /* libBaiduMobAdSdk.a */; };
 		08E935A718EA63F00088369B /* recommend_sign@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 084CFC9B18ADC70A0003BC93 /* recommend_sign@2x.png */; };
 		08E935A818EA63F00088369B /* physics-50@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FECAD951838777F00D72A8C /* physics-50@2x.png */; };
@@ -671,6 +673,9 @@
 		0818CA1218477B50003DB33A /* CDataScanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = CDataScanner.m; path = nutrition/BaiduSDK/TouchJSON/CDataScanner.m; sourceTree = "<group>"; };
 		08240BD61941718400F3C6A1 /* LZNutrientQueryMainNavController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LZNutrientQueryMainNavController.h; path = code/LZNutrientQueryMainNavController.h; sourceTree = "<group>"; };
 		08240BD71941718400F3C6A1 /* LZNutrientQueryMainNavController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = LZNutrientQueryMainNavController.m; path = code/LZNutrientQueryMainNavController.m; sourceTree = "<group>"; };
+		08428811195A93E900B10648 /* BaiduMobAdInterstitial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobAdInterstitial.h; sourceTree = "<group>"; };
+		08428812195A93E900B10648 /* BaiduMobAdInterstitialDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaiduMobAdInterstitialDelegate.h; sourceTree = "<group>"; };
+		08428813195A93E900B10648 /* libBaiduMobAdSdk64bit.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libBaiduMobAdSdk64bit.a; sourceTree = "<group>"; };
 		084CFC9518ADBC570003BC93 /* nutrient_button_off@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_off@2x.png"; path = "nutrition/Resource/nutrient_button_off@2x.png"; sourceTree = "<group>"; };
 		084CFC9618ADBC570003BC93 /* nutrient_button_on@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "nutrient_button_on@2x.png"; path = "nutrition/Resource/nutrient_button_on@2x.png"; sourceTree = "<group>"; };
 		084CFC9918ADBCC30003BC93 /* button_back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "button_back@2x.png"; path = "nutrition/Resource/button_back@2x.png"; sourceTree = "<group>"; };
@@ -1182,6 +1187,7 @@
 				088C085718C743CD005B58BC /* libCorePlot-CocoaTouch.a in Frameworks */,
 				088C085818C743CD005B58BC /* StoreKit.framework in Frameworks */,
 				088C085918C743CD005B58BC /* Security.framework in Frameworks */,
+				08428816195A942400B10648 /* libBaiduMobAdSdk64bit.a in Frameworks */,
 				088C085A18C743CD005B58BC /* QuartzCore.framework in Frameworks */,
 				088C085B18C743CD005B58BC /* MobileCoreServices.framework in Frameworks */,
 				088C085C18C743CD005B58BC /* CoreLocation.framework in Frameworks */,
@@ -1210,13 +1216,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				08428818195A9D2900B10648 /* libMobClickLibrary.a in Frameworks */,
+				08428817195A9CBA00B10648 /* libGoogleAdMobAds.a in Frameworks */,
+				08E9358E18EA63F00088369B /* libCorePlot-CocoaTouch.a in Frameworks */,
 				08E9359618EA63F00088369B /* AudioToolbox.framework in Frameworks */,
 				085E2C6719482524002D14E2 /* Accounts.framework in Frameworks */,
 				085E2C651948251C002D14E2 /* Social.framework in Frameworks */,
 				085E2C61194823D8002D14E2 /* Parse.framework in Frameworks */,
 				08E9358C18EA63F00088369B /* libz.1.1.3.dylib in Frameworks */,
 				08E9358D18EA63F00088369B /* SystemConfiguration.framework in Frameworks */,
-				08E9358E18EA63F00088369B /* libCorePlot-CocoaTouch.a in Frameworks */,
 				08E9358F18EA63F00088369B /* StoreKit.framework in Frameworks */,
 				08E9359018EA63F00088369B /* Security.framework in Frameworks */,
 				08E9359118EA63F00088369B /* QuartzCore.framework in Frameworks */,
@@ -1236,8 +1244,6 @@
 				08E935A018EA63F00088369B /* UIKit.framework in Frameworks */,
 				08E935A118EA63F00088369B /* Foundation.framework in Frameworks */,
 				08E935A218EA63F00088369B /* MessageUI.framework in Frameworks */,
-				08E935A318EA63F00088369B /* libMobClickLibrary.a in Frameworks */,
-				08E935A418EA63F00088369B /* libGoogleAdMobAds.a in Frameworks */,
 				08E935A518EA63F00088369B /* libBaiduMobAdSdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1254,6 +1260,7 @@
 				FCEE441D1851FC24008329AF /* libCorePlot-CocoaTouch.a in Frameworks */,
 				5FF631D817702CD00068CBFE /* StoreKit.framework in Frameworks */,
 				5F90D82617AF8E69000AEC06 /* Security.framework in Frameworks */,
+				08428814195A93E900B10648 /* libBaiduMobAdSdk64bit.a in Frameworks */,
 				5F746C3C176B1E9000E68D0E /* QuartzCore.framework in Frameworks */,
 				08859A1018504CF80063553D /* MobileCoreServices.framework in Frameworks */,
 				5F90D81D17AF8921000AEC06 /* CoreLocation.framework in Frameworks */,
@@ -1902,6 +1909,9 @@
 		5F90D7D017AF8873000AEC06 /* BaiduSDK */ = {
 			isa = PBXGroup;
 			children = (
+				08428811195A93E900B10648 /* BaiduMobAdInterstitial.h */,
+				08428812195A93E900B10648 /* BaiduMobAdInterstitialDelegate.h */,
+				08428813195A93E900B10648 /* libBaiduMobAdSdk64bit.a */,
 				5FAB57A91802878400657793 /* BaiduMobAdCommonConfig.h */,
 				5F90D7D117AF8873000AEC06 /* BaiduMobAdDelegateProtocol.h */,
 				5F90D7D217AF8873000AEC06 /* baidumobadsdk.bundle */,
@@ -3025,6 +3035,7 @@
 					"\"$(SRCROOT)/nutrition/YouMengSDK\"",
 					"\"$(SRCROOT)/nutrition/AdMob\"",
 					"\"$(SRCROOT)/nutrition/BaiduSDK\"",
+					"$(PROJECT_DIR)/nutrition/BaiduSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "养生胶囊Pro";
@@ -3069,6 +3080,7 @@
 					"\"$(SRCROOT)/nutrition/AdMob\"",
 					"\"$(SRCROOT)/nutrition/YouMengSDK\"",
 					"\"$(SRCROOT)/nutrition/BaiduSDK\"",
+					"$(PROJECT_DIR)/nutrition/BaiduSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "养生胶囊Pro";
@@ -3113,6 +3125,10 @@
 					"\"$(SRCROOT)/nutrition/YouMengSDK\"",
 					"\"$(SRCROOT)/nutrition/AdMob\"",
 					"\"$(SRCROOT)/nutrition/BaiduSDK\"",
+					"$(PROJECT_DIR)/nutrition/BaiduSDK",
+					"$(PROJECT_DIR)/nutrition/CorePlotLib",
+					"$(PROJECT_DIR)/nutrition/AdMob",
+					"$(PROJECT_DIR)/nutrition/YouMengSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "nutrition copy";
@@ -3154,6 +3170,10 @@
 					"\"$(SRCROOT)/nutrition/AdMob\"",
 					"\"$(SRCROOT)/nutrition/YouMengSDK\"",
 					"\"$(SRCROOT)/nutrition/BaiduSDK\"",
+					"$(PROJECT_DIR)/nutrition/BaiduSDK",
+					"$(PROJECT_DIR)/nutrition/CorePlotLib",
+					"$(PROJECT_DIR)/nutrition/AdMob",
+					"$(PROJECT_DIR)/nutrition/YouMengSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "nutrition copy";
@@ -3256,6 +3276,7 @@
 					"\"$(SRCROOT)/nutrition/YouMengSDK\"",
 					"\"$(SRCROOT)/nutrition/AdMob\"",
 					"\"$(SRCROOT)/nutrition/BaiduSDK\"",
+					"$(PROJECT_DIR)/nutrition/BaiduSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "养生胶囊Lite";
@@ -3295,6 +3316,7 @@
 					"\"$(SRCROOT)/nutrition/AdMob\"",
 					"\"$(SRCROOT)/nutrition/YouMengSDK\"",
 					"\"$(SRCROOT)/nutrition/BaiduSDK\"",
+					"$(PROJECT_DIR)/nutrition/BaiduSDK",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "养生胶囊Lite";

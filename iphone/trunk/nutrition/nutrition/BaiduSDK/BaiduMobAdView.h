@@ -73,17 +73,12 @@ typedef enum _BaiduMobAdViewType {
  */
 @property (nonatomic,copy) NSString* AdUnitTag;
 
-/**
- *  当前广告位是否处于活跃（即展示）状态。
- *  BaiduMobAdView实例化并调用start之后会处于展示状态, isActive为YES。 当其他的[BaiduMobAdView]实例产生并[BaiduMobAdView start]以后，本实例的状态为等待，[BaiduMobAdView isActive]属性为NO
- *  
- */
-@property (nonatomic, readonly) BOOL isActive;
 
 /**
  *  SDK版本
  */
 @property (nonatomic, readonly) NSString* Version;
+
 
 /**
  *  开始广告展示请求,会触发所有资源的重新加载，推荐初始化以后调用一次
